@@ -11,5 +11,8 @@ elifeUpdatePipeline(
         def xpubCommit = sh(script: "cat xpub.sha1", returnStdout: true)
         return "Updated xpub to ${xpubCommit}"
     },
-    'update_xpub/'
+    'update_xpub/',
+    false,
+    'develop',
+    true
 )
