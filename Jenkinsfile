@@ -8,6 +8,7 @@ elifePipeline {
     stage 'Project tests', {
         lock('elife-xpub--ci') {
             builderDeployRevision 'elife-xpub--ci', commit
+            builderSmokeTests 'elife-xpub--ci', '/srv/elife-xpub'
             //builderProjectTests 'elife-xpub--ci', '/srv/elife-xpub'
         }
     }
