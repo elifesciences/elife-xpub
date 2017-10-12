@@ -16,7 +16,6 @@ This is a collaboration between eLife and the Collaborative Knowledge Foundation
 
 Installation
 ============
-This repo contains scripts to synchronise the selected commit of [xPub][1] and deploy it to eLife's instance on AWS using [https://github.com/elifesciences/elife-xpub-formula][4].
 
 [4]: https://github.com/elifesciences/elife-xpub-formula
 
