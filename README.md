@@ -14,8 +14,7 @@ This is a collaboration between eLife and the Collaborative Knowledge Foundation
 [2]: https://gitlab.coko.foundation/pubsweet/pubsweet-server
 [3]: https://elifesciences.org/for-the-press/67d013c4/elife-and-collaborative-knowledge-foundation-partner-to-deliver-open-source-submission-and-peer-review-platform
 
-Installation
-============
+This repo contains scripts to synchronise the selected commit of [xPub][1] so that it can be deployed to eLife's instance on AWS using [https://github.com/elifesciences/elife-xpub-formula][4]. This repo will also contain any eLife specific components or configuration.
 
 [4]: https://github.com/elifesciences/elife-xpub-formula
 
