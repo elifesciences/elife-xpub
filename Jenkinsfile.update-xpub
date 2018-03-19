@@ -1,14 +1,9 @@
 elifeUpdatePipeline(
     { commit ->
-        lock('elife-xpub--ci') {
-            builderDeployRevision 'elife-xpub--ci', commit
-            builderCmd "elife-xpub--ci", "./update-xpub.sh /srv/xpub", "/srv/elife-xpub"
-            builderSync "ci--xpub.elife.internal", "/srv/elife-xpub/"
-            sh "git add xpub.sha1"
-        }
+        sh "sed -i -e 's/XPUB_VERSION=.*/XPUB_VERSION=${commit}/' .env"
     },
     {
-        def xpubCommit = sh(script: "cat xpub.sha1", returnStdout: true)
+        def xpubCommit = sh(script: "cat .env | grep XPUB_VERSION", returnStdout: true)
         return "Updated xpub to ${xpubCommit}"
     },
     'update_xpub/',
