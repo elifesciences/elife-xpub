@@ -3,7 +3,6 @@ version: '3'
 services:
     app:
         image: xpub/xpub:${XPUB_VERSION}
-        # TODO: must wait until database exists
         command: >
             /bin/bash -c "
                 until echo > /dev/tcp/postgres/5432; do sleep 1; done
@@ -42,6 +41,12 @@ services:
             POSTGRES_USER: xpub
         volumes:
             - postgres-volume:/var/lib/postgresql/data
+    bootstrap:
+        image: bash:4.3.48
+        command: >
+            /usr/local/bin/bash -c "until echo > /dev/tcp/app/3000; do sleep 1; done"
+        depends_on:
+            - app
 
 volumes:
     postgres-volume:
