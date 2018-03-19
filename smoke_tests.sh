@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
-. /opt/smoke.sh/smoke.sh
+set -ex
 
-smoke_url_ok $(hostname):3000/
 if [ "$ENVIRONMENT_NAME" == 'dev' ]; then
-    smoke_url_ok http://$(hostname)/
+    scheme=http
 else
-    smoke_url_ok https://$(hostname)/
+    scheme=https
 fi
 
-smoke_report
+[ $(curl --write-out %{http_code} --silent --output /dev/null $(hostname):3000) == 200 ]
+[ $(curl --write-out %{http_code} --silent --output /dev/null $scheme://$(hostname)) == 200 ]
