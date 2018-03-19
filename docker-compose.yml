@@ -3,13 +3,35 @@ version: '3'
 services:
     app:
         image: xpub/xpub:${XPUB_VERSION}
-        command: sh -c "sleep 10 && npx pubsweet server"
+        # TODO: must wait until database exists
+        command: >
+            /bin/bash -c "
+                until echo > /dev/tcp/postgres/5432; do sleep 1; done
+                npx pubsweet setupdb --clobber
+                npx pubsweet server
+            "
         ports:
             - 3000:3000
         depends_on:
             - postgres
         environment:
             NODE_ENV: development
+            NODE_CONFIG: '{
+                "pubsweet-client": {
+                    "API_ENDPOINT": "/api"
+                },
+                "pubsweet-server": {
+                    "secret": "somesecret"
+                },
+                "password-reset": {
+                    "url": "localhost:3000/password-reset"
+                },
+                "pubsweet-component-ink-backend": {
+                    "inkEndpoint": "https://demo--ink.elifesciences.org",
+                    "email": "fake",
+                    "password": "fake"
+                }
+            }'
             PGHOST: postgres
             PGUSER: xpub
     postgres:
