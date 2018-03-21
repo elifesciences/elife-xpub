@@ -2,6 +2,7 @@ elifeUpdatePipeline(
     { commit ->
         commit = 'fakecommit'
         sh "sed -i -e 's/XPUB_VERSION=.*/XPUB_VERSION=${commit}/' .env"
+        sh "git add .env"
     },
     {
         def xpubCommit = sh(script: "cat .env | grep XPUB_VERSION", returnStdout: true)
