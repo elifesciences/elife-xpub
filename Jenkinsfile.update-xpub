@@ -1,6 +1,13 @@
 elifeUpdatePipeline(
     { commit ->
-        sh 'env'
+        // sh 'env' 
+        // DOCKER_TRIGGER_REPO_NAME=xpub
+        elifeOnNode(
+            {
+                commit = dockerReadLabel('xpub/xpub:latest', 'COMMIT_SHA')
+            },
+            'containers--medium'
+        )
         commit = 'fakecommit'
         sh "sed -i -e 's/XPUB_VERSION=.*/XPUB_VERSION=${commit}/' .env"
         sh "git add .env"
