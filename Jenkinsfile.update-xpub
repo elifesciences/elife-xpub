@@ -1,6 +1,6 @@
 elifeUpdatePipeline(
     { commit ->
-        def commit = 'fakecommit'
+        commit = 'fakecommit'
         sh "sed -i -e 's/XPUB_VERSION=.*/XPUB_VERSION=${commit}/' .env"
     },
     {
