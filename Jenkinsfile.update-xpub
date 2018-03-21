@@ -8,7 +8,6 @@ elifeUpdatePipeline(
             },
             'containers--medium'
         )
-        commit = 'fakecommit'
         sh "sed -i -e 's/XPUB_VERSION=.*/XPUB_VERSION=${commit}/' .env"
         sh "git add .env"
     },
