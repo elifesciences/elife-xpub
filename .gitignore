@@ -1,0 +1,15 @@
+*.log
+.bash_history
+.env
+.env.*
+.cache
+dist/
+node_modules
+coverage/
+api/db/*
+logs/*
+log.txt
+config.json
+_build/
+uploads/
+config/local*.*

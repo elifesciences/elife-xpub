@@ -1,0 +1,143 @@
+variables:
+  IMAGE_ORG: xpub
+  IMAGE_NAME: xpub
+  BASE_DOMAIN: gateway.xpub.semioticsquares.com
+  CONFIGURATION_REPOSITORY: https://gitlab.coko.foundation/yld/xpub-deployment-config-postgres.git 
+
+stages:
+  - build
+  - test
+  - review
+  - staging
+  - production
+  - demo
+
+build:
+  image: docker:latest
+  stage: build
+  script:
+    - docker version
+    - docker build -t $IMAGE_ORG/$IMAGE_NAME:$CI_COMMIT_SHA .
+    - if [ -z "$DOCKERHUB_USERNAME" ] || [ -z "$DOCKERHUB_PASSWORD" ]; then echo "Not pushing" && exit 0; fi
+    - docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASSWORD
+    - echo "Ignore warning! Cannot perform an interactive login from a non TTY device"
+    - docker push $IMAGE_ORG/$IMAGE_NAME:$CI_COMMIT_SHA
+
+lint:
+  image: $IMAGE_ORG/$IMAGE_NAME:$CI_COMMIT_SHA
+  stage: test
+  variables:
+    GIT_STRATEGY: none
+  script:
+    - cd ${HOME}
+    - npm run lint
+
+# disable this job to make it clear we're not running any tests
+.test:
+  image: $IMAGE_ORG/$IMAGE_NAME:$CI_COMMIT_SHA
+  stage: test
+  variables:
+    GIT_STRATEGY: none
+    # setup data for postgres image
+    POSTGRES_USER: test
+    POSTGRES_PASSWORD: pw
+    # connection details for tests
+    PGUSER: test
+    PGPASSWORD: pw
+    NODE_ENV: test
+  services:
+    - postgres
+  script:
+    - cd ${HOME}
+    # specify host here else it confuses the linked postgres image
+    - PGHOST=postgres npm run test
+
+push:latest:
+  image: docker:latest
+  stage: staging
+  script:
+    - if [ -z "$DOCKERHUB_USERNAME" ] || [ -z "$DOCKERHUB_PASSWORD" ]; then echo "Not pushing" && exit 0; fi
+    - docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASSWORD
+    - echo "Ignore warning! Cannot perform an interactive login from a non TTY device"
+    - docker build -t $IMAGE_ORG/$IMAGE_NAME:latest --label COMMIT_SHA=$CI_COMMIT_SHA .
+    - docker push $IMAGE_ORG/$IMAGE_NAME:latest
+  only:
+  - master
+
+review:xpub-collabra:
+  image: pubsweet/deployer:latest
+  stage: review
+  variables:
+    PACKAGE_NAME: xpub-collabra
+    FORCE_FRESH_DB: "yes"
+    REQUIRES_PROVISIONING: "yes"
+  environment:
+    name: $PACKAGE_NAME/review/$CI_COMMIT_REF_NAME
+    # !! kube-lego will fail if domain > 64 chars
+    url: "http://${CI_ENVIRONMENT_SLUG}.${BASE_DOMAIN}"
+    on_stop: stop_review:xpub-collabra
+  except:
+  - master
+  script:
+    - source deploy.sh
+    - create_deployment
+
+stop_review:xpub-collabra:
+  image: pubsweet/deployer:latest
+  stage: review
+  variables:
+    PACKAGE_NAME: xpub-collabra
+    REQUIRES_PROVISIONING: "yes"
+    GIT_STRATEGY: none
+  environment:
+    name: $PACKAGE_NAME/review/$CI_COMMIT_REF_NAME
+    action: stop
+  when: manual
+  except:
+  - master
+  script:
+    - source deploy.sh
+    - delete_deployment
+    - delete_objects_in_environment pvc
+
+staging:xpub-collabra:
+  image: pubsweet/deployer:latest
+  stage: staging
+  variables:
+    PACKAGE_NAME: xpub-collabra
+  environment:
+    name: $PACKAGE_NAME/staging
+    url: "https://${CI_ENVIRONMENT_SLUG}.${BASE_DOMAIN}"
+  only:
+  - master
+  script:
+    - source deploy.sh
+    - create_deployment
+
+production:xpub-collabra:
+  image: pubsweet/deployer:latest
+  stage: production
+  variables:
+    PACKAGE_NAME: xpub-collabra
+  environment:
+    name: $PACKAGE_NAME/production
+    url: "https://${CI_ENVIRONMENT_SLUG}.${BASE_DOMAIN}"
+  when: manual
+  only:
+  - master
+  script:
+    - source deploy.sh
+    - create_deployment
+
+demo:xpub-collabra:
+  image: pubsweet/deployer:latest
+  stage: demo
+  variables:
+    PACKAGE_NAME: xpub-collabra
+  environment:
+    name: $PACKAGE_NAME/demo
+    url: "https://${CI_ENVIRONMENT_SLUG}.${BASE_DOMAIN}"
+  when: manual
+  script:
+    - source deploy.sh
+    - create_deployment
