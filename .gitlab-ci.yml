@@ -105,6 +105,7 @@ staging:
   stage: staging
   variables:
     PACKAGE_NAME: xpub-elife
+    REQUIRES_PROVISIONING: "yes"
   environment:
     name: xpub-elife-staging
     url: "https://${CI_ENVIRONMENT_SLUG}.${BASE_DOMAIN}"
@@ -114,11 +115,12 @@ staging:
     - source deploy.sh
     - create_deployment
 
-demo:xpub-collabra:
+demo:
   image: pubsweet/deployer:latest
   stage: demo
   variables:
     PACKAGE_NAME: xpub-elife
+    REQUIRES_PROVISIONING: "yes"
   environment:
     name: xpub-elife-demo
     url: "https://${CI_ENVIRONMENT_SLUG}.${BASE_DOMAIN}"
