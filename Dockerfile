@@ -13,7 +13,6 @@ RUN [ "rm", "-rf", "/npm-packages-offline-cache"]
 COPY app.js .babelrc .eslintignore .eslintrc .prettierrc .stylelintignore .stylelintrc ./
 
 COPY static static
-COPY api api
 COPY webpack webpack
 COPY config config
 COPY app app
