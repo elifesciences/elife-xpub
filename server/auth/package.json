@@ -1,0 +1,20 @@
+{
+  "name": "@pubsweet/auth-orcid",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "config": "^1.30.0",
+    "passport": "^0.4.0",
+    "passport-orcid": "^0.0.3"
+  },
+  "peerDependencies": {
+    "pubsweet-server": ">=2.0.0"
+  },
+  "keywords": [],
+  "author": "eLife",
+  "license": "MIT"
+}

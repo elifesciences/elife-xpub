@@ -5,11 +5,17 @@ module.exports = {
     baseUrl: deferConfig(
       cfg => `http://localhost:${cfg['pubsweet-server'].port}`,
     ),
+    secret: 'not very secret',
   },
   dbManager: {
     username: 'admin',
     password: 'password',
     email: 'admin@example.com',
     admin: true,
+  },
+  'auth-orcid': {
+    clientID: '',
+    clientSecret: '',
+    sandbox: true,
   },
 }

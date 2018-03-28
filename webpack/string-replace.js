@@ -3,12 +3,14 @@
 const components = require('../config/components.json')
 
 const requireComponentsString = components
-  .filter(name => {
-    const component = require(name)
+  // resolve relative to working dir so that relative paths work
+  .map(name => require.resolve(name, { paths: [process.cwd()] }))
+  .filter(path => {
+    const component = require(path)
     // "client" or "frontend" for backwards compatibility
     return component.client || component.frontend
   })
-  .map(name => `require('${name}')`)
+  .map(path => `require('${path}')`)
   .join(', ')
 
 module.exports = {

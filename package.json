@@ -2,7 +2,7 @@
   "name": "xpub-elife",
   "version": "1.0.0",
   "private": true,
-  "workspaces": [],
+  "workspaces": ["server/*"],
   "description": "xpub configured for eLife",
   "license": "MIT",
   "engines": {
