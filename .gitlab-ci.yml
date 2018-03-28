@@ -1,6 +1,6 @@
 variables:
   IMAGE_ORG: xpub
-  IMAGE_NAME: xpub
+  IMAGE_NAME: xpub-elife
   BASE_DOMAIN: gateway.xpub.semioticsquares.com
   CONFIGURATION_REPOSITORY: https://gitlab.coko.foundation/yld/xpub-deployment-config-postgres.git 
 
@@ -64,33 +64,33 @@ push:latest:
   only:
   - master
 
-review:xpub-collabra:
+review:
   image: pubsweet/deployer:latest
   stage: review
   variables:
-    PACKAGE_NAME: xpub-collabra
+    PACKAGE_NAME: xpub-elife
     FORCE_FRESH_DB: "yes"
     REQUIRES_PROVISIONING: "yes"
   environment:
-    name: $PACKAGE_NAME/review/$CI_COMMIT_REF_NAME
+    name: review/$CI_COMMIT_REF_NAME
     # !! kube-lego will fail if domain > 64 chars
     url: "http://${CI_ENVIRONMENT_SLUG}.${BASE_DOMAIN}"
-    on_stop: stop_review:xpub-collabra
+    on_stop: stop_review
   except:
   - master
   script:
     - source deploy.sh
     - create_deployment
 
-stop_review:xpub-collabra:
+stop_review:
   image: pubsweet/deployer:latest
   stage: review
   variables:
-    PACKAGE_NAME: xpub-collabra
+    PACKAGE_NAME: xpub-elife
     REQUIRES_PROVISIONING: "yes"
     GIT_STRATEGY: none
   environment:
-    name: $PACKAGE_NAME/review/$CI_COMMIT_REF_NAME
+    name: review/$CI_COMMIT_REF_NAME
     action: stop
   when: manual
   except:
@@ -100,29 +100,14 @@ stop_review:xpub-collabra:
     - delete_deployment
     - delete_objects_in_environment pvc
 
-staging:xpub-collabra:
+staging:
   image: pubsweet/deployer:latest
   stage: staging
   variables:
-    PACKAGE_NAME: xpub-collabra
+    PACKAGE_NAME: xpub-elife
   environment:
-    name: $PACKAGE_NAME/staging
+    name: xpub-elife-staging
     url: "https://${CI_ENVIRONMENT_SLUG}.${BASE_DOMAIN}"
-  only:
-  - master
-  script:
-    - source deploy.sh
-    - create_deployment
-
-production:xpub-collabra:
-  image: pubsweet/deployer:latest
-  stage: production
-  variables:
-    PACKAGE_NAME: xpub-collabra
-  environment:
-    name: $PACKAGE_NAME/production
-    url: "https://${CI_ENVIRONMENT_SLUG}.${BASE_DOMAIN}"
-  when: manual
   only:
   - master
   script:
@@ -133,9 +118,9 @@ demo:xpub-collabra:
   image: pubsweet/deployer:latest
   stage: demo
   variables:
-    PACKAGE_NAME: xpub-collabra
+    PACKAGE_NAME: xpub-elife
   environment:
-    name: $PACKAGE_NAME/demo
+    name: xpub-elife-demo
     url: "https://${CI_ENVIRONMENT_SLUG}.${BASE_DOMAIN}"
   when: manual
   script:
