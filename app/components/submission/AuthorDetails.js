@@ -1,15 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
+import { Flex, Box } from 'grid-styled'
 
 import { TextField, Button, Heading } from '@pubsweet/ui'
-
-const Row = styled.div`
-  display: flex;
-`
-
-const Cell = styled.div`
-  flex-grow: 1;
-`
 
 class AuthorDetails extends React.Component {
   constructor() {
@@ -38,42 +31,42 @@ class AuthorDetails extends React.Component {
 
     return (
       <div>
-        <Row>
-          <Cell>
+        <Flex>
+          <Box width={1 / 2}>
             <TextField
               label="First name"
               name="firstName"
               onChange={handleChange}
               value={values.firstName}
             />
-          </Cell>
-          <Cell>
+          </Box>
+          <Box width={1 / 2}>
             <TextField
               label="Last name"
               name="lastName"
               onChange={handleChange}
               value={values.lastName}
             />
-          </Cell>
-        </Row>
-        <Row>
-          <Cell>
+          </Box>
+        </Flex>
+        <Flex>
+          <Box width={1 / 2}>
             <TextField
               label="Email (correspondence)"
               name="email"
               onChange={handleChange}
               value={values.email}
             />
-          </Cell>
-          <Cell>
+          </Box>
+          <Box width={1 / 2}>
             <TextField
               label="Institute"
               name="institute"
               onChange={handleChange}
               value={values.institute}
             />
-          </Cell>
-        </Row>
+          </Box>
+        </Flex>
 
         {assigneeFormOpen ? (
           <AssigneeForm
@@ -95,38 +88,38 @@ const AssigneeForm = ({ values, handleChange, handleClose }) => (
   <div>
     <Heading level={6}>Assignee for correspondence</Heading>
 
-    <Row>
-      <Cell>
+    <Flex>
+      <Box width={1 / 2}>
         <TextField
           label="First name"
           name="assignee.firstName"
           onChange={handleChange}
           value={values.firstName}
         />
-      </Cell>
-      <Cell>
+      </Box>
+      <Box width={1 / 2}>
         <TextField
           label="Last name"
           name="assignee.lastName"
           onChange={handleChange}
           value={values.lastName}
         />
-      </Cell>
-    </Row>
+      </Box>
+    </Flex>
 
-    <Row>
-      <Cell>
+    <Flex>
+      <Box width={1 / 2}>
         <TextField
           label="Email"
           name="assignee.email"
           onChange={handleChange}
           value={values.email}
         />
-      </Cell>
-      <Cell>
+      </Box>
+      <Box width={1 / 2}>
         <Button onClick={handleClose}>Remove assignment</Button>
-      </Cell>
-    </Row>
+      </Box>
+    </Flex>
   </div>
 )
 
