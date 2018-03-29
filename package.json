@@ -82,17 +82,15 @@
     "reset": "pubsweet setupdb --clobber",
     "start": "docker-compose up",
     "start:services": "docker-compose up postgres",
-    "start:styleguide": "docker-compose run --no-deps -p 6060:6060 app yarn run styleguide",
+    "start:styleguide":
+      "docker-compose run --no-deps -p 6060:6060 app yarn run styleguide",
     "server": "pubsweet server",
     "styleguide": "styleguidist server",
     "build": "NODE_ENV=production pubsweet build"
   },
   "lint-staged": {
-    "*.js": [
-        "prettier --write",
-        "eslint --fix",
-        "git add"
-    ],
+    "*.js": ["prettier --write", "eslint --fix", "git add"],
+    "*.{json,md}": ["prettier --write", "git add"],
     "*.css": "stylelint",
     "*.scss": "stylelint"
   }
