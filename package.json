@@ -88,8 +88,9 @@
   },
   "lint-staged": {
     "*.js": [
-      "prettier --write",
-      "git add"
+        "prettier --write",
+        "eslint --fix",
+        "git add"
     ],
     "*.css": "stylelint",
     "*.scss": "stylelint"
