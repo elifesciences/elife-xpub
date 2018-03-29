@@ -2,13 +2,7 @@ import React from 'react'
 import { Route, Switch } from 'react-router-dom'
 import { AuthenticatedComponent } from 'pubsweet-client'
 
-import {
-  ElifeApp,
-  ElifeDashboard,
-  ElifeSubmit,
-  ElifeLogin,
-  ElifeSignup,
-} from './components'
+import { App, Dashboard, Submit, Login } from './components'
 
 const PrivateRoute = ({ component: Component, ...rest }) => (
   <Route
@@ -22,14 +16,13 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
 )
 
 const Routes = () => (
-  <ElifeApp>
+  <App>
     <Switch>
-      <Route component={ElifeSignup} exact path="/signup" />
-      <Route component={ElifeLogin} exact path="/login" />
-      <PrivateRoute component={ElifeSubmit} exact path="/submit" />
-      <PrivateRoute component={ElifeDashboard} path="/" />
+      <Route component={Login} exact path="/login" />
+      <PrivateRoute component={Submit} exact path="/submit" />
+      <PrivateRoute component={Dashboard} path="/" />
     </Switch>
-  </ElifeApp>
+  </App>
 )
 
 export default Routes

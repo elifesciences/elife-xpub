@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 
 import { AppBar } from '@pubsweet/ui'
 
-const ElifeApp = ({ children }) => (
+const App = ({ children }) => (
   <div>
     <AppBar
       brand="eLife"
@@ -17,4 +17,4 @@ const ElifeApp = ({ children }) => (
   </div>
 )
 
-export default ElifeApp
+export default App

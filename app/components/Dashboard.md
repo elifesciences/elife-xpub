@@ -1,4 +1,4 @@
-## Elife Dashboard
+## Dashboard Component
 
 TODO this needs to be implemented
 
