@@ -1,0 +1,10 @@
+{
+  "env": {
+    "node": true,
+    "es6": true
+  },
+  "globals": {
+    "fixture": true,
+    "test": true
+  }
+}

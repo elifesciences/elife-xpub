@@ -1,6 +1,3 @@
-process.env.NODE_ENV = 'development'
-process.env.BABEL_ENV = 'development'
-
 const config = require('config')
 const path = require('path')
 const webpack = require('webpack')

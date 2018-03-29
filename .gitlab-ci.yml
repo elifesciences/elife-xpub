@@ -2,7 +2,7 @@ variables:
   IMAGE_ORG: xpub
   IMAGE_NAME: xpub-elife
   BASE_DOMAIN: gateway.xpub.semioticsquares.com
-  CONFIGURATION_REPOSITORY: https://gitlab.coko.foundation/yld/xpub-deployment-config-postgres.git 
+  CONFIGURATION_REPOSITORY: https://gitlab.coko.foundation/yld/xpub-deployment-config-postgres.git
 
 stages:
   - build
@@ -32,8 +32,7 @@ lint:
     - cd ${HOME}
     - npm run lint
 
-# disable this job to make it clear we're not running any tests
-.test:
+test:
   image: $IMAGE_ORG/$IMAGE_NAME:$CI_COMMIT_SHA
   stage: test
   variables:
@@ -50,7 +49,7 @@ lint:
   script:
     - cd ${HOME}
     # specify host here else it confuses the linked postgres image
-    - PGHOST=postgres npm run test
+    - PGHOST=postgres npx testcafe 'chrome:headless --no-sandbox'
 
 push:latest:
   image: docker:latest
