@@ -96,15 +96,6 @@
     pg "^7.4.1"
     pubsweet-server "^2.0.4"
 
-"@pubsweet/default-theme@^0.2.1":
-  version "0.2.1"
-  resolved "https://registry.yarnpkg.com/@pubsweet/default-theme/-/default-theme-0.2.1.tgz#d97d8083618154ea22d005af1b4f92acf4da7058"
-  dependencies:
-    styled-components "^2.4.0"
-    typeface-noto-sans "^0.0.54"
-    typeface-noto-serif "^0.0.54"
-    typeface-ubuntu-mono "^0.0.54"
-
 "@pubsweet/elife-theme@^0.1.0":
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/@pubsweet/elife-theme/-/elife-theme-0.1.0.tgz#95325755e4693a0fa4d18e96d0727c43a0c1ccbc"
@@ -8959,18 +8950,6 @@ type-is@^1.6.4, type-is@~1.6.15, type-is@~1.6.16:
 typedarray@^0.0.6:
   version "0.0.6"
   resolved "https://registry.yarnpkg.com/typedarray/-/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
-
-typeface-noto-sans@^0.0.54:
-  version "0.0.54"
-  resolved "https://registry.yarnpkg.com/typeface-noto-sans/-/typeface-noto-sans-0.0.54.tgz#16989ef56a5220b0503495ab8c1036f66b517b55"
-
-typeface-noto-serif@^0.0.54:
-  version "0.0.54"
-  resolved "https://registry.yarnpkg.com/typeface-noto-serif/-/typeface-noto-serif-0.0.54.tgz#26a552df3557c54f2f0c7f9bdbd28a95c9aab06b"
-
-typeface-ubuntu-mono@^0.0.54:
-  version "0.0.54"
-  resolved "https://registry.yarnpkg.com/typeface-ubuntu-mono/-/typeface-ubuntu-mono-0.0.54.tgz#773582617ff60dc252acbaaeb22880ba7f559fe6"
 
 ua-parser-js@^0.7.9:
   version "0.7.17"

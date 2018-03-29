@@ -14,7 +14,6 @@
     "url": "https://gitlab.coko.foundation/xpub/xpub-elife"
   },
   "dependencies": {
-    "@pubsweet/default-theme": "^0.2.1",
     "@pubsweet/elife-theme": "^0.1.0",
     "@pubsweet/ui": "^3.2.1",
     "config": "^1.26.2",
