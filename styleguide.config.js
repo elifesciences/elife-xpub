@@ -1,3 +1,5 @@
+const path = require('path')
+
 module.exports = {
   components: 'app/components/**/*.js',
   webpackConfig: {
@@ -7,5 +9,12 @@ module.exports = {
   },
   context: {
     formik: 'formik',
+  },
+  styleguideComponents: {
+    StyleGuideRenderer: path.join(
+      __dirname,
+      'styleguide/components/StyleGuideRenderer',
+    ),
+    Wrapper: path.join(__dirname, 'styleguide/components/Wrapper'),
   },
 }

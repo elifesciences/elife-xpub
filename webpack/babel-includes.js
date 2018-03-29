@@ -4,14 +4,16 @@ const path = require('path')
 // TODO: compile components to ES5 for distribution
 
 module.exports = [
-  // include app and components folders
+  // include our code
   path.join(__dirname, '..', 'app'),
-  path.join(__dirname, '..', 'components'),
+  path.join(__dirname, '..', 'styleguide'),
+
   // include pubsweet and xpub packages which are published untranspiled
   /xpub-[^/]+\/src/,
   /wax-[^/]+\/src/,
   /pubsweet-[^/\\]+\/(?!node_modules)/,
   /@pubsweet\/[^/\\]+\/(?!node_modules)/,
+
   // include pubsweet packages when npm linked from monorepo
   filepath =>
     // is a child of packages but not node_modules
