@@ -86,7 +86,7 @@ class AuthorDetails extends React.Component {
 
 const AssigneeForm = ({ values, handleChange, handleClose }) => (
   <div>
-    <Heading level={6}>Assignee for correspondence</Heading>
+    <Heading level={3}>Assignee for correspondence</Heading>
 
     <Flex>
       <Box width={1 / 2}>
