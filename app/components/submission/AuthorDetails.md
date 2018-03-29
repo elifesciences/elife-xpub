@@ -8,10 +8,9 @@ const { Formik } = formik
     lastName: 'Bonzalez',
     email: 'todd.bonzalez@gmail.com',
     institute: 'University of eLife',
+    assignee: {},
   }}
-  render={({ values, handleChange }) => (
-    <AuthorDetails values={values} handleChange={handleChange} />
-  )}
+  render={props => <AuthorDetails {...props} />}
   onSubmit={values => console.log(values)}
 />
 ```
