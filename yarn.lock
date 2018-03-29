@@ -105,6 +105,12 @@
     typeface-noto-serif "^0.0.54"
     typeface-ubuntu-mono "^0.0.54"
 
+"@pubsweet/elife-theme@^0.1.0":
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/@pubsweet/elife-theme/-/elife-theme-0.1.0.tgz#95325755e4693a0fa4d18e96d0727c43a0c1ccbc"
+  dependencies:
+    styled-components "^2.4.0"
+
 "@pubsweet/logger@^0.2.2":
   version "0.2.2"
   resolved "https://registry.yarnpkg.com/@pubsweet/logger/-/logger-0.2.2.tgz#ef5680c766226d4b25c5915859ea259b8c688db3"
