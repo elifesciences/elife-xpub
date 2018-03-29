@@ -5,4 +5,7 @@ module.exports = {
       rules: require('./webpack/rules.development.js'),
     },
   },
+  context: {
+    formik: 'formik',
+  },
 }

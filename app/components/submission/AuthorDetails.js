@@ -1,11 +1,31 @@
 import React from 'react'
 
-export default ({ value }) => (
+export default ({ values, handleChange }) => (
   <div>
-    <input disabled type="text" value={value.firstName} />
-    <input disabled type="text" value={value.lastName} />
+    <input
+      name="firstName"
+      onChange={handleChange}
+      type="text"
+      value={values.firstName}
+    />
+    <input
+      name="lastName"
+      onChange={handleChange}
+      type="text"
+      value={values.lastName}
+    />
     <br />
-    <input disabled type="text" value={value.email} />
-    <input disabled type="text" value={value.institute} />
+    <input
+      name="email"
+      onChange={handleChange}
+      type="text"
+      value={values.email}
+    />
+    <input
+      name="institute"
+      onChange={handleChange}
+      type="text"
+      value={values.institute}
+    />
   </div>
 )
