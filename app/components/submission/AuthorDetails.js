@@ -1,7 +1,8 @@
 import React from 'react'
 import { Flex, Box } from 'grid-styled'
 
-import { TextField, Button, Heading } from '@pubsweet/ui'
+import { Button, Heading } from '@pubsweet/ui'
+import ValidatedField from '../ui/atoms/ValidatedField'
 
 class AuthorDetails extends React.Component {
   constructor() {
@@ -9,111 +10,83 @@ class AuthorDetails extends React.Component {
 
     this.openAssigneeForm = this.openAssigneeForm.bind(this)
     this.closeAssigneeForm = this.closeAssigneeForm.bind(this)
-
-    this.state = {
-      assigneeFormOpen: false,
-    }
   }
 
   openAssigneeForm() {
-    this.setState({ assigneeFormOpen: true })
+    this.props.setFieldValue('assignee', {
+      firstName: '',
+      lastName: '',
+      email: '',
+    })
   }
 
   closeAssigneeForm() {
-    this.props.setFieldValue('assignee', {})
-    this.setState({ assigneeFormOpen: false })
+    this.props.setFieldValue('assignee', null)
+    this.props.setFieldTouched('assignee', false)
   }
 
   render() {
-    const { values, handleChange } = this.props
-    const { assigneeFormOpen } = this.state
+    const { handleSubmit, values } = this.props
 
     return (
-      <div>
+      <form onSubmit={handleSubmit}>
         <Flex>
           <Box width={1 / 2}>
-            <TextField
-              label="First name"
-              name="firstName"
-              onChange={handleChange}
-              value={values.firstName}
-            />
+            <ValidatedField label="First name" name="firstName" />
           </Box>
           <Box width={1 / 2}>
-            <TextField
-              label="Last name"
-              name="lastName"
-              onChange={handleChange}
-              value={values.lastName}
-            />
+            <ValidatedField label="Last name" name="lastName" />
           </Box>
         </Flex>
         <Flex>
           <Box width={1 / 2}>
-            <TextField
-              label="Email (correspondence)"
-              name="email"
-              onChange={handleChange}
-              value={values.email}
-            />
+            <ValidatedField label="Email (correspondence)" name="email" />
           </Box>
           <Box width={1 / 2}>
-            <TextField
-              label="Institute"
-              name="institute"
-              onChange={handleChange}
-              value={values.institute}
-            />
+            <ValidatedField label="Institute" name="institute" />
           </Box>
         </Flex>
 
-        {assigneeFormOpen ? (
-          <AssigneeForm
-            handleChange={handleChange}
-            handleClose={this.closeAssigneeForm}
-            values={values.assignee}
-          />
-        ) : (
-          <Button onClick={this.openAssigneeForm}>
-            Assign a colleague to handle this submission
-          </Button>
-        )}
-      </div>
+        <Flex>
+          <Box width={1}>
+            {values.assignee ? (
+              <AssigneeForm handleClose={this.closeAssigneeForm} />
+            ) : (
+              <Button onClick={this.openAssigneeForm}>
+                Assign a colleague to handle this submission
+              </Button>
+            )}
+          </Box>
+        </Flex>
+
+        <Flex>
+          <Box width={1}>
+            <Button primary type="submit">
+              Next
+            </Button>
+          </Box>
+        </Flex>
+      </form>
     )
   }
 }
 
-const AssigneeForm = ({ values, handleChange, handleClose }) => (
+const AssigneeForm = ({ handleClose }) => (
   <div>
     <Heading level={3}>Assignee for correspondence</Heading>
 
     <Flex>
       <Box width={1 / 2}>
-        <TextField
-          label="First name"
-          name="assignee.firstName"
-          onChange={handleChange}
-          value={values.firstName}
-        />
+        <ValidatedField label="First name" name="assignee.firstName" />
       </Box>
       <Box width={1 / 2}>
-        <TextField
-          label="Last name"
-          name="assignee.lastName"
-          onChange={handleChange}
-          value={values.lastName}
-        />
+        <ValidatedField label="Last name" name="assignee.lastName" />
       </Box>
     </Flex>
 
     <Flex>
       <Box width={1 / 2}>
-        <TextField
-          label="Email"
-          name="assignee.email"
-          onChange={handleChange}
-          value={values.email}
-        />
+        <ValidatedField label="Email" name="assignee.email" />
       </Box>
       <Box width={1 / 2}>
         <Button onClick={handleClose}>Remove assignment</Button>

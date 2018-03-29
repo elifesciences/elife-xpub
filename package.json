@@ -30,7 +30,8 @@
     "recompose": "^0.26.0",
     "redux": "^3.6.0",
     "redux-logger": "^3.0.1",
-    "styled-components": "^2.4.0"
+    "styled-components": "^2.4.0",
+    "yup": "^0.24.1"
   },
   "devDependencies": {
     "babel-core": "^6.26.0",

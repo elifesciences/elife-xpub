@@ -2,15 +2,17 @@ A form for entering personal information about the author of the paper being sub
 
 ```js
 const { Formik } = formik
+const validationSchema = require('./AuthorDetailsSchema').default
 ;<Formik
+  component={AuthorDetails}
   initialValues={{
-    firstName: 'Todd',
-    lastName: 'Bonzalez',
-    email: 'todd.bonzalez@gmail.com',
-    institute: 'University of eLife',
-    assignee: {},
+    firstName: '',
+    lastName: '',
+    email: '',
+    institute: '',
+    assignee: null,
   }}
-  render={props => <AuthorDetails {...props} />}
   onSubmit={values => console.log(values)}
+  validationSchema={validationSchema}
 />
 ```
