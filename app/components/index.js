@@ -1,4 +1,4 @@
-export { default as App } from './App'
-export { default as Dashboard } from './Dashboard'
-export { default as Login } from './Login'
-export { default as Submit } from './Submit'
+export { default as App } from './app/App'
+export { default as Dashboard } from './dashboard/Dashboard'
+export { default as Login } from './login/Login'
+export { default as Submission } from './submission/Submission'

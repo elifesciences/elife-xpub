@@ -1,7 +1,7 @@
 import React from 'react'
 import { Route, Switch } from 'react-router-dom'
 
-import { App, Dashboard, Submit, Login } from './components'
+import { App, Dashboard, Submission, Login } from './components'
 
 /*
  * TODO: implement login/signup and wrap Component in AuthenticatedComponent:
@@ -17,7 +17,7 @@ const Routes = () => (
   <App>
     <Switch>
       <Route component={Login} exact path="/login" />
-      <PrivateRoute component={Submit} exact path="/submit" />
+      <PrivateRoute component={Submission} exact path="/submit" />
       <PrivateRoute component={Dashboard} path="/" />
     </Switch>
   </App>
