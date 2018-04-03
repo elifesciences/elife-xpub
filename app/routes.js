@@ -1,18 +1,16 @@
 import React from 'react'
 import { Route, Switch } from 'react-router-dom'
-import { AuthenticatedComponent } from 'pubsweet-client'
 
 import { App, Dashboard, Submit, Login } from './components'
 
+/*
+ * TODO: implement login/signup and wrap Component in AuthenticatedComponent:
+ * <AuthenticatedComponent>
+ *   <Component {...props}>
+ * </AuthenticatedComponent>
+ */
 const PrivateRoute = ({ component: Component, ...rest }) => (
-  <Route
-    {...rest}
-    render={props => (
-      <AuthenticatedComponent>
-        <Component {...props} />
-      </AuthenticatedComponent>
-    )}
-  />
+  <Route {...rest} render={props => <Component {...props} />} />
 )
 
 const Routes = () => (
