@@ -4,6 +4,8 @@ import { Flex, Box } from 'grid-styled'
 import { Button, Heading } from '@pubsweet/ui'
 import ValidatedField from '../ui/atoms/ValidatedField'
 
+import { emptyAssignee } from './AuthorDetailsSchema'
+
 class AuthorDetails extends React.Component {
   constructor() {
     super()
@@ -13,11 +15,7 @@ class AuthorDetails extends React.Component {
   }
 
   openAssigneeForm() {
-    this.props.setFieldValue('assignee', {
-      firstName: '',
-      lastName: '',
-      email: '',
-    })
+    this.props.setFieldValue('assignee', emptyAssignee)
   }
 
   closeAssigneeForm() {

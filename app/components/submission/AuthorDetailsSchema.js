@@ -11,7 +11,7 @@ const email = () =>
 
 const institute = () => yup.string().required('Institute is required')
 
-export default yup.object().shape({
+const schema = yup.object().shape({
   firstName: firstName(),
   lastName: lastName(),
   email: email(),
@@ -25,3 +25,19 @@ export default yup.object().shape({
       email: email(),
     }),
 })
+
+const empty = {
+  firstName: '',
+  lastName: '',
+  email: '',
+  institute: '',
+  assignee: null,
+}
+
+const emptyAssignee = {
+  firstName: '',
+  lastName: '',
+  email: '',
+}
+
+export { schema, empty, emptyAssignee }

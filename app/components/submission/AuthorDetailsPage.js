@@ -3,18 +3,12 @@ import { Formik } from 'formik'
 import { withRouter } from 'react-router-dom'
 
 import AuthorDetails from './AuthorDetails'
-import schema from './AuthorDetailsSchema'
+import { schema, empty } from './AuthorDetailsSchema'
 
 const AuthorDetailsPage = ({ history }) => (
   <Formik
     component={AuthorDetails}
-    initialValues={{
-      firstName: '',
-      lastName: '',
-      email: '',
-      institute: '',
-      assignee: null,
-    }}
+    initialValues={empty}
     onSubmit={values => {
       history.push('/submit/upload')
     }}
