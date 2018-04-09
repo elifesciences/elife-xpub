@@ -16,8 +16,10 @@
   "dependencies": {
     "@pubsweet/elife-theme": "^0.1.1",
     "@pubsweet/ui": "^3.3.3",
+    "apollo-link-state": "^0.4.1",
     "config": "^1.26.2",
     "formik": "^0.11.11",
+    "graphql-tag": "^2.8.0",
     "grid-styled": "^3.2.1",
     "history": "^4.7.2",
     "joi": "^10.0.6",
@@ -25,6 +27,7 @@
     "pubsweet-client": "^2.4.0",
     "pubsweet-server": "^2.0.4",
     "react": "^16.2.0",
+    "react-apollo": "^2.1.2",
     "react-dom": "^16.2.0",
     "react-router-dom": "^4.2.2",
     "recompose": "^0.26.0",

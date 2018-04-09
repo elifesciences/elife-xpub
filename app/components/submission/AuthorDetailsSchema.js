@@ -27,6 +27,7 @@ const schema = yup.object().shape({
 })
 
 const empty = {
+  __typename: 'Submission',
   firstName: '',
   lastName: '',
   email: '',
@@ -35,6 +36,7 @@ const empty = {
 }
 
 const emptyAssignee = {
+  __typename: 'Assignee',
   firstName: '',
   lastName: '',
   email: '',

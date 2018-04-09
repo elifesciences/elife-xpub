@@ -44,7 +44,7 @@ module.exports = [
 
       // files
       {
-        exclude: [/\.jsx?$/, /\.html$/, /\.json$/],
+        exclude: [/\.jsx?$/, /\.mjs$/, /\.html$/, /\.json$/],
         loader: 'file-loader',
         options: {
           name: 'static/media/[name].[hash:8].[ext]',
