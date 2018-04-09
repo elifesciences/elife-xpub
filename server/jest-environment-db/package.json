@@ -1,0 +1,16 @@
+{
+  "name": "jest-environment-db",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "private": true,
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "jest-environment-node": "^22.1.4"
+  }
+}

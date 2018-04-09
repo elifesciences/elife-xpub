@@ -14,6 +14,8 @@ module.exports = {
     admin: true,
   },
   'auth-orcid': {
+    // get the oauth credentials from another developer or
+    // create new ones at https://orcid.org/content/register-client-application-sandbox
     clientID: '',
     clientSecret: '',
     sandbox: true,

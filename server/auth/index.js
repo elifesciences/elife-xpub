@@ -1,5 +1,5 @@
 module.exports = {
-  backend: () => require('./endpoint'),
+  backend: () => require('./orcid'),
   typeDefs: `
     extend type User {
       orcid: String

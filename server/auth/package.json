@@ -3,13 +3,17 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+  "scripts": {},
   "dependencies": {
     "config": "^1.30.0",
     "passport": "^0.4.0",
     "passport-orcid": "^0.0.3"
+  },
+  "devDependencies": {
+    "nock": "^9.2.3",
+    "jest-environment-db": "^1.0.0",
+    "superagent": "^3.8.2",
+    "supertest": "^3.0.0"
   },
   "peerDependencies": {
     "pubsweet-server": ">=2.0.0"

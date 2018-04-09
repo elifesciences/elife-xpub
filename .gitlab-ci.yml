@@ -49,7 +49,26 @@ test:
   script:
     - cd ${HOME}
     # specify host here else it confuses the linked postgres image
-    - PGHOST=postgres npx testcafe 'chrome:headless --no-sandbox'
+    - PGHOST=postgres npm test
+
+test:e2e:
+  image: $IMAGE_ORG/$IMAGE_NAME:$CI_COMMIT_SHA
+  stage: test
+  variables:
+    GIT_STRATEGY: none
+    # setup data for postgres image
+    POSTGRES_USER: test
+    POSTGRES_PASSWORD: pw
+    # connection details for tests
+    PGUSER: test
+    PGPASSWORD: pw
+    NODE_ENV: test
+  services:
+    - postgres
+  script:
+    - cd ${HOME}
+    # specify host here else it confuses the linked postgres image
+    - PGHOST=postgres npm run test:e2e:ci
 
 push:latest:
   image: docker:latest

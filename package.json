@@ -63,6 +63,7 @@
     "fs-extra": "^4.0.2",
     "html-webpack-plugin": "^2.24.0",
     "husky": "^0.14.3",
+    "jest": "^22.4.3",
     "joi-browser": "^10.0.6",
     "lint-staged": "^4.1.3",
     "prettier": "^1.8.2",
@@ -84,7 +85,9 @@
     "grid-styled/styled-components": "3.2.5"
   },
   "scripts": {
-    "test": "NODE_ENV=test testcafe chrome 'test/**/*.test.js'",
+    "test": "jest",
+    "test:e2e": "NODE_ENV=test testcafe chrome 'test/**/*.e2e.js'",
+    "test:e2e:ci": "testcafe 'chrome:headless --no-sandbox' 'test/**/*.e2e.js'",
     "clean": "rm -rf node_modules",
     "lint": "npm run lint:js && npm run lint:style",
     "lint:js": "eslint .",
@@ -94,22 +97,20 @@
     "reset": "pubsweet setupdb --clobber",
     "start": "docker-compose up",
     "start:services": "docker-compose up postgres",
-    "start:styleguide": "docker-compose run --no-deps -p 6060:6060 app yarn run styleguide",
+    "start:styleguide":
+      "docker-compose run --no-deps -p 6060:6060 app yarn run styleguide",
     "server": "pubsweet server",
     "styleguide": "styleguidist server",
     "build": "NODE_ENV=production pubsweet build",
     "cz": "git-cz"
   },
+  "jest": {
+    "testEnvironment": "jest-environment-db",
+    "testMatch": ["**/*.test.js"]
+  },
   "lint-staged": {
-    "*.js": [
-      "prettier --write",
-      "eslint --fix",
-      "git add"
-    ],
-    "*.{json,md}": [
-      "prettier --write",
-      "git add"
-    ],
+    "*.js": ["prettier --write", "eslint --fix", "git add"],
+    "*.{json,md}": ["prettier --write", "git add"],
     "*.css": "stylelint",
     "*.scss": "stylelint"
   },

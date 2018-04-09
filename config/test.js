@@ -2,13 +2,18 @@ const { deferConfig } = require('config/defer')
 
 module.exports = {
   'pubsweet-server': {
-    db: { database: 'test' },
+    db: { database: global.__testDbName || 'test' },
     port: 4000,
     baseUrl: deferConfig(
       cfg => `http://localhost:${cfg['pubsweet-server'].port}`,
     ),
+    secret: 'test',
   },
-  secret: 'test',
+  'auth-orcid': {
+    clientID: '123',
+    clientSecret: 'abc',
+    sandbox: true,
+  },
   mailer: {
     transport: {
       sendmail: false,

@@ -10,6 +10,7 @@ const admin = {
   username: 'tester',
   email: 'tester@example.com',
   password: 'password',
+  orcid: '0000-0001',
   admin: true,
 }
 
