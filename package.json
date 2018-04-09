@@ -14,15 +14,15 @@
     "url": "https://gitlab.coko.foundation/xpub/xpub-elife"
   },
   "dependencies": {
-    "@pubsweet/elife-theme": "^0.1.0",
-    "@pubsweet/ui": "^3.2.1",
+    "@pubsweet/elife-theme": "^0.1.1",
+    "@pubsweet/ui": "^3.3.3",
     "config": "^1.26.2",
     "formik": "^0.11.11",
     "grid-styled": "^3.2.1",
     "history": "^4.7.2",
     "joi": "^10.0.6",
     "prop-types": "^15.5.10",
-    "pubsweet-client": "^2.2.5",
+    "pubsweet-client": "^2.4.0",
     "pubsweet-server": "^2.0.4",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
@@ -30,7 +30,7 @@
     "recompose": "^0.26.0",
     "redux": "^3.6.0",
     "redux-logger": "^3.0.1",
-    "styled-components": "^2.4.0",
+    "styled-components": "^3.2.5",
     "yup": "^0.24.1"
   },
   "devDependencies": {
@@ -78,7 +78,7 @@
     "webpack-hot-middleware": "^2.20.0"
   },
   "resolutions": {
-    "grid-styled/styled-components": "2.4.0"
+    "grid-styled/styled-components": "3.2.5"
   },
   "scripts": {
     "test": "NODE_ENV=test testcafe chrome 'test/**/*.test.js'",
@@ -94,8 +94,8 @@
     "start:styleguide": "docker-compose run --no-deps -p 6060:6060 app yarn run styleguide",
     "server": "pubsweet server",
     "styleguide": "styleguidist server",
-      "build": "NODE_ENV=production pubsweet build",
-      "cz": "git-cz"
+    "build": "NODE_ENV=production pubsweet build",
+    "cz": "git-cz"
   },
   "lint-staged": {
     "*.js": [

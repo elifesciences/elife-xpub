@@ -96,11 +96,11 @@
     pg "^7.4.1"
     pubsweet-server "^4.0.0"
 
-"@pubsweet/elife-theme@^0.1.0":
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/@pubsweet/elife-theme/-/elife-theme-0.1.0.tgz#95325755e4693a0fa4d18e96d0727c43a0c1ccbc"
+"@pubsweet/elife-theme@^0.1.1":
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/@pubsweet/elife-theme/-/elife-theme-0.1.1.tgz#14b4971b8b5dd5653540583c7516e8b5224fc5a4"
   dependencies:
-    styled-components "^2.4.0"
+    styled-components "^3.2.5"
 
 "@pubsweet/logger@^0.2.2":
   version "0.2.2"
@@ -110,9 +110,9 @@
     joi "^13.1.0"
     lodash "^4.17.4"
 
-"@pubsweet/ui@^3.2.1", "@pubsweet/ui@^3.3.2":
-  version "3.3.2"
-  resolved "https://registry.yarnpkg.com/@pubsweet/ui/-/ui-3.3.2.tgz#84a302a26101a300aab13cb812e5730da22aba87"
+"@pubsweet/ui@^3.3.3":
+  version "3.3.3"
+  resolved "https://registry.yarnpkg.com/@pubsweet/ui/-/ui-3.3.3.tgz#a4703709e40b8be3bcb2a0cf0d4d8d2b44949a5b"
   dependencies:
     babel-jest "^21.2.0"
     classnames "^2.2.5"
@@ -130,7 +130,7 @@
     recompose "^0.26.0"
     redux "^3.6.0"
     redux-form "^7.0.3"
-    styled-components "^2.4.0"
+    styled-components "^3.2.5"
 
 "@types/async@2.0.47":
   version "2.0.47"
@@ -3706,7 +3706,7 @@ faye-websocket@~0.11.0:
   dependencies:
     websocket-driver ">=0.5.1"
 
-fbjs@^0.8.1, fbjs@^0.8.16, fbjs@^0.8.5, fbjs@^0.8.9:
+fbjs@^0.8.1, fbjs@^0.8.16, fbjs@^0.8.5:
   version "0.8.16"
   resolved "https://registry.yarnpkg.com/fbjs/-/fbjs-0.8.16.tgz#5e67432f550dc41b572bf55847b8aca64e5337db"
   dependencies:
@@ -4481,10 +4481,6 @@ hoek@4.x.x:
 hoek@5.x.x:
   version "5.0.3"
   resolved "https://registry.yarnpkg.com/hoek/-/hoek-5.0.3.tgz#b71d40d943d0a95da01956b547f83c4a5b4a34ac"
-
-hoist-non-react-statics@^1.2.0:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/hoist-non-react-statics/-/hoist-non-react-statics-1.2.0.tgz#aa448cf0986d55cc40773b17174b7dd066cb7cfb"
 
 hoist-non-react-statics@^2.3.0, hoist-non-react-statics@^2.3.1, hoist-non-react-statics@^2.5.0:
   version "2.5.0"
@@ -7472,11 +7468,11 @@ public-encrypt@^4.0.0:
     parse-asn1 "^5.0.0"
     randombytes "^2.0.1"
 
-pubsweet-client@^2.2.5:
-  version "2.3.1"
-  resolved "https://registry.yarnpkg.com/pubsweet-client/-/pubsweet-client-2.3.1.tgz#3820f2c43de67a10715048b7d2ccbe4249fe46eb"
+pubsweet-client@^2.4.0:
+  version "2.4.0"
+  resolved "https://registry.yarnpkg.com/pubsweet-client/-/pubsweet-client-2.4.0.tgz#38c8c5f3d0e4995320a8dd5cdbd6da8264140b30"
   dependencies:
-    "@pubsweet/ui" "^3.3.2"
+    "@pubsweet/ui" "^3.3.3"
     apollo-client-preset "^1.0.8"
     apollo-link "^1.2.1"
     apollo-link-context "^1.0.5"
@@ -7501,7 +7497,7 @@ pubsweet-client@^2.2.5:
     redux-logger "^3.0.1"
     redux-thunk "^2.2.0"
     reselect "^3.0.1"
-    styled-components "^2.4.0"
+    styled-components "^3.2.5"
     styled-normalize "^3.0.1"
 
 pubsweet-server@^2.0.4:
@@ -9255,17 +9251,18 @@ style-search@^0.1.0:
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/style-search/-/style-search-0.1.0.tgz#7958c793e47e32e07d2b5cafe5c0bf8e12e77902"
 
-styled-components@2.4.0, "styled-components@>=2.0 || >=3.0", styled-components@^2.4.0:
-  version "2.4.0"
-  resolved "https://registry.yarnpkg.com/styled-components/-/styled-components-2.4.0.tgz#086d0fd483d54638837fca3ea546a030b94adf75"
+styled-components@3.2.5, "styled-components@>=2.0 || >=3.0", styled-components@^3.2.5:
+  version "3.2.5"
+  resolved "https://registry.yarnpkg.com/styled-components/-/styled-components-3.2.5.tgz#b5d5d7d618ab240ff10602b5ca5886b8db3d0a0d"
   dependencies:
     buffer "^5.0.3"
     css-to-react-native "^2.0.3"
-    fbjs "^0.8.9"
-    hoist-non-react-statics "^1.2.0"
+    fbjs "^0.8.16"
+    hoist-non-react-statics "^2.5.0"
     is-plain-object "^2.0.1"
     prop-types "^15.5.4"
-    stylis "^3.4.0"
+    stylis "^3.5.0"
+    stylis-rule-sheet "^0.0.10"
     supports-color "^3.2.3"
 
 styled-normalize@^3.0.1:
@@ -9348,7 +9345,11 @@ stylelint@^8.2.0:
     svg-tags "^1.0.0"
     table "^4.0.1"
 
-stylis@^3.4.0:
+stylis-rule-sheet@^0.0.10:
+  version "0.0.10"
+  resolved "https://registry.yarnpkg.com/stylis-rule-sheet/-/stylis-rule-sheet-0.0.10.tgz#44e64a2b076643f4b52e5ff71efc04d8c3c4a430"
+
+stylis@^3.5.0:
   version "3.5.0"
   resolved "https://registry.yarnpkg.com/stylis/-/stylis-3.5.0.tgz#016fa239663d77f868fef5b67cf201c4b7c701e1"
 
