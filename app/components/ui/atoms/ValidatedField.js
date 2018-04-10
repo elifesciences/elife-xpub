@@ -4,9 +4,12 @@ import { Field } from 'formik'
 import { get } from 'lodash'
 import { TextField, th } from '@pubsweet/ui'
 
-const ErrorMessage = styled.div`
+const MessageWrapper = styled.div`
   display: block;
   margin-top: calc(${th('gridUnit')} * -1);
+`
+
+const ErrorMessage = styled.div`
   color: ${th('colorError')};
 `
 
@@ -26,7 +29,11 @@ export default ({ name, component: FieldComponent = TextField, ...props }) => {
           {...field}
           {...props}
         />
-        {touched && errors && <ErrorMessage>{errors}</ErrorMessage>}
+
+        {/* live region DOM node must be initially present for changes to be announced */}
+        <MessageWrapper role="alert">
+          {touched && errors && <ErrorMessage>{errors}</ErrorMessage>}
+        </MessageWrapper>
       </div>
     )
   }
