@@ -70,7 +70,7 @@ class AuthorDetails extends React.Component {
 }
 
 const AssigneeForm = ({ handleClose }) => (
-  <div>
+  <React.Fragment>
     <Heading level={3}>Assignee for correspondence</Heading>
 
     <Flex>
@@ -90,7 +90,7 @@ const AssigneeForm = ({ handleClose }) => (
         <Button onClick={handleClose}>Remove assignment</Button>
       </Box>
     </Flex>
-  </div>
+  </React.Fragment>
 )
 
 export default AuthorDetails
