@@ -27,4 +27,5 @@ module.exports = {
     ),
     Wrapper: path.join(__dirname, 'styleguide/components/Wrapper'),
   },
+  skipComponentsWithoutExample: true,
 }
