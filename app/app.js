@@ -3,32 +3,22 @@ import ReactDOM from 'react-dom'
 import { AppContainer } from 'react-hot-loader'
 import createHistory from 'history/createBrowserHistory'
 import { withClientState } from 'apollo-link-state'
+import { defaultsDeep } from 'lodash'
 
 import { configureStore, Root } from 'pubsweet-client'
 
 import theme from '@pubsweet/elife-theme'
 
 import Routes from './routes'
-import { empty } from './components/submission/AuthorDetailsSchema'
+import * as AuthorDetailsSchema from './components/submission/AuthorDetailsSchema'
 
 const history = createHistory()
 const store = configureStore(history, {})
 
 const makeApolloConfig = ({ cache, link, ...config }) => {
-  const clientStateLink = withClientState({
-    cache,
-    resolvers: {
-      Mutation: {
-        updateCurrentSubmission: (_, { input }, { cache }) => {
-          cache.writeData({ data: { currentSubmission: JSON.parse(input) } })
-          return null
-        },
-      },
-    },
-    defaults: {
-      currentSubmission: empty,
-    },
-  })
+  const clientStateLink = withClientState(
+    defaultsDeep({ cache }, AuthorDetailsSchema.clientStateConfig),
+  )
 
   return {
     cache,

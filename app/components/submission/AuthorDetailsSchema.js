@@ -42,4 +42,18 @@ const emptyAssignee = {
   email: '',
 }
 
-export { schema, empty, emptyAssignee }
+const clientStateConfig = {
+  resolvers: {
+    Mutation: {
+      updateCurrentSubmission: (_, { input }, { cache }) => {
+        cache.writeData({ data: { currentSubmission: JSON.parse(input) } })
+        return null
+      },
+    },
+  },
+  defaults: {
+    currentSubmission: empty,
+  },
+}
+
+export { schema, empty, emptyAssignee, clientStateConfig }
