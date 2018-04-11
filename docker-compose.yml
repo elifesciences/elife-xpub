@@ -28,6 +28,10 @@ services:
                     "inkEndpoint": "https://demo--ink.elifesciences.org",
                     "email": "fake",
                     "password": "fake"
+                },
+                "auth-orcid": {
+                    "clientID": "${ORCID_CLIENT_ID}",
+                    "clientSecret": "${ORCID_CLIENT_SECRET}"
                 }
             }'
             PGHOST: postgres
