@@ -1,5 +1,3 @@
-## Login Component
-
 Simple login button
 
     <Login />

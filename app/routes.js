@@ -6,7 +6,7 @@ import {
   Dashboard,
   AuthorDetailsPage,
   FileUploadPage,
-  Login,
+  LoginPage,
 } from './components'
 
 /*
@@ -22,7 +22,7 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
 const Routes = () => (
   <App>
     <Switch>
-      <Route component={Login} exact path="/login" />
+      <Route component={LoginPage} exact path="/login" />
       <PrivateRoute component={AuthorDetailsPage} exact path="/submit" />
       <PrivateRoute component={FileUploadPage} exact path="/submit/upload" />
       <PrivateRoute component={Dashboard} path="/" />

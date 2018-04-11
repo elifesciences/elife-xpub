@@ -1,15 +1,16 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, withRouter } from 'react-router-dom'
 
 import { AppBar } from '@pubsweet/ui'
 
-const App = ({ children }) => (
+const App = ({ children, history }) => (
   <div>
     <AppBar
       brand="eLife"
       navLinkComponents={[<Link to="/">Dashboard</Link>]}
       onLogoutClick={() => {
-        /* empty function for now */
+        window.localStorage.removeItem('token')
+        history.push('/')
       }}
       user={{ username: 'Dummy User', admin: true }}
     />
@@ -17,4 +18,4 @@ const App = ({ children }) => (
   </div>
 )
 
-export default App
+export default withRouter(App)
