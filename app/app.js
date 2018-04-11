@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom'
 import { AppContainer } from 'react-hot-loader'
 import createHistory from 'history/createBrowserHistory'
 import { withClientState } from 'apollo-link-state'
-import { defaultsDeep } from 'lodash'
 
 import { configureStore, Root } from 'pubsweet-client'
 
@@ -16,9 +15,10 @@ const history = createHistory()
 const store = configureStore(history, {})
 
 const makeApolloConfig = ({ cache, link, ...config }) => {
-  const clientStateLink = withClientState(
-    defaultsDeep({ cache }, AuthorDetailsSchema.clientStateConfig),
-  )
+  const clientStateLink = withClientState({
+    cache,
+    ...AuthorDetailsSchema.clientStateConfig,
+  })
 
   return {
     cache,
