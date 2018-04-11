@@ -33,7 +33,11 @@ const AuthorDetailsPage = ({ history }) => (
   <Query query={GET_AUTHOR_DETAILS}>
     {({ loading, error, data, client }) => {
       if (loading) return <div>Loading...</div>
-      if (error) return <div>Error: {String(error)}</div>
+
+      if (error) {
+        console.error(error)
+        return <div>{String(error)}</div>
+      }
 
       return (
         <Mutation mutation={UPDATE_AUTHOR_DETAILS}>
