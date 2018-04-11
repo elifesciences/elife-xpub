@@ -10,7 +10,7 @@ An eLife specific implementation of the [xPub][1] submission and peer-review sys
 
 This is a collaboration between eLife and the Collaborative Knowledge Foundation (Coko), [more information in our press release][3].
 
-[1]: https://gitlab.coko.foundation/xpub/xpub
+[1]: https://gitlab.coko.foundation/xpub/xpub-elife
 [2]: https://gitlab.coko.foundation/pubsweet/pubsweet-server
 [3]: https://elifesciences.org/for-the-press/67d013c4/elife-and-collaborative-knowledge-foundation-partner-to-deliver-open-source-submission-and-peer-review-platform
 

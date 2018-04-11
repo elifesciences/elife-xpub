@@ -2,7 +2,7 @@ version: '3'
 
 services:
     app:
-        image: xpub/xpub:${XPUB_VERSION}
+        image: xpub/xpub-elife:${XPUB_VERSION}
         command: >
             /bin/bash -c "
                 until echo > /dev/tcp/postgres/5432; do sleep 1; done

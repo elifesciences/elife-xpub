@@ -4,7 +4,7 @@ elifeUpdatePipeline(
         // DOCKER_TRIGGER_REPO_NAME=xpub
         elifeOnNode(
             {
-                commit = dockerReadLabel('xpub/xpub:latest', 'COMMIT_SHA')
+                commit = dockerReadLabel('xpub/xpub-elife:latest', 'COMMIT_SHA')
             },
             'containers--medium'
         )
