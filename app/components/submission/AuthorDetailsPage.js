@@ -41,12 +41,13 @@ const AuthorDetailsPage = ({ history }) => (
             <Formik
               component={AuthorDetails}
               initialValues={data.currentSubmission}
-              onSubmit={values => {
+              onSubmit={values =>
                 updateAuthorDetails({
                   variables: { input: values },
+                }).then(() => {
+                  history.push('/submit/upload')
                 })
-                history.push('/submit/upload')
-              }}
+              }
               validationSchema={schema}
             />
           )}
