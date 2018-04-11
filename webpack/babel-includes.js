@@ -6,6 +6,7 @@ const path = require('path')
 module.exports = [
   // include our code
   path.join(__dirname, '..', 'app'),
+  path.join(__dirname, '..', 'client'),
   path.join(__dirname, '..', 'styleguide'),
 
   // include pubsweet and xpub packages which are published untranspiled

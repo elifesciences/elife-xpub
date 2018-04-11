@@ -1,7 +1,16 @@
 const path = require('path')
 
 module.exports = {
-  components: 'app/components/**/*.js',
+  sections: [
+    {
+      name: 'App components',
+      components: 'app/components/*/**/*.js',
+    },
+    {
+      name: 'PubSweet components',
+      components: 'client/*/**/*.js',
+    },
+  ],
   webpackConfig: {
     module: {
       rules: require('./webpack/rules.development.js'),
@@ -10,6 +19,7 @@ module.exports = {
   context: {
     formik: 'formik',
   },
+  skipComponentsWithoutExample: true,
   styleguideComponents: {
     StyleGuideRenderer: path.join(
       __dirname,

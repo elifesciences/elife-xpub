@@ -2,7 +2,7 @@
   "name": "xpub-elife",
   "version": "1.0.0",
   "private": true,
-  "workspaces": ["server/*"],
+  "workspaces": ["client/*", "server/*"],
   "description": "xpub configured for eLife",
   "license": "MIT",
   "engines": {
@@ -48,6 +48,8 @@
     "copy-webpack-plugin": "^4.0.1",
     "css-loader": "^0.28.4",
     "cz-conventional-changelog": "^2.1.0",
+    "enzyme": "^3.3.0",
+    "enzyme-adapter-react-16": "^1.1.1",
     "eslint": "^4.12.0",
     "eslint-config-pubsweet": "^0.0.6",
     "eslint-plugin-import": "^2.8.0",
@@ -105,8 +107,8 @@
     "cz": "git-cz"
   },
   "jest": {
-    "testEnvironment": "jest-environment-db",
-    "testMatch": ["**/*.test.js"]
+    "testMatch": ["**/*.test.js"],
+    "transformIgnorePatterns": ["/node_modules/(?!@?pubsweet)"]
   },
   "lint-staged": {
     "*.js": ["prettier --write", "eslint --fix", "git add"],
