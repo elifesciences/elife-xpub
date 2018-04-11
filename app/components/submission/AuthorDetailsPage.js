@@ -24,7 +24,7 @@ const GET_AUTHOR_DETAILS = gql`
 `
 
 const UPDATE_AUTHOR_DETAILS = gql`
-  mutation($input: String) {
+  mutation($input: Submission) {
     updateCurrentSubmission(input: $input) @client
   }
 `
@@ -43,7 +43,7 @@ const AuthorDetailsPage = ({ history }) => (
               initialValues={data.currentSubmission}
               onSubmit={values => {
                 updateAuthorDetails({
-                  variables: { input: JSON.stringify(values) },
+                  variables: { input: values },
                 })
                 history.push('/submit/upload')
               }}

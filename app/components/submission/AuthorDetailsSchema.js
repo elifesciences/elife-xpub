@@ -46,7 +46,7 @@ const clientStateConfig = {
   resolvers: {
     Mutation: {
       updateCurrentSubmission: (_, { input }, { cache }) => {
-        cache.writeData({ data: { currentSubmission: JSON.parse(input) } })
+        cache.writeData({ data: { currentSubmission: input } })
         return null
       },
     },
