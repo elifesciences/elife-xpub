@@ -15,6 +15,28 @@ module.exports = {
     port: 3000,
     logger,
     uploads: 'uploads',
+    typeDefs: `
+      type Manuscript {
+        id: ID!
+        title: String!
+        source: String!
+        metadata: SubmissionMeta!
+      }
+      
+      type SubmissionMeta {
+        author: Author
+        correspondingAuthor: Author
+        
+        # more submission form stuff goes in here
+      }
+      
+      type Author {
+        firstName: String
+        lastName: String
+        email: String
+        institution: String
+      }
+    `,
   },
   'pubsweet-client': {
     API_ENDPOINT: '/api',
