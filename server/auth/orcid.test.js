@@ -13,7 +13,7 @@ const makeApp = () => {
 describe('ORCID auth', () => {
   beforeEach(() => createTables(true))
 
-  it('can log in', async () => {
+  it('exchanges code and returns JWT', async () => {
     // mock OAuth response
     nock('https://sandbox.orcid.org')
       .post('/oauth/token')
@@ -29,6 +29,6 @@ describe('ORCID auth', () => {
 
     const app = makeApp()
     const response = await app.get('/auth/orcid/callback?code=def')
-    expect(response.header.location).toMatch(/^\/login\?token/)
+    expect(response.header.location).toMatch(/^\/login#\w+/)
   })
 })

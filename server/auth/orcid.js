@@ -59,7 +59,7 @@ module.exports = app => {
     }),
     (req, res) => {
       const jwt = authentication.token.create(req.user)
-      res.redirect(`/login?token=${jwt}`)
+      res.redirect(`/login#${jwt}`)
     },
   )
 }
