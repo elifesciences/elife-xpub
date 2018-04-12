@@ -5,8 +5,9 @@ import {
   App,
   Dashboard,
   AuthorDetailsPage,
-  FileUploadPage,
+  FileUploadsPage,
   LoginPage,
+  ManuscriptMetadataPage,
 } from './components'
 
 /*
@@ -24,7 +25,11 @@ const Routes = () => (
     <Switch>
       <Route component={LoginPage} exact path="/login" />
       <PrivateRoute component={AuthorDetailsPage} exact path="/submit" />
-      <PrivateRoute component={FileUploadPage} exact path="/submit/upload" />
+      <PrivateRoute component={FileUploadsPage} exact path="/submit/upload" />
+      <PrivateRoute
+        component={ManuscriptMetadataPage}
+        path="/submit/metadata"
+      />
       <PrivateRoute component={Dashboard} path="/" />
     </Switch>
   </App>

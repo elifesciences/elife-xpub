@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 
 export default () => (
   <div>
-    <Link to="/submit">&larr; Author details</Link>
-    <h1>File upload dummy page</h1>
+    <h1>MS metadata dummy page</h1>
+    <Link to="/submit/upload">&larr; File Upload</Link>
   </div>
 )

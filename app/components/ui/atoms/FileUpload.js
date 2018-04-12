@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { Flex, Box } from 'grid-styled'
 import styled from 'styled-components'
 import Dropzone from 'react-dropzone'
@@ -44,5 +45,18 @@ const FileUpload = ({ onDrop, conversion, instruction }) => (
     </CentredFlex>
   </StyledDropzone>
 )
+
+FileUpload.propTypes = {
+  onDrop: PropTypes.func.isRequired,
+  instruction: PropTypes.string.isRequired,
+  conversion: PropTypes.shape({
+    completed: PropTypes.bool,
+    error: PropTypes.instanceOf(Error),
+  }),
+}
+
+FileUpload.defaultProps = {
+  conversion: {},
+}
 
 export default FileUpload

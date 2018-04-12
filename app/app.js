@@ -11,6 +11,15 @@ import theme from '@pubsweet/elife-theme'
 import Routes from './routes'
 import * as AuthorDetailsSchema from './components/submission/AuthorDetailsSchema'
 
+theme.space = [
+  0,
+  theme.gridUnit / 4,
+  theme.gridUnit / 2,
+  theme.gridUnit,
+  theme.gridUnit * 2,
+  theme.gridUnit * 4,
+]
+
 const history = createHistory()
 const store = configureStore(history, {})
 
