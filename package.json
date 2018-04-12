@@ -1,10 +1,9 @@
 {
   "name": "xpub-elife",
   "version": "1.0.0",
-  "private": true,
-  "workspaces": ["client/*", "server/*"],
   "description": "xpub configured for eLife",
   "license": "MIT",
+  "private": true,
   "engines": {
     "node": ">=8",
     "yarn": ">=1.2"
@@ -13,6 +12,63 @@
     "type": "git",
     "url": "https://gitlab.coko.foundation/xpub/xpub-elife"
   },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  },
+  "scripts": {
+    "build": "NODE_ENV=production pubsweet build",
+    "clean": "rm -rf node_modules",
+    "cz": "git-cz",
+    "lint": "npm run lint:js && npm run lint:style && npm run lint:package",
+    "lint:js": "eslint .",
+    "lint:package": "format-package -w package.json",
+    "lint:style": "stylelint app/**/*.scss app/**/*.css",
+    "precommit": "lint-staged",
+    "reset": "pubsweet setupdb --clobber",
+    "server": "pubsweet server",
+    "setupdb": "pubsweet setupdb",
+    "start": "docker-compose up",
+    "start:services": "docker-compose up postgres",
+    "start:styleguide": "docker-compose run --no-deps -p 6060:6060 app yarn run styleguide",
+    "styleguide": "styleguidist server",
+    "test": "jest",
+    "test:e2e": "NODE_ENV=test testcafe chrome 'test/**/*.e2e.js'",
+    "test:e2e:ci": "testcafe 'chrome:headless --no-sandbox' 'test/**/*.e2e.js'"
+  },
+  "lint-staged": {
+    "*.css": "stylelint",
+    "*.js": [
+      "prettier --write",
+      "eslint --fix",
+      "git add"
+    ],
+    "*.scss": "stylelint",
+    "*.{json,md}": [
+      "prettier --write",
+      "git add"
+    ],
+    "package.json": [
+      "format-package -w",
+      "git add"
+    ]
+  },
+  "jest": {
+    "testMatch": [
+      "**/*.test.js"
+    ],
+    "transformIgnorePatterns": [
+      "/node_modules/(?!@?pubsweet)"
+    ]
+  },
+  "resolutions": {
+    "grid-styled/styled-components": "3.2.5"
+  },
+  "workspaces": [
+    "client/*",
+    "server/*"
+  ],
   "dependencies": {
     "@pubsweet/elife-theme": "^0.1.1",
     "@pubsweet/ui": "^3.3.3",
@@ -64,6 +120,7 @@
     "eslint-plugin-standard": "^3.0.1",
     "extract-text-webpack-plugin": "^3.0.0",
     "file-loader": "^1.1.5",
+    "format-package": "^4.2.0",
     "fs-extra": "^4.0.2",
     "html-webpack-plugin": "^2.24.0",
     "husky": "^0.14.3",
@@ -84,43 +141,5 @@
     "webpack": "^3.8.1",
     "webpack-dev-middleware": "^1.12.0",
     "webpack-hot-middleware": "^2.20.0"
-  },
-  "resolutions": {
-    "grid-styled/styled-components": "3.2.5"
-  },
-  "scripts": {
-    "test": "jest",
-    "test:e2e": "NODE_ENV=test testcafe chrome 'test/**/*.e2e.js'",
-    "test:e2e:ci": "testcafe 'chrome:headless --no-sandbox' 'test/**/*.e2e.js'",
-    "clean": "rm -rf node_modules",
-    "lint": "npm run lint:js && npm run lint:style",
-    "lint:js": "eslint .",
-    "lint:style": "stylelint app/**/*.scss app/**/*.css",
-    "precommit": "lint-staged",
-    "setupdb": "pubsweet setupdb",
-    "reset": "pubsweet setupdb --clobber",
-    "start": "docker-compose up",
-    "start:services": "docker-compose up postgres",
-    "start:styleguide":
-      "docker-compose run --no-deps -p 6060:6060 app yarn run styleguide",
-    "server": "pubsweet server",
-    "styleguide": "styleguidist server",
-    "build": "NODE_ENV=production pubsweet build",
-    "cz": "git-cz"
-  },
-  "jest": {
-    "testMatch": ["**/*.test.js"],
-    "transformIgnorePatterns": ["/node_modules/(?!@?pubsweet)"]
-  },
-  "lint-staged": {
-    "*.js": ["prettier --write", "eslint --fix", "git add"],
-    "*.{json,md}": ["prettier --write", "git add"],
-    "*.css": "stylelint",
-    "*.scss": "stylelint"
-  },
-  "config": {
-    "commitizen": {
-      "path": "./node_modules/cz-conventional-changelog"
-    }
   }
 }
