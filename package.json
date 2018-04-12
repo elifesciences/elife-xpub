@@ -55,6 +55,7 @@
     ]
   },
   "jest": {
+    "setupTestFrameworkScriptFile": "<rootDir>/test/helpers/jest-setup.js",
     "testMatch": [
       "**/*.test.js"
     ],
@@ -82,7 +83,7 @@
     "lodash": "^4.17.5",
     "prop-types": "^15.5.10",
     "pubsweet-client": "^2.4.0",
-    "pubsweet-server": "^2.0.4",
+    "pubsweet-server": "^5.0.0",
     "react": "^16.2.0",
     "react-apollo": "^2.1.2",
     "react-dom": "^16.2.0",

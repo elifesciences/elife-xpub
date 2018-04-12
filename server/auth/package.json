@@ -5,13 +5,13 @@
   "main": "index.js",
   "scripts": {},
   "dependencies": {
-    "config": "^1.30.0",
-    "passport": "^0.4.0",
+    "config": "^1.29.0",
+    "passport": "^0.3.2",
     "passport-orcid": "^0.0.3"
   },
   "devDependencies": {
     "nock": "^9.2.3",
-    "jest-environment-db": "^1.0.0",
+    "@elife/jest-environment-db": "^1.0.0",
     "superagent": "^3.8.2",
     "supertest": "^3.0.0"
   },

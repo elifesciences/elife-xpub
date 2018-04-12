@@ -1,5 +1,5 @@
 {
-  "name": "jest-environment-db",
+  "name": "@elife/jest-environment-db",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",

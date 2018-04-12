@@ -19,7 +19,6 @@ module.exports = {
   context: {
     formik: 'formik',
   },
-  skipComponentsWithoutExample: true,
   styleguideComponents: {
     StyleGuideRenderer: path.join(
       __dirname,

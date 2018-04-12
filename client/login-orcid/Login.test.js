@@ -1,10 +1,7 @@
 import React from 'react'
-import Adapter from 'enzyme-adapter-react-16'
-import Enzyme, { shallow } from 'enzyme'
+import { shallow } from 'enzyme'
 
 import Login from './Login'
-
-Enzyme.configure({ adapter: new Adapter() })
 
 const makeWrapper = props => shallow(<Login {...props} />)
 
