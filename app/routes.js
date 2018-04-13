@@ -8,6 +8,7 @@ import {
   FileUploadsPage,
   LoginPage,
   ManuscriptMetadataPage,
+  ReviewerSuggestionsPage,
 } from './components'
 
 /*
@@ -29,6 +30,10 @@ const Routes = () => (
       <PrivateRoute
         component={ManuscriptMetadataPage}
         path="/submit/metadata"
+      />
+      <PrivateRoute
+        component={ReviewerSuggestionsPage}
+        path="/submit/suggestions"
       />
       <PrivateRoute component={Dashboard} path="/" />
     </Switch>

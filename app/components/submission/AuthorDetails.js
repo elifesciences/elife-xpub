@@ -1,7 +1,7 @@
 import React from 'react'
 import { Flex, Box } from 'grid-styled'
 
-import { Button, Heading } from '@pubsweet/ui'
+import { Button, Heading, H1 } from '@pubsweet/ui'
 import ValidatedField from '../ui/atoms/ValidatedField'
 
 import { emptyAssignee } from './AuthorDetailsSchema'
@@ -27,7 +27,9 @@ class AuthorDetails extends React.Component {
     const { handleSubmit, values } = this.props
 
     return (
-      <form onSubmit={handleSubmit}>
+      <form noValidate onSubmit={handleSubmit}>
+        <H1>Are you handling this submission?</H1>
+
         <Flex>
           <Box width={1 / 2}>
             <ValidatedField label="First name" name="firstName" />
@@ -38,7 +40,11 @@ class AuthorDetails extends React.Component {
         </Flex>
         <Flex>
           <Box width={1 / 2}>
-            <ValidatedField label="Email (correspondence)" name="email" />
+            <ValidatedField
+              label="Email (correspondence)"
+              name="email"
+              type="email"
+            />
           </Box>
           <Box width={1 / 2}>
             <ValidatedField label="Institute" name="institute" />

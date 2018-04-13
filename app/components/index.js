@@ -6,3 +6,6 @@ export { default as FileUploadsPage } from './submission/FileUploadsPage'
 export {
   default as ManuscriptMetadataPage,
 } from './submission/ManuscriptMetadataPage'
+export {
+  default as ReviewerSuggestionsPage,
+} from './submission/ReviewerSuggestionsPage'

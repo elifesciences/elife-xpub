@@ -5,8 +5,10 @@ import { get } from 'lodash'
 import { TextField, th } from '@pubsweet/ui'
 
 const MessageWrapper = styled.div`
-  display: block;
-  margin-top: calc(${th('gridUnit')} * -1);
+  // consistent height even when empty
+  min-height: ${th('fontLineHeight')};
+  // inverse of bottom margin on FieldComponent
+  margin-top: -${th('gridUnit')};
 `
 
 const ErrorMessage = styled.div`
@@ -23,7 +25,7 @@ export default ({ name, component: FieldComponent = TextField, ...props }) => {
     if (touched && errors) validationStatus = 'error'
 
     return (
-      <div>
+      <React.Fragment>
         <FieldComponent
           validationStatus={validationStatus}
           {...field}
@@ -34,7 +36,7 @@ export default ({ name, component: FieldComponent = TextField, ...props }) => {
         <MessageWrapper role="alert">
           {touched && errors && <ErrorMessage>{errors}</ErrorMessage>}
         </MessageWrapper>
-      </div>
+      </React.Fragment>
     )
   }
 

@@ -1,11 +1,13 @@
 import React from 'react'
 import { Flex, Box } from 'grid-styled'
-import { Button } from '@pubsweet/ui'
-import { withRouter } from 'react-router'
+import { H1 } from '@pubsweet/ui'
 import FileUpload from '../ui/atoms/FileUpload'
+import ButtonLink from '../ui/atoms/ButtonLink'
 
-const FileUploads = ({ history }) => (
+const FileUploads = () => (
   <React.Fragment>
+    <H1>Upload your manuscript and cover letter</H1>
+
     <Flex flexDirection="column">
       <Box mb={3} width={1}>
         <FileUpload
@@ -20,23 +22,12 @@ const FileUploads = ({ history }) => (
         />
       </Box>
     </Flex>
-    <Flex>
-      <Box>
-        <Button
-          onClick={() => history.push('/submit/metadata')}
-          primary
-          type="button"
-        >
-          Next
-        </Button>
-      </Box>
-      <Box>
-        <Button onClick={() => history.push('/submit')} secondary type="button">
-          Back
-        </Button>
-      </Box>
-    </Flex>
+
+    <ButtonLink primary to="/submit/metadata">
+      Next
+    </ButtonLink>
+    <ButtonLink to="/submit">Back</ButtonLink>
   </React.Fragment>
 )
 
-export default withRouter(FileUploads)
+export default FileUploads
