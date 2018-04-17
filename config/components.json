@@ -1,1 +1,1 @@
-["./server/auth"]
+["./server/auth", "./server/submission"]
