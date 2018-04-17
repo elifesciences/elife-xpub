@@ -32,7 +32,7 @@ module.exports = {
     Query: {
       async currentSubmission(_, vars, ctx) {
         const rows = await db.select({
-          owner: ctx.user,
+          'submissionMeta.createdBy': ctx.user,
           'submissionMeta.stage': 'INITIAL',
         })
 
