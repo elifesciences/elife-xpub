@@ -1,3 +1,5 @@
+import * as db from '../db-helpers/'
+
 module.exports = {
   typeDefs: `
     extend type Query {
@@ -10,6 +12,7 @@ module.exports = {
       submissionMeta: SubmissionMeta!
     }
     type SubmissionMeta {
+      coverLetter: String
       author: Person!
       correspondent: Person
       stage: SubmissionStage!
@@ -21,15 +24,19 @@ module.exports = {
       institution: String
     }
     enum SubmissionStage {
-      initial
-      qa
+      INITIAL
+      QA
     }
   `,
   resolvers: {
     Query: {
-      currentSubmission(_, vars, ctx) {
-        console.log('>>>>> server/submission/index.js:31\n', 'ctx:', ctx)
-        return null
+      async currentSubmission(_, vars, ctx) {
+        const rows = await db.select({
+          owner: ctx.user,
+          'submissionMeta.stage': 'INITIAL',
+        })
+
+        return rows[0]
       },
     },
   },
