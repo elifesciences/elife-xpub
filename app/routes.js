@@ -5,12 +5,9 @@ import {
   AppBar,
   AuthenticatedComponent,
   Dashboard,
-  AuthorDetailsPage,
-  FileUploadsPage,
   LoginPage,
-  ManuscriptMetadataPage,
-  ReviewerSuggestionsPage,
 } from './components'
+import SubmissionPage from './components/submission/SubmissionPage'
 
 const Routes = () => (
   <Switch>
@@ -18,19 +15,8 @@ const Routes = () => (
     <AuthenticatedComponent>
       <AppBar />
       <Switch>
-        <Route component={AuthorDetailsPage} exact path="/submit" />
-        <Route component={FileUploadsPage} exact path="/submit/upload" />
-        <Route
-          component={ManuscriptMetadataPage}
-          exact
-          path="/submit/metadata"
-        />
-        <Route
-          component={ReviewerSuggestionsPage}
-          exact
-          path="/submit/suggestions"
-        />
-        <Route component={Dashboard} path="/" />
+        <Route component={SubmissionPage} path="/submit" />
+        <Route component={Dashboard} />
       </Switch>
     </AuthenticatedComponent>
   </Switch>

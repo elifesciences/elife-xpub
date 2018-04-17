@@ -1,11 +1,14 @@
 import React from 'react'
 import { Flex, Box } from 'grid-styled'
 import { H1 } from '@pubsweet/ui'
-import FileUpload from '../ui/atoms/FileUpload'
-import ButtonLink from '../ui/atoms/ButtonLink'
+import FileUpload from '../../ui/atoms/FileUpload'
+import ButtonLink from '../../ui/atoms/ButtonLink'
+import ProgressBar from '../ProgressBar'
 
 const FileUploads = () => (
   <React.Fragment>
+    <ProgressBar currentStep={1} />
+
     <H1>Upload your manuscript and cover letter</H1>
 
     <Flex flexDirection="column">

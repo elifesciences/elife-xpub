@@ -2,9 +2,10 @@ import React from 'react'
 import { Flex, Box } from 'grid-styled'
 
 import { Button, Heading, H1 } from '@pubsweet/ui'
-import ValidatedField from '../ui/atoms/ValidatedField'
+import ValidatedField from '../../ui/atoms/ValidatedField'
 
 import { emptyAssignee } from './AuthorDetailsSchema'
+import ProgressBar from '../ProgressBar'
 
 class AuthorDetails extends React.Component {
   constructor() {
@@ -28,6 +29,8 @@ class AuthorDetails extends React.Component {
 
     return (
       <form noValidate onSubmit={handleSubmit}>
+        <ProgressBar currentStep={0} />
+
         <H1>Are you handling this submission?</H1>
 
         <Flex>

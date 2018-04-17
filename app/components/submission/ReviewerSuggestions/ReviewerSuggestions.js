@@ -2,11 +2,14 @@ import React from 'react'
 import { Flex, Box } from 'grid-styled'
 import { Button, H1 } from '@pubsweet/ui'
 
-import ValidatedField from '../ui/atoms/ValidatedField'
-import ButtonLink from '../ui/atoms/ButtonLink'
+import ValidatedField from '../../ui/atoms/ValidatedField'
+import ButtonLink from '../../ui/atoms/ButtonLink'
+import ProgressBar from '../ProgressBar'
 
 const ReviewerSuggestions = ({ handleSubmit }) => (
   <form noValidate onSubmit={handleSubmit}>
+    <ProgressBar currentStep={3} />
+
     <H1>Who would you like to review your work?</H1>
 
     <ValidatedField label="Suggested editor(s)" name="suggestedEditors" />

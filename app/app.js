@@ -9,7 +9,7 @@ import { configureStore, Root } from 'pubsweet-client'
 import theme from '@pubsweet/elife-theme'
 
 import Routes from './routes'
-import * as AuthorDetailsSchema from './components/submission/AuthorDetailsSchema'
+import * as AuthorDetailsSchema from './components/submission/AuthorDetails/AuthorDetailsSchema'
 
 theme.space = [
   0,
