@@ -3,7 +3,7 @@ const NotFoundError = require('pubsweet-server/src/errors/NotFoundError')
 
 const db = require('pubsweet-server/src/db')
 
-export const select = async selector => {
+const select = async selector => {
   const where = Model.selectorToSql(selector)
 
   const { rows } = await db.query(
@@ -17,3 +17,5 @@ export const select = async selector => {
 
   return rows
 }
+
+module.exports = { select }

@@ -1,4 +1,4 @@
-import * as db from '../db-helpers/'
+const db = require('../db-helpers/')
 
 module.exports = {
   typeDefs: `
