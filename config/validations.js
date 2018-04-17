@@ -15,7 +15,7 @@ module.exports = {
     passwordHash: Joi.string(),
 
     // auth fields
-    orcid: Joi.string().required(),
+    orcid: Joi.string(),
     oauth: Joi.object({
       accessToken: Joi.string(),
       refreshToken: Joi.string(),
