@@ -55,13 +55,7 @@
     ]
   },
   "jest": {
-    "setupTestFrameworkScriptFile": "<rootDir>/test/helpers/jest-setup.js",
-    "testMatch": [
-      "**/*.test.js"
-    ],
-    "transformIgnorePatterns": [
-      "/node_modules/(?!@?pubsweet)"
-    ]
+    "projects": ["<rootDir>/client", "<rootDir>/app", "<rootDir>/server"]
   },
   "resolutions": {
     "grid-styled/styled-components": "3.2.5"

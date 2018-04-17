@@ -1,5 +1,4 @@
 const uuid = require('uuid')
-
 const Model = require('pubsweet-server/src/models/Model')
 // const NotFoundError = require('pubsweet-server/src/errors/NotFoundError')
 const db = require('pubsweet-server/src/db')
@@ -36,10 +35,6 @@ const select = async selector => {
     `SELECT id, data FROM entities WHERE ${where.join(' AND ')}`,
     Object.values(selector),
   )
-
-  /* if (!rows.length) { */
-  /*     return {}; */
-  /* } */
 
   return rows
   // return manuscriptToGraphql(rows[0].data, rows[0].id)

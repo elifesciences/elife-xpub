@@ -11,6 +11,15 @@ const makeApp = () => {
   return supertest(app)
 }
 
+/* Example JWT
+ * {
+ *   "username": "0000000331460256",
+ *   "id": "7a9da753-93f7-4245-bc85-10058d578e40",
+ *   "iat": 1523965654,
+ *   "exp": 1524052054
+ * }
+ */
+
 describe('ORCID auth', () => {
   beforeEach(() => createTables(true))
 
