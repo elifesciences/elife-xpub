@@ -15,7 +15,11 @@ const ErrorMessage = styled.div`
   color: ${th('colorError')};
 `
 
-export default ({ name, component: FieldComponent = TextField, ...props }) => {
+const ValidatedField = ({
+  name,
+  component: FieldComponent = TextField,
+  ...props
+}) => {
   const render = ({ field, form }) => {
     const touched = get(form.touched, name)
     const errors = get(form.errors, name)
@@ -42,3 +46,5 @@ export default ({ name, component: FieldComponent = TextField, ...props }) => {
 
   return <Field name={name} render={render} />
 }
+
+export default ValidatedField
