@@ -1,17 +1,19 @@
 import React from 'react'
-import { H1 } from '@pubsweet/ui'
-import ButtonLink from '../../ui/atoms/ButtonLink'
-import ProgressBar from '../ProgressBar'
+import { Route } from 'react-router-dom'
+import { Formik } from 'formik'
+
+import Manuscript from './Manuscript'
+import { empty, schema } from './ManuscriptSchema'
 
 export default () => (
-  <React.Fragment>
-    <ProgressBar currentStep={2} />
-
-    <H1>Help us get your work seen by the right people</H1>
-
-    <ButtonLink data-test-id="next" primary to="/submit/suggestions">
-      Next
-    </ButtonLink>
-    <ButtonLink to="/submit/upload">Back</ButtonLink>
-  </React.Fragment>
+  <Route>
+    {({ history }) => (
+      <Formik
+        component={Manuscript}
+        initialValues={empty}
+        onSubmit={() => history.push('/')}
+        validationSchema={schema}
+      />
+    )}
+  </Route>
 )
