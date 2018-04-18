@@ -77,7 +77,7 @@ const resolvers = {
       emptyManuscriptDb.submissionMeta.createdBy = ctx.user
       delete emptyManuscriptDb.id
 
-      const id = db.save('manuscript', emptyManuscriptDb)
+      const id = await db.save('manuscript', emptyManuscriptDb)
       emptyManuscript.id = id
       return emptyManuscript
     },
