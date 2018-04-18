@@ -1,6 +1,4 @@
 const db = require('../db-helpers/')
-const pool = require('pubsweet-server/src/db')
-const uuid = require('uuid')
 
 const typeDefs = `
     extend type Query {
@@ -45,13 +43,8 @@ const resolvers = {
   },
   Mutation: {
     async createSubmission(_, vars, ctx) {
-      /**
-       * TODO
-       * submissionMeta.createdBy
-       */
-      const id = uuid.v4()
       const emptyManuscript = {
-        id: id.toString(),
+        id: '',
         title: '',
         source: '',
         submissionMeta: {
@@ -76,19 +69,16 @@ const resolvers = {
        * TODO
        * DB object not identical to schema one
        * this needs to be documented
+       *
+       * also, for now id not needed in db object (data)
+       * so no need to store it twice
        */
       const emptyManuscriptDb = Object.assign({}, emptyManuscript)
       emptyManuscriptDb.submissionMeta.createdBy = ctx.user
+      delete emptyManuscriptDb.id
 
-      /**
-       * TODO
-       * I'll move this to db-helper for now
-       * this needs abstraction layer (e.g. model/fragment)
-       */
-      await pool.query('INSERT INTO entities (id, data) VALUES ($1, $2)', [
-        id,
-        { type: 'manuscript', data: emptyManuscriptDb },
-      ])
+      const id = db.save('manuscript', emptyManuscriptDb)
+      emptyManuscript.id = id
       return emptyManuscript
     },
   },
