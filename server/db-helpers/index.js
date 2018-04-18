@@ -32,4 +32,18 @@ const save = async (type, data) => {
   return id
 }
 
-module.exports = { select, save }
+const update = async (id, type, data) => {
+  /**
+   * TODO jsdoc args + returns
+   * this should be moved to save()
+   * sanity checks for args
+   * error thrown on query fail?
+   * return something here?
+   */
+  await db.query('UPDATE entities SET data = $2 WHERE id = $1', [
+    id,
+    { type, ...data },
+  ])
+}
+
+module.exports = { select, save, update }
