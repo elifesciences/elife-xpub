@@ -8,6 +8,14 @@ export const GET_CURRENT_SUBMISSION = gql`
       id
       title
       source
+      submissionMeta {
+        author {
+          firstName
+          lastName
+          email
+          institution
+        }
+      }
     }
   }
 `
@@ -16,6 +24,16 @@ const CREATE_SUBMISSION = gql`
   mutation CreateSubmission {
     createSubmission {
       id
+      title
+      source
+      submissionMeta {
+        author {
+          firstName
+          lastName
+          email
+          institution
+        }
+      }
     }
   }
 `

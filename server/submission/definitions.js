@@ -1,4 +1,5 @@
 const db = require('../db-helpers/')
+const dbx = require('pubsweet-server/src/db')
 
 /**
  * TODO
@@ -22,7 +23,7 @@ const typeDefs = `
       submissionMeta: SubmissionMeta
     }
     input ManuscriptInput {
-      id: ID
+      id: ID!
       title: String
       source: String
       submissionMeta: SubmissionMetaInput
@@ -59,16 +60,17 @@ const typeDefs = `
 
 /* TODO keep this in sync with the schema */
 const emptyManuscript = {
-  id: '',
   title: '',
   source: '',
+  type: 'manuscript',
   submissionMeta: {
+    createdBy: '',
     coverLetter: '',
     author: {
       firstName: '',
       lastName: '',
       email: '',
-      insitution: '',
+      institution: '',
     },
     correspondent: {
       firstName: '',
@@ -128,7 +130,27 @@ const resolvers = {
   },
   Mutation: {
     async createSubmission(_, vars, ctx) {
-      return { id: 'test' }
+      /* const { rows } = await dbx.query( */
+      /*   `SELECT id, data FROM entities WHERE id = $1`, */
+      /*   [ctx.user], */
+      /* ) */
+      // TODO get actual data from orcid
+      // console.log(rows[0]);
+      const orcidData = {
+        submissionMeta: {
+          author: {
+            firstName: 'firstName',
+            lastName: 'lastName',
+            email: 'email',
+            institution: 'institution',
+          },
+        },
+      }
+      const manuscript = applyObj(emptyManuscript, orcidData)
+      manuscript.submissionMeta.createdBy = ctx.user
+      const id = await db.save(manuscript)
+      manuscript.id = id
+      return manuscript
     },
     async updateSubmission(_, vars, ctx) {
       /**
@@ -143,25 +165,21 @@ const resolvers = {
        * if none - create new one for the current user
        * else just update
        */
-      try {
-        const oldManuscript = await db.select({
-          'submissionMeta.createdBy': ctx.user,
-          'submissionMeta.stage': 'INITIAL',
-        })
-        // manuscript exists
-        // TODO cheap hack to avoid random id injection
-        const { id } = oldManuscript
-        const manuscript = applyObj(oldManuscript, vars.data)
-        manuscript.id = id
-        db.update(id, manuscript, ctx)
-        return manuscript
-      } catch (err) {
-        // manuscript is new
-        const manuscript = applyObj(emptyManuscript, vars.data)
-        const id = await db.save(manuscript, ctx)
-        manuscript.id = id
-        return manuscript
+      const { rows } = await dbx.query(
+        `SELECT id, data FROM entities WHERE id = $1`,
+        [vars.data.id],
+      )
+      if (!rows.length) {
+        throw new Error('Manuscript not found')
       }
+      if (ctx.user !== rows[0].data.submissionMeta.createdBy) {
+        throw new Error('Manuscript not owned by user')
+      }
+      // TODO convert from db to manuscript
+      const manuscript = applyObj(rows[0].data, vars.data)
+      await db.update(rows[0].id, manuscript)
+      manuscript.id = rows[0].id
+      return manuscript
     },
   },
 }

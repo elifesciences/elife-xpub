@@ -45,22 +45,22 @@ const select = async selector => {
   // return manuscriptToGraphql(rows[0].data, rows[0].id)
 }
 
-const save = async (manuscript, ctx) => {
+const save = async manuscript => {
   /**
    * TODO jsdoc args + returns
    * this returns the id of the stored element
    */
   const id = uuid.v4()
   // const manuscriptDb = manuscriptToDb(manuscript, ctx)
-  const manuscriptDb = manuscript
+  // const manuscriptDb = manuscript
   await db.query('INSERT INTO entities (id, data) VALUES ($1, $2)', [
     id,
-    { ...manuscriptDb },
+    manuscript,
   ])
   return id
 }
 
-const update = async (id, manuscript, ctx) => {
+const update = async (id, manuscript) => {
   /**
    * TODO jsdoc args + returns
    * this should be moved to save()
@@ -69,10 +69,10 @@ const update = async (id, manuscript, ctx) => {
    * return something here?
    */
   // const manuscriptDb = manuscriptToDb(manuscript, ctx)
-  const manuscriptDb = manuscript
+  // const manuscriptDb = manuscript
   await db.query('UPDATE entities SET data = $2 WHERE id = $1', [
     id,
-    { ...manuscriptDb },
+    manuscript,
   ])
 }
 
