@@ -1,5 +1,5 @@
 import gql from 'graphql-tag'
-import { Query } from 'react-apollo'
+import { Query, Mutation } from 'react-apollo'
 import React from 'react'
 
 export const GET_CURRENT_SUBMISSION = gql`
@@ -12,6 +12,23 @@ export const GET_CURRENT_SUBMISSION = gql`
   }
 `
 
+const CREATE_SUBMISSION = gql`
+  mutation CreateSubmission {
+    createSubmission {
+      id
+    }
+  }
+`
+
+class CreateSubmissionWrapper extends React.Component {
+  componentDidMount() {
+    this.props.createSubmission()
+  }
+  render() {
+    return this.props.children(this.props.data)
+  }
+}
+
 const WithCurrentSubmission = ({ children }) => (
   <Query query={GET_CURRENT_SUBMISSION}>
     {({ loading, error, data }) => {
@@ -21,20 +38,22 @@ const WithCurrentSubmission = ({ children }) => (
         return <div>{error.message}</div>
       }
 
-      if (!data.currentSubmission) {
+      if (!data.currentSubmission.id) {
+        return (
+          <Mutation mutation={CREATE_SUBMISSION}>
+            {(createSubmission, mutationData) => (
+              <CreateSubmissionWrapper
+                createSubmission={createSubmission}
+                data={mutationData}
+              >
+                {children}
+              </CreateSubmissionWrapper>
+            )}
+          </Mutation>
+        )
         // create submission
       }
-
-      const childrenWithData = React.Children.map(children, child =>
-        React.cloneElement(child, { data }),
-      )
-      console.log(
-        '>>>>> app/components/submission/WithCurrentSubmission.js:25\n',
-        'data:',
-        data,
-      )
-
-      return <div>{childrenWithData}</div>
+      return children(data)
     }}
   </Query>
 )

@@ -16,10 +16,10 @@ const typeDefs = `
       updateSubmission(data: ManuscriptInput!): Manuscript!
     }
     type Manuscript {
-      id: ID!
+      id: ID
       title: String
       source: String
-      submissionMeta: SubmissionMeta!
+      submissionMeta: SubmissionMeta
     }
     input ManuscriptInput {
       id: ID
@@ -127,6 +127,9 @@ const resolvers = {
     },
   },
   Mutation: {
+    async createSubmission(_, vars, ctx) {
+      return { id: 'test' }
+    },
     async updateSubmission(_, vars, ctx) {
       /**
        * TODO

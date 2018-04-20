@@ -1,33 +1,33 @@
 const uuid = require('uuid')
 
 const Model = require('pubsweet-server/src/models/Model')
-const NotFoundError = require('pubsweet-server/src/errors/NotFoundError')
+// const NotFoundError = require('pubsweet-server/src/errors/NotFoundError')
 const db = require('pubsweet-server/src/db')
 
-function manuscriptToDb(graphqlObj, ctx) {
-  /**
-   * TODO
-   * graphql schema is not identical to the db schema
-   * this needs to be documented
-   *
-   * function that converts a manuscript from graphql format to db format
-   * this function assumes graphqlObj has all the fields
-   */
-  const dbObj = { ...graphqlObj }
-  dbObj.submissionMeta.createdBy = ctx.user
-  dbObj.type = 'manuscript'
-  delete dbObj.id
-  return dbObj
-}
+/* function manuscriptToDb(graphqlObj, ctx) { */
+/*   /\** */
+/*    * TODO */
+/*    * graphql schema is not identical to the db schema */
+/*    * this needs to be documented */
+/*    * */
+/*    * function that converts a manuscript from graphql format to db format */
+/*    * this function assumes graphqlObj has all the fields */
+/*    *\/ */
+/*   const dbObj = { ...graphqlObj } */
+/*   dbObj.submissionMeta.createdBy = ctx.user */
+/*   dbObj.type = 'manuscript' */
+/*   delete dbObj.id */
+/*   return dbObj */
+/* } */
 
-function manuscriptToGraphql(dbObj, id) {
-  /* TODO */
-  const manuscript = { ...dbObj }
-  delete manuscript.createdBy
-  delete manuscript.type
-  manuscript.id = id
-  return manuscript
-}
+/* function manuscriptToGraphql(dbObj, id) { */
+/*   /\* TODO *\/ */
+/*   const manuscript = { ...dbObj } */
+/*   delete manuscript.createdBy */
+/*   delete manuscript.type */
+/*   manuscript.id = id */
+/*   return manuscript */
+/* } */
 
 const select = async selector => {
   const where = Model.selectorToSql(selector)
@@ -37,11 +37,12 @@ const select = async selector => {
     Object.values(selector),
   )
 
-  if (!rows.length) {
-    throw new NotFoundError()
-  }
+  /* if (!rows.length) { */
+  /*     return {}; */
+  /* } */
 
-  return manuscriptToGraphql(rows[0].data, rows[0].id)
+  return rows
+  // return manuscriptToGraphql(rows[0].data, rows[0].id)
 }
 
 const save = async (manuscript, ctx) => {
@@ -50,7 +51,8 @@ const save = async (manuscript, ctx) => {
    * this returns the id of the stored element
    */
   const id = uuid.v4()
-  const manuscriptDb = manuscriptToDb(manuscript, ctx)
+  // const manuscriptDb = manuscriptToDb(manuscript, ctx)
+  const manuscriptDb = manuscript
   await db.query('INSERT INTO entities (id, data) VALUES ($1, $2)', [
     id,
     { ...manuscriptDb },
@@ -66,7 +68,8 @@ const update = async (id, manuscript, ctx) => {
    * error thrown on query fail?
    * return something here?
    */
-  const manuscriptDb = manuscriptToDb(manuscript, ctx)
+  // const manuscriptDb = manuscriptToDb(manuscript, ctx)
+  const manuscriptDb = manuscript
   await db.query('UPDATE entities SET data = $2 WHERE id = $1', [
     id,
     { ...manuscriptDb },
