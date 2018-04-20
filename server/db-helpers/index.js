@@ -4,6 +4,31 @@ const Model = require('pubsweet-server/src/models/Model')
 const NotFoundError = require('pubsweet-server/src/errors/NotFoundError')
 const db = require('pubsweet-server/src/db')
 
+function manuscriptToDb(graphqlObj, ctx) {
+  /**
+   * TODO
+   * graphql schema is not identical to the db schema
+   * this needs to be documented
+   *
+   * function that converts a manuscript from graphql format to db format
+   * this function assumes graphqlObj has all the fields
+   */
+  const dbObj = { ...graphqlObj }
+  dbObj.submissionMeta.createdBy = ctx.user
+  dbObj.type = 'manuscript'
+  delete dbObj.id
+  return dbObj
+}
+
+function manuscriptToGraphql(dbObj, id) {
+  /* TODO */
+  const manuscript = { ...dbObj }
+  delete manuscript.createdBy
+  delete manuscript.type
+  manuscript.id = id
+  return manuscript
+}
+
 const select = async selector => {
   const where = Model.selectorToSql(selector)
 
@@ -16,23 +41,24 @@ const select = async selector => {
     throw new NotFoundError()
   }
 
-  return rows
+  return manuscriptToGraphql(rows[0].data, rows[0].id)
 }
 
-const save = async (type, data) => {
+const save = async (manuscript, ctx) => {
   /**
    * TODO jsdoc args + returns
    * this returns the id of the stored element
    */
   const id = uuid.v4()
+  const manuscriptDb = manuscriptToDb(manuscript, ctx)
   await db.query('INSERT INTO entities (id, data) VALUES ($1, $2)', [
     id,
-    { type, ...data },
+    { ...manuscriptDb },
   ])
   return id
 }
 
-const update = async (id, type, data) => {
+const update = async (id, manuscript, ctx) => {
   /**
    * TODO jsdoc args + returns
    * this should be moved to save()
@@ -40,9 +66,10 @@ const update = async (id, type, data) => {
    * error thrown on query fail?
    * return something here?
    */
+  const manuscriptDb = manuscriptToDb(manuscript, ctx)
   await db.query('UPDATE entities SET data = $2 WHERE id = $1', [
     id,
-    { type, ...data },
+    { ...manuscriptDb },
   ])
 }
 

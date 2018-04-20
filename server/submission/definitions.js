@@ -22,21 +22,21 @@ const typeDefs = `
       submissionMeta: SubmissionMeta!
     }
     input ManuscriptInput {
-      id: ID!
-      title: String!
-      source: String!
-      submissionMeta: SubmissionMetaInput!
+      id: ID
+      title: String
+      source: String
+      submissionMeta: SubmissionMetaInput
     }
     type SubmissionMeta {
       coverLetter: String
-      author: Person!
+      author: Person
       correspondent: Person
-      stage: SubmissionStage!
+      stage: SubmissionStage
     }
     input SubmissionMetaInput {
-      coverLetter: String!
+      coverLetter: String
       author: PersonInput!
-      correspondent: PersonInput!
+      correspondent: PersonInput
       stage: SubmissionStage!
     }
     type Person {
@@ -46,10 +46,10 @@ const typeDefs = `
       institution: String
     }
     input PersonInput {
-      firstName: String!
-      lastName: String!
-      email: String!
-      institution: String!
+      firstName: String
+      lastName: String
+      email: String
+      institution: String
     }
     enum SubmissionStage {
       INITIAL
@@ -57,56 +57,76 @@ const typeDefs = `
     }
 `
 
+/* TODO keep this in sync with the schema */
+const emptyManuscript = {
+  id: '',
+  title: '',
+  source: '',
+  submissionMeta: {
+    coverLetter: '',
+    author: {
+      firstName: '',
+      lastName: '',
+      email: '',
+      insitution: '',
+    },
+    correspondent: {
+      firstName: '',
+      lastName: '',
+      email: '',
+      institution: '',
+    },
+    stage: 'INITIAL',
+  },
+}
+
+/**
+ * TODO any built-in way to do this?
+ * would using an external package like deepmerge
+ * https://github.com/KyleAMathews/deepmerge
+ * be better here?
+ * e.g. we make the app more complex, we add more packages/use more memory
+ * vs
+ * we might miss to catch some errors
+ * it's something easy to do anyway
+ *
+ * replace with lodash.merge
+ */
+function applyObj(obj1, obj2) {
+  /**
+   * applies values from obj2 (can be nested)
+   * to "default values"/schema obj1
+   * obj1 will have all keys
+   */
+  const obj3 = { ...obj1 }
+  if (typeof obj2 !== 'object') {
+    return obj3
+  }
+  Object.keys(obj3).forEach(key => {
+    if (key in obj2) {
+      if (typeof obj2[key] === 'object') {
+        obj3[key] = applyObj(obj3[key], obj2[key])
+      } else {
+        obj3[key] = obj2[key]
+      }
+    }
+  })
+
+  return obj3
+}
+
 const resolvers = {
   Query: {
     async currentSubmission(_, vars, ctx) {
-      const rows = await db.select({
+      // TODO this will throw an error when you click on submit intially
+      const manuscript = await db.select({
         'submissionMeta.createdBy': ctx.user,
         'submissionMeta.stage': 'INITIAL',
       })
-      return rows[0]
+      return manuscript
     },
   },
   Mutation: {
-    async createSubmission(_, vars, ctx) {
-      const emptyManuscript = {
-        id: '',
-        title: '',
-        source: '',
-        submissionMeta: {
-          coverLetter: '',
-          author: {
-            firstName: '',
-            lastName: '',
-            email: '',
-            insitution: '',
-          },
-          correspondent: {
-            firstName: '',
-            lastName: '',
-            email: '',
-            institution: '',
-          },
-          stage: 'INITIAL',
-        },
-      }
-
-      /**
-       * TODO
-       * DB object not identical to schema one
-       * this needs to be documented
-       *
-       * also, for now id not needed in db object (data)
-       * so no need to store it twice
-       */
-      const manuscriptDb = Object.assign({}, emptyManuscript)
-      manuscriptDb.submissionMeta.createdBy = ctx.user
-      delete manuscriptDb.id
-
-      const id = await db.save('manuscript', manuscriptDb)
-      emptyManuscript.id = id
-      return emptyManuscript
-    },
     async updateSubmission(_, vars, ctx) {
       /**
        * TODO
@@ -116,22 +136,29 @@ const resolvers = {
        * we can get manuscript after id, then check with createdBy
        * or just get current manuscript for ctx.user and save there
        *
-       * for now this works
-       * multiple ways to get the current manuscript
-       * error here might not be ok
+       * for now this works - get current submission for ctx.user
+       * if none - create new one for the current user
+       * else just update
        */
-      const rows = await db.select({
-        'submissionMeta.createdBy': ctx.user,
-        'submissionMeta.stage': 'INITIAL',
-      })
-
-      // build manuscript db object
-      const manuscriptDb = Object.assign({}, vars.data)
-      manuscriptDb.submissionMeta.createdBy = ctx.user
-      delete manuscriptDb.id
-
-      await db.update(rows[0].id, rows[0].data.type, manuscriptDb)
-      return vars.data
+      try {
+        const oldManuscript = await db.select({
+          'submissionMeta.createdBy': ctx.user,
+          'submissionMeta.stage': 'INITIAL',
+        })
+        // manuscript exists
+        // TODO cheap hack to avoid random id injection
+        const { id } = oldManuscript
+        const manuscript = applyObj(oldManuscript, vars.data)
+        manuscript.id = id
+        db.update(id, manuscript, ctx)
+        return manuscript
+      } catch (err) {
+        // manuscript is new
+        const manuscript = applyObj(emptyManuscript, vars.data)
+        const id = await db.save(manuscript, ctx)
+        manuscript.id = id
+        return manuscript
+      }
     },
   },
 }

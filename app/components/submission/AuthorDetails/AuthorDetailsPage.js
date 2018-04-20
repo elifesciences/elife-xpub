@@ -7,30 +7,59 @@ import gql from 'graphql-tag'
 import AuthorDetails from './AuthorDetails'
 import { schema } from './AuthorDetailsSchema'
 
-const GET_AUTHOR_DETAILS = gql`
+const GET_CURRENT_SUBMISSION = gql`
   query {
-    currentSubmission @client {
-      firstName
-      lastName
-      email
-      institution
-      assignee {
-        firstName
-        lastName
-        email
+    currentSubmission {
+      id
+      title
+      submissionMeta {
+        author {
+          firstName
+          lastName
+          email
+          institution
+        }
+        correspondent {
+          firstName
+          lastName
+          email
+          institution
+        }
       }
     }
   }
 `
 
-const UPDATE_AUTHOR_DETAILS = gql`
-  mutation($input: Submission) {
-    updateCurrentSubmission(input: $input) @client
+/**
+ * TODO
+ * have a design discussion on how to send form data from frontend
+ * entire form vs individual pages at once
+ */
+const UPDATE_SUBMISSION = gql`
+  mutation UpdateSubmission($data: ManuscriptInput!) {
+    updateSubmission(data: $data) {
+      id
+      title
+      submissionMeta {
+        author {
+          firstName
+          lastName
+          email
+          institution
+        }
+        correspondent {
+          firstName
+          lastName
+          email
+          institution
+        }
+      }
+    }
   }
 `
 
 const AuthorDetailsPage = ({ history }) => (
-  <Query query={GET_AUTHOR_DETAILS}>
+  <Query query={GET_CURRENT_SUBMISSION}>
     {({ loading, error, data, client }) => {
       if (loading) return <div>Loading...</div>
 
@@ -39,15 +68,48 @@ const AuthorDetailsPage = ({ history }) => (
         return <div>{String(error)}</div>
       }
 
+      const TODO = ''
       return (
-        <Mutation mutation={UPDATE_AUTHOR_DETAILS}>
-          {updateAuthorDetails => (
+        <Mutation mutation={UPDATE_SUBMISSION}>
+          {(updateSubmission, _) => (
             <Formik
               component={AuthorDetails}
-              initialValues={data.currentSubmission}
+              /**
+               * stuff should be in submissionMeta.author
+               * and submissionMeta.correspondent
+               *
+               * data.currentSubmission.submissionMeta
+               *   {author, correspondent}
+               *
+               * TODO get data from form
+               */
+              // initialValues={data.currentSubmission}
+
               onSubmit={values =>
-                updateAuthorDetails({
-                  variables: { input: values },
+                updateSubmission({
+                  variables: {
+                    data: {
+                      id: TODO,
+                      title: TODO,
+                      source: TODO,
+                      submissionMeta: {
+                        coverLetter: TODO,
+                        author: {
+                          firstName: TODO,
+                          lastName: TODO,
+                          email: TODO,
+                          institution: TODO,
+                        },
+                        correspondent: {
+                          firstName: TODO,
+                          lastName: TODO,
+                          email: TODO,
+                          institution: TODO,
+                        },
+                        stage: 'INITIAL',
+                      },
+                    },
+                  },
                 }).then(() => {
                   history.push('/submit/upload')
                 })
