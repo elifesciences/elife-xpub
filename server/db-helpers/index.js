@@ -1,32 +1,73 @@
 const uuid = require('uuid')
 const Model = require('pubsweet-server/src/models/Model')
-// const NotFoundError = require('pubsweet-server/src/errors/NotFoundError')
 const db = require('pubsweet-server/src/db')
 
-/* function manuscriptToDb(graphqlObj, ctx) { */
-/*   /\** */
-/*    * TODO */
-/*    * graphql schema is not identical to the db schema */
-/*    * this needs to be documented */
-/*    * */
-/*    * function that converts a manuscript from graphql format to db format */
-/*    * this function assumes graphqlObj has all the fields */
-/*    *\/ */
-/*   const dbObj = { ...graphqlObj } */
-/*   dbObj.submissionMeta.createdBy = ctx.user */
-/*   dbObj.type = 'manuscript' */
-/*   delete dbObj.id */
-/*   return dbObj */
-/* } */
+/**
+ * TODO
+ * functions here should have sanity checks in the future
+ */
 
-/* function manuscriptToGraphql(dbObj, id) { */
-/*   /\* TODO *\/ */
-/*   const manuscript = { ...dbObj } */
-/*   delete manuscript.createdBy */
-/*   delete manuscript.type */
-/*   manuscript.id = id */
-/*   return manuscript */
-/* } */
+function manuscriptToDb(manuscript, owner) {
+  /**
+   * converts manuscript from graphql schema to db schema
+   * for now this is the only place where the db schema for
+   * a manuscript is documented
+   */
+  const manuscriptDb = { ...manuscript }
+  delete manuscriptDb.id
+  manuscriptDb.submissionMeta.createdBy = owner
+  manuscriptDb.type = 'manuscript'
+  return manuscriptDb
+}
+
+function manuscriptToGraphql(manuscriptDb, id) {
+  /**
+   * converts manuscript from db schema to graphql schema
+   */
+  const manuscript = { ...manuscriptDb }
+  manuscript.id = id
+  delete manuscript.submissionMeta.createdBy
+  delete manuscript.type
+  return manuscript
+}
+
+const save = async obj => {
+  /**
+   * saves generic object to db
+   */
+  const id = uuid.v4()
+  await db.query('INSERT INTO entities (id, data) VALUES ($1, $2)', [id, obj])
+  return id
+}
+
+const update = async (obj, id) => {
+  /**
+   * updates generic object in db
+   * this should be moved to save in the future
+   */
+  await db.query('UPDATE entities SET data = $2 WHERE id = $1', [id, obj])
+}
+
+const checkPermission = async (id, user) => {
+  /**
+   * checks if manuscript is owned by user and returns old data
+   * in db format (id, data)
+   *
+   * manuscript owner should be stored at top level in the future
+   * or be in sync with other models
+   */
+  const { rows } = await db.query(
+    `SELECT id, data FROM entities WHERE id = $1`,
+    [id],
+  )
+  if (!rows.length) {
+    throw new Error('Manuscript not found')
+  }
+  if (user !== rows[0].data.submissionMeta.createdBy) {
+    throw new Error('Manuscript not owned by user')
+  }
+  return rows[0]
+}
 
 const select = async selector => {
   const where = Model.selectorToSql(selector)
@@ -37,38 +78,31 @@ const select = async selector => {
   )
 
   return rows
-  // return manuscriptToGraphql(rows[0].data, rows[0].id)
 }
 
-const save = async manuscript => {
+const getOrcidData = async user =>
   /**
-   * TODO jsdoc args + returns
-   * this returns the id of the stored element
+   * TODO
+   * get orcid data for user (orcid user id)
+   *
+   * @returns {object} - orcid data
+   *   {submissionMeta: {author: {firstName: "", lastName: "",
+   *      email: "", institution: ""}}}
    */
-  const id = uuid.v4()
-  // const manuscriptDb = manuscriptToDb(manuscript, ctx)
-  // const manuscriptDb = manuscript
-  await db.query('INSERT INTO entities (id, data) VALUES ($1, $2)', [
-    id,
-    manuscript,
-  ])
-  return id
-}
 
-const update = async (id, manuscript) => {
-  /**
-   * TODO jsdoc args + returns
-   * this should be moved to save()
-   * sanity checks for args
-   * error thrown on query fail?
-   * return something here?
-   */
-  // const manuscriptDb = manuscriptToDb(manuscript, ctx)
-  // const manuscriptDb = manuscript
-  await db.query('UPDATE entities SET data = $2 WHERE id = $1', [
-    id,
-    manuscript,
-  ])
-}
+  /* const { rows } = await dbx.query( */
+  /*   `SELECT id, data FROM entities WHERE id = $1`, */
+  /*   [ctx.user], */
+  /* ) */
 
-module.exports = { select, save, update }
+  ({})
+
+module.exports = {
+  manuscriptToDb,
+  manuscriptToGraphql,
+  select,
+  save,
+  update,
+  checkPermission,
+  getOrcidData,
+}

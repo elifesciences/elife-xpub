@@ -38,6 +38,11 @@ const CREATE_SUBMISSION = gql`
   }
 `
 
+/**
+ * TODO update submission
+ * "id": "9e7920ba-ea8b-4ccc-9668-45c80da51947"
+ */
+
 class CreateSubmissionWrapper extends React.Component {
   componentDidMount() {
     this.props.createSubmission()

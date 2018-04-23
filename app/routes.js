@@ -16,7 +16,6 @@ const Routes = () => (
           <Route component={Dashboard} />
         </Switch>
       </Layout>
-    </AuthenticatedComponent>
   </Switch>
 )
 

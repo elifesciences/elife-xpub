@@ -1,12 +1,9 @@
+const lodash = require('lodash')
+
 const db = require('../db-helpers/')
-const dbx = require('pubsweet-server/src/db')
 
 /**
- * TODO
- * better way to have Manuscript as input type
- * instead of duplicating each type
- *
- * do we need ID in Manuscript?
+ * types & input types should be kept in sync
  */
 const typeDefs = `
     extend type Query {
@@ -63,13 +60,14 @@ const typeDefs = `
     }
 `
 
-/* TODO keep this in sync with the schema */
+/**
+ * this should be kept in sync with the schema
+ */
 const emptyManuscript = {
+  id: '',
   title: '',
   source: '',
-  type: 'manuscript',
   submissionMeta: {
-    createdBy: '',
     coverLetter: '',
     author: {
       firstName: '',
@@ -85,41 +83,6 @@ const emptyManuscript = {
     },
     stage: 'INITIAL',
   },
-}
-
-/**
- * TODO any built-in way to do this?
- * would using an external package like deepmerge
- * https://github.com/KyleAMathews/deepmerge
- * be better here?
- * e.g. we make the app more complex, we add more packages/use more memory
- * vs
- * we might miss to catch some errors
- * it's something easy to do anyway
- *
- * replace with lodash.merge
- */
-function applyObj(obj1, obj2) {
-  /**
-   * applies values from obj2 (can be nested)
-   * to "default values"/schema obj1
-   * obj1 will have all keys
-   */
-  const obj3 = { ...obj1 }
-  if (typeof obj2 !== 'object') {
-    return obj3
-  }
-  Object.keys(obj3).forEach(key => {
-    if (key in obj2) {
-      if (typeof obj2[key] === 'object') {
-        obj3[key] = applyObj(obj3[key], obj2[key])
-      } else {
-        obj3[key] = obj2[key]
-      }
-    }
-  })
-
-  return obj3
 }
 
 const resolvers = {
@@ -142,12 +105,8 @@ const resolvers = {
   },
   Mutation: {
     async createSubmission(_, vars, ctx) {
-      /* const { rows } = await dbx.query( */
-      /*   `SELECT id, data FROM entities WHERE id = $1`, */
-      /*   [ctx.user], */
-      /* ) */
       // TODO get actual data from orcid
-      // console.log(rows[0]);
+      // const orcidData = db.getOrcidData(ctx.user);
       const orcidData = {
         submissionMeta: {
           author: {
@@ -158,40 +117,29 @@ const resolvers = {
           },
         },
       }
-      const manuscript = applyObj(emptyManuscript, orcidData)
-      manuscript.submissionMeta.createdBy = ctx.user
-      const id = await db.save(manuscript)
+      const manuscript = lodash.merge(emptyManuscript, orcidData)
+      const manuscriptDb = db.manuscriptToDb(manuscript, ctx.user)
+      const id = await db.save(manuscriptDb)
       manuscript.id = id
       return manuscript
     },
     async updateSubmission(_, vars, ctx) {
-      /**
-       * TODO
-       * check that manuscript with vars.data.id is actually
-       * owned by ctx.user
-       *
-       * we can get manuscript after id, then check with createdBy
-       * or just get current manuscript for ctx.user and save there
-       *
-       * for now this works - get current submission for ctx.user
-       * if none - create new one for the current user
-       * else just update
-       */
-      const { rows } = await dbx.query(
-        `SELECT id, data FROM entities WHERE id = $1`,
-        [vars.data.id],
+      // check permission
+      const { data: oldManDb } = await db.checkPermission(
+        vars.data.id,
+        ctx.user,
       )
-      if (!rows.length) {
-        throw new Error('Manuscript not found')
-      }
-      if (ctx.user !== rows[0].data.submissionMeta.createdBy) {
-        throw new Error('Manuscript not owned by user')
-      }
-      // TODO convert from db to manuscript
-      const manuscript = applyObj(rows[0].data, vars.data)
-      await db.update(rows[0].id, manuscript)
-      manuscript.id = rows[0].id
-      return manuscript
+
+      // compute new manuscript by applying vars.data to old manuscript
+      const oldMan = db.manuscriptToGraphql(oldManDb, vars.data.id)
+      const newMan = lodash.merge(oldMan, vars.data)
+
+      // update old one
+      const newManDb = db.manuscriptToDb(newMan, ctx.user)
+      await db.update(newManDb, vars.data.id)
+
+      // return updated manuscript to user
+      return newMan
     },
   },
 }
