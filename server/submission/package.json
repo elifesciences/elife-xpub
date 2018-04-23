@@ -15,7 +15,7 @@
     "pubsweet-server": ">=2.0.0"
   },
   "devDependencies": {
-    "jest-environment-db": "^1.0.0",
+    "@elife/jest-environment-db": "^1.0.0",
     "superagent": "^3.8.2",
     "supertest": "^3.0.0"
   }
