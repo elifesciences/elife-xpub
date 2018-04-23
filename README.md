@@ -55,7 +55,7 @@ sequenceDiagram
     participant GH as elife-xpub (github)
     participant DH as docker-hub
     participant JK as Jenkins
-    participant WEB as demo--xpub (website)
+    participant WEB as elife-xpub--demo
 
     activate GL
     Note over GL: Build
