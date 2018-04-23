@@ -1,23 +1,48 @@
 const supertest = require('supertest')
 const app = require('pubsweet-server/src/').configureApp(require('express')())
 const { createTables } = require('@pubsweet/db-manager')
+const User = require('pubsweet-server/src/models/User')
+const authentication = require('pubsweet-server/src/authentication')
+const { save } = require('../db-helpers/')
+const _ = require('lodash')
+
+const mockUuid = 'd2aeea36-88fc-47e6-94bc-85a6e28f53da'
+
+jest.mock('uuid', () => ({ v4: jest.fn(() => mockUuid) }))
+
+const userData = {
+  username: 'testuser',
+  orcid: 'testuser-orcid-id',
+}
+
+const manuscript = {
+  title: 'title',
+  type: 'manuscript',
+  source: 'source',
+  submissionMeta: {
+    stage: 'INITIAL',
+    author: {
+      firstName: 'Firstname',
+      lastName: 'Lastname',
+      email: 'email@example.com',
+      institution: 'institution',
+    },
+  },
+}
 
 const getClient = async () => {
-  const User = require('pubsweet-server/src/models/User')
-  const authentication = require('pubsweet-server/src/authentication')
+  const user = new User(userData)
+  const { id: userId } = await user.save()
 
-  const user = new User({
-    username: 'testuser',
-    orcid: 'testuser-orcid-id',
-  })
-  await user.save()
-
-  return query =>
+  const request = query =>
     supertest(app)
       .post('/graphql')
       .send({ query })
       .set('Accept', 'application/json')
       .set({ Authorization: `Bearer ${authentication.token.create(user)}` })
+
+  request.userId = userId
+  return request
 }
 
 describe('Submission', () => {
@@ -29,17 +54,36 @@ describe('Submission', () => {
   })
 
   it('Gets form data', async () => {
+    const testManuscript = _.merge({}, manuscript, {
+      submissionMeta: { createdBy: request.userId },
+    })
+    const expectedManuscript = _.merge({}, testManuscript, { id: mockUuid })
+
+    await save(testManuscript)
+
     const query = `
       query CurrentSubmission {
         currentSubmission {
           id
           title
           source
+          type
+          submissionMeta {
+            stage
+            createdBy
+            author {
+              firstName
+              lastName
+              email
+              institution
+            }
+          }
         }
       }
     `
 
     const { body } = await request(query)
-    expect(body.errors).toHaveLength(0)
+    expect(body.errors).toBeUndefined()
+    expect(body.data.currentSubmission).toMatchObject(expectedManuscript)
   })
 })

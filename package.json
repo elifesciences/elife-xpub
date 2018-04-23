@@ -55,7 +55,11 @@
     ]
   },
   "jest": {
-    "projects": ["<rootDir>/client", "<rootDir>/app", "<rootDir>/server"]
+    "projects": [
+      "<rootDir>/client",
+      "<rootDir>/app",
+      "<rootDir>/server"
+    ]
   },
   "resolutions": {
     "grid-styled/styled-components": "3.2.5"
@@ -88,6 +92,7 @@
     "redux": "^3.6.0",
     "redux-logger": "^3.0.1",
     "styled-components": "^3.2.5",
+    "uuid": "^3.2.1",
     "yup": "^0.24.1"
   },
   "devDependencies": {

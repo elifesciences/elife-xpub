@@ -19,6 +19,7 @@ const typeDefs = `
     type Manuscript {
       id: ID
       title: String
+      type: ManuscriptType
       source: String
       submissionMeta: SubmissionMeta
     }
@@ -32,6 +33,7 @@ const typeDefs = `
       coverLetter: String
       author: Person
       correspondent: Person
+      createdBy: String
       stage: SubmissionStage
     }
     input SubmissionMetaInput {
@@ -55,6 +57,9 @@ const typeDefs = `
     enum SubmissionStage {
       INITIAL
       QA
+    }
+    enum ManuscriptType {
+      manuscript
     }
 `
 
@@ -121,10 +126,17 @@ const resolvers = {
   Query: {
     async currentSubmission(_, vars, ctx) {
       // TODO this will throw an error when you click on submit intially
-      const manuscript = await db.select({
+      const rows = await db.select({
         'submissionMeta.createdBy': ctx.user,
         'submissionMeta.stage': 'INITIAL',
       })
+
+      if (!rows.length) {
+        return null
+      }
+
+      const manuscript = rows[0].data
+      manuscript.id = rows[0].id
       return manuscript
     },
   },
