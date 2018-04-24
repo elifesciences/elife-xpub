@@ -13,7 +13,7 @@ const ElifeAppBar = ({ history, currentUser }) => (
       window.localStorage.removeItem('token')
       history.push('/')
     }}
-    user={currentUser.user}
+    user={currentUser}
   />
 )
 

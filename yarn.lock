@@ -8230,9 +8230,9 @@ pubsweet-server@^4.0.0:
     uuid "^3.0.1"
     winston "^2.2.0"
 
-pubsweet-server@^5.0.0:
-  version "5.0.0"
-  resolved "https://registry.yarnpkg.com/pubsweet-server/-/pubsweet-server-5.0.0.tgz#7b7f363834ac67ab0648b3cdcfc1a814fb15a15a"
+pubsweet-server@^6.0.0:
+  version "6.0.0"
+  resolved "https://registry.yarnpkg.com/pubsweet-server/-/pubsweet-server-6.0.0.tgz#d91702dac91cfc98325d9cb6441a7c1acbdb788d"
   dependencies:
     "@pubsweet/logger" "^0.2.2"
     apollo-server-express "^1.3.2"
@@ -8263,7 +8263,7 @@ pubsweet-server@^5.0.0:
     pg "^7.4.1"
     promise-queue "^2.2.3"
     prompt "^1.0.0"
-    pubsweet-sse "^0.1.5"
+    pubsweet-sse "^1.0.0"
     require-relative "^0.8.7"
     uuid "^3.0.1"
     winston "^2.2.0"
@@ -8272,9 +8272,9 @@ pubsweet-sse@^0.1.4:
   version "0.1.4"
   resolved "https://registry.yarnpkg.com/pubsweet-sse/-/pubsweet-sse-0.1.4.tgz#1ff38a230143cbd487a8d44afb28a6c4746ee464"
 
-pubsweet-sse@^0.1.5:
-  version "0.1.5"
-  resolved "https://registry.yarnpkg.com/pubsweet-sse/-/pubsweet-sse-0.1.5.tgz#c93195c52121e299c8a55896962d870f792ce963"
+pubsweet-sse@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/pubsweet-sse/-/pubsweet-sse-1.0.0.tgz#dd36aa378a302b518d417b545b064da65aec876a"
 
 pubsweet@^2.1.4:
   version "2.1.7"

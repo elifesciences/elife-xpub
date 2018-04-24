@@ -14,7 +14,7 @@ const AuthenticatedComponent = ({ children }) => (
 
       if (error) return <div>{error.message}</div>
 
-      if (data.currentUser && !data.currentUser.user) {
+      if (!data.currentUser) {
         return <Redirect to="/login" />
       }
 
