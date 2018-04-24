@@ -16,7 +16,6 @@ const typeDefs = `
     type Manuscript {
       id: ID
       title: String
-      type: ManuscriptType
       source: String
       submissionMeta: SubmissionMeta
     }
@@ -54,9 +53,6 @@ const typeDefs = `
     enum SubmissionStage {
       INITIAL
       QA
-    }
-    enum ManuscriptType {
-      manuscript
     }
 `
 
@@ -104,7 +100,7 @@ const resolvers = {
     },
   },
   Mutation: {
-    async createSubmission(_, vars, ctx) {
+    async createSubmission(_, { data }, ctx) {
       // TODO get actual data from orcid
       // const orcidData = db.getOrcidData(ctx.user);
       const orcidData = {
@@ -118,28 +114,25 @@ const resolvers = {
         },
       }
       const manuscript = lodash.merge(emptyManuscript, orcidData)
-      const manuscriptDb = db.manuscriptToDb(manuscript, ctx.user)
+      const manuscriptDb = db.manuscriptGqlToDb(manuscript, ctx.user)
       const id = await db.save(manuscriptDb)
       manuscript.id = id
       return manuscript
     },
-    async updateSubmission(_, vars, ctx) {
-      // check permission
-      const { data: oldManDb } = await db.checkPermission(
-        vars.data.id,
-        ctx.user,
-      )
+    async updateSubmission(_, { data }, ctx) {
+      // check if user is authorized to update manuscript
+      const { data: manuscriptDb } = await db.checkPermission(data.id, ctx.user)
 
-      // compute new manuscript by applying vars.data to old manuscript
-      const oldMan = db.manuscriptToGraphql(oldManDb, vars.data.id)
-      const newMan = lodash.merge(oldMan, vars.data)
+      // apply new changes to old manuscript
+      const manuscript = db.manuscriptDbToGql(manuscriptDb, data.id)
+      const newManuscript = lodash.merge(manuscript, data)
 
-      // update old one
-      const newManDb = db.manuscriptToDb(newMan, ctx.user)
-      await db.update(newManDb, vars.data.id)
+      // update in db
+      const newManuscriptDb = db.manuscriptGqlToDb(newManuscript, ctx.user)
+      await db.update(newManuscriptDb, data.id)
 
       // return updated manuscript to user
-      return newMan
+      return newManuscript
     },
   },
 }

@@ -7,7 +7,7 @@ const db = require('pubsweet-server/src/db')
  * functions here should have sanity checks in the future
  */
 
-function manuscriptToDb(manuscript, owner) {
+function manuscriptGqlToDb(manuscript, owner) {
   /**
    * converts manuscript from graphql schema to db schema
    * for now this is the only place where the db schema for
@@ -20,7 +20,7 @@ function manuscriptToDb(manuscript, owner) {
   return manuscriptDb
 }
 
-function manuscriptToGraphql(manuscriptDb, id) {
+function manuscriptDbToGql(manuscriptDb, id) {
   /**
    * converts manuscript from db schema to graphql schema
    */
@@ -98,8 +98,8 @@ const getOrcidData = async user =>
   ({})
 
 module.exports = {
-  manuscriptToDb,
-  manuscriptToGraphql,
+  manuscriptGqlToDb,
+  manuscriptDbToGql,
   select,
   save,
   update,
