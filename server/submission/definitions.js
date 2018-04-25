@@ -84,7 +84,6 @@ const emptyManuscript = {
 const resolvers = {
   Query: {
     async currentSubmission(_, vars, ctx) {
-      // TODO this will throw an error when you click on submit intially
       const rows = await db.select({
         'submissionMeta.createdBy': ctx.user,
         'submissionMeta.stage': 'INITIAL',
@@ -94,9 +93,7 @@ const resolvers = {
         return null
       }
 
-      const manuscript = rows[0].data
-      manuscript.id = rows[0].id
-      return manuscript
+      return rows[0]
     },
   },
   Mutation: {

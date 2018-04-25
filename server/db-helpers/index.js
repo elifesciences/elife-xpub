@@ -77,7 +77,7 @@ const select = async selector => {
     Object.values(selector),
   )
 
-  return rows
+  return rows.map(row => manuscriptDbToGql(row.data, row.id))
 }
 
 const getOrcidData = async user =>

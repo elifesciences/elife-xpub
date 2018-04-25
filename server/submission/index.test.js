@@ -53,12 +53,12 @@ describe('Submission', () => {
   })
 
   it('Gets form data', async () => {
-    const testManuscript = _.merge({}, manuscript, {
+    const dbManuscript = _.merge({}, manuscript, {
       submissionMeta: { createdBy: request.userId },
     })
-    const expectedManuscript = _.merge({}, testManuscript, { id: mockUuid })
+    await save(dbManuscript)
 
-    await save(testManuscript)
+    const expectedManuscript = _.merge({}, manuscript, { id: mockUuid })
 
     const query = `
       query CurrentSubmission {
@@ -68,7 +68,6 @@ describe('Submission', () => {
           source
           submissionMeta {
             stage
-            createdBy
             author {
               firstName
               lastName
