@@ -35,12 +35,7 @@ const MoreButton = ({
 
 const MAX_EXCLUDED_EDITORS = 2
 
-const ReviewerSuggestions = ({
-  handleSubmit,
-  values,
-  setValues,
-  setFieldValue,
-}) => (
+const ReviewerSuggestions = ({ handleSubmit, values, setFieldValue }) => (
   <form noValidate onSubmit={handleSubmit}>
     <ProgressBar currentStep={3} />
 
@@ -132,8 +127,8 @@ const ReviewerSuggestions = ({
 
     <Declaration />
 
-    <Button primary type="submit">
-      Next
+    <Button data-test-id="next" primary type="submit">
+      Submit
     </Button>
     <ButtonLink to="/submit/metadata">Back</ButtonLink>
   </form>

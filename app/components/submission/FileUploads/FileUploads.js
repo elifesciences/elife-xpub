@@ -26,7 +26,7 @@ const FileUploads = () => (
       </Box>
     </Flex>
 
-    <ButtonLink primary to="/submit/metadata">
+    <ButtonLink data-test-id="next" primary to="/submit/metadata">
       Next
     </ButtonLink>
     <ButtonLink to="/submit">Back</ButtonLink>

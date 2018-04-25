@@ -1,10 +1,12 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import ButtonLink from '../ui/atoms/ButtonLink'
 
 const Dashboard = () => (
   <div>
     <h1>Dashboard Dummy Page</h1>
-    <Link to="/submit">Submit a manuscript</Link>
+    <ButtonLink data-test-id="submit" primary to="/submit">
+      Submit a manuscript
+    </ButtonLink>
   </div>
 )
 
