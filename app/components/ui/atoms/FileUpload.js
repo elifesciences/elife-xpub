@@ -3,15 +3,11 @@ import PropTypes from 'prop-types'
 import { Flex, Box } from 'grid-styled'
 import styled from 'styled-components'
 import Dropzone from 'react-dropzone'
-import { th } from '@pubsweet/ui'
+import { ErrorText, th } from '@pubsweet/ui'
 import { get } from 'lodash'
 
 const StyledDropzone = styled(Dropzone)`
   border-style: dashed;
-`
-
-const Error = styled.div`
-  color: ${th('colorError')};
 `
 
 const Instruction = styled.div``
@@ -36,9 +32,9 @@ const FileUpload = ({ onDrop, conversion, instruction, ...props }) => (
       <Box width={1}>
         <Instruction>{instruction}</Instruction>
         {conversion.error ? (
-          <Error>
+          <ErrorText>
             {get(conversion, 'error.message', 'Error Uploading File')}
-          </Error>
+          </ErrorText>
         ) : (
           conversion.completed && <Confirmation>Upload Successful</Confirmation>
         )}

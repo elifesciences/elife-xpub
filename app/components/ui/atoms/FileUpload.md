@@ -19,6 +19,6 @@ Conversion failed
 
 ```
 const onDrop = (files) => console.log(files);
-const conversion = {error: {message: 'Conversion failed'}};
+const conversion = {error: new Error('Conversion failed')};
 <FileUpload onDrop={onDrop} conversion={conversion} instruction = {'Upload file'} />
 ```

@@ -47,10 +47,16 @@ test('Happy path', async t => {
 
   // file uploads
   await t
+    .typeText(
+      '[name=coverLetter] div[contenteditable=true]',
+      'Please consider this for publication',
+    )
     .setFilesToUpload(
       '[data-test-id=upload]>input',
       './fixtures/dummy-manuscript.docx',
     )
+    // wait for editor onChange
+    .wait(1000)
     .click('[data-test-id=next]')
 
   // metadata
