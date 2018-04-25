@@ -6,8 +6,8 @@ module.exports = {
       cfg => `http://localhost:${cfg['pubsweet-server'].port}`,
     ),
     secret: 'not very secret',
+    graphiql: true,
   },
-  graphiql: true,
   dbManager: {
     username: 'admin',
     password: 'password',
