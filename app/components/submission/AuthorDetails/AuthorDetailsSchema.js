@@ -28,17 +28,7 @@ const schema = yup.object().shape({
   }),
 })
 
-const empty = {
-  __typename: 'Submission',
-  firstName: '',
-  lastName: '',
-  email: '',
-  institution: '',
-  assignee: null,
-}
-
-const emptyAssignee = {
-  __typename: 'Assignee',
+const emptyPerson = {
   firstName: '',
   lastName: '',
   email: '',
@@ -48,15 +38,12 @@ const emptyAssignee = {
 const clientStateConfig = {
   resolvers: {
     Mutation: {
-      updateCurrentSubmission: (_, { input }, { cache }) => {
+      updateSubmissionLocal: (_, { input }, { cache }) => {
         cache.writeData({ data: { currentSubmission: input } })
         return null
       },
     },
   },
-  defaults: {
-    currentSubmission: empty,
-  },
 }
 
-export { schema, empty, emptyAssignee, clientStateConfig }
+export { schema, emptyPerson, clientStateConfig }

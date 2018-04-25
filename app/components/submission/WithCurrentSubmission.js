@@ -9,12 +9,21 @@ export const GET_CURRENT_SUBMISSION = gql`
       title
       source
       submissionMeta {
+        coverLetter
         author {
           firstName
           lastName
           email
           institution
         }
+        displayCorrespondent
+        correspondent {
+          firstName
+          lastName
+          email
+          institution
+        }
+        stage
       }
     }
   }
@@ -27,12 +36,21 @@ const CREATE_SUBMISSION = gql`
       title
       source
       submissionMeta {
+        coverLetter
         author {
           firstName
           lastName
           email
           institution
         }
+        displayCorrespondent
+        correspondent {
+          firstName
+          lastName
+          email
+          institution
+        }
+        stage
       }
     }
   }
@@ -43,6 +61,7 @@ class CreateSubmissionWrapper extends React.Component {
     this.props.createSubmission()
   }
   render() {
+    console.log(this.props.data)
     return this.props.children(this.props.data)
   }
 }
@@ -56,7 +75,7 @@ const WithCurrentSubmission = ({ children }) => (
         return <div>{error.message}</div>
       }
 
-      if (!data.currentSubmission.id) {
+      if (!data.currentSubmission) {
         return (
           <Mutation mutation={CREATE_SUBMISSION}>
             {(createSubmission, mutationData) => (

@@ -2,7 +2,14 @@ A form for entering personal information about the author of the paper being sub
 
 ```js
 const { Formik } = formik
-const { schema, empty } = require('./AuthorDetailsSchema')
+const { schema, emptyPerson } = require('./AuthorDetailsSchema')
+const empty = {
+  submissionMeta: {
+    displayCorrespondent: false,
+    author: emptyPerson,
+    correspondent: emptyPerson,
+  },
+}
 ;<Formik
   component={AuthorDetails}
   initialValues={empty}
