@@ -17,7 +17,6 @@ const userData = {
 
 const manuscript = {
   title: 'title',
-  type: 'manuscript',
   source: 'source',
   submissionMeta: {
     stage: 'INITIAL',
@@ -67,7 +66,6 @@ describe('Submission', () => {
           id
           title
           source
-          type
           submissionMeta {
             stage
             createdBy

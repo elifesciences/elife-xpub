@@ -1,4 +1,3 @@
-/** @jest-environment @elife/jest-environment-db */
 const express = require('express')
 const supertest = require('supertest')
 const nock = require('nock')
