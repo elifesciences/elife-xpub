@@ -83,4 +83,34 @@ describe('Submission', () => {
     expect(body.errors).toBeUndefined()
     expect(body.data.currentSubmission).toMatchObject(expectedManuscript)
   })
+
+  it('Returns empty object when user does not have any created manuscripts', async () => {
+    const dbManuscript = _.merge({}, manuscript, {
+      submissionMeta: { createdBy: 'b0baef74-19b1-45ab-b09d-4bfda191d8b4' },
+    })
+    await save(dbManuscript)
+
+    const query = `
+      query CurrentSubmission {
+        currentSubmission {
+          id
+          title
+          source
+          submissionMeta {
+            stage
+            author {
+              firstName
+              lastName
+              email
+              institution
+            }
+          }
+        }
+      }
+    `
+
+    const { body } = await request(query)
+    expect(body.errors).toBeUndefined()
+    expect(body.data.currentSubmission).toBe(null)
+  })
 })
