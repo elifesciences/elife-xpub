@@ -5,7 +5,7 @@ import FileUpload from '../../ui/atoms/FileUpload'
 import ButtonLink from '../../ui/atoms/ButtonLink'
 import ProgressBar from '../ProgressBar'
 
-const FileUploads = () => (
+const FileUploads = ({ onDrop, conversion }) => (
   <React.Fragment>
     <ProgressBar currentStep={1} />
 
@@ -20,8 +20,9 @@ const FileUploads = () => (
       </Box>
       <Box mb={3} width={1}>
         <FileUpload
+          conversion={conversion}
           instruction="Drag and drop or click to upload your cover letter"
-          onDrop={x => x}
+          onDrop={onDrop}
         />
       </Box>
     </Flex>
