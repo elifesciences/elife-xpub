@@ -11,13 +11,14 @@ import theme from '@pubsweet/elife-theme'
 import Routes from './routes'
 import * as AuthorDetailsSchema from './components/submission/AuthorDetails/AuthorDetailsSchema'
 
+const pixelGridUnit = parseInt(theme.gridUnit, 10)
 theme.space = [
   0,
-  theme.gridUnit / 4,
-  theme.gridUnit / 2,
-  theme.gridUnit,
-  theme.gridUnit * 2,
-  theme.gridUnit * 4,
+  pixelGridUnit / 4,
+  pixelGridUnit / 2,
+  pixelGridUnit,
+  pixelGridUnit * 2,
+  pixelGridUnit * 4,
 ]
 
 const history = createHistory()

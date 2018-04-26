@@ -1,12 +1,8 @@
 import React from 'react'
 import { Route, Switch } from 'react-router-dom'
 
-import {
-  AppBar,
-  AuthenticatedComponent,
-  Dashboard,
-  LoginPage,
-} from './components'
+import { AuthenticatedComponent, Dashboard, LoginPage } from './components'
+import Layout from './components/global/Layout'
 import SubmissionPage from './components/submission/SubmissionPage'
 import ManuscriptPage from './components/manuscript/ManuscriptPage'
 
@@ -14,12 +10,12 @@ const Routes = () => (
   <Switch>
     <Route component={LoginPage} path="/login" />
     <AuthenticatedComponent>
-      <AppBar />
-      <Switch>
-        <Route component={SubmissionPage} path="/submit" />
-        <Route component={ManuscriptPage} path="/manuscript" />
-        <Route component={Dashboard} />
-      </Switch>
+      <Layout>
+        <Switch>
+          <Route component={SubmissionPage} path="/submit" />
+          <Route component={Dashboard} />
+        </Switch>
+      </Layout>
     </AuthenticatedComponent>
   </Switch>
 )

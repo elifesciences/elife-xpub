@@ -7,7 +7,7 @@ import { CURRENT_USER } from './queries'
 
 const ElifeAppBar = ({ history, currentUser }) => (
   <AppBar
-    brand="eLife"
+    brand={<img alt="eLife" src="/assets/elife-logo.png" />}
     navLinkComponents={[<Link to="/">Dashboard</Link>]}
     onLogoutClick={() => {
       window.localStorage.removeItem('token')
