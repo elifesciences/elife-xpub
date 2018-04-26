@@ -13,7 +13,7 @@ module.exports = {
   ],
   webpackConfig: {
     module: {
-      rules: require('./webpack/rules.development.js'),
+      rules: require('./webpack/rules.js'),
     },
   },
   context: {

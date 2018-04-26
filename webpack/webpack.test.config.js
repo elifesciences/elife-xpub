@@ -2,7 +2,7 @@ const config = require('config')
 const path = require('path')
 const webpack = require('webpack')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
-const rules = require('./rules.development')
+const rules = require('./rules')
 const resolve = require('./common-resolve')
 
 module.exports = [

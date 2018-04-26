@@ -15,6 +15,7 @@ module.exports = {
     port: 3000,
     logger,
     uploads: 'uploads',
+    enableExperimentalGraphql: true,
     typeDefs: `
       type Manuscript {
         id: ID!
