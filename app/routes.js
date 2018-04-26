@@ -8,6 +8,7 @@ import {
   LoginPage,
 } from './components'
 import SubmissionPage from './components/submission/SubmissionPage'
+import ManuscriptPage from './components/manuscript/ManuscriptPage'
 
 const Routes = () => (
   <Switch>
@@ -16,6 +17,7 @@ const Routes = () => (
       <AppBar />
       <Switch>
         <Route component={SubmissionPage} path="/submit" />
+        <Route component={ManuscriptPage} path="/manuscript" />
         <Route component={Dashboard} />
       </Switch>
     </AuthenticatedComponent>
