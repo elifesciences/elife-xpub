@@ -9,7 +9,7 @@ import ButtonLink from '../../ui/atoms/ButtonLink'
 import Textarea from '../../ui/atoms/Textarea'
 import ProgressBar from '../ProgressBar'
 
-const Manuscript = ({ handleSubmit, values }) => (
+const ManuscriptMetadata = ({ handleSubmit, values }) => (
   <form noValidate onSubmit={handleSubmit}>
     <ProgressBar currentStep={2} />
 
@@ -94,4 +94,4 @@ const Manuscript = ({ handleSubmit, values }) => (
   </form>
 )
 
-export default Manuscript
+export default ManuscriptMetadata
