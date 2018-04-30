@@ -20,7 +20,6 @@ class AuthorDetails extends React.Component {
   }
 
   get isAssigned() {
-    /* eslint eqeqeq: ["error", "always", {"null": "ignore"}] */
     return this.props.values.assignee !== null
   }
 
