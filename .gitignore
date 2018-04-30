@@ -1,4 +1,5 @@
 *.log
+package-lock.json
 .bash_history
 .env
 .env.*

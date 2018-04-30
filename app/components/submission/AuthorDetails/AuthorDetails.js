@@ -1,7 +1,8 @@
 import React from 'react'
 import { Flex, Box } from 'grid-styled'
 
-import { Button, Heading, H1 } from '@pubsweet/ui'
+import { Button, Heading, H1, Checkbox } from '@pubsweet/ui'
+
 import ValidatedField from '../../ui/atoms/ValidatedField'
 
 import { emptyAssignee } from './AuthorDetailsSchema'
@@ -13,6 +14,14 @@ class AuthorDetails extends React.Component {
 
     this.openAssigneeForm = this.openAssigneeForm.bind(this)
     this.closeAssigneeForm = this.closeAssigneeForm.bind(this)
+    this.handleNotCorrespondingAuthor = this.handleNotCorrespondingAuthor.bind(
+      this,
+    )
+  }
+
+  get isAssigned() {
+    /* eslint eqeqeq: ["error", "always", {"null": "ignore"}] */
+    return this.props.values.assignee !== null
   }
 
   openAssigneeForm() {
@@ -22,6 +31,14 @@ class AuthorDetails extends React.Component {
   closeAssigneeForm() {
     this.props.setFieldValue('assignee', null)
     this.props.setFieldTouched('assignee', false)
+  }
+
+  handleNotCorrespondingAuthor() {
+    if (!this.isAssigned) {
+      this.openAssigneeForm()
+    } else {
+      this.closeAssigneeForm()
+    }
   }
 
   render() {
@@ -56,19 +73,26 @@ class AuthorDetails extends React.Component {
 
         <Flex>
           <Box width={1}>
-            {values.assignee ? (
-              <AssigneeForm handleClose={this.closeAssigneeForm} />
-            ) : (
-              <Button onClick={this.openAssigneeForm}>
-                Assign a colleague to handle this submission
-              </Button>
-            )}
+            <Checkbox
+              checked={this.isAssigned}
+              label="I am not the corresponding author"
+              name="cbNotCorrespondingAuthor"
+              onChange={this.handleNotCorrespondingAuthor}
+            />
           </Box>
         </Flex>
 
+        {values.assignee && (
+          <Flex>
+            <Box width={1}>
+              <AssigneeForm />
+            </Box>
+          </Flex>
+        )}
+
         <Flex>
           <Box width={1}>
-            <Button data-test-id="next" primary type="submit">
+            <Button primary type="submit">
               Next
             </Button>
           </Box>
@@ -80,25 +104,23 @@ class AuthorDetails extends React.Component {
 
 const AssigneeForm = ({ handleClose }) => (
   <React.Fragment>
-    <Heading level={3}>Assignee for correspondence</Heading>
+    <Box p={20} width={1}>
+      <Heading level={3}>Assignee for correspondence</Heading>
+      <Flex>
+        <Box width={1 / 2}>
+          <ValidatedField label="First name" name="assignee.firstName" />
+        </Box>
+        <Box width={1 / 2}>
+          <ValidatedField label="Last name" name="assignee.lastName" />
+        </Box>
+      </Flex>
 
-    <Flex>
-      <Box width={1 / 2}>
-        <ValidatedField label="First name" name="assignee.firstName" />
-      </Box>
-      <Box width={1 / 2}>
-        <ValidatedField label="Last name" name="assignee.lastName" />
-      </Box>
-    </Flex>
-
-    <Flex>
-      <Box width={1 / 2}>
-        <ValidatedField label="Email" name="assignee.email" />
-      </Box>
-      <Box width={1 / 2}>
-        <Button onClick={handleClose}>Remove assignment</Button>
-      </Box>
-    </Flex>
+      <Flex>
+        <Box width={1 / 2}>
+          <ValidatedField label="Email" name="assignee.email" />
+        </Box>
+      </Flex>
+    </Box>
   </React.Fragment>
 )
 
