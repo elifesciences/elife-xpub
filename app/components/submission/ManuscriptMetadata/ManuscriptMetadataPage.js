@@ -11,7 +11,7 @@ export default () => (
       <Formik
         component={ManuscriptMetadata}
         initialValues={empty}
-        onSubmit={() => history.push('/')}
+        onSubmit={() => history.push('/submit/suggestions')}
         validationSchema={schema}
       />
     )}
