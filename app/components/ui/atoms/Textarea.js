@@ -45,17 +45,11 @@ class Textarea extends React.Component {
     this.inputId = `textarea-${Math.round(Math.random() * 1e12).toString(36)}`
   }
   render() {
-    const { label, value = '', name, readonly, ...props } = this.props
+    const { label, value = '', readonly, ...props } = this.props
     return (
       <Root>
         {label && <Label htmlFor={this.inputId}>{label}</Label>}
-        <Input
-          id={this.inputId}
-          name={name}
-          readOnly={readonly}
-          value={value}
-          {...props}
-        />
+        <Input id={this.inputId} readOnly={readonly} value={value} {...props} />
       </Root>
     )
   }
