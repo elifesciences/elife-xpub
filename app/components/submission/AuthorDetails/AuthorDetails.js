@@ -41,7 +41,7 @@ class AuthorDetails extends React.Component {
   }
 
   render() {
-    const { handleSubmit, values } = this.props
+    const { handleSubmit } = this.props
 
     return (
       <form noValidate onSubmit={handleSubmit}>
@@ -66,7 +66,7 @@ class AuthorDetails extends React.Component {
             />
           </Box>
           <Box width={1 / 2}>
-            <ValidatedField label="Institute" name="institute" />
+            <ValidatedField label="Institution" name="institution" />
           </Box>
         </Flex>
 
@@ -81,7 +81,7 @@ class AuthorDetails extends React.Component {
           </Box>
         </Flex>
 
-        {values.assignee && (
+        {this.isAssigned && (
           <Flex>
             <Box width={1}>
               <AssigneeForm />
@@ -102,25 +102,26 @@ class AuthorDetails extends React.Component {
 }
 
 const AssigneeForm = ({ handleClose }) => (
-  <React.Fragment>
-    <Box p={20} width={1}>
-      <Heading level={3}>Assignee for correspondence</Heading>
-      <Flex>
-        <Box width={1 / 2}>
-          <ValidatedField label="First name" name="assignee.firstName" />
-        </Box>
-        <Box width={1 / 2}>
-          <ValidatedField label="Last name" name="assignee.lastName" />
-        </Box>
-      </Flex>
+  <Box p={3} width={1}>
+    <Heading level={3}>Assignee for correspondence</Heading>
+    <Flex>
+      <Box width={1 / 2}>
+        <ValidatedField label="First name" name="assignee.firstName" />
+      </Box>
+      <Box width={1 / 2}>
+        <ValidatedField label="Last name" name="assignee.lastName" />
+      </Box>
+    </Flex>
 
-      <Flex>
-        <Box width={1 / 2}>
-          <ValidatedField label="Email" name="assignee.email" />
-        </Box>
-      </Flex>
-    </Box>
-  </React.Fragment>
+    <Flex>
+      <Box width={1 / 2}>
+        <ValidatedField label="Email" name="assignee.email" />
+      </Box>
+      <Box width={1 / 2}>
+        <ValidatedField label="Institution" name="institution" />
+      </Box>
+    </Flex>
+  </Box>
 )
 
 export default AuthorDetails
