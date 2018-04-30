@@ -2,6 +2,35 @@ const uuid = require('uuid')
 const Model = require('pubsweet-server/src/models/Model')
 const db = require('pubsweet-server/src/db')
 
+const selectAll = async () => {
+  /**
+   * TODO - delete this
+   * return everything in dbs
+   */
+  const { rows } = await db.query(`SELECT * FROM entities`)
+  return rows
+}
+
+const remove = async id => {
+  /**
+   * TODO - delete this
+   * delete from entities after id
+   */
+  await db.query('DELETE FROM entities WHERE id = $1', [id])
+}
+
+const selectId = async id => {
+  /**
+   * TODO - delete/refactor this
+   * selects from entities after id
+   */
+  const { rows } = await db.query(
+    `SELECT id, data FROM entities WHERE id = $1`,
+    [id],
+  )
+  return rows
+}
+
 /**
  * TODO
  * functions here should have sanity checks in the future
@@ -105,4 +134,7 @@ module.exports = {
   update,
   checkPermission,
   getOrcidData,
+  remove,
+  selectAll,
+  selectId,
 }

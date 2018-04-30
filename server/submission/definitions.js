@@ -30,15 +30,14 @@ const typeDefs = `
       author: Person
       displayCorrespondent: Boolean
       correspondent: Person
-      createdBy: String
       stage: SubmissionStage
     }
     input SubmissionMetaInput {
       coverLetter: String
-      author: PersonInput!
+      author: PersonInput
       displayCorrespondent: Boolean
       correspondent: PersonInput
-      stage: SubmissionStage!
+      stage: SubmissionStage
     }
     type Person {
       firstName: String
