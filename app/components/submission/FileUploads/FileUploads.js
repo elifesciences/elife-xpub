@@ -21,6 +21,7 @@ const FileUploads = ({ onDrop, conversion }) => (
       <Box mb={3} width={1}>
         <FileUpload
           conversion={conversion}
+          data-test-id="upload"
           instruction="Drag and drop or click to upload your cover letter"
           onDrop={onDrop}
         />

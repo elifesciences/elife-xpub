@@ -42,10 +42,15 @@ test('Happy path', async t => {
     .typeText('[name=lastName]', 'Author')
     .typeText('[name=email]', 'anne.author@life.ac.uk')
     .typeText('[name=institute]', 'University of Life')
-    .click('[data-test-id=next')
+    .click('[data-test-id=next]')
 
   // file uploads
-  await t.click('[data-test-id=next]')
+  await t
+    .setFilesToUpload(
+      '[data-test-id=upload]>input',
+      './fixtures/dummy-manuscript.docx',
+    )
+    .click('[data-test-id=next]')
 
   // metadata
   await t.click('[data-test-id=next]')

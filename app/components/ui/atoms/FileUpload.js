@@ -26,10 +26,11 @@ const CentredFlex = styled(Flex)`
   align-items: center;
 `
 
-const FileUpload = ({ onDrop, conversion, instruction }) => (
+const FileUpload = ({ onDrop, conversion, instruction, ...props }) => (
   <StyledDropzone
     accept="application/vnd.openxmlformats-officedocument.wordprocessingml.document"
     onDrop={onDrop}
+    {...props}
   >
     <CentredFlex>
       <Box width={1}>
