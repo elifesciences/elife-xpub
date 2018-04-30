@@ -3,9 +3,7 @@ import yup from 'yup'
 const schema = yup.object().shape({
   title: yup.string().required('Title is required'),
   metadata: yup.object().shape({
-    articleType: yup
-      .string()
-      .oneOf(['research-article', 'feature'], 'Article type is required'),
+    articleType: yup.string().required('Article type is required'),
     discussedPreviously: yup.bool(),
     discussion: yup.string().when('discussedPreviously', {
       is: true,
