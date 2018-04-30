@@ -92,7 +92,7 @@ class AuthorDetails extends React.Component {
 
         <Flex>
           <Box width={1}>
-            <Button primary type="submit">
+            <Button data-test-id="next" primary type="submit">
               Next
             </Button>
           </Box>
