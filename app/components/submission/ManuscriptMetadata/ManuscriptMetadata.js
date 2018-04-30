@@ -89,7 +89,7 @@ const ManuscriptMetadata = ({ handleSubmit, values, setFieldValue }) => (
       )}
     </CalloutBox>
 
-    <Button primary type="submit">
+    <Button data-test-id="next" primary to="/submit/suggestions">
       Next
     </Button>
     <ButtonLink to="/submit/upload">Back</ButtonLink>
