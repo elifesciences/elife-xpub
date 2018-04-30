@@ -5,8 +5,7 @@ const schema = yup.object().shape({
   metadata: yup.object().shape({
     articleType: yup
       .string()
-      .oneOf(['Research Article', 'Feature article'])
-      .required('Article type is required'),
+      .oneOf(['research-article', 'feature'], 'Article type is required'),
     discussedPreviously: yup.bool(),
     discussion: yup.string().when('discussedPreviously', {
       is: true,

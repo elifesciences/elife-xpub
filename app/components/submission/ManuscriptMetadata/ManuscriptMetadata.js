@@ -9,7 +9,7 @@ import ButtonLink from '../../ui/atoms/ButtonLink'
 import Textarea from '../../ui/atoms/Textarea'
 import ProgressBar from '../ProgressBar'
 
-const ManuscriptMetadata = ({ handleSubmit, values }) => (
+const ManuscriptMetadata = ({ handleSubmit, values, setFieldValue }) => (
   <form noValidate onSubmit={handleSubmit}>
     <ProgressBar currentStep={2} />
 
@@ -20,8 +20,10 @@ const ManuscriptMetadata = ({ handleSubmit, values }) => (
       component={Menu}
       label="Article type"
       name="metadata.articleType"
+      onBlur={value => setFieldValue('metadata.articleType', value)}
+      onChange={value => setFieldValue('metadata.articleType', value)}
       options={[
-        { value: 'research-article', label: 'Research Article' },
+        { value: 'research-article', label: 'Research article' },
         { value: 'feature', label: 'Feature article' },
       ]}
     />
