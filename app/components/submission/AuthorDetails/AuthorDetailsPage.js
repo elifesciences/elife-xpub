@@ -4,7 +4,7 @@ import { withRouter } from 'react-router-dom'
 import omitDeep from 'omit-deep-lodash'
 
 import AuthorDetails from './AuthorDetails'
-import WithCurrentSubmission from './WithCurrentSubmission'
+import WithCurrentSubmission from '../WithCurrentSubmission'
 import { schema } from './AuthorDetailsSchema'
 
 const AuthorDetailsPage = ({ history }) => (

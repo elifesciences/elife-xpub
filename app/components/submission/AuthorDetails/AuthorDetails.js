@@ -19,7 +19,7 @@ class AuthorDetails extends React.Component {
     )
   }
 
-  get isAssigned() {
+  get correspondentIsAssigned() {
     return this.props.values.submissionMeta.displayCorrespondent
   }
 
@@ -33,7 +33,7 @@ class AuthorDetails extends React.Component {
   }
 
   handleNotCorrespondingAuthor() {
-    if (!this.isAssigned) {
+    if (!this.correspondentIsAssigned) {
       this.openCorrespondentForm()
     } else {
       this.closeCorrespondentForm()
@@ -41,7 +41,7 @@ class AuthorDetails extends React.Component {
   }
 
   render() {
-    const { handleSubmit, values /* errors */ } = this.props
+    const { handleSubmit } = this.props
     return (
       <form noValidate onSubmit={handleSubmit}>
         <ProgressBar currentStep={0} />
@@ -81,7 +81,7 @@ class AuthorDetails extends React.Component {
         <Flex>
           <Box width={1}>
             <Checkbox
-              checked={this.isAssigned}
+              checked={this.correspondentIsAssigned}
               label="I am not the corresponding author"
               name="cbNotCorrespondingAuthor"
               onChange={this.handleNotCorrespondingAuthor}
@@ -89,10 +89,10 @@ class AuthorDetails extends React.Component {
           </Box>
         </Flex>
 
-        {this.isAssigned && (
+        {this.correspondentIsAssigned && (
           <Flex>
             <Box width={1}>
-              <AssigneeForm />
+              <CorrespondentForm />
             </Box>
           </Flex>
         )}
@@ -136,7 +136,10 @@ const CorrespondentForm = ({ handleClose }) => (
         />
       </Box>
       <Box width={1 / 2}>
-        <ValidatedField label="Institution" name="assignee.institution" />
+        <ValidatedField
+          label="Institution"
+          name="submissionMeta.correspondent.institution"
+        />
       </Box>
     </Flex>
   </Box>

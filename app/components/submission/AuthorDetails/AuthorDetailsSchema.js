@@ -9,27 +9,23 @@ const email = () =>
     .required('Email is required')
     .email('Must be a valid email address')
 
-const institution = () => yup.string().required('Institute is required')
+const institution = () => yup.string().required('Institution is required')
 
-const correspondent = () =>
+const author = () =>
   yup.object().shape({
     firstName: firstName(),
     lastName: lastName(),
     email: email(),
+    institution: institution(),
   })
 
 const schema = yup.object().shape({
   submissionMeta: yup.object().shape({
     displayCorrespondent: yup.boolean(),
-    author: yup.object().shape({
-      firstName: firstName(),
-      lastName: lastName(),
-      email: email(),
-      institution: institution(),
-    }),
+    author: author(),
     correspondent: yup.object().when('displayCorrespondent', {
       is: true,
-      then: correspondent(),
+      then: author(),
     }),
   }),
 })
