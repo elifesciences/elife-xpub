@@ -120,8 +120,8 @@ class WithCurrentSubmission extends React.Component {
 
     return (
       <Mutation mutation={UPDATE_SUBMISSION}>
-        {(updateSubmission, updateResult) =>
-          this.props.children(updateSubmission, updateResult, initialValues)
+        {updateSubmission =>
+          this.props.children(updateSubmission, initialValues)
         }
       </Mutation>
     )

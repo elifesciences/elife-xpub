@@ -79,6 +79,7 @@
     "history": "^4.7.2",
     "joi": "^10.0.6",
     "lodash": "^4.17.5",
+    "omit-deep-lodash": "^1.0.0",
     "prop-types": "^15.5.10",
     "pubsweet-client": "^2.4.0",
     "pubsweet-server": "^6.0.0",

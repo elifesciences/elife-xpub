@@ -24,12 +24,12 @@ class AuthorDetails extends React.Component {
   }
 
   openCorrespondentForm() {
-    this.props.setFieldValue('displayCorrespondent', true)
+    this.props.setFieldValue('submissionMeta.displayCorrespondent', true)
   }
   closeCorrespondentForm() {
-    this.props.setFieldValue('correspondent', emptyPerson)
-    this.props.setFieldValue('displayCorrespondent', false)
-    this.props.setFieldTouched('correspondent', false)
+    this.props.setFieldValue('submissionMeta.correspondent', emptyPerson)
+    this.props.setFieldValue('submissionMeta.displayCorrespondent', false)
+    this.props.setFieldTouched('submissionMeta.correspondent', false)
   }
 
   handleNotCorrespondingAuthor() {
@@ -41,7 +41,7 @@ class AuthorDetails extends React.Component {
   }
 
   render() {
-    const { handleSubmit } = this.props
+    const { handleSubmit, values /* errors */ } = this.props
     return (
       <form noValidate onSubmit={handleSubmit}>
         <ProgressBar currentStep={0} />
@@ -132,6 +132,7 @@ const CorrespondentForm = ({ handleClose }) => (
         <ValidatedField
           label="Email"
           name="submissionMeta.correspondent.email"
+          type="email"
         />
       </Box>
       <Box width={1 / 2}>

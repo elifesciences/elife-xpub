@@ -11,6 +11,13 @@ const email = () =>
 
 const institution = () => yup.string().required('Institute is required')
 
+const correspondent = () =>
+  yup.object().shape({
+    firstName: firstName(),
+    lastName: lastName(),
+    email: email(),
+  })
+
 const schema = yup.object().shape({
   submissionMeta: yup.object().shape({
     displayCorrespondent: yup.boolean(),
@@ -20,10 +27,9 @@ const schema = yup.object().shape({
       email: email(),
       institution: institution(),
     }),
-    correspondent: yup.object().shape({
-      firstName: firstName(),
-      lastName: lastName(),
-      email: email(),
+    correspondent: yup.object().when('displayCorrespondent', {
+      is: true,
+      then: correspondent(),
     }),
   }),
 })
