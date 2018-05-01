@@ -13,7 +13,7 @@ const GET_AUTHOR_DETAILS = gql`
       firstName
       lastName
       email
-      institute
+      institution
       assignee {
         firstName
         lastName

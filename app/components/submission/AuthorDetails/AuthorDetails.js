@@ -20,7 +20,9 @@ class AuthorDetails extends React.Component {
   }
 
   get isAssigned() {
-    return this.props.values.assignee !== null
+    // On page load the assignee is undefined, if it is unassigned it
+    // becomes null, see closeAssigneeForm(). Hence the truthy comparison.
+    return this.props.values.assignee != null
   }
 
   openAssigneeForm() {
@@ -118,7 +120,7 @@ const AssigneeForm = ({ handleClose }) => (
         <ValidatedField label="Email" name="assignee.email" />
       </Box>
       <Box width={1 / 2}>
-        <ValidatedField label="Institution" name="institution" />
+        <ValidatedField label="Institution" name="assignee.institution" />
       </Box>
     </Flex>
   </Box>

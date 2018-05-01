@@ -9,13 +9,13 @@ const email = () =>
     .required('Email is required')
     .email('Must be a valid email address')
 
-const institute = () => yup.string().required('Institute is required')
+const institution = () => yup.string().required('Institution is required')
 
 const schema = yup.object().shape({
   firstName: firstName(),
   lastName: lastName(),
   email: email(),
-  institute: institute(),
+  institution: institution(),
   assignee: yup
     .object()
     .nullable()
@@ -23,6 +23,7 @@ const schema = yup.object().shape({
       firstName: firstName(),
       lastName: lastName(),
       email: email(),
+      institution: institution(),
     }),
 })
 
@@ -31,7 +32,7 @@ const empty = {
   firstName: '',
   lastName: '',
   email: '',
-  institute: '',
+  institution: '',
   assignee: null,
 }
 
@@ -40,6 +41,7 @@ const emptyAssignee = {
   firstName: '',
   lastName: '',
   email: '',
+  institution: '',
 }
 
 const clientStateConfig = {

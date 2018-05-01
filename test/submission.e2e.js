@@ -41,7 +41,15 @@ test('Happy path', async t => {
     .typeText('[name=firstName]', 'Anne')
     .typeText('[name=lastName]', 'Author')
     .typeText('[name=email]', 'anne.author@life.ac.uk')
-    .typeText('[name=institute]', 'University of Life')
+    .typeText('[name=institution]', 'University of Life')
+    .click('[name=cbNotCorrespondingAuthor]')
+
+  // assignee details
+  await t
+    .typeText('[name=assignee\\.firstName]', 'A')
+    .typeText('[name=assignee\\.lastName]', 'Signee')
+    .typeText('[name=assignee\\.email]', 'a.signee@knocks.ac.uk')
+    .typeText('[name=assignee\\.institution]', 'University of Hard Knocks')
     .click('[data-test-id=next]')
 
   // file uploads
