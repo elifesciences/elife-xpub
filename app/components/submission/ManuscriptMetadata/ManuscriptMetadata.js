@@ -38,6 +38,7 @@ const ManuscriptMetadata = ({ handleSubmit, values, setFieldValue }) => (
     <ValidatedField label="Manuscript title" name="title" />
     <ValidatedField
       component={Menu}
+      data-test-id="articleType"
       label="Article type"
       name="metadata.articleType"
       onBlur={value => setFieldValue('metadata.articleType', value)}
