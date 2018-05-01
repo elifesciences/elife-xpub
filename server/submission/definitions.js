@@ -107,7 +107,7 @@ const resolvers = {
           author: {
             firstName: 'firstName',
             lastName: 'lastName',
-            email: 'email',
+            email: 'email@mailinator.com',
             institution: 'institution',
           },
         },

@@ -83,18 +83,18 @@ const UPDATE_SUBMISSION = gql`
 class WithCurrentSubmission extends React.Component {
   constructor() {
     super()
-    this.state = { error: undefined, data: undefined, loading: false }
+    this.state = { error: null, data: null, loading: true }
   }
   componentDidMount() {
     this.props.client
       .query({ query: GET_CURRENT_SUBMISSION })
       .then(({ data }) => {
         if (data.currentSubmission) {
-          return this.setState({ data, error: undefined, loading: false })
+          return this.setState({ data, error: null, loading: false })
         }
         return this.props.client
           .mutate({ mutation: CREATE_SUBMISSION })
-          .then(({ createData }) => {
+          .then(({ data: createData }) => {
             this.setState({
               data: createData,
               error: undefined,
@@ -102,10 +102,13 @@ class WithCurrentSubmission extends React.Component {
             })
           })
       })
-      .catch(error => this.setState({ error, data: undefined, loading: false }))
+      .catch(error => this.setState({ error, data: null, loading: false }))
   }
   render() {
-    const { loading, error } = this.state
+    const { loading, error, data } = this.state
+
+    const initialValues =
+      data && (data.currentSubmission || data.createSubmission)
 
     if (loading) {
       return <div>Loading...</div>
@@ -118,7 +121,7 @@ class WithCurrentSubmission extends React.Component {
     return (
       <Mutation mutation={UPDATE_SUBMISSION}>
         {(updateSubmission, updateResult) =>
-          this.props.children(updateSubmission, updateResult, this.state)
+          this.props.children(updateSubmission, updateResult, initialValues)
         }
       </Mutation>
     )

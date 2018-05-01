@@ -34,7 +34,7 @@ const emptyPerson = {
   email: '',
   institution: '',
 }
-
+/*
 const clientStateConfig = {
   resolvers: {
     Mutation: {
@@ -45,5 +45,5 @@ const clientStateConfig = {
     },
   },
 }
-
-export { schema, emptyPerson, clientStateConfig }
+*/
+export { schema, emptyPerson }

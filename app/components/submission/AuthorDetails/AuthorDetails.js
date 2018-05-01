@@ -5,36 +5,24 @@ import { Button, Heading, H1, Checkbox } from '@pubsweet/ui'
 
 import ValidatedField from '../../ui/atoms/ValidatedField'
 
-<<<<<<< HEAD:app/components/submission/AuthorDetails/AuthorDetails.js
-import { emptyAssignee } from './AuthorDetailsSchema'
+import { emptyPerson } from './AuthorDetailsSchema'
+
 import ProgressBar from '../ProgressBar'
 
 class AuthorDetails extends React.Component {
-  constructor() {
+  constructor(props) {
     super()
-
-    this.openAssigneeForm = this.openAssigneeForm.bind(this)
-    this.closeAssigneeForm = this.closeAssigneeForm.bind(this)
+    this.openCorrespondentForm = this.openCorrespondentForm.bind(this)
+    this.closeCorrespondentForm = this.closeCorrespondentForm.bind(this)
     this.handleNotCorrespondingAuthor = this.handleNotCorrespondingAuthor.bind(
       this,
     )
   }
 
   get isAssigned() {
-    // On page load the assignee is undefined, if it is unassigned it
-    // becomes null, see closeAssigneeForm(). Hence the truthy comparison.
-    return this.props.values.assignee != null
-=======
-import { emptyPerson } from './AuthorDetailsSchema'
-
-class AuthorDetails extends React.Component {
-  constructor(props) {
-    super(props.initialValues)
-    console.log(this.props)
-    this.openCorrespondentForm = this.openCorrespondentForm.bind(this)
-    this.closeCorrespondentForm = this.closeCorrespondentForm.bind(this)
->>>>>>> feat(submission): add more progress to storing state on frontend submission:app/components/submission/AuthorDetails.js
+    return this.props.values.submissionMeta.displayCorrespondent
   }
+
   openCorrespondentForm() {
     this.props.setFieldValue('displayCorrespondent', true)
   }
@@ -46,24 +34,15 @@ class AuthorDetails extends React.Component {
 
   handleNotCorrespondingAuthor() {
     if (!this.isAssigned) {
-      this.openAssigneeForm()
+      this.openCorrespondentForm()
     } else {
-      this.closeAssigneeForm()
+      this.closeCorrespondentForm()
     }
   }
 
   render() {
     const { handleSubmit } = this.props
-
-    /* function tst(event) { */
-    /*     console.log("next was clicked"); */
-    /*     //console.log(values); */
-    /*     console.log(arguments); */
-    /*     event.preventDefault(); */
-    /* } */
-
     return (
-      /* <form noValidate onSubmit={tst}> */
       <form noValidate onSubmit={handleSubmit}>
         <ProgressBar currentStep={0} />
 
@@ -92,35 +71,21 @@ class AuthorDetails extends React.Component {
             />
           </Box>
           <Box width={1 / 2}>
-<<<<<<< HEAD:app/components/submission/AuthorDetails/AuthorDetails.js
-            <ValidatedField label="Institution" name="institution" />
-=======
             <ValidatedField
               label="Institution"
               name="submissionMeta.author.institution"
             />
->>>>>>> feat(submission): add more progress to storing state on frontend submission:app/components/submission/AuthorDetails.js
           </Box>
         </Flex>
 
         <Flex>
           <Box width={1}>
-<<<<<<< HEAD:app/components/submission/AuthorDetails/AuthorDetails.js
             <Checkbox
               checked={this.isAssigned}
               label="I am not the corresponding author"
               name="cbNotCorrespondingAuthor"
               onChange={this.handleNotCorrespondingAuthor}
             />
-=======
-            {values.submissionMeta.displayCorrespondent ? (
-              <CorrespondentForm handleClose={this.closeCorrespondentForm} />
-            ) : (
-              <Button onClick={this.openCorrespondentForm}>
-                Assign a colleague to handle this submission
-              </Button>
-            )}
->>>>>>> feat(submission): add more progress to storing state on frontend submission:app/components/submission/AuthorDetails.js
           </Box>
         </Flex>
 
@@ -144,13 +109,8 @@ class AuthorDetails extends React.Component {
   }
 }
 
-<<<<<<< HEAD:app/components/submission/AuthorDetails/AuthorDetails.js
-const AssigneeForm = ({ handleClose }) => (
-  <Box p={3} width={1}>
-=======
 const CorrespondentForm = ({ handleClose }) => (
-  <React.Fragment>
->>>>>>> feat(submission): add more progress to storing state on frontend submission:app/components/submission/AuthorDetails.js
+  <Box p={3} width={1}>
     <Heading level={3}>Assignee for correspondence</Heading>
     <Flex>
       <Box width={1 / 2}>

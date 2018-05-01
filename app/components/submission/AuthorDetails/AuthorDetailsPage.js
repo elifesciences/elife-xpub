@@ -8,12 +8,19 @@ import { schema } from './AuthorDetailsSchema'
 
 const AuthorDetailsPage = ({ history }) => (
   <WithCurrentSubmission>
-    {(updateSubmission, { loading, error, data }, createResult) => (
+    {(updateSubmission, { loading, error, data }, initialValues) => (
       <Formik
         component={AuthorDetails}
-        initialValues={data.currentSubmission}
-        onSubmit={values => {
-          // console.log(values)
+        initialValues={initialValues}
+        onSubmit={(values, { setSubmitting }) => {
+          console.log(
+            '>>>>> app/components/submission/AuthorDetailsPage.js:16\n',
+            'values:',
+            values,
+          )
+          return updateSubmission()
+            .then(() => setSubmitting(false))
+            .then(() => history.push('/'))
         }}
         validationSchema={schema}
       />
