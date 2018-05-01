@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import replay from 'replay'
 import { Selector } from 'testcafe'
 import { dashboard, authorDetails } from './pageObjects'
