@@ -1,5 +1,5 @@
 import gql from 'graphql-tag'
-import { Query, Mutation } from 'react-apollo'
+import { withApollo, Mutation } from 'react-apollo'
 import React from 'react'
 
 export const GET_CURRENT_SUBMISSION = gql`
@@ -80,17 +80,37 @@ const UPDATE_SUBMISSION = gql`
   }
 `
 
-class CreateSubmissionWrapper extends React.Component {
+class WithCurrentSubmission extends React.Component {
+  constructor() {
+    super()
+    this.state = { error: undefined, data: undefined, loading: false }
+  }
   componentDidMount() {
-    this.props.createSubmission()
+    this.props.client
+      .query({ query: GET_CURRENT_SUBMISSION })
+      .then(({ data }) => {
+        if (data.currentSubmission) {
+          return this.setState({ data, error: undefined, loading: false })
+        }
+        return this.props.client
+          .mutate({ mutation: CREATE_SUBMISSION })
+          .then(({ createData }) => {
+            this.setState({
+              data: createData,
+              error: undefined,
+              loading: false,
+            })
+          })
+      })
+      .catch(error => this.setState({ error, data: undefined, loading: false }))
   }
   render() {
-    const { createResult } = this.props
-    const { loading, error } = createResult
+    const { loading, error } = this.state
 
     if (loading) {
       return <div>Loading...</div>
     }
+
     if (error) {
       return <div>{error.message}</div>
     }
@@ -98,49 +118,11 @@ class CreateSubmissionWrapper extends React.Component {
     return (
       <Mutation mutation={UPDATE_SUBMISSION}>
         {(updateSubmission, updateResult) =>
-          this.props.children(updateSubmission, updateResult, createResult)
+          this.props.children(updateSubmission, updateResult, this.state)
         }
       </Mutation>
     )
   }
 }
 
-const WithCurrentSubmission = ({ children }) => (
-  <Query query={GET_CURRENT_SUBMISSION}>
-    {getResult => {
-      const { loading, error, data } = getResult
-
-      if (loading) {
-        return <div>Loading...</div>
-      }
-
-      if (error) {
-        return <div>{error.message}</div>
-      }
-
-      if (!data.currentSubmission) {
-        return (
-          <Mutation mutation={CREATE_SUBMISSION}>
-            {(createSubmission, mutationResult) => (
-              <CreateSubmissionWrapper
-                createResult={mutationResult}
-                createSubmission={createSubmission}
-              >
-                {children}
-              </CreateSubmissionWrapper>
-            )}
-          </Mutation>
-        )
-      }
-      return (
-        <Mutation mutation={UPDATE_SUBMISSION}>
-          {(updateSubmission, updateResult) =>
-            children(updateSubmission, updateResult, getResult)
-          }
-        </Mutation>
-      )
-    }}
-  </Query>
-)
-
-export default WithCurrentSubmission
+export default withApollo(WithCurrentSubmission)
