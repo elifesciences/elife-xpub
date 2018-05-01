@@ -93,7 +93,14 @@ class WithCurrentSubmission extends React.Component {
           return this.setState({ data, error: null, loading: false })
         }
         return this.props.client
-          .mutate({ mutation: CREATE_SUBMISSION })
+          .mutate({
+            mutation: CREATE_SUBMISSION,
+            refetchQueries: [
+              {
+                query: GET_CURRENT_SUBMISSION,
+              },
+            ],
+          })
           .then(({ data: createData }) => {
             this.setState({
               data: createData,
