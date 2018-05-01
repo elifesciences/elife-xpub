@@ -56,20 +56,63 @@ const CREATE_SUBMISSION = gql`
   }
 `
 
+const UPDATE_SUBMISSION = gql`
+  mutation UpdateSubmission($data: ManuscriptInput!) {
+    updateSubmission(data: $data) {
+      id
+      title
+      submissionMeta {
+        author {
+          firstName
+          lastName
+          email
+          institution
+        }
+        displayCorrespondent
+        correspondent {
+          firstName
+          lastName
+          email
+          institution
+        }
+      }
+    }
+  }
+`
+
 class CreateSubmissionWrapper extends React.Component {
   componentDidMount() {
     this.props.createSubmission()
   }
   render() {
-    console.log(this.props.data)
-    return this.props.children(this.props.data)
+    const { createResult } = this.props
+    const { loading, error } = createResult
+
+    if (loading) {
+      return <div>Loading...</div>
+    }
+    if (error) {
+      return <div>{error.message}</div>
+    }
+
+    return (
+      <Mutation mutation={UPDATE_SUBMISSION}>
+        {(updateSubmission, updateResult) =>
+          this.props.children(updateSubmission, updateResult, createResult)
+        }
+      </Mutation>
+    )
   }
 }
 
 const WithCurrentSubmission = ({ children }) => (
   <Query query={GET_CURRENT_SUBMISSION}>
-    {({ loading, error, data }) => {
-      if (loading) return <div>Loading...</div>
+    {getResult => {
+      const { loading, error, data } = getResult
+
+      if (loading) {
+        return <div>Loading...</div>
+      }
 
       if (error) {
         return <div>{error.message}</div>
@@ -78,19 +121,24 @@ const WithCurrentSubmission = ({ children }) => (
       if (!data.currentSubmission) {
         return (
           <Mutation mutation={CREATE_SUBMISSION}>
-            {(createSubmission, mutationData) => (
+            {(createSubmission, mutationResult) => (
               <CreateSubmissionWrapper
+                createResult={mutationResult}
                 createSubmission={createSubmission}
-                data={mutationData}
               >
                 {children}
               </CreateSubmissionWrapper>
             )}
           </Mutation>
         )
-        // create submission
       }
-      return children(data)
+      return (
+        <Mutation mutation={UPDATE_SUBMISSION}>
+          {(updateSubmission, updateResult) =>
+            children(updateSubmission, updateResult, getResult)
+          }
+        </Mutation>
+      )
     }}
   </Query>
 )

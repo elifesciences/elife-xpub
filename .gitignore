@@ -1,5 +1,6 @@
 *.log
 package-lock.json
+.DS_Store
 .bash_history
 .env
 .env.*
