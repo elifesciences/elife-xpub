@@ -1,10 +1,7 @@
-<<<<<<< HEAD
 import replay from 'replay'
 import { Selector } from 'testcafe'
 import { dashboard, authorDetails } from './pageObjects'
 import setFixtureHooks from './helpers/set-fixture-hooks'
-
-replay.fixtures = `${__dirname}/http-mocks`
 
 const f = fixture('Submission')
 setFixtureHooks(f)
