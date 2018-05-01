@@ -1,38 +1,17 @@
 import replay from 'replay'
-import { Selector, ClientFunction } from 'testcafe'
-import { addUser } from '@pubsweet/db-manager'
-import authentication from 'pubsweet-server/src/authentication'
-import { startServer, setup, teardown } from './helpers/setup'
+import { Selector } from 'testcafe'
 import { dashboard } from './pageObjects'
+import authenticateFixture from './helpers/authenticate-fixture'
 
 replay.fixtures = `${__dirname}/http-mocks`
 
-const admin = {
-  username: 'tester',
-  email: 'tester@example.com',
-  password: 'password',
-  orcid: '0000-0001',
-  admin: true,
-}
-let token
-
-fixture('Submission')
-  .before(startServer)
-  .beforeEach(async () => {
-    await setup()
-    const user = await addUser(admin)
-    token = authentication.token.create(user)
-  })
-  .afterEach(teardown)
-
-const localStorageSet = ClientFunction((key, val) =>
-  localStorage.setItem(key, val),
-)
+const f = fixture('Submission')
+authenticateFixture(f)
 
 test('Happy path', async t => {
   // fake login by navigating to site and injecting token into local storage
   await t.navigateTo(dashboard.url)
-  await localStorageSet('token', token)
+  await t.ctx.localStorageSet(t.ctx.token)
 
   await t.navigateTo(dashboard.url).click('[data-test-id=submit]')
 
