@@ -3,27 +3,15 @@ const Model = require('pubsweet-server/src/models/Model')
 const db = require('pubsweet-server/src/db')
 
 const selectAll = async () => {
-  /**
-   * TODO - delete this
-   * return everything in dbs
-   */
   const { rows } = await db.query(`SELECT * FROM entities`)
   return rows
 }
 
 const remove = async id => {
-  /**
-   * TODO - delete this
-   * delete from entities after id
-   */
   await db.query('DELETE FROM entities WHERE id = $1', [id])
 }
 
 const selectId = async id => {
-  /**
-   * TODO - delete/refactor this
-   * selects from entities after id
-   */
   const { rows } = await db.query(
     `SELECT id, data FROM entities WHERE id = $1`,
     [id],
@@ -31,17 +19,7 @@ const selectId = async id => {
   return rows
 }
 
-/**
- * TODO
- * functions here should have sanity checks in the future
- */
-
 function manuscriptGqlToDb(manuscript, owner) {
-  /**
-   * converts manuscript from graphql schema to db schema
-   * for now this is the only place where the db schema for
-   * a manuscript is documented
-   */
   const manuscriptDb = { ...manuscript }
   delete manuscriptDb.id
   manuscriptDb.submissionMeta.createdBy = owner
@@ -50,9 +28,6 @@ function manuscriptGqlToDb(manuscript, owner) {
 }
 
 function manuscriptDbToGql(manuscriptDb, id) {
-  /**
-   * converts manuscript from db schema to graphql schema
-   */
   const manuscript = { ...manuscriptDb }
   manuscript.id = id
   delete manuscript.submissionMeta.createdBy
@@ -61,30 +36,16 @@ function manuscriptDbToGql(manuscriptDb, id) {
 }
 
 const save = async obj => {
-  /**
-   * saves generic object to db
-   */
   const id = uuid.v4()
   await db.query('INSERT INTO entities (id, data) VALUES ($1, $2)', [id, obj])
   return id
 }
 
 const update = async (obj, id) => {
-  /**
-   * updates generic object in db
-   * this should be moved to save in the future
-   */
   await db.query('UPDATE entities SET data = $2 WHERE id = $1', [id, obj])
 }
 
 const checkPermission = async (id, user) => {
-  /**
-   * checks if manuscript is owned by user and returns old data
-   * in db format (id, data)
-   *
-   * manuscript owner should be stored at top level in the future
-   * or be in sync with other models
-   */
   const { rows } = await db.query(
     `SELECT id, data FROM entities WHERE id = $1`,
     [id],
@@ -110,21 +71,18 @@ const select = async selector => {
 }
 
 const getOrcidData = async user =>
-  /**
-   * TODO
-   * get orcid data for user (orcid user id)
-   *
-   * @returns {object} - orcid data
-   *   {submissionMeta: {author: {firstName: "", lastName: "",
-   *      email: "", institution: ""}}}
-   */
-
+  /* TODO get orcid data for user (orcid user id)
+  /*
   /* const { rows } = await dbx.query( */
   /*   `SELECT id, data FROM entities WHERE id = $1`, */
   /*   [ctx.user], */
   /* ) */
-
-  ({})
+  ({
+    firstName: 'firstName',
+    lastName: 'lastName',
+    email: 'email@mailinator.com',
+    institution: 'institution',
+  })
 
 module.exports = {
   manuscriptGqlToDb,

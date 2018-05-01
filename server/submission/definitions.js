@@ -100,16 +100,9 @@ const resolvers = {
   },
   Mutation: {
     async createSubmission(_, { data }, ctx) {
-      // TODO get actual data from orcid
-      // const orcidData = db.getOrcidData(ctx.user);
       const orcidData = {
         submissionMeta: {
-          author: {
-            firstName: 'firstName',
-            lastName: 'lastName',
-            email: 'email@mailinator.com',
-            institution: 'institution',
-          },
+          author: db.getOrcidData(ctx.user),
         },
       }
       const manuscript = lodash.merge(emptyManuscript, orcidData)
@@ -119,18 +112,14 @@ const resolvers = {
       return manuscript
     },
     async updateSubmission(_, { data }, ctx) {
-      // check if user is authorized to update manuscript
       const { data: manuscriptDb } = await db.checkPermission(data.id, ctx.user)
 
-      // apply new changes to old manuscript
       const manuscript = db.manuscriptDbToGql(manuscriptDb, data.id)
       const newManuscript = lodash.merge(manuscript, data)
 
-      // update in db
       const newManuscriptDb = db.manuscriptGqlToDb(newManuscript, ctx.user)
       await db.update(newManuscriptDb, data.id)
 
-      // return updated manuscript to user
       return newManuscript
     },
   },
