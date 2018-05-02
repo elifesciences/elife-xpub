@@ -17,19 +17,15 @@ const schema = yup.object().shape({
     cosubmission: yup.bool(),
     cosubmissionTitle: yup
       .string()
-      .test('namehere', 'Article title/reference no. is required', function(
-        value,
-      ) {
-        const { cosubmission, cosubmissionId } = this.parent
-        return cosubmission && (value || cosubmissionId)
+      .test('namehere', 'Article title/reference no. is required', function() {
+        const { cosubmission, cosubmissionTitle, cosubmissionId } = this.parent
+        return !cosubmission || cosubmissionTitle || cosubmissionId
       }),
     cosubmissionId: yup
       .string()
-      .test('namehere', 'Article title/reference no. is required', function(
-        value,
-      ) {
-        const { cosubmission, cosubmissionTitle } = this.parent
-        return cosubmission && (value || cosubmissionTitle)
+      .test('namehere', 'Article title/reference no. is required', function() {
+        const { cosubmission, cosubmissionTitle, cosubmissionId } = this.parent
+        return !cosubmission || cosubmissionTitle || cosubmissionId
       }),
   }),
 })
