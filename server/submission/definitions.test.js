@@ -1,10 +1,16 @@
 const supertest = require('supertest')
+const _ = require('lodash')
 const app = require('pubsweet-server/src/').configureApp(require('express')())
 const { createTables } = require('@pubsweet/db-manager')
 const User = require('pubsweet-server/src/models/User')
 const authentication = require('pubsweet-server/src/authentication')
-const { save, select, selectId } = require('../db-helpers/')
-const _ = require('lodash')
+const {
+  save,
+  select,
+  selectId,
+  manuscriptGqlToDb,
+  manuscriptDbToGql,
+} = require('../db-helpers/')
 const { jsonToGraphQLQuery } = require('json-to-graphql-query')
 
 const userData = {
@@ -16,7 +22,6 @@ const getClient = async () => {
   const user = new User(userData)
   const { id: userId } = await user.save()
 
-  // TODO test send(query), send(mutation)
   const request = query =>
     supertest(app)
       .post('/graphql')
@@ -42,7 +47,6 @@ describe('Submission', () => {
       title: 'title',
       source: 'source',
       submissionMeta: {
-        createdBy: request.userId,
         stage: 'INITIAL',
         author: {
           firstName: 'Firstname',
@@ -52,7 +56,7 @@ describe('Submission', () => {
         },
       },
     }
-    await save(expectedManuscript)
+    await save(manuscriptGqlToDb(expectedManuscript, request.userId))
 
     // query to get it
     const query = {
@@ -76,9 +80,6 @@ describe('Submission', () => {
 
     const { body } = await request(graphqlQuery)
     expect(body.errors).toBeUndefined()
-
-    // get rid of createdBy
-    delete expectedManuscript.submissionMeta.createdBy
     expect(body.data.currentSubmission).toMatchObject(expectedManuscript)
   })
 
@@ -186,13 +187,10 @@ describe('Submission', () => {
 
   it('updateSubmission updates the current submission for user with data', async () => {
     // manuscript in db for current user
-    // TODO manuscriptToDb
     const manuscript = {
       title: 'title',
       source: 'source',
-      type: 'manuscript',
       submissionMeta: {
-        createdBy: request.userId,
         stage: 'INITIAL',
         author: {
           firstName: 'Firstname',
@@ -210,7 +208,7 @@ describe('Submission', () => {
         },
       },
     }
-    const id = await save(manuscript)
+    const id = await save(manuscriptGqlToDb(manuscript, request.userId))
     const newFormData = {
       data: {
         id,
@@ -250,10 +248,9 @@ describe('Submission', () => {
 
     // check new values in db
     const rows = await selectId(id)
-    // console.log(JSON.stringify(rows[0], null, 2));
     const expectedManuscript = _.merge(manuscript, newFormData.data)
-    // console.log(JSON.stringify(expectedManuscript, null, 2));
-    delete expectedManuscript.id
-    expect(rows[0].data).toMatchObject(expectedManuscript)
+    expect(manuscriptDbToGql(rows[0].data, id)).toMatchObject(
+      expectedManuscript,
+    )
   })
 })
