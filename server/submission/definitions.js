@@ -102,7 +102,7 @@ const resolvers = {
     async createSubmission(_, { data }, ctx) {
       const orcidData = {
         submissionMeta: {
-          author: db.getOrcidData(ctx.user),
+          author: await db.getOrcidData(ctx.user),
         },
       }
       const manuscript = lodash.merge(emptyManuscript, orcidData)
