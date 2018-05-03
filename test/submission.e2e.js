@@ -17,18 +17,36 @@ test('Happy path', async t => {
 
   // author details
   await t
-    .typeText('[name=firstName]', 'Anne')
-    .typeText('[name=lastName]', 'Author')
-    .typeText('[name=email]', 'anne.author@life.ac.uk')
-    .typeText('[name=institution]', 'University of Life')
+    .typeText('[name=submissionMeta\\.author\\.firstName]', 'Anne', {
+      replace: true,
+    })
+    .typeText('[name=submissionMeta\\.author\\.lastName]', 'Author', {
+      replace: true,
+    })
+    .typeText(
+      '[name=submissionMeta\\.author\\.email]',
+      'anne.author@life.ac.uk',
+      { replace: true },
+    )
+    .typeText(
+      '[name=submissionMeta\\.author\\.institution]',
+      'University of Life',
+      { replace: true },
+    )
     .click('[name=cbNotCorrespondingAuthor]')
 
-  // assignee details
+  // correspondent details
   await t
-    .typeText('[name=assignee\\.firstName]', 'A')
-    .typeText('[name=assignee\\.lastName]', 'Signee')
-    .typeText('[name=assignee\\.email]', 'a.signee@knocks.ac.uk')
-    .typeText('[name=assignee\\.institution]', 'University of Hard Knocks')
+    .typeText('[name=submissionMeta\\.correspondent\\.firstName]', 'A')
+    .typeText('[name=submissionMeta\\.correspondent\\.lastName]', 'Signee')
+    .typeText(
+      '[name=submissionMeta\\.correspondent\\.email]',
+      'a.signee@knocks.ac.uk',
+    )
+    .typeText(
+      '[name=submissionMeta\\.correspondent\\.institution]',
+      'University of Hard Knocks',
+    )
     .click('[data-test-id=next]')
 
   // file uploads
