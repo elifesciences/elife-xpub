@@ -2,82 +2,56 @@ import gql from 'graphql-tag'
 import { withApollo, Mutation } from 'react-apollo'
 import React from 'react'
 
+const manuscriptFragment = gql`
+  fragment WholeManuscript on Manuscript {
+    id
+    title
+    source
+    submissionMeta {
+      coverLetter
+      author {
+        firstName
+        lastName
+        email
+        institution
+      }
+      displayCorrespondent
+      correspondent {
+        firstName
+        lastName
+        email
+        institution
+      }
+      stage
+    }
+  }
+`
+
 export const GET_CURRENT_SUBMISSION = gql`
   query CurrentSubmission {
     currentSubmission {
-      id
-      title
-      source
-      submissionMeta {
-        coverLetter
-        author {
-          firstName
-          lastName
-          email
-          institution
-        }
-        displayCorrespondent
-        correspondent {
-          firstName
-          lastName
-          email
-          institution
-        }
-        stage
-      }
+      ...WholeManuscript
     }
   }
+  ${manuscriptFragment}
 `
 
 const CREATE_SUBMISSION = gql`
   mutation CreateSubmission {
     createSubmission {
-      id
-      title
-      source
-      submissionMeta {
-        coverLetter
-        author {
-          firstName
-          lastName
-          email
-          institution
-        }
-        displayCorrespondent
-        correspondent {
-          firstName
-          lastName
-          email
-          institution
-        }
-        stage
-      }
+      ...WholeManuscript
     }
   }
+  ${manuscriptFragment}
 `
 
 const UPDATE_SUBMISSION = gql`
   mutation UpdateSubmission($data: ManuscriptInput!) {
     updateSubmission(data: $data) {
-      id
-      title
-      submissionMeta {
-        author {
-          firstName
-          lastName
-          email
-          institution
-        }
-        displayCorrespondent
-        correspondent {
-          firstName
-          lastName
-          email
-          institution
-        }
-      }
+      ...WholeManuscript
     }
   }
+  ${manuscriptFragment}
 `
 
 class WithCurrentSubmission extends React.Component {

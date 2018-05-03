@@ -86,11 +86,6 @@ const emptyManuscript = {
 const resolvers = {
   Query: {
     async currentSubmission(_, vars, ctx) {
-      console.log(
-        '>>>>> server/submission/definitions.js:89\n',
-        'ctx:',
-        ctx.user,
-      )
       const rows = await db.select({
         'submissionMeta.createdBy': ctx.user,
         'submissionMeta.stage': 'INITIAL',
