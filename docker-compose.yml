@@ -19,10 +19,11 @@ services:
                     "API_ENDPOINT": "/api"
                 },
                 "pubsweet-server": {
+                    "baseUrl": "${PUBSWEET_BASEURL}",
                     "secret": "somesecret"
                 },
                 "password-reset": {
-                    "url": "localhost:3000/password-reset"
+                    "url": "${PUBSWEET_BASEURL}/password-reset"
                 },
                 "pubsweet-component-ink-backend": {
                     "inkEndpoint": "https://demo--ink.elifesciences.org",
