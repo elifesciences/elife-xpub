@@ -12,6 +12,7 @@ const {
   manuscriptDbToGql,
 } = require('../db-helpers/')
 const { jsonToGraphQLQuery } = require('json-to-graphql-query')
+const Joi = require('joi')
 
 const userData = {
   username: 'testuser',
@@ -25,7 +26,9 @@ const getClient = async () => {
   const request = query =>
     supertest(app)
       .post('/graphql')
-      .send({ query })
+      .send({
+        query: jsonToGraphQLQuery(query, { pretty: true }),
+      })
       .set('Accept', 'application/json')
       .set({ Authorization: `Bearer ${authentication.token.create(user)}` })
 
@@ -42,7 +45,6 @@ describe('Submission', () => {
   })
 
   it('Gets form data', async () => {
-    // manuscript in db
     const expectedManuscript = {
       title: 'title',
       source: 'source',
@@ -58,7 +60,6 @@ describe('Submission', () => {
     }
     await save(manuscriptGqlToDb(expectedManuscript, request.userId))
 
-    // query to get it
     const query = {
       query: {
         currentSubmission: {
@@ -76,9 +77,8 @@ describe('Submission', () => {
         },
       },
     }
-    const graphqlQuery = jsonToGraphQLQuery(query, { pretty: true })
 
-    const { body } = await request(graphqlQuery)
+    const { body } = await request(query)
     expect(body.errors).toBeUndefined()
     expect(body.data.currentSubmission).toMatchObject(expectedManuscript)
   })
@@ -102,19 +102,17 @@ describe('Submission', () => {
         },
       },
     }
-    const graphqlQuery = jsonToGraphQLQuery(query, { pretty: true })
-    const { body } = await request(graphqlQuery)
+    const { body } = await request(query)
     expect(body.errors).toBeUndefined()
     expect(body.data.currentSubmission).toBe(null)
   })
 
-  it('Returns empty object when user has no manuscripts in the db (db not empty)', async () => {
-    // add some manuscripts to db
+  it('Returns null object when user has no manuscripts in the db (db not empty)', async () => {
     await save({
       title: 'title',
       source: 'source',
       submissionMeta: {
-        createdBy: 'fake1',
+        createdBy: '9f72f2b8-bb4a-43fa-8b80-c7ac505c8c5f',
         stage: 'INITIAL',
         author: {
           firstName: 'Firstname 1',
@@ -157,10 +155,8 @@ describe('Submission', () => {
         },
       },
     }
-    const graphqlQuery = jsonToGraphQLQuery(query, { pretty: true })
 
-    // null for current user
-    const { body } = await request(graphqlQuery)
+    const { body } = await request(query)
     expect(body.errors).toBeUndefined()
     expect(body.data.currentSubmission).toBe(null)
   })
@@ -173,20 +169,66 @@ describe('Submission', () => {
         },
       },
     }
-    const graphqlQuery = jsonToGraphQLQuery(query, { pretty: true })
-    await request(graphqlQuery)
+    const { body } = await request(query)
 
-    // check db has manuscript
-    const rows = await select({
+    const manuscripts = await select({
       'submissionMeta.createdBy': request.userId,
       'submissionMeta.stage': 'INITIAL',
     })
-    expect(rows.length).toBeGreaterThan(0)
-    // TODO check for empty?
+    expect(manuscripts.length).toBeGreaterThan(0)
+    expect(manuscripts[0].id).toBe(body.data.createSubmission.id)
+
+    const schema = Joi.object()
+      .keys({
+        id: Joi.string().required(),
+        title: Joi.string()
+          .required()
+          .allow(''),
+        source: Joi.string()
+          .required()
+          .allow(''),
+        submissionMeta: {
+          coverLetter: Joi.string()
+            .required()
+            .allow(''),
+          author: {
+            firstName: Joi.string()
+              .required()
+              .allow(''),
+            lastName: Joi.string()
+              .required()
+              .allow(''),
+            email: Joi.string()
+              .required()
+              .allow(''),
+            institution: Joi.string()
+              .required()
+              .allow(''),
+          },
+          hasCorrespondent: Joi.boolean().required(),
+          correspondent: {
+            firstName: Joi.string()
+              .required()
+              .allow(''),
+            lastName: Joi.string()
+              .required()
+              .allow(''),
+            email: Joi.string()
+              .required()
+              .allow(''),
+            institution: Joi.string()
+              .required()
+              .allow(''),
+          },
+          stage: Joi.string().required(),
+        },
+      })
+      .required()
+    const { error } = Joi.validate(manuscripts[0], schema)
+    expect(error).toBeNull()
   })
 
   it('updateSubmission updates the current submission for user with data', async () => {
-    // manuscript in db for current user
     const manuscript = {
       title: 'title',
       source: 'source',
@@ -243,10 +285,8 @@ describe('Submission', () => {
         },
       },
     }
-    const graphqlQuery = jsonToGraphQLQuery(query, { pretty: true })
-    await request(graphqlQuery)
+    await request(query)
 
-    // check new values in db
     const rows = await selectId(id)
     const expectedManuscript = _.merge(manuscript, newFormData.data)
     expect(manuscriptDbToGql(rows[0].data, id)).toMatchObject(
