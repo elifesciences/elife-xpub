@@ -40,7 +40,23 @@ test('Happy path', async t => {
     .click('[data-test-id=next]')
 
   // metadata
-  await t.click('[data-test-id=next]')
+  await t
+    .typeText(
+      '[name=title]',
+      'Inferring multi-scale neural mechanisms with brain networking modelling',
+    )
+    .click('[role=listbox] button')
+    .click(Selector('[role=option]').nth(0))
+    .click('[name="metadata.discussedPreviously"]')
+    .typeText(
+      '[name="metadata.discussion"]',
+      'Spoke to Bob about another article',
+    )
+    .click('[name="metadata.consideredPreviously"]')
+    .typeText('[name="metadata.previousArticle"]', '01234')
+    .click('[name="metadata.cosubmission"]')
+    .typeText('[name="metadata.cosubmissionTitle"]', '56789')
+    .click('[data-test-id=next]')
 
   // reviewer suggestions
   await t
