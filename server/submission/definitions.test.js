@@ -5,6 +5,7 @@ const User = require('pubsweet-server/src/models/User')
 const authentication = require('pubsweet-server/src/authentication')
 const { save, select, selectId } = require('../db-helpers/')
 const _ = require('lodash')
+const { jsonToGraphQLQuery } = require('json-to-graphql-query')
 
 const userData = {
   username: 'testuser',
@@ -54,24 +55,27 @@ describe('Submission', () => {
     await save(expectedManuscript)
 
     // query to get it
-    const query = `
-        query CurrentSubmission {
-          currentSubmission {
-            title
-            source
-            submissionMeta {
-              stage
-              author {
-                firstName
-                lastName
-                email
-                institution
-              }
-            }
-          }
-        }`
+    const query = {
+      query: {
+        currentSubmission: {
+          title: true,
+          source: true,
+          submissionMeta: {
+            stage: true,
+            author: {
+              firstName: true,
+              lastName: true,
+              email: true,
+              institution: true,
+            },
+          },
+        },
+      },
+    }
+    const graphqlQuery = jsonToGraphQLQuery(query, { pretty: true })
 
-    const { body } = await request(query)
+    // const { body } = await request(query)
+    const { body } = await request(graphqlQuery)
     expect(body.errors).toBeUndefined()
 
     // get rid of createdBy
@@ -80,24 +84,26 @@ describe('Submission', () => {
   })
 
   it('Returns empty object when there are no manuscripts in the db', async () => {
-    const query = `
-        query CurrentSubmission {
-          currentSubmission {
-            id
-            title
-            source
-            submissionMeta {
-              stage
-              author {
-                firstName
-                lastName
-                email
-                institution
-              }
-            }
-          }
-        }`
-    const { body } = await request(query)
+    const query = {
+      query: {
+        currentSubmission: {
+          id: true,
+          title: true,
+          source: true,
+          submissionMeta: {
+            stage: true,
+            author: {
+              firstName: true,
+              lastName: true,
+              email: true,
+              institution: true,
+            },
+          },
+        },
+      },
+    }
+    const graphqlQuery = jsonToGraphQLQuery(query, { pretty: true })
+    const { body } = await request(graphqlQuery)
     expect(body.errors).toBeUndefined()
     expect(body.data.currentSubmission).toBe(null)
   })
@@ -133,39 +139,42 @@ describe('Submission', () => {
       },
     })
 
-    const query = `
-        query CurrentSubmission {
-          currentSubmission {
-            id
-            title
-            source
-            submissionMeta {
-              stage
-              author {
-                firstName
-                lastName
-                email
-                institution
-              }
-            }
-          }
-        }`
+    const query = {
+      query: {
+        currentSubmission: {
+          id: true,
+          title: true,
+          source: true,
+          submissionMeta: {
+            stage: true,
+            author: {
+              firstName: true,
+              lastName: true,
+              email: true,
+              institution: true,
+            },
+          },
+        },
+      },
+    }
+    const graphqlQuery = jsonToGraphQLQuery(query, { pretty: true })
 
     // null for current user
-    const { body } = await request(query)
+    const { body } = await request(graphqlQuery)
     expect(body.errors).toBeUndefined()
     expect(body.data.currentSubmission).toBe(null)
   })
 
   it('createSubmission adds new manuscript to the db for current user with stage INITIAL', async () => {
-    const query = `
-            mutation CreateSubmission {
-                createSubmission {
-                    id
-                }
-            }
-        `
-    await request(query)
+    const query = {
+      mutation: {
+        createSubmission: {
+          id: true,
+        },
+      },
+    }
+    const graphqlQuery = jsonToGraphQLQuery(query, { pretty: true })
+    await request(graphqlQuery)
 
     // check db has manuscript
     const rows = await select({
@@ -203,8 +212,6 @@ describe('Submission', () => {
       },
     }
     const id = await save(manuscript)
-
-    // TODO better way to do this
     const newFormData = {
       data: {
         id,
@@ -226,68 +233,21 @@ describe('Submission', () => {
         },
       },
     }
-    const query = `
-            mutation {
-                updateSubmission(data: {
-                    id: "${id}",
-                    title: "${newFormData.data.title}",
-                    submissionMeta: {
-                        coverLetter: "${
-                          newFormData.data.submissionMeta.coverLetter
-                        }",
-                        author: {
-                            firstName: "${
-                              newFormData.data.submissionMeta.author.firstName
-                            }",
-                            lastName: "${
-                              newFormData.data.submissionMeta.author.lastName
-                            }",
-                            email: "${
-                              newFormData.data.submissionMeta.author.email
-                            }",
-                            institution: "${
-                              newFormData.data.submissionMeta.author.institution
-                            }"
-                        },
-                        correspondent: {
-                            firstName: "${
-                              newFormData.data.submissionMeta.correspondent
-                                .firstName
-                            }",
-                            lastName: "${
-                              newFormData.data.submissionMeta.correspondent
-                                .lastName
-                            }",
-                            email: "${
-                              newFormData.data.submissionMeta.correspondent
-                                .email
-                            }",
-                            institution: "${
-                              newFormData.data.submissionMeta.correspondent
-                                .institution
-                            }"
-                        }
-                    }
-                }) {
-                    id
-                }
-            }
-        `
-    /* const query = ` */
-    /*     mutation { */
-    /*         updateSubmission(data: ${JSON.stringify(newFormData.data)}) { */
-    /*             id */
-    /*         } */
-    /*     } */
-    /* `; */
-    /* const query = ` */
-    /*     mutation { */
-    /*         updateSubmission(data: ${newFormData.data}) { */
-    /*             id */
-    /*         } */
-    /*     } */
-    /* `; */
-    await request(query)
+    const query = {
+      mutation: {
+        updateSubmission: {
+          id: true,
+          __args: {
+            data: {
+              id,
+              ...newFormData.data,
+            },
+          },
+        },
+      },
+    }
+    const graphqlQuery = jsonToGraphQLQuery(query, { pretty: true })
+    await request(graphqlQuery)
 
     // check new values in db
     const rows = await selectId(id)
