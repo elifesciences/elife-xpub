@@ -1,6 +1,7 @@
 const uuid = require('uuid')
 const Model = require('pubsweet-server/src/models/Model')
 const db = require('pubsweet-server/src/db')
+const _ = require('lodash')
 
 const selectAll = async () => {
   const { rows } = await db.query(`SELECT * FROM entities`)
@@ -20,7 +21,7 @@ const selectId = async id => {
 }
 
 function manuscriptGqlToDb(manuscript, owner) {
-  const manuscriptDb = { ...manuscript }
+  const manuscriptDb = _.cloneDeep(manuscript)
   delete manuscriptDb.id
   manuscriptDb.submissionMeta.createdBy = owner
   manuscriptDb.type = 'manuscript'
@@ -28,7 +29,7 @@ function manuscriptGqlToDb(manuscript, owner) {
 }
 
 function manuscriptDbToGql(manuscriptDb, id) {
-  const manuscript = { ...manuscriptDb }
+  const manuscript = _.cloneDeep(manuscriptDb)
   manuscript.id = id
   delete manuscript.submissionMeta.createdBy
   delete manuscript.type
