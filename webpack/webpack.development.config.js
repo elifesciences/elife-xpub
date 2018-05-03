@@ -14,8 +14,8 @@ module.exports = [
     entry: {
       app: [
         'react-hot-loader/patch',
-        'webpack-hot-middleware/client?reload=true',
-        './app',
+        'webpack-hot-middleware/client',
+        './index',
       ],
     },
     output: {

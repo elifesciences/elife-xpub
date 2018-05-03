@@ -18,7 +18,7 @@ module.exports = [
     target: 'web',
     context: path.join(__dirname, '..', 'app'),
     entry: {
-      app: ['./app'],
+      app: ['./index'],
     },
     output: {
       path: path.join(__dirname, '..', '_build', 'assets'),
