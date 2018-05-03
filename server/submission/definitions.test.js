@@ -74,7 +74,6 @@ describe('Submission', () => {
     }
     const graphqlQuery = jsonToGraphQLQuery(query, { pretty: true })
 
-    // const { body } = await request(query)
     const { body } = await request(graphqlQuery)
     expect(body.errors).toBeUndefined()
 
