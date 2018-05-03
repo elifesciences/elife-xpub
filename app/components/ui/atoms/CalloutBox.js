@@ -10,7 +10,8 @@ const CalloutBox = styled(({ enabled, ...rest }) => <Box {...rest} />).attrs({
 })`
   border: ${th('borderWidth')} ${th('borderStyle')} ${th('borderColor')};
   border-radius: ${th('borderRadius')};
-  border-color: ${props => (props.enabled ? th('colorBorder') : 'transparent')};
+  border-color: ${({ enabled = true }) =>
+    enabled ? th('colorBorder') : 'transparent'};
 `
 
 export default CalloutBox
