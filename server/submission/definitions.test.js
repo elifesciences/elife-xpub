@@ -193,7 +193,7 @@ describe('Submission', () => {
           institution: 'institution',
         },
         coverLetter: '',
-        displayCorrespondent: false,
+        hasCorrespondent: false,
         correspondent: {
           firstName: '',
           lastName: '',

@@ -20,15 +20,15 @@ class AuthorDetails extends React.Component {
   }
 
   get correspondentIsAssigned() {
-    return this.props.values.submissionMeta.displayCorrespondent
+    return this.props.values.submissionMeta.hasCorrespondent
   }
 
   openCorrespondentForm() {
-    this.props.setFieldValue('submissionMeta.displayCorrespondent', true)
+    this.props.setFieldValue('submissionMeta.hasCorrespondent', true)
   }
   closeCorrespondentForm() {
     this.props.setFieldValue('submissionMeta.correspondent', emptyPerson)
-    this.props.setFieldValue('submissionMeta.displayCorrespondent', false)
+    this.props.setFieldValue('submissionMeta.hasCorrespondent', false)
     this.props.setFieldTouched('submissionMeta.correspondent', false)
   }
 

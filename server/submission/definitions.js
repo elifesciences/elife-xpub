@@ -28,14 +28,14 @@ const typeDefs = `
     type SubmissionMeta {
       coverLetter: String
       author: Person
-      displayCorrespondent: Boolean
+      hasCorrespondent: Boolean
       correspondent: Person
       stage: SubmissionStage
     }
     input SubmissionMetaInput {
       coverLetter: String
       author: PersonInput
-      displayCorrespondent: Boolean
+      hasCorrespondent: Boolean
       correspondent: PersonInput
       stage: SubmissionStage
     }
@@ -72,7 +72,7 @@ const emptyManuscript = {
       email: '',
       institution: '',
     },
-    displayCorrespondent: false,
+    hasCorrespondent: false,
     correspondent: {
       firstName: '',
       lastName: '',

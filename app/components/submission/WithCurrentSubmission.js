@@ -15,7 +15,7 @@ const manuscriptFragment = gql`
         email
         institution
       }
-      displayCorrespondent
+      hasCorrespondent
       correspondent {
         firstName
         lastName

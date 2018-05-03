@@ -21,9 +21,9 @@ const author = () =>
 
 const schema = yup.object().shape({
   submissionMeta: yup.object().shape({
-    displayCorrespondent: yup.boolean(),
+    hasCorrespondent: yup.boolean(),
     author: author(),
-    correspondent: yup.object().when('displayCorrespondent', {
+    correspondent: yup.object().when('hasCorrespondent', {
       is: true,
       then: author(),
     }),

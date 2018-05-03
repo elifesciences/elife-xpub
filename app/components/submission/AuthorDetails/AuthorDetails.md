@@ -5,7 +5,7 @@ const { Formik } = formik
 const { schema, emptyPerson } = require('./AuthorDetailsSchema')
 const empty = {
   submissionMeta: {
-    displayCorrespondent: false,
+    hasCorrespondent: false,
     author: emptyPerson,
     correspondent: emptyPerson,
   },
