@@ -38,6 +38,9 @@ module.exports = [
         title: 'xpub',
         template: '../app/index-production.html',
         inject: 'body',
+        packageVersion: require('../package.json').version,
+        gitHash: require('config')['pubsweet-client'].sha,
+        buildTime: new Date().toString(),
       }),
       new webpack.DefinePlugin({
         'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
