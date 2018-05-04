@@ -1,6 +1,6 @@
 import replay from 'replay'
 import { Selector } from 'testcafe'
-import { dashboard } from './pageObjects'
+import { dashboard, authorDetails } from './pageObjects'
 import authenticateFixture from './helpers/authenticate-fixture'
 
 replay.fixtures = `${__dirname}/http-mocks`
@@ -17,22 +17,18 @@ test('Happy path', async t => {
 
   // author details
   await t
-    .typeText('[name=submissionMeta\\.author\\.firstName]', 'Anne', {
+    .typeText(authorDetails.firstNameField, 'Anne', {
       replace: true,
     })
-    .typeText('[name=submissionMeta\\.author\\.lastName]', 'Author', {
+    .typeText(authorDetails.secondNameField, 'Author', {
       replace: true,
     })
-    .typeText(
-      '[name=submissionMeta\\.author\\.email]',
-      'anne.author@life.ac.uk',
-      { replace: true },
-    )
-    .typeText(
-      '[name=submissionMeta\\.author\\.institution]',
-      'University of Life',
-      { replace: true },
-    )
+    .typeText(authorDetails.emailField, 'anne.author@life.ac.uk', {
+      replace: true,
+    })
+    .typeText(authorDetails.institutionField, 'University of Life', {
+      replace: true,
+    })
     .click('[name=cbNotCorrespondingAuthor]')
 
   // correspondent details
@@ -90,4 +86,35 @@ test('Happy path', async t => {
     .typeText('[name="suggestedReviewers.2.email"]', 'dave@example.org')
     .click(Selector('[name=declaration]').parent())
     .click('[data-test-id=next]')
+})
+
+test('Submission form details are saved to server on submit', async t => {
+  await t.navigateTo(dashboard.url)
+  await t.ctx.localStorageSet(t.ctx.token)
+
+  await t.navigateTo(dashboard.url).click('[data-test-id=submit]')
+
+  await t
+    .typeText(authorDetails.firstNameField, 'Meghan', {
+      replace: true,
+    })
+    .typeText(authorDetails.secondNameField, 'Moggy', {
+      replace: true,
+    })
+    .typeText(authorDetails.emailField, 'meghan.moggy@life.ac.uk', {
+      replace: true,
+    })
+    .typeText(authorDetails.institutionField, 'iTunes U', { replace: true })
+    .click('[data-test-id=next]')
+
+  await t.navigateTo(authorDetails.url)
+  await t
+    .expect(Selector(authorDetails.firstNameField).value)
+    .eql('Meghan', 'First name has been saved')
+    .expect(Selector(authorDetails.secondNameField).value)
+    .eql('Moggy', 'Second name has been saved')
+    .expect(Selector(authorDetails.emailField).value)
+    .eql('meghan.moggy@life.ac.uk', 'Email has been saved')
+    .expect(Selector(authorDetails.institutionField).value)
+    .eql('iTunes U', 'Institution has been saved')
 })
