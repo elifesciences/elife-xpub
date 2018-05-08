@@ -28,6 +28,8 @@ COPY test test
 COPY webpack webpack
 
 ENV NODE_ENV "production"
+ARG CI_COMMIT_SHA
+ENV CI_COMMIT_SHA ${CI_COMMIT_SHA}
 
 RUN [ "npx", "pubsweet", "build"]
 
