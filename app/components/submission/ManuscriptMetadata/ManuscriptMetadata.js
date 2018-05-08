@@ -38,11 +38,10 @@ const ManuscriptMetadata = ({ handleSubmit, values, setFieldValue }) => (
     <ValidatedField label="Manuscript title" name="title" />
     <ValidatedField
       component={Menu}
-      data-test-id="articleType"
       label="Article type"
-      name="metadata.articleType"
-      onBlur={value => setFieldValue('metadata.articleType', value)}
-      onChange={value => setFieldValue('metadata.articleType', value)}
+      name="manuscriptType"
+      onBlur={value => setFieldValue('manuscriptType', value)}
+      onChange={value => setFieldValue('manuscriptType', value)}
       options={[
         { value: 'research-article', label: 'Research article' },
         { value: 'feature', label: 'Feature article' },
@@ -51,38 +50,41 @@ const ManuscriptMetadata = ({ handleSubmit, values, setFieldValue }) => (
 
     <CheckboxGeneratedChild
       checkboxLabel="This manuscript has been discussed previously with an eLife editor"
-      fieldName="metadata.discussedPreviously"
+      fieldName="submissionMeta.discussedPreviously"
       values={values}
     >
       <ValidatedField
         component={Textarea}
         label="What was discussed and with whom"
-        name="metadata.discussion"
+        name="submissionMeta.discussion"
       />
     </CheckboxGeneratedChild>
 
     <CheckboxGeneratedChild
       checkboxLabel="This manuscript has been considered by eLife previously"
-      fieldName="metadata.consideredPreviously"
+      fieldName="submissionMeta.consideredPreviously"
       values={values}
     >
       <ValidatedField
         label="Article title/reference No"
-        name="metadata.previousArticle"
+        name="submissionMeta.previousArticle"
       />
     </CheckboxGeneratedChild>
 
     <CheckboxGeneratedChild
       checkboxLabel="This manuscript is a co-submission"
-      fieldName="metadata.cosubmission"
+      fieldName="submissionMeta.cosubmission"
       values={values}
     >
       <div>
         <ValidatedField
           label="Article title"
-          name="metadata.cosubmissionTitle"
+          name="submissionMeta.cosubmissionTitle"
         />
-        <ValidatedField label="Reference No" name="metadata.cosubmissionId" />
+        <ValidatedField
+          label="Reference No"
+          name="submissionMeta.cosubmissionId"
+        />
       </div>
     </CheckboxGeneratedChild>
 

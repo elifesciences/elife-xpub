@@ -1,19 +1,33 @@
 import React from 'react'
 import { Route } from 'react-router-dom'
 import { Formik } from 'formik'
+import omitDeep from 'omit-deep-lodash'
 
+import WithCurrentSubmission from '../WithCurrentSubmission'
 import ManuscriptMetadata from './ManuscriptMetadata'
-import { empty, schema } from './ManuscriptMetadataSchema'
+import { schema } from './ManuscriptMetadataSchema'
 
 export default () => (
   <Route>
     {({ history }) => (
-      <Formik
-        component={ManuscriptMetadata}
-        initialValues={empty}
-        onSubmit={() => history.push('/submit/suggestions')}
-        validationSchema={schema}
-      />
+      <WithCurrentSubmission>
+        {(updateSubmission, initialValues) => (
+          <Formik
+            component={ManuscriptMetadata}
+            initialValues={initialValues}
+            onSubmit={(values, { setSubmitting, setErrors }) => {
+              const data = omitDeep(values, '__typename')
+              return updateSubmission({ variables: { data } })
+                .then(() => setSubmitting(false))
+                .then(() => history.push('/submit/suggestions'))
+                .catch(errors => {
+                  setErrors(errors)
+                })
+            }}
+            validationSchema={schema}
+          />
+        )}
+      </WithCurrentSubmission>
     )}
   </Route>
 )

@@ -7,6 +7,7 @@ const manuscriptFragment = gql`
     id
     title
     source
+    manuscriptType
     submissionMeta {
       coverLetter
       author {
@@ -23,6 +24,13 @@ const manuscriptFragment = gql`
         institution
       }
       stage
+      discussedPreviously
+      discussion
+      consideredPreviously
+      previousArticle
+      cosubmission
+      cosubmissionTitle
+      cosubmissionId
     }
   }
 `

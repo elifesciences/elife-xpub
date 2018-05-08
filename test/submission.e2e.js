@@ -61,15 +61,15 @@ test('Happy path', async t => {
     )
     .click('[role=listbox] button')
     .click(Selector('[role=option]').nth(0))
-    .click('[name="metadata.discussedPreviously"]')
+    .click('[name="submissionMeta.discussedPreviously"]')
     .typeText(
-      '[name="metadata.discussion"]',
+      '[name="submissionMeta.discussion"]',
       'Spoke to Bob about another article',
     )
-    .click('[name="metadata.consideredPreviously"]')
-    .typeText('[name="metadata.previousArticle"]', '01234')
-    .click('[name="metadata.cosubmission"]')
-    .typeText('[name="metadata.cosubmissionTitle"]', '56789')
+    .click('[name="submissionMeta.consideredPreviously"]')
+    .typeText('[name="submissionMeta.previousArticle"]', '01234')
+    .click('[name="submissionMeta.cosubmission"]')
+    .typeText('[name="submissionMeta.cosubmissionTitle"]', '56789')
     .click('[data-test-id=next]')
 
   // reviewer suggestions

@@ -184,6 +184,9 @@ describe('Submission', () => {
         title: Joi.string()
           .required()
           .allow(''),
+        manuscriptType: Joi.string()
+          .required()
+          .allow(''),
         source: Joi.string()
           .required()
           .allow(''),
@@ -221,6 +224,21 @@ describe('Submission', () => {
               .allow(''),
           },
           stage: Joi.string().required(),
+          discussedPreviously: Joi.boolean().required(),
+          discussion: Joi.string()
+            .required()
+            .allow(''),
+          consideredPreviously: Joi.boolean().required(),
+          previousArticle: Joi.string()
+            .required()
+            .allow(''),
+          cosubmission: Joi.boolean().required(),
+          cosubmissionTitle: Joi.string()
+            .required()
+            .allow(''),
+          cosubmissionId: Joi.string()
+            .required()
+            .allow(''),
         },
       })
       .required()

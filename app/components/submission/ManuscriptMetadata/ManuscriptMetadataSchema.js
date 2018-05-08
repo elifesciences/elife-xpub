@@ -2,8 +2,8 @@ import yup from 'yup'
 
 const schema = yup.object().shape({
   title: yup.string().required('Title is required'),
-  metadata: yup.object().shape({
-    articleType: yup.string().required('Article type is required'),
+  manuscriptType: yup.string().required('Article type is required'),
+  submissionMeta: yup.object().shape({
     discussedPreviously: yup.bool(),
     discussion: yup.string().when('discussedPreviously', {
       is: true,
@@ -32,8 +32,8 @@ const schema = yup.object().shape({
 
 const empty = {
   title: '',
-  metadata: {
-    articleType: '',
+  manuscriptType: '',
+  submissionMeta: {
     discussedPreviously: false,
     discussion: '',
     consideredPreviously: false,

@@ -17,12 +17,14 @@ const typeDefs = `
       id: ID
       title: String
       source: String
+      manuscriptType: String
       submissionMeta: SubmissionMeta
     }
     input ManuscriptInput {
       id: ID!
       title: String
       source: String
+      manuscriptType: String
       submissionMeta: SubmissionMetaInput
     }
     type SubmissionMeta {
@@ -31,6 +33,13 @@ const typeDefs = `
       hasCorrespondent: Boolean
       correspondent: Person
       stage: SubmissionStage
+      discussedPreviously: Boolean
+      discussion: String
+      consideredPreviously: Boolean
+      previousArticle: String
+      cosubmission: Boolean
+      cosubmissionTitle: String
+      cosubmissionId: String
     }
     input SubmissionMetaInput {
       coverLetter: String
@@ -38,6 +47,13 @@ const typeDefs = `
       hasCorrespondent: Boolean
       correspondent: PersonInput
       stage: SubmissionStage
+      discussedPreviously: Boolean
+      discussion: String
+      consideredPreviously: Boolean
+      previousArticle: String
+      cosubmission: Boolean
+      cosubmissionTitle: String
+      cosubmissionId: String
     }
     type Person {
       firstName: String
@@ -64,6 +80,7 @@ const emptyManuscript = {
   id: '',
   title: '',
   source: '',
+  manuscriptType: '',
   submissionMeta: {
     coverLetter: '',
     author: {
@@ -80,6 +97,13 @@ const emptyManuscript = {
       institution: '',
     },
     stage: 'INITIAL',
+    discussedPreviously: false,
+    discussion: '',
+    consideredPreviously: false,
+    previousArticle: '',
+    cosubmission: false,
+    cosubmissionTitle: '',
+    cosubmissionId: '',
   },
 }
 
