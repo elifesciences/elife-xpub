@@ -68,8 +68,8 @@
     "server/*"
   ],
   "dependencies": {
-    "@pubsweet/elife-theme": "^0.1.1",
-    "@pubsweet/ui": "^3.3.3",
+    "@pubsweet/elife-theme": "^1.0.0",
+    "@pubsweet/ui": "^4.1.0",
     "apollo-link-state": "^0.4.1",
     "config": "^1.26.2",
     "formik": "^0.11.11",
@@ -81,7 +81,7 @@
     "omit-deep-lodash": "^1.0.0",
     "prop-types": "^15.5.10",
     "pubsweet-client": "^2.4.0",
-    "pubsweet-server": "^6.0.0",
+    "pubsweet-server": "^7.0.1",
     "react": "^16.2.0",
     "react-apollo": "^2.1.2",
     "react-dom": "^16.2.0",
