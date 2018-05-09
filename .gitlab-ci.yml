@@ -56,6 +56,7 @@ test:e2e:
   stage: test
   variables:
     GIT_STRATEGY: none
+    BROWSER: chrome:headless --no-sandbox
     # setup data for postgres image
     POSTGRES_USER: test
     POSTGRES_PASSWORD: pw
@@ -68,7 +69,7 @@ test:e2e:
   script:
     - cd ${HOME}
     # specify host here else it confuses the linked postgres image
-    - PGHOST=postgres npm run test:e2e:ci
+    - PGHOST=postgres npm run test:e2e
 
 push:latest:
   image: docker:latest

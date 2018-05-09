@@ -34,8 +34,7 @@
     "start:styleguide": "docker-compose run --no-deps -p 6060:6060 app yarn run styleguide",
     "styleguide": "styleguidist server",
     "test": "jest",
-    "test:e2e": "NODE_ENV=test testcafe chrome 'test/**/*.e2e.js'",
-    "test:e2e:ci": "testcafe 'chrome:headless --no-sandbox' 'test/**/*.e2e.js'"
+    "test:e2e": "NODE_ENV=test testcafe \"${BROWSER:-chrome}\" 'test/**/*.e2e.js'"
   },
   "lint-staged": {
     "*.css": "stylelint",
