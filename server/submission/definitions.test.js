@@ -178,7 +178,6 @@ describe('Submission', () => {
     expect(manuscripts.length).toBeGreaterThan(0)
     expect(manuscripts[0].id).toBe(body.data.createSubmission.id)
 
-    console.log(manuscripts[0].suggestedSeniorEditors)
     const schema = Joi.object()
       .keys({
         id: Joi.string().required(),
