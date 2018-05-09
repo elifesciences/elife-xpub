@@ -84,7 +84,7 @@ test('Happy path', async t => {
     .typeText('[name="suggestedReviewers.1.email"]', 'reece@example.net')
     .typeText('[name="suggestedReviewers.2.name"]', 'Dave')
     .typeText('[name="suggestedReviewers.2.email"]', 'dave@example.org')
-    .click(Selector('[name=declaration]').parent())
+    .click(Selector('[name=noConflictOfInterest]').parent())
     .click('[data-test-id=next]')
 })
 
