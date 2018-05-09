@@ -1,4 +1,5 @@
 const superagent = require('superagent')
+const _ = require('lodash')
 
 const apiRoot = 'https://api.sandbox.orcid.org/v2.1'
 
@@ -20,23 +21,26 @@ const toDate = date => {
 }
 
 module.exports = async user => {
-  const [emailResponse, empolymentsResponse] = await Promise.all([
-    request(user, 'email'),
+  const [personResponse, employmentsResponse] = await Promise.all([
+    request(user, 'person'),
     request(user, 'employments'),
   ])
 
-  const emails = emailResponse.body.email
-  const email = emails.length ? emails[0].email : null
+  const firstName = _.get(personResponse, 'body.name.given-names.value')
+  const lastName = _.get(personResponse, 'body.name.family-name.value')
+  const email = _.get(personResponse, 'body.emails.email[0].email')
 
-  const employments = empolymentsResponse.body['employment-summary']
+  const employments = _.get(employmentsResponse, 'body.employment-summary')
   const institution = employments.length
     ? // sort by most recently ended
       employments
         .sort((a, b) => toDate(a['end-date']) - toDate(b['end-date']))
-        .pop().organization
+        .pop().organization.name
     : null
 
   return {
+    firstName,
+    lastName,
     email,
     institution,
   }
