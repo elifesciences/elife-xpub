@@ -122,7 +122,7 @@ export const Declaration = () => (
     <ValidatedField
       component={ValueCheckbox}
       label="I declare that, to the best of my knowledge, these experts have no conflict of interest"
-      name="declaration"
+      name="noConflictOfInterest"
     />
   </Box>
 )

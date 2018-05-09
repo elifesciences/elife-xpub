@@ -18,6 +18,13 @@ const typeDefs = `
       title: String
       source: String
       manuscriptType: String
+      suggestedSeniorEditors: [String]
+      opposedSeniorEditors: [OpposedEditor]
+      suggestedReviewingEditors: [String]
+      opposedReviewingEditors: [OpposedEditor]
+      suggestedReviewers: [SuggestedReviewer]
+      opposedReviewers: [OpposedReviewer]
+      noConflictOfInterest: Boolean
       submissionMeta: SubmissionMeta
     }
     input ManuscriptInput {
@@ -25,6 +32,13 @@ const typeDefs = `
       title: String
       source: String
       manuscriptType: String
+      suggestedSeniorEditors: [String]
+      opposedSeniorEditors: [OpposedEditorInput]
+      suggestedReviewingEditors: [String]
+      opposedReviewingEditors: [OpposedEditorInput]
+      suggestedReviewers: [SuggestedReviewerInput]
+      opposedReviewers: [OpposedReviewerInput]
+      noConflictOfInterest: Boolean
       submissionMeta: SubmissionMetaInput
     }
     type SubmissionMeta {
@@ -71,6 +85,32 @@ const typeDefs = `
       INITIAL
       QA
     }
+    type OpposedEditor {
+      name: String
+      reason: String
+    }
+    input OpposedEditorInput {
+      name: String
+      reason: String
+    }
+    type SuggestedReviewer {
+      name: String
+      email: String
+    }
+    input SuggestedReviewerInput {
+      name: String
+      email: String
+    }
+    type OpposedReviewer {
+      name: String
+      email: String
+      reason: String
+    }
+    input OpposedReviewerInput {
+      name: String
+      email: String
+      reason: String
+    }
 `
 
 /**
@@ -81,6 +121,17 @@ const emptyManuscript = {
   title: '',
   source: '',
   manuscriptType: '',
+  suggestedSeniorEditors: ['', ''],
+  opposedSeniorEditors: [],
+  suggestedReviewingEditors: ['', ''],
+  opposedReviewingEditors: [],
+  suggestedReviewers: [
+    { name: '', email: '' },
+    { name: '', email: '' },
+    { name: '', email: '' },
+  ],
+  opposedReviewers: [],
+  noConflictOfInterest: false,
   submissionMeta: {
     coverLetter: '',
     author: {

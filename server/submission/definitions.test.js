@@ -178,6 +178,7 @@ describe('Submission', () => {
     expect(manuscripts.length).toBeGreaterThan(0)
     expect(manuscripts[0].id).toBe(body.data.createSubmission.id)
 
+    console.log(manuscripts[0].suggestedSeniorEditors)
     const schema = Joi.object()
       .keys({
         id: Joi.string().required(),
@@ -190,11 +191,45 @@ describe('Submission', () => {
         source: Joi.string()
           .required()
           .allow(''),
-        submissionMeta: {
+        suggestedSeniorEditors: Joi.array()
+          .items(Joi.string().allow(''))
+          .required(),
+        opposedSeniorEditors: Joi.array()
+          .items(
+            Joi.object().keys({ name: Joi.string(), reason: Joi.string() }),
+          )
+          .required(),
+        suggestedReviewingEditors: Joi.array()
+          .items(Joi.string().allow(''))
+          .required(),
+        opposedReviewingEditors: Joi.array()
+          .items(
+            Joi.object().keys({ name: Joi.string(), reason: Joi.string() }),
+          )
+          .required(),
+        suggestedReviewers: Joi.array()
+          .items(
+            Joi.object().keys({
+              name: Joi.string().allow(''),
+              email: Joi.string().allow(''),
+            }),
+          )
+          .required(),
+        opposedReviewers: Joi.array()
+          .items(
+            Joi.object().keys({
+              name: Joi.string(),
+              email: Joi.string(),
+              reason: Joi.string(),
+            }),
+          )
+          .required(),
+        noConflictOfInterest: Joi.boolean().required(),
+        submissionMeta: Joi.object().keys({
           coverLetter: Joi.string()
             .required()
             .allow(''),
-          author: {
+          author: Joi.object().keys({
             firstName: Joi.string()
               .required()
               .allow(''),
@@ -207,9 +242,9 @@ describe('Submission', () => {
             institution: Joi.string()
               .required()
               .allow(''),
-          },
+          }),
           hasCorrespondent: Joi.boolean().required(),
-          correspondent: {
+          correspondent: Joi.object().keys({
             firstName: Joi.string()
               .required()
               .allow(''),
@@ -222,7 +257,7 @@ describe('Submission', () => {
             institution: Joi.string()
               .required()
               .allow(''),
-          },
+          }),
           stage: Joi.string().required(),
           discussedPreviously: Joi.boolean().required(),
           discussion: Joi.string()
@@ -239,7 +274,7 @@ describe('Submission', () => {
           cosubmissionId: Joi.string()
             .required()
             .allow(''),
-        },
+        }),
       })
       .required()
     const { error } = Joi.validate(manuscripts[0], schema)

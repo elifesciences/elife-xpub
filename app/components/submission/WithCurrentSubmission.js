@@ -8,6 +8,26 @@ const manuscriptFragment = gql`
     title
     source
     manuscriptType
+    suggestedSeniorEditors
+    opposedSeniorEditors {
+      name
+      reason
+    }
+    suggestedReviewingEditors
+    opposedReviewingEditors {
+      name
+      reason
+    }
+    suggestedReviewers {
+      name
+      email
+    }
+    opposedReviewers {
+      name
+      email
+      reason
+    }
+    noConflictOfInterest
     submissionMeta {
       coverLetter
       author {

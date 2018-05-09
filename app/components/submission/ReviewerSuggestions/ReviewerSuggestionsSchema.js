@@ -4,24 +4,21 @@ import yup from 'yup'
 // fields added by the user should be optional
 
 const suggestedEditorValidator = () =>
-  yup.array(yup.string().required('Required'))
+  yup.array(yup.string().required('Suggested editors are required'))
 
 const opposedEditorValidator = () =>
   yup.array(
     yup.object({
-      name: yup.string().required('Required'),
-      reason: yup.string().required('Required'),
+      name: yup.string().required('This field is required'),
+      reason: yup.string().required('This field is required'),
     }),
   )
 
 const suggestedReviewerValidator = () =>
   yup.array(
     yup.object({
-      name: yup.string().required('Name is required'),
-      email: yup
-        .string()
-        .email('Must be a valid email')
-        .required('Email is required'),
+      name: yup.string(), // .required('Name is required'),
+      email: yup.string(), // .email('Must be a valid email').required()
     }),
   )
 
@@ -44,7 +41,7 @@ const schema = yup.object().shape({
   opposedReviewingEditors: opposedEditorValidator(),
   suggestedReviewers: suggestedReviewerValidator(),
   opposedReviewers: opposedReviewerValidator(),
-  declaration: yup
+  noConflictOfInterest: yup
     .bool()
     .required()
     .oneOf(
@@ -64,7 +61,7 @@ const empty = {
     { name: '', email: '' },
   ],
   opposedReviewers: [],
-  declaration: false,
+  noConflictOfInterest: false,
 }
 
 export { schema, empty }
