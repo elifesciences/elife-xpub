@@ -1,6 +1,9 @@
 const lodash = require('lodash')
+const logger = require('@pubsweet/logger')
+const User = require('pubsweet-server/src/models/User')
 
 const db = require('../db-helpers/')
+const fetchOrcidDetails = require('../auth/fetchUserDetails')
 
 /**
  * types & input types should be kept in sync
@@ -175,10 +178,14 @@ const resolvers = {
   },
   Mutation: {
     async createSubmission(_, { data }, ctx) {
-      const orcidData = {
-        submissionMeta: {
-          author: await db.getOrcidData(ctx.user),
-        },
+      const orcidData = {}
+      try {
+        const userData = await User.find(ctx.user)
+        orcidData.submissionMeta = {
+          author: await fetchOrcidDetails(userData),
+        }
+      } catch (err) {
+        logger.error(err)
       }
       const manuscript = lodash.merge(emptyManuscript, orcidData)
       const manuscriptDb = db.manuscriptGqlToDb(manuscript, ctx.user)

@@ -7,4 +7,6 @@ const Replay = require('replay')
 // When writing or updating tests you'll want to change the mode
 // see https://github.com/assaf/node-replay#settings
 
-Replay.fixtures = path.join(__dirname, '..', 'http-mocks')
+module.exports = subFolder => {
+  Replay.fixtures = path.join(__dirname, '..', 'http-mocks', subFolder)
+}

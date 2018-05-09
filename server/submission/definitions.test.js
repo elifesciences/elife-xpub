@@ -14,9 +14,12 @@ const {
 const { jsonToGraphQLQuery } = require('json-to-graphql-query')
 const Joi = require('joi')
 
+const replaySetup = require('../../test/helpers/replay-setup')
+
 const userData = {
   username: 'testuser',
-  orcid: 'testuser-orcid-id',
+  orcid: '0000-0003-3146-0256',
+  oauth: { accessToken: 'f7617529-f46a-40b1-99f4-4181859783ca' },
 }
 
 const getClient = async () => {
@@ -40,6 +43,7 @@ describe('Submission', () => {
   let request
 
   beforeEach(async () => {
+    replaySetup('')
     await createTables(true)
     request = await getClient()
   })
@@ -278,6 +282,35 @@ describe('Submission', () => {
       .required()
     const { error } = Joi.validate(manuscripts[0], schema)
     expect(error).toBeNull()
+  })
+
+  it('createSubmission - an error in the orcid request leaves fields unpopulated', async () => {
+    replaySetup('error')
+    const query = {
+      mutation: {
+        createSubmission: {
+          submissionMeta: {
+            author: {
+              firstName: true,
+              lastName: true,
+              email: true,
+              institution: true,
+            },
+          },
+        },
+      },
+    }
+    const { body } = await request(query)
+    expect(body.data.createSubmission).toEqual({
+      submissionMeta: {
+        author: {
+          firstName: '',
+          lastName: '',
+          email: '',
+          institution: '',
+        },
+      },
+    })
   })
 
   it('updateSubmission updates the current submission for user with data', async () => {
