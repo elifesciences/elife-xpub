@@ -29,18 +29,18 @@ test('Happy path', async t => {
     .typeText(authorDetails.institutionField, 'University of Life', {
       replace: true,
     })
-    .click('[name=cbNotCorrespondingAuthor]')
+    .click(Selector('[name=cbNotCorrespondingAuthor]').parent())
 
   // correspondent details
   await t
-    .typeText('[name=submissionMeta\\.correspondent\\.firstName]', 'A')
-    .typeText('[name=submissionMeta\\.correspondent\\.lastName]', 'Signee')
+    .typeText('[name="submissionMeta.correspondent.firstName"]', 'A')
+    .typeText('[name="submissionMeta.correspondent.lastName"]', 'Signee')
     .typeText(
-      '[name=submissionMeta\\.correspondent\\.email]',
+      '[name="submissionMeta.correspondent.email"]',
       'a.signee@knocks.ac.uk',
     )
     .typeText(
-      '[name=submissionMeta\\.correspondent\\.institution]',
+      '[name="submissionMeta.correspondent.institution"]',
       'University of Hard Knocks',
     )
     .click('[data-test-id=next]')
@@ -67,14 +67,14 @@ test('Happy path', async t => {
     )
     .click('[role=listbox] button')
     .click(Selector('[role=option]').nth(0))
-    .click('[name="submissionMeta.discussedPreviously"]')
+    .click(Selector('[name="submissionMeta.discussedPreviously"]').parent())
     .typeText(
       '[name="submissionMeta.discussion"]',
       'Spoke to Bob about another article',
     )
-    .click('[name="submissionMeta.consideredPreviously"]')
+    .click(Selector('[name="submissionMeta.consideredPreviously"]').parent())
     .typeText('[name="submissionMeta.previousArticle"]', '01234')
-    .click('[name="submissionMeta.cosubmission"]')
+    .click(Selector('[name="submissionMeta.cosubmission"]').parent())
     .typeText('[name="submissionMeta.cosubmissionTitle"]', '56789')
     .click('[data-test-id=next]')
 
