@@ -32,7 +32,6 @@ const FileUploads = ({ handleSubmit, setFieldValue, onDrop, conversion }) => (
         <FileUpload
           conversion={conversion}
           data-test-id="upload"
-          instruction="Drag and drop or click to upload your manuscript"
           onDrop={onDrop}
         />
       </Box>
