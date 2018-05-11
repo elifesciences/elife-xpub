@@ -1,6 +1,9 @@
 const include = require('./babel-includes')
 const stringReplaceRule = require('./string-replace')
 
+const ifDev = (then, otherwise) =>
+  process.env.NODE_ENV === 'development' ? then : otherwise
+
 module.exports = [
   stringReplaceRule,
   {
@@ -11,12 +14,7 @@ module.exports = [
         include,
         loader: 'babel-loader',
         options: {
-          presets: [
-            [require('babel-preset-env'), { modules: false }],
-            require('babel-preset-react'),
-            require('babel-preset-stage-2'),
-          ],
-          plugins: [require('react-hot-loader/babel')],
+          plugins: ifDev([require('react-hot-loader/babel')], []),
         },
       },
 
