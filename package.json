@@ -60,9 +60,6 @@
       "<rootDir>/server"
     ]
   },
-  "resolutions": {
-    "grid-styled/styled-components": "3.2.5"
-  },
   "workspaces": [
     "client/*",
     "server/*"
@@ -74,7 +71,7 @@
     "config": "^1.26.2",
     "formik": "^0.11.11",
     "graphql-tag": "^2.8.0",
-    "grid-styled": "^3.2.1",
+    "grid-styled": "^4.1.0",
     "history": "^4.7.2",
     "joi": "^10.0.6",
     "lodash": "^4.17.5",

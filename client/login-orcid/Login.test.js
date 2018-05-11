@@ -1,5 +1,6 @@
 import React from 'react'
 import { shallow } from 'enzyme'
+import { Button } from '@pubsweet/ui'
 
 import Login from './Login'
 
@@ -8,7 +9,7 @@ const makeWrapper = props => shallow(<Login {...props} />)
 describe('ORCID Login component', () => {
   it('renders default button link', () => {
     const wrapper = makeWrapper()
-    expect(wrapper.childAt(0).name()).toBe('Button')
+    expect(wrapper.childAt(0).type()).toBe(Button)
   })
 
   it('renders custom content', () => {
