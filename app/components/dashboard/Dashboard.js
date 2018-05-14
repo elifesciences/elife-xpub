@@ -12,22 +12,16 @@ const Dashboard = () => (
     <h3>Sample manuscripts</h3>
     <ul>
       <li>
-        <Link to="/manuscript?archiveId=bmj-10.1136-bmjgh-2017-000634.xml">
-          BMJ
-        </Link>
+        <Link to="/manuscript/blank">Blank</Link>
       </li>
       <li>
-        <Link to="/manuscript?archiveId=elife-32671-v2.xml">eLife</Link>
+        <Link to="/manuscript/elife-32671">eLife</Link>
       </li>
       <li>
-        <Link to="/manuscript?archiveId=hindawi-10.1155-2017-8479487.xml">
-          Hindawi
-        </Link>
+        <Link to="/manuscript/kitchen-sink">Kitchen sink</Link>
       </li>
       <li>
-        <Link to="/manuscript?archiveId=plos-10.1371-journal.pone.0193088.xml">
-          PLOS
-        </Link>
+        <Link to="/manuscript/plos">PLOS</Link>
       </li>
     </ul>
   </React.Fragment>

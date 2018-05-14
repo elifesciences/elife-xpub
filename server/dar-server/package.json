@@ -1,0 +1,17 @@
+{
+  "name": "@pubsweet/dar-server",
+  "version": "1.0.0",
+  "description": "",
+  "license": "ISC",
+  "author": "",
+  "main": "index.js",
+  "keywords": [],
+  "dependencies": {
+    "config": "^1.30.0",
+    "dar-server": "^0.5.0",
+    "express": "^4.16.2"
+  },
+  "peerDependencies": {
+    "pubsweet-server": "^7.0.0"
+  }
+}

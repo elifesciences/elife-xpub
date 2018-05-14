@@ -13,6 +13,7 @@ const Routes = () => (
       <Layout>
         <Switch>
           <Route component={SubmissionPage} path="/submit" />
+          <Route component={ManuscriptPage} path="/manuscript/:id" />
           <Route component={Dashboard} />
         </Switch>
       </Layout>
