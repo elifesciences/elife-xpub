@@ -1,4 +1,5 @@
 import { Selector } from 'testcafe'
+import replaySetup from './helpers/replay-setup'
 import { dashboard, authorDetails } from './pageObjects'
 import setFixtureHooks from './helpers/set-fixture-hooks'
 
@@ -6,37 +7,37 @@ const f = fixture('Submission')
 setFixtureHooks(f)
 
 test('Happy path', async t => {
+  replaySetup('success')
   // fake login by navigating to site and injecting token into local storage
   await t.navigateTo(dashboard.url)
   await t.ctx.localStorageSet(t.ctx.token)
   await t.navigateTo(dashboard.url).click('[data-test-id=submit]')
 
-  // author details
-
+  // author details pre-populated using Orcid API
   await t
-    .expect(authorDetails.firstNameField)
-    .eql('Test', 'First name is populated by query to the Orchid API')
-    .typeText(authorDetails.firstNameField, 'Anne', {
-      replace: true,
-    })
-    .expect(authorDetails.secondNameField)
-    .eql('User', 'Last name is populated by query to the Orchid API')
-    .typeText(authorDetails.secondNameField, 'Author', {
-      replace: true,
-    })
-    .expect(authorDetails.emailField)
-    .eql(
-      'elife@mailinator.com',
-      'Email is populated by query to the Orchid API',
-    )
-    .typeText(authorDetails.emailField, 'anne.author@life.ac.uk', {
-      replace: true,
-    })
-    .expect(authorDetails.institutionField)
+    .expect(Selector(authorDetails.firstNameField).value)
+    .eql('Test', 'First name is populated by query to the Orcid API')
+    .expect(Selector(authorDetails.secondNameField).value)
+    .eql('User', 'Last name is populated by query to the Orcid API')
+    .expect(Selector(authorDetails.emailField).value)
+    .eql('elife@mailinator.com', 'Email is populated by query to the Orcid API')
+    .expect(Selector(authorDetails.institutionField).value)
     .eql(
       'University of eLife',
       'Institution is populated by query to the Orchid API',
     )
+
+  // change author details
+  await t
+    .typeText(authorDetails.firstNameField, 'Anne', {
+      replace: true,
+    })
+    .typeText(authorDetails.secondNameField, 'Author', {
+      replace: true,
+    })
+    .typeText(authorDetails.emailField, 'anne.author@life.ac.uk', {
+      replace: true,
+    })
     .typeText(authorDetails.institutionField, 'University of Life', {
       replace: true,
     })
