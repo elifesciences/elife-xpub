@@ -187,7 +187,7 @@ const resolvers = {
       } catch (err) {
         logger.error(err)
       }
-      const manuscript = lodash.merge(emptyManuscript, orcidData)
+      const manuscript = lodash.merge({}, emptyManuscript, orcidData)
       const manuscriptDb = db.manuscriptGqlToDb(manuscript, ctx.user)
       const id = await db.save(manuscriptDb)
       manuscript.id = id
@@ -197,7 +197,7 @@ const resolvers = {
       const { data: manuscriptDb } = await db.checkPermission(data.id, ctx.user)
 
       const manuscript = db.manuscriptDbToGql(manuscriptDb, data.id)
-      const newManuscript = lodash.merge(manuscript, data)
+      const newManuscript = lodash.merge({}, manuscript, data)
 
       const newManuscriptDb = db.manuscriptGqlToDb(newManuscript, ctx.user)
       await db.update(newManuscriptDb, data.id)
