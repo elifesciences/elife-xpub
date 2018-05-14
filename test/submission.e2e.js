@@ -1,4 +1,3 @@
-import replay from 'replay'
 import { Selector } from 'testcafe'
 import { dashboard, authorDetails } from './pageObjects'
 import setFixtureHooks from './helpers/set-fixture-hooks'
@@ -13,16 +12,31 @@ test('Happy path', async t => {
   await t.navigateTo(dashboard.url).click('[data-test-id=submit]')
 
   // author details
+
   await t
+    .expect(authorDetails.firstNameField)
+    .eql('Test', 'First name is populated by query to the Orchid API')
     .typeText(authorDetails.firstNameField, 'Anne', {
       replace: true,
     })
+    .expect(authorDetails.secondNameField)
+    .eql('User', 'Last name is populated by query to the Orchid API')
     .typeText(authorDetails.secondNameField, 'Author', {
       replace: true,
     })
+    .expect(authorDetails.emailField)
+    .eql(
+      'elife@mailinator.com',
+      'Email is populated by query to the Orchid API',
+    )
     .typeText(authorDetails.emailField, 'anne.author@life.ac.uk', {
       replace: true,
     })
+    .expect(authorDetails.institutionField)
+    .eql(
+      'University of eLife',
+      'Institution is populated by query to the Orchid API',
+    )
     .typeText(authorDetails.institutionField, 'University of Life', {
       replace: true,
     })
