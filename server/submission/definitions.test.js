@@ -43,7 +43,7 @@ describe('Submission', () => {
   let request
 
   beforeEach(async () => {
-    replaySetup('')
+    replaySetup('success')
     await createTables(true)
     request = await getClient()
   })
