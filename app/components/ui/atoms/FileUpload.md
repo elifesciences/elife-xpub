@@ -1,24 +1,35 @@
 Awaiting file
 
-```
-const onDrop = (files) => console.log(files);
-const conversion = {};
-
-<FileUpload onDrop={onDrop} conversion={conversion} instruction = {'Upload file'} />
+```js
+const onDrop = files => console.log(files)
+const conversion = {}
+const formError = null
+;<FileUpload onDrop={onDrop} conversion={conversion} formError={formError} />
 ```
 
 Conversion completed
 
-```
-const onDrop = (files) => console.log(files);
-const conversion = {completed: true};
-<FileUpload onDrop={onDrop} conversion={conversion} instruction = {'Upload file'} />
+```js
+const onDrop = files => console.log(files)
+const conversion = { completed: true }
+const formError = null
+;<FileUpload onDrop={onDrop} conversion={conversion} formError={formError} />
 ```
 
-Conversion failed
+Conversion failed (server side)
 
+```js
+const onDrop = files => console.log(files)
+const conversion = { error: new Error('Conversion failed') }
+const formError = null
+;<FileUpload onDrop={onDrop} conversion={conversion} formError={formError} />
 ```
-const onDrop = (files) => console.log(files);
-const conversion = {error: new Error('Conversion failed')};
-<FileUpload onDrop={onDrop} conversion={conversion} instruction = {'Upload file'} />
+
+Conversion failed (form validation on client side)
+
+```js
+const onDrop = files => console.log(files)
+const conversion = {}
+const formError = { error: new Error('Please upload manuscript') }
+;<FileUpload onDrop={onDrop} conversion={conversion} formError={formError} />
 ```

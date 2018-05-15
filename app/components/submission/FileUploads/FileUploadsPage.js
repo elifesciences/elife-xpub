@@ -30,17 +30,21 @@ const FileUploadsPage = () => (
                   converting: loading,
                   completed: !!data,
                   // display either upload error or form validation error
-                  error:
-                    uploadError ||
-                    (errors.manuscriptUrl &&
-                      touched.manuscriptUrl &&
-                      new Error(errors.manuscriptUrl)),
+                  error: uploadError,
                 }}
+                formError={
+                  errors.manuscriptUrl &&
+                  touched.manuscriptUrl &&
+                  new Error(errors.manuscriptUrl)
+                }
                 onDrop={([file]) =>
                   uploadFile({ variables: { file } }).then(
                     // save file URL to form on success
-                    ({ data: { upload: { url } } }) =>
-                      setFieldValue('manuscriptUrl', url),
+                    ({
+                      data: {
+                        upload: { url },
+                      },
+                    }) => setFieldValue('manuscriptUrl', url),
                   )
                 }
                 setFieldValue={setFieldValue}

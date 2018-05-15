@@ -5,9 +5,18 @@ import styled from 'styled-components'
 import Dropzone from 'react-dropzone'
 import { ErrorText, Action, th } from '@pubsweet/ui'
 import { get } from 'lodash'
+import { toClass } from 'recompose'
 
-const StyledDropzone = styled(Dropzone)`
+import Icon from './Icon'
+
+const StyledDropzone = styled(
+  toClass(({ hasError, saveInnerRef, ...rest }) => (
+    <Dropzone ref={saveInnerRef} {...rest} />
+  )),
+)`
   border-style: dashed;
+  border-color: ${({ hasError = false }) =>
+    hasError ? th('colorError') : th('colorBorder')};
 `
 
 const Instruction = styled.div``
@@ -18,95 +27,84 @@ const CentredFlex = styled(Flex)`
   align-items: center;
 `
 
-const IconUpload = styled.img.attrs({
-  src: '/assets/elife-icon-upload.svg',
-})``
-
-const IconUploadSuccess = styled.img.attrs({
-  src: '/assets/elife-icon-tick.svg',
-})``
-
-const IconUploadFailure = styled.img.attrs({
-  src: '/assets/elife-icon-cross.svg',
-})``
-
-const FileUpload = ({ onDrop, conversion, ...props }) => {
-  let content, dropzoneRef
-  const dropzoneStyle = {}
-
+const DropzoneContent = ({ conversion, formError, dropzoneOpen }) => {
   if (conversion.error) {
-    dropzoneStyle.borderColor = 'red'
-
-    let displayErrorMessage = ''
     const errorMessage = get(
       conversion,
       'error.message',
       'Error Uploading File',
     )
-    if (errorMessage === 'Please upload your manuscript') {
-      displayErrorMessage = (
-        <ErrorText>
-          Please <Action onClick={() => dropzoneRef.open()}>upload</Action> your
-          Manuscript.
-        </ErrorText>
-      )
-    } else {
-      displayErrorMessage = (
-        <ErrorText>
-          {errorMessage}. Try to{' '}
-          <Action onClick={() => dropzoneRef.open()}>upload</Action> your
-          Manuscript again.
-        </ErrorText>
-      )
-    }
-    content = (
+    return (
       <div>
-        <IconUploadFailure />
-        {displayErrorMessage}
+        <Icon size={6}>UploadFailure</Icon>
+        <ErrorText>
+          {errorMessage}. Try to <Action onClick={dropzoneOpen}>upload</Action>{' '}
+          your Manuscript again.
+        </ErrorText>
       </div>
     )
-  } else if (conversion.converting) {
-    content = (
+  }
+  if (formError) {
+    return (
       <div>
-        <IconUpload />
+        <Icon size={6}>UploadFailure</Icon>
+        <ErrorText>
+          Please <Action onClick={dropzoneOpen}>upload</Action> your Manuscript.
+        </ErrorText>
+      </div>
+    )
+  }
+  if (conversion.converting) {
+    return (
+      <div>
+        <Icon size={6}>Upload</Icon>
         <Instruction>Manuscript is uploading</Instruction>
       </div>
     )
-  } else if (conversion.completed) {
-    content = (
+  }
+  if (conversion.completed) {
+    return (
       <div>
-        <IconUploadSuccess />
+        <Icon size={6}>UploadSuccess</Icon>
         <Instruction>
           Success! <Action to="/manuscript">Preview</Action> or{' '}
-          <Action onClick={() => dropzoneRef.open()}>replace</Action> your
-          Manuscript.
-        </Instruction>
-      </div>
-    )
-  } else {
-    content = (
-      <div>
-        <IconUpload />
-        <Instruction>
-          <Action onClick={() => dropzoneRef.open()}>Upload</Action> your
-          manuscript or drag it here
+          <Action onClick={dropzoneOpen}>replace</Action> your Manuscript.
         </Instruction>
       </div>
     )
   }
+  return (
+    <div>
+      <Icon size={6}>Upload</Icon>
+      <Instruction>
+        <Action onClick={dropzoneOpen}>Upload</Action> your manuscript or drag
+        it here
+      </Instruction>
+    </div>
+  )
+}
+
+const FileUpload = ({ onDrop, conversion, formError, ...props }) => {
+  let dropzoneRef
   return (
     <StyledDropzone
       accept="application/vnd.openxmlformats-officedocument.wordprocessingml.document"
       onDrop={onDrop}
       {...props}
       disableClick
-      innerRef={node => {
+      hasError={!!(formError || conversion.error)}
+      saveInnerRef={node => {
         dropzoneRef = node
       }}
-      style={dropzoneStyle}
     >
       <CentredFlex>
-        <Box width={1}>{content}</Box>
+        <Box width={1}>
+          <DropzoneContent
+            conversion={conversion}
+            dropzoneOpen={() => dropzoneRef.open()}
+            formError={formError}
+          />
+        </Box>
       </CentredFlex>
     </StyledDropzone>
   )
@@ -118,10 +116,12 @@ FileUpload.propTypes = {
     completed: PropTypes.bool,
     error: PropTypes.instanceOf(Error),
   }),
+  formError: PropTypes.instanceOf(Error),
 }
 
 FileUpload.defaultProps = {
   conversion: {},
+  formError: null,
 }
 
 export default FileUpload

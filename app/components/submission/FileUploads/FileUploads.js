@@ -11,7 +11,13 @@ const Editor = props => (
   <ConfigurableEditor {...props} bold italic smallcaps underline />
 )
 
-const FileUploads = ({ handleSubmit, setFieldValue, onDrop, conversion }) => (
+const FileUploads = ({
+  handleSubmit,
+  setFieldValue,
+  onDrop,
+  conversion,
+  formError,
+}) => (
   <form onSubmit={handleSubmit}>
     <ProgressBar currentStep={1} />
 
@@ -32,6 +38,7 @@ const FileUploads = ({ handleSubmit, setFieldValue, onDrop, conversion }) => (
         <FileUpload
           conversion={conversion}
           data-test-id="upload"
+          formError={formError}
           onDrop={onDrop}
         />
       </Box>
