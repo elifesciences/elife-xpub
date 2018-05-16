@@ -37,7 +37,7 @@ const DropzoneContent = ({ conversion, formError, dropzoneOpen }) => {
     return (
       <div>
         <Icon size={6}>UploadFailure</Icon>
-        <ErrorText>
+        <ErrorText name="dropzoneMessage">
           {errorMessage}. Try to <Action onClick={dropzoneOpen}>upload</Action>{' '}
           your Manuscript again.
         </ErrorText>
@@ -48,7 +48,7 @@ const DropzoneContent = ({ conversion, formError, dropzoneOpen }) => {
     return (
       <div>
         <Icon size={6}>UploadFailure</Icon>
-        <ErrorText>
+        <ErrorText name="dropzoneMessage">
           Please <Action onClick={dropzoneOpen}>upload</Action> your Manuscript.
         </ErrorText>
       </div>
@@ -58,7 +58,9 @@ const DropzoneContent = ({ conversion, formError, dropzoneOpen }) => {
     return (
       <div>
         <Icon size={6}>Upload</Icon>
-        <Instruction>Manuscript is uploading</Instruction>
+        <Instruction name="dropzoneMessage">
+          Manuscript is uploading
+        </Instruction>
       </div>
     )
   }
@@ -66,7 +68,7 @@ const DropzoneContent = ({ conversion, formError, dropzoneOpen }) => {
     return (
       <div>
         <Icon size={6}>UploadSuccess</Icon>
-        <Instruction>
+        <Instruction name="dropzoneMessage">
           Success! <Action to="/manuscript">Preview</Action> or{' '}
           <Action onClick={dropzoneOpen}>replace</Action> your Manuscript.
         </Instruction>
@@ -76,9 +78,9 @@ const DropzoneContent = ({ conversion, formError, dropzoneOpen }) => {
   return (
     <div>
       <Icon size={6}>Upload</Icon>
-      <Instruction>
+      <Instruction name="dropzoneMessage">
         <Action onClick={dropzoneOpen}>Upload</Action> your manuscript or drag
-        it here
+        it here.
       </Instruction>
     </div>
   )
