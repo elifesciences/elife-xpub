@@ -1,12 +1,12 @@
 import replay from 'replay'
 import { Selector } from 'testcafe'
 import { dashboard, authorDetails } from './pageObjects'
-import authenticateFixture from './helpers/authenticate-fixture'
+import setFixtureHooks from './helpers/set-fixture-hooks'
 
 replay.fixtures = `${__dirname}/http-mocks`
 
 const f = fixture('Submission')
-authenticateFixture(f)
+setFixtureHooks(f)
 
 test('Happy path', async t => {
   // fake login by navigating to site and injecting token into local storage
