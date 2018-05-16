@@ -7543,9 +7543,9 @@ passport-oauth2@^1.4.0:
     uid2 "0.0.x"
     utils-merge "1.x.x"
 
-passport-orcid@^0.0.3:
+"passport-orcid@git+https://github.com/g-sam/passport-orcid.git":
   version "0.0.3"
-  resolved "https://registry.yarnpkg.com/passport-orcid/-/passport-orcid-0.0.3.tgz#802126a4e0dac0dc1406b9521b29b0dd13644ec4"
+  resolved "git+https://github.com/g-sam/passport-orcid.git#966519e915eac0c948336c2a604178118d6dfc12"
   dependencies:
     passport-oauth2 "^1.4.0"
 
