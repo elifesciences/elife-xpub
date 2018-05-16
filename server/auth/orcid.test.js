@@ -24,7 +24,7 @@ describe('ORCID auth', () => {
 
   it('exchanges code and returns JWT', async () => {
     // mock OAuth response
-    nock('https://sandbox.orcid.org')
+    nock('http://localhost:8080')
       .post('/oauth/token')
       .reply(200, {
         access_token: 'token456',
