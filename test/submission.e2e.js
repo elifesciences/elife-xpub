@@ -125,10 +125,9 @@ test('Submission form details are saved to server on submit', async t => {
 })
 
 const noManuscriptError = 'Please upload your Manuscript.'
-const badManuscriptError = 'Try to upload your Manuscript again.'
-// const manuscriptUploading = 'Manuscript is uploading'
+const badManuscriptError =
+  'Network error: Response not successful: Received status code 400'
 const manuscriptUploadSuccess = 'Success! Preview or replace your Manuscript.'
-// const manuscriptUpload = 'Upload your manuscript or drag it here.'
 
 test('Clicking next without uploading manuscript on page 2 generates error', async t => {
   await t.navigateTo(dashboard.url)
@@ -142,24 +141,26 @@ test('Clicking next without uploading manuscript on page 2 generates error', asy
     .eql(noManuscriptError)
 })
 
-/* TODO - how to catch the 400 error */
-test.skip('Uploading the wrong type of file for manuscript will show error', async t => {
+test('Uploading the wrong type of file for manuscript will show error', async t => {
   await t.navigateTo(dashboard.url)
   await t.ctx.localStorageSet(t.ctx.token)
   await t.navigateTo(dashboard.url).click('[data-test-id=submit]')
 
   await t.click('[data-test-id=next]')
+
   await t
     .setFilesToUpload(
       '[data-test-id=upload]>input',
       './fixtures/dummy-manuscript.pdf',
     )
-    .wait(1000)
-    .expect(Selector('[name=dropzoneMessage]').innerText)
-    .eql(badManuscriptError)
+    .then(arg => {
+      throw new Error('No error was thrown when uploading bad manuscript type')
+    })
+    .catch(e => {
+      if (e.errMsg !== badManuscriptError) throw e
+    })
 })
 
-/* TODO drop vs click + upload large file (uploading message) */
 test('Uploading a correct file for manuscript shows success', async t => {
   await t.navigateTo(dashboard.url)
   await t.ctx.localStorageSet(t.ctx.token)
@@ -193,29 +194,22 @@ test('Uploading a correct file for manuscript after no-manuscript error shows su
     .eql(manuscriptUploadSuccess)
 })
 
-/* TODO - how to catch the 400 error */
-test.skip('Uploading correct manuscript type after uploading wrong manuscript type shows success', async t => {
+test('Uploading correct manuscript type after uploading wrong manuscript type shows success', async t => {
   await t.navigateTo(dashboard.url)
   await t.ctx.localStorageSet(t.ctx.token)
   await t.navigateTo(dashboard.url).click('[data-test-id=submit]')
 
   await t.click('[data-test-id=next]')
   await t
-    .setFilesToUpload(
-      '[data-test-id=upload]>input',
+    .setFilesToUpload('[data-test-id=upload]>input', [
       './fixtures/dummy-manuscript.pdf',
-    )
-    .wait(1000)
-    .setFilesToUpload(
-      '[data-test-id=upload]>input',
       './fixtures/dummy-manuscript.docx',
-    )
+    ])
     .wait(1000)
     .expect(Selector('[name=dropzoneMessage]').innerText)
     .eql(manuscriptUploadSuccess)
 })
 
-/* TODO click reupload? */
 test('Reuploading manuscript after success shows success again', async t => {
   await t.navigateTo(dashboard.url)
   await t.ctx.localStorageSet(t.ctx.token)
@@ -223,15 +217,10 @@ test('Reuploading manuscript after success shows success again', async t => {
 
   await t.click('[data-test-id=next]')
   await t
-    .setFilesToUpload(
-      '[data-test-id=upload]>input',
+    .setFilesToUpload('[data-test-id=upload]>input', [
       './fixtures/dummy-manuscript.docx',
-    )
-    .wait(1000)
-    .setFilesToUpload(
-      '[data-test-id=upload]>input',
       './fixtures/dummy-manuscript.docx',
-    )
+    ])
     .wait(1000)
     .expect(Selector('[name=dropzoneMessage]').innerText)
     .eql(manuscriptUploadSuccess)
