@@ -7,7 +7,7 @@ import { ErrorText, Action, th } from '@pubsweet/ui'
 import { get } from 'lodash'
 import { toClass } from 'recompose'
 
-import Icon from './Icon'
+import Icon from '../atoms/Icon'
 
 const StyledDropzone = styled(
   toClass(({ hasError, saveInnerRef, ...rest }) => (

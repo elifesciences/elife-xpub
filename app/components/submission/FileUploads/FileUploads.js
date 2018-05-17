@@ -3,7 +3,7 @@ import { Flex, Box } from 'grid-styled'
 import { Button, H1 } from '@pubsweet/ui'
 import ConfigurableEditor from 'xpub-edit/src/components/configurable/ConfigurableEditor'
 import ButtonLink from '../../ui/atoms/ButtonLink'
-import FileUpload from '../../ui/atoms/FileUpload'
+import FileUpload from '../../ui/molecules/FileUpload'
 import ValidatedField from '../../ui/atoms/ValidatedField'
 import ProgressBar from '../ProgressBar'
 
