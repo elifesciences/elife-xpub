@@ -1,6 +1,7 @@
 import gql from 'graphql-tag'
 import { withApollo, Mutation } from 'react-apollo'
 import React from 'react'
+import ErrorPage from '../global/ErrorPage'
 
 const manuscriptFragment = gql`
   fragment WholeManuscript on Manuscript {
@@ -124,7 +125,7 @@ class WithCurrentSubmission extends React.Component {
     }
 
     if (error) {
-      return <div>{error.message}</div>
+      return <ErrorPage error={error} />
     }
 
     return (

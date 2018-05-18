@@ -2,6 +2,7 @@ import React from 'react'
 import { Redirect } from 'react-router'
 import { Query } from 'react-apollo'
 import { CURRENT_USER } from './queries'
+import ErrorPage from './ErrorPage'
 
 const AuthenticatedComponent = ({ children }) => (
   <Query query={CURRENT_USER}>
@@ -12,7 +13,13 @@ const AuthenticatedComponent = ({ children }) => (
 
       if (loading) return 'Loading...'
 
-      if (error) return <div>{error.message}</div>
+      if (error) {
+        if (error.message.includes('Object not found:')) {
+          window.localStorage.removeItem('token')
+        }
+
+        return <ErrorPage error={error} />
+      }
 
       if (!data.currentUser) {
         return <Redirect to="/login" />
