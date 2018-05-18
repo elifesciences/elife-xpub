@@ -19,20 +19,24 @@ jest.mock('pubsweet-server/src/db', () => {
 let db
 
 beforeAll(async () => {
-  const pg = require('pg')
-  db = new pg.Client()
-  await db.connect()
-  await db.query(`CREATE DATABASE ${mockTestDbName}`)
-  const { createTables } = require('@pubsweet/db-manager')
-  await createTables(true)
+  if (mockTestDbName) {
+    const pg = require('pg')
+    db = new pg.Client()
+    await db.connect()
+    await db.query(`CREATE DATABASE ${mockTestDbName}`)
+    const { createTables } = require('@pubsweet/db-manager')
+    await createTables(true)
+  }
 })
 
 afterAll(async () => {
-  await db.query(`REVOKE CONNECT ON DATABASE ${mockTestDbName} FROM public`)
-  await db.query(`
-      SELECT pg_terminate_backend(pg_stat_activity.pid)
-      FROM pg_stat_activity
-      WHERE pg_stat_activity.datname = '${mockTestDbName}'`)
-  await db.query(`DROP DATABASE ${mockTestDbName}`)
-  await db.end()
+  if (mockTestDbName) {
+    await db.query(`REVOKE CONNECT ON DATABASE ${mockTestDbName} FROM public`)
+    await db.query(`
+        SELECT pg_terminate_backend(pg_stat_activity.pid)
+        FROM pg_stat_activity
+        WHERE pg_stat_activity.datname = '${mockTestDbName}'`)
+    await db.query(`DROP DATABASE ${mockTestDbName}`)
+    await db.end()
+  }
 })
