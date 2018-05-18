@@ -27,23 +27,20 @@ const AnimationRoot = styled.div`
   }
 `
 
-function percentageToDashoffset(percentage) {
+function percentageToDasharray(percentage, circleRadius) {
   /**
-   * convert from [0 - 100] to [250, 99]
+   * converts from [0 - 100] to stroke-dasharray string
+   * with pairs of numbers like "150.72, 0" etc
    */
-  const maxDashoffset = 250
-  const minDashoffset = 99
-  return (
-    maxDashoffset -
-    Math.min(Math.max(percentage, 0), 100) *
-      (maxDashoffset - minDashoffset) /
-      100
-  )
+  const circleLength = 2 * Math.PI * circleRadius
+  const lineLength = circleLength * percentage / 100
+  const spaceLength = circleLength - lineLength
+  return `${lineLength}, ${spaceLength}`
 }
 
 const Upload = props => {
   const { color, size, percentage, ...otherProps } = props
-  const progressCircle = percentageToDashoffset(percentage)
+  const dashArray = percentageToDasharray(percentage, 24)
   let animate = true
   return (
     <AnimationRoot>
@@ -91,8 +88,7 @@ const Upload = props => {
                 id="Progress-circle"
                 r="24"
                 stroke="#0288D1"
-                strokeDasharray="250"
-                strokeDashoffset={progressCircle}
+                strokeDasharray={dashArray}
                 strokeWidth="2"
               />
             </g>
