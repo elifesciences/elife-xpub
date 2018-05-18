@@ -11,7 +11,8 @@ const admin = {
   username: 'tester',
   email: 'tester@example.com',
   password: 'password',
-  orcid: '0000-0001',
+  orcid: '0000-0003-3146-0256',
+  oauth: { accessToken: 'f7617529-f46a-40b1-99f4-4181859783ca' },
   admin: true,
 }
 
