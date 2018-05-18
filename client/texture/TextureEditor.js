@@ -8,7 +8,6 @@ import TextureContainer from './TextureContainer'
 
 class TextureEditor extends React.Component {
   componentDidMount() {
-    // substanceGlobals.DEBUG_RENDERING = platform.devtools
     TextureWebApp.mount(this.state, this.ref)
   }
 

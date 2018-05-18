@@ -28,7 +28,7 @@ module.exports = {
     },
   },
   darServer: {
-    basePath: 'manuscripts',
+    basePath: path.join(__dirname, '..', 'manuscripts'),
   },
   publicKeys: ['pubsweet-client', 'authsome', 'validations'],
 }

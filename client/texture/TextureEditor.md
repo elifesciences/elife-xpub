@@ -1,5 +1,9 @@
 A Texture editor for authoring JATS XML
 
 ```js
-<TextureEditor archiveId="elife-32671-v2.xml" />
+// Use staging deployment to serve DARs
+;<TextureEditor
+  storageUrl="https://xpub-elife-staging.gateway.xpub.semioticsquares.com/api/dar"
+  archiveId="elife-32671"
+/>
 ```
