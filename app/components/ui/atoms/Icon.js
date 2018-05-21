@@ -23,18 +23,16 @@ const Icon = ({ children, size, color, ...props }) => {
   }
   return (
     <Container color={color} role="img" size={size} {...props}>
-      <SelectedIcon color={color} size={size} {...props} />
+      <SelectedIcon {...props} />
     </Container>
   )
 }
 
 Icon.propTypes = {
-  size: PropTypes.number,
   color: PropTypes.string,
 }
 
 Icon.defaultProps = {
-  size: 3,
   color: 'black',
 }
 

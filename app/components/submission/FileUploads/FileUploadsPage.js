@@ -29,14 +29,9 @@ const FileUploadsPage = () => (
                 conversion={{
                   converting: loading,
                   completed: !!data,
-                  // display either upload error or form validation error
                   error: uploadError,
                 }}
-                formError={
-                  errors.manuscriptUrl &&
-                  touched.manuscriptUrl &&
-                  new Error(errors.manuscriptUrl)
-                }
+                formError={errors.manuscriptUrl && touched.manuscriptUrl}
                 onDrop={([file]) =>
                   uploadFile({ variables: { file } }).then(
                     // save file URL to form on success

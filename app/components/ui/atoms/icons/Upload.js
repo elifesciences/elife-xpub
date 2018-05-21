@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import styled, { keyframes } from 'styled-components'
+import styled, { keyframes, withTheme } from 'styled-components'
 
 function animateUpload(animate) {
   if (animate === true) {
@@ -38,21 +38,18 @@ function percentageToDasharray(percentage, circleRadius) {
   return `${lineLength}, ${spaceLength}`
 }
 
-const Upload = props => {
-  const { color, size, percentage, ...otherProps } = props
+const Upload = ({ color, percentage, ...otherProps }) => {
   const dashArray = percentageToDasharray(percentage, 24)
   let animate = true
   return (
     <AnimationRoot>
       <svg
-        height={size}
         onClick={() => {
           animateUpload(animate)
           animate = !animate
         }}
         version="1.1"
         viewBox="0 0 52 52"
-        width={size}
         xmlns="http://www.w3.org/2000/svg"
         {...otherProps}
       >
@@ -68,8 +65,7 @@ const Upload = props => {
           <g id="icons" transform="translate(-22.000000, -22.000000)">
             <g id="dropzone-upload" transform="translate(24.000000, 24.000000)">
               <polygon
-                fill="#0288D1"
-                // fill={color}
+                fill={otherProps.theme.colorPrimary}
                 id="Shape"
                 points="20 31 28 31 28 23 33 23 24 14 15 23 20 23"
               />
@@ -78,7 +74,7 @@ const Upload = props => {
                 cy="24"
                 id="Oval"
                 r="24"
-                // stroke={color}
+                // stroke={otherProps.theme.colorTextDividers}
                 stroke="#E0E0E0"
                 strokeWidth="3"
               />
@@ -87,7 +83,7 @@ const Upload = props => {
                 cy="24"
                 id="Progress-circle"
                 r="24"
-                stroke="#0288D1"
+                stroke={otherProps.theme.colorPrimary}
                 strokeDasharray={dashArray}
                 strokeWidth="2"
               />
@@ -101,14 +97,12 @@ const Upload = props => {
 
 Upload.propTypes = {
   color: PropTypes.string,
-  size: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   percentage: PropTypes.number,
 }
 
 Upload.defaultProps = {
   color: 'currentColor',
-  size: '24',
   percentage: 0,
 }
 
-export default Upload
+export default withTheme(Upload)

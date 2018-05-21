@@ -5,15 +5,12 @@ import styled from 'styled-components'
 import Dropzone from 'react-dropzone'
 import { ErrorText, Action, th } from '@pubsweet/ui'
 import { get } from 'lodash'
-import { toClass } from 'recompose'
 
 import Icon from '../atoms/Icon'
 
-const StyledDropzone = styled(
-  toClass(({ hasError, saveInnerRef, ...rest }) => (
-    <Dropzone ref={saveInnerRef} {...rest} />
-  )),
-)`
+const StyledDropzone = styled(({ hasError, saveInnerRef, ...rest }) => (
+  <Dropzone ref={saveInnerRef} {...rest} />
+))`
   border-style: dashed;
   border-color: ${({ hasError = false }) =>
     hasError ? th('colorError') : th('colorBorder')};
@@ -27,7 +24,7 @@ const CentredFlex = styled(Flex)`
   align-items: center;
 `
 
-const DropzoneContent = ({ conversion, formError, dropzoneOpen }) => {
+const DropzoneContent = ({ conversion, formError, dropzoneOpen, ...props }) => {
   if (conversion.error) {
     const errorMessage = get(
       conversion,
@@ -37,7 +34,7 @@ const DropzoneContent = ({ conversion, formError, dropzoneOpen }) => {
     return (
       <div>
         <Icon size={6}>UploadFailure</Icon>
-        <ErrorText name="dropzoneMessage">
+        <ErrorText data-test-id="dropzoneMessage">
           {errorMessage}. Try to <Action onClick={dropzoneOpen}>upload</Action>{' '}
           your Manuscript again.
         </ErrorText>
@@ -48,7 +45,7 @@ const DropzoneContent = ({ conversion, formError, dropzoneOpen }) => {
     return (
       <div>
         <Icon size={6}>UploadFailure</Icon>
-        <ErrorText name="dropzoneMessage">
+        <ErrorText data-test-id="dropzoneMessage">
           Please <Action onClick={dropzoneOpen}>upload</Action> your Manuscript.
         </ErrorText>
       </div>
@@ -58,7 +55,7 @@ const DropzoneContent = ({ conversion, formError, dropzoneOpen }) => {
     return (
       <div>
         <Icon size={6}>Upload</Icon>
-        <Instruction name="dropzoneMessage">
+        <Instruction data-test-id="dropzoneMessage">
           Manuscript is uploading
         </Instruction>
       </div>
@@ -68,7 +65,7 @@ const DropzoneContent = ({ conversion, formError, dropzoneOpen }) => {
     return (
       <div>
         <Icon size={6}>UploadSuccess</Icon>
-        <Instruction name="dropzoneMessage">
+        <Instruction data-test-id="dropzoneMessage">
           Success! <Action to="/manuscript">Preview</Action> or{' '}
           <Action onClick={dropzoneOpen}>replace</Action> your Manuscript.
         </Instruction>
@@ -78,7 +75,7 @@ const DropzoneContent = ({ conversion, formError, dropzoneOpen }) => {
   return (
     <div>
       <Icon size={6}>Upload</Icon>
-      <Instruction name="dropzoneMessage">
+      <Instruction data-test-id="dropzoneMessage">
         <Action onClick={dropzoneOpen}>Upload</Action> your manuscript or drag
         it here.
       </Instruction>
@@ -117,13 +114,14 @@ FileUpload.propTypes = {
   conversion: PropTypes.shape({
     completed: PropTypes.bool,
     error: PropTypes.instanceOf(Error),
+    converting: PropTypes.bool,
   }),
-  formError: PropTypes.instanceOf(Error),
+  formError: PropTypes.bool,
 }
 
 FileUpload.defaultProps = {
   conversion: {},
-  formError: null,
+  formError: false,
 }
 
 export default FileUpload

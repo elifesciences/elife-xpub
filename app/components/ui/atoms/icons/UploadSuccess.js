@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { withTheme } from 'styled-components'
 
 const UploadSuccess = props => {
   const { color, size, ...otherProps } = props
@@ -23,8 +24,7 @@ const UploadSuccess = props => {
       >
         <g
           id="icons"
-          stroke="#0288D1"
-          // stroke={color}
+          stroke={otherProps.theme.colorPrimary}
           strokeWidth="3"
           transform="translate(-118.000000, -22.000000)"
         >
@@ -40,12 +40,10 @@ const UploadSuccess = props => {
 
 UploadSuccess.propTypes = {
   color: PropTypes.string,
-  size: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 }
 
 UploadSuccess.defaultProps = {
   color: 'currentColor',
-  size: '24',
 }
 
-export default UploadSuccess
+export default withTheme(UploadSuccess)

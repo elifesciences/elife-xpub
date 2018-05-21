@@ -1,16 +1,16 @@
-An upload icon
+An upload icon (you must specify a size).
 
 ```js
-<Icon>Upload</Icon>
+<Icon size={6}>Upload</Icon>
 ```
 
-The size can be changed.
+Upload failure icon.
 
 ```js
 <Icon size={6}>UploadFailure</Icon>
 ```
 
-Some icons accept special parameters.
+Some icons accept additional parameters.
 
 ```js
 <Icon size={6} percentage={100}>

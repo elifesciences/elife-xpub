@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { withTheme } from 'styled-components'
 
 const UploadFailure = props => {
   const { color, size, ...otherProps } = props
@@ -23,8 +24,7 @@ const UploadFailure = props => {
       >
         <g
           id="icons"
-          stroke="#CF0C4E"
-          // stroke={color}
+          stroke={otherProps.theme.colorError}
           strokeWidth="3"
           transform="translate(-214.000000, -22.000000)"
         >
@@ -41,12 +41,10 @@ const UploadFailure = props => {
 
 UploadFailure.propTypes = {
   color: PropTypes.string,
-  size: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 }
 
 UploadFailure.defaultProps = {
   color: 'currentColor',
-  size: '24',
 }
 
-export default UploadFailure
+export default withTheme(UploadFailure)
