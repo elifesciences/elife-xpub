@@ -39,6 +39,7 @@ function percentageToDasharray(percentage, circleRadius) {
 }
 
 const Upload = ({ color, percentage, ...otherProps }) => {
+  // 24 is the svg circle radius that doesn't change with size
   const dashArray = percentageToDasharray(percentage, 24)
   let animate = true
   return (
