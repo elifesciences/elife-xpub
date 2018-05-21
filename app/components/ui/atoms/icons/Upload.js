@@ -74,8 +74,7 @@ const Upload = ({ color, percentage, ...otherProps }) => {
                 cy="24"
                 id="Oval"
                 r="24"
-                // stroke={otherProps.theme.colorTextDividers}
-                stroke="#E0E0E0"
+                stroke={otherProps.theme.colorFurniture}
                 strokeWidth="3"
               />
               <circle
