@@ -1,4 +1,4 @@
-import { Selector } from 'testcafe'
+import { ClientFunction, Selector } from 'testcafe'
 import replaySetup from './helpers/replay-setup'
 import { dashboard, authorDetails } from './pageObjects'
 import setFixtureHooks from './helpers/set-fixture-hooks'
@@ -35,12 +35,25 @@ test('Happy path', async t => {
     .typeText(authorDetails.secondNameField, 'Author', {
       replace: true,
     })
-    .typeText(authorDetails.emailField, 'anne.author@life.ac.uk', {
+    .typeText(authorDetails.emailField, 'anne.author@life', {
       replace: true,
     })
     .typeText(authorDetails.institutionField, 'University of Life', {
       replace: true,
     })
+    .expect(Selector(authorDetails.emailValidationMessage).textContent)
+    .eql(
+      'Must be a valid email address',
+      'Error is displayed when user enters invalid email',
+    )
+    .click('[data-test-id=next]')
+    .wait(1000)
+    .expect(ClientFunction(() => window.location.href)())
+    .eql(
+      authorDetails.url,
+      'Validation errors prevent progress to the next page',
+    )
+    .typeText(authorDetails.emailField, 'ac.uk')
     .click(Selector('[name=cbNotCorrespondingAuthor]').parent())
 
   // correspondent details

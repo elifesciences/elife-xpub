@@ -5,6 +5,7 @@ const authorDetails = {
   firstNameField: '[name="submissionMeta.author.firstName"]',
   secondNameField: '[name="submissionMeta.author.lastName"]',
   emailField: '[name="submissionMeta.author.email"]',
+  emailValidationMessage: '[data-test-id="error-submissionMeta.author.email"]',
   institutionField: '[name="submissionMeta.author.institution"]',
 }
 

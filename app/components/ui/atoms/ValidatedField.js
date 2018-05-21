@@ -38,7 +38,12 @@ const ValidatedField = ({
 
         {/* live region DOM node must be initially present for changes to be announced */}
         <MessageWrapper role="alert">
-          {touched && errors && <ErrorMessage>{errors}</ErrorMessage>}
+          {touched &&
+            errors && (
+              <ErrorMessage data-test-id={`error-${name}`}>
+                {errors}
+              </ErrorMessage>
+            )}
         </MessageWrapper>
       </React.Fragment>
     )
