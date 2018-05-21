@@ -30,5 +30,8 @@ module.exports = {
   darServer: {
     basePath: path.join(__dirname, '..', 'manuscripts'),
   },
+  scienceBeam: {
+    url: 'https://sciencebeam-texture.elifesciences.org/api/convert',
+  },
   publicKeys: ['pubsweet-client', 'authsome', 'validations'],
 }

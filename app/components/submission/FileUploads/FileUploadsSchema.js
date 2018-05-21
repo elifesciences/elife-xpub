@@ -1,13 +1,10 @@
 import yup from 'yup'
 
 const schema = yup.object().shape({
-  coverLetter: yup.string().required('Cover letter is required'),
-  manuscriptUrl: yup.string().required('Please upload your manuscript'),
+  submissionMeta: yup.object({
+    coverLetter: yup.string().required('Cover letter is required'),
+  }),
+  files: yup.array().min(1, 'Please upload a manuscript'),
 })
 
-const empty = {
-  coverLetter: '',
-  manuscriptUrl: '',
-}
-
-export { schema, empty }
+export { schema }

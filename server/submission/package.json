@@ -13,7 +13,8 @@
     "config": "^1.30.0",
     "graphql-tag": "^2.8.0",
     "lodash": "^4.17.5",
-    "uuid": "^3.2.1"
+    "uuid": "^3.2.1",
+    "xml2js": "^0.4.19"
   },
   "peerDependencies": {
     "pubsweet-server": ">=2.0.0"

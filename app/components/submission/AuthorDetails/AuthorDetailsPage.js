@@ -14,7 +14,7 @@ const AuthorDetailsPage = ({ history }) => (
         component={AuthorDetails}
         initialValues={initialValues}
         onSubmit={(values, { setSubmitting, setErrors }) => {
-          const data = omitDeep(values, '__typename')
+          const data = omitDeep(values, ['__typename', 'files'])
           return updateSubmission({ variables: { data } })
             .then(() => setSubmitting(false))
             .then(() => history.push('/submit/upload'))

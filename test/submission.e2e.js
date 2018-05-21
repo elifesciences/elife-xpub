@@ -73,12 +73,12 @@ test('Happy path', async t => {
   // file uploads
   await t
     .typeText(
-      '[name=coverLetter] div[contenteditable=true]',
+      '[name="submissionMeta.coverLetter"] div[contenteditable=true]',
       'Please consider this for publication',
     )
     .setFilesToUpload(
       '[data-test-id=upload]>input',
-      './fixtures/dummy-manuscript.docx',
+      './fixtures/dummy-manuscript-2.pdf',
     )
     // wait for editor onChange
     .wait(1000)
@@ -86,10 +86,8 @@ test('Happy path', async t => {
 
   // metadata
   await t
-    .typeText(
-      '[name=title]',
-      'Inferring multi-scale neural mechanisms with brain networking modelling',
-    )
+    .expect(Selector('[name=title]').value)
+    .eql('The Relationship Between Lamport Clocks and Interrupts Using Obi')
     .click('[role=listbox] button')
     .click(Selector('[role=option]').nth(0))
     .click(Selector('[name="submissionMeta.discussedPreviously"]').parent())

@@ -8,6 +8,11 @@ import { get } from 'lodash'
 
 import Icon from '../atoms/Icon'
 
+const VALID_FILE_TYPES = [
+  'application/pdf',
+  'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+]
+
 const StyledDropzone = styled(({ hasError, saveInnerRef, ...rest }) => (
   <Dropzone ref={saveInnerRef} {...rest} />
 ))`
@@ -87,7 +92,7 @@ const FileUpload = ({ onDrop, conversion, formError, ...props }) => {
   let dropzoneRef
   return (
     <StyledDropzone
-      accept="application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+      accept={VALID_FILE_TYPES}
       onDrop={onDrop}
       {...props}
       disableClick

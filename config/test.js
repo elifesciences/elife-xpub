@@ -6,6 +6,7 @@ module.exports = {
     baseUrl: deferConfig(
       cfg => `http://localhost:${cfg['pubsweet-server'].port}`,
     ),
+    uploads: 'test/temp/uploads',
     secret: 'test',
   },
   'auth-orcid': {

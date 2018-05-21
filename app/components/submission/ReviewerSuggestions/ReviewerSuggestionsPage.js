@@ -16,7 +16,7 @@ const ReviewerSuggestionsPage = () => (
             component={ReviewerSuggestions}
             initialValues={initialValues}
             onSubmit={(values, { setSubmitting, setErrors }) => {
-              const data = omitDeep(values, '__typename')
+              const data = omitDeep(values, ['__typename', 'files'])
               return updateSubmission({ variables: { data } })
                 .then(() => setSubmitting(false))
                 .then(() => history.push('/'))

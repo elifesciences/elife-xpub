@@ -23,7 +23,9 @@ const selectId = async id => {
 function manuscriptGqlToDb(manuscript, owner) {
   const manuscriptDb = _.cloneDeep(manuscript)
   delete manuscriptDb.id
-  manuscriptDb.submissionMeta.createdBy = owner
+  if (owner) {
+    manuscriptDb.submissionMeta.createdBy = owner
+  }
   manuscriptDb.type = 'manuscript'
   return manuscriptDb
 }
@@ -31,8 +33,6 @@ function manuscriptGqlToDb(manuscript, owner) {
 function manuscriptDbToGql(manuscriptDb, id) {
   const manuscript = _.cloneDeep(manuscriptDb)
   manuscript.id = id
-  delete manuscript.submissionMeta.createdBy
-  delete manuscript.type
   return manuscript
 }
 

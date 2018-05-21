@@ -1,10 +1,3 @@
-const lodash = require('lodash')
-const logger = require('@pubsweet/logger')
-const User = require('pubsweet-server/src/models/User')
-
-const db = require('../db-helpers/')
-const fetchOrcidDetails = require('../auth/fetchUserDetails')
-
 /**
  * types & input types should be kept in sync
  */
@@ -15,7 +8,9 @@ const typeDefs = `
     extend type Mutation {
       createSubmission: Manuscript!
       updateSubmission(data: ManuscriptInput!): Manuscript!
+      uploadManuscript(id: ID!, file: Upload!): Manuscript!
     }
+    
     type Manuscript {
       id: ID
       title: String
@@ -28,6 +23,7 @@ const typeDefs = `
       suggestedReviewers: [SuggestedReviewer]
       opposedReviewers: [OpposedReviewer]
       noConflictOfInterest: Boolean
+      files: [File]
       submissionMeta: SubmissionMeta
     }
     input ManuscriptInput {
@@ -114,6 +110,12 @@ const typeDefs = `
       email: String
       reason: String
     }
+    type File {
+      name: String
+      url: String
+      size: String
+      type: String
+    }
 `
 
 /**
@@ -135,6 +137,7 @@ const emptyManuscript = {
   ],
   opposedReviewers: [],
   noConflictOfInterest: false,
+  files: [],
   submissionMeta: {
     coverLetter: '',
     author: {
@@ -161,50 +164,4 @@ const emptyManuscript = {
   },
 }
 
-const resolvers = {
-  Query: {
-    async currentSubmission(_, vars, ctx) {
-      const rows = await db.select({
-        'submissionMeta.createdBy': ctx.user,
-        'submissionMeta.stage': 'INITIAL',
-      })
-
-      if (!rows.length) {
-        return null
-      }
-
-      return rows[0]
-    },
-  },
-  Mutation: {
-    async createSubmission(_, { data }, ctx) {
-      const orcidData = {}
-      try {
-        const userData = await User.find(ctx.user)
-        orcidData.submissionMeta = {
-          author: await fetchOrcidDetails(userData),
-        }
-      } catch (err) {
-        logger.error(err)
-      }
-      const manuscript = lodash.merge({}, emptyManuscript, orcidData)
-      const manuscriptDb = db.manuscriptGqlToDb(manuscript, ctx.user)
-      const id = await db.save(manuscriptDb)
-      manuscript.id = id
-      return manuscript
-    },
-    async updateSubmission(_, { data }, ctx) {
-      const { data: manuscriptDb } = await db.checkPermission(data.id, ctx.user)
-
-      const manuscript = db.manuscriptDbToGql(manuscriptDb, data.id)
-      const newManuscript = lodash.merge({}, manuscript, data)
-
-      const newManuscriptDb = db.manuscriptGqlToDb(newManuscript, ctx.user)
-      await db.update(newManuscriptDb, data.id)
-
-      return newManuscript
-    },
-  },
-}
-
-module.exports = { typeDefs, resolvers }
+module.exports = { typeDefs, emptyManuscript }

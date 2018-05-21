@@ -7,7 +7,7 @@ import FileUpload from '../../ui/molecules/FileUpload'
 import ValidatedField from '../../ui/atoms/ValidatedField'
 import ProgressBar from '../ProgressBar'
 
-const Editor = props => (
+const Editor = ({ validationStatus, ...props }) => (
   <ConfigurableEditor {...props} bold italic smallcaps underline />
 )
 
@@ -28,9 +28,9 @@ const FileUploads = ({
         <ValidatedField
           component={Editor}
           id="coverLetter"
-          name="coverLetter"
-          onBlur={value => setFieldValue('coverLetter', value)}
-          onChange={value => setFieldValue('coverLetter', value)}
+          name="submissionMeta.coverLetter"
+          onBlur={value => setFieldValue('submissionMeta.coverLetter', value)}
+          onChange={value => setFieldValue('submissionMeta.coverLetter', value)}
           title="Cover letter"
         />
       </Box>

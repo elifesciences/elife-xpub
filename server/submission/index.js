@@ -1,6 +1,7 @@
-const definitions = require('./definitions')
+const { typeDefs } = require('./definitions')
+const resolvers = require('./resolvers')
 
 module.exports = {
-  typeDefs: definitions.typeDefs,
-  resolvers: definitions.resolvers,
+  typeDefs,
+  resolvers,
 }
