@@ -3,11 +3,6 @@ const Model = require('pubsweet-server/src/models/Model')
 const db = require('pubsweet-server/src/db')
 const _ = require('lodash')
 
-const selectAll = async () => {
-  const { rows } = await db.query(`SELECT * FROM entities`)
-  return rows
-}
-
 const remove = async id => {
   await db.query('DELETE FROM entities WHERE id = $1', [id])
 }
@@ -17,7 +12,10 @@ const selectId = async id => {
     `SELECT id, data FROM entities WHERE id = $1`,
     [id],
   )
-  return rows
+  if (!rows.length) {
+    throw new Error('Entity not found')
+  }
+  return manuscriptDbToGql(rows[0].data, rows[0].id)
 }
 
 function manuscriptGqlToDb(manuscript, owner) {
@@ -46,18 +44,10 @@ const update = async (obj, id) => {
   await db.query('UPDATE entities SET data = $2 WHERE id = $1', [id, obj])
 }
 
-const checkPermission = async (id, user) => {
-  const { rows } = await db.query(
-    `SELECT id, data FROM entities WHERE id = $1`,
-    [id],
-  )
-  if (!rows.length) {
-    throw new Error('Manuscript not found')
-  }
-  if (user !== rows[0].data.submissionMeta.createdBy) {
+const checkPermission = (manuscript, user) => {
+  if (user !== manuscript.submissionMeta.createdBy) {
     throw new Error('Manuscript not owned by user')
   }
-  return rows[0]
 }
 
 const select = async selector => {
@@ -71,20 +61,6 @@ const select = async selector => {
   return rows.map(row => manuscriptDbToGql(row.data, row.id))
 }
 
-const getOrcidData = async user =>
-  /* TODO get orcid data for user (orcid user id)
-  /*
-  /* const { rows } = await dbx.query( */
-  /*   `SELECT id, data FROM entities WHERE id = $1`, */
-  /*   [ctx.user], */
-  /* ) */
-  ({
-    firstName: 'firstName',
-    lastName: 'lastName',
-    email: 'email@mailinator.com',
-    institution: 'institution',
-  })
-
 module.exports = {
   manuscriptGqlToDb,
   manuscriptDbToGql,
@@ -92,8 +68,6 @@ module.exports = {
   save,
   update,
   checkPermission,
-  getOrcidData,
   remove,
-  selectAll,
   selectId,
 }

@@ -1,10 +1,11 @@
 import React from 'react'
 import { Route, Switch } from 'react-router-dom'
 
-import { AuthenticatedComponent, Dashboard, LoginPage } from './components'
+import { AuthenticatedComponent, LoginPage } from './components'
 import Layout from './components/global/Layout'
 import SubmissionPage from './components/submission/SubmissionPage'
 import ManuscriptPage from './components/manuscript/ManuscriptPage'
+import DashboardPage from './components/dashboard/DashboardPage'
 
 const Routes = () => (
   <Switch>
@@ -14,7 +15,7 @@ const Routes = () => (
         <Switch>
           <Route component={SubmissionPage} path="/submit" />
           <Route component={ManuscriptPage} path="/manuscript/:id" />
-          <Route component={Dashboard} />
+          <Route component={DashboardPage} />
         </Switch>
       </Layout>
     </AuthenticatedComponent>

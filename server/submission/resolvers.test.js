@@ -7,13 +7,7 @@ const app = require('pubsweet-server/src/').configureApp(require('express')())
 const { createTables } = require('@pubsweet/db-manager')
 const User = require('pubsweet-server/src/models/User')
 const authentication = require('pubsweet-server/src/authentication')
-const {
-  save,
-  select,
-  selectId,
-  manuscriptGqlToDb,
-  manuscriptDbToGql,
-} = require('../db-helpers/')
+const { save, select, selectId, manuscriptGqlToDb } = require('../db-helpers/')
 const {
   Mutation: { uploadManuscript },
 } = require('./resolvers')
@@ -213,11 +207,9 @@ describe('Submission', () => {
       }
       await request(query)
 
-      const rows = await selectId(id)
+      const actualManuscript = await selectId(id)
       const expectedManuscript = _.merge(manuscript, newFormData.data)
-      expect(manuscriptDbToGql(rows[0].data, id)).toMatchObject(
-        expectedManuscript,
-      )
+      expect(actualManuscript).toMatchObject(expectedManuscript)
     })
   })
 

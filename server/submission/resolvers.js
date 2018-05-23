@@ -43,6 +43,12 @@ const resolvers = {
       const user = await User.find(ctx.user)
       return fetchOrcidDetails(user)
     },
+    async manuscript(_, { id }) {
+      return db.selectId(id)
+    },
+    async manuscripts() {
+      return db.select({ type: 'manuscript' })
+    },
   },
 
   Mutation: {
@@ -53,11 +59,10 @@ const resolvers = {
       return manuscript
     },
     async updateSubmission(_, { data }, ctx) {
-      const { data: manuscriptDb } = await db.checkPermission(data.id, ctx.user)
+      const manuscript = await db.selectId(data.id)
+      db.checkPermission(manuscript, ctx.user)
 
-      const manuscript = db.manuscriptDbToGql(manuscriptDb, data.id)
       const newManuscript = lodash.merge({}, manuscript, data)
-
       const newManuscriptDb = db.manuscriptGqlToDb(newManuscript, ctx.user)
       await db.update(newManuscriptDb, data.id)
 
@@ -120,8 +125,7 @@ const resolvers = {
           'article-title'
         ][0]
 
-      const rows = await db.selectId(id)
-      const manuscript = db.manuscriptDbToGql(rows[0].data, rows[0].id)
+      const manuscript = await db.selectId(id)
       manuscript.files.push({
         url: manuscriptSourcePath,
         name: filename,
