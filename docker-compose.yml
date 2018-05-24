@@ -2,7 +2,6 @@ version: '3'
 
 services:
   app:
-    user: 'node'
     build: 
       context: .
       dockerfile: ./Dockerfile-development
