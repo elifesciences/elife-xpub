@@ -12,4 +12,9 @@ describe('ErrorPage', () => {
     const wrapper = mount(<ErrorPage error={new Error('Another error')} />)
     expect(wrapper.text()).toContain('Another error')
   })
+
+  it("doesn't choke on bad argument", () => {
+    const wrapper = mount(<ErrorPage error={{}} />)
+    expect(wrapper.text()).toContain('Back to homepage')
+  })
 })

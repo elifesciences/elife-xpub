@@ -1,12 +1,16 @@
 import React from 'react'
 import styled from 'styled-components'
+import PropTypes from 'prop-types'
 import { Heading, th } from '@pubsweet/ui'
 
 const formatErrorMessage = error => {
   if (error instanceof Error) {
     return error.message
   }
-  return error
+  if (['string', 'number'].includes(typeof error)) {
+    return error
+  }
+  return ''
 }
 
 const Container = styled.div`
@@ -26,5 +30,10 @@ const ErrorPage = ({ error }) => (
     <a href="/">Back to homepage</a>
   </Container>
 )
+
+ErrorPage.propTypes = {
+  error: PropTypes.oneOfType([PropTypes.string, PropTypes.instanceOf(Error)])
+    .isRequired,
+}
 
 export default ErrorPage
