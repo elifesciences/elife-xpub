@@ -1,7 +1,7 @@
 import React from 'react'
 import { Flex, Box } from 'grid-styled'
 import { H1 } from '@pubsweet/ui'
-import LoginButton from '@elife/login-orcid/Login'
+import LoginButton from '@pubsweet-pending/login-orcid/Login'
 
 const LoginPage = ({ location }) => (
   <Flex>

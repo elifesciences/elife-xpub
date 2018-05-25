@@ -1,1 +1,5 @@
-["./server/auth", "./server/submission", "./server/dar-server"]
+[
+  "@pubsweet-pending/auth-orcid",
+  "@elife-xpub/submission",
+  "@pubsweet-pending/dar-server"
+]
