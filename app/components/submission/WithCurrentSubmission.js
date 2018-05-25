@@ -29,6 +29,10 @@ const manuscriptFragment = gql`
       reason
     }
     noConflictOfInterest
+    files {
+      name
+      type
+    }
     submissionMeta {
       coverLetter
       author {

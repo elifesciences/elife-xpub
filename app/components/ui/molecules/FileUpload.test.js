@@ -57,3 +57,11 @@ it('displays uploading if conversion.converting is set', () => {
   })
   expect(dropzoneContentWrapper.text()).toBe(manuscriptUploading)
 })
+
+it('displays uploading even if there are errors', () => {
+  const dropzoneContentWrapper = makeCheerioWrapper({
+    conversion: { converting: true, error: new Error('Boo') },
+    formError: true,
+  })
+  expect(dropzoneContentWrapper.text()).toBe(manuscriptUploading)
+})

@@ -29,7 +29,17 @@ const CentredFlex = styled(Flex)`
   align-items: center;
 `
 
-const DropzoneContent = ({ conversion, formError, dropzoneOpen, ...props }) => {
+const DropzoneContent = ({ conversion, formError, dropzoneOpen }) => {
+  if (conversion.converting) {
+    return (
+      <div>
+        <Icon size={6}>Upload</Icon>
+        <Instruction data-test-id="dropzoneMessage">
+          Manuscript is uploading
+        </Instruction>
+      </div>
+    )
+  }
   if (conversion.error) {
     const errorMessage = get(
       conversion,
@@ -53,16 +63,6 @@ const DropzoneContent = ({ conversion, formError, dropzoneOpen, ...props }) => {
         <ErrorText data-test-id="dropzoneMessage">
           Please <Action onClick={dropzoneOpen}>upload</Action> your Manuscript.
         </ErrorText>
-      </div>
-    )
-  }
-  if (conversion.converting) {
-    return (
-      <div>
-        <Icon size={6}>Upload</Icon>
-        <Instruction data-test-id="dropzoneMessage">
-          Manuscript is uploading
-        </Instruction>
       </div>
     )
   }

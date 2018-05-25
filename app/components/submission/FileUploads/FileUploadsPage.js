@@ -38,26 +38,32 @@ const FileUploadsPage = ({ history }) => (
             }}
             validationSchema={schema}
           >
-            {({ setFieldValue, errors, touched, ...props }) => (
-              <FileUploads
-                conversion={{
-                  converting: loading,
-                  completed: !!uploadData,
-                  error: uploadError,
-                }}
-                formError={errors.manuscriptUrl && touched.manuscriptUrl}
-                onDrop={([file]) =>
-                  uploadFile({
-                    variables: { file, id: initialValues.id },
-                  }).then(({ data }) => {
-                    setFieldValue('title', data.uploadManuscript.title)
-                    setFieldValue('files', data.uploadManuscript.files)
-                  })
-                }
-                setFieldValue={setFieldValue}
-                {...props}
-              />
-            )}
+            {({ setFieldValue, errors, touched, values, ...props }) => {
+              const fieldName = 'files'
+              return (
+                <FileUploads
+                  conversion={{
+                    converting: loading,
+                    // TODO import this constant from somewhere (data model package?)
+                    completed: values[fieldName].includes(
+                      file => file.type === 'MANUSCRIPT_SOURCE',
+                    ),
+                    error: uploadError,
+                  }}
+                  formError={errors[fieldName] && touched[fieldName]}
+                  onDrop={([file]) =>
+                    uploadFile({
+                      variables: { file, id: initialValues.id },
+                    }).then(({ data }) => {
+                      setFieldValue('title', data.uploadManuscript.title)
+                      setFieldValue(fieldName, data.uploadManuscript.files)
+                    })
+                  }
+                  setFieldValue={setFieldValue}
+                  {...props}
+                />
+              )
+            }}
           </Formik>
         )}
       </Mutation>
