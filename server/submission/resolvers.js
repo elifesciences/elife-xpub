@@ -1,6 +1,5 @@
 const lodash = require('lodash')
 const config = require('config')
-const logger = require('@pubsweet/logger')
 const User = require('pubsweet-server/src/models/User')
 const request = require('request-promise-native')
 const { promisify } = require('util')
@@ -40,19 +39,15 @@ const resolvers = {
 
       return rows[0]
     },
+    async orcidDetails(_, vars, ctx) {
+      const user = await User.find(ctx.user)
+      return fetchOrcidDetails(user)
+    },
   },
+
   Mutation: {
-    async createSubmission(_, { data }, ctx) {
-      const orcidData = {}
-      try {
-        const userData = await User.find(ctx.user)
-        orcidData.submissionMeta = {
-          author: await fetchOrcidDetails(userData),
-        }
-      } catch (err) {
-        logger.error(err)
-      }
-      const manuscript = lodash.merge({}, emptyManuscript, orcidData)
+    async createSubmission(_, vars, ctx) {
+      const manuscript = lodash.cloneDeep(emptyManuscript)
       const manuscriptDb = db.manuscriptGqlToDb(manuscript, ctx.user)
       manuscript.id = await db.save(manuscriptDb)
       return manuscript

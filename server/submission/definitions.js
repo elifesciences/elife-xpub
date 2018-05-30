@@ -4,6 +4,7 @@
 const typeDefs = `
     extend type Query {
       currentSubmission: Manuscript
+      orcidDetails: Person
     }
     extend type Mutation {
       createSubmission: Manuscript!

@@ -151,35 +151,6 @@ describe('Submission', () => {
       expect(manuscripts.length).toBeGreaterThan(0)
       expect(manuscripts[0].id).toBe(body.data.createSubmission.id)
     })
-
-    it('an error in the orcid request leaves fields unpopulated', async () => {
-      replaySetup('error')
-      const query = {
-        mutation: {
-          createSubmission: {
-            submissionMeta: {
-              author: {
-                firstName: true,
-                lastName: true,
-                email: true,
-                institution: true,
-              },
-            },
-          },
-        },
-      }
-      const { body } = await request(query)
-      expect(body.data.createSubmission).toEqual({
-        submissionMeta: {
-          author: {
-            firstName: '',
-            lastName: '',
-            email: '',
-            institution: '',
-          },
-        },
-      })
-    })
   })
 
   describe('updateSubmission', () => {

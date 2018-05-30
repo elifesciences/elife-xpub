@@ -3,7 +3,7 @@ import { Route, Switch } from 'react-router-dom'
 import { Formik } from 'formik'
 import omitDeep from 'omit-deep-lodash'
 import WithCurrentSubmission from './WithCurrentSubmission'
-import AuthorDetails from './AuthorDetails/AuthorDetails'
+import AuthorDetailsPage from './AuthorDetails/AuthorDetailsPage'
 import FileUploadsPage from './FileUploads/FileUploadsPage'
 import ManuscriptMetadata from './ManuscriptMetadata/ManuscriptMetadata'
 import ReviewerSuggestions from './ReviewerSuggestions/ReviewerSuggestions'
@@ -73,7 +73,7 @@ const SubmissionPage = ({ match, history }) => (
         <Route
           render={() => (
             <FormStep
-              component={AuthorDetails}
+              component={AuthorDetailsPage}
               history={history}
               initialValues={initialValues}
               nextUrl={`${match.path}/upload`}

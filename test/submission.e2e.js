@@ -13,15 +13,27 @@ test('Happy path', async t => {
   await t.ctx.localStorageSet(t.ctx.token)
   await t.navigateTo(dashboard.url).click('[data-test-id=submit]')
 
+  // author details initially empty
+  await t
+    .expect(authorDetails.firstNameField.value)
+    .eql('')
+    .expect(authorDetails.secondNameField.value)
+    .eql('')
+    .expect(authorDetails.emailField.value)
+    .eql('')
+    .expect(authorDetails.institutionField.value)
+    .eql('')
+
   // author details pre-populated using Orcid API
   await t
-    .expect(Selector(authorDetails.firstNameField).value)
+    .click(authorDetails.orcidPrefill)
+    .expect(authorDetails.firstNameField.value)
     .eql('Test', 'First name is populated by query to the Orcid API')
-    .expect(Selector(authorDetails.secondNameField).value)
+    .expect(authorDetails.secondNameField.value)
     .eql('User', 'Last name is populated by query to the Orcid API')
-    .expect(Selector(authorDetails.emailField).value)
+    .expect(authorDetails.emailField.value)
     .eql('elife@mailinator.com', 'Email is populated by query to the Orcid API')
-    .expect(Selector(authorDetails.institutionField).value)
+    .expect(authorDetails.institutionField.value)
     .eql(
       'University of eLife',
       'Institution is populated by query to the Orchid API',
@@ -53,21 +65,8 @@ test('Happy path', async t => {
       authorDetails.url,
       'Validation errors prevent progress to the next page',
     )
-    .typeText(authorDetails.emailField, 'ac.uk')
-    .click(Selector('[name=cbNotCorrespondingAuthor]').parent())
+    .typeText(authorDetails.emailField, '.ac.uk')
 
-  // correspondent details
-  await t
-    .typeText('[name="submissionMeta.correspondent.firstName"]', 'A')
-    .typeText('[name="submissionMeta.correspondent.lastName"]', 'Signee')
-    .typeText(
-      '[name="submissionMeta.correspondent.email"]',
-      'a.signee@knocks.ac.uk',
-    )
-    .typeText(
-      '[name="submissionMeta.correspondent.institution"]',
-      'University of Hard Knocks',
-    )
     .click('[data-test-id=next]')
 
   // file uploads

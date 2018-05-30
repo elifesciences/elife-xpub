@@ -1,13 +1,18 @@
-A form for entering personal information about the author of the paper being submitted.
+A form for entering personal information about the author of the paper being
+submitted.
 
 ```js
 const { Formik } = formik
-const { schema, emptyPerson } = require('./AuthorDetailsSchema')
+const { schema } = require('./AuthorDetailsSchema')
+
 const empty = {
   submissionMeta: {
-    hasCorrespondent: false,
-    author: emptyPerson,
-    correspondent: emptyPerson,
+    author: {
+      firstName: '',
+      lastName: '',
+      email: '',
+      institution: '',
+    },
   },
 }
 ;<Formik
@@ -15,5 +20,23 @@ const empty = {
   initialValues={empty}
   onSubmit={values => console.log(values)}
   validationSchema={schema}
+/>
+```
+
+Loading orcid data
+
+```js
+const { Formik } = formik
+;<Formik render={props => <AuthorDetails loading={true} {...props} />} />
+```
+
+Loading orcid data failed
+
+```js
+const { Formik } = formik
+;<Formik
+  render={props => (
+    <AuthorDetails error="ORCID is down for maintenance" {...props} />
+  )}
 />
 ```
