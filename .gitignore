@@ -15,3 +15,8 @@ config.json
 _build/
 uploads/
 config/local*.*
+
+.config
+.local
+.yarnrc
+.pki

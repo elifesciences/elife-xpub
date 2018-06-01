@@ -1,8 +1,13 @@
 variables:
+  DOCKER_DRIVER: overlay2
+  DOCKER_HOST: tcp://docker:2375/
   IMAGE_ORG: xpub
   IMAGE_NAME: xpub-elife
   BASE_DOMAIN: gateway.xpub.semioticsquares.com
   CONFIGURATION_REPOSITORY: https://gitlab.coko.foundation/yld/xpub-deployment-config-postgres.git
+
+services:
+  - docker:dind
 
 stages:
   - build
@@ -81,7 +86,7 @@ push:latest:
     - docker build --build-arg CI_COMMIT_SHA -t $IMAGE_ORG/$IMAGE_NAME:latest --label COMMIT_SHA=$CI_COMMIT_SHA .
     - docker push $IMAGE_ORG/$IMAGE_NAME:latest
   only:
-  - master
+  - develop
 
 review:
   image: pubsweet/deployer:latest
@@ -97,6 +102,7 @@ review:
     on_stop: stop_review
   except:
   - master
+  - develop
   script:
     - source deploy.sh
     - create_deployment
@@ -114,6 +120,7 @@ stop_review:
   when: manual
   except:
   - master
+  - develop
   script:
     - source deploy.sh
     - delete_deployment
@@ -129,7 +136,7 @@ staging:
     name: xpub-elife-staging
     url: "https://${CI_ENVIRONMENT_SLUG}.${BASE_DOMAIN}"
   only:
-  - master
+  - develop
   script:
     - source deploy.sh
     - create_deployment
