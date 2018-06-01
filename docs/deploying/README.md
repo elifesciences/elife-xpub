@@ -1,13 +1,13 @@
+# Build
 
-Build
-=====
+> **NOTE** This page uses mermaid to show the sequence diagram.
 
 The following [sequence-diagram](https://mermaidjs.github.io/sequenceDiagram.html) shows how the building of this project is triggered from `xpub-elife` to the deployment on the [demo website](https://demo--xpub.elifesciences.org/login)
 
 ```mermaid
 sequenceDiagram
-    participant GL as xpub-elife (gitlab)
-    participant GH as elife-xpub (github)
+    participant GL as elife-xpub
+    participant GH as elife-xpub-deployment
     participant DH as docker-hub
     participant JK as Jenkins
     participant WEB as elife-xpub--demo

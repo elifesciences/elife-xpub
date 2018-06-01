@@ -1,5 +1,4 @@
-Local setup
-===========
+# Local setup
 
 Run these commands:
 
@@ -10,3 +9,5 @@ docker-compose up
 ```
 
 Visit the web interface at [http://localhost:3000].
+
+> **TODO** Documentation for styleguide
