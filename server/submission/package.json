@@ -11,8 +11,11 @@
   "dependencies": {
     "apollo-boost": "^0.1.4",
     "config": "^1.30.0",
+    "fs-extra": "^6.0.1",
     "graphql-tag": "^2.8.0",
     "lodash": "^4.17.5",
+    "request": "^2.87.0",
+    "request-promise-native": "^1.0.5",
     "uuid": "^3.2.1",
     "xml2js": "^0.4.19"
   },
