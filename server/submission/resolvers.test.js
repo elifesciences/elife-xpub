@@ -33,7 +33,6 @@ describe('Submission', () => {
     it('Gets form data', async () => {
       const expectedManuscript = {
         title: 'title',
-        source: 'source',
         submissionMeta: {
           stage: 'INITIAL',
           author: {
@@ -58,7 +57,6 @@ describe('Submission', () => {
     it('Returns null object when user has no manuscripts in the db (db not empty)', async () => {
       await save({
         title: 'title',
-        source: 'source',
         submissionMeta: {
           createdBy: '9f72f2b8-bb4a-43fa-8b80-c7ac505c8c5f',
           stage: 'INITIAL',
@@ -72,7 +70,6 @@ describe('Submission', () => {
       })
       await save({
         title: 'title 2',
-        source: 'source 2',
         submissionMeta: {
           createdBy: 'bcd735c6-9b62-441a-a085-7d1e8a7834c6',
           stage: 'QA',
@@ -111,7 +108,6 @@ describe('Submission', () => {
     it('updates the current submission for user with data', async () => {
       const manuscript = {
         title: 'title',
-        source: 'source',
         submissionMeta: {
           stage: 'INITIAL',
           author: {
