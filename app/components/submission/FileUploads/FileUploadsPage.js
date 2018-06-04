@@ -32,7 +32,7 @@ const FileUploadsPage = ({
           conversion={{
             converting: loading,
             // TODO import this constant from somewhere (data model package?)
-            completed: values[fieldName].includes(
+            completed: values[fieldName].some(
               file => file.type === 'MANUSCRIPT_SOURCE',
             ),
             error: uploadError,
