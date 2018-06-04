@@ -1,5 +1,5 @@
-<<<<<<< HEAD
 ![eLife logo](https://raw.githubusercontent.com/elifesciences/pattern-library/develop/assets/img/patterns/organisms/elife-logo-symbol-2x.png)
+
 # eLife xPub
 
 [![Build Status](http://ci--alfred.elifesciences.org/buildStatus/icon?job=test-elife-xpub)](https://ci--alfred.elifesciences.org/blue/organizations/jenkins/test-elife-xpub/activity)
