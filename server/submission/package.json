@@ -1,0 +1,31 @@
+{
+  "name": "@elife-xpub/submission",
+  "version": "1.0.0",
+  "description": "",
+  "license": "MIT",
+  "private": true,
+  "author": "eLife",
+  "main": "index.js",
+  "scripts": {},
+  "keywords": [],
+  "dependencies": {
+    "apollo-boost": "^0.1.4",
+    "config": "^1.30.0",
+    "fs-extra": "^6.0.1",
+    "graphql-tag": "^2.8.0",
+    "lodash": "^4.17.5",
+    "request": "^2.87.0",
+    "request-promise-native": "^1.0.5",
+    "uuid": "^3.2.1",
+    "xml2js": "^0.4.19"
+  },
+  "peerDependencies": {
+    "pubsweet-server": ">=2.0.0"
+  },
+  "devDependencies": {
+    "joi": "^13.2.0",
+    "json-to-graphql-query": "^1.3.0",
+    "superagent": "^3.8.2",
+    "supertest": "^3.0.0"
+  }
+}

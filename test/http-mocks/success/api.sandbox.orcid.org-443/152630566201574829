@@ -1,0 +1,20 @@
+GET /v2.1/0000-0003-3146-0256/person
+accept-encoding: gzip, deflate
+accept: application/json
+authorization: Bearer f7617529-f46a-40b1-99f4-4181859783ca
+
+HTTP/1.1 200 OK
+server: nginx/1.10.0
+date: Mon, 14 May 2018 13:47:41 GMT
+content-type: application/json;charset=UTF-8
+transfer-encoding: chunked
+connection: close
+access-control-allow-origin: *
+cache-control: no-cache, no-store, max-age=0, must-revalidate
+pragma: no-cache
+expires: 0
+x-xss-protection: 1; mode=block
+x-frame-options: DENY
+x-content-type-options: nosniff
+
+{"last-modified-date":{"value":1525104549715},"name":{"created-date":{"value":1523279444398},"last-modified-date":{"value":1523279444675},"given-names":{"value":"Test"},"family-name":{"value":"User"},"credit-name":null,"source":null,"visibility":"PUBLIC","path":"0000-0003-3146-0256"},"other-names":{"last-modified-date":null,"other-name":[],"path":"/0000-0003-3146-0256/other-names"},"biography":null,"researcher-urls":{"last-modified-date":null,"researcher-url":[],"path":"/0000-0003-3146-0256/researcher-urls"},"emails":{"last-modified-date":{"value":1525104549715},"email":[{"created-date":{"value":1523279444675},"last-modified-date":{"value":1525104549715},"source":{"source-orcid":{"uri":"https://sandbox.orcid.org/0000-0003-3146-0256","path":"0000-0003-3146-0256","host":"sandbox.orcid.org"},"source-client-id":null,"source-name":{"value":"Test User"}},"email":"elife@mailinator.com","path":null,"visibility":"PUBLIC","verified":true,"primary":true,"put-code":null}],"path":"/0000-0003-3146-0256/email"},"addresses":{"last-modified-date":null,"address":[],"path":"/0000-0003-3146-0256/address"},"keywords":{"last-modified-date":null,"keyword":[],"path":"/0000-0003-3146-0256/keywords"},"external-identifiers":{"last-modified-date":null,"external-identifier":[],"path":"/0000-0003-3146-0256/external-identifiers"},"path":"/0000-0003-3146-0256/person"}

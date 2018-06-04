@@ -1,0 +1,23 @@
+{
+  "name": "@pubsweet-pending/auth-orcid",
+  "version": "1.0.0",
+  "description": "",
+  "license": "MIT",
+  "author": "eLife",
+  "main": "index.js",
+  "scripts": {},
+  "keywords": [],
+  "dependencies": {
+    "config": "^1.29.0",
+    "passport": "^0.3.2",
+    "passport-orcid": "git+https://github.com/g-sam/passport-orcid.git"
+  },
+  "peerDependencies": {
+    "pubsweet-server": ">=2.0.0"
+  },
+  "devDependencies": {
+    "nock": "^9.2.3",
+    "superagent": "^3.8.2",
+    "supertest": "^3.0.0"
+  }
+}

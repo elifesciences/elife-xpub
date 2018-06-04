@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 157">
+    <style>
+        .st0{fill:none;stroke:#212121;stroke-width:4;stroke-miterlimit:10}
+        .st1{fill:#cf0c4e}
+        .st2{fill:none;stroke:#212121;stroke-width:4;stroke-linecap:round;stroke-miterlimit:10}
+    </style>
+    <g id="Layer_2">
+        <path class="st0" d="M12 12v5l5 6v106.6c0 7.7 5.6 14.5 13.3 15.3 9 1 16.7-6.1 16.7-14.9V23l5-6v-5H12z"/>
+        <path class="st1" d="M23.8 132c.9 3.4 4 6 7.7 6s6.8-2.6 7.7-6H23.8z"/>
+        <path class="st2" d="M25 39v63M25 110v5"/>
+    </g>
+</svg>

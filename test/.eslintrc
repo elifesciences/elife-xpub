@@ -1,0 +1,13 @@
+{
+  "env": {
+    "node": true,
+    "es6": true
+  },
+  "globals": {
+    "fixture": true,
+    "test": true
+  },
+  "rules": {
+    "no-param-reassign": ["error", { "props": false }]
+  }
+}

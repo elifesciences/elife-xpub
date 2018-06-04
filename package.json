@@ -1,0 +1,144 @@
+{
+  "name": "xpub-elife",
+  "version": "1.0.0",
+  "description": "xpub configured for eLife",
+  "license": "MIT",
+  "private": true,
+  "engines": {
+    "node": ">=8",
+    "yarn": ">=1.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://gitlab.coko.foundation/xpub/xpub-elife"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  },
+  "scripts": {
+    "build": "NODE_ENV=production pubsweet build",
+    "clean": "rm -rf node_modules",
+    "cz": "git-cz",
+    "lint": "npm run lint:js && npm run lint:style && npm run lint:package",
+    "lint:js": "eslint .",
+    "lint:package": "format-package -w package.json",
+    "lint:style": "stylelint app/**/*.scss app/**/*.css",
+    "precommit": "lint-staged",
+    "reset": "pubsweet setupdb --clobber",
+    "server": "pubsweet server",
+    "setupdb": "pubsweet setupdb",
+    "start": "docker-compose up",
+    "start:services": "docker-compose up postgres",
+    "start:styleguide": "docker-compose run --no-deps -p 6060:6060 app yarn run styleguide",
+    "styleguide": "styleguidist server",
+    "test": "jest",
+    "test:e2e": "NODE_ENV=test testcafe \"${BROWSER:-chrome}\" 'test/**/*.e2e.js'"
+  },
+  "lint-staged": {
+    "*.css": "stylelint",
+    "*.js": [
+      "prettier --write",
+      "eslint --fix",
+      "git add"
+    ],
+    "*.scss": "stylelint",
+    "*.{json,md}": [
+      "prettier --write",
+      "git add"
+    ],
+    "package.json": [
+      "format-package -w",
+      "git add"
+    ]
+  },
+  "jest": {
+    "projects": [
+      "<rootDir>/client",
+      "<rootDir>/app",
+      "<rootDir>/server"
+    ]
+  },
+  "workspaces": [
+    "client/*",
+    "server/*"
+  ],
+  "dependencies": {
+    "@pubsweet/elife-theme": "^1.0.0",
+    "@pubsweet/ui": "^4.1.0",
+    "apollo-link-state": "^0.4.1",
+    "config": "^1.26.2",
+    "formik": "^0.11.11",
+    "graphql-tag": "^2.8.0",
+    "grid-styled": "^4.1.0",
+    "history": "^4.7.2",
+    "joi": "^10.0.6",
+    "lodash": "^4.17.5",
+    "omit-deep-lodash": "^1.0.0",
+    "prop-types": "^15.5.10",
+    "pubsweet-client": "^2.4.0",
+    "pubsweet-server": "^7.0.1",
+    "react": "^16.2.0",
+    "react-apollo": "^2.1.2",
+    "react-dom": "^16.2.0",
+    "react-dropzone": "^4.2.9",
+    "react-hot-loader": "^4.1.2",
+    "react-router-dom": "^4.2.2",
+    "recompose": "^0.26.0",
+    "redux": "^3.6.0",
+    "redux-logger": "^3.0.1",
+    "styled-components": "^3.2.5",
+    "uuid": "^3.2.1",
+    "xpub-edit": "^0.1.2",
+    "yup": "^0.24.1"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-eslint": "^8.0.2",
+    "babel-loader": "^7.1.2",
+    "babel-preset-env": "^1.6.0",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-2": "^6.24.1",
+    "clean-webpack-plugin": "^0.1.17",
+    "commitizen": "^2.9.6",
+    "copy-webpack-plugin": "^4.0.1",
+    "css-loader": "^0.28.4",
+    "cz-conventional-changelog": "^2.1.0",
+    "enzyme": "^3.3.0",
+    "enzyme-adapter-react-16": "^1.1.1",
+    "eslint": "^4.12.0",
+    "eslint-config-pubsweet": "^0.0.6",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-jest": "^21.4.0",
+    "eslint-plugin-jsx-a11y": "^6.0.2",
+    "eslint-plugin-node": "^5.2.1",
+    "eslint-plugin-prettier": "^2.3.1",
+    "eslint-plugin-promise": "^3.6.0",
+    "eslint-plugin-react": "^7.4.0",
+    "eslint-plugin-standard": "^3.0.1",
+    "extract-text-webpack-plugin": "^3.0.0",
+    "file-loader": "^1.1.5",
+    "format-package": "^4.2.0",
+    "fs-extra": "^4.0.2",
+    "html-webpack-plugin": "^2.24.0",
+    "husky": "^0.14.3",
+    "identity-obj-proxy": "^3.0.0",
+    "jest": "^22.4.3",
+    "joi-browser": "^10.0.6",
+    "lint-staged": "^4.1.3",
+    "prettier": "^1.8.2",
+    "pubsweet": "^2.1.4",
+    "react-styleguidist": "^6.5.3",
+    "replay": "^2.1.4",
+    "string-replace-loader": "^1.3.0",
+    "style-loader": "^0.19.0",
+    "stylelint": "^8.2.0",
+    "stylelint-config-pubsweet": "^0.0.3",
+    "testcafe": "^0.19.1",
+    "uglifyjs-webpack-plugin": "^1.1.2",
+    "webpack": "^3.8.1",
+    "webpack-dev-middleware": "^1.12.0",
+    "webpack-hot-middleware": "^2.22.1"
+  }
+}

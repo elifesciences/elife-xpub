@@ -1,0 +1,351 @@
+<article article-type="research-article">
+  <front>
+    <article-meta>
+      <title-group>
+        <article-title>Prevalence of clinical trial status discrepancies: A cross-sectional study of 10,492 trials registered on both ClinicalTrials.gov and the European Union Clinical Trials Register</article-title>
+      </title-group>
+      <contrib-group content-type="author">
+        <contrib contrib-type="person">
+          <name>
+            <surname>Fleminger</surname>
+            <given-names>Jessica</given-names>
+          </name>
+          <xref ref-type="aff" rid="aff0"/>
+        </contrib>
+        <contrib contrib-type="person">
+          <name>
+            <surname>Goldacre</surname>
+            <given-names>Ben</given-names>
+          </name>
+          <email>* ben.goldacre@phc.ox.ac.uk</email>
+          <xref ref-type="aff" rid="aff0"/>
+        </contrib>
+      </contrib-group>
+      <aff id="aff0">
+        <institution content-type="orgname">University of Oxford</institution>
+        <institution content-type="orgdiv1">Centre for Evidence Based Medicine</institution>
+        <city>Oxford</city>
+        <country>United Kingdom</country>
+      </aff>
+      <aff id="aff0">
+        <institution content-type="orgname">University of Oxford</institution>
+        <institution content-type="orgdiv1">Centre for Evidence Based Medicine</institution>
+        <city>Oxford</city>
+        <country>United Kingdom</country>
+      </aff>
+      <abstract>
+				<p>Objective Trial registries are a key source of information for clinicians and researchers. While building OpenTrials, an open database of public trial information, we identified errors and omissions in registries, including discrepancies between descriptions of the same trial in different registries. We set out to ascertain the prevalence of discrepancies in trial completion status using a cohort of trials registered on both the European Union Clinical Trials Register (EUCTR) and ClinicalTrials.gov. Study design and setting We used matching titles and registry IDs provided by both registries to build a cohort of dual-registered trials. Completion statuses were compared; we calculated descriptive statistics on the prevalence of discrepancies. Results 11,988 dual-registered trials were identified. 1,496 did not provide a comparable completion status, leaving 10,492 trials. 16.2% were discrepant on completion status. The majority of discrepancies (90.5%) were a 'completed' trial on ClinicalTrials.gov inaccurately marked as 'ongoing' on EUCTR. Overall, 33.9% of dual-registered trials described as 'ongoing' on EUCTR were listed as 'completed' on ClinicalTrials.gov.</p>
+			</abstract>
+    </article-meta>
+  </front>
+  <body/>
+  <back>
+    <ref-list id="ref-list-1">
+      <ref id="b0">
+        <element-citation publication-type="journal">
+          <article-title>Publication bias: the case for an international registry of clinical trials</article-title>
+          <source>J Clin Oncol</source>
+          <year>1986</year>
+          <volume>4</volume>
+          <fpage>3760920</fpage>
+          <lpage>3760920</lpage>
+          <person-group person-group-type="author">
+            <name>
+              <surname>Simes</surname>
+              <given-names>R J</given-names>
+            </name>
+          </person-group>
+        </element-citation>
+      </ref>
+      <ref id="b1">
+        <element-citation publication-type="journal">
+          <article-title>Extent of non-publication in cohorts of studies approved by research ethics committees or included in trial registries</article-title>
+          <source>PLoS One</source>
+          <year>2014</year>
+          <volume>9</volume>
+          <fpage>25536072</fpage>
+          <lpage>25536072</lpage>
+          <person-group person-group-type="author">
+            <name>
+              <surname>Schmucker</surname>
+              <given-names>C</given-names>
+            </name>
+            <name>
+              <surname>Schell</surname>
+              <given-names>L K</given-names>
+            </name>
+            <name>
+              <surname>Portalupi</surname>
+              <given-names>S</given-names>
+            </name>
+            <name>
+              <surname>Oeller</surname>
+              <given-names>P</given-names>
+            </name>
+            <name>
+              <surname>Cabrera</surname>
+              <given-names>L</given-names>
+            </name>
+            <name>
+              <surname>Bassler</surname>
+              <given-names>D</given-names>
+            </name>
+          </person-group>
+        </element-citation>
+      </ref>
+      <ref id="b2">
+        <element-citation publication-type="journal">
+          <article-title>Dissemination and publication of research findings: an updated review of related biases</article-title>
+          <source>Health Technol Assess</source>
+          <year>2010</year>
+          <volume>14</volume>
+          <fpage>1</fpage>
+          <lpage>193</lpage>
+          <person-group person-group-type="author">
+            <name>
+              <surname>Song</surname>
+              <given-names>F</given-names>
+            </name>
+            <name>
+              <surname>Parekh</surname>
+              <given-names>S</given-names>
+            </name>
+            <name>
+              <surname>Hooper</surname>
+              <given-names>L</given-names>
+            </name>
+            <name>
+              <surname>Loke</surname>
+              <given-names>Y K</given-names>
+            </name>
+            <name>
+              <surname>Ryder</surname>
+              <given-names>J</given-names>
+            </name>
+            <name>
+              <surname>Sutton</surname>
+              <given-names>A J</given-names>
+            </name>
+          </person-group>
+        </element-citation>
+      </ref>
+      <ref id="b3">
+        <element-citation publication-type="journal">
+          <article-title>Managing the incidence of selective reporting bias: a survey of Cochrane review groups</article-title>
+          <source>Syst Rev</source>
+          <year>2015</year>
+          <volume>4</volume>
+          <fpage>85</fpage>
+          <lpage>85</lpage>
+          <person-group person-group-type="author">
+            <name>
+              <surname>Reid</surname>
+              <given-names>E K</given-names>
+            </name>
+            <name>
+              <surname>Tejani</surname>
+              <given-names>A M</given-names>
+            </name>
+            <name>
+              <surname>Huan</surname>
+              <given-names>L N</given-names>
+            </name>
+            <name>
+              <surname>Egan</surname>
+              <given-names>G</given-names>
+            </name>
+            <name>
+              <surname>O&amp;apos;sullivan</surname>
+              <given-names>C</given-names>
+            </name>
+            <name>
+              <surname>Mayhew</surname>
+              <given-names>A D</given-names>
+            </name>
+          </person-group>
+        </element-citation>
+      </ref>
+      <ref id="b4">
+        <element-citation publication-type="journal">
+          <article-title>Rewarding true inquiry and diligence in research</article-title>
+          <source>Lancet</source>
+          <year>2015</year>
+          <volume>385</volume>
+          <issue>15</issue>
+          <fpage>26068247</fpage>
+          <lpage>26068247</lpage>
+        </element-citation>
+      </ref>
+      <ref id="b5">
+        <element-citation publication-type="journal">
+          <article-title>Food and Drug Administration Modernization Act (FDAMA)</article-title>
+          <year>1997</year>
+          <person-group person-group-type="author">
+            <name>
+              <surname>Fda</surname>
+              <given-names/>
+            </name>
+          </person-group>
+        </element-citation>
+      </ref>
+      <ref id="b6">
+        <element-citation publication-type="journal">
+          <article-title>European Medicines Agency Clinical Trial Regulation</article-title>
+          <year>2014</year>
+        </element-citation>
+      </ref>
+      <ref id="b7">
+        <element-citation publication-type="journal">
+          <year>2017</year>
+          <month>03</month>
+          <fpage>22</fpage>
+          <lpage>22</lpage>
+        </element-citation>
+      </ref>
+      <ref id="b8">
+        <element-citation publication-type="journal">
+          <article-title>Organisation WH. International Standards for Clinical Trial Registration</article-title>
+          <year>2012</year>
+        </element-citation>
+      </ref>
+      <ref id="b9">
+        <element-citation publication-type="journal">
+          <article-title>OpenTrials: towards a collaborative open database of all available information on all clinical trials</article-title>
+          <source>Trials</source>
+          <year>2016</year>
+          <volume>17</volume>
+          <fpage>27056367</fpage>
+          <lpage>27056367</lpage>
+          <person-group person-group-type="author">
+            <name>
+              <surname>Goldacre</surname>
+              <given-names>B</given-names>
+            </name>
+            <name>
+              <surname>Gray</surname>
+              <given-names>J</given-names>
+            </name>
+          </person-group>
+        </element-citation>
+      </ref>
+      <ref id="b10">
+        <element-citation publication-type="journal">
+          <article-title>Compliance of clinical trial registries with the World Health Organization minimum data set: a survey</article-title>
+          <source>Trials</source>
+          <year>2009</year>
+          <volume>10</volume>
+          <fpage>19624821</fpage>
+          <lpage>19624821</lpage>
+          <person-group person-group-type="author">
+            <name>
+              <surname>Moja</surname>
+              <given-names>L P</given-names>
+            </name>
+            <name>
+              <surname>Moschetti</surname>
+              <given-names>I</given-names>
+            </name>
+            <name>
+              <surname>Nurbhai</surname>
+              <given-names>M</given-names>
+            </name>
+            <name>
+              <surname>Compagnoni</surname>
+              <given-names>A</given-names>
+            </name>
+            <name>
+              <surname>Liberati</surname>
+              <given-names>A</given-names>
+            </name>
+            <name>
+              <surname>Grimshaw</surname>
+              <given-names>J M</given-names>
+            </name>
+          </person-group>
+        </element-citation>
+      </ref>
+      <ref id="b11">
+        <element-citation publication-type="journal">
+          <article-title>Trial Publication after Registration in ClinicalTrials.Gov: A Cross-Sectional Analysis</article-title>
+          <source>PLoS Med. Public Library of Science</source>
+          <year>2009</year>
+          <volume>6</volume>
+          <person-group person-group-type="author">
+            <name>
+              <surname>Ross</surname>
+              <given-names>J S</given-names>
+            </name>
+            <name>
+              <surname>Mulvey</surname>
+              <given-names>G K</given-names>
+            </name>
+            <name>
+              <surname>Hines</surname>
+              <given-names>E M</given-names>
+            </name>
+            <name>
+              <surname>Nissen</surname>
+              <given-names>S E</given-names>
+            </name>
+            <name>
+              <surname>Krumholz</surname>
+              <given-names>H M</given-names>
+            </name>
+          </person-group>
+        </element-citation>
+      </ref>
+      <ref id="b12">
+        <element-citation publication-type="journal">
+          <article-title>Discrepancies between ClinicalTrials.gov recruitment status and actual trial status: a cross-sectional analysis</article-title>
+          <source>BMJ Open</source>
+          <year>2017</year>
+          <volume>7</volume>
+          <fpage>29025842</fpage>
+          <lpage>29025842</lpage>
+          <person-group person-group-type="author">
+            <name>
+              <surname>Jones</surname>
+              <given-names>C W</given-names>
+            </name>
+            <name>
+              <surname>Safferman</surname>
+              <given-names>M R</given-names>
+            </name>
+            <name>
+              <surname>Adams</surname>
+              <given-names>A C</given-names>
+            </name>
+            <name>
+              <surname>Platts-Mills</surname>
+              <given-names>T F</given-names>
+            </name>
+          </person-group>
+        </element-citation>
+      </ref>
+      <ref id="b13">
+        <element-citation publication-type="journal">
+          <article-title>Completeness and Changes in Registered Data and Reporting Bias of Randomized Controlled Trials in ICMJE Journals after Trial Registration Policy</article-title>
+          <source>PLoS One. Public Library of Science</source>
+          <year>2011</year>
+          <volume>6</volume>
+          <fpage>21957485</fpage>
+          <lpage>21957485</lpage>
+          <person-group person-group-type="author">
+            <name>
+              <surname>Hui&#263;</surname>
+              <given-names>M</given-names>
+            </name>
+            <name>
+              <surname>Maru&#353;i&#263;</surname>
+              <given-names>M</given-names>
+            </name>
+            <name>
+              <surname>Maru&#353;i&#263;</surname>
+              <given-names>A</given-names>
+            </name>
+          </person-group>
+        </element-citation>
+      </ref>
+    </ref-list>
+  </back>
+</article>
