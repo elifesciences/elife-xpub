@@ -1,186 +1,249 @@
 type Manuscript {
   id: ID!
-  # Date type is not built in, need to import one
+  #Date type is not built in, need to import one
   created: Date!
   updated: Date!
   stage: Stage!
+  title: String!
+  type: SubmissionType!
   coverLetter: String!
   "eLife 5 digit article ID which persists through to publication"
-  articleIdentifier: String
+  articleIdentifier: String!
   subjectAreas: [MajorSubjectArea!]!
   previouslyDiscussed: String
-  # should this be null or an empty array when there is no previously submitted data?
   previouslySubmitted: [ArticleSearchParameters!]
   coSubmission: [ArticleSearchParameters!]
-  relatedArticles: [RelatedArticle!]!
+  relatedManuscripts: [RelatedManuscript!]
   suggestedEditors: [EditorSuggestion!]!
   excludedEditors: [EditorSuggestion!]!
   suggestedReviewers: [ReviewerSuggestion!]!
   excludedReviewers: [ReviewerSuggestion!]!
-  # is this name too long?
-  declarationOfNoConflictOfInterest: Boolean!
+  suggestionsConflict: Boolean!
   persons: [ManuscriptPerson!]!
-  qcIssues: [QCIssue!]!
+  qcIssues: [QCIssue!]
+  submissionFiles: [Files!]!
+  manuscriptHistory: [ChangeLog!]
 }
 
-# How to name stages?
-# Active like 'QualityChecking' or passive like 'InQualityCheck' or past like 'Submitted'?
-# Should all stages be prefixed with 'Initial' or 'Full' as in 'InitialQualityCheck' and 'FullQualityCheck'?
 enum Stage {
-  Created
-  Submitted
-  QualityCheckPassed
-  DeputyEditorAssigned
-  SeniorEditorAssigned
-  #...
+  STARTED
+  SUBMITTED
+  AWAITINGINITIALQUALITYCHECK
+  INITIALQUALITYCHECKINPROGRESS
+  CHANGESREQUESTED
+  AWAITINGCHANGES
+  CHANGESCOMPLETE
+  INITIALQUALITYCHECKCOMPLETE
+  DEPUTYEDITORASSIGNED
+  AWAITINGDEPUTYEDITORASSESSMENT
+  DEPUTYEDITORASSESSMENTINPROGRESS
+  DEPUTYEDITORASSESSMENTCOMPLETE
+  SENIOREDITORASSIGNED
+  AWAITINGSENIOREDITORASSESSMENT
+  SENIOREDITORASSESSMENTINPROGRESS
+  SENIOREDITORASSESSMENTCOMPLETE
+  DECISIONLETTERDRAFTED
+  ENCOURAGED
+  REJECTED
+  WITHDRAWN
 }
 
-# How often do these change? Should they be queried from the elife API at runtime or embedded in the app?
+enum SubmissionType {
+    RESEARCHARTICLE
+    TOOLSANDRESOURCES
+    SHORTREPORT
+    RESEARCHADVANCE
+    FEATUREARTICLE
+    SCIENTIFICCORRESPONDENCE
+}
+
 enum MajorSubjectArea {
-  Biochemistry
-  CellBiology
-  Neuroscience
-  #...
+#Hard-code for now, with a view to calling from API in the future
+  BIOCHEMISTRYANDCHEMICALBIOLOGY
+  CANCERBIOLOGY
+  CELLBIOLOGY
+  CHROMOSOMESANDGENEEXPRESSION
+  COMPUTATIONALANDSYSTEMSBIOLOGY
+  DEVELOPMENTALBIOLOGYANDSTEMCELLS
+  ECOLOGY
+  EPIDEMIOLOGYANDGLOBALHEALTH
+  EVOLUTIONARYBIOLOGY
+  GENETICSANDGENOMICS
+  HUMANBIOLOGYANDMEDICINE
+  IMMUNOLOGYANDINFLAMMATION
+  MICROBIOLOGYANDINFECTIOUSDISEASE
+  NEUROSCIENCE
+  PHYSICSOFLIVINGSYSTEMS
+  PLANTBIOLOGY
+  STRUCTURALBIOLOGYANDMOLECULARBIOPHYSICS
 }
 
 type ArticleSearchParameters {
+  created: Date!
+  updated: Date!
   title: String!
-  author: String!
+  correspondingAuthor: String!
 }
 
-# Is is weird that this type has only one required field?
+#Is is weird that this type has only one required field?
 type ManuscriptPerson {
+  created: Date!
+  updated: Date!
   user: User
   role: ManuscriptRole!
-  # should alias actually be part of AuthorMetadata? It's only ever present for authors.
-  # does the alias data have any use once the author is resolved to a user?
-  alias: AuthorAlias
+  #Alias has no use once upgraded to a User. Is there any way to move the information from one place to the other?
+  alias: UserAlias
   metadata: ManuscriptPersonMetadata
 }
 
-type AuthorAlias {
+#This extends the base type in pubsweet
+extend type User {
+  id: ID!
+  created: Date!
+  updated: Date!
   firstName: String!
   lastName: String!
+  publishedName: String
+  institution: String!
   email: String!
-  # Is this free text? The institution we get back from ORCID is disambiguated
-  # but we lose that information if the author edits the field
+  orcidId: String!
+  roles: [GlobalRole!]!
+}
+
+type UserAlias {
+  id: ID!
+  created: Date!
+  updated: Date!
+  firstName: String!
+  lastName: String!
+  publishedName: String
+  email: String!
   institution: String!
 }
 
-# Should this base interface have any fields?
+#Should this base interface have any fields?
 interface ManuscriptPersonMetadata
 
 type AuthorMetadata implements ManuscriptPersonMetatdata {
+  created: Date!
+  updated: Date!
   rank: Int!
-  coRelationship: ManuscriptPerson
-  contributions: String
+  contributions: AuthorMetadataContribution!
+  corresponding: Boolean!
   conflictOfInterest: String
 }
 
 type ReviewerMetadata implements ManuscriptPersonMetatdata {
-  # is rank always present?
-  rank: Int
-  coRelationship: ManuscriptPerson
+  created: Date!
+  updated: Date!
+  rank: Int!
+  coRelationship: [ManuscriptPerson]
+  #Accounts for instances where a post-doc has helped review
   conflictOfInterest: String
-  revealIdentity: Boolean
+  revealIdentity: Boolean!
 }
 
 enum ManuscriptRole {
-  DeputyEditor
-  SeniorEditor
-  ReviewingEditor
-  Reviewer
-  Author
-  # The following two would have the same permissions as an Author but are
-  # used for distinguishing the type of their relationship to the manuscript.
-  # Is this mixing responsibilities? Would it be better to model this as data on AuthorMetadata?
-  Submitter
-  CorrespondingAuthor
+  DEPUTYEDITOR
+  SENIOREDITOR
+  REVIEWINGEDITOR
+  REVIEWER
+  AUTHOR
+  SUBMITTER
 }
 
 type EditorSuggestion {
+  created: Date!
+  updated: Date!
   user: User!
   role: ManuscriptRole!
   reason: String
 }
 
 type ReviewerSuggestion {
+  created: Date!
+  updated: Date!
   name: String!
   email: String!
-  role: ManuscriptRole!
   reason: String
 }
 
 type ChangeLog {
   id: ID!
   created: Date!
-  # would all logged changes relate to a manuscript?
-  manuscript: Manuscript
-  user: User
+  manuscript: Manuscript!
+  user: User!
   actions: [Action!]!
 }
 
 # to be defined
-type Action
+type Action {
+  
+}
 
 type File {
-  # what is the URI? a path on the server? a file in an S3 bucket? a public URL?
+  # URI yet to be defined
+  created: Date!
+  updated: Date!
   uri: String!
   type: FileType!
-  # MIME type
-  fileType: String!
+  format: String!
+  size: String!
+  lastChangeDate: Date!
+  lastChangeUser: User!
+  #Refers to changes to individual files
 }
 
-# what is the file type used for? What do we need to distinguish?
+#Submitter chooses file type within context of domain.
 enum FileType {
-  ManuscriptSource
-  Figure
-  Dataset
-  #...
+  ARTICLEFILE
+  FIGURE
+  FIGURESUPPLEMENT
+  SOURCEDATA
+  RICHMEDIA
+  SOURCECODE
+  SUPPLEMENTARYFILE
 }
 
-type RelatedArticle {
-  type: ArticleRelationship!
-  articleIdentifier: String!
-}
-
-# what are the possible types of relationship? Same as JATS?
-enum ArticleRelationship
-
-type ArticleSearchParameters {
+type RelatedSubmission {
+  created: Date!
+  updated: Date!
+  connectionType: SubmissionRelationship!
+  submissionIdentifier: String!
   title: String!
-  correspondingAuthor: String!
-  # Do we need in addition to 'manuscript.relatedArticles'?
-  matchedRelation: RelatedArticle
 }
 
-# this extends the base type in pubsweet
-extend type User {
-  orcidId: String!
-  roles: [GlobalRole!]!
+enum SubmissionRelationship {
+    COSUBMISSION
+    RESUBMISSION
+    ADVANCE
+    SCIENTIFICCORRESPONDENCE
 }
 
 enum GlobalRole {
-  Staff
-  EditorInChief
+  STAFF
+  EDITORINCHIEF
   # The following roles impart no extra permissions but allow the system to populate the list of editors
-  DeputyEditor
-  SeniorEditor
-  ReviewingEditor
+  DEPUTYEDITOR
+  SENIOREDITOR
+  REVIEWINGEDITOR
+  # One role encompasses the permissions etc. of the role(s) below it. Senior editor has all permissions of Reviewing editor and appears in lists of reviewing editors
 }
 
 type QCIssue {
   id: ID!
   created: Date!
-  manuscript: Manuscript!
-  location: String!
+  submission: Submission!
+  location: QCIssueLocation!
+  #To be defined
   comments: [Comment!]!
-  type: String!
-  resolved: Boolean
+  resolved: Boolean!
 }
 
 type Comment {
+id: ID!
   created: Date!
+  updated: Date!
   user: User!
   text: String!
 }
