@@ -49,16 +49,16 @@ enum Stage {
 }
 
 enum SubmissionType {
-    RESEARCHARTICLE
-    TOOLSANDRESOURCES
-    SHORTREPORT
-    RESEARCHADVANCE
-    FEATUREARTICLE
-    SCIENTIFICCORRESPONDENCE
+  RESEARCHARTICLE
+  TOOLSANDRESOURCES
+  SHORTREPORT
+  RESEARCHADVANCE
+  FEATUREARTICLE
+  SCIENTIFICCORRESPONDENCE
 }
 
-enum MajorSubjectArea {
 #Hard-code for now, with a view to calling from API in the future
+enum MajorSubjectArea {
   BIOCHEMISTRYANDCHEMICALBIOLOGY
   CANCERBIOLOGY
   CELLBIOLOGY
@@ -85,7 +85,7 @@ type ArticleSearchParameters {
   correspondingAuthor: String!
 }
 
-#Is is weird that this type has only one required field?
+#Is it weird that this type has only one required field?
 type ManuscriptPerson {
   created: Date!
   updated: Date!
@@ -178,7 +178,7 @@ type ChangeLog {
 
 # to be defined
 type Action {
-  
+
 }
 
 type File {
@@ -214,10 +214,10 @@ type RelatedSubmission {
 }
 
 enum SubmissionRelationship {
-    COSUBMISSION
-    RESUBMISSION
-    ADVANCE
-    SCIENTIFICCORRESPONDENCE
+  COSUBMISSION
+  RESUBMISSION
+  ADVANCE
+  SCIENTIFICCORRESPONDENCE
 }
 
 enum GlobalRole {
@@ -241,7 +241,7 @@ type QCIssue {
 }
 
 type Comment {
-id: ID!
+  id: ID!
   created: Date!
   updated: Date!
   user: User!
