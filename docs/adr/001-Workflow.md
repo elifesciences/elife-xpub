@@ -1,6 +1,6 @@
 # 1. Workflow Solution for xPub
 
-Date: 2018-06-01
+Date: 2018-06-04
 
 ## Status
 
