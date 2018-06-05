@@ -14,11 +14,16 @@ Each ticket should have at least two labels- one to indicate the corresponding e
 
 # Description
 
-**Plain text description (what are you building? what value is this technical task adding?) with relevant links/references**
+**Plain text description**
 
-**Technical description (optional) with relevant links/references**
+What are you building? What value is this technical task adding? Include relevant links/references
+
+**Technical description (optional)**
+
+Include relevant links/references
 
 **Possible solutions**
+
 1.
 2.
 3.
