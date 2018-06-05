@@ -22,6 +22,7 @@ build:
   stage: build
   script:
     - docker version
+    - docker pull $IMAGE_ORG/$IMAGE_NAME:latest
     - docker build --cache-from $IMAGE_ORG/$IMAGE_NAME:latest --build-arg CI_COMMIT_SHA -t $IMAGE_ORG/$IMAGE_NAME:$CI_COMMIT_SHA .
     - if [ -z "$DOCKERHUB_USERNAME" ] || [ -z "$DOCKERHUB_PASSWORD" ]; then echo "Not pushing" && exit 0; fi
     - docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASSWORD
@@ -83,6 +84,7 @@ push:latest:
     - if [ -z "$DOCKERHUB_USERNAME" ] || [ -z "$DOCKERHUB_PASSWORD" ]; then echo "Not pushing" && exit 0; fi
     - docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASSWORD
     - echo "Ignore warning! Cannot perform an interactive login from a non TTY device"
+    - docker pull $IMAGE_ORG/$IMAGE_NAME:$CI_COMMIT_SHA
     - docker build --cache-from $IMAGE_ORG/$IMAGE_NAME:$CI_COMMIT_SHA --build-arg CI_COMMIT_SHA -t $IMAGE_ORG/$IMAGE_NAME:latest --label COMMIT_SHA=$CI_COMMIT_SHA .
     - docker push $IMAGE_ORG/$IMAGE_NAME:latest
   only:
