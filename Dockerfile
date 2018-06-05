@@ -12,11 +12,10 @@ COPY client client
 COPY server server
 
 # We do a development install because react-styleguidist is a dev dependency and we want to run tests
-RUN [ "yarn", "install", "--frozen-lockfile" ]
-
-# Remove cache and offline mirror
-RUN [ "yarn", "cache", "clean"]
-RUN [ "rm", "-rf", "/npm-packages-offline-cache"]
+# Remove cache and offline mirror in the same command, to avoid creating intermediate layers
+RUN yarn install --frozen-lockfile \
+    && yarn cache clean \
+    && rm -rf /npm-packages-offline-cache
 
 COPY app.js .babelrc .eslintignore .eslintrc .prettierrc .stylelintignore .stylelintrc ./
 
