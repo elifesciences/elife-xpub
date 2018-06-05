@@ -1,6 +1,6 @@
 ---
-name: Custom issue template
-about: Describe this issue template's purpose here.
+name: Feature issue template
+about: A broad template for feature-building issues
 
 ---
 
