@@ -5,6 +5,8 @@ const typeDefs = `
     extend type Query {
       currentSubmission: Manuscript
       orcidDetails: Person
+      manuscript(id: ID!): Manuscript!
+      manuscripts: [Manuscript]!
     }
     extend type Mutation {
       createSubmission: Manuscript!
