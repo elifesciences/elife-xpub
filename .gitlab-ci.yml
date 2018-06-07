@@ -55,7 +55,7 @@ test:
   script:
     - cd ${HOME}
     # specify host here else it confuses the linked postgres image
-    - PGHOST=localhost npm test
+    - PGHOSTADDR=127.0.0.1 npm test
 
 test:e2e:
   image: $IMAGE_ORG/$IMAGE_NAME:$CI_COMMIT_SHA
@@ -75,7 +75,8 @@ test:e2e:
   script:
     - cd ${HOME}
     # specify host here else it confuses the linked postgres image
-    - PGHOST=localhost npm run test:e2e
+    - export PGHOSTADDR=127.0.0.1
+    - npm run test:e2e
 
 push:latest:
   image: docker:latest
