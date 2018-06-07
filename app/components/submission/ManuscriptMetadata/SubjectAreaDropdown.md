@@ -1,5 +1,5 @@
 ```js
-<SubjectAreaDropdown
+<ThemelessSubjectAreaDropdown
   label="Subject Areas"
   name="subjectAreas"
   onBlur={() => console.log('Blur event')}

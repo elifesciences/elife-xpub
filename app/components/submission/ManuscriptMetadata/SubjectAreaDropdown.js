@@ -14,7 +14,7 @@ const SelectLimitMessage = styled.p`
   color: ${th('colorSuccess')};
 `
 
-class ThemelessSubjectAreaDropdown extends React.Component {
+export class ThemelessSubjectAreaDropdown extends React.Component {
   constructor(props) {
     super(props)
 
