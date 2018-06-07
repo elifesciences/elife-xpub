@@ -3,6 +3,11 @@ import yup from 'yup'
 const schema = yup.object().shape({
   title: yup.string().required('Title is required'),
   manuscriptType: yup.string().required('Article type is required'),
+  subjectAreas: yup
+    .array()
+    .min(1, `Choose at least 1 subject area`)
+    .max(2, `No more than 2 subject areas`)
+    .required('Subject area(s) required'),
   submissionMeta: yup.object().shape({
     discussedPreviously: yup.bool(),
     discussion: yup.string().when('discussedPreviously', {
@@ -33,6 +38,7 @@ const schema = yup.object().shape({
 const empty = {
   title: '',
   manuscriptType: '',
+  subjectAreas: [],
   submissionMeta: {
     discussedPreviously: false,
     discussion: '',

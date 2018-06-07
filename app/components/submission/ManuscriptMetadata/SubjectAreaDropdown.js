@@ -1,6 +1,14 @@
 import React from 'react'
-import Select from 'react-select'
 import PropTypes from 'prop-types'
+import styled from 'styled-components'
+import { th } from '@pubsweet/ui'
+import Select from 'react-select'
+
+const Root = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-bottom: ${th('gridUnit')};
+`
 
 class SubjectAreaDropdown extends React.Component {
   constructor(props) {
@@ -30,7 +38,7 @@ class SubjectAreaDropdown extends React.Component {
     const { label, name } = this.props
 
     return (
-      <div>
+      <Root>
         {/* htmlFor matches with react-select's inputId, which applies the correct id to the internal sub-component */}
         {/* eslint-disable-next-line jsx-a11y/label-has-for */}
         <label htmlFor="subject-area-select">{label}</label>
@@ -91,7 +99,7 @@ class SubjectAreaDropdown extends React.Component {
           ]}
           value={selectedOptions}
         />
-      </div>
+      </Root>
     )
   }
 }
