@@ -10,6 +10,10 @@ const Root = styled.div`
   margin-bottom: ${th('gridUnit')};
 `
 
+const SelectLimitMessage = styled.p`
+  color: ${th('colorSuccess')};
+`
+
 class ThemelessSubjectAreaDropdown extends React.Component {
   constructor(props) {
     super(props)
@@ -114,11 +118,16 @@ class ThemelessSubjectAreaDropdown extends React.Component {
         <label htmlFor="subject-area-select">{label}</label>
         {!hasReachedMultiselectLimit && <Select {...selectChildProps} />}
         {hasReachedMultiselectLimit && (
-          <Select
-            {...selectChildProps}
-            components={{ ClearIndicator: null, DropdownIndicator: null }}
-            menuIsOpen={false}
-          />
+          <div>
+            <Select
+              {...selectChildProps}
+              components={{ ClearIndicator: null, DropdownIndicator: null }}
+              menuIsOpen={false}
+            />
+            <SelectLimitMessage>
+              No more than two subject areas
+            </SelectLimitMessage>
+          </div>
         )}
       </Root>
     )
