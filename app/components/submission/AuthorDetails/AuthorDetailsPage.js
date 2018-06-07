@@ -13,12 +13,12 @@ const ORCID_DETAILS_QUERY = gql`
     }
   }
 `
+
 class AuthorDetailsPage extends React.Component {
   constructor(props) {
     super(props)
     this.state = {}
   }
-
   runQuery = () => {
     this.setState({ loading: true, error: false })
     this.props.client
@@ -29,7 +29,6 @@ class AuthorDetailsPage extends React.Component {
       })
       .catch(error => this.setState({ loading: false, error: error.message }))
   }
-
   render() {
     return (
       <AuthorDetails

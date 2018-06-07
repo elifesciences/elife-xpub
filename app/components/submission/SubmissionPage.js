@@ -3,6 +3,7 @@ import { Route, Switch } from 'react-router-dom'
 import { Formik } from 'formik'
 import omitDeep from 'omit-deep-lodash'
 import WithCurrentSubmission from './WithCurrentSubmission'
+import ComponentWithSaving from './ComponentWithSaving'
 import AuthorDetailsPage from './AuthorDetails/AuthorDetailsPage'
 import FileUploadsPage from './FileUploads/FileUploadsPage'
 import ManuscriptMetadata from './ManuscriptMetadata/ManuscriptMetadata'
@@ -12,7 +13,7 @@ import { schema as authorDetailsSchema } from './AuthorDetails/AuthorDetailsSche
 import { schema as manuscriptMetadataSchema } from './ManuscriptMetadata/ManuscriptMetadataSchema'
 import { schema as reviewerSuggestionsSchema } from './ReviewerSuggestions/ReviewerSuggestionsSchema'
 
-const FormStep = ({ history, updateSubmission, nextUrl, ...props }) => (
+const FormStep = ({ history, nextUrl, updateSubmission, ...props }) => (
   <Formik
     onSubmit={(values, { setSubmitting, setErrors }) => {
       const data = omitDeep(values, ['__typename', 'files'])
@@ -35,10 +36,17 @@ const SubmissionPage = ({ match, history }) => (
           path={`${match.path}/upload`}
           render={() => (
             <FormStep
-              component={FileUploadsPage}
               history={history}
               initialValues={initialValues}
               nextUrl={`${match.path}/metadata`}
+              render={props => (
+                <ComponentWithSaving
+                  {...props}
+                  updateSubmission={updateSubmission}
+                >
+                  <FileUploadsPage {...props} />
+                </ComponentWithSaving>
+              )}
               updateSubmission={updateSubmission}
               validationSchema={fileUploadsSchema}
             />
@@ -48,10 +56,17 @@ const SubmissionPage = ({ match, history }) => (
           path={`${match.path}/metadata`}
           render={() => (
             <FormStep
-              component={ManuscriptMetadata}
               history={history}
               initialValues={initialValues}
               nextUrl={`${match.path}/suggestions`}
+              render={props => (
+                <ComponentWithSaving
+                  {...props}
+                  updateSubmission={updateSubmission}
+                >
+                  <ManuscriptMetadata {...props} />
+                </ComponentWithSaving>
+              )}
               updateSubmission={updateSubmission}
               validationSchema={manuscriptMetadataSchema}
             />
@@ -61,10 +76,17 @@ const SubmissionPage = ({ match, history }) => (
           path={`${match.path}/suggestions`}
           render={() => (
             <FormStep
-              component={ReviewerSuggestions}
               history={history}
               initialValues={initialValues}
               nextUrl="/dashboard"
+              render={props => (
+                <ComponentWithSaving
+                  {...props}
+                  updateSubmission={updateSubmission}
+                >
+                  <ReviewerSuggestions {...props} />
+                </ComponentWithSaving>
+              )}
               updateSubmission={updateSubmission}
               validationSchema={reviewerSuggestionsSchema}
             />
@@ -73,10 +95,17 @@ const SubmissionPage = ({ match, history }) => (
         <Route
           render={() => (
             <FormStep
-              component={AuthorDetailsPage}
               history={history}
               initialValues={initialValues}
               nextUrl={`${match.path}/upload`}
+              render={props => (
+                <ComponentWithSaving
+                  {...props}
+                  updateSubmission={updateSubmission}
+                >
+                  <AuthorDetailsPage {...props} />
+                </ComponentWithSaving>
+              )}
               updateSubmission={updateSubmission}
               validationSchema={authorDetailsSchema}
             />
