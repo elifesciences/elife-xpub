@@ -65,7 +65,7 @@
     "server/*"
   ],
   "dependencies": {
-    "@pubsweet/elife-theme": "^1.0.0",
+    "@pubsweet/elife-theme": "^1.0.1",
     "@pubsweet/ui": "^4.1.0",
     "apollo-link-state": "^0.4.1",
     "config": "^1.26.2",
