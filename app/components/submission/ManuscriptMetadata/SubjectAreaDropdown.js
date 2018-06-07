@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import styled from 'styled-components'
+import styled, { withTheme } from 'styled-components'
 import { th } from '@pubsweet/ui'
 import Select from 'react-select'
 
@@ -10,7 +10,7 @@ const Root = styled.div`
   margin-bottom: ${th('gridUnit')};
 `
 
-class SubjectAreaDropdown extends React.Component {
+class ThemelessSubjectAreaDropdown extends React.Component {
   constructor(props) {
     super(props)
 
@@ -20,6 +20,13 @@ class SubjectAreaDropdown extends React.Component {
 
     this.handleChange = this.handleChange.bind(this)
     this.handleBlur = this.handleBlur.bind(this)
+
+    this.customReactSelectStyles = {
+      multiValue: (base, state) => ({
+        ...base,
+        backgroundColor: this.props.theme.colorPrimary,
+      }),
+    }
   }
 
   // https://github.com/JedWatson/react-select/blob/v2/src/Select.js
@@ -43,6 +50,7 @@ class SubjectAreaDropdown extends React.Component {
         {/* eslint-disable-next-line jsx-a11y/label-has-for */}
         <label htmlFor="subject-area-select">{label}</label>
         <Select
+          components={{ ClearIndicator: null }}
           inputId="subject-area-select"
           isMulti
           name={name}
@@ -97,12 +105,15 @@ class SubjectAreaDropdown extends React.Component {
               label: 'Biochemistry and Chemical Biology',
             },
           ]}
+          styles={this.customReactSelectStyles}
           value={selectedOptions}
         />
       </Root>
     )
   }
 }
+
+const SubjectAreaDropdown = withTheme(ThemelessSubjectAreaDropdown)
 
 SubjectAreaDropdown.propTypes = {
   label: PropTypes.string.isRequired,
