@@ -122,6 +122,7 @@ export class ThemelessSubjectAreaDropdown extends React.Component {
             <Select
               {...selectChildProps}
               components={{ ClearIndicator: null, DropdownIndicator: null }}
+              isSearchable={false}
               menuIsOpen={false}
             />
             <SelectLimitMessage>
