@@ -1,6 +1,6 @@
 const lodash = require('lodash')
 const config = require('config')
-// const Email = require('@pubsweet/component-send-email')
+const Email = require('@pubsweet/component-send-email')
 const User = require('pubsweet-server/src/models/User')
 const logger = require('@pubsweet/logger')
 const request = require('request-promise-native')
@@ -76,8 +76,8 @@ const resolvers = {
       return newManuscript
     },
     async finishSubmission(_, { data }, ctx) {
-      const { data: manuscriptDb } = await db.checkPermission(data.id, ctx.user)
-      const manuscript = db.manuscriptDbToGql(manuscriptDb, data.id)
+      const manuscript = await db.selectId(data.id)
+      db.checkPermission(manuscript, ctx.user)
       const newManuscript = lodash.merge({}, manuscript, data)
 
       const { errorManuscript } = Joi.validate(newManuscript, manuscriptSchema)
@@ -106,14 +106,14 @@ const resolvers = {
       const newManuscriptDb = db.manuscriptGqlToDb(newManuscript, ctx.user)
       await db.update(newManuscriptDb, data.id)
 
-      /* const mailData = { */
-      /*   from: config.get('mailer.from'), */
-      /*   to: newManuscript.submissionMeta.author.email, */
-      /*   subject: 'Congratulations! You submitted your manuscript!', */
-      /*   text: 'Your manuscript has been submitted', */
-      /*   html: '<p>Your manuscript has been submitted</p>', */
-      /* } */
-      // Email.send(mailData);
+      const mailData = {
+        from: config.get('mailer.from'),
+        to: newManuscript.submissionMeta.author.email,
+        subject: 'Congratulations! You submitted your manuscript!',
+        text: 'Your manuscript has been submitted',
+        html: '<p>Your manuscript has been submitted</p>',
+      }
+      Email.send(mailData)
       return newManuscript
     },
 

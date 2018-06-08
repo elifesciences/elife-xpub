@@ -1,5 +1,6 @@
 [
   "@pubsweet-pending/auth-orcid",
   "@elife-xpub/submission",
-  "@pubsweet-pending/dar-server"
+  "@pubsweet-pending/dar-server",
+  "@pubsweet/component-send-email"
 ]
