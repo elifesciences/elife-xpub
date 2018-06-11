@@ -109,6 +109,14 @@ export class ThemelessSubjectAreaDropdown extends React.Component {
       ],
       styles: this.customReactSelectStyles,
       value: selectedOptions,
+      filterOption: (option, rawInput) => {
+        const input = rawInput.replace(/^\s+|\s+$/g, '').toLowerCase()
+        const candidate = `${option.label} ${option.value}`
+          .replace(/^\s+|\s+$/g, '')
+          .toLowerCase()
+
+        return candidate.substr(0, input.length) === input
+      },
     }
 
     return (
