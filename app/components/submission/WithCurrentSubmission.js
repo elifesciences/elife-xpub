@@ -97,41 +97,46 @@ const FINISH_SUBMISSION = gql`
 `
 
 class WithCurrentSubmission extends React.Component {
-  constructor() {
-    super()
-    this.state = { error: null, data: null, loading: true }
-  }
+  state = { error: null, data: null, loading: true }
+
   componentDidMount() {
-    this.props.client
-      .query({ query: GET_CURRENT_SUBMISSION })
-      .then(({ data }) => {
-        if (data.currentSubmission) {
-          return this.setState({ data, error: null, loading: false })
-        }
-        return this.props.client
-          .mutate({
-            mutation: CREATE_SUBMISSION,
-            refetchQueries: [
-              {
-                query: GET_CURRENT_SUBMISSION,
-              },
-            ],
-          })
-          .then(({ data: createData }) => {
-            this.setState({
-              data: createData,
-              error: undefined,
-              loading: false,
-            })
-          })
-      })
-      .catch(error => this.setState({ error, data: null, loading: false }))
+    this.querySubscription = this.props.client
+      .watchQuery({ query: GET_CURRENT_SUBMISSION })
+      .subscribe(
+        ({ data }) => {
+          if (data.currentSubmission) {
+            this.setData(data)
+          } else {
+            this.props.client
+              .mutate({
+                mutation: CREATE_SUBMISSION,
+                refetchQueries: [{ query: GET_CURRENT_SUBMISSION }],
+              })
+              .then(result => this.setData(result.data))
+              .catch(error => this.setError(error))
+          }
+        },
+        error => this.setError(error),
+      )
   }
+
+  setData(data) {
+    this.setState({ data, error: undefined, loading: false })
+  }
+
+  setError(error) {
+    this.setState({ data: null, error, loading: false })
+  }
+
+  componentWillUnmount() {
+    if (this.querySubscription) {
+      this.querySubscription.unsubscribe()
+      delete this.querySubscription
+    }
+  }
+
   render() {
     const { loading, error, data } = this.state
-
-    const initialValues =
-      data && (data.currentSubmission || data.createSubmission)
 
     if (loading) {
       return <div>Loading...</div>
@@ -140,6 +145,9 @@ class WithCurrentSubmission extends React.Component {
     if (error) {
       return <ErrorPage error={error} />
     }
+
+    const initialValues =
+      data && (data.currentSubmission || data.createSubmission)
 
     return this.props.children(initialValues, {
       updateSubmission: ({ variables }) =>

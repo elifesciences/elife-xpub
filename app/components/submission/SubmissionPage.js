@@ -13,8 +13,18 @@ import { schema as authorDetailsSchema } from './AuthorDetails/AuthorDetailsSche
 import { schema as manuscriptMetadataSchema } from './ManuscriptMetadata/ManuscriptMetadataSchema'
 import { schema as reviewerSuggestionsSchema } from './ReviewerSuggestions/ReviewerSuggestionsSchema'
 
-const FormStep = ({ history, nextUrl, submitMutation, ...props }) => (
+const FormStep = ({
+  component: Component,
+  history,
+  nextUrl,
+  submitMutation,
+  initialValues,
+  validationSchema,
+}) => (
   <Formik
+    initialValues={initialValues}
+    // ensure each page gets a new form instance otherwise all fields are touched
+    key={Component.name}
     onSubmit={(values, { setSubmitting, setErrors }) => {
       const data = omitDeep(values, ['__typename', 'files'])
       return submitMutation({ variables: { data } })
@@ -24,7 +34,12 @@ const FormStep = ({ history, nextUrl, submitMutation, ...props }) => (
           setErrors(errors)
         })
     }}
-    {...props}
+    render={formProps => (
+      <ComponentWithSaving updateSubmission={submitMutation} {...formProps}>
+        <Component {...formProps} />
+      </ComponentWithSaving>
+    )}
+    validationSchema={validationSchema}
   />
 )
 
@@ -36,17 +51,10 @@ const SubmissionPage = ({ match, history }) => (
           path={`${match.path}/upload`}
           render={() => (
             <FormStep
+              component={FileUploadsPage}
               history={history}
               initialValues={initialValues}
               nextUrl={`${match.path}/metadata`}
-              render={props => (
-                <ComponentWithSaving
-                  {...props}
-                  updateSubmission={updateSubmission}
-                >
-                  <FileUploadsPage {...props} />
-                </ComponentWithSaving>
-              )}
               submitMutation={updateSubmission}
               validationSchema={fileUploadsSchema}
             />
@@ -56,17 +64,10 @@ const SubmissionPage = ({ match, history }) => (
           path={`${match.path}/metadata`}
           render={() => (
             <FormStep
+              component={ManuscriptMetadata}
               history={history}
               initialValues={initialValues}
               nextUrl={`${match.path}/suggestions`}
-              render={props => (
-                <ComponentWithSaving
-                  {...props}
-                  updateSubmission={updateSubmission}
-                >
-                  <ManuscriptMetadata {...props} />
-                </ComponentWithSaving>
-              )}
               submitMutation={updateSubmission}
               validationSchema={manuscriptMetadataSchema}
             />
@@ -76,18 +77,11 @@ const SubmissionPage = ({ match, history }) => (
           path={`${match.path}/suggestions`}
           render={() => (
             <FormStep
+              component={ReviewerSuggestions}
               history={history}
               initialValues={initialValues}
               nextUrl="/dashboard"
-              render={props => (
-                <ComponentWithSaving
-                  {...props}
-                  updateSubmission={updateSubmission}
-                >
-                  <ReviewerSuggestions {...props} />
-                </ComponentWithSaving>
-              )}
-              submitMutation={finishSubmission}
+              submitMutation={updateSubmission}
               validationSchema={reviewerSuggestionsSchema}
             />
           )}
@@ -95,17 +89,10 @@ const SubmissionPage = ({ match, history }) => (
         <Route
           render={() => (
             <FormStep
+              component={AuthorDetailsPage}
               history={history}
               initialValues={initialValues}
               nextUrl={`${match.path}/upload`}
-              render={props => (
-                <ComponentWithSaving
-                  {...props}
-                  updateSubmission={updateSubmission}
-                >
-                  <AuthorDetailsPage {...props} />
-                </ComponentWithSaving>
-              )}
               submitMutation={updateSubmission}
               validationSchema={authorDetailsSchema}
             />
