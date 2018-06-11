@@ -1,4 +1,7 @@
 const { deferConfig } = require('config/defer')
+const winston = require('winston')
+
+winston.level = 'debug'
 
 module.exports = {
   'pubsweet-server': {
@@ -7,7 +10,9 @@ module.exports = {
     ),
     secret: 'not very secret',
     graphiql: true,
+    logger: winston,
   },
+
   dbManager: {
     username: 'admin',
     password: 'password',
