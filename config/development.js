@@ -10,7 +10,9 @@ module.exports = {
     ),
     secret: 'not very secret',
     graphiql: true,
+    logger: winston,
   },
+
   dbManager: {
     username: 'admin',
     password: 'password',
