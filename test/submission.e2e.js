@@ -89,6 +89,10 @@ test('Happy path', async t => {
     .eql('The Relationship Between Lamport Clocks and Interrupts Using Obi')
     .click('[role=listbox] button')
     .click(Selector('[role=option]').nth(0))
+    .click(Selector('[id=subject-area-select'))
+    .pressKey('enter')
+    .pressKey('down')
+    .pressKey('enter')
     .click(Selector('[name="submissionMeta.discussedPreviously"]').parent())
     .typeText(
       '[name="submissionMeta.discussion"]',

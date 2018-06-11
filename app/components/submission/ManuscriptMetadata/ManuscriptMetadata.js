@@ -9,6 +9,7 @@ import CalloutBox from '../../ui/atoms/CalloutBox'
 import ButtonLink from '../../ui/atoms/ButtonLink'
 import Textarea from '../../ui/atoms/Textarea'
 import ProgressBar from '../ProgressBar'
+import SubjectAreaDropdown from './SubjectAreaDropdown'
 
 const CheckboxGeneratedChild = ({
   values,
@@ -29,7 +30,12 @@ const CheckboxGeneratedChild = ({
   </CalloutBox>
 )
 
-const ManuscriptMetadata = ({ handleSubmit, values, setFieldValue }) => (
+const ManuscriptMetadata = ({
+  handleSubmit,
+  values,
+  setFieldValue,
+  setFieldTouched,
+}) => (
   <form noValidate onSubmit={handleSubmit}>
     <ProgressBar currentStep={2} />
 
@@ -46,6 +52,18 @@ const ManuscriptMetadata = ({ handleSubmit, values, setFieldValue }) => (
         { value: 'research-article', label: 'Research article' },
         { value: 'feature', label: 'Feature article' },
       ]}
+    />
+
+    <ValidatedField
+      component={SubjectAreaDropdown}
+      label="Subject areas"
+      name="subjectAreas"
+      onBlur={e => setFieldTouched('subjectAreas', true)}
+      onChange={selectedOptions => {
+        const subjectAreas = selectedOptions.map(option => option.value)
+        setFieldValue('subjectAreas', subjectAreas)
+      }}
+      savedValues={values.subjectAreas}
     />
 
     <CheckboxGeneratedChild

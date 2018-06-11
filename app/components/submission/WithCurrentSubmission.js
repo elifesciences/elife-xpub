@@ -9,6 +9,7 @@ const manuscriptFragment = gql`
     title
     source
     manuscriptType
+    subjectAreas
     suggestedSeniorEditors
     opposedSeniorEditors {
       name

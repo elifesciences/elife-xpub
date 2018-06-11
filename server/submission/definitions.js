@@ -19,6 +19,7 @@ const typeDefs = `
       title: String
       source: String
       manuscriptType: String
+      subjectAreas: [String]
       suggestedSeniorEditors: [String]
       opposedSeniorEditors: [OpposedEditor]
       suggestedReviewingEditors: [String]
@@ -34,6 +35,7 @@ const typeDefs = `
       title: String
       source: String
       manuscriptType: String
+      subjectAreas: [String]
       suggestedSeniorEditors: [String]
       opposedSeniorEditors: [OpposedEditorInput]
       suggestedReviewingEditors: [String]
@@ -129,6 +131,7 @@ const emptyManuscript = {
   title: '',
   source: '',
   manuscriptType: '',
+  subjectAreas: [],
   suggestedSeniorEditors: ['', ''],
   opposedSeniorEditors: [],
   suggestedReviewingEditors: ['', ''],
