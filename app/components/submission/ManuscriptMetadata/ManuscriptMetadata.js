@@ -59,9 +59,11 @@ const ManuscriptMetadata = ({
       label="Subject areas"
       name="subjectAreas"
       onBlur={e => setFieldTouched('subjectAreas', true)}
-      onChange={selectedSubjectAreas =>
-        setFieldValue('subjectAreas', selectedSubjectAreas)
-      }
+      onChange={selectedOptions => {
+        const subjectAreas = selectedOptions.map(option => option.value)
+        setFieldValue('subjectAreas', subjectAreas)
+      }}
+      savedValues={values.subjectAreas}
     />
 
     <CheckboxGeneratedChild

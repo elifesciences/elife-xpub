@@ -14,12 +14,66 @@ const SelectLimitMessage = styled.p`
   color: ${th('colorSuccess')};
 `
 
+const eLifeOptions = [
+  {
+    value: 'biochemistry-chemical-biology',
+    label: 'Biochemistry and Chemical Biology',
+  },
+  { value: 'cancer-biology', label: 'Cancer Biology' },
+  { value: 'cell-biology', label: 'Cell Biology' },
+  {
+    value: 'chromosomes-gene-expression',
+    label: 'Chromosomes and Gene Expression',
+  },
+  {
+    value: 'computational-systems-biology',
+    label: 'Computational and Systems Biology',
+  },
+  {
+    value: 'developmental-biology-stem-cells',
+    label: 'Developmental Biology and Stem Cells',
+  },
+  { value: 'ecology', label: 'Ecology' },
+  {
+    value: 'epidemiology-global-health',
+    label: 'Epidemiology and Global Health',
+  },
+  { value: 'evolutionary-biology', label: 'Evolutionary Biology' },
+  { value: 'genetics-genomics', label: 'Genetics and Genomics' },
+  {
+    value: 'human-biology-medicine',
+    label: 'Human Biology and Medicine',
+  },
+  {
+    value: 'immunology-inflammation',
+    label: 'Immunology and Inflammation',
+  },
+  {
+    value: 'microbiology-infectious-disease',
+    label: 'Microbiology and Infectious Disease',
+  },
+  { value: 'neuroscience', label: 'Neuroscience' },
+  { value: 'physics-living-systems', label: 'Physics of Living Systems' },
+  { value: 'plant-biology', label: 'Plant Biology' },
+  {
+    value: 'structural-biology-molecular-biophysics',
+    label: 'Structural Biology and Molecular Biophysics',
+  },
+]
+
+const findOptionByValue = (value, options) =>
+  options.find(option => option.value === value)
+
 export class ThemelessSubjectAreaDropdown extends React.Component {
   constructor(props) {
     super(props)
 
+    const savedOptions = this.props.savedValues.map(value =>
+      findOptionByValue(value, eLifeOptions),
+    )
+
     this.state = {
-      selectedOptions: [],
+      selectedOptions: savedOptions,
       hasReachedMultiselectLimit: false,
     }
 
@@ -61,52 +115,7 @@ export class ThemelessSubjectAreaDropdown extends React.Component {
       name,
       onBlur: this.handleBlur,
       onChange: this.handleChange,
-      options: [
-        {
-          value: 'biochemistry-chemical-biology',
-          label: 'Biochemistry and Chemical Biology',
-        },
-        { value: 'cancer-biology', label: 'Cancer Biology' },
-        { value: 'cell-biology', label: 'Cell Biology' },
-        {
-          value: 'chromosomes-gene-expression',
-          label: 'Chromosomes and Gene Expression',
-        },
-        {
-          value: 'computational-systems-biology',
-          label: 'Computational and Systems Biology',
-        },
-        {
-          value: 'developmental-biology-stem-cells',
-          label: 'Developmental Biology and Stem Cells',
-        },
-        { value: 'ecology', label: 'Ecology' },
-        {
-          value: 'epidemiology-global-health',
-          label: 'Epidemiology and Global Health',
-        },
-        { value: 'evolutionary-biology', label: 'Evolutionary Biology' },
-        { value: 'genetics-genomics', label: 'Genetics and Genomics' },
-        {
-          value: 'human-biology-medicine',
-          label: 'Human Biology and Medicine',
-        },
-        {
-          value: 'immunology-inflammation',
-          label: 'Immunology and Inflammation',
-        },
-        {
-          value: 'microbiology-infectious-disease',
-          label: 'Microbiology and Infectious Disease',
-        },
-        { value: 'neuroscience', label: 'Neuroscience' },
-        { value: 'physics-living-systems', label: 'Physics of Living Systems' },
-        { value: 'plant-biology', label: 'Plant Biology' },
-        {
-          value: 'structural-biology-molecular-biophysics',
-          label: 'Structural Biology and Molecular Biophysics',
-        },
-      ],
+      options: eLifeOptions,
       styles: this.customReactSelectStyles,
       value: selectedOptions,
       filterOption: (option, rawInput) => {
@@ -150,6 +159,7 @@ SubjectAreaDropdown.propTypes = {
   name: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
   onBlur: PropTypes.func.isRequired,
+  savedValues: PropTypes.arrayOf(PropTypes.string).isRequired,
 }
 
 export default SubjectAreaDropdown
