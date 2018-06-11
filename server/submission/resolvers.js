@@ -1,6 +1,7 @@
 const lodash = require('lodash')
 const config = require('config')
 const User = require('pubsweet-server/src/models/User')
+const logger = require('@pubsweet/logger')
 const request = require('request-promise-native')
 const { promisify } = require('util')
 const xml2js = require('xml2js')
@@ -65,7 +66,7 @@ const resolvers = {
       const newManuscript = lodash.merge({}, manuscript, data)
       const newManuscriptDb = db.manuscriptGqlToDb(newManuscript, ctx.user)
       await db.update(newManuscriptDb, data.id)
-
+      logger.debug(`Updated Submission ${data.id} by user ${ctx.user}`)
       return newManuscript
     },
 
