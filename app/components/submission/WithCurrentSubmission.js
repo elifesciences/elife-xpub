@@ -141,23 +141,17 @@ class WithCurrentSubmission extends React.Component {
       return <ErrorPage error={error} />
     }
 
-    function updateSubmission({ variables }) {
-      return this.props.client.mutate({
-        mutation: UPDATE_SUBMISSION,
-        variables,
-      })
-    }
-
-    function finishSubmission({ variables }) {
-      return this.props.client.mutate({
-        mutation: FINISH_SUBMISSION,
-        variables,
-      })
-    }
-
     return this.props.children(initialValues, {
-      updateSubmission: updateSubmission.bind(this),
-      finishSubmission: finishSubmission.bind(this),
+      updateSubmission: ({ variables }) =>
+        this.props.client.mutate({
+          mutation: UPDATE_SUBMISSION,
+          variables,
+        }),
+      finishSubmission: ({ variables }) =>
+        this.props.client.mutate({
+          mutation: FINISH_SUBMISSION,
+          variables,
+        }),
     })
   }
 }
