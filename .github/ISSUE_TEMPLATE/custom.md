@@ -4,15 +4,15 @@ about: Each issue should have at least two labels (one to indicate the correspon
 
 ---
 
-**User Story**
+**User Story:**
 
-**Product requirements/Acceptance criteria**
+**Product requirements/Acceptance criteria:**
 
-**Technical description (optional)**
+**Technical description (optional):**
 
 Include relevant links/references
 
-**Possible solutions**
+**Possible solutions:**
 
 1.
 2.
