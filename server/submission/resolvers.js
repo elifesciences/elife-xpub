@@ -2,6 +2,7 @@ const lodash = require('lodash')
 const config = require('config')
 const Email = require('@pubsweet/component-send-email')
 const User = require('pubsweet-server/src/models/User')
+const mailer = require('@pubsweet/component-send-email')
 const logger = require('@pubsweet/logger')
 const request = require('request-promise-native')
 const { promisify } = require('util')
@@ -31,6 +32,50 @@ const staticManifest = `<dar>
   </assets>
 </dar>
 `
+
+function manuscriptHasAuthor(user, manuscript) {
+  return manuscript.manuscriptPersons.some(
+    manuscriptPerson =>
+      manuscriptPerson.role === 'AUTHOR' &&
+      manuscriptPerson.alias.email === manuscript.submissionMeta.author.email,
+  )
+}
+
+async function setupCorrespondingAuthor(user, manuscript) {
+  if (!manuscriptHasAuthor(user, manuscript)) {
+    const manuscriptPerson = await createManuscriptPerson(manuscript)
+
+    manuscript.manuscriptPersons.push(manuscriptPerson)
+
+    if (!manuscriptPerson.user) {
+      await mailer.send({
+        to: manuscript.submissionMeta.author.email,
+        text: 'Please verify that you are a corresponding author',
+      })
+    }
+  }
+
+  return manuscript
+}
+
+async function createManuscriptPerson(manuscript) {
+  const manuscriptPerson = {
+    alias: manuscript.submissionMeta.author,
+    role: 'AUTHOR',
+    metadata: {},
+  }
+
+  try {
+    manuscriptPerson.user = await User.findByEmail(
+      manuscript.submissionMeta.author.email,
+    )
+    manuscriptPerson.metadata.confirmed = true
+  } catch (err) {
+    if (err.name !== 'NotFoundError') throw err
+  }
+
+  return manuscriptPerson
+}
 
 const resolvers = {
   Query: {
@@ -65,15 +110,24 @@ const resolvers = {
       manuscript.id = await db.save(manuscriptDb)
       return manuscript
     },
-    async updateSubmission(_, { data }, ctx) {
-      const manuscript = await db.selectId(data.id)
-      db.checkPermission(manuscript, ctx.user)
 
-      const newManuscript = lodash.merge({}, manuscript, data)
-      const newManuscriptDb = db.manuscriptGqlToDb(newManuscript, ctx.user)
-      await db.update(newManuscriptDb, data.id)
+    async updateSubmission(_, { data, isAutoSave }, ctx) {
+      let manuscript = await db.selectId(data.id)
+      db.checkPermission(manuscript, ctx.user)
+      lodash.merge(manuscript, data)
+
+      const user = await User.find(ctx.user)
+      if (
+        !isAutoSave &&
+        user.email !== manuscript.submissionMeta.author.email
+      ) {
+        manuscript = await setupCorrespondingAuthor(user, manuscript)
+      }
+
+      await db.update(db.manuscriptGqlToDb(manuscript, ctx.user), data.id)
       logger.debug(`Updated Submission ${data.id} by user ${ctx.user}`)
-      return newManuscript
+
+      return manuscript
     },
     async finishSubmission(_, { data }, ctx) {
       const manuscript = await db.selectId(data.id)
