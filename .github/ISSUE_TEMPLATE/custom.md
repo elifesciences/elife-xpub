@@ -1,16 +1,12 @@
 ---
-name: Feature issue template
-about: A broad template for feature-building issues. Each issue should have at least
-  two labels (one to indicate the corresponding epic and one to indicate the nature
-  of the ticket).
+name: Issue Template
+about: Each issue should have at least two labels (one to indicate the corresponding epic and one to indicate the nature of the ticket, e.g. client-side or server-side). GitHub milestones correspond to features of the product and issues will be grouped by the feature they relate to.
 
 ---
 
-# Description
+**User Story**
 
-**Plain text description**
-
-What are you building? What value is this technical task adding? Include relevant links/references
+**Product requirements/Acceptance criteria**
 
 **Technical description (optional)**
 
