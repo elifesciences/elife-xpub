@@ -80,8 +80,12 @@ const resolvers = {
       db.checkPermission(manuscript, ctx.user)
       const newManuscript = lodash.merge({}, manuscript, data)
 
-      const { errorManuscript } = Joi.validate(newManuscript, manuscriptSchema)
+      const { error: errorManuscript } = Joi.validate(
+        newManuscript,
+        manuscriptSchema,
+      )
       if (errorManuscript) {
+        logger.error(`Bad manuscript data: ${errorManuscript}`)
         throw new Error(errorManuscript)
       }
 
@@ -90,7 +94,7 @@ const resolvers = {
         cosubmissionTitle,
         cosubmissionId,
       } = newManuscript.submissionMeta
-      const { errorCosubmission } = Joi.validate(
+      const { error: errorCosubmission } = Joi.validate(
         {
           cosubmission,
           cosubmissionTitle,
@@ -99,6 +103,7 @@ const resolvers = {
         cosubmissionSchema,
       )
       if (errorCosubmission) {
+        logger.error(`Bad manuscript data: ${errorCosubmission}`)
         throw new Error(errorCosubmission)
       }
 
@@ -113,7 +118,10 @@ const resolvers = {
         text: 'Your manuscript has been submitted',
         html: '<p>Your manuscript has been submitted</p>',
       }
-      Email.send(mailData)
+      Email.send(mailData).catch(error => {
+        logger.error(`Error sending e-mail: ${error}`)
+      })
+
       return newManuscript
     },
 

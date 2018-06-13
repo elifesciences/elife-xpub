@@ -176,9 +176,15 @@ const manuscriptSchema = Joi.object()
     id: Joi.string().required(),
     title: Joi.string().required(),
     manuscriptType: Joi.string().required(),
+    subjectAreas: Joi.array()
+      .min(1)
+      .max(2)
+      .required(),
     files: Joi.array().min(1),
     submissionMeta: Joi.object()
       .keys({
+        // TODO remove this once we have an ORM
+        createdBy: Joi.string(),
         coverLetter: Joi.string().required(),
         author: Joi.object()
           .keys({
