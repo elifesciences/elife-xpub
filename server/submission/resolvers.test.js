@@ -3,6 +3,7 @@ const config = require('config')
 const fs = require('fs-extra')
 const { createTables } = require('@pubsweet/db-manager')
 const User = require('pubsweet-server/src/models/User')
+const Email = require('@pubsweet/component-send-email')
 const { save, select, selectId, manuscriptGqlToDb } = require('../db-helpers/')
 const { Mutation, Query } = require('./resolvers')
 const { emptyManuscript } = require('./definitions')
@@ -27,6 +28,7 @@ describe('Submission', () => {
     const user = new User(userData)
     await user.save()
     userId = user.id
+    Email.clearMails()
   })
 
   describe('currentSubmission', () => {
@@ -145,6 +147,113 @@ describe('Submission', () => {
       const actualManuscript = await selectId(id)
       const expectedManuscript = _.merge(manuscript, manuscriptInput)
       expect(actualManuscript).toMatchObject(expectedManuscript)
+    })
+  })
+
+  describe('finshSubmission', () => {
+    function getInitialManuscript() {
+      // userId is defined in beforeEach
+      return {
+        submissionMeta: {
+          createdBy: userId,
+          stage: 'INITIAL',
+        },
+        // this is here just to fake upload process
+        files: [
+          {
+            url: 'fake-path.pdf',
+            name: 'FakeManuscript.pdf',
+            type: 'MANUSCRIPT_SOURCE',
+          },
+        ],
+      }
+    }
+    const fullManuscript = {
+      title: 'My Manuscript',
+      manuscriptType: 'research-article',
+      subjectAreas: ['cancer-biology'],
+      suggestedSeniorEditors: ['Senior 1', 'Senior 2'],
+      opposedSeniorEditors: [],
+      suggestedReviewingEditors: ['Editor 1', 'Editor 2'],
+      opposedReviewingEditors: [],
+      suggestedReviewers: [
+        { name: 'Reviewer 1', email: 'reviewer1@mail.com' },
+        { name: 'Reviewer 2', email: 'reviewer2@mail.com' },
+        { name: 'Reviewer 3', email: 'reviewer3@mail.com' },
+      ],
+      opposedReviewers: [],
+      noConflictOfInterest: false,
+      submissionMeta: {
+        coverLetter: 'my cover letter',
+        author: {
+          firstName: 'Firstname',
+          lastName: 'Lastname',
+          email: 'mymail@mail.com',
+          institution: 'Institution Inc',
+        },
+        hasCorrespondent: false,
+        discussedPreviously: false,
+        consideredPreviously: false,
+        cosubmission: false,
+      },
+    }
+    it('stores data to the backend with a new stage of QA', async () => {
+      const initialManuscript = getInitialManuscript()
+      const id = await save(manuscriptGqlToDb(initialManuscript, userId))
+      const manuscript = _.cloneDeep(fullManuscript)
+      manuscript.id = id
+      const returnedManuscript = await Mutation.finishSubmission(
+        {},
+        {
+          data: manuscript
+        },
+        { user: userId }
+      )
+
+      expect(returnedManuscript.submissionMeta.stage).toBe('QA')
+
+      const storedManuscript = await selectId(id)
+      const expectedManuscript = _.merge(initialManuscript, manuscript)
+      expectedManuscript.submissionMeta.stage = 'QA'
+      expect(expectedManuscript).toMatchObject(storedManuscript)
+
+      expect(Email.getMails()).toHaveLength(1)
+    })
+
+    // TODO more tests needed here
+    it('fails when manuscript has incomplete data', async () => {
+      const initialManuscript = getInitialManuscript()
+      const id = await save(manuscriptGqlToDb(initialManuscript, userId))
+      const badManuscript = {
+        id,
+        title: 'Some Title',
+      }
+      const returnedManuscript = await Mutation.finishSubmission(
+        {},
+        {
+          data: badManuscript
+        },
+        { user: userId }
+      ).catch(err => expect(err).toBeDefined())
+      expect.assertions(1)
+    })
+    it('fails when manuscript has bad data types', async () => {
+      const initialManuscript = getInitialManuscript()
+      const id = await save(manuscriptGqlToDb(initialManuscript, userId))
+      const badManuscript = _.cloneDeep(fullManuscript)
+      _.merge(badManuscript, {
+        id,
+        title: 100,
+        manuscriptType: {},
+      })
+      const returnedManuscript = await Mutation.finishSubmission(
+        {},
+        {
+          data: badManuscript
+        },
+        { user: userId }
+      ).catch(err => expect(err).toBeDefined())
+      expect.assertions(1)
     })
   })
 
