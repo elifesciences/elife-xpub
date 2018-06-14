@@ -6,14 +6,12 @@ about: Each issue should have at least two labels (one to indicate the correspon
 
 **User Story:**
 
+_As a < type of user > I want < some goal > in order to < some reason >._
+
 **Product requirements/Acceptance criteria:**
 
-**Technical description (optional):**
+Functional:
 
-Include relevant links/references
+Non-functional:
 
-**Possible solutions:**
-
-1.
-2.
-3.
+**Relevant links to design(s):**
