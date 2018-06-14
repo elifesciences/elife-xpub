@@ -1,16 +1,10 @@
-const supertest = require('supertest')
 const _ = require('lodash')
 const config = require('config')
 const fs = require('fs-extra')
-const { jsonToGraphQLQuery } = require('json-to-graphql-query')
-const app = require('pubsweet-server/src/').configureApp(require('express')())
 const { createTables } = require('@pubsweet/db-manager')
 const User = require('pubsweet-server/src/models/User')
-const authentication = require('pubsweet-server/src/authentication')
 const { save, select, selectId, manuscriptGqlToDb } = require('../db-helpers/')
-const {
-  Mutation: { uploadManuscript },
-} = require('./resolvers')
+const { Mutation, Query } = require('./resolvers')
 const { emptyManuscript } = require('./definitions')
 
 const replaySetup = require('../../test/helpers/replay-setup')
@@ -22,7 +16,6 @@ const userData = {
 }
 
 describe('Submission', () => {
-  let request
   let userId
 
   beforeEach(async () => {
@@ -34,36 +27,9 @@ describe('Submission', () => {
     const user = new User(userData)
     await user.save()
     userId = user.id
-    request = query =>
-      supertest(app)
-        .post('/graphql')
-        .send({
-          query: jsonToGraphQLQuery(query, { pretty: true }),
-        })
-        .set('Accept', 'application/json')
-        .set({ Authorization: `Bearer ${authentication.token.create(user)}` })
   })
 
   describe('currentSubmission', () => {
-    const query = {
-      query: {
-        currentSubmission: {
-          id: true,
-          title: true,
-          source: true,
-          submissionMeta: {
-            stage: true,
-            author: {
-              firstName: true,
-              lastName: true,
-              email: true,
-              institution: true,
-            },
-          },
-        },
-      },
-    }
-
     it('Gets form data', async () => {
       const expectedManuscript = {
         title: 'title',
@@ -80,15 +46,13 @@ describe('Submission', () => {
       }
       await save(manuscriptGqlToDb(expectedManuscript, userId))
 
-      const { body } = await request(query)
-      expect(body.errors).toBeUndefined()
-      expect(body.data.currentSubmission).toMatchObject(expectedManuscript)
+      const manuscript = await Query.currentSubmission({}, {}, { user: userId })
+      expect(manuscript).toMatchObject(expectedManuscript)
     })
 
     it('Returns empty object when there are no manuscripts in the db', async () => {
-      const { body } = await request(query)
-      expect(body.errors).toBeUndefined()
-      expect(body.data.currentSubmission).toBe(null)
+      const manuscript = await Query.currentSubmission({}, {}, { user: userId })
+      expect(manuscript).toBe(null)
     })
 
     it('Returns null object when user has no manuscripts in the db (db not empty)', async () => {
@@ -121,29 +85,25 @@ describe('Submission', () => {
         },
       })
 
-      const { body } = await request(query)
-      expect(body.errors).toBeUndefined()
-      expect(body.data.currentSubmission).toBe(null)
+      const manuscript = await Query.currentSubmission({}, {}, { user: userId })
+      expect(manuscript).toBe(null)
     })
   })
 
   describe('createSubmission', () => {
     it('adds new manuscript to the db for current user with stage INITIAL', async () => {
-      const query = {
-        mutation: {
-          createSubmission: {
-            id: true,
-          },
-        },
-      }
-      const { body } = await request(query)
+      const manuscript = await Mutation.createSubmission(
+        {},
+        {},
+        { user: userId },
+      )
 
       const manuscripts = await select({
         'submissionMeta.createdBy': userId,
         'submissionMeta.stage': 'INITIAL',
       })
       expect(manuscripts.length).toBeGreaterThan(0)
-      expect(manuscripts[0].id).toBe(body.data.createSubmission.id)
+      expect(manuscripts[0].id).toBe(manuscript.id)
     })
   })
 
@@ -161,54 +121,33 @@ describe('Submission', () => {
             institution: 'institution',
           },
           coverLetter: '',
-          hasCorrespondent: false,
-          correspondent: {
-            firstName: '',
-            lastName: '',
-            email: '',
-            institution: '',
-          },
         },
       }
       const id = await save(manuscriptGqlToDb(manuscript, userId))
-      const newFormData = {
-        data: {
-          id,
-          title: 'New Title',
-          submissionMeta: {
-            coverLetter: 'this is some long text',
-            author: {
-              firstName: 'todo first name',
-              lastName: 'todo last name',
-              email: 'todo@mail.com',
-              institution: 'TODO',
-            },
-            correspondent: {
-              firstName: 'todo first name',
-              lastName: 'todo',
-              email: 'todo@mail.com',
-              institution: 'todo institution 1',
-            },
+      const manuscriptInput = {
+        id,
+        title: 'New Title',
+        submissionMeta: {
+          coverLetter: 'this is some long text',
+          author: {
+            firstName: 'todo first name',
+            lastName: 'todo last name',
+            email: 'todo@mail.com',
+            institution: 'TODO',
           },
         },
       }
-      const query = {
-        mutation: {
-          updateSubmission: {
-            id: true,
-            __args: {
-              data: {
-                id,
-                ...newFormData.data,
-              },
-            },
-          },
+
+      await Mutation.updateSubmission(
+        {},
+        {
+          data: manuscriptInput,
         },
-      }
-      await request(query)
+        { user: userId },
+      )
 
       const actualManuscript = await selectId(id)
-      const expectedManuscript = _.merge(manuscript, newFormData.data)
+      const expectedManuscript = _.merge(manuscript, manuscriptInput)
       expect(actualManuscript).toMatchObject(expectedManuscript)
     })
   })
@@ -225,10 +164,8 @@ describe('Submission', () => {
         mimetype: 'application/pdf',
       }
 
-      // call resolver directly because setting up the multipart request is hard
-      const response = await uploadManuscript({}, { id, file })
-
-      expect(response).toMatchObject({
+      const manuscript = await Mutation.uploadManuscript({}, { id, file })
+      expect(manuscript).toMatchObject({
         id,
         title:
           'The Relationship Between Lamport Clocks and Interrupts Using Obi',
