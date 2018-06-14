@@ -1,29 +1,17 @@
 ---
-name: Feature issue template
-about: A broad template for feature-building issues
+name: Issue Template
+about: Each issue should have at least two labels (one to indicate the corresponding epic and one to indicate the nature of the ticket, e.g. client-side or server-side). GitHub milestones correspond to features of the product and issues will be grouped by the feature they relate to.
 
 ---
 
-# Issue Title
+**User Story:**
 
-Should be clear, precise and (where possible) written in non-technical language.
+_As a < type of user > I want < some goal > in order to < some reason >._
 
-# Labels
+**Product requirements/Acceptance criteria:**
 
-Each ticket should have at least two labels- one to indicate the corresponding epic and one to indicate the nature of the ticket.
+Functional:
 
-# Description
+Non-functional:
 
-**Plain text description**
-
-What are you building? What value is this technical task adding? Include relevant links/references
-
-**Technical description (optional)**
-
-Include relevant links/references
-
-**Possible solutions**
-
-1.
-2.
-3.
+**Relevant links to design(s):**
