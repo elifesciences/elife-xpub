@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import styled, { withTheme } from 'styled-components'
 import { th } from '@pubsweet/ui'
-import Select from 'react-select'
+import Select, { createFilter } from 'react-select'
 
 const Root = styled.div`
   display: flex;
@@ -61,24 +61,18 @@ const eLifeOptions = [
   },
 ]
 
-const findOptionByValue = (value, options) =>
-  options.find(option => option.value === value)
-
-export class ThemelessSubjectAreaDropdown extends React.Component {
+class SubjectAreaDropdown extends React.Component {
   constructor(props) {
     super(props)
 
     const savedOptions = this.props.savedValues.map(value =>
-      findOptionByValue(value, eLifeOptions),
+      eLifeOptions.find(option => option.value === value),
     )
 
     this.state = {
       selectedOptions: savedOptions,
       hasReachedMultiselectLimit: false,
     }
-
-    this.handleChange = this.handleChange.bind(this)
-    this.handleBlur = this.handleBlur.bind(this)
 
     this.customReactSelectStyles = {
       multiValue: (base, state) => ({
@@ -93,39 +87,30 @@ export class ThemelessSubjectAreaDropdown extends React.Component {
   handleChange = selectedOptions => {
     if (selectedOptions.length <= 2) {
       this.setState({ selectedOptions, hasReachedMultiselectLimit: false })
-      if (this.props.onChange) this.props.onChange(selectedOptions)
+      this.props.onChange(selectedOptions)
     }
     if (selectedOptions.length >= 2) {
       this.setState({ hasReachedMultiselectLimit: true })
     }
   }
 
-  handleBlur = e => {
-    if (this.props.onBlur) this.props.onBlur(e)
-  }
-
   render() {
     const { selectedOptions, hasReachedMultiselectLimit } = this.state
-    const { label, name } = this.props
+    const { label, name, onBlur } = this.props
 
     const selectChildProps = {
       components: { ClearIndicator: null },
       inputId: 'subject-area-select',
       isMulti: true,
       name,
-      onBlur: this.handleBlur,
+      onBlur,
       onChange: this.handleChange,
       options: eLifeOptions,
       styles: this.customReactSelectStyles,
       value: selectedOptions,
-      filterOption: (option, rawInput) => {
-        const input = rawInput.replace(/^\s+|\s+$/g, '').toLowerCase()
-        const candidate = `${option.label} ${option.value}`
-          .replace(/^\s+|\s+$/g, '')
-          .toLowerCase()
-
-        return candidate.substr(0, input.length) === input
-      },
+      filterOption: createFilter({
+        matchFrom: 'start',
+      }),
     }
 
     return (
@@ -152,8 +137,6 @@ export class ThemelessSubjectAreaDropdown extends React.Component {
   }
 }
 
-const SubjectAreaDropdown = withTheme(ThemelessSubjectAreaDropdown)
-
 SubjectAreaDropdown.propTypes = {
   label: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
@@ -162,4 +145,4 @@ SubjectAreaDropdown.propTypes = {
   savedValues: PropTypes.arrayOf(PropTypes.string).isRequired,
 }
 
-export default SubjectAreaDropdown
+export default withTheme(SubjectAreaDropdown)
