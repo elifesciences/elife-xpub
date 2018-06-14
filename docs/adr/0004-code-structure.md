@@ -12,11 +12,21 @@ As the code rapidly grows we need a common structure and approach that will keep
 There are various aspects, the initial concern was the data access separation. The issue #140 initially talked about how this could be separated in terms of an ORM (Object-Relational Mapping) or a DAL (Data Access Layer).
 However, this discussion also soon covered the structure of the code in general and how to structure it for ease of development and best practise.
 
+### Rejected Options
+
+We considered the following options:
+
+* The Pubsweet Way - This was to define a base class "Model" and extend this for each entity. This was rejected as its another self made ORM but and has validations that we don't want.
+
+* Other ORMs : Waterline, sequelize, bookshelf - General purpose ORMs were rejected based on the experience that the time spent going up the learning curve and sifting through the docs when things go wrong is greater then simply rolling your own.
+
+* Query Builders : massive.js, Knex.js -These were not entirely ruled out, and were deemed compatible with a good code structure that would allow the database access to be encapsulated in a way that would allow a query builder to be used where necessary.
+
 ## Decision
 
 In summary the server-side code will be structured below the `server` folder as follows:
 
-* **entities** - This folder will contain subfolders relating to named entities in the system. See "Data Model Specification".
+* **entities** - This folder will contain subfolders relating to named entities in the system. See ["Data Model Specification"](https://docs.google.com/document/d/1KU-DLMNhPxjQF2j8HVlJvenvttPLxgtbTHo8Sy_PNRc/).
 
 * **entities/\<entity\>** - The example below shows `Mansuscript` as an example entity, this folder will contain a common set of files that describe the entity's behaviour. Each of these have a particular purpose explained below:
 
@@ -52,7 +62,7 @@ server
 
 ## Consequences
 
-There will need to be coordination with the team in order to implment this structure.
+There will need to be coordination with the team in order to implement this structure.
 
 The outcome should result in:
 
