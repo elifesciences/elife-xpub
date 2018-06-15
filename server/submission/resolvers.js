@@ -1,5 +1,6 @@
 const lodash = require('lodash')
 const config = require('config')
+const Email = require('@pubsweet/component-send-email')
 const User = require('pubsweet-server/src/models/User')
 const logger = require('@pubsweet/logger')
 const request = require('request-promise-native')
@@ -8,7 +9,12 @@ const xml2js = require('xml2js')
 const fs = require('fs-extra')
 const path = require('path')
 const crypto = require('crypto')
-const { emptyManuscript } = require('./definitions')
+const Joi = require('joi')
+const {
+  emptyManuscript,
+  manuscriptSchema,
+  cosubmissionSchema,
+} = require('./definitions')
 
 const parseString = promisify(xml2js.parseString)
 const randomBytes = promisify(crypto.randomBytes)
@@ -67,6 +73,55 @@ const resolvers = {
       const newManuscriptDb = db.manuscriptGqlToDb(newManuscript, ctx.user)
       await db.update(newManuscriptDb, data.id)
       logger.debug(`Updated Submission ${data.id} by user ${ctx.user}`)
+      return newManuscript
+    },
+    async finishSubmission(_, { data }, ctx) {
+      const manuscript = await db.selectId(data.id)
+      db.checkPermission(manuscript, ctx.user)
+      const newManuscript = lodash.merge({}, manuscript, data)
+
+      const { error: errorManuscript } = Joi.validate(
+        newManuscript,
+        manuscriptSchema,
+      )
+      if (errorManuscript) {
+        logger.error(`Bad manuscript data: ${errorManuscript}`)
+        throw new Error(errorManuscript)
+      }
+
+      const {
+        cosubmission,
+        cosubmissionTitle,
+        cosubmissionId,
+      } = newManuscript.submissionMeta
+      const { error: errorCosubmission } = Joi.validate(
+        {
+          cosubmission,
+          cosubmissionTitle,
+          cosubmissionId,
+        },
+        cosubmissionSchema,
+      )
+      if (errorCosubmission) {
+        logger.error(`Bad manuscript data: ${errorCosubmission}`)
+        throw new Error(errorCosubmission)
+      }
+
+      newManuscript.submissionMeta.stage = 'QA'
+      const newManuscriptDb = db.manuscriptGqlToDb(newManuscript, ctx.user)
+      await db.update(newManuscriptDb, data.id)
+
+      const mailData = {
+        from: config.get('mailer.from'),
+        to: newManuscript.submissionMeta.author.email,
+        subject: 'Congratulations! You submitted your manuscript!',
+        text: 'Your manuscript has been submitted',
+        html: '<p>Your manuscript has been submitted</p>',
+      }
+      Email.send(mailData).catch(error => {
+        logger.error(`Error sending e-mail: ${error}`)
+      })
+
       return newManuscript
     },
 

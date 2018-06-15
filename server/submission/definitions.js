@@ -1,3 +1,5 @@
+const Joi = require('joi')
+
 /**
  * types & input types should be kept in sync
  */
@@ -12,12 +14,12 @@ const typeDefs = `
       createSubmission: Manuscript!
       updateSubmission(data: ManuscriptInput!): Manuscript!
       uploadManuscript(id: ID!, file: Upload!): Manuscript!
+      finishSubmission(data: ManuscriptInput!): Manuscript!
     }
     
     type Manuscript {
       id: ID
       title: String
-      source: String
       manuscriptType: String
       subjectAreas: [String]
       suggestedSeniorEditors: [String]
@@ -33,7 +35,6 @@ const typeDefs = `
     input ManuscriptInput {
       id: ID!
       title: String
-      source: String
       manuscriptType: String
       subjectAreas: [String]
       suggestedSeniorEditors: [String]
@@ -129,7 +130,6 @@ const typeDefs = `
 const emptyManuscript = {
   id: '',
   title: '',
-  source: '',
   manuscriptType: '',
   subjectAreas: [],
   suggestedSeniorEditors: ['', ''],
@@ -170,4 +170,127 @@ const emptyManuscript = {
   },
 }
 
-module.exports = { typeDefs, emptyManuscript }
+const possibleStages = ['INITIAL', 'QA']
+const manuscriptSchema = Joi.object()
+  .keys({
+    id: Joi.string().required(),
+    title: Joi.string().required(),
+    manuscriptType: Joi.string().required(),
+    subjectAreas: Joi.array()
+      .min(1)
+      .max(2)
+      .required(),
+    files: Joi.array().min(1),
+    submissionMeta: Joi.object()
+      .keys({
+        // TODO remove this once we have an ORM
+        createdBy: Joi.string(),
+        coverLetter: Joi.string().required(),
+        author: Joi.object()
+          .keys({
+            firstName: Joi.string().required(),
+            lastName: Joi.string().required(),
+            email: Joi.string()
+              .email()
+              .required(),
+            institution: Joi.string().required(),
+          })
+          .required(),
+        hasCorrespondent: Joi.boolean().required(),
+        correspondent: Joi.when('hasCorrespondent', {
+          is: true,
+          then: Joi.object()
+            .keys({
+              firstName: Joi.string().required(),
+              lastName: Joi.string().required(),
+              email: Joi.string().required(),
+              institution: Joi.string().required(),
+            })
+            .required(),
+        }),
+        stage: Joi.string()
+          .valid(possibleStages)
+          .required(),
+        discussedPreviously: Joi.boolean().required(),
+        discussion: Joi.when('discussedPreviously', {
+          is: true,
+          then: Joi.string().required(),
+        }),
+        consideredPreviously: Joi.boolean().required(),
+        previousArticle: Joi.when('consideredPreviously', {
+          is: true,
+          then: Joi.string().required(),
+        }),
+        cosubmission: Joi.boolean().required(),
+        cosubmissionTitle: Joi.string().allow(''),
+        cosubmissionId: Joi.string().allow(''),
+      })
+      .required(),
+    suggestedSeniorEditors: Joi.array()
+      .items(Joi.string().required())
+      .required(),
+    opposedSeniorEditors: Joi.array().items(
+      Joi.object().keys({
+        name: Joi.string().required(),
+        reason: Joi.string().required(),
+      }),
+    ),
+    suggestedReviewingEditors: Joi.array()
+      .items(Joi.string().required())
+      .required(),
+    opposedReviewingEditors: Joi.array().items(
+      Joi.object().keys({
+        name: Joi.string().required(),
+        reason: Joi.string().required(),
+      }),
+    ),
+    suggestedReviewers: Joi.array().items(
+      Joi.object()
+        .keys({
+          name: Joi.string().required(),
+          email: Joi.string()
+            .email()
+            .required(),
+        })
+        .required(),
+    ),
+    opposedReviewers: Joi.array().items(
+      Joi.object().keys({
+        name: Joi.string().required(),
+        email: Joi.string()
+          .email()
+          .required(),
+        reason: Joi.string().required(),
+      }),
+    ),
+    noConflictOfInterest: Joi.boolean().required(),
+  })
+  .required()
+
+const cosubmissionSchema = Joi.alternatives().try(
+  Joi.object().keys({
+    cosubmission: Joi.boolean().required(),
+    cosubmissionTitle: Joi.string().when('cosubmission', {
+      is: true,
+      then: Joi.required(),
+      otherwise: Joi.allow(''),
+    }),
+    cosubmissionId: Joi.string().allow(''),
+  }),
+  Joi.object().keys({
+    cosubmission: Joi.boolean().required(),
+    cosubmissionTitle: Joi.string().allow(''),
+    cosubmissionId: Joi.string().when('a', {
+      is: true,
+      then: Joi.required(),
+      otherwise: Joi.string().allow(''),
+    }),
+  }),
+)
+
+module.exports = {
+  typeDefs,
+  emptyManuscript,
+  manuscriptSchema,
+  cosubmissionSchema,
+}

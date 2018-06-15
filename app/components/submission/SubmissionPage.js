@@ -13,11 +13,11 @@ import { schema as authorDetailsSchema } from './AuthorDetails/AuthorDetailsSche
 import { schema as manuscriptMetadataSchema } from './ManuscriptMetadata/ManuscriptMetadataSchema'
 import { schema as reviewerSuggestionsSchema } from './ReviewerSuggestions/ReviewerSuggestionsSchema'
 
-const FormStep = ({ history, nextUrl, updateSubmission, ...props }) => (
+const FormStep = ({ history, nextUrl, submitMutation, ...props }) => (
   <Formik
     onSubmit={(values, { setSubmitting, setErrors }) => {
       const data = omitDeep(values, ['__typename', 'files'])
-      return updateSubmission({ variables: { data } })
+      return submitMutation({ variables: { data } })
         .then(() => setSubmitting(false))
         .then(() => history.push(nextUrl))
         .catch(errors => {
@@ -30,7 +30,7 @@ const FormStep = ({ history, nextUrl, updateSubmission, ...props }) => (
 
 const SubmissionPage = ({ match, history }) => (
   <WithCurrentSubmission>
-    {(updateSubmission, initialValues) => (
+    {(initialValues, { updateSubmission, finishSubmission }) => (
       <Switch>
         <Route
           path={`${match.path}/upload`}
@@ -47,7 +47,7 @@ const SubmissionPage = ({ match, history }) => (
                   <FileUploadsPage {...props} />
                 </ComponentWithSaving>
               )}
-              updateSubmission={updateSubmission}
+              submitMutation={updateSubmission}
               validationSchema={fileUploadsSchema}
             />
           )}
@@ -67,7 +67,7 @@ const SubmissionPage = ({ match, history }) => (
                   <ManuscriptMetadata {...props} />
                 </ComponentWithSaving>
               )}
-              updateSubmission={updateSubmission}
+              submitMutation={updateSubmission}
               validationSchema={manuscriptMetadataSchema}
             />
           )}
@@ -87,7 +87,7 @@ const SubmissionPage = ({ match, history }) => (
                   <ReviewerSuggestions {...props} />
                 </ComponentWithSaving>
               )}
-              updateSubmission={updateSubmission}
+              submitMutation={finishSubmission}
               validationSchema={reviewerSuggestionsSchema}
             />
           )}
@@ -106,7 +106,7 @@ const SubmissionPage = ({ match, history }) => (
                   <AuthorDetailsPage {...props} />
                 </ComponentWithSaving>
               )}
-              updateSubmission={updateSubmission}
+              submitMutation={updateSubmission}
               validationSchema={authorDetailsSchema}
             />
           )}

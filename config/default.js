@@ -23,9 +23,7 @@ module.exports = {
   },
   mailer: {
     from: 'dev@example.com',
-    transport: {
-      sendmail: true,
-    },
+    path: `${__dirname}/mailer`,
   },
   darServer: {
     basePath: path.join(__dirname, '..', 'manuscripts'),

@@ -1,5 +1,5 @@
 import gql from 'graphql-tag'
-import { withApollo, Mutation } from 'react-apollo'
+import { withApollo } from 'react-apollo'
 import React from 'react'
 import ErrorPage from '../global/ErrorPage'
 
@@ -7,7 +7,6 @@ const manuscriptFragment = gql`
   fragment WholeManuscript on Manuscript {
     id
     title
-    source
     manuscriptType
     subjectAreas
     suggestedSeniorEditors
@@ -88,6 +87,15 @@ const UPDATE_SUBMISSION = gql`
   ${manuscriptFragment}
 `
 
+const FINISH_SUBMISSION = gql`
+  mutation FinishSubmission($data: ManuscriptInput!) {
+    finishSubmission(data: $data) {
+      ...WholeManuscript
+    }
+  }
+  ${manuscriptFragment}
+`
+
 class WithCurrentSubmission extends React.Component {
   constructor() {
     super()
@@ -133,13 +141,18 @@ class WithCurrentSubmission extends React.Component {
       return <ErrorPage error={error} />
     }
 
-    return (
-      <Mutation mutation={UPDATE_SUBMISSION}>
-        {updateSubmission =>
-          this.props.children(updateSubmission, initialValues)
-        }
-      </Mutation>
-    )
+    return this.props.children(initialValues, {
+      updateSubmission: ({ variables }) =>
+        this.props.client.mutate({
+          mutation: UPDATE_SUBMISSION,
+          variables,
+        }),
+      finishSubmission: ({ variables }) =>
+        this.props.client.mutate({
+          mutation: FINISH_SUBMISSION,
+          variables,
+        }),
+    })
   }
 }
 

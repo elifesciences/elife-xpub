@@ -31,6 +31,7 @@ function manuscriptGqlToDb(manuscript, owner) {
 function manuscriptDbToGql(manuscriptDb, id) {
   const manuscript = _.cloneDeep(manuscriptDb)
   manuscript.id = id
+  delete manuscript.type
   return manuscript
 }
 
