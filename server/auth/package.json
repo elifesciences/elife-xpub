@@ -9,7 +9,7 @@
   "keywords": [],
   "dependencies": {
     "config": "^1.29.0",
-    "passport": "^0.3.2",
+    "passport": "^0.4.0",
     "passport-orcid": "git+https://github.com/g-sam/passport-orcid.git"
   },
   "peerDependencies": {
