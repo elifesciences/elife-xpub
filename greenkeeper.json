@@ -1,0 +1,14 @@
+{
+  "groups": {
+    "default": {
+      "packages": [
+        "client/login-orcid/package.json",
+        "client/texture/package.json",
+        "package.json",
+        "server/auth/package.json",
+        "server/dar-server/package.json",
+        "server/submission/package.json"
+      ]
+    }
+  }
+}
