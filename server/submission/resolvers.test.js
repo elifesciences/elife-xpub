@@ -151,23 +151,7 @@ describe('Submission', () => {
   })
 
   describe('finshSubmission', () => {
-    function getInitialManuscript() {
-      // userId is defined in beforeEach
-      return {
-        submissionMeta: {
-          createdBy: userId,
-          stage: 'INITIAL',
-        },
-        // this is here just to fake upload process
-        files: [
-          {
-            url: 'fake-path.pdf',
-            name: 'FakeManuscript.pdf',
-            type: 'MANUSCRIPT_SOURCE',
-          },
-        ],
-      }
-    }
+    let id, initialManuscript
     const fullManuscript = {
       title: 'My Manuscript',
       manuscriptType: 'research-article',
@@ -197,17 +181,33 @@ describe('Submission', () => {
         cosubmission: false,
       },
     }
+
+    beforeEach(async () => {
+      initialManuscript = {
+        submissionMeta: {
+          createdBy: userId,
+          stage: 'INITIAL',
+        },
+        files: [
+          {
+            url: 'fake-path.pdf',
+            name: 'FakeManuscript.pdf',
+            type: 'MANUSCRIPT_SOURCE',
+          },
+        ],
+      }
+      id = await save(manuscriptGqlToDb(initialManuscript, userId))
+    })
+
     it('stores data to the backend with a new stage of QA', async () => {
-      const initialManuscript = getInitialManuscript()
-      const id = await save(manuscriptGqlToDb(initialManuscript, userId))
       const manuscript = _.cloneDeep(fullManuscript)
       manuscript.id = id
       const returnedManuscript = await Mutation.finishSubmission(
         {},
         {
-          data: manuscript
+          data: manuscript,
         },
-        { user: userId }
+        { user: userId },
       )
 
       expect(returnedManuscript.submissionMeta.stage).toBe('QA')
@@ -222,36 +222,32 @@ describe('Submission', () => {
 
     // TODO more tests needed here
     it('fails when manuscript has incomplete data', async () => {
-      const initialManuscript = getInitialManuscript()
-      const id = await save(manuscriptGqlToDb(initialManuscript, userId))
       const badManuscript = {
         id,
         title: 'Some Title',
       }
-      const returnedManuscript = await Mutation.finishSubmission(
+      await Mutation.finishSubmission(
         {},
         {
-          data: badManuscript
+          data: badManuscript,
         },
-        { user: userId }
+        { user: userId },
       ).catch(err => expect(err).toBeDefined())
       expect.assertions(1)
     })
     it('fails when manuscript has bad data types', async () => {
-      const initialManuscript = getInitialManuscript()
-      const id = await save(manuscriptGqlToDb(initialManuscript, userId))
       const badManuscript = _.cloneDeep(fullManuscript)
       _.merge(badManuscript, {
         id,
         title: 100,
         manuscriptType: {},
       })
-      const returnedManuscript = await Mutation.finishSubmission(
+      await Mutation.finishSubmission(
         {},
         {
-          data: badManuscript
+          data: badManuscript,
         },
-        { user: userId }
+        { user: userId },
       ).catch(err => expect(err).toBeDefined())
       expect.assertions(1)
     })
