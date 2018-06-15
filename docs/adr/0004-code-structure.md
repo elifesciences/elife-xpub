@@ -20,7 +20,7 @@ We considered the following options:
 
 * Other ORMs : Waterline, sequelize, bookshelf - General purpose ORMs were rejected based on the experience that the time spent going up the learning curve and sifting through the docs when things go wrong is greater then simply rolling your own.
 
-* Query Builders : massive.js, Knex.js -These were not entirely ruled out, and were deemed compatible with a good code structure that would allow the database access to be encapsulated in a way that would allow a query builder to be used where necessary.
+* Query Builders : Knex.js -These were not entirely ruled out, and were deemed compatible with a good code structure that would allow the database access to be encapsulated in a way that would allow a query builder to be used where necessary.
 
 ## Decision
 
@@ -31,7 +31,7 @@ In summary the server-side code will be structured below the `server` folder as 
 * **entities/\<entity\>** - The example below shows `Mansuscript` as an example entity, this folder will contain a common set of files that describe the entity's behaviour. Each of these have a particular purpose explained below:
 
   * index.js - The main business logic, e.g. for `Manuscript` this could contain `getAuthor()`
-  * typedefs.js - Contains the GraphQL types pertinant to this entity.
+  * typedefs.js - Contains the GraphQL types pertinent to this entity.
   * resolvers.js - Contains the GraphQL interface specified in terms of `Query` and `Mutation` 's for this entity. These in general should map onto the exposed functions from index.js. For example, `Manuscript` may contain a `Query` for `allManuscripts` and a `Mutation` for `createManuscript`.
   * data-access.js - Contains the functions for saving to and loading from the database. All references to the database and SQL that is written should remain private to this file.
 
