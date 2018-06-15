@@ -18,8 +18,8 @@ We need a set of common default principles to govern how the team will use GitHu
 * After two days' effort, an assignee will add a comment to an issue and/or consider raising new issues to clearly indicate progress.
 * When feedback is required, an assignee will open a PR with the 'WIP' prefix. See [this ADR](https://github.com/elifesciences/elife-xpub/blob/develop/docs/adr/0001-pull-request-workflow.md).
 * As we facilitate deployment on a per-branch basis, once a PR is merged it is considered 'Done'.
-* Further end-to-end testing will be raised in a new issue with the 'e2e test' label.
-* An issue will never be re-opened.
+* If a feature can reasonably be tested using an existing end-to-end test, this will be undertaken before the PR is approved. Any further or additional end-to-end testing will be raised in a new issue with the 'e2e test' label and referencing the original issue.
+* An issue will never be re-opened, unless closed in error.
 
 ## Consequences
 
