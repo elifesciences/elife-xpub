@@ -3,7 +3,7 @@
 # eLife xPub
 
 [![Build Status](http://ci--alfred.elifesciences.org/buildStatus/icon?job=test-elife-xpub)](https://ci--alfred.elifesciences.org/blue/organizations/jenkins/test-elife-xpub/activity)
-[![mattermost](https://img.shields.io/badge/mattermost_chat-coko%2Fxpub-blue.svg)](https://mattermost.coko.foundation/coko/channels/xpub)
+[![mattermost](https://img.shields.io/badge/mattermost_chat-coko%2Fxpub-blue.svg)](https://mattermost.coko.foundation/coko/channels/xpub) [![Greenkeeper badge](https://badges.greenkeeper.io/elifesciences/elife-xpub.svg)](https://greenkeeper.io/)
 
 ## Description
 
