@@ -5,7 +5,7 @@ import { withClientState } from 'apollo-link-state'
 
 import { configureStore, Root } from 'pubsweet-client'
 
-import theme from '@pubsweet/elife-theme'
+import theme from '@elifesciences/elife-theme'
 
 import Routes from './routes'
 import * as AuthorDetailsSchema from './components/submission/AuthorDetails/AuthorDetailsSchema'

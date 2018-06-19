@@ -2,7 +2,7 @@ import React from 'react'
 import { mount } from 'enzyme'
 import { MemoryRouter } from 'react-router-dom'
 import { ThemeProvider } from 'styled-components'
-import theme from '@pubsweet/elife-theme'
+import theme from '@elifesciences/elife-theme'
 
 import FileUpload from './FileUpload'
 
