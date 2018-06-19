@@ -1,0 +1,13 @@
+{
+  "name": "@pubsweet/elife-theme",
+  "version": "1.0.1",
+  "description": "Theme for eLife apps",
+  "license": "MIT",
+  "main": "src",
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "styled-components": "^3.2.5"
+  }
+}
