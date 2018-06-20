@@ -7,11 +7,11 @@ import * as icons from './icons'
 
 const Container = styled.span`
   display: inline-flex;
-  padding: calc(${th('subGridUnit')} / 2);
+  padding: calc(${th('gridUnit')} / 2);
   svg {
     stroke: ${props => props.color || props.theme.colorText};
-    width: calc(${props => props.size} * ${th('subGridUnit')});
-    height: calc(${props => props.size} * ${th('subGridUnit')});
+    width: calc(${props => props.size} * ${th('gridUnit')});
+    height: calc(${props => props.size} * ${th('gridUnit')});
   }
 `
 
