@@ -1,16 +1,24 @@
-/* Demi */
+/* SemiBold */
 @font-face {
-  font-family: 'Avenir Next Webfont';
-  font-weight: 700;
+  font-display: fallback;
+  font-family: "Noto Sans SemiBold";
   src:
-    url('249228f0-61ac-40cc-a5a5-5609c9816e3f.woff2') format('woff2'),
-    url('efba18ed-80cc-49c4-997a-fbb140739d19.woff') format('woff');
+    url('NotoSans-SemiBold-webfont-custom-2-subsetting.woff2') format('woff2');
 }
 
-/* Medium */
+/* Sans */
 @font-face {
-  font-family: 'Avenir Next Webfont';
+  font-display: fallback;
+  font-family: "Noto Sans";
   src:
-    url('627fbb5a-3bae-4cd9-b617-2f923e29d55e.woff2') format('woff2'),
-    url('f26faddb-86cc-4477-a253-1e1287684336.woff') format('woff');
+    url('NotoSans-Regular-webfont-custom-2-subsetting.woff2') format('woff2');
+}
+
+
+/* Serif */
+@font-face {
+  font-display: fallback;
+  font-family: "Noto Serif";
+  src:
+    url('NotoSerif-Regular-webfont-custom-2-subsetting.woff2') format('woff2');
 }
