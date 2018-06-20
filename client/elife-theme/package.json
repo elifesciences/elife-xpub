@@ -1,6 +1,6 @@
 {
-  "name": "@pubsweet/elife-theme",
-  "version": "1.0.1",
+  "name": "@elifesciences/elife-theme",
+  "version": "1.0.0",
   "description": "Theme for eLife apps",
   "license": "MIT",
   "main": "src",
