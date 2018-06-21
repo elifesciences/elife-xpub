@@ -21,7 +21,7 @@ const suggestedReviewerValidator = () =>
       email: yup
         .string()
         .email('Must be a valid email')
-        .required(),
+        .required('Email is required'),
     }),
   )
 
