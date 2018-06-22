@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import styled, { withTheme } from 'styled-components'
-import { th } from '@pubsweet/ui'
+import { th } from '@pubsweet/ui-toolkit'
 import Select, { createFilter } from 'react-select'
 
 const Root = styled.div`

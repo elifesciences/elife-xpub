@@ -1,7 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
-import { Heading, th } from '@pubsweet/ui'
+import { Heading } from '@pubsweet/ui'
+import { th } from '@pubsweet/ui-toolkit'
 
 const formatErrorMessage = error => {
   if (error instanceof Error) {
