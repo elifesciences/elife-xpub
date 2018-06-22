@@ -2,6 +2,7 @@ const { deferConfig } = require('config/defer')
 
 module.exports = {
   'pubsweet-server': {
+    db: { database: 'test' },
     port: 4000,
     baseUrl: deferConfig(
       cfg => `http://localhost:${cfg['pubsweet-server'].port}`,
