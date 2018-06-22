@@ -41,13 +41,6 @@ export default {
 
   /* Spacing */
   gridUnit: '6px',
-  verticalXxl: 'gridUnit' * 20,
-  verticalXl: 'gridUnit' * 12,
-  verticalL: 'gridUnit' * 8,
-  verticalM: 'gridUnit' * 6,
-  verticalS: 'gridUnit' * 4,
-  verticalXs: 'gridUnit' * 2,
-  verticalXxs: 'gridUnit',
 
   /* Border */
   borderRadius: '3px',
