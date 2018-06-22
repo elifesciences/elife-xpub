@@ -54,6 +54,7 @@
     ]
   },
   "jest": {
+    "collectCoverage": true,
     "projects": [
       "<rootDir>/client",
       "<rootDir>/app",
