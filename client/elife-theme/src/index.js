@@ -41,12 +41,12 @@ export default {
 
   /* Spacing */
   gridUnit: '6px',
-  verticalXxl: 'gridUnit'*20,
-  verticalXl: 'gridUnit'*12,
-  verticalL: 'gridUnit'*8,
-  verticalM: 'gridUnit'*6,
-  verticalS: 'gridUnit'*4,
-  verticalXs: 'gridUnit'*2,
+  verticalXxl: 'gridUnit' * 20,
+  verticalXl: 'gridUnit' * 12,
+  verticalL: 'gridUnit' * 8,
+  verticalM: 'gridUnit' * 6,
+  verticalS: 'gridUnit' * 4,
+  verticalXs: 'gridUnit' * 2,
   verticalXxs: 'gridUnit',
 
   /* Border */
@@ -55,7 +55,7 @@ export default {
   borderStyle: 'solid',
 
   /* Shadow (for tooltip) */
-  dropShadow: '0 2px 4px 0 rgba(0, 0, 0, 0.30)',
+  boxShadow: '0 2px 4px 0 rgba(0, 0, 0, 0.30)',
 
   /* Transition */
   transitionDuration: '0.2s',
