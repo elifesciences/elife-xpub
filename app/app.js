@@ -10,16 +10,6 @@ import theme from '@elifesciences/elife-theme'
 import Routes from './routes'
 import * as AuthorDetailsSchema from './components/submission/AuthorDetails/AuthorDetailsSchema'
 
-const pixelGridUnit = parseInt(theme.gridUnit, 10)
-theme.space = [
-  0,
-  pixelGridUnit / 4,
-  pixelGridUnit / 2,
-  pixelGridUnit,
-  pixelGridUnit * 2,
-  pixelGridUnit * 4,
-]
-
 const history = createHistory()
 const store = configureStore(history, {})
 
