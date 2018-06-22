@@ -1,5 +1,6 @@
 /* eslint-disable import/extensions */
 import './fonts/index.css'
+import { Button } from './components'
 
 export default {
   /* Colors */
@@ -61,4 +62,8 @@ export default {
   transitionDuration: '0.2s',
   transitionTimingFunction: 'ease',
   transitionDelay: '0',
+
+  cssOverrides: {
+    Button,
+  },
 }
