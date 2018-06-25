@@ -1,6 +1,6 @@
 /* eslint-disable import/extensions */
 import './fonts/index.css'
-import { Button } from './components'
+import { Button } from './elements'
 
 export default {
   /* Colors */
