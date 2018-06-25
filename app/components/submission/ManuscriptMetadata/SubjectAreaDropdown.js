@@ -78,6 +78,26 @@ class SubjectAreaDropdown extends React.Component {
       multiValue: (base, state) => ({
         ...base,
         backgroundColor: this.props.theme.colorPrimary,
+        color: this.props.theme.colorTextReverse,
+        margin: 0,
+      }),
+      multiValueLabel: (base, state) => ({
+        ...base,
+        color: this.props.theme.colorTextReverse,
+        fontSize: this.props.theme.fontSizeBase,
+        padding: this.props.theme.gridUnit,
+        paddingLeft: this.props.theme.gridUnit,
+      }),
+      multiValueRemove: (base, state) => ({
+        ...base,
+        padding: `0 ${this.props.theme.gridUnit} 0 0`,
+        backgroundColor: this.props.theme.colorPrimary,
+        ':hover': {
+          cursor: 'pointer',
+          // overriding react-select's default hover behaviour - changing colours
+          backgroundColor: this.props.theme.colorPrimary,
+          color: this.props.theme.colorTextReverse,
+        },
       }),
     }
   }
