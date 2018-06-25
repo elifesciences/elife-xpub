@@ -74,6 +74,18 @@ class SubjectAreaDropdown extends React.Component {
       hasReachedMultiselectLimit: false,
     }
 
+    const chooseBorderColorFromProps = (
+      theme,
+      validationStatus = 'default',
+      isFocused,
+    ) =>
+      ({
+        error: theme.colorError,
+        success: theme.colorSuccess,
+        warning: theme.colorWarning,
+        default: isFocused ? '#2684FF' : theme.colorBorder,
+      }[validationStatus])
+
     const gridUnitValue = parseInt(this.props.theme.gridUnit, 10)
 
     this.customReactSelectStyles = {
@@ -136,6 +148,19 @@ class SubjectAreaDropdown extends React.Component {
         borderRadius: this.props.theme.borderRadius,
         borderWidth: this.props.theme.borderWidth,
         borderStyle: this.props.theme.borderStyle,
+        borderColor: chooseBorderColorFromProps(
+          this.props.theme,
+          this.props.validationStatus,
+          isFocused,
+        ),
+        // overrides the fact that react-select changes borderColor on hover
+        '&:hover': {
+          borderColor: chooseBorderColorFromProps(
+            this.props.theme,
+            this.props.validationStatus,
+            isFocused,
+          ),
+        },
         boxShadow: this.props.theme.boxShadow,
         backgroundColor: this.props.theme.backgroundColor,
       }),
