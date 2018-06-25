@@ -1,5 +1,6 @@
 /* eslint-disable import/extensions */
 import './fonts/index.css'
+import { Button } from './elements'
 
 const gridUnit = 6
 
@@ -66,4 +67,8 @@ export default {
   transitionDuration: '0.2s',
   transitionTimingFunction: 'ease',
   transitionDelay: '0',
+
+  cssOverrides: {
+    Button,
+  },
 }
