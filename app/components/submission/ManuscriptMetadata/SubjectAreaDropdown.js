@@ -7,7 +7,6 @@ import Select, { createFilter } from 'react-select'
 const Root = styled.div`
   display: flex;
   flex-direction: column;
-  margin-bottom: ${th('space.3')};
 `
 
 const SelectLimitMessage = styled.p`
