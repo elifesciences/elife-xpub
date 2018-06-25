@@ -2,20 +2,24 @@ import React from 'react'
 import { mount } from 'enzyme'
 import { Formik } from 'formik'
 import { MemoryRouter } from 'react-router-dom'
+import { ThemeProvider } from 'styled-components'
 
+import theme from '@elifesciences/elife-theme'
 import ReviewerSuggestions from './ReviewerSuggestions'
 import { empty, schema } from './ReviewerSuggestionsSchema'
 
 function makeWrapper(props) {
   return mount(
     <MemoryRouter>
-      <Formik
-        component={ReviewerSuggestions}
-        initialValues={empty}
-        onSubmit={jest.fn()}
-        validationSchema={schema}
-        {...props}
-      />
+      <ThemeProvider theme={theme}>
+        <Formik
+          component={ReviewerSuggestions}
+          initialValues={empty}
+          onSubmit={jest.fn()}
+          validationSchema={schema}
+          {...props}
+        />
+      </ThemeProvider>
     </MemoryRouter>,
   )
 }

@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { Box } from 'grid-styled'
-import { th } from '@pubsweet/ui'
+import { th } from '@pubsweet/ui-toolkit'
 
 const CalloutBox = styled(({ enabled, ...rest }) => <Box {...rest} />).attrs({
   mx: -3,

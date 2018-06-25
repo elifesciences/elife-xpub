@@ -67,7 +67,8 @@
   ],
   "dependencies": {
     "@elifesciences/elife-theme": "^1.0.0",
-    "@pubsweet/ui": "^4.1.0",
+    "@pubsweet/ui": "^5.0.1",
+    "@pubsweet/ui-toolkit": "^1.1.0",
     "apollo-link-state": "^0.4.1",
     "config": "^1.26.2",
     "formik": "^0.11.11",
@@ -78,8 +79,8 @@
     "lodash": "^4.17.5",
     "omit-deep-lodash": "^1.0.0",
     "prop-types": "^15.5.10",
-    "pubsweet-client": "^2.4.0",
-    "pubsweet-server": "^7.0.1",
+    "pubsweet-client": "^3.0.1",
+    "pubsweet-server": "^7.1.2",
     "react": "^16.2.0",
     "react-apollo": "^2.1.2",
     "react-dom": "^16.2.0",
@@ -92,7 +93,7 @@
     "redux-logger": "^3.0.1",
     "styled-components": "^3.2.5",
     "uuid": "^3.2.1",
-    "xpub-edit": "^0.1.2",
+    "xpub-edit": "^1.0.1",
     "yup": "^0.24.1"
   },
   "devDependencies": {

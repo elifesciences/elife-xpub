@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
-    "@pubsweet/ui": "^4.1.0",
+    "@pubsweet/ui": "^5.0.1",
     "query-string": "^6.0.0"
   },
   "peerDependencies": {

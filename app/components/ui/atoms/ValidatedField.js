@@ -2,7 +2,8 @@ import React from 'react'
 import styled from 'styled-components'
 import { Field } from 'formik'
 import { get } from 'lodash'
-import { TextField, th } from '@pubsweet/ui'
+import { TextField } from '@pubsweet/ui'
+import { th } from '@pubsweet/ui-toolkit'
 
 const MessageWrapper = styled.div`
   // consistent height even when empty
