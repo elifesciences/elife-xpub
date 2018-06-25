@@ -74,12 +74,18 @@ class SubjectAreaDropdown extends React.Component {
       hasReachedMultiselectLimit: false,
     }
 
+    const gridUnitValue = parseInt(this.props.theme.gridUnit, 10)
+
     this.customReactSelectStyles = {
+      valueContainer: (base, state) => ({
+        ...base,
+        padding: `${gridUnitValue / 2}px`, // combines with margin on multiValue to achieve gridUnit spacing around tags
+      }),
       multiValue: (base, state) => ({
         ...base,
         backgroundColor: this.props.theme.colorPrimary,
         color: this.props.theme.colorTextReverse,
-        margin: 0,
+        margin: `${gridUnitValue / 2}px`, // combines with padding on valueContainer to achieve gridUnit spacing around tags
       }),
       multiValueLabel: (base, state) => ({
         ...base,
