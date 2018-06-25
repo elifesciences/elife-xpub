@@ -105,6 +105,10 @@ class SubjectAreaDropdown extends React.Component {
           color: this.props.theme.colorTextReverse,
         },
       }),
+      menuList: (base, state) => ({
+        ...base,
+        padding: 0,
+      }),
       option: (base, { isSelected, isFocused }) => ({
         ...base,
         backgroundColor:
