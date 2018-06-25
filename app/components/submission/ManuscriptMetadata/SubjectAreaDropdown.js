@@ -93,6 +93,16 @@ class SubjectAreaDropdown extends React.Component {
         ...base,
         padding: `${gridUnitValue / 2}px`, // combines with margin on multiValue to achieve gridUnit spacing around tags
       }),
+      placeholder: (base, state) => ({
+        ...base,
+        color: this.props.theme.colorText,
+        margin: `${gridUnitValue / 2}px`,
+        padding: `${gridUnitValue / 2}px`,
+      }),
+      input: (base, state) => ({
+        ...base,
+        padding: `${gridUnitValue / 2}px`,
+      }),
       multiValue: (base, state) => ({
         ...base,
         backgroundColor: this.props.theme.colorPrimary,
@@ -163,6 +173,7 @@ class SubjectAreaDropdown extends React.Component {
         },
         boxShadow: this.props.theme.boxShadow,
         backgroundColor: this.props.theme.backgroundColor,
+        minHeight: this.props.gridUnit,
       }),
     }
   }
