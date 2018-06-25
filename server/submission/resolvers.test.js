@@ -1,4 +1,4 @@
-const _ = require('lodash')
+const lodash = require('lodash')
 const config = require('config')
 const fs = require('fs-extra')
 const { createTables } = require('@pubsweet/db-manager')
@@ -12,6 +12,7 @@ const replaySetup = require('../../test/helpers/replay-setup')
 
 const userData = {
   username: 'testuser',
+  email: 'test@example.com',
   orcid: '0000-0003-3146-0256',
   oauth: { accessToken: 'f7617529-f46a-40b1-99f4-4181859783ca' },
 }
@@ -108,19 +109,7 @@ describe('Submission', () => {
 
   describe('updateSubmission', () => {
     it('updates the current submission for user with data', async () => {
-      const manuscript = {
-        title: 'title',
-        submissionMeta: {
-          stage: 'INITIAL',
-          author: {
-            firstName: 'Firstname',
-            lastName: 'Lastname',
-            email: 'email@example.com',
-            institution: 'institution',
-          },
-          coverLetter: '',
-        },
-      }
+      const manuscript = lodash.merge({}, emptyManuscript)
       const id = await save(manuscriptGqlToDb(manuscript, userId))
       const manuscriptInput = {
         id,
@@ -140,13 +129,86 @@ describe('Submission', () => {
         {},
         {
           data: manuscriptInput,
+          isAutoSave: true,
         },
         { user: userId },
       )
 
       const actualManuscript = await selectId(id)
-      const expectedManuscript = _.merge(manuscript, manuscriptInput)
+      const expectedManuscript = lodash.merge({}, manuscriptInput)
       expect(actualManuscript).toMatchObject(expectedManuscript)
+    })
+
+    describe('corresponding author', () => {
+      it('does not add manuscript person if emails match', async () => {
+        const manuscript = lodash.merge({}, emptyManuscript)
+        manuscript.submissionMeta.author.email = userData.email
+
+        const id = await save(manuscriptGqlToDb(manuscript, userId))
+        await Mutation.updateSubmission(
+          {},
+          {
+            data: { id },
+            isAutoSave: false,
+          },
+          { user: userId },
+        )
+
+        const actualManuscript = await selectId(id)
+        expect(actualManuscript.manuscriptPersons).toHaveLength(0)
+        expect(Email.getMails()).toHaveLength(0)
+      })
+
+      it('adds manuscript person if emails differ', async () => {
+        const manuscript = lodash.merge({}, emptyManuscript)
+        manuscript.submissionMeta.author.email = 'author@example.com'
+
+        const id = await save(manuscriptGqlToDb(manuscript, userId))
+        await Mutation.updateSubmission(
+          {},
+          {
+            data: { id },
+            isAutoSave: false,
+          },
+          { user: userId },
+        )
+
+        const actualManuscript = await selectId(id)
+        expect(actualManuscript.manuscriptPersons).toHaveLength(1)
+        expect(Email.getMails()).toHaveLength(1)
+      })
+
+      it('does not add another manuscript person if already present', async () => {
+        const manuscript = lodash.merge({}, emptyManuscript, {
+          submissionMeta: {
+            author: {
+              email: 'email@example.com',
+            },
+          },
+          manuscriptPersons: [
+            {
+              alias: {
+                email: 'email@example.com',
+              },
+              role: 'AUTHOR',
+            },
+          ],
+        })
+
+        const id = await save(manuscriptGqlToDb(manuscript, userId))
+        await Mutation.updateSubmission(
+          {},
+          {
+            data: { id },
+            isAutoSave: false,
+          },
+          { user: userId },
+        )
+
+        const actualManuscript = await selectId(id)
+        expect(actualManuscript.manuscriptPersons).toHaveLength(1)
+        expect(Email.getMails()).toHaveLength(0)
+      })
     })
   })
 
@@ -200,7 +262,7 @@ describe('Submission', () => {
     })
 
     it('stores data to the backend with a new stage of QA', async () => {
-      const manuscript = _.cloneDeep(fullManuscript)
+      const manuscript = lodash.cloneDeep(fullManuscript)
       manuscript.id = id
       const returnedManuscript = await Mutation.finishSubmission(
         {},
@@ -213,7 +275,7 @@ describe('Submission', () => {
       expect(returnedManuscript.submissionMeta.stage).toBe('QA')
 
       const storedManuscript = await selectId(id)
-      const expectedManuscript = _.merge(initialManuscript, manuscript)
+      const expectedManuscript = lodash.merge(initialManuscript, manuscript)
       expectedManuscript.submissionMeta.stage = 'QA'
       expect(expectedManuscript).toMatchObject(storedManuscript)
 
@@ -236,8 +298,8 @@ describe('Submission', () => {
       expect.assertions(1)
     })
     it('fails when manuscript has bad data types', async () => {
-      const badManuscript = _.cloneDeep(fullManuscript)
-      _.merge(badManuscript, {
+      const badManuscript = lodash.cloneDeep(fullManuscript)
+      lodash.merge(badManuscript, {
         id,
         title: 100,
         manuscriptType: {},

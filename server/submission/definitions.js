@@ -12,7 +12,7 @@ const typeDefs = `
     }
     extend type Mutation {
       createSubmission: Manuscript!
-      updateSubmission(data: ManuscriptInput!): Manuscript!
+      updateSubmission(data: ManuscriptInput!, isAutoSave: Boolean): Manuscript!
       uploadManuscript(id: ID!, file: Upload!): Manuscript!
       finishSubmission(data: ManuscriptInput!): Manuscript!
     }
@@ -31,7 +31,9 @@ const typeDefs = `
       noConflictOfInterest: Boolean
       files: [File]
       submissionMeta: SubmissionMeta
+      manuscriptPersons: [ManuscriptPerson!]!
     }
+    
     input ManuscriptInput {
       id: ID!
       title: String
@@ -46,6 +48,51 @@ const typeDefs = `
       noConflictOfInterest: Boolean
       submissionMeta: SubmissionMetaInput
     }
+
+    type ManuscriptPerson {
+      user: User
+      role: ManuscriptRole!
+      #Alias has no use once upgraded to a User. Is there any way to move the information from one place to the other?
+      alias: UserAlias
+      metadata: ManuscriptPersonMetadata
+    }
+    
+    type UserAlias {
+      id: ID!
+      firstName: String!
+      lastName: String!
+      publishedName: String
+      email: String!
+      institution: String!
+    }
+    
+    union ManuscriptPersonMetadata = AuthorMetadata | ReviewerMetadata
+    
+    type AuthorMetadata {
+      rank: Int!
+      #contributions: AuthorMetadataContribution!
+      corresponding: Boolean!
+      conflictOfInterest: String
+    }
+    
+    type ReviewerMetadata {
+      rank: Int!
+      coRelationship: [ManuscriptPerson]
+      #Accounts for instances where a post-doc has helped review
+      conflictOfInterest: String
+      revealIdentity: Boolean!
+    }
+    
+    
+    enum ManuscriptRole {
+      DEPUTYEDITOR
+      SENIOREDITOR
+      REVIEWINGEDITOR
+      REVIEWER
+      AUTHOR
+      SUBMITTER
+    }
+
     type SubmissionMeta {
       coverLetter: String
       author: Person
@@ -168,6 +215,7 @@ const emptyManuscript = {
     cosubmissionTitle: '',
     cosubmissionId: '',
   },
+  manuscriptPersons: [],
 }
 
 const possibleStages = ['INITIAL', 'QA']
