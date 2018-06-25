@@ -109,6 +109,16 @@ class SubjectAreaDropdown extends React.Component {
         ...base,
         padding: 0,
       }),
+      menu: (base, { placement }) => ({
+        ...base,
+        borderRadius: `0 0 ${this.props.theme.borderRadius} ${
+          this.props.theme.borderRadius
+        }`,
+        borderWidth: this.props.theme.borderWidth,
+        marginBottom: 0,
+        // leave room for the bottom border of the Control component to be visible on validation/focus
+        marginTop: this.props.theme.borderWidth,
+      }),
       option: (base, { isSelected, isFocused }) => ({
         ...base,
         backgroundColor:
