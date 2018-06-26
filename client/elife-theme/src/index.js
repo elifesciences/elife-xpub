@@ -1,6 +1,6 @@
 /* eslint-disable import/extensions */
 import './fonts/index.css'
-import * as cssOverrides from './elements'
+import * as elements from './elements'
 
 const gridUnit = 6
 
@@ -69,5 +69,8 @@ export default {
   transitionTimingFunction: 'ease',
   transitionDelay: '0',
 
-  cssOverrides,
+  cssOverrides: {
+    ...elements,
+    'xpub-edit': elements.xpubEdit,
+  },
 }
