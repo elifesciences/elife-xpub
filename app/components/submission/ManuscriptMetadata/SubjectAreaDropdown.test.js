@@ -95,20 +95,16 @@ describe('SubjectAreaDropdown component', () => {
 
     it('typing filters list of options based on first letter(s)', () => {
       typeSubjectArea('c')
-      const totalStartingWithC = wrapper.find('Option').length
-      expect(totalStartingWithC).toBeLessThan(17)
       wrapper.find('Option').forEach(option => {
         const optionText = option.childAt(0).text()
-        const wordStartsWithC = new RegExp(/^[cC]\w+/)
+        const wordStartsWithC = new RegExp(/^c/i)
         expect(optionText).toMatch(wordStartsWithC)
       })
 
       typeSubjectArea('ce')
-      const totalStartingWithCe = wrapper.find('Option').length
-      expect(totalStartingWithCe).toBeLessThan(totalStartingWithC)
       wrapper.find('Option').forEach(option => {
         const optionText = option.childAt(0).text()
-        const wordStartsWithCe = new RegExp(/^[ceCe]\w+/)
+        const wordStartsWithCe = new RegExp(/^ce/i)
         expect(optionText).toMatch(wordStartsWithCe)
       })
     })
