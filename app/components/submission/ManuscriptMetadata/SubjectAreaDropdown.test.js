@@ -66,10 +66,6 @@ describe('SubjectAreaDropdown component', () => {
       selectInput.simulate('keyDown', { keyCode: 9, key: 'Tab' })
       expect(wrapper.find('MultiValue')).toHaveLength(2)
       expect(wrapper.find('ValueContainer').html()).toContain('Cancer Biology')
-
-      // selectWrapper.props().onInputChange('E')
-      // selectInput.simulate('change')
-      // expect(wrapper.contains('Menu')).toBe(false)
     })
 
     it('selecting 2 options disables further selection', () => {
