@@ -1,6 +1,6 @@
 /* eslint-disable import/extensions */
 import './fonts/index.css'
-import { Button, Heading, H1, H2, H3, H4 } from './elements'
+import { Button, Heading, H1, H2, H3, H4, TextField } from './elements'
 
 const gridUnit = 6
 
@@ -67,6 +67,8 @@ export default {
       H2,
       H3,
       H4,
+      Button,
+      TextField,
     },
   },
 }
