@@ -19,7 +19,8 @@ const MyDropdown = (
 
 describe('SubjectAreaDropdown component', () => {
   it('renders label & select', () => {
-    const wrapper = shallow(MyDropdown).dive() // dive is necessary because SubjectAreaDropdown is wrapped by withTheme
+    // dive is necessary because SubjectAreaDropdown is wrapped by withTheme
+    const wrapper = shallow(MyDropdown).dive()
     expect(wrapper.html()).toContain('My label')
     expect(wrapper.find('[inputId="subject-area-select"]').exists()).toBe(true)
     expect(wrapper.text()).not.toContain('No more than two subject areas')
@@ -43,7 +44,8 @@ describe('SubjectAreaDropdown component', () => {
     }
 
     it('focusing causes the dropdown to open & display every option', () => {
-      typeSubjectArea('') // typing nothing into the field seems to be the only way to programmatically focus react-select)
+      // typing nothing into the field seems to be the only way to programmatically focus react-select)
+      typeSubjectArea('')
       expect(wrapper.find('Menu').exists()).toBe(true)
       expect(wrapper.find('Option')).toHaveLength(17)
     })
@@ -53,7 +55,8 @@ describe('SubjectAreaDropdown component', () => {
       selectInput.simulate('keyDown', { keyCode: 9, key: 'Tab' })
       expect(onChange.mock.calls).toHaveLength(1)
       expect(wrapper.find('Menu').exists()).toBe(false)
-      expect(wrapper.find('MultiValue')).toHaveLength(1) // MultiValue = a "tag" (i.e. selected option) in react-select
+      // MultiValue = a "tag" (i.e. selected option) in react-select
+      expect(wrapper.find('MultiValue')).toHaveLength(1)
       expect(wrapper.find('ValueContainer').html()).toContain(
         'Biochemistry and Chemical Biology',
       )
