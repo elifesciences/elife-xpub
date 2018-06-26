@@ -70,7 +70,7 @@ describe('SubjectAreaDropdown component', () => {
       expect(wrapper.find('MultiValue')).toHaveLength(1)
     })
 
-    it('selecting 2 options disables further selection', () => {
+    it('dropdown indicator disappears when 2 options are selected', () => {
       typeSubjectArea('b')
       selectInput.simulate('keyDown', { keyCode: 9, key: 'Tab' })
       typeSubjectArea('c')
