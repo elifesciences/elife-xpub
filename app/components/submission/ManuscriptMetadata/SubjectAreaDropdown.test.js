@@ -56,7 +56,6 @@ describe('SubjectAreaDropdown component', () => {
       typeSubjectArea('b')
       selectInput.simulate('keyDown', { keyCode: 9, key: 'Tab' })
       expect(onChange.mock.calls).toHaveLength(1)
-      expect(wrapper.find('Menu').exists()).toBe(false)
       // MultiValue = a "tag" (i.e. selected option) in react-select
       expect(wrapper.find('MultiValue')).toHaveLength(1)
       expect(wrapper.find('ValueContainer').html()).toContain(
@@ -64,13 +63,11 @@ describe('SubjectAreaDropdown component', () => {
       )
     })
 
-    it('2 options can be selected from the dropdown', () => {
+    it('when an option is chosen, the menu closes', () => {
       typeSubjectArea('b')
-      selectInput.simulate('keyDown', { keyCode: 9, key: 'Tab' })
-      typeSubjectArea('c')
-      selectInput.simulate('keyDown', { keyCode: 9, key: 'Tab' })
-      expect(wrapper.find('MultiValue')).toHaveLength(2)
-      expect(wrapper.find('ValueContainer').html()).toContain('Cancer Biology')
+      selectInput.simulate('keyDown', { keyCode: 13, key: 'Enter' })
+      expect(wrapper.find('Menu').exists()).toBe(false)
+      expect(wrapper.find('MultiValue')).toHaveLength(1)
     })
 
     it('selecting 2 options disables further selection', () => {
