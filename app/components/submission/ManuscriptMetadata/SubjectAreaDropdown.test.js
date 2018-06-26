@@ -5,12 +5,13 @@ import theme from '@elifesciences/elife-theme'
 import SubjectAreaDropdown from './SubjectAreaDropdown'
 
 const onChange = jest.fn()
+const onBlur = jest.fn()
 
 const MyDropdown = (
   <SubjectAreaDropdown
     label="My label"
     name="My name"
-    onBlur={jest.fn()}
+    onBlur={onBlur}
     onChange={onChange}
     savedValues={[]}
     theme={theme}
