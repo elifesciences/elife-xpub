@@ -4,15 +4,15 @@ import theme from '@elifesciences/elife-theme'
 
 import SubjectAreaDropdown from './SubjectAreaDropdown'
 
-const onChange = jest.fn()
-const onBlur = jest.fn()
+const handleChange = jest.fn()
+const handleBlur = jest.fn()
 
 const MyDropdown = (
   <SubjectAreaDropdown
     label="My label"
     name="My name"
-    onBlur={onBlur}
-    onChange={onChange}
+    onBlur={handleBlur}
+    onChange={handleChange}
     savedValues={[]}
     theme={theme}
   />
@@ -55,7 +55,7 @@ describe('SubjectAreaDropdown component', () => {
     it('an option can be selected from the dropdown', () => {
       typeSubjectArea('b')
       selectInput.simulate('keyDown', { keyCode: 9, key: 'Tab' })
-      expect(onChange.mock.calls).toHaveLength(1)
+      expect(handleChange.mock.calls).toHaveLength(1)
       // MultiValue = a "tag" (i.e. selected option) in react-select
       expect(wrapper.find('MultiValue')).toHaveLength(1)
       expect(wrapper.find('ValueContainer').html()).toContain(
