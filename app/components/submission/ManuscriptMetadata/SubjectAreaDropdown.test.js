@@ -20,11 +20,9 @@ const MyDropdown = (
 describe('SubjectAreaDropdown component', () => {
   it('renders label & select', () => {
     const wrapper = shallow(MyDropdown).dive() // dive is necessary because SubjectAreaDropdown is wrapped by withTheme
-    expect(wrapper.contains('My label')).toBe(true)
-    expect(wrapper.find('[inputId="subject-area-select"]').exists()).toEqual(
-      true,
-    )
-    expect(wrapper.contains('No more than two subject areas')).toBe(false)
+    expect(wrapper.html()).toContain('My label')
+    expect(wrapper.find('[inputId="subject-area-select"]').exists()).toBe(true)
+    expect(wrapper.text()).not.toContain('No more than two subject areas')
   })
 
   describe('Integration with react-select', () => {
@@ -46,7 +44,7 @@ describe('SubjectAreaDropdown component', () => {
 
     it('focusing causes the dropdown to open & display every option', () => {
       typeSubjectArea('') // typing nothing into the field seems to be the only way to programmatically focus react-select)
-      expect(wrapper.find('Menu').exists()).toEqual(true)
+      expect(wrapper.find('Menu').exists()).toBe(true)
       expect(wrapper.find('Option')).toHaveLength(17)
     })
 
@@ -54,13 +52,11 @@ describe('SubjectAreaDropdown component', () => {
       typeSubjectArea('b')
       selectInput.simulate('keyDown', { keyCode: 9, key: 'Tab' })
       expect(onChange.mock.calls).toHaveLength(1)
-      expect(wrapper.find('Menu').exists()).toEqual(false)
+      expect(wrapper.find('Menu').exists()).toBe(false)
       expect(wrapper.find('MultiValue')).toHaveLength(1) // MultiValue = a "tag" (i.e. selected option) in react-select
-      expect(
-        wrapper
-          .find('MultiValue')
-          .contains('Biochemistry and Chemical Biology'),
-      ).toBe(true)
+      expect(wrapper.find('ValueContainer').html()).toContain(
+        'Biochemistry and Chemical Biology',
+      )
     })
 
     it('2 options can be selected from the dropdown', () => {
@@ -69,7 +65,7 @@ describe('SubjectAreaDropdown component', () => {
       typeSubjectArea('c')
       selectInput.simulate('keyDown', { keyCode: 9, key: 'Tab' })
       expect(wrapper.find('MultiValue')).toHaveLength(2)
-      expect(wrapper.find('MultiValue').contains('Cancer Biology')).toBe(true)
+      expect(wrapper.find('ValueContainer').html()).toContain('Cancer Biology')
 
       // selectWrapper.props().onInputChange('E')
       // selectInput.simulate('change')
@@ -81,7 +77,7 @@ describe('SubjectAreaDropdown component', () => {
       selectInput.simulate('keyDown', { keyCode: 9, key: 'Tab' })
       typeSubjectArea('c')
       selectInput.simulate('keyDown', { keyCode: 9, key: 'Tab' })
-      expect(wrapper.contains('DropdownIndicator')).toBe(false)
+      expect(wrapper.text()).not.toContain('DropdownIndicator')
     })
 
     it('selection/deselection of 2 items triggers success message to show/hide', () => {
@@ -89,12 +85,12 @@ describe('SubjectAreaDropdown component', () => {
       selectInput.simulate('keyDown', { keyCode: 9, key: 'Tab' })
       typeSubjectArea('c')
       selectInput.simulate('keyDown', { keyCode: 9, key: 'Tab' })
-      expect(wrapper.contains('No more than two subject areas')).toBe(true)
+      expect(wrapper.text()).toContain('No more than two subject areas')
 
       const crossOnFirstTag = wrapper.find('MultiValueRemove').at(0)
       crossOnFirstTag.simulate('click')
       expect(wrapper.find('MultiValue')).toHaveLength(1)
-      expect(wrapper.contains('No more than two subject areas')).toBe(false)
+      expect(wrapper.text()).not.toContain('No more than two subject areas')
     })
 
     it('typing filters list of options based on first letter(s)', () => {
