@@ -31,6 +31,7 @@ describe('SubjectAreaDropdown component', () => {
     let wrapper, selectWrapper, selectInput
 
     beforeEach(() => {
+      jest.clearAllMocks()
       wrapper = mount(MyDropdown)
       selectWrapper = wrapper.find('Select')
       selectInput = selectWrapper.find('input')
