@@ -9,7 +9,8 @@ const MessageWrapper = styled.div`
   // consistent height even when empty
   min-height: ${th('fontLineHeight')};
   // inverse of bottom margin on FieldComponent
-  margin-top: -${th('gridUnit')};
+  margin-top: ${th('space.3')};
+  font-size: ${th('fontSizeBaseSmall')};
 `
 
 const ErrorMessage = styled.div`

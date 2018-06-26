@@ -44,16 +44,7 @@ export default {
 
   /* Spacing */
   gridUnit: `${gridUnit}px`,
-  space: [
-    0,
-    gridUnit,
-    gridUnit * 2,
-    gridUnit * 4,
-    gridUnit * 6,
-    gridUnit * 8,
-    gridUnit * 12,
-    gridUnit * 20,
-  ],
+  space: [0, 1, 2, 4, 6, 8, 12, 20].map(factor => `${factor * gridUnit}px`),
 
   /* Border */
   borderRadius: '3px',

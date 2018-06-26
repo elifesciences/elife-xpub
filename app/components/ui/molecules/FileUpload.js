@@ -20,25 +20,27 @@ const StyledDropzone = styled(({ hasError, saveInnerRef, ...rest }) => (
   border-style: dashed;
   border-color: ${({ hasError = false }) =>
     hasError ? th('colorError') : th('colorBorder')};
+  border-width: 2px;
+  padding: ${th('space.4')};
 `
 
-const Instruction = styled.div``
+const Instruction = styled.div`
+  margin-top: ${th('space.3')};
+`
 
 const CentredFlex = styled(Flex)`
   text-align: center;
-  min-height: calc(${th('gridUnit')} * 4);
-  align-items: center;
 `
 
 const DropzoneContent = ({ conversion, formError, dropzoneOpen }) => {
   if (conversion.converting) {
     return (
-      <div>
-        <Icon size={6}>Upload</Icon>
+      <React.Fragment>
+        <Icon size={5}>Upload</Icon>
         <Instruction data-test-id="dropzoneMessage">
           Manuscript is uploading
         </Instruction>
-      </div>
+      </React.Fragment>
     )
   }
   if (conversion.error) {
@@ -48,44 +50,44 @@ const DropzoneContent = ({ conversion, formError, dropzoneOpen }) => {
       'Error Uploading File',
     )
     return (
-      <div>
-        <Icon size={6}>UploadFailure</Icon>
+      <React.Fragment>
+        <Icon size={5}>UploadFailure</Icon>
         <ErrorText data-test-id="dropzoneMessage">
           {errorMessage}. Try to <Action onClick={dropzoneOpen}>upload</Action>{' '}
           your Manuscript again.
         </ErrorText>
-      </div>
+      </React.Fragment>
     )
   }
   if (formError) {
     return (
-      <div>
-        <Icon size={6}>UploadFailure</Icon>
+      <React.Fragment>
+        <Icon size={5}>UploadFailure</Icon>
         <ErrorText data-test-id="dropzoneMessage">
           Please <Action onClick={dropzoneOpen}>upload</Action> your Manuscript.
         </ErrorText>
-      </div>
+      </React.Fragment>
     )
   }
   if (conversion.completed) {
     return (
-      <div>
-        <Icon size={6}>UploadSuccess</Icon>
+      <React.Fragment>
+        <Icon size={5}>UploadSuccess</Icon>
         <Instruction data-test-id="dropzoneMessage">
           Success! <Action to="/manuscript">Preview</Action> or{' '}
           <Action onClick={dropzoneOpen}>replace</Action> your Manuscript.
         </Instruction>
-      </div>
+      </React.Fragment>
     )
   }
   return (
-    <div>
-      <Icon size={6}>Upload</Icon>
+    <React.Fragment>
+      <Icon size={5}>Upload</Icon>
       <Instruction data-test-id="dropzoneMessage">
         <Action onClick={dropzoneOpen}>Upload</Action> your manuscript or drag
         it here.
       </Instruction>
-    </div>
+    </React.Fragment>
   )
 }
 

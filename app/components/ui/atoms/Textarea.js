@@ -5,8 +5,8 @@ import { th } from '@pubsweet/ui-toolkit'
 const Root = styled.div`
   display: flex;
   flex-direction: column;
-  max-width: calc(${th('gridUnit')} * 14);
-  margin-bottom: ${th('gridUnit')};
+  max-width: calc(${th('gridUnit')} * 56);
+  margin-bottom: ${th('space.3')};
 `
 
 const Label = styled.label`
@@ -30,7 +30,7 @@ const Input = styled.textarea`
   font-family: inherit;
   font-size: inherit;
 
-  padding: calc(${th('gridUnit')} / 2);
+  padding: ${th('space.2')};
   min-height: calc(${th('fontLineHeight')} * 2);
 
   &::placeholder {
