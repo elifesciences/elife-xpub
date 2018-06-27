@@ -4,6 +4,8 @@ import styled, { withTheme } from 'styled-components'
 import { th } from '@pubsweet/ui-toolkit'
 import Select, { createFilter } from 'react-select'
 
+import TagRemovalIcon from '../../ui/atoms/icons/TagRemovalIcon'
+
 const Root = styled.div`
   display: flex;
   flex-direction: column;
@@ -224,7 +226,11 @@ class SubjectAreaDropdown extends React.Component {
           <div>
             <Select
               {...selectChildProps}
-              components={{ ClearIndicator: null, DropdownIndicator: null }}
+              components={{
+                ClearIndicator: null,
+                DropdownIndicator: null,
+                MultiValueRemove: TagRemovalIcon,
+              }}
               isSearchable={false}
               menuIsOpen={false}
             />
