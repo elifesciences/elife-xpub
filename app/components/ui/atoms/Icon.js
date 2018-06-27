@@ -1,17 +1,16 @@
 import React from 'react'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
-import { th } from '@pubsweet/ui-toolkit'
 
 import * as icons from './icons'
 
-const Container = styled.span`
-  display: inline-flex;
-  padding: calc(${th('gridUnit')} / 2);
+const Container = styled.div`
+  display: flex;
+  justify-content: space-around;
   svg {
     stroke: ${props => props.color || props.theme.colorText};
-    width: calc(${props => props.size} * ${th('gridUnit')});
-    height: calc(${props => props.size} * ${th('gridUnit')});
+    width: ${props => props.theme.space[props.size] || props.size};
+    height: ${props => props.theme.space[props.size] || props.size};
   }
 `
 
@@ -30,6 +29,7 @@ const Icon = ({ children, size, color, ...props }) => {
 
 Icon.propTypes = {
   color: PropTypes.string,
+  size: PropTypes.number.isRequired,
 }
 
 Icon.defaultProps = {

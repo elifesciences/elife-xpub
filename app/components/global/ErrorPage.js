@@ -19,7 +19,7 @@ const Container = styled.div`
 `
 
 const Img = styled.img`
-  height: calc(${th('gridUnit')} * 4);
+  height: ${th('space.6')};
 `
 
 const ErrorPage = ({ error }) => (
