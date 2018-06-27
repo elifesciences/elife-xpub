@@ -112,8 +112,8 @@ class SubjectAreaDropdown extends React.Component {
         ...base,
         color: this.props.theme.colorTextReverse,
         fontSize: this.props.theme.fontSizeBase,
-        padding: this.props.theme.gridUnit,
-        paddingLeft: this.props.theme.gridUnit,
+        padding: '8px',
+        paddingLeft: '8px',
       }),
       multiValueRemove: (base, state) => ({
         ...base,
