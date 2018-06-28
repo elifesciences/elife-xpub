@@ -1,7 +1,9 @@
 import { css } from 'styled-components'
 import { th } from '@pubsweet/ui-toolkit'
 
-export default css``
+export default css`
+  margin-bottom: 100px;
+`
 
 const stepCenter = (isCurrent, isPast) => {
   if (isCurrent) {
