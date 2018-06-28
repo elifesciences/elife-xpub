@@ -2,9 +2,26 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import styled, { withTheme } from 'styled-components'
 import { th } from '@pubsweet/ui-toolkit'
-import Select, { createFilter } from 'react-select'
+import Select, { createFilter, components } from 'react-select'
 
-import TagRemovalIcon from '../../ui/atoms/icons/TagRemovalIcon'
+import Icon from '../../ui/atoms/Icon'
+
+const TagRemovalIcon = props => (
+  <components.MultiValueRemove {...props}>
+    {/* Icon requires a size, but width and height are more accurate and applied in styling below */}
+    <Icon size={3}>Cross</Icon>
+  </components.MultiValueRemove>
+)
+
+const StyledTagRemovalIcon = styled(TagRemovalIcon)`
+  svg {
+    stroke: ${props => props.theme.colorTextReverse};
+    fill: ${props => props.theme.colorTextReverse};
+    padding: 0;
+    width: 20px;
+    height: 20px;
+  }
+`
 
 const Root = styled.div`
   display: flex;
@@ -114,7 +131,7 @@ class SubjectAreaDropdown extends React.Component {
         ...base,
         color: this.props.theme.colorTextReverse,
         fontSize: this.props.theme.fontSizeBase,
-        padding: '8px',
+        padding: '8px 4px 8px 8px',
         paddingLeft: '8px',
       }),
       multiValueRemove: (base, state) => ({
@@ -202,7 +219,10 @@ class SubjectAreaDropdown extends React.Component {
     const { label, name, onBlur } = this.props
 
     const selectChildProps = {
-      components: { ClearIndicator: null },
+      components: {
+        ClearIndicator: null,
+        MultiValueRemove: StyledTagRemovalIcon,
+      },
       inputId: 'subject-area-select',
       isMulti: true,
       name,
@@ -229,7 +249,7 @@ class SubjectAreaDropdown extends React.Component {
               components={{
                 ClearIndicator: null,
                 DropdownIndicator: null,
-                MultiValueRemove: TagRemovalIcon,
+                MultiValueRemove: StyledTagRemovalIcon,
               }}
               isSearchable={false}
               menuIsOpen={false}
