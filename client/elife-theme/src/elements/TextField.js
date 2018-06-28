@@ -19,10 +19,6 @@ const borderColor = ({ theme, validationStatus = 'default' }) =>
  *
  * font-size & line-height might change to fontSizeBase in the future
  *
- * for some reason th didn't work for spacing
- * padding: ${th('space.2') + 'px'};
- * margin-bottom: ${th('space.1') + 'px'};
- *
  * move root margin-bottom at page level
  */
 export default {
@@ -32,13 +28,13 @@ export default {
     font-family: ${th('fontInterface')};
     font-size: 16px;
     line-height: 24px;
-    padding: ${props => `${props.theme.space[2]}px`};
-    height: ${props => `${props.theme.space[5]}px`};
+    padding: ${th('space.2')};
+    height: ${th('space.5')};
   `,
   Label: css`
-    margin-bottom: ${props => `${props.theme.space[1]}px`};
+    margin-bottom: ${th('space.1')};
   `,
   Root: css`
-    margin-bottom: ${props => `${props.theme.space[3]}px`};
+    margin-bottom: ${th('space.3')};
   `,
 }
