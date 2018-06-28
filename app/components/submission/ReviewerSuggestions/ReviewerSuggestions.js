@@ -1,6 +1,6 @@
 import React from 'react'
 import { Box } from 'grid-styled'
-import { Button, H1, PlainButton } from '@pubsweet/ui'
+import { Button, PlainButton } from '@pubsweet/ui'
 
 import ButtonLink from '../../ui/atoms/ButtonLink'
 import ProgressBar from '../ProgressBar'
@@ -13,6 +13,7 @@ import {
   SuggestedReviewingEditorRow,
   SuggestedSeniorEditorRow,
 } from './FormSections'
+import { FormH2, FormH3 } from '../../ui/atoms/FormHeadings'
 
 const MoreButton = ({
   empty,
@@ -39,13 +40,20 @@ const ReviewerSuggestions = ({ handleSubmit, values, setFieldValue }) => (
   <form noValidate onSubmit={handleSubmit}>
     <ProgressBar currentStep={3} />
 
-    <H1>Who would you like to review your work?</H1>
+    <FormH2>Who should review your work?</FormH2>
+
+    <FormH3>Suggest a Senior Editor</FormH3>
 
     <SuggestedSeniorEditorRow rowIndex={0} />
 
     {values.opposedSeniorEditors.map((_, index) => (
-      // eslint-disable-next-line react/no-array-index-key
-      <ExcludedSeniorEditor index={index} key={index} />
+      <ExcludedSeniorEditor
+        index={index}
+        // eslint-disable-next-line react/no-array-index-key
+        key={index}
+        setFieldValue={setFieldValue}
+        values={values}
+      />
     ))}
 
     {values.opposedSeniorEditors.length < MAX_EXCLUDED_EDITORS && (
@@ -62,6 +70,8 @@ const ReviewerSuggestions = ({ handleSubmit, values, setFieldValue }) => (
       </Box>
     )}
 
+    <FormH3>Suggest a Reviewing Editor</FormH3>
+
     {values.suggestedReviewingEditors
       .filter((_, index) => index % 2)
       .map((_, rowIndex) => (
@@ -70,8 +80,13 @@ const ReviewerSuggestions = ({ handleSubmit, values, setFieldValue }) => (
       ))}
 
     {values.opposedReviewingEditors.map((_, index) => (
-      // eslint-disable-next-line react/no-array-index-key
-      <ExcludedReviewingEditor index={index} key={index} />
+      <ExcludedReviewingEditor
+        index={index}
+        // eslint-disable-next-line react/no-array-index-key
+        key={index}
+        setFieldValue={setFieldValue}
+        values={values}
+      />
     ))}
 
     <Box my={3}>
@@ -101,8 +116,13 @@ const ReviewerSuggestions = ({ handleSubmit, values, setFieldValue }) => (
     ))}
 
     {values.opposedReviewers.map((_, index) => (
-      // eslint-disable-next-line react/no-array-index-key
-      <ExcludedReviewer index={index} key={index} />
+      <ExcludedReviewer
+        index={index}
+        // eslint-disable-next-line react/no-array-index-key
+        key={index}
+        setFieldValue={setFieldValue}
+        values={values}
+      />
     ))}
 
     <Box my={3}>

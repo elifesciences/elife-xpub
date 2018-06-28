@@ -5,6 +5,14 @@ import { Checkbox } from '@pubsweet/ui'
 import ValidatedField from '../../ui/atoms/ValidatedField'
 import CalloutBox from '../../ui/atoms/CalloutBox'
 import Textarea from '../../ui/atoms/Textarea'
+import { FormH3 } from '../../ui/atoms/FormHeadings'
+
+const createCloseHandler = (index, values, fieldName, setFieldValue) => () =>
+  setFieldValue(
+    fieldName,
+    values[fieldName].filter((_, i) => i !== index),
+    false,
+  )
 
 export const SuggestedSeniorEditorRow = ({ rowIndex }) => (
   <Flex>
@@ -23,8 +31,16 @@ export const SuggestedSeniorEditorRow = ({ rowIndex }) => (
   </Flex>
 )
 
-export const ExcludedSeniorEditor = ({ index }) => (
-  <CalloutBox>
+export const ExcludedSeniorEditor = ({ index, values, setFieldValue }) => (
+  <CalloutBox
+    onClose={createCloseHandler(
+      index,
+      values,
+      'opposedSeniorEditors',
+      setFieldValue,
+    )}
+  >
+    <FormH3>Exclude a Senior Editor</FormH3>
     <ValidatedField
       label="Excluded senior editor"
       name={`opposedSeniorEditors.${index}.name`}
@@ -54,8 +70,16 @@ export const SuggestedReviewingEditorRow = ({ rowIndex }) => (
   </Flex>
 )
 
-export const ExcludedReviewingEditor = ({ index }) => (
-  <CalloutBox>
+export const ExcludedReviewingEditor = ({ index, values, setFieldValue }) => (
+  <CalloutBox
+    onClose={createCloseHandler(
+      index,
+      values,
+      'opposedReviewingEditors',
+      setFieldValue,
+    )}
+  >
+    <FormH3>Exclude a Reviewing Editor</FormH3>
     <ValidatedField
       label="Excluded reviewing editor"
       name={`opposedReviewingEditors.${index}.name`}
@@ -63,7 +87,7 @@ export const ExcludedReviewingEditor = ({ index }) => (
     <ValidatedField
       component={Textarea}
       label="Reason for exclusion"
-      name={`opposedSeniorEditors.${index}.reason`}
+      name={`opposedReviewingEditors.${index}.reason`}
     />
   </CalloutBox>
 )
@@ -85,8 +109,17 @@ export const SuggestedReviewer = ({ index }) => (
     </Box>
   </Flex>
 )
-export const ExcludedReviewer = ({ index }) => (
-  <CalloutBox>
+
+export const ExcludedReviewer = ({ index, values, setFieldValue }) => (
+  <CalloutBox
+    onClose={createCloseHandler(
+      index,
+      values,
+      'opposedReviewers',
+      setFieldValue,
+    )}
+  >
+    <FormH3>Exclude a Reviewer</FormH3>
     <Flex>
       <Box width={1 / 2}>
         <ValidatedField
