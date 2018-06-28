@@ -10,8 +10,8 @@ export default {
   colorSecondary: '#f7f7f7',
   colorFurniture: '#E0E0E0',
   colorBorder: '#E0E0E0',
-  colorBackgroundHue:
-    '#f7f7f7' /* marginally darker shade of the app background so that it can be used to divide the interface when needed */,
+  /* marginally darker shade of the app background so that it can be used to divide the interface when needed */
+  colorBackgroundHue: '#f7f7f7',
   colorSuccess: '#629f43',
   colorError: '#cf0c4e',
   colourWarning: '#e65100',
