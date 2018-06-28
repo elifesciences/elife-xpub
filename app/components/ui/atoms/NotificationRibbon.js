@@ -16,9 +16,4 @@ export default styled.div`
   font-size: 14px;
   line-height: 24px;
   text-align: center;
-  a {
-    text-decoration: underline;
-    color: inherit;
-    cursor: pointer;
-  }
 `

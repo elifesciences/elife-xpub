@@ -24,10 +24,12 @@ Error ribbon
 </NotificationRibbon>
 ```
 
-Anchors also have a special style inside a ribbon
+You can also use RibbonAction inside the ribbon
 
 ```js
-<NotificationRibbon type="primary">
-  <a onClick={() => console.log('resent!')}>Resend</a> verification email
+const RibbonAction = require('./RibbonAction').default
+;<NotificationRibbon type="primary">
+  <RibbonAction onClick={() => console.log('resent!')}>Resend</RibbonAction>{' '}
+  verification email
 </NotificationRibbon>
 ```
