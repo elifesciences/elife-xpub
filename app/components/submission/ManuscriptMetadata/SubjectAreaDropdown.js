@@ -190,7 +190,7 @@ class SubjectAreaDropdown extends React.Component {
           ),
         },
         boxShadow: isFocused
-          ? `0 0 0 2pt ${chooseBorderColorFromProps(
+          ? `0 0 0 2px ${chooseBorderColorFromProps(
               this.props.theme,
               this.props.validationStatus,
               isFocused,
