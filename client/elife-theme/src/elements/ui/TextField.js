@@ -21,6 +21,6 @@ export default {
     margin-bottom: ${th('space.1')};
   `,
   Root: css`
-    margin-bottom: ${th('space.3')};
+    margin-bottom: 0px;
   `,
 }

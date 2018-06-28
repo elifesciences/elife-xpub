@@ -1,6 +1,6 @@
 /* eslint-disable import/extensions */
 import './fonts/index.css'
-import { Button, Heading, H1, H2, H3, H4, TextField } from './elements'
+import * as cssOverrides from './elements'
 
 const gridUnit = 6
 
@@ -69,16 +69,5 @@ export default {
   transitionTimingFunction: 'ease',
   transitionDelay: '0',
 
-  cssOverrides: {
-    ui: {
-      Button,
-      Heading,
-      H1,
-      H2,
-      H3,
-      H4,
-      Button,
-      TextField,
-    },
-  },
+  cssOverrides,
 }
