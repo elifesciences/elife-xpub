@@ -1,6 +1,6 @@
 /* eslint-disable import/extensions */
 import './fonts/index.css'
-import { Button, Heading, H1, H2, H3, H4 } from './elements'
+import * as cssOverrides from './elements'
 
 const gridUnit = 6
 
@@ -44,6 +44,16 @@ export default {
 
   /* Spacing */
   gridUnit: `${gridUnit}px`,
+  /**
+   * 0 = 0px
+   * 1 = XXS = 6px
+   * 2 = XS  = 12px
+   * 3 = S   = 24px
+   * 4 = M   = 36px
+   * 5 = L   = 48px
+   * 6 = XL  = 72px
+   * 7 = XXL = 120px
+   */
   space: [0, 1, 2, 4, 6, 8, 12, 20].map(factor => `${factor * gridUnit}px`),
 
   /* Border */
@@ -59,14 +69,5 @@ export default {
   transitionTimingFunction: 'ease',
   transitionDelay: '0',
 
-  cssOverrides: {
-    ui: {
-      Button,
-      Heading,
-      H1,
-      H2,
-      H3,
-      H4,
-    },
-  },
+  cssOverrides,
 }

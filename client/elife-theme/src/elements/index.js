@@ -1,3 +1,3 @@
-export { default as Button } from './Button'
-export { default as Heading } from './Heading'
-export * from './Heading'
+import * as ui from './ui'
+
+export { ui }
