@@ -1,6 +1,7 @@
 import React from 'react'
 import { Flex, Box } from 'grid-styled'
-import { Button, H1, Action, ErrorText } from '@pubsweet/ui'
+import { Button, Action, ErrorText } from '@pubsweet/ui'
+import { FormH2 } from '../../ui/atoms/FormHeadings'
 import ValidatedField from '../../ui/atoms/ValidatedField'
 import ProgressBar from '../ProgressBar'
 
@@ -8,7 +9,7 @@ const AuthorDetails = ({ handleSubmit, fetchOrcid, loading, error }) => (
   <form noValidate onSubmit={handleSubmit}>
     <ProgressBar currentStep={0} />
 
-    <H1>Who is the corresponding author?</H1>
+    <FormH2>Who is the corresponding author?</FormH2>
 
     <p>
       <Action data-test-id="orcid-prefill" onClick={fetchOrcid}>

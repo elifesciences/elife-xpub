@@ -1,7 +1,8 @@
 import React from 'react'
 import { Flex, Box } from 'grid-styled'
-import { Button, H1 } from '@pubsweet/ui'
+import { Button } from '@pubsweet/ui'
 import ConfigurableEditor from 'xpub-edit/src/components/configurable/ConfigurableEditor'
+import { FormH2 } from '../../ui/atoms/FormHeadings'
 import ButtonLink from '../../ui/atoms/ButtonLink'
 import FileUpload from '../../ui/molecules/FileUpload'
 import ValidatedField from '../../ui/atoms/ValidatedField'
@@ -21,7 +22,7 @@ const FileUploads = ({
   <form onSubmit={handleSubmit}>
     <ProgressBar currentStep={1} />
 
-    <H1>Upload your manuscript and cover letter</H1>
+    <FormH2>Upload your manuscript and cover letter</FormH2>
 
     <Flex flexDirection="column">
       <Box mb={3} width={1}>

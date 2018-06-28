@@ -1,8 +1,9 @@
 import React from 'react'
 
-import { H1, Menu, Checkbox, Button } from '@pubsweet/ui'
+import { Menu, Checkbox, Button } from '@pubsweet/ui'
 import { Field } from 'formik'
 import { get } from 'lodash'
+import { Box } from 'grid-styled'
 
 import ValidatedField from '../../ui/atoms/ValidatedField'
 import CalloutBox from '../../ui/atoms/CalloutBox'
@@ -10,24 +11,25 @@ import ButtonLink from '../../ui/atoms/ButtonLink'
 import Textarea from '../../ui/atoms/Textarea'
 import ProgressBar from '../ProgressBar'
 import SubjectAreaDropdown from './SubjectAreaDropdown'
+import { FormH2 } from '../../ui/atoms/FormHeadings'
 
 const CheckboxGeneratedChild = ({
-  values,
   fieldName,
-  checkboxStatus,
   checkboxLabel,
+  values,
   children,
-  ...props
 }) => (
-  <CalloutBox enabled={get(values, fieldName)}>
-    <Field
-      name={fieldName}
-      render={({ field }) => (
-        <Checkbox {...field} checked={field.value} label={checkboxLabel} />
-      )}
-    />
-    {get(values, fieldName) && children}
-  </CalloutBox>
+  <Box mb={3}>
+    <Box mb={2}>
+      <Field
+        name={fieldName}
+        render={({ field }) => (
+          <Checkbox {...field} checked={field.value} label={checkboxLabel} />
+        )}
+      />
+    </Box>
+    {get(values, fieldName) && <CalloutBox>{children}</CalloutBox>}
+  </Box>
 )
 
 const ManuscriptMetadata = ({
@@ -39,7 +41,7 @@ const ManuscriptMetadata = ({
   <form noValidate onSubmit={handleSubmit}>
     <ProgressBar currentStep={2} />
 
-    <H1>Help us get your work seen by the right people</H1>
+    <FormH2>Help us get your work seen by the right people</FormH2>
 
     <ValidatedField label="Manuscript title" name="title" />
     <ValidatedField

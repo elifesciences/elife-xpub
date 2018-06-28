@@ -1,15 +1,16 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { FormH2, FormH3 } from '../ui/atoms/FormHeadings'
 import ButtonLink from '../ui/atoms/ButtonLink'
 
 const Dashboard = ({ manuscripts }) => (
   <React.Fragment>
-    <h1>Dashboard Dummy Page</h1>
+    <FormH2>Dashboard Dummy Page</FormH2>
     <ButtonLink data-test-id="submit" primary to="/submit">
       Submit a manuscript
     </ButtonLink>
 
-    <h3>All manuscripts</h3>
+    <FormH3>All manuscripts</FormH3>
     <ul>
       {manuscripts.map(manuscript => (
         <li key={manuscript.id}>

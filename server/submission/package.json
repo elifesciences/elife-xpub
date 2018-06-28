@@ -9,7 +9,7 @@
   "scripts": {},
   "keywords": [],
   "dependencies": {
-    "@pubsweet/component-send-email": "^0.2.4",
+    "@pubsweet/component-send-email": "^0.2.3",
     "apollo-boost": "^0.1.4",
     "config": "^1.30.0",
     "fs-extra": "^6.0.1",
