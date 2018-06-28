@@ -221,6 +221,7 @@ class SubjectAreaDropdown extends React.Component {
     const selectChildProps = {
       components: {
         ClearIndicator: null,
+        IndicatorSeparator: null,
         MultiValueRemove: StyledTagRemovalIcon,
       },
       inputId: 'subject-area-select',
@@ -247,9 +248,8 @@ class SubjectAreaDropdown extends React.Component {
             <Select
               {...selectChildProps}
               components={{
-                ClearIndicator: null,
+                ...selectChildProps.components,
                 DropdownIndicator: null,
-                MultiValueRemove: StyledTagRemovalIcon,
               }}
               isSearchable={false}
               menuIsOpen={false}
