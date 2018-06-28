@@ -6,6 +6,7 @@ const gridUnit = 6
 
 export default {
   /* Colors */
+  colorBackground: '#fff',
   colorPrimary: '#0288d1',
   colorSecondary: '#f7f7f7',
   colorFurniture: '#E0E0E0',
