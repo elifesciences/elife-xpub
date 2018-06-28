@@ -1,13 +1,9 @@
 import { css } from 'styled-components'
 import { th } from '@pubsweet/ui-toolkit'
 
-<<<<<<< HEAD
 export default css`
   margin-bottom: 100px;
 `
-=======
-export default css``
->>>>>>> wip: Need to add tick and change labels aka steptitles
 
 const stepCenter = (isCurrent, isPast) => {
   if (isCurrent) {
