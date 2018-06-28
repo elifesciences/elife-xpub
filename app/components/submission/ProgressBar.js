@@ -6,10 +6,10 @@ import PropTypes from 'prop-types'
 const ProgressBar = ({ currentStep }) => (
   <Box mx="auto" width={500}>
     <Steps currentStep={currentStep}>
-      <Steps.Step title="Step 1" />
-      <Steps.Step title="Step 2" />
-      <Steps.Step title="Step 3" />
-      <Steps.Step title="Step 4" />
+      <Steps.Step title="Author" />
+      <Steps.Step title="Files" />
+      <Steps.Step title="Submission" />
+      <Steps.Step title="Editors" />
     </Steps>
   </Box>
 )
