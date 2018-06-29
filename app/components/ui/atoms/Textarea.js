@@ -1,19 +1,14 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { th } from '@pubsweet/ui-toolkit'
-
-const Root = styled.div`
-  display: flex;
-  flex-direction: column;
-  max-width: calc(${th('gridUnit')} * 56);
-  margin-bottom: ${th('space.3')};
-`
+import { Flex, Box } from 'grid-styled'
 
 const Label = styled.label`
   font-size: ${th('fontSizeBaseSmall')};
-  display: block;
 `
 
+// TODO - remove when this function is added to pubsweet
 const borderColor = ({ theme, validationStatus = 'default' }) =>
   ({
     error: theme.colorError,
@@ -28,10 +23,11 @@ const Input = styled.textarea`
   border-radius: ${th('borderRadius')};
 
   font-family: inherit;
-  font-size: inherit;
+  font-size: ${th('fontSizeBase')};
+  line-height: ${th('fontLineHeightBase')};
 
   padding: ${th('space.2')};
-  min-height: calc(${th('fontLineHeight')} * 2);
+  width: 100%;
 
   &::placeholder {
     color: ${th('colorTextPlaceholder')};
@@ -45,14 +41,25 @@ class Textarea extends React.Component {
     this.inputId = `textarea-${Math.round(Math.random() * 1e12).toString(36)}`
   }
   render() {
-    const { label, value = '', readonly, ...props } = this.props
+    // Note: readonly is explicitly passed in because JSX readOnly has an uppercase 'O', so destructuring props is not enough
+    const { label, readonly, ...props } = this.props
     return (
-      <Root>
-        {label && <Label htmlFor={this.inputId}>{label}</Label>}
-        <Input id={this.inputId} readOnly={readonly} value={value} {...props} />
-      </Root>
+      <Flex flexDirection="column">
+        <Box mb={1}>
+          <Label htmlFor={this.inputId}>{label}</Label>
+        </Box>
+        <Box>
+          <Input id={this.inputId} readOnly={readonly} {...props} />
+        </Box>
+      </Flex>
     )
   }
+}
+
+Textarea.propTypes = {
+  label: PropTypes.string.isRequired,
+  value: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired,
 }
 
 export default Textarea
