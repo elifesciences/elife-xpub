@@ -1,6 +1,6 @@
 import React from 'react'
 import { Box } from 'grid-styled'
-import { Button, PlainButton } from '@pubsweet/ui'
+import { Button, Action } from '@pubsweet/ui'
 
 import ButtonLink from '../../ui/atoms/ButtonLink'
 import ProgressBar from '../ProgressBar'
@@ -24,14 +24,14 @@ const MoreButton = ({
   more = 'another',
   values,
 }) => (
-  <PlainButton
+  <Action
     onClick={() =>
       setFieldValue(fieldName, values[fieldName].concat(empty), false)
     }
     type="button"
   >
     {type} {values[fieldName].length ? more : 'a'} {roleName}
-  </PlainButton>
+  </Action>
 )
 
 const MAX_EXCLUDED_EDITORS = 2
