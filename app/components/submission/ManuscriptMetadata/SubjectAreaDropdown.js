@@ -2,12 +2,13 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import styled, { withTheme } from 'styled-components'
 import { th } from '@pubsweet/ui-toolkit'
-import Select, { createFilter } from 'react-select'
+import Select, { createFilter, components } from 'react-select'
+
+import Icon from '../../ui/atoms/Icon'
 
 const Root = styled.div`
   display: flex;
   flex-direction: column;
-  margin-bottom: ${th('space.3')};
 `
 
 const SelectLimitMessage = styled.p`
@@ -74,10 +75,112 @@ class SubjectAreaDropdown extends React.Component {
       hasReachedMultiselectLimit: false,
     }
 
+    const chooseBorderColorFromProps = (
+      theme,
+      validationStatus = 'default',
+      isFocused,
+    ) =>
+      ({
+        error: theme.colorError,
+        success: theme.colorSuccess,
+        warning: theme.colorWarning,
+        default: isFocused ? '#2684FF' : theme.colorBorder,
+      }[validationStatus])
+
+    const gridUnitValue = parseInt(this.props.theme.gridUnit, 10)
+
     this.customReactSelectStyles = {
+      valueContainer: (base, state) => ({
+        ...base,
+        padding: `${gridUnitValue / 2}px`, // combines with margin on multiValue to achieve gridUnit spacing around tags
+      }),
+      placeholder: (base, state) => ({
+        ...base,
+        color: this.props.theme.colorText,
+        margin: `${gridUnitValue / 2}px`,
+        padding: `${gridUnitValue / 2}px`,
+      }),
+      input: (base, state) => ({
+        ...base,
+        padding: `${gridUnitValue / 2}px`,
+      }),
       multiValue: (base, state) => ({
         ...base,
         backgroundColor: this.props.theme.colorPrimary,
+        color: this.props.theme.colorTextReverse,
+        margin: `${gridUnitValue / 2}px`, // combines with padding on valueContainer to achieve gridUnit spacing around tags
+      }),
+      multiValueLabel: (base, state) => ({
+        ...base,
+        color: this.props.theme.colorTextReverse,
+        fontSize: this.props.theme.fontSizeBase,
+        padding: '8px 4px 8px 8px',
+        paddingLeft: '8px',
+      }),
+      multiValueRemove: (base, state) => ({
+        ...base,
+        padding: `0 ${this.props.theme.gridUnit} 0 0`,
+        backgroundColor: this.props.theme.colorPrimary,
+        ':hover': {
+          cursor: 'pointer',
+          // overriding react-select's default hover behaviour - changing colours
+          backgroundColor: this.props.theme.colorPrimary,
+          color: this.props.theme.colorTextReverse,
+        },
+      }),
+      menuList: (base, state) => ({
+        ...base,
+        padding: 0,
+      }),
+      menu: (base, { placement }) => ({
+        ...base,
+        borderRadius: `0 0 ${this.props.theme.borderRadius} ${
+          this.props.theme.borderRadius
+        }`,
+        borderWidth: this.props.theme.borderWidth,
+        marginBottom: 0,
+        // leave room for the bottom border of the Control component to be visible on validation/focus
+        marginTop: this.props.theme.borderWidth,
+      }),
+      option: (base, { isSelected, isFocused }) => ({
+        ...base,
+        backgroundColor:
+          isSelected || isFocused
+            ? this.props.theme.colorPrimary
+            : 'transparent',
+        color:
+          isSelected || isFocused
+            ? this.props.theme.colorTextReverse
+            : this.props.theme.colorText,
+        padding: `${gridUnitValue * 2}px`,
+      }),
+      control: (base, { isFocused }) => ({
+        ...base,
+        borderRadius: this.props.theme.borderRadius,
+        borderWidth: this.props.theme.borderWidth,
+        borderStyle: this.props.theme.borderStyle,
+        borderColor: chooseBorderColorFromProps(
+          this.props.theme,
+          this.props.validationStatus,
+          isFocused,
+        ),
+        // overrides the fact that react-select changes borderColor on hover
+        '&:hover': {
+          borderColor: chooseBorderColorFromProps(
+            this.props.theme,
+            this.props.validationStatus,
+            isFocused,
+          ),
+        },
+        boxShadow: isFocused
+          ? `0 0 0 2px ${chooseBorderColorFromProps(
+              this.props.theme,
+              this.props.validationStatus,
+              isFocused,
+            )}`
+          : this.props.theme.boxShadow,
+        backgroundColor: this.props.theme.backgroundColor,
+        minHeight: this.props.gridUnit,
       }),
     }
   }
@@ -96,10 +199,33 @@ class SubjectAreaDropdown extends React.Component {
 
   render() {
     const { selectedOptions, hasReachedMultiselectLimit } = this.state
-    const { label, name, onBlur } = this.props
+    const { label, name, onBlur, theme } = this.props
+
+    const TagRemovalIcon = props => (
+        <components.MultiValueRemove {...props}>
+          {/* Icon requires a size, but width and height are more accurate and applied in styling below */}
+          <Icon size={3} {...props} theme={theme}>
+            Cross
+          </Icon>
+        </components.MultiValueRemove>
+      )
+
+    const StyledTagRemovalIcon = styled(TagRemovalIcon)`
+      svg {
+        stroke: ${theme.colorTextReverse};
+        fill: ${theme.colorTextReverse};
+        padding: 0;
+        width: 20px;
+        height: 20px;
+      }
+    `
 
     const selectChildProps = {
-      components: { ClearIndicator: null },
+      components: {
+        ClearIndicator: null,
+        IndicatorSeparator: null,
+        MultiValueRemove: StyledTagRemovalIcon,
+      },
       inputId: 'subject-area-select',
       isMulti: true,
       name,
@@ -123,7 +249,10 @@ class SubjectAreaDropdown extends React.Component {
           <div>
             <Select
               {...selectChildProps}
-              components={{ ClearIndicator: null, DropdownIndicator: null }}
+              components={{
+                ...selectChildProps.components,
+                DropdownIndicator: null,
+              }}
               isSearchable={false}
               menuIsOpen={false}
             />

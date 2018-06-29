@@ -14,7 +14,7 @@ export default {
   colorBackgroundHue: '#f7f7f7',
   colorSuccess: '#629f43',
   colorError: '#cf0c4e',
-  colourWarning: '#e65100',
+  colorWarning: '#e65100',
   colorText: '#212121',
   colorTextSecondary: '#888',
   colorTextPlaceholder: '#bdbdbd',
