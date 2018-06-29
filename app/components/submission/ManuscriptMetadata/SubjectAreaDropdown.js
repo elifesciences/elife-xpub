@@ -6,23 +6,6 @@ import Select, { createFilter, components } from 'react-select'
 
 import Icon from '../../ui/atoms/Icon'
 
-const TagRemovalIcon = props => (
-  <components.MultiValueRemove {...props}>
-    {/* Icon requires a size, but width and height are more accurate and applied in styling below */}
-    <Icon size={3}>Cross</Icon>
-  </components.MultiValueRemove>
-)
-
-const StyledTagRemovalIcon = styled(TagRemovalIcon)`
-  svg {
-    stroke: ${props => props.theme.colorTextReverse};
-    fill: ${props => props.theme.colorTextReverse};
-    padding: 0;
-    width: 20px;
-    height: 20px;
-  }
-`
-
 const Root = styled.div`
   display: flex;
   flex-direction: column;
@@ -216,7 +199,26 @@ class SubjectAreaDropdown extends React.Component {
 
   render() {
     const { selectedOptions, hasReachedMultiselectLimit } = this.state
-    const { label, name, onBlur } = this.props
+    const { label, name, onBlur, theme } = this.props
+
+    const TagRemovalIcon = props => (
+        <components.MultiValueRemove {...props}>
+          {/* Icon requires a size, but width and height are more accurate and applied in styling below */}
+          <Icon size={3} {...props} theme={theme}>
+            Cross
+          </Icon>
+        </components.MultiValueRemove>
+      )
+
+    const StyledTagRemovalIcon = styled(TagRemovalIcon)`
+      svg {
+        stroke: ${theme.colorTextReverse};
+        fill: ${theme.colorTextReverse};
+        padding: 0;
+        width: 20px;
+        height: 20px;
+      }
+    `
 
     const selectChildProps = {
       components: {
