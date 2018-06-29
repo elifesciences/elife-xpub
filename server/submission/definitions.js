@@ -12,6 +12,7 @@ const typeDefs = `
     }
     extend type Mutation {
       createSubmission: Manuscript!
+      deleteManuscript(id: ID!): ID!
       updateSubmission(data: ManuscriptInput!, isAutoSave: Boolean): Manuscript!
       uploadManuscript(id: ID!, file: Upload!): Manuscript!
       finishSubmission(data: ManuscriptInput!): Manuscript!

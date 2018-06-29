@@ -111,6 +111,11 @@ const resolvers = {
       return manuscript
     },
 
+    async deleteManuscript(_, { id }) {
+      await db.deleteManuscript(id)
+      return id
+    },
+
     async updateSubmission(_, { data, isAutoSave }, ctx) {
       let manuscript = await db.selectId(data.id)
       db.checkPermission(manuscript, ctx.user)
