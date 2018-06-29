@@ -147,10 +147,10 @@ const ReviewerSuggestions = ({ handleSubmit, values, setFieldValue }) => (
 
     <Declaration />
 
+    <ButtonLink to="/submit/metadata">Back</ButtonLink>
     <Button data-test-id="next" primary type="submit">
       Submit
     </Button>
-    <ButtonLink to="/submit/metadata">Back</ButtonLink>
   </form>
 )
 
