@@ -41,14 +41,15 @@ class Textarea extends React.Component {
     this.inputId = `textarea-${Math.round(Math.random() * 1e12).toString(36)}`
   }
   render() {
-    const { label, ...props } = this.props
+    // Note: readonly is explicitly passed in because JSX readOnly has an uppercase 'O', so destructuring props is not enough
+    const { label, readonly, ...props } = this.props
     return (
       <Flex flexDirection="column">
         <Box mb={1}>
           <Label htmlFor={this.inputId}>{label}</Label>
         </Box>
         <Box>
-          <Input id={this.inputId} {...props} />
+          <Input id={this.inputId} readOnly={readonly} {...props} />
         </Box>
       </Flex>
     )
