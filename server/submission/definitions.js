@@ -320,6 +320,7 @@ const manuscriptSchema = Joi.object()
         reason: Joi.string().required(),
       }),
     ),
+    manuscriptPersons: Joi.array(),
     noConflictOfInterest: Joi.boolean().required(),
   })
   .required()

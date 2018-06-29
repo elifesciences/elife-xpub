@@ -26,7 +26,7 @@ module.exports = {
     path: `${__dirname}/mailer`,
   },
   darServer: {
-    basePath: path.join(__dirname, '..', 'manuscripts'),
+    basePath: 'uploads',
   },
   scienceBeam: {
     url: 'https://sciencebeam-texture.elifesciences.org/api/convert',

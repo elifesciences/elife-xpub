@@ -132,7 +132,18 @@ const resolvers = {
     async finishSubmission(_, { data }, ctx) {
       const manuscript = await db.selectId(data.id)
       db.checkPermission(manuscript, ctx.user)
-      const newManuscript = lodash.merge({}, manuscript, data)
+      const newManuscript = lodash.mergeWith(
+        {},
+        manuscript,
+        data,
+        // always replace arrays instead of merging
+        (objValue, srcValue) => {
+          if (lodash.isArray(srcValue)) {
+            return srcValue
+          }
+          return undefined
+        },
+      )
 
       const { error: errorManuscript } = Joi.validate(
         newManuscript,

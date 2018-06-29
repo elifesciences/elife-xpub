@@ -1,9 +1,8 @@
 import React from 'react'
 import { Route, Switch } from 'react-router-dom'
 import { Formik } from 'formik'
-import omitDeep from 'omit-deep-lodash'
 import WithCurrentSubmission from './WithCurrentSubmission'
-import ComponentWithSaving from './ComponentWithSaving'
+import AutoSave from './AutoSave'
 import AuthorDetailsPage from './AuthorDetails/AuthorDetailsPage'
 import FileUploadsPage from './FileUploads/FileUploadsPage'
 import ManuscriptMetadata from './ManuscriptMetadata/ManuscriptMetadata'
@@ -14,30 +13,23 @@ import { schema as manuscriptMetadataSchema } from './ManuscriptMetadata/Manuscr
 import { schema as reviewerSuggestionsSchema } from './ReviewerSuggestions/ReviewerSuggestionsSchema'
 
 const FormStep = ({
-  component: Component,
+  component: FormComponent,
+  handleSubmit,
+  handleUpdate,
   history,
   nextUrl,
-  submitMutation,
   initialValues,
   validationSchema,
 }) => (
   <Formik
     initialValues={initialValues}
     // ensure each page gets a new form instance otherwise all fields are touched
-    key={Component.name}
-    onSubmit={(values, { setSubmitting, setErrors }) => {
-      const data = omitDeep(values, ['__typename', 'files'])
-      return submitMutation({ variables: { data } })
-        .then(() => setSubmitting(false))
-        .then(() => history.push(nextUrl))
-        .catch(errors => {
-          setErrors(errors)
-        })
-    }}
+    key={FormComponent.name}
+    onSubmit={values => handleSubmit(values).then(() => history.push(nextUrl))}
     render={formProps => (
-      <ComponentWithSaving updateSubmission={submitMutation} {...formProps}>
-        <Component {...formProps} />
-      </ComponentWithSaving>
+      <AutoSave onSave={handleUpdate} values={formProps.values}>
+        <FormComponent {...formProps} />
+      </AutoSave>
     )}
     validationSchema={validationSchema}
   />
@@ -45,17 +37,24 @@ const FormStep = ({
 
 const SubmissionPage = ({ match, history }) => (
   <WithCurrentSubmission>
-    {(initialValues, { updateSubmission, finishSubmission }) => (
+    {({
+      initialValues,
+      updateSubmission,
+      progressSubmission,
+      finishSubmission,
+    }) => (
       <Switch>
         <Route
+          exact
           path={`${match.path}/upload`}
           render={() => (
             <FormStep
               component={FileUploadsPage}
+              handleSubmit={progressSubmission}
+              handleUpdate={updateSubmission}
               history={history}
               initialValues={initialValues}
               nextUrl={`${match.path}/metadata`}
-              submitMutation={updateSubmission}
               validationSchema={fileUploadsSchema}
             />
           )}
@@ -65,10 +64,11 @@ const SubmissionPage = ({ match, history }) => (
           render={() => (
             <FormStep
               component={ManuscriptMetadata}
+              handleSubmit={progressSubmission}
+              handleUpdate={updateSubmission}
               history={history}
               initialValues={initialValues}
               nextUrl={`${match.path}/suggestions`}
-              submitMutation={updateSubmission}
               validationSchema={manuscriptMetadataSchema}
             />
           )}
@@ -78,10 +78,11 @@ const SubmissionPage = ({ match, history }) => (
           render={() => (
             <FormStep
               component={ReviewerSuggestions}
+              handleSubmit={finishSubmission}
+              handleUpdate={updateSubmission}
               history={history}
               initialValues={initialValues}
               nextUrl="/dashboard"
-              submitMutation={updateSubmission}
               validationSchema={reviewerSuggestionsSchema}
             />
           )}
@@ -90,10 +91,11 @@ const SubmissionPage = ({ match, history }) => (
           render={() => (
             <FormStep
               component={AuthorDetailsPage}
+              handleSubmit={progressSubmission}
+              handleUpdate={updateSubmission}
               history={history}
               initialValues={initialValues}
               nextUrl={`${match.path}/upload`}
-              submitMutation={updateSubmission}
               validationSchema={authorDetailsSchema}
             />
           )}

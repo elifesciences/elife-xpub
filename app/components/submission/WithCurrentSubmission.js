@@ -1,6 +1,7 @@
 import gql from 'graphql-tag'
 import { withApollo } from 'react-apollo'
 import React from 'react'
+import omitDeep from 'omit-deep-lodash'
 import ErrorPage from '../global/ErrorPage'
 
 const manuscriptFragment = gql`
@@ -135,6 +136,15 @@ class WithCurrentSubmission extends React.Component {
     }
   }
 
+  mutate(values, mutation, { isAutoSave = false, refetchQueries = [] } = {}) {
+    const data = omitDeep(values, ['__typename', 'manuscriptPersons', 'files'])
+    return this.props.client.mutate({
+      mutation,
+      refetchQueries,
+      variables: { data, isAutoSave },
+    })
+  }
+
   render() {
     const { loading, error, data } = this.state
 
@@ -149,16 +159,14 @@ class WithCurrentSubmission extends React.Component {
     const initialValues =
       data && (data.currentSubmission || data.createSubmission)
 
-    return this.props.children(initialValues, {
-      updateSubmission: ({ variables }) =>
-        this.props.client.mutate({
-          mutation: UPDATE_SUBMISSION,
-          variables,
-        }),
-      finishSubmission: ({ variables }) =>
-        this.props.client.mutate({
-          mutation: FINISH_SUBMISSION,
-          variables,
+    return this.props.children({
+      initialValues,
+      updateSubmission: values =>
+        this.mutate(values, UPDATE_SUBMISSION, { isAutoSave: true }),
+      progressSubmission: values => this.mutate(values, UPDATE_SUBMISSION),
+      finishSubmission: values =>
+        this.mutate(values, FINISH_SUBMISSION, {
+          refetchQueries: [{ query: GET_CURRENT_SUBMISSION }],
         }),
     })
   }
