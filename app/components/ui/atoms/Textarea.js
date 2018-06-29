@@ -41,19 +41,14 @@ class Textarea extends React.Component {
     this.inputId = `textarea-${Math.round(Math.random() * 1e12).toString(36)}`
   }
   render() {
-    const { label, readonly, value = '', ...props } = this.props
+    const { label, ...props } = this.props
     return (
       <Flex flexDirection="column">
         <Box mb={1}>
           <Label htmlFor={this.inputId}>{label}</Label>
         </Box>
         <Box>
-          <Input
-            id={this.inputId}
-            readOnly={readonly}
-            value={value}
-            {...props}
-          />
+          <Input id={this.inputId} {...props} />
         </Box>
       </Flex>
     )
@@ -62,6 +57,8 @@ class Textarea extends React.Component {
 
 Textarea.propTypes = {
   label: PropTypes.string.isRequired,
+  value: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired,
 }
 
 export default Textarea
