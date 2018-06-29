@@ -108,10 +108,10 @@ const ManuscriptMetadata = ({
       </div>
     </CheckboxGeneratedChild>
 
+    <ButtonLink to="/submit/upload">Back</ButtonLink>
     <Button data-test-id="next" primary type="submit">
       Next
     </Button>
-    <ButtonLink to="/submit/upload">Back</ButtonLink>
   </form>
 )
 
