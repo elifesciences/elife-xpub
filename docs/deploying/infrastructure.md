@@ -6,7 +6,7 @@
 
 All the necessary infrastructure is within [AWS under the elifesciences account](https://512686554592.signin.aws.amazon.com/console)
 
-This is managed using [builder](https://github.com/elifesciences/builder) using the convension where the "Project Name" is appended with the enivronment to give the "Stack Name". This is done in the form:
+This is managed using [builder](https://github.com/elifesciences/builder) using the convention where the "Project Name" is appended with the environment to give the "Stack Name". This is done in the form:
 
 ```
 {project name}--{env}
