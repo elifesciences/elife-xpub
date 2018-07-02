@@ -19,6 +19,9 @@ module.exports = {
   'orcid-server': {
     port: 8080,
   },
+  darServer: {
+    basePath: 'test/temp/uploads',
+  },
   mailer: {
     transport: {
       sendmail: false,

@@ -17,7 +17,6 @@ const UPLOAD_MUTATION = gql`
 `
 
 const FileUploadsPage = ({
-  manuscriptId,
   setFieldValue,
   errors,
   touched,
@@ -46,6 +45,7 @@ const FileUploadsPage = ({
               setFieldValue(fieldName, data.uploadManuscript.files)
             })
           }
+          previewUrl={`/manuscript/${values.id}`}
           setFieldValue={setFieldValue}
           {...props}
         />
