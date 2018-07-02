@@ -1,6 +1,7 @@
 import React from 'react'
 import gql from 'graphql-tag'
-import { Query } from 'react-apollo'
+import { Query, Mutation } from 'react-apollo'
+import { GET_CURRENT_SUBMISSION } from '../submission/WithCurrentSubmission'
 import Dashboard from './Dashboard'
 
 const MANUSCRIPTS_QUERY = gql`
@@ -8,7 +9,16 @@ const MANUSCRIPTS_QUERY = gql`
     manuscripts {
       id
       title
+      submissionMeta {
+        stage
+      }
     }
+  }
+`
+
+const DELETE_MANUSCRIPT_MUTATION = gql`
+  mutation($id: ID!) {
+    deleteManuscript(id: $id)
   }
 `
 
@@ -23,7 +33,22 @@ const DashboardPage = () => (
         return <div>{error.message}</div>
       }
 
-      return <Dashboard manuscripts={data.manuscripts} />
+      return (
+        <Mutation
+          mutation={DELETE_MANUSCRIPT_MUTATION}
+          refetchQueries={[
+            { query: MANUSCRIPTS_QUERY },
+            { query: GET_CURRENT_SUBMISSION },
+          ]}
+        >
+          {deleteManuscript => (
+            <Dashboard
+              deleteManuscript={id => deleteManuscript({ variables: { id } })}
+              manuscripts={data.manuscripts}
+            />
+          )}
+        </Mutation>
+      )
     }}
   </Query>
 )

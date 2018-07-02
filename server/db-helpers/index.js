@@ -62,9 +62,13 @@ const select = async selector => {
   return rows.map(row => manuscriptDbToGql(row.data, row.id))
 }
 
+const deleteManuscript = id =>
+  db.query('DELETE FROM entities WHERE id = $1', [id])
+
 module.exports = {
   manuscriptGqlToDb,
   manuscriptDbToGql,
+  deleteManuscript,
   select,
   save,
   update,
