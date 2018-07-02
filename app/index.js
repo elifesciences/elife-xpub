@@ -20,7 +20,7 @@ ReactDOM.render(
   <React.Fragment>
     <App />
     <Footer>
-      Date: {date} - Commit: {version}
+      Date: {date} - Commit: {version.substring(0, 7)}
     </Footer>
   </React.Fragment>,
   document.getElementById('root'),
