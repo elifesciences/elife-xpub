@@ -1,13 +1,9 @@
 import { css } from 'styled-components'
 import { th } from '@pubsweet/ui-toolkit'
 
-export default css`
-  margin-bottom: 100px;
-`
-
 const stepCenter = (isCurrent, isPast) => {
   if (isCurrent) {
-    return '#fff'
+    return th('colorBackground')
   } else if (isPast) {
     return th('colorPrimary')
   }
@@ -15,6 +11,10 @@ const stepCenter = (isCurrent, isPast) => {
 }
 
 export const Steps = {
+  Root: css`
+    margin-bottom: ${th('space.6')};
+  `,
+
   Step: css`
     height: 20px;
     width: 20px;
