@@ -34,7 +34,7 @@ const Dashboard = ({ manuscripts, deleteManuscript }) => (
     {!manuscripts.length && <p>No manuscripts to display</p>}
 
     {!!manuscripts.length && (
-      <table>
+      <table data-test-id="manuscripts">
         <thead>
           <tr>
             <Header>Title</Header>
@@ -45,12 +45,14 @@ const Dashboard = ({ manuscripts, deleteManuscript }) => (
         <tbody>
           {manuscripts.map(manuscript => (
             <tr key={manuscript.id}>
-              <Cell>
-                <Link to={`/manuscript/${manuscript.id}`}>
+              <Cell data-test-id="title">
+                <Link data-test-id="title" to={`/manuscript/${manuscript.id}`}>
                   {manuscript.title || '(Untitled manuscript)'}
                 </Link>
               </Cell>
-              <Cell>{manuscript.submissionMeta.stage}</Cell>
+              <Cell data-test-id="stage">
+                {manuscript.submissionMeta.stage}
+              </Cell>
               <Cell>
                 <Button onClick={() => deleteManuscript(manuscript.id)} small>
                   Delete
