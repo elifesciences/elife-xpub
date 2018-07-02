@@ -1,5 +1,4 @@
 import React from 'react'
-
 import { Menu, Checkbox, Button } from '@pubsweet/ui'
 import { Field } from 'formik'
 import { get } from 'lodash'
@@ -44,17 +43,21 @@ const ManuscriptMetadata = ({
     <FormH2>Help us get your work seen by the right people</FormH2>
 
     <ValidatedField label="Manuscript title" name="title" />
-    <ValidatedField
-      component={Menu}
-      label="Article type"
-      name="manuscriptType"
-      onBlur={value => setFieldValue('manuscriptType', value)}
-      onChange={value => setFieldValue('manuscriptType', value)}
-      options={[
-        { value: 'research-article', label: 'Research article' },
-        { value: 'feature', label: 'Feature article' },
-      ]}
-    />
+
+    <Box mb={3} w={1 / 2}>
+      <ValidatedField
+        component={Menu}
+        label="Article type"
+        name="manuscriptType"
+        onBlur={value => setFieldValue('manuscriptType', value)}
+        onChange={value => setFieldValue('manuscriptType', value)}
+        options={[
+          { value: 'research-article', label: 'Research article' },
+          { value: 'feature', label: 'Feature article' },
+        ]}
+        placeholder="Please choose"
+      />
+    </Box>
 
     <ValidatedField
       component={SubjectAreaDropdown}
