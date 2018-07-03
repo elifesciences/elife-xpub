@@ -172,13 +172,6 @@ class SubjectAreaDropdown extends React.Component {
             isFocused,
           ),
         },
-        boxShadow: isFocused
-          ? `0 0 0 2px ${chooseBorderColorFromProps(
-              this.props.theme,
-              this.props.validationStatus,
-              isFocused,
-            )}`
-          : this.props.theme.boxShadow,
         backgroundColor: this.props.theme.backgroundColor,
         minHeight: this.props.gridUnit,
       }),
@@ -202,13 +195,13 @@ class SubjectAreaDropdown extends React.Component {
     const { label, name, onBlur, theme } = this.props
 
     const TagRemovalIcon = props => (
-        <components.MultiValueRemove {...props}>
-          {/* Icon requires a size, but width and height are more accurate and applied in styling below */}
-          <Icon size={3} {...props} theme={theme}>
-            Cross
-          </Icon>
-        </components.MultiValueRemove>
-      )
+      <components.MultiValueRemove {...props}>
+        {/* Icon requires a size, but width and height are more accurate and applied in styling below */}
+        <Icon size={3} {...props} theme={theme}>
+          Cross
+        </Icon>
+      </components.MultiValueRemove>
+    )
 
     const StyledTagRemovalIcon = styled(TagRemovalIcon)`
       svg {
