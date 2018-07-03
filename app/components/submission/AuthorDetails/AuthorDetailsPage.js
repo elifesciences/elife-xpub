@@ -20,9 +20,9 @@ class AuthorDetailsPage extends React.Component {
     this.state = {}
   }
 
-  sanatizeAuthor = author => {
+  sanitizeAuthor = author => {
     const cleanedAuthor = JSON.parse(
-      JSON.stringify(author, (key, value) => value == null ? '' : value),
+      JSON.stringify(author, (key, value) => (value == null ? '' : value)),
     )
 
     return cleanedAuthor
@@ -33,7 +33,7 @@ class AuthorDetailsPage extends React.Component {
     this.props.client
       .query({ query: ORCID_DETAILS_QUERY })
       .then(({ data }) => {
-        const author = this.sanatizeAuthor(data.orcidDetails)
+        const author = this.sanitizeAuthor(data.orcidDetails)
         this.setState({ loading: false })
         this.props.setFieldValue('submissionMeta.author', author)
       })
