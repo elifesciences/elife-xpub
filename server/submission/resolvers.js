@@ -2,6 +2,7 @@ const lodash = require('lodash')
 const config = require('config')
 const Email = require('@pubsweet/component-send-email')
 const User = require('pubsweet-server/src/models/User')
+const authentication = require('pubsweet-server/src/authentication')
 const mailer = require('@pubsweet/component-send-email')
 const logger = require('@pubsweet/logger')
 const request = require('request-promise-native')
@@ -52,6 +53,8 @@ async function setupCorrespondingAuthor(user, manuscript) {
         const { email, firstName, lastName } = manuscript.submissionMeta.author
         const { title, id } = manuscript
 
+        const emailToken = authentication.token.create({ username: email })
+
         await mailer.send({
           to: email,
           text: 'Please verify that you are a corresponding author',
@@ -60,7 +63,7 @@ async function setupCorrespondingAuthor(user, manuscript) {
         
         <button><a href="${config.get(
           'pubsweet-server.baseUrl',
-        )}/confirm-author/${id}">Confirm</a></button> <button><a href="${config.get(
+        )}/confirm-author/${id}&token=${emailToken}">Confirm</a></button> <button><a href="${config.get(
             'pubsweet-server.baseUrl',
           )}/decline-author/${id}"
         )}">Decline</a></button>`,
