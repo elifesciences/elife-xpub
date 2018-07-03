@@ -1,7 +1,12 @@
 import React from 'react'
 import { Route, Switch } from 'react-router-dom'
 
-import { AuthenticatedComponent, LoginPage } from './components'
+import {
+  AuthenticatedComponent,
+  LoginPage,
+  CorrespondingAuthorConfirmation,
+  CorrespondingAuthorMistake,
+} from './components'
 import Layout from './components/global/Layout'
 import SubmissionPage from './components/submission/SubmissionPage'
 import ManuscriptPage from './components/manuscript/ManuscriptPage'
@@ -10,6 +15,8 @@ import DashboardPage from './components/dashboard/DashboardPage'
 const Routes = () => (
   <Switch>
     <Route component={LoginPage} path="/login" />
+    <Route component={CorrespondingAuthorConfirmation} path="/confirm-author" />
+    <Route component={CorrespondingAuthorMistake} path="/decline-author" />
     <AuthenticatedComponent>
       <Layout>
         <Switch>
