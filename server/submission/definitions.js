@@ -113,7 +113,6 @@ const typeDefs = `
       author: PersonInput
       hasCorrespondent: Boolean
       correspondent: PersonInput
-      stage: SubmissionStage
       discussedPreviously: Boolean
       discussion: String
       consideredPreviously: Boolean
