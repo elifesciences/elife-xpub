@@ -49,9 +49,21 @@ async function setupCorrespondingAuthor(user, manuscript) {
 
     if (!manuscriptPerson.user) {
       try {
+        const { email, firstName, lastName } = manuscript.submissionMeta.author
+        const { title, id } = manuscript
+
         await mailer.send({
-          to: manuscript.submissionMeta.author.email,
+          to: email,
           text: 'Please verify that you are a corresponding author',
+          html: `<p>${firstName} ${lastName} has recently submitted a paper to eLife, with the title "${title}". You have been listed as the corresponding author
+        so you will be contacted with any questions and an initial decision once the editors have completed their evaluation.</p>
+        
+        <button><a href="${config.get(
+          'pubsweet-server.baseUrl',
+        )}/confirm-author/${id}">Confirm</a></button> <button><a href="${config.get(
+            'pubsweet-server.baseUrl',
+          )}/decline-author/${id}"
+        )}">Decline</a></button>`,
         })
       } catch (err) {
         logger.error(err)

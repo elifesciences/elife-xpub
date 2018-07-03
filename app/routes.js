@@ -15,8 +15,11 @@ import DashboardPage from './components/dashboard/DashboardPage'
 const Routes = () => (
   <Switch>
     <Route component={LoginPage} path="/login" />
-    <Route component={CorrespondingAuthorConfirmation} path="/confirm-author" />
-    <Route component={CorrespondingAuthorMistake} path="/decline-author" />
+    <Route
+      component={CorrespondingAuthorConfirmation}
+      path="/confirm-author/:id"
+    />
+    <Route component={CorrespondingAuthorMistake} path="/decline-author/:id" />
     <AuthenticatedComponent>
       <Layout>
         <Switch>
