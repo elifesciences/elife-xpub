@@ -2,6 +2,7 @@ const lodash = require('lodash')
 const config = require('config')
 const Email = require('@pubsweet/component-send-email')
 const User = require('pubsweet-server/src/models/User')
+const mailer = require('@pubsweet/component-send-email')
 const logger = require('@pubsweet/logger')
 const request = require('request-promise-native')
 const { promisify } = require('util')
@@ -47,12 +48,14 @@ async function setupCorrespondingAuthor(user, manuscript) {
     manuscript.manuscriptPersons.push(manuscriptPerson)
 
     if (!manuscriptPerson.user) {
-      /*
-      await mailer.send({
-        to: manuscript.submissionMeta.author.email,
-        text: 'Please verify that you are a corresponding author',
-      })
-      */
+      try {
+        await mailer.send({
+          to: manuscript.submissionMeta.author.email,
+          text: 'Please verify that you are a corresponding author',
+        })
+      } catch (err) {
+        logger.error(err)
+      }
     }
   }
 
