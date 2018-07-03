@@ -59,6 +59,14 @@ const manuscriptFragment = gql`
       cosubmissionTitle
       cosubmissionId
     }
+    manuscriptPersons {
+      role
+      metadata {
+        ... on AuthorMetadata {
+          confirmed
+        }
+      }
+    }
   }
 `
 
@@ -122,19 +130,19 @@ class WithCurrentSubmission extends React.Component {
       )
   }
 
+  componentWillUnmount() {
+    if (this.querySubscription) {
+      this.querySubscription.unsubscribe()
+      delete this.querySubscription
+    }
+  }
+
   setData(data) {
     this.setState({ data, error: undefined, loading: false })
   }
 
   setError(error) {
     this.setState({ data: null, error, loading: false })
-  }
-
-  componentWillUnmount() {
-    if (this.querySubscription) {
-      this.querySubscription.unsubscribe()
-      delete this.querySubscription
-    }
   }
 
   mutate(values, mutation, { isAutoSave = false, refetchQueries = [] } = {}) {

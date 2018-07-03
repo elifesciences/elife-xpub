@@ -43,7 +43,7 @@ function manuscriptHasAuthor(user, manuscript) {
 
 async function setupCorrespondingAuthor(user, manuscript) {
   if (!manuscriptHasAuthor(user, manuscript)) {
-    const manuscriptPerson = await createManuscriptPerson(manuscript)
+    const manuscriptPerson = await createCorrespondingAuthor(manuscript)
 
     manuscript.manuscriptPersons.push(manuscriptPerson)
 
@@ -62,11 +62,13 @@ async function setupCorrespondingAuthor(user, manuscript) {
   return manuscript
 }
 
-async function createManuscriptPerson(manuscript) {
+async function createCorrespondingAuthor(manuscript) {
   const manuscriptPerson = {
     alias: manuscript.submissionMeta.author,
     role: 'AUTHOR',
-    metadata: {},
+    metadata: {
+      corresponding: true,
+    },
   }
 
   try {
@@ -267,6 +269,19 @@ const resolvers = {
       await db.update(db.manuscriptGqlToDb(manuscript), id)
 
       return manuscript
+    },
+  },
+
+  ManuscriptPersonMetadata: {
+    __resolveType: obj => {
+      switch (true) {
+        case obj.corresponding !== undefined:
+          return 'AuthorMetadata'
+        case obj.revealIdentity !== undefined:
+          return 'ReviewerMetadata'
+        default:
+          return null
+      }
     },
   },
 }

@@ -1,8 +1,6 @@
 import React from 'react'
 import { Route, Switch } from 'react-router-dom'
-import { Formik } from 'formik'
 import WithCurrentSubmission from './WithCurrentSubmission'
-import AutoSave from './AutoSave'
 import AuthorDetailsPage from './AuthorDetails/AuthorDetailsPage'
 import FileUploadsPage from './FileUploads/FileUploadsPage'
 import ManuscriptMetadata from './ManuscriptMetadata/ManuscriptMetadata'
@@ -11,29 +9,7 @@ import { schema as fileUploadsSchema } from './FileUploads/FileUploadsSchema'
 import { schema as authorDetailsSchema } from './AuthorDetails/AuthorDetailsSchema'
 import { schema as manuscriptMetadataSchema } from './ManuscriptMetadata/ManuscriptMetadataSchema'
 import { schema as reviewerSuggestionsSchema } from './ReviewerSuggestions/ReviewerSuggestionsSchema'
-
-const FormStep = ({
-  component: FormComponent,
-  handleSubmit,
-  handleUpdate,
-  history,
-  nextUrl,
-  initialValues,
-  validationSchema,
-}) => (
-  <Formik
-    initialValues={initialValues}
-    // ensure each page gets a new form instance otherwise all fields are touched
-    key={FormComponent.name}
-    onSubmit={values => handleSubmit(values).then(() => history.push(nextUrl))}
-    render={formProps => (
-      <AutoSave onSave={handleUpdate} values={formProps.values}>
-        <FormComponent {...formProps} />
-      </AutoSave>
-    )}
-    validationSchema={validationSchema}
-  />
-)
+import WizardStep from './WizardStep'
 
 const SubmissionPage = ({ match, history }) => (
   <WithCurrentSubmission>
@@ -48,7 +24,7 @@ const SubmissionPage = ({ match, history }) => (
           exact
           path={`${match.path}/upload`}
           render={() => (
-            <FormStep
+            <WizardStep
               component={FileUploadsPage}
               handleSubmit={progressSubmission}
               handleUpdate={updateSubmission}
@@ -62,7 +38,7 @@ const SubmissionPage = ({ match, history }) => (
         <Route
           path={`${match.path}/metadata`}
           render={() => (
-            <FormStep
+            <WizardStep
               component={ManuscriptMetadata}
               handleSubmit={progressSubmission}
               handleUpdate={updateSubmission}
@@ -76,7 +52,7 @@ const SubmissionPage = ({ match, history }) => (
         <Route
           path={`${match.path}/suggestions`}
           render={() => (
-            <FormStep
+            <WizardStep
               component={ReviewerSuggestions}
               handleSubmit={finishSubmission}
               handleUpdate={updateSubmission}
@@ -89,7 +65,7 @@ const SubmissionPage = ({ match, history }) => (
         />
         <Route
           render={() => (
-            <FormStep
+            <WizardStep
               component={AuthorDetailsPage}
               handleSubmit={progressSubmission}
               handleUpdate={updateSubmission}
