@@ -48,10 +48,14 @@ async function setupCorrespondingAuthor(user, manuscript) {
     manuscript.manuscriptPersons.push(manuscriptPerson)
 
     if (!manuscriptPerson.user) {
-      await mailer.send({
-        to: manuscript.submissionMeta.author.email,
-        text: 'Please verify that you are a corresponding author',
-      })
+      try {
+        await mailer.send({
+          to: manuscript.submissionMeta.author.email,
+          text: 'Please verify that you are a corresponding author',
+        })
+      } catch (err) {
+        logger.error(err)
+      }
     }
   }
 
@@ -117,11 +121,13 @@ const resolvers = {
     },
 
     async updateSubmission(_, { data, isAutoSave }, ctx) {
+      logger.debug('Update Submission - starting')
+
       let manuscript = await db.selectId(data.id)
       db.checkPermission(manuscript, ctx.user)
       lodash.merge(manuscript, data)
-
       const user = await User.find(ctx.user)
+
       if (
         !isAutoSave &&
         user.email !== manuscript.submissionMeta.author.email

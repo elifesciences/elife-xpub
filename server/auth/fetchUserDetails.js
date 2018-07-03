@@ -1,5 +1,6 @@
 const superagent = require('superagent')
 const _ = require('lodash')
+const logger = require('@pubsweet/logger')
 
 const apiRoot = 'https://api.sandbox.orcid.org/v2.1'
 
@@ -21,6 +22,7 @@ const toDate = date => {
 }
 
 module.exports = async user => {
+  logger.debug('processing response from orcid api')
   const [personResponse, employmentsResponse] = await Promise.all([
     request(user, 'person'),
     request(user, 'employments'),
@@ -38,6 +40,11 @@ module.exports = async user => {
         .pop().organization.name
     : null
 
+  logger.debug(`fetchUserDetails returning:
+    first: ${firstName},
+    last: ${lastName}
+    email: ${email},
+    institution: ${institution}`)
   return {
     firstName,
     lastName,
