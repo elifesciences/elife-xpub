@@ -81,7 +81,14 @@ test('Happy path', async t => {
     )
     // wait for editor onChange
     .wait(1000)
-    .click('[data-test-id=next]')
+
+    .click('[data-test-id=preview')
+    .expect(Selector('.sc-title-group').textContent)
+    .eql('The Relationship Between Lamport Clocks and Interrupts Using Obi')
+
+  const goBack = ClientFunction(() => window.history.back())
+  await goBack()
+  await t.click('[data-test-id=next]')
 
   // metadata
   await t

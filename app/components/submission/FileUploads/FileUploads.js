@@ -33,6 +33,7 @@ const FileUploads = ({
   onDrop,
   conversion,
   formError,
+  previewUrl,
 }) => (
   <form onSubmit={handleSubmit}>
     <ProgressBar currentStep={1} />
@@ -55,6 +56,7 @@ const FileUploads = ({
           data-test-id="upload"
           formError={formError}
           onDrop={onDrop}
+          previewUrl={previewUrl}
         />
       </Box>
     </Flex>
