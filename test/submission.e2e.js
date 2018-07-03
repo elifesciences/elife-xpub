@@ -1,10 +1,15 @@
 import { ClientFunction, Selector } from 'testcafe'
 import replaySetup from './helpers/replay-setup'
-import { dashboard, authorDetails } from './pageObjects'
+import { dashboard, authorDetails, fileUploads } from './pageObjects'
 import setFixtureHooks from './helpers/set-fixture-hooks'
 
 const f = fixture('Submission')
 setFixtureHooks(f)
+
+const manuscript = {
+  title: 'The Relationship Between Lamport Clocks and Interrupts Using Obi',
+  file: './fixtures/dummy-manuscript-2.pdf',
+}
 
 test('Happy path', async t => {
   replaySetup('success')
@@ -59,7 +64,6 @@ test('Happy path', async t => {
       'Error is displayed when user enters invalid email',
     )
     .click('[data-test-id=next]')
-    .wait(1000)
     .expect(ClientFunction(() => window.location.href)())
     .eql(
       authorDetails.url,
@@ -71,14 +75,8 @@ test('Happy path', async t => {
 
   // file uploads
   await t
-    .typeText(
-      '[name="submissionMeta.coverLetter"] div[contenteditable=true]',
-      'Please consider this for publication',
-    )
-    .setFilesToUpload(
-      '[data-test-id=upload]>input',
-      './fixtures/dummy-manuscript-2.pdf',
-    )
+    .typeText(fileUploads.editor, '\nPlease consider this for publication')
+    .setFilesToUpload(fileUploads.manuscriptUpload, manuscript.file)
     // wait for editor onChange
     .wait(1000)
 
@@ -93,7 +91,7 @@ test('Happy path', async t => {
   // metadata
   await t
     .expect(Selector('[name=title]').value)
-    .eql('The Relationship Between Lamport Clocks and Interrupts Using Obi')
+    .eql(manuscript.title)
     .click('[role=listbox] button')
     .click(Selector('[role=option]').nth(0))
     .click(Selector('label[for=subject-area-select'))
@@ -125,6 +123,13 @@ test('Happy path', async t => {
     .typeText('[name="suggestedReviewers.2.email"]', 'dave@example.org')
     .click(Selector('[name=noConflictOfInterest]').parent())
     .click('[data-test-id=next]')
+
+  // dashboard
+  await t
+    .expect(Selector('[data-test-id=title]').textContent)
+    .eql(manuscript.title)
+    .expect(Selector('[data-test-id=stage]').textContent)
+    .eql('QA')
 })
 
 test('Submission form details are saved to server on submit', async t => {
@@ -146,7 +151,10 @@ test('Submission form details are saved to server on submit', async t => {
     .typeText(authorDetails.institutionField, 'iTunes U', { replace: true })
     .click('[data-test-id=next]')
 
+  // ensure save completed before reloading
+  await fileUploads.editor
   await t.navigateTo(authorDetails.url)
+
   await t
     .expect(Selector(authorDetails.firstNameField).value)
     .eql('Meghan', 'First name has been saved')

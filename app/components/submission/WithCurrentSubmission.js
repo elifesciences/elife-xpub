@@ -3,6 +3,7 @@ import { withApollo } from 'react-apollo'
 import React from 'react'
 import omitDeep from 'omit-deep-lodash'
 import ErrorPage from '../global/ErrorPage'
+import { MANUSCRIPTS_QUERY } from '../dashboard/DashboardPage'
 
 const manuscriptFragment = gql`
   fragment WholeManuscript on Manuscript {
@@ -166,7 +167,10 @@ class WithCurrentSubmission extends React.Component {
       progressSubmission: values => this.mutate(values, UPDATE_SUBMISSION),
       finishSubmission: values =>
         this.mutate(values, FINISH_SUBMISSION, {
-          refetchQueries: [{ query: GET_CURRENT_SUBMISSION }],
+          refetchQueries: [
+            { query: GET_CURRENT_SUBMISSION },
+            { query: MANUSCRIPTS_QUERY },
+          ],
         }),
     })
   }

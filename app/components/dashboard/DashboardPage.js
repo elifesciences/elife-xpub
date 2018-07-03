@@ -4,7 +4,7 @@ import { Query, Mutation } from 'react-apollo'
 import { GET_CURRENT_SUBMISSION } from '../submission/WithCurrentSubmission'
 import Dashboard from './Dashboard'
 
-const MANUSCRIPTS_QUERY = gql`
+export const MANUSCRIPTS_QUERY = gql`
   query {
     manuscripts {
       id
@@ -16,7 +16,7 @@ const MANUSCRIPTS_QUERY = gql`
   }
 `
 
-const DELETE_MANUSCRIPT_MUTATION = gql`
+export const DELETE_MANUSCRIPT_MUTATION = gql`
   mutation($id: ID!) {
     deleteManuscript(id: $id)
   }
