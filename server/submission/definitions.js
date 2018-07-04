@@ -73,6 +73,7 @@ const typeDefs = `
       rank: Int!
       #contributions: AuthorMetadataContribution!
       corresponding: Boolean!
+      confirmed: Boolean
       conflictOfInterest: String
     }
     

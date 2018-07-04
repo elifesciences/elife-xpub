@@ -12,8 +12,7 @@ export default styled.div`
   background: ${backgroundColor};
   color: ${th('colorTextReverse')};
   padding: ${th('space.2')};
-  font-family: ${th('fontHeading')};
-  font-size: 14px;
-  line-height: 24px;
+  font-size: ${th('fontSizeBaseSmall')};
+  line-height: ${th('space.3')};
   text-align: center;
 `
