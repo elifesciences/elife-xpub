@@ -61,16 +61,13 @@ async function setupCorrespondingAuthor(user, manuscript) {
           html: `<p>${firstName} ${lastName} has recently submitted a paper to eLife, with the title "${title}". You have been listed as the corresponding author
         so you will be contacted with any questions and an initial decision once the editors have completed their evaluation.</p>
         
-        <button><a href="${config.get(
+        <a href="${config.get(
           'pubsweet-server.baseUrl',
-        )}/confirm-author/${id}&token=${emailToken}">Confirm</a></button> <button><a href="${config.get(
-            'pubsweet-server.baseUrl',
-          )}/decline-author/${id}"
-        )}">Decline</a></button>`,
-        })
-      } catch (err) {
-        logger.error(err)
-      }
+        )}/confirm-author/${id}&token=${emailToken}">Confirm</a> <a href="${config.get(
+          'pubsweet-server.baseUrl',
+        )}/decline-author/${id}"
+        )}">Decline</a>`,
+      })
     }
   }
 
