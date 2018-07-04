@@ -138,7 +138,12 @@ class WithCurrentSubmission extends React.Component {
   }
 
   mutate(values, mutation, { isAutoSave = false, refetchQueries = [] } = {}) {
-    const data = omitDeep(values, ['__typename', 'manuscriptPersons', 'files'])
+    const data = omitDeep(values, [
+      '__typename',
+      'files',
+      'manuscriptPersons',
+      'submissionMeta.stage',
+    ])
     return this.props.client.mutate({
       mutation,
       refetchQueries,
