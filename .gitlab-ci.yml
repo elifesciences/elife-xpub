@@ -79,7 +79,7 @@ test:e2e:
     - npm run test:e2e -- --screenshots test/screenshots --screenshots-on-fails
   artifacts:
     paths:
-      - "test/screenshots/*/*/*/errors/*.png"
+      - test/screenshots
     when: on_failure
     expire_in: 1 week
 

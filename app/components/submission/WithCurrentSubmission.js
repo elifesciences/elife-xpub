@@ -98,8 +98,8 @@ const UPDATE_SUBMISSION = gql`
 `
 
 const FINISH_SUBMISSION = gql`
-  mutation FinishSubmission($data: ManuscriptInput!, $isAutoSave: Boolean) {
-    updateSubmission(data: $data, isAutoSave: $isAutoSave) {
+  mutation FinishSubmission($data: ManuscriptInput!) {
+    finishSubmission(data: $data) {
       ...WholeManuscript
     }
   }
