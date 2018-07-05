@@ -5,6 +5,7 @@ const User = require('pubsweet-server/src/models/User')
 const authentication = require('pubsweet-server/src/authentication')
 const mailer = require('@pubsweet/component-send-email')
 const logger = require('@pubsweet/logger')
+const sanitizeHtml = require('sanitize-html')
 const request = require('request-promise-native')
 const { promisify } = require('util')
 const xml2js = require('xml2js')
@@ -34,6 +35,12 @@ const staticManifest = `<dar>
 </dar>
 `
 
+const sanitize = dirty =>
+  sanitizeHtml(dirty, {
+    allowedTags: [],
+    allowedAttributes: [],
+  })
+
 function manuscriptHasAuthor(user, manuscript) {
   return manuscript.manuscriptPersons.some(
     manuscriptPerson =>
@@ -53,23 +60,27 @@ async function setupCorrespondingAuthor(user, manuscript) {
         const { email, firstName, lastName } = manuscript.submissionMeta.author
         const { title, id } = manuscript
 
+        const sanitizedFirstName = sanitize(firstName)
+        const sanitizedLastName = sanitize(lastName)
+        const sanitziedTitle = sanitize(title)
+
         const emailToken = authentication.token.create({ username: email })
 
         await mailer.send({
           to: email,
           text: 'Please verify that you are a corresponding author',
-          html: `<p>${firstName} ${lastName} has recently submitted a paper to eLife, with the title "${title}". You have been listed as the corresponding author
-        so you will be contacted with any questions and an initial decision once the editors have completed their evaluation.</p>
-        
-        <a href="${config.get(
-          'pubsweet-server.baseUrl',
-        )}/confirm-author/${id}&token=${emailToken}">Confirm</a> <a href="${config.get(
-          'pubsweet-server.baseUrl',
-        )}/decline-author/${id}"
-        )}">Decline</a>`,
-      })
+          html: `<p>${sanitizedFirstName} ${sanitizedLastName} has recently submitted a paper to eLife, with the title "${sanitziedTitle}". You have been listed as the corresponding author
+          so you will be contacted with any questions and an initial decision once the editors have completed their evaluation.</p>
+          
+          <a href="${config.get(
+            'pubsweet-server.baseUrl',
+          )}/confirm-author/${id}&token=${emailToken}">Confirm</a> <a href="${config.get(
+            'pubsweet-server.baseUrl',
+          )}/decline-author/${id}"
+          )}">Decline</a>`,
+        })
+      }
     }
-  }
 
   return manuscript
 }
