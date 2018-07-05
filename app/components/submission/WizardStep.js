@@ -13,7 +13,7 @@ const EmailVerificationRibbon = ({ values }) => {
   return (
     show && (
       <Box mb={5} mx={-3}>
-        <NotificationRibbon>
+        <NotificationRibbon data-test-id="author-verification">
           A verification email has been sent to the corresponding author.
         </NotificationRibbon>
       </Box>
