@@ -79,8 +79,11 @@ async function setupCorrespondingAuthor(user, manuscript) {
           )}/decline-author/${id}"
           )}">Decline</a>`,
         })
+      } catch (err) {
+        logger.error(err)
       }
     }
+  }
 
   return manuscript
 }
