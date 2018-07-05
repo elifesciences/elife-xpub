@@ -90,6 +90,7 @@ test('Happy path', async t => {
 
   // metadata
   await t
+    .wait(1000)
     .expect(Selector('[name=title]').value)
     .eql(manuscript.title)
     .click('[role=listbox] button')
