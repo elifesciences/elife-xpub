@@ -5,7 +5,7 @@
   "license": "MIT",
   "private": true,
   "engines": {
-    "node": ">=8",
+    "node": ">=8.9.4",
     "yarn": ">=1.2"
   },
   "repository": {
