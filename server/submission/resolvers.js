@@ -34,6 +34,26 @@ const staticManifest = `<dar>
 </dar>
 `
 
+const correspondingAuthorEmailTemplate = (
+  correspondingAuthorFirstName,
+  correspondingAuthorLastName,
+  manuscriptTitle,
+  confirmLink,
+  declineLink,
+) => `
+${correspondingAuthorFirstName} ${correspondingAuthorLastName} has recently submitted a paper to eLife, with the title "${manuscriptTitle}". You have been listed as the corresponding author
+so you will be contacted with any questions and an initial decision once the editors have completed their evaluation.</p>
+
+${confirmLink}
+${declineLink}
+
+Best wishes,
+Emma
+http://elifesciences.org
+Emma Smith
+Editorial Assistant, eLife
+`
+
 const sanitize = dirty =>
   sanitizeHtml(dirty, {
     allowedTags: [],
@@ -55,26 +75,44 @@ async function setupCorrespondingAuthor(user, manuscript) {
     manuscript.manuscriptPersons.push(manuscriptPerson)
 
     if (!manuscriptPerson.user) {
+      const correspondingAuthorEmail = sanitize(
+        manuscript.submissionMeta.author.email,
+      )
+      const correspondingAuthorFirstName = sanitize(
+        manuscript.submissionMeta.author.firstName,
+      )
+      const correspondingAuthorLastName = sanitize(
+        manuscript.submissionMeta.author.lastName,
+      )
+      const { title, id } = manuscript
+
+      const confirmationLink = `${config.get(
+        'pubsweet-server.baseUrl',
+      )}/confirm-author/${id}`
+
+      const declineLink = `${config.get(
+        'pubsweet-server.baseUrl',
+      )}/decline-author/${id}`
+
       try {
-        const { email, firstName, lastName } = manuscript.submissionMeta.author
-        const { title, id } = manuscript
-
-        const sanitizedFirstName = sanitize(firstName)
-        const sanitizedLastName = sanitize(lastName)
-        const sanitziedTitle = sanitize(title)
-
         await mailer.send({
-          to: email,
-          text: 'Please verify that you are a corresponding author',
-          html: `<p>${sanitizedFirstName} ${sanitizedLastName} has recently submitted a paper to eLife, with the title "${sanitziedTitle}". You have been listed as the corresponding author
-          so you will be contacted with any questions and an initial decision once the editors have completed their evaluation.</p>
-          
-          <a href="${config.get(
-            'pubsweet-server.baseUrl',
-          )}/confirm-author/${id}">Confirm</a> <a href="${config.get(
-            'pubsweet-server.baseUrl',
-          )}/decline-author/${id}"
-          )}">Decline</a>`,
+          // should have a 'from'
+          to: correspondingAuthorEmail,
+          subject: `Are you the corresponding author for ${title}`,
+          text: correspondingAuthorEmailTemplate(
+            correspondingAuthorFirstName,
+            correspondingAuthorLastName,
+            title,
+            confirmationLink,
+            declineLink,
+          ),
+          html: correspondingAuthorEmailTemplate(
+            correspondingAuthorFirstName,
+            correspondingAuthorLastName,
+            title,
+            `<a href="${confirmationLink}">Confirm</a>`,
+            `<a href="${declineLink}")}">Decline</a>`,
+          ),
         })
       } catch (err) {
         logger.error(err)
