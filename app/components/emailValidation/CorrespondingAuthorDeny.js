@@ -2,7 +2,7 @@ import React from 'react'
 import { Flex, Box } from 'grid-styled'
 import { Heading, Button } from '@pubsweet/ui'
 
-const CorrespondingAuthorMistake = () => (
+const CorrespondingAuthorDeny = () => (
   <Flex>
     <Box>
       <Heading level={1}>Thank you!</Heading>
@@ -12,4 +12,4 @@ const CorrespondingAuthorMistake = () => (
   </Flex>
 )
 
-export default CorrespondingAuthorMistake
+export default CorrespondingAuthorDeny

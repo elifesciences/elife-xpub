@@ -8,5 +8,5 @@ export {
   default as CorrespondingAuthorConfirmation,
 } from './emailValidation/CorrespondingAuthorConfirmation'
 export {
-  default as CorrespondingAuthorMistake,
-} from './emailValidation/CorrespondingAuthorMistake'
+  default as CorrespondingAuthorDeny,
+} from './emailValidation/CorrespondingAuthorDeny'

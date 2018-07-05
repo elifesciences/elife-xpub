@@ -5,7 +5,7 @@ import {
   AuthenticatedComponent,
   LoginPage,
   CorrespondingAuthorConfirmation,
-  CorrespondingAuthorMistake,
+  CorrespondingAuthorDeny,
 } from './components'
 import Layout from './components/global/Layout'
 import SubmissionPage from './components/submission/SubmissionPage'
@@ -19,7 +19,7 @@ const Routes = () => (
       component={CorrespondingAuthorConfirmation}
       path="/confirm-author/:id"
     />
-    <Route component={CorrespondingAuthorMistake} path="/decline-author/:id" />
+    <Route component={CorrespondingAuthorDeny} path="/decline-author/:id" />
     <AuthenticatedComponent>
       <Layout>
         <Switch>
