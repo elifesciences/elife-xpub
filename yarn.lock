@@ -170,9 +170,17 @@
     lodash "^4.17.4"
     styled-components "^3.2.5"
 
-"@pubsweet/ui@^6.0.1":
-  version "6.0.1"
-  resolved "https://registry.yarnpkg.com/@pubsweet/ui/-/ui-6.0.1.tgz#bf96346245b8d53943ae48307e2662ea08b9c481"
+"@pubsweet/ui-toolkit@^1.1.2":
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/@pubsweet/ui-toolkit/-/ui-toolkit-1.1.2.tgz#d8edf90716f14102e8bc20b01f39e17c9be9119a"
+  dependencies:
+    color "^3.0.0"
+    lodash "^4.17.4"
+    styled-components "^3.2.5"
+
+"@pubsweet/ui@^8.0.0":
+  version "8.0.0"
+  resolved "https://registry.yarnpkg.com/@pubsweet/ui/-/ui-8.0.0.tgz#73108597713bbb3885af4bf6d4974df28fb42516"
   dependencies:
     babel-jest "^21.2.0"
     classnames "^2.2.5"
@@ -8588,12 +8596,12 @@ public-encrypt@^4.0.0:
     parse-asn1 "^5.0.0"
     randombytes "^2.0.1"
 
-pubsweet-client@^3.0.3:
-  version "3.0.3"
-  resolved "https://registry.yarnpkg.com/pubsweet-client/-/pubsweet-client-3.0.3.tgz#e5eb130279981e5624008d1cb7702e6ba2a5a393"
+pubsweet-client@^4.0.1:
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/pubsweet-client/-/pubsweet-client-4.0.1.tgz#48ab0677c6b507500a3fc1934e603cbb318fd1e8"
   dependencies:
-    "@pubsweet/ui" "^6.0.1"
-    "@pubsweet/ui-toolkit" "^1.1.1"
+    "@pubsweet/ui" "^8.0.0"
+    "@pubsweet/ui-toolkit" "^1.1.2"
     apollo-cache-inmemory "^1.2.4"
     apollo-client "^2.3.4"
     apollo-link "^1.2.1"
