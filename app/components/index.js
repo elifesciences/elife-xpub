@@ -4,3 +4,9 @@ export {
 } from './global/AuthenticatedComponent'
 export { default as Dashboard } from './dashboard/Dashboard'
 export { default as LoginPage } from './login/LoginPage'
+export {
+  default as CorrespondingAuthorConfirmation,
+} from './emailValidation/CorrespondingAuthorConfirmation'
+export {
+  default as CorrespondingAuthorDeny,
+} from './emailValidation/CorrespondingAuthorDeny'

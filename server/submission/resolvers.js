@@ -4,6 +4,7 @@ const Email = require('@pubsweet/component-send-email')
 const User = require('pubsweet-server/src/models/User')
 const mailer = require('@pubsweet/component-send-email')
 const logger = require('@pubsweet/logger')
+const sanitizeHtml = require('sanitize-html')
 const request = require('request-promise-native')
 const { promisify } = require('util')
 const xml2js = require('xml2js')
@@ -33,6 +34,32 @@ const staticManifest = `<dar>
 </dar>
 `
 
+const correspondingAuthorEmailTemplate = (
+  correspondingAuthorFirstName,
+  correspondingAuthorLastName,
+  manuscriptTitle,
+  confirmLink,
+  declineLink,
+) => `
+${correspondingAuthorFirstName} ${correspondingAuthorLastName} has recently submitted a paper to eLife, with the title "${manuscriptTitle}". You have been listed as the corresponding author
+so you will be contacted with any questions and an initial decision once the editors have completed their evaluation.</p>
+
+${confirmLink}
+${declineLink}
+
+Best wishes,
+Emma
+http://elifesciences.org
+Emma Smith
+Editorial Assistant, eLife
+`
+
+const sanitize = dirty =>
+  sanitizeHtml(dirty, {
+    allowedTags: [],
+    allowedAttributes: [],
+  })
+
 function manuscriptHasAuthor(user, manuscript) {
   return manuscript.manuscriptPersons.some(
     manuscriptPerson =>
@@ -48,10 +75,44 @@ async function setupCorrespondingAuthor(user, manuscript) {
     manuscript.manuscriptPersons.push(manuscriptPerson)
 
     if (!manuscriptPerson.user) {
+      const correspondingAuthorEmail = sanitize(
+        manuscript.submissionMeta.author.email,
+      )
+      const correspondingAuthorFirstName = sanitize(
+        manuscript.submissionMeta.author.firstName,
+      )
+      const correspondingAuthorLastName = sanitize(
+        manuscript.submissionMeta.author.lastName,
+      )
+      const { title, id } = manuscript
+
+      const confirmationLink = `${config.get(
+        'pubsweet-server.baseUrl',
+      )}/confirm-author/${id}`
+
+      const declineLink = `${config.get(
+        'pubsweet-server.baseUrl',
+      )}/decline-author/${id}`
+
       try {
         await mailer.send({
-          to: manuscript.submissionMeta.author.email,
-          text: 'Please verify that you are a corresponding author',
+          // should have a 'from'
+          to: correspondingAuthorEmail,
+          subject: `Are you the corresponding author for ${title}`,
+          text: correspondingAuthorEmailTemplate(
+            correspondingAuthorFirstName,
+            correspondingAuthorLastName,
+            title,
+            confirmationLink,
+            declineLink,
+          ),
+          html: correspondingAuthorEmailTemplate(
+            correspondingAuthorFirstName,
+            correspondingAuthorLastName,
+            title,
+            `<a href="${confirmationLink}">Confirm</a>`,
+            `<a href="${declineLink}")}">Decline</a>`,
+          ),
         })
       } catch (err) {
         logger.error(err)
