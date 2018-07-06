@@ -1,16 +1,10 @@
 import React from 'react'
 import { Flex, Box } from 'grid-styled'
-import { Button, Action, ErrorText } from '@pubsweet/ui'
-import { FormH2 } from '../../ui/atoms/FormHeadings'
+import { Action, ErrorText } from '@pubsweet/ui'
 import ValidatedField from '../../ui/atoms/ValidatedField'
-import ProgressBar from '../ProgressBar'
 
-const AuthorDetails = ({ handleSubmit, fetchOrcid, loading, error }) => (
-  <form noValidate onSubmit={handleSubmit}>
-    <ProgressBar currentStep={0} />
-
-    <FormH2>Who is the corresponding author?</FormH2>
-
+const AuthorDetails = ({ fetchOrcid, loading, error }) => (
+  <React.Fragment>
     <p>
       <Action data-test-id="orcid-prefill" onClick={fetchOrcid}>
         Pre-fill my details
@@ -51,15 +45,7 @@ const AuthorDetails = ({ handleSubmit, fetchOrcid, loading, error }) => (
         />
       </Box>
     </Flex>
-
-    <Flex>
-      <Box width={1}>
-        <Button data-test-id="next" primary type="submit">
-          Next
-        </Button>
-      </Box>
-    </Flex>
-  </form>
+  </React.Fragment>
 )
 
 export default AuthorDetails
