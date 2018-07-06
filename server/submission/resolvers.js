@@ -1,6 +1,5 @@
 const lodash = require('lodash')
 const config = require('config')
-const Email = require('@pubsweet/component-send-email')
 const User = require('pubsweet-server/src/models/User')
 const mailer = require('@pubsweet/component-send-email')
 const logger = require('@pubsweet/logger')
@@ -131,25 +130,29 @@ const resolvers = {
       const newManuscriptDb = db.manuscriptGqlToDb(newManuscript, ctx.user)
       await db.update(newManuscriptDb, data.id)
 
-      const mailData = {
-        from: config.get('mailer.from'),
-        to: newManuscript.submissionMeta.author.email,
-        subject: 'Congratulations! You submitted your manuscript!',
-        text: 'Your manuscript has been submitted',
-        html: '<p>Your manuscript has been submitted</p>',
-      }
-      Email.send(mailData).catch(error => {
-        logger.error(`Error sending e-mail: ${error}`)
-      })
+      mailer
+        .send({
+          from: config.get('mailer.from'),
+          to: newManuscript.submissionMeta.author.email,
+          subject: 'Congratulations! You submitted your manuscript!',
+          text: 'Your manuscript has been submitted',
+          html: '<p>Your manuscript has been submitted</p>',
+        })
+        .catch(err => {
+          logger.error(`Error sending submitter confirmation email: ${err}`)
+        })
 
-      try {
-        await mailer.send({
-          to: manuscript.submissionMeta.author.email,
+      mailer
+        .send({
+          from: config.get('mailer.from'),
+          to: newManuscript.submissionMeta.author.email,
           text: 'Please verify that you are a corresponding author',
         })
-      } catch (err) {
-        logger.error(err)
-      }
+        .catch(err => {
+          logger.error(
+            `Error sending corresponding author verification email: ${err}`,
+          )
+        })
 
       return newManuscript
     },
