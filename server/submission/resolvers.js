@@ -142,17 +142,19 @@ const resolvers = {
           logger.error(`Error sending submitter confirmation email: ${err}`)
         })
 
-      mailer
-        .send({
-          from: config.get('mailer.from'),
-          to: newManuscript.submissionMeta.author.email,
-          text: 'Please verify that you are a corresponding author',
-        })
-        .catch(err => {
-          logger.error(
-            `Error sending corresponding author verification email: ${err}`,
-          )
-        })
+      if (ctx.user.email !== manuscript.submissionMeta.author.email) {
+        mailer
+          .send({
+            from: config.get('mailer.from'),
+            to: newManuscript.submissionMeta.author.email,
+            text: 'Please verify that you are a corresponding author',
+          })
+          .catch(err => {
+            logger.error(
+              `Error sending corresponding author verification email: ${err}`,
+            )
+          })
+      }
 
       return newManuscript
     },
