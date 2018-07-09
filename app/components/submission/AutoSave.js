@@ -29,7 +29,7 @@ export default class AutoSave extends React.Component {
   }
 
   render() {
-    return this.props.children
+    return this.props.children || null
   }
 }
 

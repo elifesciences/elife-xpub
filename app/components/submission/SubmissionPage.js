@@ -31,6 +31,9 @@ const SubmissionPage = ({ match, history }) => (
               history={history}
               initialValues={initialValues}
               nextUrl={`${match.path}/metadata`}
+              previousUrl={`${match.path}`}
+              step={1}
+              title="Write your cover letter and upload your manuscript"
               validationSchema={fileUploadsSchema}
             />
           )}
@@ -45,6 +48,9 @@ const SubmissionPage = ({ match, history }) => (
               history={history}
               initialValues={initialValues}
               nextUrl={`${match.path}/suggestions`}
+              previousUrl={`${match.path}/upload`}
+              step={2}
+              title="Help us get your work seen by the right people"
               validationSchema={manuscriptMetadataSchema}
             />
           )}
@@ -59,6 +65,10 @@ const SubmissionPage = ({ match, history }) => (
               history={history}
               initialValues={initialValues}
               nextUrl="/dashboard"
+              previousUrl={`${match.path}/metadata`}
+              step={3}
+              submitButtonText="Submit"
+              title="Who should review your work?"
               validationSchema={reviewerSuggestionsSchema}
             />
           )}
@@ -72,6 +82,8 @@ const SubmissionPage = ({ match, history }) => (
               history={history}
               initialValues={initialValues}
               nextUrl={`${match.path}/upload`}
+              step={0}
+              title="Who is the corresponding author?"
               validationSchema={authorDetailsSchema}
             />
           )}

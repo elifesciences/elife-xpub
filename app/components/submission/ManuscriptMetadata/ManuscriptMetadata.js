@@ -1,16 +1,13 @@
 import React from 'react'
-import { Menu, Checkbox, Button } from '@pubsweet/ui'
+import { Menu, Checkbox } from '@pubsweet/ui'
 import { Field } from 'formik'
 import { get } from 'lodash'
 import { Box } from 'grid-styled'
 
 import ValidatedField from '../../ui/atoms/ValidatedField'
 import CalloutBox from '../../ui/atoms/CalloutBox'
-import ButtonLink from '../../ui/atoms/ButtonLink'
 import Textarea from '../../ui/atoms/Textarea'
-import ProgressBar from '../ProgressBar'
 import SubjectAreaDropdown from './SubjectAreaDropdown'
-import { FormH2 } from '../../ui/atoms/FormHeadings'
 
 const CheckboxGeneratedChild = ({
   fieldName,
@@ -31,17 +28,8 @@ const CheckboxGeneratedChild = ({
   </Box>
 )
 
-const ManuscriptMetadata = ({
-  handleSubmit,
-  values,
-  setFieldValue,
-  setFieldTouched,
-}) => (
-  <form noValidate onSubmit={handleSubmit}>
-    <ProgressBar currentStep={2} />
-
-    <FormH2>Help us get your work seen by the right people</FormH2>
-
+const ManuscriptMetadata = ({ values, setFieldValue, setFieldTouched }) => (
+  <React.Fragment>
     <ValidatedField label="Manuscript title" name="title" />
 
     <Box mb={3} w={1 / 2}>
@@ -110,12 +98,7 @@ const ManuscriptMetadata = ({
         />
       </div>
     </CheckboxGeneratedChild>
-
-    <ButtonLink to="/submit/upload">Back</ButtonLink>
-    <Button data-test-id="next" primary type="submit">
-      Next
-    </Button>
-  </form>
+  </React.Fragment>
 )
 
 export default ManuscriptMetadata

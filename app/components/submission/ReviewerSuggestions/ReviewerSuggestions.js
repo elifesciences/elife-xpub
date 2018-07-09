@@ -1,9 +1,7 @@
 import React from 'react'
 import { Box } from 'grid-styled'
-import { Button, Action } from '@pubsweet/ui'
+import { Action } from '@pubsweet/ui'
 
-import ButtonLink from '../../ui/atoms/ButtonLink'
-import ProgressBar from '../ProgressBar'
 import {
   Declaration,
   ExcludedReviewer,
@@ -13,7 +11,7 @@ import {
   SuggestedReviewingEditorRow,
   SuggestedSeniorEditorRow,
 } from './FormSections'
-import { FormH2, FormH3 } from '../../ui/atoms/FormHeadings'
+import { FormH3 } from '../../ui/atoms/FormHeadings'
 
 const MoreButton = ({
   empty,
@@ -36,12 +34,8 @@ const MoreButton = ({
 
 const MAX_EXCLUDED_EDITORS = 2
 
-const ReviewerSuggestions = ({ handleSubmit, values, setFieldValue }) => (
-  <form noValidate onSubmit={handleSubmit}>
-    <ProgressBar currentStep={3} />
-
-    <FormH2>Who should review your work?</FormH2>
-
+const ReviewerSuggestions = ({ values, setFieldValue }) => (
+  <React.Fragment>
     <FormH3>Suggest a Senior Editor</FormH3>
 
     <SuggestedSeniorEditorRow rowIndex={0} />
@@ -146,12 +140,7 @@ const ReviewerSuggestions = ({ handleSubmit, values, setFieldValue }) => (
     </Box>
 
     <Declaration />
-
-    <ButtonLink to="/submit/metadata">Back</ButtonLink>
-    <Button data-test-id="next" primary type="submit">
-      Submit
-    </Button>
-  </form>
+  </React.Fragment>
 )
 
 export default ReviewerSuggestions
