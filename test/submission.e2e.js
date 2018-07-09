@@ -52,9 +52,6 @@ test('Happy path', async t => {
 
   // file uploads
   await t
-    // TODO re-enable this assertion once https://github.com/elifesciences/elife-xpub/issues/309 is resolved
-    // .expect(submission.verificationRibbon.exists)
-    // .eql(false)
     .typeText(fileUploads.editor, '\nPlease consider this for publication')
     .setFilesToUpload(fileUploads.manuscriptUpload, manuscript.file)
     // wait for editor onChange
@@ -114,8 +111,6 @@ test('Corresponding author', async t => {
 
   // file uploads
   await t
-    .expect(submission.verificationRibbon.exists)
-    .eql(true)
     .typeText(fileUploads.editor, '\nPlease consider this for publication')
     .setFilesToUpload(fileUploads.manuscriptUpload, manuscript.file)
     // wait for editor onChange
