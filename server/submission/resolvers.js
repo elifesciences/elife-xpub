@@ -142,10 +142,10 @@ const resolvers = {
           logger.error(`Error sending submitter confirmation email: ${err}`)
         })
 
-      if (ctx.user.email !== manuscript.submissionMeta.author.email) {
+      const user = await User.find(ctx.user)
+      if (user.email !== newManuscript.submissionMeta.author.email) {
         mailer
           .send({
-            from: config.get('mailer.from'),
             to: newManuscript.submissionMeta.author.email,
             text: 'Please verify that you are a corresponding author',
           })
