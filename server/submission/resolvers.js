@@ -1,6 +1,5 @@
 const lodash = require('lodash')
 const config = require('config')
-const Email = require('@pubsweet/component-send-email')
 const User = require('pubsweet-server/src/models/User')
 const mailer = require('@pubsweet/component-send-email')
 const logger = require('@pubsweet/logger')
@@ -32,56 +31,6 @@ const staticManifest = `<dar>
   </assets>
 </dar>
 `
-
-function manuscriptHasAuthor(user, manuscript) {
-  return manuscript.manuscriptPersons.some(
-    manuscriptPerson =>
-      manuscriptPerson.role === 'AUTHOR' &&
-      manuscriptPerson.alias.email === manuscript.submissionMeta.author.email,
-  )
-}
-
-async function setupCorrespondingAuthor(user, manuscript) {
-  if (!manuscriptHasAuthor(user, manuscript)) {
-    const manuscriptPerson = await createCorrespondingAuthor(manuscript)
-
-    manuscript.manuscriptPersons.push(manuscriptPerson)
-
-    if (!manuscriptPerson.user) {
-      try {
-        await mailer.send({
-          to: manuscript.submissionMeta.author.email,
-          text: 'Please verify that you are a corresponding author',
-        })
-      } catch (err) {
-        logger.error(err)
-      }
-    }
-  }
-
-  return manuscript
-}
-
-async function createCorrespondingAuthor(manuscript) {
-  const manuscriptPerson = {
-    alias: manuscript.submissionMeta.author,
-    role: 'AUTHOR',
-    metadata: {
-      corresponding: true,
-    },
-  }
-
-  try {
-    manuscriptPerson.user = await User.findByEmail(
-      manuscript.submissionMeta.author.email,
-    )
-    manuscriptPerson.metadata.confirmed = true
-  } catch (err) {
-    if (err.name !== 'NotFoundError') throw err
-  }
-
-  return manuscriptPerson
-}
 
 const resolvers = {
   Query: {
@@ -122,20 +71,12 @@ const resolvers = {
       return id
     },
 
-    async updateSubmission(_, { data, isAutoSave }, ctx) {
+    async updateSubmission(_, { data }, ctx) {
       logger.debug('Update Submission - starting')
 
-      let manuscript = await db.selectId(data.id)
+      const manuscript = await db.selectId(data.id)
       db.checkPermission(manuscript, ctx.user)
       lodash.merge(manuscript, data)
-      const user = await User.find(ctx.user)
-
-      if (
-        !isAutoSave &&
-        user.email !== manuscript.submissionMeta.author.email
-      ) {
-        manuscript = await setupCorrespondingAuthor(user, manuscript)
-      }
 
       await db.update(db.manuscriptGqlToDb(manuscript, ctx.user), data.id)
       logger.debug(`Updated Submission ${data.id} by user ${ctx.user}`)
@@ -189,16 +130,19 @@ const resolvers = {
       const newManuscriptDb = db.manuscriptGqlToDb(newManuscript, ctx.user)
       await db.update(newManuscriptDb, data.id)
 
-      const mailData = {
-        from: config.get('mailer.from'),
-        to: newManuscript.submissionMeta.author.email,
-        subject: 'Congratulations! You submitted your manuscript!',
-        text: 'Your manuscript has been submitted',
-        html: '<p>Your manuscript has been submitted</p>',
+      const user = await User.find(ctx.user)
+      if (user.email !== newManuscript.submissionMeta.author.email) {
+        mailer
+          .send({
+            to: newManuscript.submissionMeta.author.email,
+            text: 'Please verify that you are a corresponding author',
+          })
+          .catch(err => {
+            logger.error(
+              `Error sending corresponding author verification email: ${err}`,
+            )
+          })
       }
-      Email.send(mailData).catch(error => {
-        logger.error(`Error sending e-mail: ${error}`)
-      })
 
       return newManuscript
     },

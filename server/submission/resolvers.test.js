@@ -3,7 +3,7 @@ const config = require('config')
 const fs = require('fs-extra')
 const { createTables } = require('@pubsweet/db-manager')
 const User = require('pubsweet-server/src/models/User')
-const Email = require('@pubsweet/component-send-email')
+const mailer = require('@pubsweet/component-send-email')
 const { save, select, selectId, manuscriptGqlToDb } = require('../db-helpers/')
 const { Mutation, Query } = require('./resolvers')
 const { emptyManuscript } = require('./definitions')
@@ -29,7 +29,7 @@ describe('Submission', () => {
     const user = new User(userData)
     await user.save()
     userId = user.id
-    Email.clearMails()
+    mailer.clearMails()
   })
 
   describe('currentSubmission', () => {
@@ -138,78 +138,6 @@ describe('Submission', () => {
       const expectedManuscript = lodash.merge({}, manuscriptInput)
       expect(actualManuscript).toMatchObject(expectedManuscript)
     })
-
-    describe('corresponding author', () => {
-      it('does not add manuscript person if emails match', async () => {
-        const manuscript = lodash.merge({}, emptyManuscript)
-        manuscript.submissionMeta.author.email = userData.email
-
-        const id = await save(manuscriptGqlToDb(manuscript, userId))
-        await Mutation.updateSubmission(
-          {},
-          {
-            data: { id },
-            isAutoSave: false,
-          },
-          { user: userId },
-        )
-
-        const actualManuscript = await selectId(id)
-        expect(actualManuscript.manuscriptPersons).toHaveLength(0)
-        expect(Email.getMails()).toHaveLength(0)
-      })
-
-      it('adds manuscript person if emails differ', async () => {
-        const manuscript = lodash.merge({}, emptyManuscript)
-        manuscript.submissionMeta.author.email = 'author@example.com'
-
-        const id = await save(manuscriptGqlToDb(manuscript, userId))
-        await Mutation.updateSubmission(
-          {},
-          {
-            data: { id },
-            isAutoSave: false,
-          },
-          { user: userId },
-        )
-
-        const actualManuscript = await selectId(id)
-        expect(actualManuscript.manuscriptPersons).toHaveLength(1)
-        expect(Email.getMails()).toHaveLength(1)
-      })
-
-      it('does not add another manuscript person if already present', async () => {
-        const manuscript = lodash.merge({}, emptyManuscript, {
-          submissionMeta: {
-            author: {
-              email: 'email@example.com',
-            },
-          },
-          manuscriptPersons: [
-            {
-              alias: {
-                email: 'email@example.com',
-              },
-              role: 'AUTHOR',
-            },
-          ],
-        })
-
-        const id = await save(manuscriptGqlToDb(manuscript, userId))
-        await Mutation.updateSubmission(
-          {},
-          {
-            data: { id },
-            isAutoSave: false,
-          },
-          { user: userId },
-        )
-
-        const actualManuscript = await selectId(id)
-        expect(actualManuscript.manuscriptPersons).toHaveLength(1)
-        expect(Email.getMails()).toHaveLength(0)
-      })
-    })
   })
 
   describe('finshSubmission', () => {
@@ -278,8 +206,35 @@ describe('Submission', () => {
       const expectedManuscript = lodash.merge(initialManuscript, manuscript)
       expectedManuscript.submissionMeta.stage = 'QA'
       expect(expectedManuscript).toMatchObject(storedManuscript)
+    })
 
-      expect(Email.getMails()).toHaveLength(1)
+    it("sends a verification email if the submitter is not the corresponding author - email address entered on step 1 of the wizard differs from submitter's login email", async () => {
+      const manuscript = lodash.cloneDeep(fullManuscript)
+      manuscript.id = id
+      await Mutation.finishSubmission(
+        {},
+        {
+          data: manuscript,
+        },
+        { user: userId },
+      )
+
+      expect(mailer.getMails()).toHaveLength(1)
+    })
+
+    it('does not send a verification email if the submitter is the corresponding author', async () => {
+      const manuscript = lodash.cloneDeep(fullManuscript)
+      manuscript.id = id
+      manuscript.submissionMeta.author.email = userData.email
+      await Mutation.finishSubmission(
+        {},
+        {
+          data: manuscript,
+        },
+        { user: userId },
+      )
+
+      expect(mailer.getMails()).toHaveLength(0)
     })
 
     // TODO more tests needed here

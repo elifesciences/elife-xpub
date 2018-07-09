@@ -2,28 +2,10 @@ import React from 'react'
 import { Formik } from 'formik'
 import { Box, Flex } from 'grid-styled'
 import { Button } from '@pubsweet/ui'
-import NotificationRibbon from '../ui/atoms/NotificationRibbon'
 import ButtonLink from '../ui/atoms/ButtonLink'
 import { FormH2 } from '../ui/atoms/FormHeadings'
 import AutoSave from './AutoSave'
 import ProgressBar from './ProgressBar'
-
-const EmailVerificationRibbon = ({ values }) => {
-  const show = values.manuscriptPersons.some(
-    manuscriptPerson =>
-      manuscriptPerson.role === 'AUTHOR' &&
-      !manuscriptPerson.metadata.confirmed,
-  )
-  return (
-    show && (
-      <Box mb={5} mx={-3}>
-        <NotificationRibbon data-test-id="author-verification">
-          A verification email has been sent to the corresponding author.
-        </NotificationRibbon>
-      </Box>
-    )
-  )
-}
 
 const WizardStep = ({
   component: FormComponent,
@@ -46,7 +28,6 @@ const WizardStep = ({
     render={({ values, handleSubmit: handleFormSubmit, ...formProps }) => (
       <form noValidate onSubmit={handleFormSubmit}>
         <AutoSave onSave={handleUpdate} values={values} />
-        <EmailVerificationRibbon values={values} />
 
         <ProgressBar currentStep={step} />
         <Box mt={6}>
