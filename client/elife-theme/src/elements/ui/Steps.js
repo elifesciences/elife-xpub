@@ -13,6 +13,7 @@ const stepCenter = (isCurrent, isPast) => {
 export const Steps = {
   Root: css`
     margin-bottom: ${th('space.6')};
+    min-width: 0;
   `,
 
   Step: css`

@@ -1,7 +1,7 @@
 import React from 'react'
-import { Flex, Box } from 'grid-styled'
 import { Action, ErrorText } from '@pubsweet/ui'
 import ValidatedField from '../../ui/atoms/ValidatedField'
+import TwoColumnRow from '../TwoColumnRow'
 
 const AuthorDetails = ({ fetchOrcid, loading, error }) => (
   <React.Fragment>
@@ -16,35 +16,35 @@ const AuthorDetails = ({ fetchOrcid, loading, error }) => (
       {error}
     </ErrorText>
 
-    <Flex>
-      <Box width={1 / 2}>
+    <TwoColumnRow
+      left={
         <ValidatedField
           label="First name"
           name="submissionMeta.author.firstName"
         />
-      </Box>
-      <Box width={1 / 2}>
+      }
+      right={
         <ValidatedField
           label="Last name"
           name="submissionMeta.author.lastName"
         />
-      </Box>
-    </Flex>
-    <Flex>
-      <Box width={1 / 2}>
+      }
+    />
+    <TwoColumnRow
+      left={
         <ValidatedField
           label="Email (correspondence)"
           name="submissionMeta.author.email"
           type="email"
         />
-      </Box>
-      <Box width={1 / 2}>
+      }
+      right={
         <ValidatedField
           label="Institution"
           name="submissionMeta.author.institution"
         />
-      </Box>
-    </Flex>
+      }
+    />
   </React.Fragment>
 )
 

@@ -4,7 +4,7 @@ import { Box } from 'grid-styled'
 import PropTypes from 'prop-types'
 
 const ProgressBar = ({ currentStep }) => (
-  <Box mx="auto" width={500}>
+  <Box mx="auto" width={[1, 1, 500]}>
     <Steps currentStep={currentStep}>
       <Steps.Step title="Author" />
       <Steps.Step title="Files" />

@@ -26,28 +26,32 @@ const WizardStep = ({
     key={FormComponent.name}
     onSubmit={values => handleSubmit(values).then(() => history.push(nextUrl))}
     render={({ values, handleSubmit: handleFormSubmit, ...formProps }) => (
-      <form noValidate onSubmit={handleFormSubmit}>
-        <AutoSave onSave={handleUpdate} values={values} />
+      <Flex>
+        <Box flex="1 1 auto" mx={[0, 0, 0, '16.666%']}>
+          <form noValidate onSubmit={handleFormSubmit}>
+            <AutoSave onSave={handleUpdate} values={values} />
 
-        <ProgressBar currentStep={step} />
-        <Box mt={6}>
-          <FormH2>{title}</FormH2>
-        </Box>
-        <FormComponent values={values} {...formProps} />
-
-        <Flex mt={5}>
-          {previousUrl && (
-            <Box mr={3}>
-              <ButtonLink to={previousUrl}>Back</ButtonLink>
+            <ProgressBar currentStep={step} />
+            <Box mt={6}>
+              <FormH2>{title}</FormH2>
             </Box>
-          )}
-          <Box>
-            <Button data-test-id="next" primary type="submit">
-              {submitButtonText}
-            </Button>
-          </Box>
-        </Flex>
-      </form>
+            <FormComponent values={values} {...formProps} />
+
+            <Flex mt={5}>
+              {previousUrl && (
+                <Box mr={3}>
+                  <ButtonLink to={previousUrl}>Back</ButtonLink>
+                </Box>
+              )}
+              <Box>
+                <Button data-test-id="next" primary type="submit">
+                  {submitButtonText}
+                </Button>
+              </Box>
+            </Flex>
+          </form>
+        </Box>
+      </Flex>
     )}
     validationSchema={validationSchema}
   />
