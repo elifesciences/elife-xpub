@@ -1,3 +1,4 @@
+import { ClientFunction, Selector } from 'testcafe'
 import replaySetup from './helpers/replay-setup'
 import {
   dashboard,
@@ -51,6 +52,9 @@ test('Happy path', async t => {
 
   // file uploads
   await t
+    // TODO re-enable this assertion once https://github.com/elifesciences/elife-xpub/issues/309 is resolved
+    // .expect(submission.verificationRibbon.exists)
+    // .eql(false)
     .typeText(fileUploads.editor, '\nPlease consider this for publication')
     .setFilesToUpload(fileUploads.manuscriptUpload, manuscript.file)
     // wait for editor onChange
@@ -84,45 +88,48 @@ test('Happy path', async t => {
 test('Corresponding author', async t => {
   replaySetup('success')
   await dashboard.login()
-  await t.navigateTo(dashboard.url).click('[data-test-id=submit]')
+  await t.navigateTo(authorDetails.url)
 
-  // author details initially empty
+  // set author details
   await t
-    .expect(authorDetails.firstNameField.value)
-    .eql('')
-    .expect(authorDetails.secondNameField.value)
-    .eql('')
-    .expect(authorDetails.emailField.value)
-    .eql('')
-    .expect(authorDetails.institutionField.value)
-    .eql('')
-
-  // author details pre-populated using Orcid API
-  await t
-    .click(authorDetails.orcidPrefill)
-    .expect(authorDetails.firstNameField.value)
-    .eql('Test', 'First name is populated by query to the Orcid API')
-    .expect(authorDetails.secondNameField.value)
-    .eql('User', 'Last name is populated by query to the Orcid API')
-    .expect(authorDetails.emailField.value)
-    .eql('elife@mailinator.com', 'Email is populated by query to the Orcid API')
-    .expect(authorDetails.institutionField.value)
+    .typeText(authorDetails.firstNameField, 'Anne')
+    .typeText(authorDetails.secondNameField, 'Author')
+    .typeText(authorDetails.emailField, 'anne.author@life')
+    .typeText(authorDetails.institutionField, 'University of eLife')
+    .expect(Selector(authorDetails.emailValidationMessage).textContent)
     .eql(
-      'University of eLife',
-      'Institution is populated by query to the Orchid API',
+      'Must be a valid email address',
+      'Error is displayed when user enters invalid email',
     )
+    .click(submission.next)
+    .expect(ClientFunction(() => window.location.href)())
+    .eql(
+      authorDetails.url,
+      'Validation errors prevent progress to the next page',
+    )
+    .typeText(authorDetails.emailField, '.ac.uk')
     .click(submission.next)
 
   // file uploads
   await t
+    .expect(submission.verificationRibbon.exists)
+    .eql(true)
     .typeText(fileUploads.editor, '\nPlease consider this for publication')
     .setFilesToUpload(fileUploads.manuscriptUpload, manuscript.file)
     // wait for editor onChange
     .wait(1000)
-    .click(submission.next)
+
+    .click(fileUploads.preview)
+    .expect(Selector('.sc-title-group').textContent)
+    .eql(manuscript.title)
+
+  const goBack = ClientFunction(() => window.history.back())
+  await goBack()
+  await t.click(submission.next)
 
   // metadata
   await t
+    .wait(1000)
     .expect(metadata.title.value)
     .eql(manuscript.title)
     .click(metadata.articleType)
@@ -131,6 +138,12 @@ test('Corresponding author', async t => {
     .pressKey('enter')
     .pressKey('down')
     .pressKey('enter')
+    .click(metadata.discussedPreviously)
+    .typeText(metadata.discussion, 'Spoke to Bob about another article')
+    .click(metadata.consideredPreviously)
+    .typeText(metadata.previousArticle, '01234')
+    .click(metadata.cosubmission)
+    .typeText(metadata.cosubmissionTitle, '56789')
     .click(submission.next)
 
   // reviewer suggestions
