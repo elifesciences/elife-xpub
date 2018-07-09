@@ -206,8 +206,6 @@ describe('Submission', () => {
       const expectedManuscript = lodash.merge(initialManuscript, manuscript)
       expectedManuscript.submissionMeta.stage = 'QA'
       expect(expectedManuscript).toMatchObject(storedManuscript)
-
-      expect(mailer.getMails()).toHaveLength(1)
     })
 
     it("sends a verification email if the submitter is not the corresponding author - email address entered on step 1 of the wizard differs from submitter's login email", async () => {

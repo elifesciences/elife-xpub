@@ -130,18 +130,6 @@ const resolvers = {
       const newManuscriptDb = db.manuscriptGqlToDb(newManuscript, ctx.user)
       await db.update(newManuscriptDb, data.id)
 
-      mailer
-        .send({
-          from: config.get('mailer.from'),
-          to: newManuscript.submissionMeta.author.email,
-          subject: 'Congratulations! You submitted your manuscript!',
-          text: 'Your manuscript has been submitted',
-          html: '<p>Your manuscript has been submitted</p>',
-        })
-        .catch(err => {
-          logger.error(`Error sending submitter confirmation email: ${err}`)
-        })
-
       const user = await User.find(ctx.user)
       if (user.email !== newManuscript.submissionMeta.author.email) {
         mailer
