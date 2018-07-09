@@ -76,10 +76,11 @@ test:e2e:
     - cd ${HOME}
     # specify host here else it confuses the linked postgres image
     - export PGHOSTADDR=127.0.0.1
-    - npm run test:e2e -- ---screenshots test/screenshots --screenshots-on-fails
+    - npm run test:e2e -- --screenshots test/screenshots --screenshots-on-fails
   artifacts:
     paths:
-    - test/screenshots
+      - "test/screenshots/*/*/*/errors/*.png"
+    when: on_failure
     expire_in: 1 week
 
 push:latest:
