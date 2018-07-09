@@ -102,6 +102,8 @@ test('Corresponding author', async t => {
       'Error is displayed when user enters invalid email',
     )
     .click(submission.next)
+    // without this wait the tests sometimes fail on CI ¯\_(ツ)_/¯
+    .wait(1000)
     .expect(ClientFunction(() => window.location.href)())
     .eql(
       authorDetails.url,
@@ -129,7 +131,6 @@ test('Corresponding author', async t => {
 
   // metadata
   await t
-    .wait(1000)
     .expect(metadata.title.value)
     .eql(manuscript.title)
     .click(metadata.articleType)
