@@ -8,17 +8,10 @@ const Label = styled.label`
   font-size: ${th('fontSizeBaseSmall')};
 `
 
-// TODO - remove when this function is added to pubsweet
-const borderColor = ({ theme, validationStatus = 'default' }) =>
-  ({
-    error: theme.colorError,
-    success: theme.colorSuccess,
-    warning: theme.colorWarning,
-    default: theme.colorBorder,
-  }[validationStatus])
-
 const Input = styled.textarea`
-  border: ${th('borderWidth')} ${th('borderStyle')} ${borderColor};
+  border: ${th('borderWidth')} ${th('borderStyle')}
+    ${({ validationStatus }) =>
+      validationStatus === 'error' ? th('colorError') : th('colorBorder')};
 
   border-radius: ${th('borderRadius')};
 

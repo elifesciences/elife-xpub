@@ -10,7 +10,9 @@ import { th } from '@pubsweet/ui-toolkit'
  */
 export default {
   Input: css`
-    color: ${th('colorText')};
+    border: ${th('borderWidth')} ${th('borderStyle')}
+      ${({ validationStatus }) =>
+        validationStatus === 'error' ? th('colorError') : th('colorBorder')};
     font-family: ${th('fontInterface')};
     font-size: 16px;
     line-height: 24px;
