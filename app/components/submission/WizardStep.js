@@ -31,13 +31,15 @@ const WizardStep = ({
           <form noValidate onSubmit={handleFormSubmit}>
             <AutoSave onSave={handleUpdate} values={values} />
 
-            <ProgressBar currentStep={step} />
-            <Box mt={6}>
-              <FormH2>{title}</FormH2>
+            <Box my={5}>
+              <ProgressBar currentStep={step} />
             </Box>
+
+            <FormH2>{title}</FormH2>
+
             <FormComponent values={values} {...formProps} />
 
-            <Flex mt={5}>
+            <Flex mt={6}>
               {previousUrl && (
                 <Box mr={3}>
                   <ButtonLink to={previousUrl}>Back</ButtonLink>
