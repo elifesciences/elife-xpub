@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-sort-props */
 
 import React from 'react'
-import { Flex, Box } from 'grid-styled'
+import { Box } from 'grid-styled'
 import ConfigurableEditor from 'xpub-edit/src/components/configurable/ConfigurableEditor'
 import FileUpload from '../../ui/molecules/FileUpload'
 import ValidatedField from '../../ui/atoms/ValidatedField'
@@ -30,7 +30,7 @@ const FileUploads = ({
   formError,
   previewUrl,
 }) => (
-  <Flex flexDirection="column">
+  <React.Fragment>
     <Box mb={3} width={1}>
       <ValidatedField
         component={Editor}
@@ -49,7 +49,7 @@ const FileUploads = ({
         previewUrl={previewUrl}
       />
     </Box>
-  </Flex>
+  </React.Fragment>
 )
 
 export default FileUploads

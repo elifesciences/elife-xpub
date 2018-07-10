@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { th } from '@pubsweet/ui-toolkit'
-import { Flex, Box } from 'grid-styled'
+import { Box } from 'grid-styled'
 
 const Label = styled.label`
   font-size: ${th('fontSizeBaseSmall')};
@@ -37,14 +37,14 @@ class Textarea extends React.Component {
     // Note: readonly is explicitly passed in because JSX readOnly has an uppercase 'O', so destructuring props is not enough
     const { label, readonly, ...props } = this.props
     return (
-      <Flex flexDirection="column">
+      <React.Fragment>
         <Box mb={1}>
           <Label htmlFor={this.inputId}>{label}</Label>
         </Box>
         <Box>
           <Input id={this.inputId} readOnly={readonly} {...props} />
         </Box>
-      </Flex>
+      </React.Fragment>
     )
   }
 }
