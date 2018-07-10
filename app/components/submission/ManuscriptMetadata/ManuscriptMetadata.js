@@ -15,7 +15,7 @@ const CheckboxGeneratedChild = ({
   values,
   children,
 }) => (
-  <Box mb={3}>
+  <Box mb={4}>
     <Box mb={2}>
       <Field
         name={fieldName}
@@ -30,7 +30,9 @@ const CheckboxGeneratedChild = ({
 
 const ManuscriptMetadata = ({ values, setFieldValue, setFieldTouched }) => (
   <React.Fragment>
-    <ValidatedField label="Manuscript title" name="title" />
+    <Box mb={3}>
+      <ValidatedField label="Manuscript title" name="title" />
+    </Box>
 
     <Box mb={3} w={1 / 2}>
       <ValidatedField
@@ -47,17 +49,19 @@ const ManuscriptMetadata = ({ values, setFieldValue, setFieldTouched }) => (
       />
     </Box>
 
-    <ValidatedField
-      component={SubjectAreaDropdown}
-      label="Subject areas"
-      name="subjectAreas"
-      onBlur={e => setFieldTouched('subjectAreas', true)}
-      onChange={selectedOptions => {
-        const subjectAreas = selectedOptions.map(option => option.value)
-        setFieldValue('subjectAreas', subjectAreas)
-      }}
-      savedValues={values.subjectAreas}
-    />
+    <Box mb={3}>
+      <ValidatedField
+        component={SubjectAreaDropdown}
+        label="Subject areas"
+        name="subjectAreas"
+        onBlur={e => setFieldTouched('subjectAreas', true)}
+        onChange={selectedOptions => {
+          const subjectAreas = selectedOptions.map(option => option.value)
+          setFieldValue('subjectAreas', subjectAreas)
+        }}
+        savedValues={values.subjectAreas}
+      />
+    </Box>
 
     <CheckboxGeneratedChild
       checkboxLabel="This manuscript has been discussed previously with an eLife editor"
