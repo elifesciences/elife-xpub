@@ -41,9 +41,7 @@ class Textarea extends React.Component {
         <Box mb={1}>
           <Label htmlFor={this.inputId}>{label}</Label>
         </Box>
-        <Box>
-          <Input id={this.inputId} readOnly={readonly} {...props} />
-        </Box>
+        <Input id={this.inputId} readOnly={readonly} {...props} />
       </React.Fragment>
     )
   }
