@@ -57,6 +57,8 @@ export default {
    */
   space: [0, 1, 2, 4, 6, 8, 12, 20].map(factor => `${factor * gridUnit}px`),
 
+  breakpoints: [480, 768, 1000, 1272],
+
   /* Border */
   borderRadius: '3px',
   borderWidth: '1px',
