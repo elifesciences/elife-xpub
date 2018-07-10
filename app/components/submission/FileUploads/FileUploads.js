@@ -40,7 +40,7 @@ const FileUploads = ({
         onChange={value => setFieldValue('submissionMeta.coverLetter', value)}
       />
     </Box>
-    <Box mb={3} width={1}>
+    <Box width={1}>
       <FileUpload
         conversion={conversion}
         data-test-id="upload"
