@@ -5,7 +5,7 @@ you have created will be in tip-top shape for the site.
 
 ## Browsers to check
 
-It doesn't have to look exactly the same in every browser, but it should look similar and work properly in current versions of these evergreen browsers:
+It doesn't have to look exactly the same in every browser, but it should look similar and work properly in current versions of these browsers:
 
 ### Desktop
 
@@ -28,5 +28,7 @@ Latest versions of:
 ## Procedure to follow
 
 * Visually check the html of the component.
-* Audibly check the description of the component.
+* Audibly check the description of the component, where possible with:
+  * Voice Over on a Mac while using Safari, or
+  * Chrome Vox Chrome extension using Chrome on any platform
 * Check the CSS is applied correctly.
