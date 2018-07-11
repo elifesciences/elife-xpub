@@ -6,9 +6,6 @@ import ValidatedField from '../../../../ui/atoms/ValidatedField'
 import Textarea from '../../../../ui/atoms/Textarea'
 import SubjectAreaDropdown from './SubjectAreaDropdown'
 import OptionalSection from './OptionalSection'
-import MoreButton from '../../ui/molecules/MoreButton'
-
-const MAX_COSUBMISSIONS = 2
 
 const ManuscriptMetadata = ({ values, setFieldValue, setFieldTouched }) => (
   <React.Fragment>
@@ -78,29 +75,10 @@ const ManuscriptMetadata = ({ values, setFieldValue, setFieldTouched }) => (
       }
       open={values.submissionMeta.cosubmission.length}
     >
-      {values.submissionMeta.cosubmission.map((_, rowIndex) => (
-        // eslint-disable-next-line react/no-array-index-key
-        <Box key={rowIndex} mb={2}>
-          <ValidatedField
-            label="Article title"
-            name={`submissionMeta.cosubmission.${rowIndex}.title`}
-          />
-        </Box>
-      ))}
-
-      {values.submissionMeta.cosubmission.length < MAX_COSUBMISSIONS && (
-        <Box>
-          Would you like to{' '}
-          <MoreButton
-            empty={{ title: '' }}
-            fieldName="submissionMeta.cosubmission"
-            objectName="co-submission"
-            setFieldValue={setFieldValue}
-            type="include"
-            values={values}
-          />?
-        </Box>
-      )}
+      <ValidatedField
+        label="Article title"
+        name="submissionMeta.cosubmission.0.title"
+      />
     </OptionalSection>
   </React.Fragment>
 )
