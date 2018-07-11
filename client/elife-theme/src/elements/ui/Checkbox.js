@@ -32,8 +32,8 @@ export default css`
   
   input:checked + span::before {
     border-color: ${th('colorPrimary')};
-    background: url('data:image/svg+xml;utf8,${checkIcon}') center/75% no-repeat, ${th(
-  'colorPrimary',
-)};
+    background: url('data:image/svg+xml;utf8,${encodeURIComponent(
+      checkIcon,
+    )}') center/75% no-repeat, ${th('colorPrimary')};
   }
 `

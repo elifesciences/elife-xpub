@@ -1,6 +1,11 @@
 import { css } from 'styled-components'
 import { th } from '@pubsweet/ui-toolkit'
 
+// TODO: remove this once themes support icons
+const checkIcon = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 8">
+    <path fill="#FFF" d="M0 4l1.4-1.4L4 5.2 8.6.6 10 2 4 8z" />
+</svg>`
+
 const stepCenter = (isCurrent, isPast) => {
   if (isCurrent) {
     return th('colorBackground')
@@ -41,8 +46,11 @@ export const Steps = {
 
   Bullet: css`
     background-position: center;
+    background-size: 10px;
     background-repeat: no-repeat;
     background-color: inherit;
-    background-image: url("data:image/svg+xml;utf8,<?xml version='1.0' encoding='UTF-8'?><svg width='10px' height='8px' viewBox='0 0 10 8' version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'><!-- Generator: Sketch 50.2 (55047) - http://www.bohemiancoding.com/sketch --><title>stepper-tick-icon</title><desc>Created with Sketch.</desc><defs></defs><g id='Symbols' stroke='none' stroke-width='1' fill='none' fill-rule='evenodd'><g id='atoms/step-complete' transform='translate(-5.000000, -6.000000)'><g id='stepper-tick-icon' transform='translate(4.000000, 4.000000)'><rect id='Rectangle' x='0' y='0' width='12' height='12'></rect><polygon id='Shape' fill='#FFFFFF' points='1 6 2.4 4.6 5 7.2 9.6 2.6 11 4 5 10'></polygon></g></g></g></svg>");
+    background-image: url('data:image/svg+xml;utf8,${encodeURIComponent(
+      checkIcon,
+    )}');
   `,
 }
