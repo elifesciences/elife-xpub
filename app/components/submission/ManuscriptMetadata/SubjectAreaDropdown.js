@@ -6,10 +6,7 @@ import Select, { createFilter, components } from 'react-select'
 
 import Icon from '../../ui/atoms/Icon'
 
-const Root = styled.div`
-  display: flex;
-  flex-direction: column;
-`
+const Root = styled.div``
 
 const SelectLimitMessage = styled.p`
   color: ${th('colorSuccess')};

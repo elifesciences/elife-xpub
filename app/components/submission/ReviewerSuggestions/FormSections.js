@@ -1,5 +1,4 @@
 import React from 'react'
-import { Box } from 'grid-styled'
 import { Checkbox } from '@pubsweet/ui'
 
 import ValidatedField from '../../ui/atoms/ValidatedField'
@@ -146,17 +145,13 @@ export const ExcludedReviewer = ({ index, values, setFieldValue }) => (
 
 // pass `value` prop to `checked`
 const ValueCheckbox = ({ value, validationStatus, ...props }) => (
-  <Box mb={3}>
-    <Checkbox checked={value} {...props} />
-  </Box>
+  <Checkbox checked={value} {...props} />
 )
 
 export const Declaration = () => (
-  <Box mb={3}>
-    <ValidatedField
-      component={ValueCheckbox}
-      label="I declare that, to the best of my knowledge, these experts have no conflict of interest"
-      name="noConflictOfInterest"
-    />
-  </Box>
+  <ValidatedField
+    component={ValueCheckbox}
+    label="I declare that, to the best of my knowledge, these experts have no conflict of interest"
+    name="noConflictOfInterest"
+  />
 )
