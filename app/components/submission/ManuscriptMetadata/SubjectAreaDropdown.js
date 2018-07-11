@@ -6,6 +6,8 @@ import Select, { createFilter, components } from 'react-select'
 
 import Icon from '../../ui/atoms/Icon'
 
+const Root = styled.div``
+
 const SelectLimitMessage = styled.p`
   color: ${th('colorSuccess')};
 `
@@ -228,7 +230,7 @@ class SubjectAreaDropdown extends React.Component {
     }
 
     return (
-      <React.Fragment>
+      <Root>
         {/* htmlFor matches with react-select's inputId, which applies the correct id to the internal sub-component */}
         {/* eslint-disable-next-line jsx-a11y/label-has-for */}
         <label htmlFor="subject-area-select">{label}</label>
@@ -249,7 +251,7 @@ class SubjectAreaDropdown extends React.Component {
             </SelectLimitMessage>
           </div>
         )}
-      </React.Fragment>
+      </Root>
     )
   }
 }
