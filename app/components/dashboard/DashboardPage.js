@@ -5,7 +5,7 @@ import { GET_CURRENT_SUBMISSION } from '../submission/WithCurrentSubmission'
 import Dashboard from './Dashboard'
 
 export const MANUSCRIPTS_QUERY = gql`
-  query {
+  query DashboardManuscripts {
     manuscripts {
       id
       title
@@ -17,7 +17,7 @@ export const MANUSCRIPTS_QUERY = gql`
 `
 
 export const DELETE_MANUSCRIPT_MUTATION = gql`
-  mutation($id: ID!) {
+  mutation DeleteManuscript($id: ID!) {
     deleteManuscript(id: $id)
   }
 `
