@@ -98,29 +98,17 @@ const typeDefs = `
     type SubmissionMeta {
       coverLetter: String
       author: Person
-      hasCorrespondent: Boolean
-      correspondent: Person
       stage: SubmissionStage
-      discussedPreviously: Boolean
       discussion: String
-      consideredPreviously: Boolean
       previousArticle: String
-      cosubmission: Boolean
-      cosubmissionTitle: String
-      cosubmissionId: String
+      cosubmission: [ArticleSearchParams]
     }
     input SubmissionMetaInput {
       coverLetter: String
       author: PersonInput
-      hasCorrespondent: Boolean
-      correspondent: PersonInput
-      discussedPreviously: Boolean
       discussion: String
-      consideredPreviously: Boolean
       previousArticle: String
-      cosubmission: Boolean
-      cosubmissionTitle: String
-      cosubmissionId: String
+      cosubmission: [ArticleSearchParamsInput!]!
     }
     type Person {
       firstName: String
@@ -137,6 +125,14 @@ const typeDefs = `
     enum SubmissionStage {
       INITIAL
       QA
+    }
+    type ArticleSearchParams {
+      title: String!
+      author: String
+    }
+    input ArticleSearchParamsInput {
+      title: String!
+      author: String
     }
     type OpposedEditor {
       name: String
@@ -217,13 +213,9 @@ const emptyManuscript = {
       institution: '',
     },
     stage: 'INITIAL',
-    discussedPreviously: false,
-    discussion: '',
-    consideredPreviously: false,
-    previousArticle: '',
-    cosubmission: false,
-    cosubmissionTitle: '',
-    cosubmissionId: '',
+    discussion: null,
+    previousArticle: null,
+    cosubmission: [],
   },
   manuscriptPersons: [],
 }
@@ -269,19 +261,17 @@ const manuscriptSchema = Joi.object()
         stage: Joi.string()
           .valid(possibleStages)
           .required(),
-        discussedPreviously: Joi.boolean().required(),
         discussion: Joi.when('discussedPreviously', {
           is: true,
           then: Joi.string().required(),
         }),
-        consideredPreviously: Joi.boolean().required(),
         previousArticle: Joi.when('consideredPreviously', {
           is: true,
           then: Joi.string().required(),
         }),
-        cosubmission: Joi.boolean().required(),
-        cosubmissionTitle: Joi.string().allow(''),
-        cosubmissionId: Joi.string().allow(''),
+        cosubmission: Joi.array()
+          .items(Joi.object().keys({ title: Joi.string().required() }))
+          .required(),
       })
       .required(),
     suggestedSeniorEditors: Joi.array()
@@ -326,30 +316,8 @@ const manuscriptSchema = Joi.object()
   })
   .required()
 
-const cosubmissionSchema = Joi.alternatives().try(
-  Joi.object().keys({
-    cosubmission: Joi.boolean().required(),
-    cosubmissionTitle: Joi.string().when('cosubmission', {
-      is: true,
-      then: Joi.required(),
-      otherwise: Joi.allow(''),
-    }),
-    cosubmissionId: Joi.string().allow(''),
-  }),
-  Joi.object().keys({
-    cosubmission: Joi.boolean().required(),
-    cosubmissionTitle: Joi.string().allow(''),
-    cosubmissionId: Joi.string().when('a', {
-      is: true,
-      then: Joi.required(),
-      otherwise: Joi.string().allow(''),
-    }),
-  }),
-)
-
 module.exports = {
   typeDefs,
   emptyManuscript,
   manuscriptSchema,
-  cosubmissionSchema,
 }

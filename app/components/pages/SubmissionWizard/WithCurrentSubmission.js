@@ -43,21 +43,12 @@ const manuscriptFragment = gql`
         email
         institution
       }
-      hasCorrespondent
-      correspondent {
-        firstName
-        lastName
-        email
-        institution
-      }
       stage
-      discussedPreviously
       discussion
-      consideredPreviously
       previousArticle
-      cosubmission
-      cosubmissionTitle
-      cosubmissionId
+      cosubmission {
+        title
+      }
     }
     manuscriptPersons {
       role

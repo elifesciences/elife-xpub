@@ -9,29 +9,19 @@ const schema = yup.object().shape({
     .max(2, `No more than 2 subject areas`)
     .required('Subject area(s) required'),
   submissionMeta: yup.object().shape({
-    discussedPreviously: yup.bool(),
-    discussion: yup.string().when('discussedPreviously', {
-      is: true,
-      then: yup.string().required('Please describe your previous discussion'),
-    }),
-    consideredPreviously: yup.bool(),
-    previousArticle: yup.string().when('consideredPreviously', {
-      is: true,
-      then: yup.string().required('Article title/reference no. is required'),
-    }),
-    cosubmission: yup.bool(),
-    cosubmissionTitle: yup
+    discussion: yup
       .string()
-      .test('namehere', 'Article title/reference no. is required', function() {
-        const { cosubmission, cosubmissionTitle, cosubmissionId } = this.parent
-        return !cosubmission || cosubmissionTitle || cosubmissionId
-      }),
-    cosubmissionId: yup
+      .notOneOf([''], 'Please describe your previous discussion')
+      .nullable(),
+    previousArticle: yup
       .string()
-      .test('namehere', 'Article title/reference no. is required', function() {
-        const { cosubmission, cosubmissionTitle, cosubmissionId } = this.parent
-        return !cosubmission || cosubmissionTitle || cosubmissionId
+      .notOneOf([''], 'Article title is required')
+      .nullable(),
+    cosubmission: yup.array(
+      yup.object().shape({
+        title: yup.string().required('Article title is required'),
       }),
+    ),
   }),
 })
 
@@ -40,13 +30,9 @@ const empty = {
   manuscriptType: '',
   subjectAreas: [],
   submissionMeta: {
-    discussedPreviously: false,
-    discussion: '',
-    consideredPreviously: false,
-    previousArticle: '',
-    cosubmission: false,
-    cosubmissionTitle: '',
-    cosubmissionId: '',
+    discussion: null,
+    previousArticle: null,
+    cosubmission: [],
   },
 }
 

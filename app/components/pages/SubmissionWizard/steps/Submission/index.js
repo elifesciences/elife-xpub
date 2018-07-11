@@ -1,32 +1,11 @@
 import React from 'react'
-import { Menu, Checkbox } from '@pubsweet/ui'
-import { Field } from 'formik'
-import { get } from 'lodash'
+import { Menu } from '@pubsweet/ui'
 import { Box } from 'grid-styled'
 
 import ValidatedField from '../../../../ui/atoms/ValidatedField'
-import CalloutBox from '../../../../ui/atoms/CalloutBox'
 import Textarea from '../../../../ui/atoms/Textarea'
 import SubjectAreaDropdown from './SubjectAreaDropdown'
-
-const CheckboxGeneratedChild = ({
-  fieldName,
-  checkboxLabel,
-  values,
-  children,
-}) => (
-  <Box mb={4}>
-    <Box mb={2}>
-      <Field
-        name={fieldName}
-        render={({ field }) => (
-          <Checkbox {...field} checked={field.value} label={checkboxLabel} />
-        )}
-      />
-    </Box>
-    {get(values, fieldName) && <CalloutBox>{children}</CalloutBox>}
-  </Box>
-)
+import OptionalSection from './OptionalSection'
 
 const ManuscriptMetadata = ({ values, setFieldValue, setFieldTouched }) => (
   <React.Fragment>
@@ -63,45 +42,44 @@ const ManuscriptMetadata = ({ values, setFieldValue, setFieldTouched }) => (
       />
     </Box>
 
-    <CheckboxGeneratedChild
-      checkboxLabel="This manuscript has been discussed previously with an eLife editor"
-      fieldName="submissionMeta.discussedPreviously"
-      values={values}
+    <OptionalSection
+      label="This manuscript has been discussed with an eLife editor"
+      onClose={() => setFieldValue('submissionMeta.discussion', null)}
+      onOpen={() => setFieldValue('submissionMeta.discussion', '')}
+      open={values.submissionMeta.discussion !== null}
     >
       <ValidatedField
         component={Textarea}
-        label="What was discussed and with whom"
+        label="What did you discuss and with whom?"
         name="submissionMeta.discussion"
       />
-    </CheckboxGeneratedChild>
+    </OptionalSection>
 
-    <CheckboxGeneratedChild
-      checkboxLabel="This manuscript has been considered by eLife previously"
-      fieldName="submissionMeta.consideredPreviously"
-      values={values}
+    <OptionalSection
+      label="This manuscript has been previously considered by eLife"
+      onClose={() => setFieldValue('submissionMeta.previousArticle', null)}
+      onOpen={() => setFieldValue('submissionMeta.previousArticle', '')}
+      open={values.submissionMeta.previousArticle !== null}
     >
       <ValidatedField
-        label="Article title/reference No"
+        label="Article title"
         name="submissionMeta.previousArticle"
       />
-    </CheckboxGeneratedChild>
+    </OptionalSection>
 
-    <CheckboxGeneratedChild
-      checkboxLabel="This manuscript is a co-submission"
-      fieldName="submissionMeta.cosubmission"
-      values={values}
+    <OptionalSection
+      label="This manuscript is a co-submission"
+      onClose={() => setFieldValue('submissionMeta.cosubmission', [])}
+      onOpen={() =>
+        setFieldValue('submissionMeta.cosubmission', [{ title: '' }])
+      }
+      open={values.submissionMeta.cosubmission.length}
     >
-      <div>
-        <ValidatedField
-          label="Article title"
-          name="submissionMeta.cosubmissionTitle"
-        />
-        <ValidatedField
-          label="Reference No"
-          name="submissionMeta.cosubmissionId"
-        />
-      </div>
-    </CheckboxGeneratedChild>
+      <ValidatedField
+        label="Article title"
+        name="submissionMeta.cosubmission.0.title"
+      />
+    </OptionalSection>
   </React.Fragment>
 )
 
