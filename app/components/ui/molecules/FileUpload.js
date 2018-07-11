@@ -177,6 +177,7 @@ FileUpload.propTypes = {
     completed: PropTypes.bool,
     error: PropTypes.instanceOf(Error),
     converting: PropTypes.bool,
+    progress: PropTypes.number,
   }),
   formError: PropTypes.bool,
 }

@@ -281,9 +281,13 @@ describe('Submission', () => {
         ),
         encoding: 'utf8',
         mimetype: 'application/pdf',
+        size: 73947,
       }
-
-      const manuscript = await Mutation.uploadManuscript({}, { id, file })
+      const manuscript = await Mutation.uploadManuscript(
+        {},
+        { id, file },
+        file.size,
+      )
       expect(manuscript).toMatchObject({
         id,
         meta: {

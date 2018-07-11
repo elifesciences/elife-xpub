@@ -10,6 +10,11 @@ const path = require('path')
 const crypto = require('crypto')
 const Joi = require('joi')
 
+const { PubSub } = require('graphql-subscriptions')
+
+const pubsub = new PubSub()
+const ON_UPLOAD_PROGRESS = 'uploadProgress'
+
 const parseString = promisify(xml2js.parseString)
 const randomBytes = promisify(crypto.randomBytes)
 const uploadsPath = config.get('pubsweet-server').uploads
@@ -110,7 +115,7 @@ const resolvers = {
       return manuscript
     },
 
-    async uploadManuscript(_, { file, id }) {
+    async uploadManuscript(_, { file, id, fileSize }) {
       const { stream, filename, mimetype } = await file
 
       const manuscriptContainer = path.join(uploadsPath, id)
@@ -133,6 +138,13 @@ const resolvers = {
       // save source file locally
       const saveFileStream = fs.createWriteStream(manuscriptSourcePath)
       stream.pipe(saveFileStream)
+
+      let uploadedSize = 0
+      stream.on('data', chunk => {
+        uploadedSize += chunk.length
+        const uploadProgress = Math.floor(uploadedSize * 100 / fileSize)
+        pubsub.publish(ON_UPLOAD_PROGRESS, { uploadProgress })
+      })
       const saveFilePromise = new Promise((resolve, reject) => {
         saveFileStream.on('finish', () => resolve(true))
         saveFileStream.on('error', reject)
@@ -183,6 +195,18 @@ const resolvers = {
       await Manuscript.save(manuscript)
 
       return manuscript
+    },
+  },
+  Subscription: {
+    uploadProgress: {
+      subscribe: () => {
+        console.log('new subscription!!')
+        setTimeout(() => {
+          console.log('published new data')
+          pubsub.publish(ON_UPLOAD_PROGRESS, { uploadProgress: 10 })
+        }, 8000)
+        return pubsub.asyncIterator(ON_UPLOAD_PROGRESS)
+      },
     },
   },
 
