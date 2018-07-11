@@ -3,12 +3,12 @@ import { th } from '@pubsweet/ui-toolkit'
 
 // TODO: remove this once themes support icons
 const checkIcon = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-    <path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z" fill="#fff" stroke="#fff" />
+    <path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z" fill="%23fff" stroke="%23fff" />
 </svg>`
 
 export default css`
   font-size: ${th('fontSizeBaseSmall')};
-  
+
   input {
     position: absolute;
     opacity: 0;
@@ -29,7 +29,7 @@ export default css`
     border: 1px solid ${th('colorBorder')};
     border-radius: ${th('borderRadius')};
   }
-  
+
   input:checked + span::before {
     border-color: ${th('colorPrimary')};
     background: url('data:image/svg+xml;utf8,${checkIcon}') center/75% no-repeat, ${th(
