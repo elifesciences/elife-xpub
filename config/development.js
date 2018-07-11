@@ -11,6 +11,8 @@ module.exports = {
     secret: 'not very secret',
     graphiql: true,
     logger: winston,
+    morganLogFormat:
+      ':method :url :status :graphql[operation] :res[content-length] :response-time ms',
   },
 
   dbManager: {

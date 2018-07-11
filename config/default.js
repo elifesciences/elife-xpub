@@ -16,6 +16,8 @@ module.exports = {
     logger,
     uploads: 'uploads',
     enableExperimentalGraphql: true,
+    morganLogFormat:
+      ':remote-addr [:date[clf]] :method :url :status :graphql[operation] :res[content-length] :response-time ms',
   },
   'pubsweet-client': {
     API_ENDPOINT: '/api',
