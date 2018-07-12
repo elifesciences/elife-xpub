@@ -17,11 +17,23 @@ const schema = yup.object().shape({
       .string()
       .notOneOf([''], 'Article title is required')
       .nullable(),
-    cosubmission: yup.array(
-      yup.object().shape({
-        title: yup.string().required('Article title is required'),
-      }),
-    ),
+    cosubmission: yup
+      // validate the array as an object to allow different requirements at different positions
+      .object({
+        '0': yup.object().shape({
+          title: yup.string().required('Article title is required'),
+        }),
+        '1': yup.object().shape({
+          title: yup.string(),
+        }),
+      })
+      // transform array to object for the purpose of validation
+      .transform((_, originalValue) =>
+        originalValue.reduce(
+          (obj, value, index) => ({ ...obj, [index]: value }),
+          {},
+        ),
+      ),
   }),
 })
 

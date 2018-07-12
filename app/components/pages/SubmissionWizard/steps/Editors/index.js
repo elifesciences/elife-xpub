@@ -1,6 +1,7 @@
 import React from 'react'
 import { Box } from 'grid-styled'
-import MoreButton from '../../ui/molecules/MoreButton'
+import MoreButton from '../../../../ui/molecules/MoreButton'
+import { FormH3 } from '../../../../ui/atoms/FormHeadings'
 
 import {
   Declaration,
@@ -11,7 +12,6 @@ import {
   SuggestedReviewingEditorRow,
   SuggestedSeniorEditorRow,
 } from './FormSections'
-import { FormH3 } from '../../../../ui/atoms/FormHeadings'
 
 const MAX_EXCLUDED_EDITORS = 2
 
