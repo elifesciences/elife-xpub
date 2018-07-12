@@ -1,6 +1,6 @@
 import React from 'react'
 import { Box } from 'grid-styled'
-import { Action } from '@pubsweet/ui'
+import MoreButton from '../../ui/molecules/MoreButton'
 
 import {
   Declaration,
@@ -12,25 +12,6 @@ import {
   SuggestedSeniorEditorRow,
 } from './FormSections'
 import { FormH3 } from '../../../../ui/atoms/FormHeadings'
-
-const MoreButton = ({
-  empty,
-  fieldName,
-  roleName,
-  setFieldValue,
-  type = 'suggest',
-  more = 'another',
-  values,
-}) => (
-  <Action
-    onClick={() =>
-      setFieldValue(fieldName, values[fieldName].concat(empty), false)
-    }
-    type="button"
-  >
-    {type} {values[fieldName].length ? more : 'a'} {roleName}
-  </Action>
-)
 
 const MAX_EXCLUDED_EDITORS = 2
 
@@ -60,7 +41,7 @@ const ReviewerSuggestions = ({ values, setFieldValue }) => (
           <MoreButton
             empty={{ name: '', reason: '' }}
             fieldName="opposedSeniorEditors"
-            roleName="senior editor"
+            objectName="senior editor"
             setFieldValue={setFieldValue}
             type="exclude"
             values={values}
@@ -98,7 +79,7 @@ const ReviewerSuggestions = ({ values, setFieldValue }) => (
           empty={['', '']}
           fieldName="suggestedReviewingEditors"
           more="more"
-          roleName="reviewing editors"
+          objectName="reviewing editors"
           setFieldValue={setFieldValue}
           values={values}
         />{' '}
@@ -106,7 +87,7 @@ const ReviewerSuggestions = ({ values, setFieldValue }) => (
         <MoreButton
           empty={{ name: '', reason: '' }}
           fieldName="opposedReviewingEditors"
-          roleName="reviewing editor"
+          objectName="reviewing editor"
           setFieldValue={setFieldValue}
           type="exclude"
           values={values}
@@ -140,7 +121,7 @@ const ReviewerSuggestions = ({ values, setFieldValue }) => (
         <MoreButton
           empty=""
           fieldName="suggestedReviewers"
-          roleName="reviewer"
+          objectName="reviewer"
           setFieldValue={setFieldValue}
           values={values}
         />{' '}
@@ -148,7 +129,7 @@ const ReviewerSuggestions = ({ values, setFieldValue }) => (
         <MoreButton
           empty={{ name: '', email: '', reason: '' }}
           fieldName="opposedReviewers"
-          roleName="reviewer"
+          objectName="reviewer"
           setFieldValue={setFieldValue}
           type="exclude"
           values={values}
