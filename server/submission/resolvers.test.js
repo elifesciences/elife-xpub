@@ -140,7 +140,7 @@ describe('Submission', () => {
     })
   })
 
-  describe('finshSubmission', () => {
+  describe('finishSubmission', () => {
     let id, initialManuscript
     const fullManuscript = {
       title: 'My Manuscript',
@@ -166,9 +166,9 @@ describe('Submission', () => {
           institution: 'Institution Inc',
         },
         hasCorrespondent: false,
-        discussedPreviously: false,
-        consideredPreviously: false,
-        cosubmission: false,
+        discussion: false,
+        previousArticle: false,
+        cosubmission: [],
       },
     }
 
