@@ -164,11 +164,21 @@ demo:
     - create_deployment
 
 scale-cluster:up:
-  stage: build
   image: pubsweet/kubernetes:latest
+  stage: build
   variables:
     MIN_SIZE: 9
     MAX_SIZE: 9
+  when: manual
+  script:
+    - scale-cluster
+
+scale-cluster:down:
+  image: pubsweet/kubernetes:latest
+  stage: build
+  variables:
+    MIN_SIZE: 1
+    MAX_SIZE: 1
   when: manual
   script:
     - scale-cluster
