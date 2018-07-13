@@ -20,6 +20,8 @@ stages:
 build:
   image: docker:latest
   stage: build
+  except:
+    - shedules
   script:
     - docker version
     - docker pull $IMAGE_ORG/$IMAGE_NAME:latest
@@ -32,6 +34,8 @@ build:
 lint:
   image: $IMAGE_ORG/$IMAGE_NAME:$CI_COMMIT_SHA
   stage: test
+  except:
+    - shedules
   variables:
     GIT_STRATEGY: none
   script:
@@ -41,6 +45,8 @@ lint:
 test:
   image: $IMAGE_ORG/$IMAGE_NAME:$CI_COMMIT_SHA
   stage: test
+  except:
+    - shedules
   variables:
     GIT_STRATEGY: none
     # setup data for postgres image
@@ -60,6 +66,8 @@ test:
 test:e2e:
   image: $IMAGE_ORG/$IMAGE_NAME:$CI_COMMIT_SHA
   stage: test
+  except:
+    - shedules
   variables:
     GIT_STRATEGY: none
     BROWSER: chrome:headless --no-sandbox
@@ -86,6 +94,8 @@ test:e2e:
 push:latest:
   image: docker:latest
   stage: staging
+  except:
+    - shedules
   script:
     - if [ -z "$DOCKERHUB_USERNAME" ] || [ -z "$DOCKERHUB_PASSWORD" ]; then echo "Not pushing" && exit 0; fi
     - docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASSWORD
@@ -99,6 +109,8 @@ push:latest:
 review:
   image: pubsweet/deployer:latest
   stage: review
+  except:
+    - shedules
   variables:
     PACKAGE_NAME: xpub-elife
     FORCE_FRESH_DB: "yes"
@@ -118,6 +130,8 @@ review:
 stop_review:
   image: pubsweet/deployer:latest
   stage: review
+  except:
+    - shedules
   variables:
     PACKAGE_NAME: xpub-elife
     REQUIRES_PROVISIONING: "yes"
@@ -137,6 +151,8 @@ stop_review:
 staging:
   image: pubsweet/deployer:latest
   stage: staging
+  except:
+    - shedules
   variables:
     PACKAGE_NAME: xpub-elife
     REQUIRES_PROVISIONING: "yes"
@@ -152,6 +168,8 @@ staging:
 demo:
   image: pubsweet/deployer:latest
   stage: demo
+  except:
+    - shedules
   variables:
     PACKAGE_NAME: xpub-elife
     REQUIRES_PROVISIONING: "yes"
@@ -163,25 +181,12 @@ demo:
     - source deploy.sh
     - create_deployment
 
-scale-cluster:up:
+scale-cluster:
   image: pubsweet/kubernetes:latest
   stage: build
-  variables:
-    MIN_SIZE: 9
-    MAX_SIZE: 9
   when: manual
-  tags:
-    - docker
-  script:
-    - scale-cluster
-
-scale-cluster:down:
-  image: pubsweet/kubernetes:latest
-  stage: build
-  variables:
-    MIN_SIZE: 1
-    MAX_SIZE: 1
-  when: manual
+  only:
+    - shedules
   tags:
     - docker
   script:
