@@ -170,6 +170,8 @@ scale-cluster:up:
     MIN_SIZE: 9
     MAX_SIZE: 9
   when: manual
+  tags:
+    - docker
   script:
     - scale-cluster
 
@@ -180,5 +182,7 @@ scale-cluster:down:
     MIN_SIZE: 1
     MAX_SIZE: 1
   when: manual
+  tags:
+    - docker
   script:
     - scale-cluster
