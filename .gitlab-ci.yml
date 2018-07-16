@@ -23,7 +23,7 @@ build:
   tags:
     - elife-kubernetes-runner
   except:
-    - shedules
+    - schedules
   script:
     - docker version
     - docker pull $IMAGE_ORG/$IMAGE_NAME:latest
@@ -39,7 +39,7 @@ lint:
   tags:
     - elife-kubernetes-runner
   except:
-    - shedules
+    - schedules
   variables:
     GIT_STRATEGY: none
   script:
@@ -52,7 +52,7 @@ test:
   tags:
     - elife-kubernetes-runner
   except:
-    - shedules
+    - schedules
   variables:
     GIT_STRATEGY: none
     # setup data for postgres image
@@ -75,7 +75,7 @@ test:e2e:
   tags:
     - elife-kubernetes-runner
   except:
-    - shedules
+    - schedules
   variables:
     GIT_STRATEGY: none
     BROWSER: chrome:headless --no-sandbox
@@ -105,7 +105,7 @@ push:latest:
   tags:
     - elife-kubernetes-runner
   except:
-    - shedules
+    - schedules
   script:
     - if [ -z "$DOCKERHUB_USERNAME" ] || [ -z "$DOCKERHUB_PASSWORD" ]; then echo "Not pushing" && exit 0; fi
     - docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASSWORD
@@ -122,7 +122,7 @@ review:
   tags:
     - elife-kubernetes-runner
   except:
-    - shedules
+    - schedules
   variables:
     PACKAGE_NAME: xpub-elife
     FORCE_FRESH_DB: "yes"
@@ -145,7 +145,7 @@ stop_review:
   tags:
     - elife-kubernetes-runner
   except:
-    - shedules
+    - schedules
   variables:
     PACKAGE_NAME: xpub-elife
     REQUIRES_PROVISIONING: "yes"
@@ -168,7 +168,7 @@ staging:
   tags:
     - elife-kubernetes-runner
   except:
-    - shedules
+    - schedules
   variables:
     PACKAGE_NAME: xpub-elife
     REQUIRES_PROVISIONING: "yes"
@@ -187,7 +187,7 @@ demo:
   tags:
     - elife-kubernetes-runner
   except:
-    - shedules
+    - schedules
   variables:
     PACKAGE_NAME: xpub-elife
     REQUIRES_PROVISIONING: "yes"
@@ -205,7 +205,7 @@ scale-cluster:
   variables:
     DOCKER_HOST: ""
   only:
-    - shedules
+    - schedules
   tags:
     - docker
   script:
