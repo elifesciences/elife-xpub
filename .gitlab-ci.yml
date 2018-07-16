@@ -121,8 +121,6 @@ review:
   stage: review
   tags:
     - elife-kubernetes-runner
-  except:
-    - schedules
   variables:
     PACKAGE_NAME: xpub-elife
     FORCE_FRESH_DB: "yes"
@@ -135,6 +133,7 @@ review:
   except:
   - master
   - develop
+  - schedules
   script:
     - source deploy.sh
     - create_deployment
@@ -144,8 +143,6 @@ stop_review:
   stage: review
   tags:
     - elife-kubernetes-runner
-  except:
-    - schedules
   variables:
     PACKAGE_NAME: xpub-elife
     REQUIRES_PROVISIONING: "yes"
@@ -157,6 +154,7 @@ stop_review:
   except:
   - master
   - develop
+  - schedules
   script:
     - source deploy.sh
     - delete_deployment
