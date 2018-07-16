@@ -3,9 +3,9 @@ import { Route, Switch } from 'react-router-dom'
 
 import { AuthenticatedComponent, LoginPage } from './components'
 import Layout from './components/global/Layout'
-import SubmissionPage from './components/submission/SubmissionPage'
-import ManuscriptPage from './components/manuscript/ManuscriptPage'
-import DashboardPage from './components/dashboard/DashboardPage'
+import SubmissionPage from './components/pages/submission-wizard/SubmissionPage'
+import ManuscriptPage from './components/pages/manuscript/ManuscriptPage'
+import DashboardPage from './components/pages/dashboard/DashboardPage'
 
 const Routes = () => (
   <Switch>
