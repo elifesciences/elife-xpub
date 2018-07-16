@@ -20,6 +20,8 @@ stages:
 build:
   image: docker:latest
   stage: build
+  tags:
+    - elife-kubernetes-runner
   except:
     - shedules
   script:
@@ -34,6 +36,8 @@ build:
 lint:
   image: $IMAGE_ORG/$IMAGE_NAME:$CI_COMMIT_SHA
   stage: test
+  tags:
+    - elife-kubernetes-runner
   except:
     - shedules
   variables:
@@ -45,6 +49,8 @@ lint:
 test:
   image: $IMAGE_ORG/$IMAGE_NAME:$CI_COMMIT_SHA
   stage: test
+  tags:
+    - elife-kubernetes-runner
   except:
     - shedules
   variables:
@@ -66,6 +72,8 @@ test:
 test:e2e:
   image: $IMAGE_ORG/$IMAGE_NAME:$CI_COMMIT_SHA
   stage: test
+  tags:
+    - elife-kubernetes-runner
   except:
     - shedules
   variables:
@@ -94,6 +102,8 @@ test:e2e:
 push:latest:
   image: docker:latest
   stage: staging
+  tags:
+    - elife-kubernetes-runner
   except:
     - shedules
   script:
@@ -109,6 +119,8 @@ push:latest:
 review:
   image: pubsweet/deployer:latest
   stage: review
+  tags:
+    - elife-kubernetes-runner
   except:
     - shedules
   variables:
@@ -130,6 +142,8 @@ review:
 stop_review:
   image: pubsweet/deployer:latest
   stage: review
+  tags:
+    - elife-kubernetes-runner
   except:
     - shedules
   variables:
@@ -151,6 +165,8 @@ stop_review:
 staging:
   image: pubsweet/deployer:latest
   stage: staging
+  tags:
+    - elife-kubernetes-runner
   except:
     - shedules
   variables:
@@ -168,6 +184,8 @@ staging:
 demo:
   image: pubsweet/deployer:latest
   stage: demo
+  tags:
+    - elife-kubernetes-runner
   except:
     - shedules
   variables:
