@@ -7,14 +7,8 @@ const metadata = {
   articleType: Selector('[role=listbox] button'),
   articleTypes: Selector('[role=option]'),
   subjectAreaLabel: Selector('label[for=subject-area-select]'),
-  discussedPreviously: Selector(
-    '[name="submissionMeta.discussedPreviously"]',
-  ).parent(),
-  discussion: Selector('[name="submissionMeta.discussion"]'),
-  consideredPreviously: Selector(
-    '[name="submissionMeta.consideredPreviously"]',
-  ).parent(),
-  previousArticle: Selector('[name="submissionMeta.previousArticle"]'),
+  discussion: Selector('[name="submissionMeta.discussion"]').parent(),
+  previousArticle: Selector('[name="submissionMeta.previousArticle"]').parent(),
   cosubmission: Selector('[name="submissionMeta.cosubmission"]').parent(),
   cosubmissionTitle: Selector('[name="submissionMeta.cosubmissionTitle"]'),
 }
