@@ -1,7 +1,7 @@
 import React from 'react'
 import gql from 'graphql-tag'
 import { Query, Mutation } from 'react-apollo'
-import { GET_CURRENT_SUBMISSION } from '../submission/WithCurrentSubmission'
+import { GET_CURRENT_SUBMISSION } from '../pages/submission-wizard/WithCurrentSubmission'
 import Dashboard from './Dashboard'
 
 export const MANUSCRIPTS_QUERY = gql`
