@@ -20,6 +20,10 @@ stages:
 build:
   image: docker:latest
   stage: build
+  tags:
+    - elife-kubernetes-runner
+  except:
+    - schedules
   script:
     - docker version
     - docker pull $IMAGE_ORG/$IMAGE_NAME:latest
@@ -32,6 +36,10 @@ build:
 lint:
   image: $IMAGE_ORG/$IMAGE_NAME:$CI_COMMIT_SHA
   stage: test
+  tags:
+    - elife-kubernetes-runner
+  except:
+    - schedules
   variables:
     GIT_STRATEGY: none
   script:
@@ -41,6 +49,10 @@ lint:
 test:
   image: $IMAGE_ORG/$IMAGE_NAME:$CI_COMMIT_SHA
   stage: test
+  tags:
+    - elife-kubernetes-runner
+  except:
+    - schedules
   variables:
     GIT_STRATEGY: none
     # setup data for postgres image
@@ -60,6 +72,10 @@ test:
 test:e2e:
   image: $IMAGE_ORG/$IMAGE_NAME:$CI_COMMIT_SHA
   stage: test
+  tags:
+    - elife-kubernetes-runner
+  except:
+    - schedules
   variables:
     GIT_STRATEGY: none
     BROWSER: chrome:headless --no-sandbox
@@ -86,6 +102,10 @@ test:e2e:
 push:latest:
   image: docker:latest
   stage: staging
+  tags:
+    - elife-kubernetes-runner
+  except:
+    - schedules
   script:
     - if [ -z "$DOCKERHUB_USERNAME" ] || [ -z "$DOCKERHUB_PASSWORD" ]; then echo "Not pushing" && exit 0; fi
     - docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASSWORD
@@ -99,6 +119,8 @@ push:latest:
 review:
   image: pubsweet/deployer:latest
   stage: review
+  tags:
+    - elife-kubernetes-runner
   variables:
     PACKAGE_NAME: xpub-elife
     FORCE_FRESH_DB: "yes"
@@ -111,6 +133,7 @@ review:
   except:
   - master
   - develop
+  - schedules
   script:
     - source deploy.sh
     - create_deployment
@@ -118,6 +141,8 @@ review:
 stop_review:
   image: pubsweet/deployer:latest
   stage: review
+  tags:
+    - elife-kubernetes-runner
   variables:
     PACKAGE_NAME: xpub-elife
     REQUIRES_PROVISIONING: "yes"
@@ -129,6 +154,7 @@ stop_review:
   except:
   - master
   - develop
+  - schedules
   script:
     - source deploy.sh
     - delete_deployment
@@ -137,6 +163,10 @@ stop_review:
 staging:
   image: pubsweet/deployer:latest
   stage: staging
+  tags:
+    - elife-kubernetes-runner
+  except:
+    - schedules
   variables:
     PACKAGE_NAME: xpub-elife
     REQUIRES_PROVISIONING: "yes"
@@ -152,6 +182,10 @@ staging:
 demo:
   image: pubsweet/deployer:latest
   stage: demo
+  tags:
+    - elife-kubernetes-runner
+  except:
+    - schedules
   variables:
     PACKAGE_NAME: xpub-elife
     REQUIRES_PROVISIONING: "yes"
@@ -162,3 +196,15 @@ demo:
   script:
     - source deploy.sh
     - create_deployment
+
+scale-cluster:
+  image: pubsweet/kubernetes:latest
+  stage: build
+  variables:
+    DOCKER_HOST: ""
+  only:
+    - schedules
+  tags:
+    - docker
+  script:
+    - scale-cluster
