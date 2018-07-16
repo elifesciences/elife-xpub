@@ -184,7 +184,8 @@ demo:
 scale-cluster:
   image: pubsweet/kubernetes:latest
   stage: build
-  when: manual
+  variables:
+    DOCKER_HOST: ""
   only:
     - shedules
   tags:
