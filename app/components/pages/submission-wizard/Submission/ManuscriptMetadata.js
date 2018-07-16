@@ -4,9 +4,9 @@ import { Field } from 'formik'
 import { get } from 'lodash'
 import { Box } from 'grid-styled'
 
-import ValidatedField from '../../ui/atoms/ValidatedField'
-import CalloutBox from '../../ui/atoms/CalloutBox'
-import Textarea from '../../ui/atoms/Textarea'
+import ValidatedField from '../../../ui/atoms/ValidatedField'
+import CalloutBox from '../../../ui/atoms/CalloutBox'
+import Textarea from '../../../ui/atoms/Textarea'
 import SubjectAreaDropdown from './SubjectAreaDropdown'
 
 const CheckboxGeneratedChild = ({

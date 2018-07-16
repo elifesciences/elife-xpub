@@ -1,10 +1,10 @@
 import React from 'react'
 import { Checkbox } from '@pubsweet/ui'
 
-import ValidatedField from '../../ui/atoms/ValidatedField'
-import CalloutBox from '../../ui/atoms/CalloutBox'
-import Textarea from '../../ui/atoms/Textarea'
-import { FormH3 } from '../../ui/atoms/FormHeadings'
+import ValidatedField from '../../../ui/atoms/ValidatedField'
+import CalloutBox from '../../../ui/atoms/CalloutBox'
+import Textarea from '../../../ui/atoms/Textarea'
+import { FormH3 } from '../../../ui/atoms/FormHeadings'
 import TwoColumnRow from '../TwoColumnRow'
 
 const createCloseHandler = (index, values, fieldName, setFieldValue) => () =>

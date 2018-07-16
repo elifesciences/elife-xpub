@@ -4,7 +4,7 @@ import styled, { withTheme } from 'styled-components'
 import { th } from '@pubsweet/ui-toolkit'
 import Select, { createFilter, components } from 'react-select'
 
-import Icon from '../../ui/atoms/Icon'
+import Icon from '../../../ui/atoms/Icon'
 
 const Root = styled.div``
 
