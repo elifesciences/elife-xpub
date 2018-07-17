@@ -7,10 +7,16 @@ const metadata = {
   articleType: Selector('[role=listbox] button'),
   articleTypes: Selector('[role=option]'),
   subjectAreaLabel: Selector('label[for=subject-area-select]'),
-  discussion: Selector('[name="submissionMeta.discussion"]').parent(),
-  previousArticle: Selector('[name="submissionMeta.previousArticle"]').parent(),
-  cosubmission: Selector('[name="submissionMeta.cosubmission"]').parent(),
-  cosubmissionTitle: Selector('[name="submissionMeta.cosubmissionTitle"]'),
+
+  discussionCheckbox: Selector('[name="discussion"]'),
+  discussionText: Selector('[name="submissionMeta.discussion"]'),
+
+  previousArticleCheckbox: Selector('[name="previousArticle"]'),
+  previousArticleText: Selector('[name="submissionMeta.previousArticle"]'),
+
+  cosubmissionCheckbox: Selector('[name="cosubmission"]'),
+  cosubmission0Title: Selector('[name="submissionMeta.cosubmission.0.title"]'),
+  cosubmission1Title: Selector('[name="submissionMeta.cosubmission.1.title"]'),
 }
 
 export default metadata

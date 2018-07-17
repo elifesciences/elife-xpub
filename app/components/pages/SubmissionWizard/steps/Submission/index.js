@@ -72,6 +72,7 @@ const ManuscriptMetadata = ({ values, setFieldValue, setFieldTouched }) => (
 
     <OptionalSection
       label="This manuscript is a co-submission"
+      namedAs="cosubmission"
       onClose={() => setFieldValue('submissionMeta.cosubmission', [])}
       onOpen={() =>
         setFieldValue('submissionMeta.cosubmission', [{ title: '' }])

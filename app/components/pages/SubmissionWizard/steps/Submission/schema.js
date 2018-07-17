@@ -19,21 +19,13 @@ const schema = yup.object().shape({
       .nullable(),
     cosubmission: yup
       // validate the array as an object to allow different requirements at different positions
-      .object({
-        '0': yup.object().shape({
+      .array()
+      .of(
+        yup.object().shape({
           title: yup.string().required('Article title is required'),
         }),
-        '1': yup.object().shape({
-          title: yup.string(),
-        }),
-      })
-      // transform array to object for the purpose of validation
-      .transform((_, originalValue) =>
-        originalValue.reduce(
-          (obj, value, index) => ({ ...obj, [index]: value }),
-          {},
-        ),
-      ),
+      )
+      .max(2, 'Cannot have more than 2 cosubmissions'),
   }),
 })
 
