@@ -199,14 +199,7 @@ const resolvers = {
   },
   Subscription: {
     uploadProgress: {
-      subscribe: () => {
-        console.log('new subscription!!')
-        setTimeout(() => {
-          console.log('published new data')
-          pubsub.publish(ON_UPLOAD_PROGRESS, { uploadProgress: 10 })
-        }, 8000)
-        return pubsub.asyncIterator(ON_UPLOAD_PROGRESS)
-      },
+      subscribe: () => pubsub.asyncIterator(ON_UPLOAD_PROGRESS),
     },
   },
 

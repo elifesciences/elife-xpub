@@ -80,9 +80,9 @@ const DropzoneContent = ({
   if (conversion.converting) {
     return (
       <React.Fragment>
-        <StyledUploadIcon />
+        <StyledUploadIcon percentage={conversion.progress} />
         <Instruction data-test-id="dropzoneMessage">
-          Manuscript is uploading
+          Manuscript is uploading {conversion.progress}%
         </Instruction>
       </React.Fragment>
     )
