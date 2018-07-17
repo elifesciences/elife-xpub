@@ -4,8 +4,8 @@ let mockTestDbName
 jest.mock('pubsweet-server/src/db', () => {
   const pg = require('pg')
   const logger = require('@pubsweet/logger')
-  mockTestDbName = `test_${Math.floor(Math.random() * 9999999)}`
-  const pool = new pg.Pool({ db: mockTestDbName })
+  mockTestDbName = `test_${Date.now()}_${Math.floor(Math.random() * 9999999)}`
+  const pool = new pg.Pool({ database: mockTestDbName })
   pool.on('error', err => {
     if (err.message !== 'terminating connection due to administrator command') {
       logger.error(err)
@@ -40,8 +40,6 @@ beforeAll(async () => {
     db = new pg.Client()
     await db.connect()
     await db.query(`CREATE DATABASE ${mockTestDbName}`)
-    const { createTables } = require('@pubsweet/db-manager')
-    await createTables(true)
   }
 })
 
