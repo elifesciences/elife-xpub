@@ -40,7 +40,6 @@ beforeAll(async () => {
     db = new pg.Client()
     await db.connect()
     await db.query(`CREATE DATABASE ${mockTestDbName}`)
-    await db.query(``)
   }
 })
 
