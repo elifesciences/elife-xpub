@@ -2,7 +2,7 @@ import React from 'react'
 import { Redirect } from 'react-router'
 import { Query } from 'react-apollo'
 import { CURRENT_USER } from './queries'
-import ErrorPage from '../pages/error/ErrorPage'
+import ErrorPage from '../pages/error'
 
 const AuthenticatedComponent = ({ children }) => (
   <Query query={CURRENT_USER}>

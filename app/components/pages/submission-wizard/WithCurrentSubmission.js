@@ -2,8 +2,8 @@ import gql from 'graphql-tag'
 import { withApollo } from 'react-apollo'
 import React from 'react'
 import omitDeep from 'omit-deep-lodash'
-import ErrorPage from '../error/ErrorPage'
-import { MANUSCRIPTS_QUERY } from '../dashboard/DashboardPage'
+import ErrorPage from '../error'
+import { MANUSCRIPTS_QUERY } from '../dashboard'
 
 const manuscriptFragment = gql`
   fragment WholeManuscript on Manuscript {
