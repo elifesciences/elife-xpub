@@ -3,7 +3,7 @@ import { withApollo } from 'react-apollo'
 import React from 'react'
 import omitDeep from 'omit-deep-lodash'
 import ErrorPage from '../error/ErrorPage'
-import { MANUSCRIPTS_QUERY } from '../../dashboard/DashboardPage'
+import { MANUSCRIPTS_QUERY } from '../dashboard/DashboardPage'
 
 const manuscriptFragment = gql`
   fragment WholeManuscript on Manuscript {
