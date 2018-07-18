@@ -17,16 +17,10 @@ const schema = yup.object().shape({
       .string()
       .notOneOf([''], 'Article title is required')
       .nullable(),
-    cosubmission: yup
-      // validate the array as an object to allow different requirements at different positions
-      .array()
-      .max(2, 'Cannot have more than 2 cosubmissions')
-      .test('titles', 'First article title is mandatory', val => (
-          // allow the array to be empty
-          val.length === 0 ||
-          // or if not empty mandate first title
-          (val.length >= 1 && val[0].title.length > 0)
-        )),
+    firstCosubmissionTitle: yup
+      .string()
+      .notOneOf([''], 'Article title is required')
+      .nullable(),
   }),
 })
 

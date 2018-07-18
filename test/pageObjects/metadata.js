@@ -15,8 +15,12 @@ const metadata = {
   previousArticleText: Selector('[name="submissionMeta.previousArticle"]'),
 
   cosubmissionCheckbox: Selector('[name="cosubmission"]'),
-  cosubmission0Title: Selector('[name="submissionMeta.cosubmission.0.title"]'),
-  cosubmission1Title: Selector('[name="submissionMeta.cosubmission.1.title"]'),
+  firstCosubmissionTitle: Selector(
+    '[name="submissionMeta.firstCosubmissionTitle"]',
+  ),
+  secondCosubmissionTitle: Selector(
+    '[name="submissionMeta.secondCosubmissionTitle"]',
+  ),
   moreSubmission: Selector('[name="submissionMeta.moreSubmission"]'),
 }
 

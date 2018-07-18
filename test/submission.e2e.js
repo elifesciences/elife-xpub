@@ -139,9 +139,9 @@ test('Corresponding author', async t => {
     .click(metadata.previousArticleCheckbox)
     .typeText(metadata.previousArticleText, '01234')
     .click(metadata.cosubmissionCheckbox)
-    .typeText(metadata.cosubmission0Title, '56789')
+    .typeText(metadata.firstCosubmissionTitle, '56789')
     .click(metadata.moreSubmission)
-    .typeText(metadata.cosubmission1Title, 'ABCDE')
+    .typeText(metadata.secondCosubmissionTitle, 'ABCDE')
     .click(submission.next)
 
   // reviewer suggestions

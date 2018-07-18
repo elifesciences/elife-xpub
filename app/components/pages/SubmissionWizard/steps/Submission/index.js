@@ -1,14 +1,11 @@
 import React from 'react'
-import { Menu } from '@pubsweet/ui'
+import { Menu, Action } from '@pubsweet/ui'
 import { Box } from 'grid-styled'
 
 import ValidatedField from '../../../../ui/atoms/ValidatedField'
 import Textarea from '../../../../ui/atoms/Textarea'
 import SubjectAreaDropdown from './SubjectAreaDropdown'
 import OptionalSection from './OptionalSection'
-import MoreButton from '../../ui/molecules/MoreButton'
-
-const MAX_COSUBMISSIONS = 2
 
 const ManuscriptMetadata = ({ values, setFieldValue, setFieldTouched }) => (
   <React.Fragment>
@@ -73,34 +70,42 @@ const ManuscriptMetadata = ({ values, setFieldValue, setFieldTouched }) => (
     <OptionalSection
       label="This manuscript is a co-submission"
       namedAs="cosubmission"
-      onClose={() => setFieldValue('submissionMeta.cosubmission', [])}
-      onOpen={() =>
-        setFieldValue('submissionMeta.cosubmission', [{ title: '' }])
+      onClose={() =>
+        setFieldValue('submissionMeta.firstCosubmissionTitle', null)
       }
-      open={values.submissionMeta.cosubmission.length}
+      onOpen={() => setFieldValue('submissionMeta.firstCosubmissionTitle', '')}
+      open={values.submissionMeta.firstCosubmissionTitle !== null}
     >
-      {values.submissionMeta.cosubmission.map((_, rowIndex) => (
-        // eslint-disable-next-line react/no-array-index-key
-        <Box key={rowIndex} mb={2}>
-          <ValidatedField
-            label="Article title"
-            name={`submissionMeta.cosubmission.${rowIndex}.title`}
-          />
-        </Box>
-      ))}
+      <Box mb={2}>
+        <ValidatedField
+          label="Second Article title"
+          name="submissionMeta.firstCosubmissionTitle"
+        />
+      </Box>
 
-      {values.submissionMeta.cosubmission.length < MAX_COSUBMISSIONS && (
+      {values.submissionMeta.secondCosubmissionTitle === null ? (
+        // If null showing the link to show the second title...
         <Box>
-          Would you like to{' '}
-          <MoreButton
-            empty={{ title: '' }}
-            fieldName="submissionMeta.cosubmission"
-            namedAs="submissionMeta.moreSubmission"
-            objectName="co-submission"
-            setFieldValue={setFieldValue}
-            type="include"
-            values={values}
-          />?
+          Would you like to
+          <Action
+            name="submissionMeta.moreSubmission"
+            onClick={() =>
+              setFieldValue('submissionMeta.secondCosubmissionTitle', '', false)
+            }
+            type="button"
+          >
+            {' '}
+            include{' '}
+          </Action>
+          another cosubmission
+        </Box>
+      ) : (
+        // the second title is not null so show it
+        <Box mb={2}>
+          <ValidatedField
+            label="Third Article title"
+            name="submissionMeta.secondCosubmissionTitle"
+          />
         </Box>
       )}
     </OptionalSection>

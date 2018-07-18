@@ -1,101 +1,69 @@
-import gql from 'graphql-tag'
+import { cloneDeep } from 'lodash'
 import { withApollo } from 'react-apollo'
 import React from 'react'
 import omitDeep from 'omit-deep-lodash'
 import ErrorPage from '../Error'
 import { MANUSCRIPTS_QUERY } from '../Dashboard'
+import {
+  GET_CURRENT_SUBMISSION,
+  CREATE_SUBMISSION,
+  UPDATE_SUBMISSION,
+  FINISH_SUBMISSION,
+} from './mutations'
 
-const manuscriptFragment = gql`
-  fragment WholeManuscript on Manuscript {
-    id
-    title
-    manuscriptType
-    subjectAreas
-    suggestedSeniorEditors
-    opposedSeniorEditors {
-      name
-      reason
+/*
+ * Data Modifiers -
+ *    CosubmissionModifier
+ *
+ * These classes provide a common interface for the main class
+ * 'WithCurrentSubmission' to delgate transforming the data model to the
+ * view model.
+ */
+class CosubmissionModifier {
+  omitList = () => [
+    'submissionMeta.firstCosubmissionTitle',
+    'submissionMeta.secondCosubmissionTitle',
+  ]
+
+  setData = data => {
+    const metadata = (data.createSubmission || data.currentSubmission)
+      .submissionMeta
+    const cosub = metadata.cosubmission
+
+    const cosubLen = cosub.length
+    if (cosubLen) {
+      metadata.firstCosubmissionTitle = cosub[0].title
+    } else {
+      metadata.firstCosubmissionTitle = null
     }
-    suggestedReviewingEditors
-    opposedReviewingEditors {
-      name
-      reason
-    }
-    suggestedReviewers {
-      name
-      email
-    }
-    opposedReviewers {
-      name
-      email
-      reason
-    }
-    noConflictOfInterest
-    files {
-      name
-      type
-    }
-    submissionMeta {
-      coverLetter
-      author {
-        firstName
-        lastName
-        email
-        institution
-      }
-      stage
-      discussion
-      previousArticle
-      cosubmission {
-        title
-      }
-    }
-    manuscriptPersons {
-      role
-      metadata {
-        ... on AuthorMetadata {
-          confirmed
-        }
-      }
+
+    if (cosubLen > 1) {
+      metadata.secondCosubmissionTitle = cosub[1].title
+    } else {
+      metadata.secondCosubmissionTitle = null
     }
   }
-`
 
-export const GET_CURRENT_SUBMISSION = gql`
-  query CurrentSubmission {
-    currentSubmission {
-      ...WholeManuscript
+  getData = (data, values) => {
+    const target = data.submissionMeta
+    const first = values.submissionMeta.firstCosubmissionTitle
+    const second = values.submissionMeta.secondCosubmissionTitle
+    const cosub = []
+
+    if (typeof first === 'string' && first.length) {
+      cosub.push({ title: first })
+    }
+
+    if (typeof second === 'string' && second.length) {
+      cosub.push({ title: second })
+    }
+
+    // only update if there was any data found
+    if (cosub.length) {
+      target.cosubmission = cosub
     }
   }
-  ${manuscriptFragment}
-`
-
-const CREATE_SUBMISSION = gql`
-  mutation CreateSubmission {
-    createSubmission {
-      ...WholeManuscript
-    }
-  }
-  ${manuscriptFragment}
-`
-
-const UPDATE_SUBMISSION = gql`
-  mutation UpdateSubmission($data: ManuscriptInput!, $isAutoSave: Boolean) {
-    updateSubmission(data: $data, isAutoSave: $isAutoSave) {
-      ...WholeManuscript
-    }
-  }
-  ${manuscriptFragment}
-`
-
-const FINISH_SUBMISSION = gql`
-  mutation FinishSubmission($data: ManuscriptInput!) {
-    finishSubmission(data: $data) {
-      ...WholeManuscript
-    }
-  }
-  ${manuscriptFragment}
-`
+}
 
 class WithCurrentSubmission extends React.Component {
   state = { error: null, data: null, loading: true }
@@ -128,8 +96,15 @@ class WithCurrentSubmission extends React.Component {
     }
   }
 
+  //
+  dataModifiers = [new CosubmissionModifier()]
+
   setData(data) {
-    this.setState({ data, error: undefined, loading: false })
+    const newData = cloneDeep(data)
+    this.dataModifiers.forEach(modifier => {
+      modifier.setData(newData)
+    })
+    this.setState({ data: newData, error: undefined, loading: false })
   }
 
   setError(error) {
@@ -137,12 +112,23 @@ class WithCurrentSubmission extends React.Component {
   }
 
   mutate(values, mutation, { isAutoSave = false, refetchQueries = [] } = {}) {
-    const data = omitDeep(values, [
+    const omitList = [
       '__typename',
       'files',
       'manuscriptPersons',
       'submissionMeta.stage',
-    ])
+    ]
+
+    this.dataModifiers.forEach(modifier => {
+      omitList.push(...modifier.omitList())
+    })
+
+    const data = omitDeep(values, omitList)
+
+    this.dataModifiers.forEach(modifier => {
+      modifier.getData(data, values)
+    })
+
     return this.props.client.mutate({
       mutation,
       refetchQueries,
