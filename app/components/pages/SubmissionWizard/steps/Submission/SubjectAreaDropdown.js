@@ -4,7 +4,7 @@ import styled, { withTheme } from 'styled-components'
 import { th } from '@pubsweet/ui-toolkit'
 import Select, { createFilter, components } from 'react-select'
 
-import Icon from '../../../../ui/atoms/Icon'
+import CrossIcon from '../../../../ui/atoms/icons/Cross'
 
 const Root = styled.div``
 
@@ -193,20 +193,15 @@ class SubjectAreaDropdown extends React.Component {
 
     const TagRemovalIcon = props => (
       <components.MultiValueRemove {...props}>
-        {/* Icon requires a size, but width and height are more accurate and applied in styling below */}
-        <Icon size={3} {...props} theme={theme}>
-          Cross
-        </Icon>
+        <CrossIcon {...props} theme={theme} />
       </components.MultiValueRemove>
     )
 
     const StyledTagRemovalIcon = styled(TagRemovalIcon)`
       svg {
-        stroke: ${theme.colorTextReverse};
-        fill: ${theme.colorTextReverse};
-        padding: 0;
-        width: 20px;
-        height: 20px;
+        padding: ${th('space.1')};
+        width: ${th('space.3')};
+        height: ${th('space.3')};
       }
     `
 
