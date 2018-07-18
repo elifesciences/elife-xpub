@@ -13,7 +13,7 @@ Upload failure icon.
 Some icons accept additional parameters.
 
 ```js
-<Icon size={4} percentage={100}>
+<Icon size={4} percentage={60}>
   Upload
 </Icon>
 ```
