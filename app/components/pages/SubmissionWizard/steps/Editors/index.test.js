@@ -5,8 +5,8 @@ import { MemoryRouter } from 'react-router-dom'
 import { ThemeProvider } from 'styled-components'
 
 import theme from '@elifesciences/elife-theme'
-import ReviewerSuggestions from './ReviewerSuggestions'
-import { empty, schema } from './ReviewerSuggestionsSchema'
+import ReviewerSuggestions from '../Editors'
+import { empty, schema } from './schema'
 
 function makeWrapper(props) {
   return mount(

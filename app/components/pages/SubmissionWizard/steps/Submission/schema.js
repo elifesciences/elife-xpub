@@ -22,13 +22,13 @@ const schema = yup.object().shape({
     cosubmission: yup.bool(),
     cosubmissionTitle: yup
       .string()
-      .test('namehere', 'Article title/reference no. is required', function() {
+      .test('namehere', 'Article title/reference no. is required', () => {
         const { cosubmission, cosubmissionTitle, cosubmissionId } = this.parent
         return !cosubmission || cosubmissionTitle || cosubmissionId
       }),
     cosubmissionId: yup
       .string()
-      .test('namehere', 'Article title/reference no. is required', function() {
+      .test('namehere', 'Article title/reference no. is required', () => {
         const { cosubmission, cosubmissionTitle, cosubmissionId } = this.parent
         return !cosubmission || cosubmissionTitle || cosubmissionId
       }),
