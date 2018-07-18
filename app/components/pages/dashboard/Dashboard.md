@@ -1,5 +1,0 @@
-## Dashboard Component
-
-```js
-<Dashboard />
-```
