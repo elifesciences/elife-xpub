@@ -39,8 +39,9 @@ function percentageToDasharray(percentage, circleRadius) {
 }
 
 const Upload = ({ color, percentage, ...otherProps }) => {
-  // 24 is the svg circle radius that doesn't change with size
-  const dashArray = percentageToDasharray(percentage, 24)
+  const circleRadius = 24
+  const dashArray = percentageToDasharray(percentage, circleRadius)
+  const dashOffset = Math.PI * circleRadius / 2
   let animate = true
   return (
     <AnimationRoot>
@@ -85,6 +86,7 @@ const Upload = ({ color, percentage, ...otherProps }) => {
                 r="24"
                 stroke={otherProps.theme.colorPrimary}
                 strokeDasharray={dashArray}
+                strokeDashoffset={dashOffset}
                 strokeWidth="2"
               />
             </g>
