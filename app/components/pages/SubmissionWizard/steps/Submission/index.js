@@ -95,6 +95,7 @@ const ManuscriptMetadata = ({ values, setFieldValue, setFieldTouched }) => (
           <MoreButton
             empty={{ title: '' }}
             fieldName="submissionMeta.cosubmission"
+            namedAs="submissionMeta.moreSubmission"
             objectName="co-submission"
             setFieldValue={setFieldValue}
             type="include"

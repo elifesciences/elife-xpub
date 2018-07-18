@@ -5,6 +5,7 @@ import lodash from 'lodash'
 const MoreButton = ({
   empty,
   fieldName,
+  namedAs,
   objectName,
   setFieldValue,
   type = 'suggest',
@@ -12,6 +13,7 @@ const MoreButton = ({
   values,
 }) => (
   <Action
+    name={namedAs}
     onClick={() =>
       setFieldValue(
         fieldName,

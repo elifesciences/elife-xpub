@@ -17,6 +17,7 @@ const metadata = {
   cosubmissionCheckbox: Selector('[name="cosubmission"]'),
   cosubmission0Title: Selector('[name="submissionMeta.cosubmission.0.title"]'),
   cosubmission1Title: Selector('[name="submissionMeta.cosubmission.1.title"]'),
+  moreSubmission: Selector('[name="submissionMeta.moreSubmission"]'),
 }
 
 export default metadata
