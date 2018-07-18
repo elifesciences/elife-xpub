@@ -31,6 +31,7 @@
     "setupdb": "pubsweet setupdb",
     "start": "docker-compose up",
     "start:services": "docker-compose up postgres",
+    "stop:services": "docker-compose down -v",
     "start:styleguide": "docker-compose run --no-deps -p 6060:6060 app yarn run styleguide",
     "styleguide": "styleguidist server",
     "test": "jest",
