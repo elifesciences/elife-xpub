@@ -33,7 +33,7 @@ const ErrorPage = ({ error }) => (
 )
 
 ErrorPage.propTypes = {
-  error: PropTypes.oneOfType([PropTypes.string, PropTypes.instanceOf(Error)])
+  error: PropTypes.oneOfType([PropTypes.string, PropTypes.instanceOf(Error), PropTypes.any])
     .isRequired,
 }
 

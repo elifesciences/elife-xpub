@@ -17,6 +17,7 @@ const Container = styled.div`
 const Icon = ({ children, size, color, ...props }) => {
   const SelectedIcon = icons[children]
   if (!SelectedIcon) {
+    // eslint-disable-next-line no-console
     console.warn("Icon '%s' not found", children)
     return ''
   }

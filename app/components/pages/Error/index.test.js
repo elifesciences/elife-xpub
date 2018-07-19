@@ -1,6 +1,6 @@
 import React from 'react'
 import { mount } from 'enzyme'
-import ErrorPage from './ErrorPage'
+import ErrorPage from '../Error'
 
 describe('ErrorPage', () => {
   it('renders string', () => {

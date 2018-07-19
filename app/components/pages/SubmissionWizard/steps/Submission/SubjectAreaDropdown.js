@@ -4,7 +4,7 @@ import styled, { withTheme } from 'styled-components'
 import { th } from '@pubsweet/ui-toolkit'
 import Select, { createFilter, components } from 'react-select'
 
-import CrossIcon from '../../ui/atoms/icons/Cross'
+import CrossIcon from '../../../../ui/atoms/icons/Cross'
 
 const Root = styled.div``
 

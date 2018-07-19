@@ -1,14 +1,14 @@
 import React from 'react'
 import { Route, Switch } from 'react-router-dom'
 import WithCurrentSubmission from './WithCurrentSubmission'
-import AuthorDetailsPage from './AuthorDetails/AuthorDetailsPage'
-import FileUploadsPage from './FileUploads/FileUploadsPage'
-import ManuscriptMetadata from './ManuscriptMetadata/ManuscriptMetadata'
-import ReviewerSuggestions from './ReviewerSuggestions/ReviewerSuggestions'
-import { schema as fileUploadsSchema } from './FileUploads/FileUploadsSchema'
-import { schema as authorDetailsSchema } from './AuthorDetails/AuthorDetailsSchema'
-import { schema as manuscriptMetadataSchema } from './ManuscriptMetadata/ManuscriptMetadataSchema'
-import { schema as reviewerSuggestionsSchema } from './ReviewerSuggestions/ReviewerSuggestionsSchema'
+import AuthorDetails from './steps/Author'
+import FileUploads from './steps/Files'
+import ManuscriptMetadata from './steps/Submission'
+import ReviewerSuggestions from './steps/Editors'
+import { schema as fileUploadsSchema } from './steps/Files/schema'
+import { schema as authorDetailsSchema } from './steps/Author/schema'
+import { schema as manuscriptMetadataSchema } from './steps/Submission/schema'
+import { schema as reviewerSuggestionsSchema } from './steps/Editors/schema'
 import WizardStep from './WizardStep'
 
 const SubmissionPage = ({ match, history }) => (
@@ -25,7 +25,7 @@ const SubmissionPage = ({ match, history }) => (
           path={`${match.path}/upload`}
           render={() => (
             <WizardStep
-              component={FileUploadsPage}
+              component={FileUploads}
               handleSubmit={progressSubmission}
               handleUpdate={updateSubmission}
               history={history}
@@ -76,7 +76,7 @@ const SubmissionPage = ({ match, history }) => (
         <Route
           render={() => (
             <WizardStep
-              component={AuthorDetailsPage}
+              component={AuthorDetails}
               handleSubmit={progressSubmission}
               handleUpdate={updateSubmission}
               history={history}

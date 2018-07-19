@@ -11,7 +11,7 @@ import {
   SuggestedReviewingEditorRow,
   SuggestedSeniorEditorRow,
 } from './FormSections'
-import { FormH3 } from '../../ui/atoms/FormHeadings'
+import { FormH3 } from '../../../../ui/atoms/FormHeadings'
 
 const MoreButton = ({
   empty,

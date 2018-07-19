@@ -4,8 +4,8 @@ import { Link } from 'react-router-dom'
 import { Box } from 'grid-styled'
 import { Button } from '@pubsweet/ui'
 
-import { FormH2, FormH3 } from '../ui/atoms/FormHeadings'
-import ButtonLink from '../ui/atoms/ButtonLink'
+import { FormH2, FormH3 } from '../../ui/atoms/FormHeadings'
+import ButtonLink from '../../ui/atoms/ButtonLink'
 
 /* Temporary dashboard view pending receipt of designs */
 

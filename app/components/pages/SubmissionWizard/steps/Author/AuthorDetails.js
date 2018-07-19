@@ -1,7 +1,7 @@
 import React from 'react'
 import { Action, ErrorText } from '@pubsweet/ui'
-import ValidatedField from '../../ui/atoms/ValidatedField'
-import TwoColumnRow from '../TwoColumnRow'
+import ValidatedField from '../../../../ui/atoms/ValidatedField'
+import TwoColumnRow from '../../TwoColumnRow'
 
 const AuthorDetails = ({ fetchOrcid, loading, error }) => (
   <React.Fragment>
