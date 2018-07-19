@@ -44,6 +44,7 @@ const ManuscriptMetadata = ({ values, setFieldValue, setFieldTouched }) => (
 
     <OptionalSection
       label="This manuscript has been discussed with an eLife editor"
+      namedAs="discussion"
       onClose={() => setFieldValue('submissionMeta.discussion', null)}
       onOpen={() => setFieldValue('submissionMeta.discussion', '')}
       open={values.submissionMeta.discussion !== null}
@@ -57,6 +58,7 @@ const ManuscriptMetadata = ({ values, setFieldValue, setFieldTouched }) => (
 
     <OptionalSection
       label="This manuscript has been previously considered by eLife"
+      namedAs="previousArticle"
       onClose={() => setFieldValue('submissionMeta.previousArticle', null)}
       onOpen={() => setFieldValue('submissionMeta.previousArticle', '')}
       open={values.submissionMeta.previousArticle !== null}
