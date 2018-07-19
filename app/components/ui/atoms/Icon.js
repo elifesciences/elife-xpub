@@ -34,7 +34,7 @@ Icon.propTypes = {
 }
 
 Icon.defaultProps = {
-  color: 'black',
+  color: 'inherit',
 }
 
 export default Icon
