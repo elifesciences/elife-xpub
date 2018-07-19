@@ -10,11 +10,7 @@ const fs = require('fs-extra')
 const path = require('path')
 const crypto = require('crypto')
 const Joi = require('joi')
-const {
-  emptyManuscript,
-  manuscriptSchema,
-  cosubmissionSchema,
-} = require('./definitions')
+const { emptyManuscript, manuscriptSchema } = require('./definitions')
 
 const parseString = promisify(xml2js.parseString)
 const randomBytes = promisify(crypto.randomBytes)
@@ -31,6 +27,18 @@ const staticManifest = `<dar>
   </assets>
 </dar>
 `
+
+const mergeObjects = (...inputs) =>
+  lodash.mergeWith(
+    ...inputs,
+    // always replace arrays instead of merging
+    (objValue, srcValue) => {
+      if (lodash.isArray(srcValue)) {
+        return srcValue
+      }
+      return undefined
+    },
+  )
 
 const resolvers = {
   Query: {
@@ -76,7 +84,7 @@ const resolvers = {
 
       const manuscript = await db.selectId(data.id)
       db.checkPermission(manuscript, ctx.user)
-      lodash.merge(manuscript, data)
+      mergeObjects(manuscript, data)
 
       await db.update(db.manuscriptGqlToDb(manuscript, ctx.user), data.id)
       logger.debug(`Updated Submission ${data.id} by user ${ctx.user}`)
@@ -86,18 +94,7 @@ const resolvers = {
     async finishSubmission(_, { data }, ctx) {
       const manuscript = await db.selectId(data.id)
       db.checkPermission(manuscript, ctx.user)
-      const newManuscript = lodash.mergeWith(
-        {},
-        manuscript,
-        data,
-        // always replace arrays instead of merging
-        (objValue, srcValue) => {
-          if (lodash.isArray(srcValue)) {
-            return srcValue
-          }
-          return undefined
-        },
-      )
+      const newManuscript = mergeObjects({}, manuscript, data)
 
       const { error: errorManuscript } = Joi.validate(
         newManuscript,
@@ -106,24 +103,6 @@ const resolvers = {
       if (errorManuscript) {
         logger.error(`Bad manuscript data: ${errorManuscript}`)
         throw new Error(errorManuscript)
-      }
-
-      const {
-        cosubmission,
-        cosubmissionTitle,
-        cosubmissionId,
-      } = newManuscript.submissionMeta
-      const { error: errorCosubmission } = Joi.validate(
-        {
-          cosubmission,
-          cosubmissionTitle,
-          cosubmissionId,
-        },
-        cosubmissionSchema,
-      )
-      if (errorCosubmission) {
-        logger.error(`Bad manuscript data: ${errorCosubmission}`)
-        throw new Error(errorCosubmission)
       }
 
       newManuscript.submissionMeta.stage = 'QA'
