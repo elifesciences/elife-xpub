@@ -2,7 +2,7 @@ A set of controls for uploading files
 
 ```js
 const { Formik } = formik
-const { schema } = require('./FileUploadsSchema')
+const { schema } = require('./schema')
 const empty = { coverLetter: '' }
 ;<Formik
   initialValues={empty}

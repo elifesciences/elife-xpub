@@ -3,7 +3,7 @@ submitted.
 
 ```js
 const { Formik } = formik
-const { schema } = require('./AuthorDetailsSchema')
+const { schema } = require('./schema')
 
 const empty = {
   submissionMeta: {
