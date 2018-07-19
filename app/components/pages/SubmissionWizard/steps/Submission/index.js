@@ -68,7 +68,7 @@ const ManuscriptMetadata = ({ values, setFieldValue, setFieldTouched }) => (
     </OptionalSection>
 
     <OptionalSection
-      label="This manuscript is a co-submission"
+      label="This manuscript is part of a co-submission"
       namedAs="cosubmission"
       onClose={() =>
         setFieldValue('submissionMeta.firstCosubmissionTitle', null)
@@ -78,7 +78,7 @@ const ManuscriptMetadata = ({ values, setFieldValue, setFieldTouched }) => (
     >
       <Box mb={2}>
         <ValidatedField
-          label="Second Article title"
+          label="Second article title"
           name="submissionMeta.firstCosubmissionTitle"
         />
       </Box>
@@ -86,7 +86,7 @@ const ManuscriptMetadata = ({ values, setFieldValue, setFieldTouched }) => (
       {values.submissionMeta.secondCosubmissionTitle === null ? (
         // If null showing the link to show the second title...
         <Box>
-          Would you like to
+          Would you like to{' '}
           <Action
             name="submissionMeta.moreSubmission"
             onClick={() =>
@@ -94,16 +94,15 @@ const ManuscriptMetadata = ({ values, setFieldValue, setFieldTouched }) => (
             }
             type="button"
           >
-            {' '}
-            include{' '}
-          </Action>
+            include
+          </Action>{' '}
           another cosubmission
         </Box>
       ) : (
         // the second title is not null so show it
         <Box mb={2}>
           <ValidatedField
-            label="Third Article title"
+            label="Third article title (optional)"
             name="submissionMeta.secondCosubmissionTitle"
           />
         </Box>
