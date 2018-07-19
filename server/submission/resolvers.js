@@ -177,10 +177,17 @@ const resolvers = {
         fs.writeFile(manuscriptJatsPath, xmlString),
         fs.writeFile(manuscriptManifestPath, staticManifest),
       ])
-      const title =
-        xmlData.article.front[0]['article-meta'][0]['title-group'][0][
-          'article-title'
-        ][0]
+
+      let title = ''
+      if (xmlData.article) {
+        const firstArticle = xmlData.article.front[0]
+        const { 'article-meta': articleMeta } = firstArticle
+        const firstMeta = articleMeta[0]
+        const { 'title-group': titleGroup } = firstMeta
+        const firstTitleGroup = titleGroup[0]
+        const { 'article-title': titleArray } = firstTitleGroup
+        ;[title] = titleArray
+      }
 
       const manuscript = await db.selectId(id)
       manuscript.files.push({
