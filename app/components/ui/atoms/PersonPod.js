@@ -41,7 +41,7 @@ const StyledPicker = styled(Flex)`
   font-family: ${th('fontInterface')};
   font-size: ${th('fontSizeBase')};
   min-width: 312px;
-  height: 128px;
+  height: 120px;
 `
 
 const PersonPod = ({ onIconClick, textContainer, icon, ...props }) => (
