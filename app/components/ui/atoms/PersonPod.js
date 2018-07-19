@@ -44,11 +44,23 @@ const StyledPicker = styled(Flex)`
   height: 120px;
 `
 
-const PersonPod = ({ onIconClick, textContainer, icon, ...props }) => (
+const PersonPod = ({
+  isIconClickable,
+  onIconClick,
+  textContainer,
+  icon,
+  ...props
+}) => (
   <StyledPicker>
     {textContainer}
     <Flex flexDirection="column" justifyContent="center">
-      <StyledButton onClick={onIconClick}>{icon}</StyledButton>
+      <StyledButton
+        data-test-id="person-pod-toggle"
+        disabled={!isIconClickable}
+        onClick={onIconClick}
+      >
+        {icon}
+      </StyledButton>
     </Flex>
   </StyledPicker>
 )
@@ -91,10 +103,17 @@ const buildPersonText = ({
   </Box>
 )
 
-const ChosenPersonPod = props => {
+const ChosenPersonPod = ({ isIconClickable = true, onIconClick, ...props }) => {
   const IconByState = switchIcon(props.iconState)
   const ChosenPerson = buildPersonText(props)
-  return <PersonPod icon={IconByState} textContainer={ChosenPerson} />
+  return (
+    <PersonPod
+      icon={IconByState}
+      isIconClickable={isIconClickable}
+      onIconClick={onIconClick}
+      textContainer={ChosenPerson}
+    />
+  )
 }
 
 const buildChooserText = ({ role, isRequired, ...props }) => (
@@ -107,9 +126,15 @@ const buildChooserText = ({ role, isRequired, ...props }) => (
   </Flex>
 )
 
-const ChoosePersonPod = props => {
+const ChoosePersonPod = ({ onIconClick, ...props }) => {
   const ChooserText = buildChooserText(props)
-  return <PersonPod icon={PlusIcon} textContainer={ChooserText} />
+  return (
+    <PersonPod
+      icon={PlusIcon}
+      onIconClick={onIconClick}
+      textContainer={ChooserText}
+    />
+  )
 }
 
 PersonPod.ChosenPersonPod = ChosenPersonPod
