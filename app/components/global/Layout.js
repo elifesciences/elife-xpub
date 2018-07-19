@@ -1,13 +1,11 @@
 import React from 'react'
-import { Box } from 'grid-styled'
+import Centerer from './Centerer'
 import AppBar from './AppBar'
 
 const Layout = ({ children }) => (
   <React.Fragment>
     <AppBar />
-    <Box mx="auto" px={3} width={[1, 1, 1, 1, 1272]}>
-      {children}
-    </Box>
+    <Centerer>{children}</Centerer>
   </React.Fragment>
 )
 

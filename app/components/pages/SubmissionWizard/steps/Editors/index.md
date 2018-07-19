@@ -1,6 +1,6 @@
 ```js
 const { Formik } = formik
-const { schema, empty } = require('./ReviewerSuggestionsSchema')
+const { schema, empty } = require('./schema')
 ;<Formik
   component={ReviewerSuggestions}
   initialValues={empty}

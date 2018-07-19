@@ -2,6 +2,7 @@ import React from 'react'
 import styled, { withTheme } from 'styled-components'
 import { CSSTransition } from 'react-transition-group'
 import ScrollLock from 'react-scrolllock'
+import PropTypes from 'prop-types'
 import { th } from '@pubsweet/ui-toolkit'
 
 const Root = styled.div``
@@ -58,5 +59,10 @@ const ModalOverlay = ({ children, open, theme }) => (
     </CSSTransition>
   </Root>
 )
+
+ModalOverlay.propTypes = {
+  open: PropTypes.bool.isRequired,
+  children: PropTypes.node.isRequired,
+}
 
 export default withTheme(ModalOverlay)

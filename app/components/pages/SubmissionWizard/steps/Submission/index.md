@@ -2,7 +2,7 @@ A form for entering metadata about the article being submitted e.g. title, type,
 
 ```js
 const { Formik } = formik
-const { schema, empty } = require('./ManuscriptMetadataSchema')
+const { schema, empty } = require('./schema')
 ;<Formik
   component={ManuscriptMetadata}
   initialValues={empty}
