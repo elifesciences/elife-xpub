@@ -9,7 +9,7 @@ import {
   CREATE_SUBMISSION,
   UPDATE_SUBMISSION,
   FINISH_SUBMISSION,
-} from './mutations'
+} from './operations'
 
 /*
  * Data Modifiers -
