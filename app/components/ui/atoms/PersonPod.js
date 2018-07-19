@@ -101,8 +101,9 @@ const ChosenPersonPod = props => (
 const Chooser = ({ role, isRequired, ...props }) => (
   <Flex flexDirection="column" justifyContent="center">
     <Box ml={2}>
-      {isRequired && <RegularP>Choose {role} (required)</RegularP>}
-      {!isRequired && <RegularP>Choose {role} (optional)</RegularP>}
+      <RegularP>
+        Choose {role} ({isRequired ? 'required' : 'optional'})
+      </RegularP>
     </Box>
   </Flex>
 )
