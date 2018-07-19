@@ -19,7 +19,11 @@ module.exports = {
   context: {
     formik: 'formik',
   },
-  ignore: ['**/node_modules/**', '**/*.test.{js,jsx}'],
+  ignore: [
+    '**/node_modules/**',
+    '**/*.test.{js,jsx}',
+    '**/icons/material/*.js',
+  ],
   styleguideComponents: {
     StyleGuideRenderer: path.join(
       __dirname,
