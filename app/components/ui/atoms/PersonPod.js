@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { th } from '@pubsweet/ui-toolkit'
 import { Action, Button } from '@pubsweet/ui'
@@ -30,10 +31,7 @@ const StyledButton = styled(Button)`
   border: none;
 `
 
-const StyledPicker = styled(Flex)`
-  display: flex;
-  justify-content: space-between;
-
+const StyledPod = styled(Flex)`
   background: ${th('colorSecondary')};
   border: ${th('borderWidth')} ${th('borderStyle')} ${th('colorBorder')};
   border-radius: ${th('borderRadius')};
@@ -51,7 +49,7 @@ const PersonPod = ({
   icon,
   ...props
 }) => (
-  <StyledPicker>
+  <StyledPod justifyContent="space-between">
     {textContainer}
     <Flex flexDirection="column" justifyContent="center">
       <StyledButton
@@ -62,7 +60,7 @@ const PersonPod = ({
         {icon}
       </StyledButton>
     </Flex>
-  </StyledPicker>
+  </StyledPod>
 )
 
 const PlusIcon = <Icon size={3}>Plus</Icon>
@@ -87,27 +85,32 @@ const buildPersonText = ({
   institution,
   keywords,
   isKeywordClickable,
-  onKeywordClick,
+  onKeywordClick = null,
   isStatusShown,
-  status,
+  status = '',
   ...props
 }) => (
-  <Box m={2}>
+  <Box {...props} m={2}>
     <RegularP>{name}</RegularP>
     <RegularP>{institution}</RegularP>
     {isKeywordClickable && (
       <SmallAction onClick={onKeywordClick}>{keywords}</SmallAction>
     )}
-    {!isKeywordClickable && <RegularP>{keywords}</RegularP>}
+    {!isKeywordClickable && <SmallP>{keywords}</SmallP>}
     {isStatusShown && <SmallP>{status}</SmallP>}
   </Box>
 )
 
-const ChosenPersonPod = ({ isIconClickable = true, onIconClick, ...props }) => {
-  const IconByState = switchIcon(props.iconState)
+const PersonPod = ({
+  isIconClickable = true,
+  onIconClick,
+  iconState,
+  ...props
+}) => {
+  const IconByState = switchIcon(iconState)
   const ChosenPerson = buildPersonText(props)
   return (
-    <PersonPod
+    <PersonPodContainer
       icon={IconByState}
       isIconClickable={isIconClickable}
       onIconClick={onIconClick}
@@ -126,10 +129,10 @@ const buildChooserText = ({ role, isRequired, ...props }) => (
   </Flex>
 )
 
-const ChoosePersonPod = ({ onIconClick, ...props }) => {
+const SelectButton = ({ onIconClick, ...props }) => {
   const ChooserText = buildChooserText(props)
   return (
-    <PersonPod
+    <PersonPodContainer
       icon={PlusIcon}
       onIconClick={onIconClick}
       textContainer={ChooserText}
@@ -137,7 +140,45 @@ const ChoosePersonPod = ({ onIconClick, ...props }) => {
   )
 }
 
-PersonPod.ChosenPersonPod = ChosenPersonPod
-PersonPod.ChoosePersonPod = ChoosePersonPod
+PersonPodContainer.propTypes = {
+  onIconClick: PropTypes.func.isRequired,
+  textContainer: PropTypes.element.isRequired,
+  icon: PropTypes.element.isRequired,
+}
+
+switchIcon.PropTypes = {
+  iconState: PropTypes.oneOf[('add', 'remove', 'selected')],
+}
+
+buildPersonText.propTypes = {
+  name: PropTypes.string.isRequired,
+  institution: PropTypes.string.isRequired,
+  keywords: PropTypes.string.isRequired,
+  isKeywordClickable: PropTypes.bool.isRequired,
+  onKeywordClick: PropTypes.func,
+  isStatusShown: PropTypes.bool.isRequired,
+  status: PropTypes.string,
+}
+
+buildPersonText.defaultProps = {
+  onKeywordClick: null,
+  status: '',
+}
+
+PersonPod.propTypes = {
+  iconState: PropTypes.string.isRequired,
+  onIconClick: PropTypes.func.isRequired,
+}
+
+buildChooserText.propTypes = {
+  role: PropTypes.string.isRequired,
+  isRequired: PropTypes.bool.isRequired,
+}
+
+SelectButton.propTypes = {
+  onIconClick: PropTypes.func.isRequired,
+}
+
+PersonPod.SelectButton = SelectButton
 
 export default PersonPod

@@ -3,7 +3,7 @@
 Clickable keywords:
 
 ```js
-<PersonPod.ChosenPersonPod
+<PersonPod
   name="Richard Aldrich"
   institution="Utrecht University"
   keywords="cell biology"
@@ -18,7 +18,7 @@ Clickable keywords:
 Showing the person's status:
 
 ```js
-<PersonPod.ChosenPersonPod
+<PersonPod
   name="Richard Aldrich"
   institution="Utrecht University"
   keywords="cell biology"
@@ -34,7 +34,7 @@ Showing the person's status:
 Removal icon:
 
 ```js
-<PersonPod.ChosenPersonPod
+<PersonPod
   name="Richard Aldrich"
   institution="Utrecht University"
   keywords="cell biology"
@@ -50,7 +50,7 @@ Removal icon:
 Selected icon:
 
 ```js
-<PersonPod.ChosenPersonPod
+<PersonPod
   name="Richard Aldrich"
   institution="Utrecht University"
   keywords="cell biology"
@@ -66,7 +66,7 @@ Selected icon:
 Disabled:
 
 ```js
-<PersonPod.ChosenPersonPod
+<PersonPod
   name="Richard Aldrich"
   institution="Utrecht University"
   keywords="cell biology"
@@ -83,7 +83,7 @@ Disabled:
 ### ChoosePersonPod
 
 ```js
-<PersonPod.ChoosePersonPod
+<PersonPod.SelectButton
   role="Senior Editor(s)"
   isRequired={true}
   onIconClick={() => console.log('icon clicked')}
@@ -91,7 +91,7 @@ Disabled:
 ```
 
 ```js
-<PersonPod.ChoosePersonPod
+<PersonPod.SelectButton
   role="Reviewing Editor(s)"
   isRequired={false}
   onIconClick={() => console.log('icon clicked')}
