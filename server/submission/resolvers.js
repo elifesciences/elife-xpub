@@ -186,7 +186,7 @@ const resolvers = {
         const titleGroup = firstMeta['title-group']
         const firstTitleGroup = titleGroup[0]
         const titleArray = firstTitleGroup['article-title']
-        title = titleArray.title
+        title = titleArray[0]
       }
 
       const manuscript = await db.selectId(id)
