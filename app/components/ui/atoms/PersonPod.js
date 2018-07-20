@@ -57,7 +57,7 @@ const PlusIcon = <Icon size={3}>Plus</Icon>
 const RubbishBinIcon = <Icon size={3}>RubbishBin</Icon>
 const SelectedTickIcon = <Icon size={4}>SelectedTick</Icon>
 
-const ChangingIcon = iconState => {
+const switchIcon = iconState => {
   switch (iconState) {
     case 'add':
       return PlusIcon
@@ -70,7 +70,7 @@ const ChangingIcon = iconState => {
   }
 }
 
-const ChosenPerson = ({
+const buildPersonText = ({
   name,
   institution,
   keywords,
@@ -91,14 +91,13 @@ const ChosenPerson = ({
   </Box>
 )
 
-const ChosenPersonPod = props => (
-  <PersonPod
-    icon={ChangingIcon(props.iconState)}
-    textContainer={ChosenPerson(props)}
-  />
-)
+const ChosenPersonPod = props => {
+  const IconByState = switchIcon(props.iconState)
+  const ChosenPerson = buildPersonText(props)
+  return <PersonPod icon={IconByState} textContainer={ChosenPerson} />
+}
 
-const Chooser = ({ role, isRequired, ...props }) => (
+const buildChooserText = ({ role, isRequired, ...props }) => (
   <Flex flexDirection="column" justifyContent="center">
     <Box ml={2}>
       <RegularP>
@@ -108,9 +107,10 @@ const Chooser = ({ role, isRequired, ...props }) => (
   </Flex>
 )
 
-const ChoosePersonPod = props => (
-  <PersonPod icon={PlusIcon} textContainer={Chooser(props)} />
-)
+const ChoosePersonPod = props => {
+  const ChooserText = buildChooserText(props)
+  return <PersonPod icon={PlusIcon} textContainer={ChooserText} />
+}
 
 PersonPod.ChosenPersonPod = ChosenPersonPod
 PersonPod.ChoosePersonPod = ChoosePersonPod
