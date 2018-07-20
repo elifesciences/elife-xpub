@@ -28,6 +28,22 @@ const staticManifest = `<dar>
 </dar>
 `
 
+// dummy editor data
+const people = {
+  '1': { id: 1, role: 'SENIOREDITOR', name: 'Annie Badger' },
+  '2': { id: 2, role: 'SENIOREDITOR', name: 'Bobby Badger' },
+  '3': { id: 3, role: 'SENIOREDITOR', name: 'Chastity Badger' },
+  '4': { id: 4, role: 'SENIOREDITOR', name: 'Dave Badger' },
+  '5': { id: 5, role: 'SENIOREDITOR', name: 'Edwina Badger' },
+  '6': { id: 6, role: 'SENIOREDITOR', name: 'Frederic Badger' },
+  '7': { id: 7, role: 'REVIEWINGEDITOR', name: 'Annie Falstaff' },
+  '8': { id: 8, role: 'REVIEWINGEDITOR', name: 'Bobby Falstaff' },
+  '9': { id: 9, role: 'REVIEWINGEDITOR', name: 'Chastity Falstaff' },
+  '10': { id: 10, role: 'REVIEWINGEDITOR', name: 'Dave Falstaff' },
+  '11': { id: 11, role: 'REVIEWINGEDITOR', name: 'Edwina Falstaff' },
+  '12': { id: 12, role: 'REVIEWINGEDITOR', name: 'Frederic Falstaff' },
+}
+
 const mergeObjects = (...inputs) =>
   lodash.mergeWith(
     ...inputs,
@@ -63,6 +79,9 @@ const resolvers = {
     },
     async manuscripts() {
       return db.select({ type: 'manuscript' })
+    },
+    async editors(_, { role }) {
+      return lodash.filter(people, { role })
     },
   },
 
@@ -199,6 +218,21 @@ const resolvers = {
       await db.update(db.manuscriptGqlToDb(manuscript), id)
 
       return manuscript
+    },
+  },
+
+  Manuscript: {
+    async suggestedSeniorEditors(manuscript) {
+      return manuscript.suggestedSeniorEditors.map(id => people[id])
+    },
+    async opposedSeniorEditors(manuscript) {
+      return manuscript.opposedSeniorEditors.map(id => people[id])
+    },
+    async suggestedReviewingEditors(manuscript) {
+      return manuscript.suggestedReviewingEditors.map(id => people[id])
+    },
+    async opposedReviewingEditors(manuscript) {
+      return manuscript.opposedReviewingEditors.map(id => people[id])
     },
   },
 

@@ -1,21 +1,33 @@
 import gql from 'graphql-tag'
 
+const editorFragment = gql`
+  fragment EditorDetails on EditorUser {
+    id
+    name
+    institution
+  }
+`
+
 const manuscriptFragment = gql`
   fragment WholeManuscript on Manuscript {
     id
     title
     manuscriptType
     subjectAreas
-    suggestedSeniorEditors
+    suggestedSeniorEditors {
+      ...EditorDetails
+    }
     opposedSeniorEditors {
-      name
-      reason
+      ...EditorDetails
     }
-    suggestedReviewingEditors
+    opposedSeniorEditorsReason
+    suggestedReviewingEditors {
+      ...EditorDetails
+    }
     opposedReviewingEditors {
-      name
-      reason
+      ...EditorDetails
     }
+    opposedReviewingEditorsReason
     suggestedReviewers {
       name
       email
@@ -54,6 +66,7 @@ const manuscriptFragment = gql`
       }
     }
   }
+  ${editorFragment}
 `
 
 export const GET_CURRENT_SUBMISSION = gql`

@@ -3,16 +3,8 @@ import yup from 'yup'
 // TODO only the initially displayed fields should be required,
 // fields added by the user should be optional
 
-const suggestedEditorValidator = () =>
-  yup.array(yup.string().required('Suggested editors are required'))
-
-const opposedEditorValidator = () =>
-  yup.array(
-    yup.object({
-      name: yup.string().required('This field is required'),
-      reason: yup.string().required('This field is required'),
-    }),
-  )
+// TODO validate and display errors if wrong number of editors selected
+const editorValidator = () => yup.array()
 
 const suggestedReviewerValidator = () =>
   yup.array(
@@ -38,10 +30,13 @@ const opposedReviewerValidator = () =>
   )
 
 const schema = yup.object().shape({
-  suggestedSeniorEditors: suggestedEditorValidator(),
-  opposedSeniorEditors: opposedEditorValidator(),
-  suggestedReviewingEditors: suggestedEditorValidator(),
-  opposedReviewingEditors: opposedEditorValidator(),
+  suggestedSeniorEditors: editorValidator(),
+  opposedSeniorEditors: editorValidator(),
+  // TODO conditionally required
+  opposedSeniorEditorsReason: yup.string(),
+  suggestedReviewingEditors: editorValidator(),
+  opposedReviewingEditors: editorValidator(),
+  oppopposedSeniorEditorsReason: yup.string(),
   suggestedReviewers: suggestedReviewerValidator(),
   opposedReviewers: opposedReviewerValidator(),
   noConflictOfInterest: yup
@@ -53,18 +48,4 @@ const schema = yup.object().shape({
     ),
 })
 
-const empty = {
-  suggestedSeniorEditors: ['', ''],
-  opposedSeniorEditors: [],
-  suggestedReviewingEditors: ['', ''],
-  opposedReviewingEditors: [],
-  suggestedReviewers: [
-    { name: '', email: '' },
-    { name: '', email: '' },
-    { name: '', email: '' },
-  ],
-  opposedReviewers: [],
-  noConflictOfInterest: false,
-}
-
-export { schema, empty }
+export { schema }
