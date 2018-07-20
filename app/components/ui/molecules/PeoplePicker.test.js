@@ -27,7 +27,7 @@ const makeWrapper = props =>
   )
 
 const getPersonPodButton = (wrapper, index) =>
-  wrapper.find('button[data-test-id="person-pod-toggle"]').at(index)
+  wrapper.find('button[data-test-id="person-pod-button"]').at(index)
 
 const expectSelectionLength = (wrapper, length) =>
   expect(wrapper.find('SelectedItem')).toHaveLength(length)

@@ -53,7 +53,7 @@ const PersonPod = ({
     {textContainer}
     <Flex flexDirection="column" justifyContent="center">
       <StyledButton
-        data-test-id="person-pod-toggle"
+        data-test-id="person-pod-button"
         disabled={!isIconClickable}
         onClick={onIconClick}
       >
@@ -94,9 +94,13 @@ const buildPersonText = ({
     <RegularP>{name}</RegularP>
     <RegularP>{institution}</RegularP>
     {isKeywordClickable && (
-      <SmallAction onClick={onKeywordClick}>{keywords}</SmallAction>
+      <SmallAction data-test-id="clickable-keyword" onClick={onKeywordClick}>
+        {keywords}
+      </SmallAction>
     )}
-    {!isKeywordClickable && <SmallP>{keywords}</SmallP>}
+    {!isKeywordClickable && (
+      <SmallP data-test-id="non-clickable-keyword">{keywords}</SmallP>
+    )}
     {isStatusShown && <SmallP>{status}</SmallP>}
   </Box>
 )
