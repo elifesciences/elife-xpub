@@ -181,12 +181,12 @@ const resolvers = {
       let title = ''
       if (xmlData.article) {
         const firstArticle = xmlData.article.front[0]
-        const { 'article-meta': articleMeta } = firstArticle
+        const articleMeta = firstArticle['article-meta']
         const firstMeta = articleMeta[0]
-        const { 'title-group': titleGroup } = firstMeta
+        const titleGroup = firstMeta['title-group']
         const firstTitleGroup = titleGroup[0]
-        const { 'article-title': titleArray } = firstTitleGroup
-        ;[title] = titleArray
+        const titleArray = firstTitleGroup['article-title']
+        title = titleArray.title
       }
 
       const manuscript = await db.selectId(id)
