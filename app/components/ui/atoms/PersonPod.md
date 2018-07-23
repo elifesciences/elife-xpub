@@ -9,9 +9,9 @@ Clickable keywords:
   keywords="cell biology"
   isKeywordClickable={true}
   onKeywordClick={() => console.log('keyword clicked')}
-  onIconClick={() => console.log('icon clicked')}
   isStatusShown={false}
   iconState="add"
+  onIconClick={() => console.log('icon clicked')}
 />
 ```
 
@@ -24,10 +24,10 @@ Showing the person's status:
   keywords="cell biology"
   isKeywordClickable={true}
   onKeywordClick={() => console.log('keyword clicked')}
-  onIconClick={() => console.log('icon clicked')}
   status="Currently unavailable"
   isStatusShown={true}
   iconState="add"
+  onIconClick={() => console.log('icon clicked')}
 />
 ```
 
@@ -40,10 +40,10 @@ Removal icon:
   keywords="cell biology"
   isKeywordClickable={false}
   onKeywordClick={() => console.log('keyword clicked')}
-  onIconClick={() => console.log('icon clicked')}
   status="Currently unavailable"
   isStatusShown={true}
   iconState="remove"
+  onIconClick={() => console.log('icon clicked')}
 />
 ```
 
@@ -56,10 +56,10 @@ Selected icon:
   keywords="cell biology"
   isKeywordClickable={false}
   onKeywordClick={() => console.log('keyword clicked')}
-  onIconClick={() => console.log('icon clicked')}
   status="Currently unavailable"
   isStatusShown={true}
   iconState="selected"
+  onIconClick={() => console.log('icon clicked')}
 />
 ```
 
@@ -72,11 +72,11 @@ Disabled:
   keywords="cell biology"
   isKeywordClickable={false}
   onKeywordClick={() => console.log('keyword clicked')}
-  onIconClick={() => console.log('icon clicked')}
   status="Currently unavailable"
   isStatusShown={true}
   iconState="add"
   isIconClickable={false}
+  onIconClick={() => console.log('icon clicked')}
 />
 ```
 
