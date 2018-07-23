@@ -76,7 +76,7 @@ Disabled:
   status="Currently unavailable"
   isStatusShown={true}
   iconState="add"
-  disabled
+  isIconClickable={false}
 />
 ```
 
