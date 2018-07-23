@@ -10,8 +10,9 @@ const people = [
   { id: 4, name: 'Dave Badger', institution: 'D Research Lab' },
 ]
 ;<PeoplePicker
-  minSelection="2"
-  maxSelection="3"
+  initialSelection={[people[1]]}
+  minSelection={2}
+  maxSelection={3}
   onSubmit={selection => console.log(selection)}
   people={people}
 >
@@ -25,6 +26,10 @@ const people = [
 </PeoplePicker>
 ```
 
+Note that by spreading the `prop` parameter from the render prop function into
+the `Buttons` and `Body` components as shown in the example, you avoid the need
+to update your code should the API change in future.
+
 ### Body only
 
 ```js
@@ -34,10 +39,13 @@ const people = [
   { id: 3, name: 'Chastity' },
   { id: 4, name: 'Dave' },
 ]
+const selection = people.slice(0, 2)
 ;<PeoplePicker.Body
+  isSelected={person => selection.includes(person)}
+  maxSelection={5}
+  minSelection={3}
   people={people}
-  selection={[]}
-  isSelected={() => false}
+  selection={selection}
   toggleSelection={person => console.log(person)}
 />
 ```

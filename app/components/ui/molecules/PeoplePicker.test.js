@@ -15,6 +15,7 @@ const makeWrapper = props =>
   mount(
     <ThemeProvider theme={theme}>
       <PeoplePicker
+        // need to pass children as a prop in order to override it in some tests
         // eslint-disable-next-line react/no-children-prop
         children={innerProps => <PeoplePicker.Body {...innerProps} />}
         onCancel={jest.fn()}
@@ -38,14 +39,14 @@ describe('PeoplePicker', () => {
     expect(render).toHaveBeenCalled()
   })
 
-  it('renders one person pod per person', () => {
+  it('renders as many person pods as people', () => {
     const wrapper = makeWrapper()
     const buttons = wrapper.find('PersonPod')
 
-    expect(buttons).toHaveLength(4)
+    expect(buttons).toHaveLength(people.length)
   })
 
-  it('updates selection', () => {
+  it('clicking the icon adds/removes a selected item from the page', () => {
     const wrapper = makeWrapper()
     expectSelectionLength(wrapper, 0)
 
@@ -56,7 +57,7 @@ describe('PeoplePicker', () => {
     expectSelectionLength(wrapper, 0)
   })
 
-  it('disables inputs when maximum is reached', () => {
+  it('cannot select more pods when maximum is reached', () => {
     const wrapper = makeWrapper({ maxSelection: 1 })
     expectSelectionLength(wrapper, 0)
 
@@ -67,7 +68,7 @@ describe('PeoplePicker', () => {
     expectSelectionLength(wrapper, 1)
   })
 
-  it('allows submit only when minimum is met', () => {
+  it('allows submit only after minimum is met', () => {
     const onSubmit = jest.fn()
     const wrapper = makeWrapper({ minSelection: 1, onSubmit })
 
@@ -85,7 +86,7 @@ describe('PeoplePicker', () => {
     expect(onSubmit).toHaveBeenCalled()
   })
 
-  it('shows selected items', () => {
+  it('clicking on selected item icon removes it', () => {
     const wrapper = makeWrapper()
     expectSelectionLength(wrapper, 0)
 

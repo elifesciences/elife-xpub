@@ -93,7 +93,10 @@ const PeoplePickerButtons = ({ isValid, onCancel, onSubmit }) => (
 )
 
 class PeoplePicker extends React.Component {
-  state = { selection: [] }
+  constructor(props) {
+    super(props)
+    this.state = { selection: this.props.initialSelection }
+  }
 
   toggleSelection(person) {
     if (this.isSelected(person)) {
@@ -134,21 +137,24 @@ class PeoplePicker extends React.Component {
     })
   }
 }
+const peopleArrayPropType = PropTypes.arrayOf(
+  PropTypes.shape({
+    id: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
+    name: PropTypes.string.isRequired,
+  }),
+)
 
 PeoplePicker.propTypes = {
+  initialSelection: peopleArrayPropType,
   minSelection: PropTypes.number,
   maxSelection: PropTypes.number,
   onCancel: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,
-  people: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
-      name: PropTypes.string.isRequired,
-    }),
-  ).isRequired,
+  people: peopleArrayPropType.isRequired,
 }
 
 PeoplePicker.defaultProps = {
+  initialSelection: [],
   minSelection: 0,
   maxSelection: Infinity,
 }
