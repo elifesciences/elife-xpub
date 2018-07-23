@@ -150,11 +150,7 @@ PersonPodContainer.propTypes = {
   icon: PropTypes.element.isRequired,
 }
 
-switchIcon.PropTypes = {
-  iconState: PropTypes.oneOf[('add', 'remove', 'selected')],
-}
-
-buildPersonText.propTypes = {
+PersonPod.propTypes = {
   name: PropTypes.string.isRequired,
   institution: PropTypes.string.isRequired,
   keywords: PropTypes.string.isRequired,
@@ -162,24 +158,18 @@ buildPersonText.propTypes = {
   onKeywordClick: PropTypes.func,
   isStatusShown: PropTypes.bool.isRequired,
   status: PropTypes.string,
+  iconState: PropTypes.oneOf[('add', 'remove', 'selected')].isRequired,
+  onIconClick: PropTypes.func.isRequired,
 }
 
-buildPersonText.defaultProps = {
+PersonPod.defaultProps = {
   onKeywordClick: null,
   status: '',
 }
 
-PersonPod.propTypes = {
-  iconState: PropTypes.string.isRequired,
-  onIconClick: PropTypes.func.isRequired,
-}
-
-buildChooserText.propTypes = {
+SelectButton.propTypes = {
   role: PropTypes.string.isRequired,
   isRequired: PropTypes.bool.isRequired,
-}
-
-SelectButton.propTypes = {
   onIconClick: PropTypes.func.isRequired,
 }
 
