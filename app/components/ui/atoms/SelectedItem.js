@@ -4,7 +4,7 @@ import { th } from '@pubsweet/ui-toolkit'
 import CrossIcon from './icons/Cross'
 
 const Root = styled.div`
-  border-radius: ${th('borderRadius')}
+  border-radius: ${th('borderRadius')};
   background-color: ${th('colorPrimary')};
   line-height: ${th('fontLineHeightBase')};
   padding: ${th('space.1')};
