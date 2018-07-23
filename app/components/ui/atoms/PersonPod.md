@@ -10,7 +10,7 @@ Clickable keywords:
   isKeywordClickable={true}
   onKeywordClick={() => console.log('keyword clicked')}
   isStatusShown={false}
-  iconState="add"
+  iconType="add"
   onIconClick={() => console.log('icon clicked')}
 />
 ```
@@ -26,7 +26,7 @@ Showing the person's status:
   onKeywordClick={() => console.log('keyword clicked')}
   status="Currently unavailable"
   isStatusShown={true}
-  iconState="add"
+  iconType="add"
   onIconClick={() => console.log('icon clicked')}
 />
 ```
@@ -42,7 +42,7 @@ Removal icon:
   onKeywordClick={() => console.log('keyword clicked')}
   status="Currently unavailable"
   isStatusShown={true}
-  iconState="remove"
+  iconType="remove"
   onIconClick={() => console.log('icon clicked')}
 />
 ```
@@ -58,7 +58,7 @@ Selected icon:
   onKeywordClick={() => console.log('keyword clicked')}
   status="Currently unavailable"
   isStatusShown={true}
-  iconState="selected"
+  iconType="selected"
   onIconClick={() => console.log('icon clicked')}
 />
 ```
@@ -74,7 +74,7 @@ Disabled:
   onKeywordClick={() => console.log('keyword clicked')}
   status="Currently unavailable"
   isStatusShown={true}
-  iconState="add"
+  iconType="add"
   isIconClickable={false}
   onIconClick={() => console.log('icon clicked')}
 />

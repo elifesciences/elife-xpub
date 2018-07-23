@@ -63,24 +63,23 @@ const PersonPodContainer = ({
   </StyledPod>
 )
 
-const PlusIcon = <Icon size={3}>Plus</Icon>
-const RubbishBinIcon = <Icon size={3}>RubbishBin</Icon>
-const SelectedTickIcon = <Icon size={4}>SelectedTick</Icon>
+const plusIcon = <Icon size={3}>Plus</Icon>
+const rubbishBinIcon = <Icon size={3}>RubbishBin</Icon>
+const selectedTickIcon = <Icon size={4}>SelectedTick</Icon>
 
-const switchIcon = iconState => {
-  switch (iconState) {
-    case 'add':
-      return PlusIcon
+const PodIcon = ({ iconType }) => {
+  switch (iconType) {
     case 'remove':
-      return RubbishBinIcon
+      return rubbishBinIcon
     case 'selected':
-      return SelectedTickIcon
+      return selectedTickIcon
+    case 'add':
     default:
-      return PlusIcon
+      return plusIcon
   }
 }
 
-const buildPersonText = ({
+const PersonText = ({
   name,
   institution,
   keywords,
@@ -108,22 +107,18 @@ const buildPersonText = ({
 const PersonPod = ({
   isIconClickable = true,
   onIconClick,
-  iconState,
+  iconType,
   ...props
-}) => {
-  const IconByState = switchIcon(iconState)
-  const ChosenPerson = buildPersonText(props)
-  return (
-    <PersonPodContainer
-      icon={IconByState}
-      isIconClickable={isIconClickable}
-      onIconClick={onIconClick}
-      textContainer={ChosenPerson}
-    />
-  )
-}
+}) => (
+  <PersonPodContainer
+    icon={<PodIcon iconType={iconType} />}
+    isIconClickable={isIconClickable}
+    onIconClick={onIconClick}
+    textContainer={<PersonText {...props} />}
+  />
+)
 
-const buildChooserText = ({ role, isRequired, ...props }) => (
+const ChooserText = ({ role, isRequired, ...props }) => (
   <Flex flexDirection="column" justifyContent="center">
     <Box ml={2}>
       <RegularP>
@@ -133,24 +128,27 @@ const buildChooserText = ({ role, isRequired, ...props }) => (
   </Flex>
 )
 
-const SelectButton = ({ onIconClick, ...props }) => {
-  const ChooserText = buildChooserText(props)
-  return (
-    <PersonPodContainer
-      icon={PlusIcon}
-      onIconClick={onIconClick}
-      textContainer={ChooserText}
-    />
-  )
-}
+const SelectButton = ({ isIconClickable, onIconClick, ...props }) => (
+  <PersonPodContainer
+    icon={plusIcon}
+    isIconClickable
+    onIconClick={onIconClick}
+    textContainer={<ChooserText {...props} />}
+  />
+)
 
 PersonPodContainer.propTypes = {
+  isIconClickable: PropTypes.bool.isRequired,
   onIconClick: PropTypes.func.isRequired,
   textContainer: PropTypes.element.isRequired,
   icon: PropTypes.element.isRequired,
 }
 
-PersonPod.propTypes = {
+PodIcon.propTypes = {
+  iconType: PropTypes.oneOf(['add', 'remove', 'selected']).isRequired,
+}
+
+PersonText.propTypes = {
   name: PropTypes.string.isRequired,
   institution: PropTypes.string.isRequired,
   keywords: PropTypes.string.isRequired,
@@ -158,18 +156,29 @@ PersonPod.propTypes = {
   onKeywordClick: PropTypes.func,
   isStatusShown: PropTypes.bool.isRequired,
   status: PropTypes.string,
-  iconState: PropTypes.oneOf[('add', 'remove', 'selected')].isRequired,
-  onIconClick: PropTypes.func.isRequired,
 }
 
-PersonPod.defaultProps = {
+PersonText.defaultProps = {
   onKeywordClick: null,
   status: '',
 }
 
-SelectButton.propTypes = {
+PersonPod.propTypes = {
+  isIconClickable: PropTypes.bool,
+  onIconClick: PropTypes.func.isRequired,
+  iconType: PropTypes.oneOf(['add', 'remove', 'selected']).isRequired,
+}
+
+PersonPod.defaultProps = {
+  isIconClickable: true,
+}
+
+ChooserText.propTypes = {
   role: PropTypes.string.isRequired,
   isRequired: PropTypes.bool.isRequired,
+}
+
+SelectButton.propTypes = {
   onIconClick: PropTypes.func.isRequired,
 }
 
