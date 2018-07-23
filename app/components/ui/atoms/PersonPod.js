@@ -42,7 +42,7 @@ const StyledPod = styled(Flex)`
   height: 120px;
 `
 
-const PersonPod = ({
+const PersonPodContainer = ({
   isIconClickable,
   onIconClick,
   textContainer,
