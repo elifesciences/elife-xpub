@@ -64,14 +64,17 @@ const PeoplePickerBody = ({
     <Flex flexWrap="wrap" mx={-2}>
       {people.map(person => (
         <Box key={person.id} p={2} width={1 / 2}>
-          <PersonPod.ChosenPersonPod
-            iconState={isSelected(person) ? 'selected' : 'add'}
+          <PersonPod
+            iconType={isSelected(person) ? 'selected' : 'add'}
             institution={person.institution}
             isIconClickable={
               isSelected(person) || selection.length < maxSelection
             }
+            isKeywordClickable
+            keywords={person.keywords}
             name={person.name}
             onIconClick={() => toggleSelection(person)}
+            // onKeywordClick will need to be added, once we know what the desired behaviour is
           />
         </Box>
       ))}

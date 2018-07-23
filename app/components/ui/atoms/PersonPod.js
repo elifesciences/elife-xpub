@@ -85,7 +85,7 @@ const PersonText = ({
   keywords,
   isKeywordClickable,
   onKeywordClick = null,
-  isStatusShown,
+  isStatusShown = false,
   status = '',
   ...props
 }) => (
@@ -154,12 +154,13 @@ PersonText.propTypes = {
   keywords: PropTypes.string.isRequired,
   isKeywordClickable: PropTypes.bool.isRequired,
   onKeywordClick: PropTypes.func,
-  isStatusShown: PropTypes.bool.isRequired,
+  isStatusShown: PropTypes.bool,
   status: PropTypes.string,
 }
 
 PersonText.defaultProps = {
   onKeywordClick: null,
+  isStatusShown: false,
   status: '',
 }
 

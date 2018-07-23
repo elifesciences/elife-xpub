@@ -17,7 +17,7 @@ function makePersonPodWrapper(props) {
 }
 
 const propsWithClickableFunctionality = {
-  iconState: 'add',
+  iconType: 'add',
   institution: 'Utrecht University',
   isKeywordClickable: true,
   isStatusShown: false,

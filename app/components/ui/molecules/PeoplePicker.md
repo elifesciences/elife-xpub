@@ -4,10 +4,30 @@
 
 ```js
 const people = [
-  { id: 1, name: 'Annie Badger', institution: 'A University' },
-  { id: 2, name: 'Bobby Badger', institution: 'B College' },
-  { id: 3, name: 'Chastity Badger', institution: 'C Institute' },
-  { id: 4, name: 'Dave Badger', institution: 'D Research Lab' },
+  {
+    id: 1,
+    name: 'Annie Badger',
+    institution: 'A University',
+    keywords: 'cell biology',
+  },
+  {
+    id: 2,
+    name: 'Bobby Badger',
+    institution: 'B College',
+    keywords: 'biochemistry and chemical biology',
+  },
+  {
+    id: 3,
+    name: 'Chastity Badger',
+    institution: 'C Institute',
+    keywords: 'ecology',
+  },
+  {
+    id: 4,
+    name: 'Dave Badger',
+    institution: 'D Research Lab',
+    keywords: 'neuroscience',
+  },
 ]
 ;<PeoplePicker
   initialSelection={[people[1]]}
@@ -34,11 +54,32 @@ to update your code should the API change in future.
 
 ```js
 const people = [
-  { id: 1, name: 'Annie' },
-  { id: 2, name: 'Bobby' },
-  { id: 3, name: 'Chastity' },
-  { id: 4, name: 'Dave' },
+  {
+    id: 1,
+    name: 'Annie Badger',
+    institution: 'A University',
+    keywords: 'cell biology',
+  },
+  {
+    id: 2,
+    name: 'Bobby Badger',
+    institution: 'B College',
+    keywords: 'biochemistry and chemical biology',
+  },
+  {
+    id: 3,
+    name: 'Chastity Badger',
+    institution: 'C Institute',
+    keywords: 'ecology',
+  },
+  {
+    id: 4,
+    name: 'Dave Badger',
+    institution: 'D Research Lab',
+    keywords: 'neuroscience',
+  },
 ]
+
 const selection = people.slice(0, 2)
 ;<PeoplePicker.Body
   isSelected={person => selection.includes(person)}
