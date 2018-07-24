@@ -92,14 +92,24 @@ const PersonText = ({
   <Box {...props} m={2}>
     <RegularP>{name}</RegularP>
     <RegularP>{institution}</RegularP>
-    {isKeywordClickable && (
-      <SmallAction data-test-id="clickable-keyword" onClick={onKeywordClick}>
-        {keywords}
-      </SmallAction>
-    )}
-    {!isKeywordClickable && (
-      <SmallP data-test-id="non-clickable-keyword">{keywords}</SmallP>
-    )}
+    {isKeywordClickable &&
+      keywords &&
+      keywords.map(keyword => (
+        <SmallAction
+          data-test-id="clickable-keyword"
+          key={keyword}
+          onClick={() => onKeywordClick(keyword)}
+        >
+          {keyword}
+        </SmallAction>
+      ))}
+    {!isKeywordClickable &&
+      keywords &&
+      keywords.map(keyword => (
+        <SmallP data-test-id="non-clickable-keyword" key={keyword}>
+          {keyword}
+        </SmallP>
+      ))}
     {isStatusShown && <SmallP>{status}</SmallP>}
   </Box>
 )
@@ -118,11 +128,11 @@ const PersonPod = ({
   />
 )
 
-const ChooserText = ({ role, isRequired, ...props }) => (
+const ChooserText = ({ roleName, isRequired, ...props }) => (
   <Flex flexDirection="column" justifyContent="center">
     <Box ml={2}>
       <RegularP>
-        Choose {role} ({isRequired ? 'required' : 'optional'})
+        Choose {roleName} ({isRequired ? 'required' : 'optional'})
       </RegularP>
     </Box>
   </Flex>
@@ -151,7 +161,7 @@ PodIcon.propTypes = {
 PersonText.propTypes = {
   name: PropTypes.string.isRequired,
   institution: PropTypes.string.isRequired,
-  keywords: PropTypes.string.isRequired,
+  keywords: PropTypes.arrayOf(PropTypes.string.isRequired),
   isKeywordClickable: PropTypes.bool.isRequired,
   onKeywordClick: PropTypes.func,
   isStatusShown: PropTypes.bool,
@@ -159,6 +169,7 @@ PersonText.propTypes = {
 }
 
 PersonText.defaultProps = {
+  keywords: null,
   onKeywordClick: null,
   isStatusShown: false,
   status: '',
@@ -175,7 +186,7 @@ PersonPod.defaultProps = {
 }
 
 ChooserText.propTypes = {
-  role: PropTypes.string.isRequired,
+  roleName: PropTypes.string.isRequired,
   isRequired: PropTypes.bool.isRequired,
 }
 

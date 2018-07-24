@@ -88,7 +88,12 @@ const PeoplePickerButtons = ({ isValid, onCancel, onSubmit }) => (
       <Button onClick={onCancel}>Cancel</Button>
     </Box>
     <Box>
-      <Button disabled={!isValid} onClick={onSubmit} primary>
+      <Button
+        data-test-id="people-picker-add"
+        disabled={!isValid}
+        onClick={onSubmit}
+        primary
+      >
         Add
       </Button>
     </Box>

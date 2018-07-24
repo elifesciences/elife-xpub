@@ -19,6 +19,7 @@ const PeoplePickerControl = ({
     <PersonPod
       iconType="remove"
       institution={person.institution}
+      isKeywordClickable={false}
       name={person.name}
       onIconClick={() => onRequestRemove(person)}
     />
@@ -29,6 +30,7 @@ const PeoplePickerControl = ({
       <PersonPod.SelectButton
         isRequired={items.length < minSelection}
         onIconClick={onRequestModal}
+        roleName="Editor"
       />,
     )
 

@@ -27,11 +27,14 @@ const OptionalExclude = ({
   onRequestClose,
   onRequestOpen,
   roleName,
+  ...props
 }) =>
   boxVisible ? (
-    <CalloutBox onClose={onRequestClose}>{children}</CalloutBox>
+    <CalloutBox onClose={onRequestClose} {...props}>
+      {children}
+    </CalloutBox>
   ) : (
-    <Box>
+    <Box {...props}>
       Would you like to{' '}
       <Action onClick={onRequestOpen} type="button">
         exclude a {roleName}
@@ -39,7 +42,7 @@ const OptionalExclude = ({
     </Box>
   )
 
-class ReviewerSuggestions extends React.Component {
+class EditorsContent extends React.Component {
   state = {
     boxVisibility: {},
     modalVisibility: {},
@@ -102,7 +105,7 @@ class ReviewerSuggestions extends React.Component {
         <Box mb={5}>
           <FormH3>Suggest Senior Editors</FormH3>
 
-          <Box mb={2}>
+          <Box data-test-id="suggested-senior-editors" mb={2}>
             <PeoplePickerControl
               initialSelection={values.suggestedSeniorEditors}
               maxSelection={minimax.suggestedSeniorEditors.max}
@@ -123,6 +126,7 @@ class ReviewerSuggestions extends React.Component {
 
           <OptionalExclude
             boxVisible={this.isBoxVisible('opposedSeniorEditors')}
+            data-test-id="opposed-senior-editors"
             onRequestClose={() => this.hideBox('opposedSeniorEditors')}
             onRequestOpen={() => this.showBox('opposedSeniorEditors')}
             roleName="senior editor"
@@ -157,7 +161,7 @@ class ReviewerSuggestions extends React.Component {
         <Box mb={5}>
           <FormH3>Suggest Reviewing Editors</FormH3>
 
-          <Box mb={2}>
+          <Box data-test-id="suggested-reviewing-editors" mb={2}>
             <PeoplePickerControl
               initialSelection={values.suggestedReviewingEditors}
               maxSelection={minimax.suggestedReviewingEditors.max}
@@ -178,6 +182,7 @@ class ReviewerSuggestions extends React.Component {
 
           <OptionalExclude
             boxVisible={this.isBoxVisible('opposedReviewingEditors')}
+            data-test-id="opposed-reviewing-editors"
             onRequestClose={() => this.hideBox('opposedReviewingEditors')}
             onRequestOpen={() => this.showBox('opposedReviewingEditors')}
             roleName="senior editor"
@@ -257,4 +262,4 @@ class ReviewerSuggestions extends React.Component {
   }
 }
 
-export default ReviewerSuggestions
+export default EditorsContent

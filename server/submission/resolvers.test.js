@@ -146,9 +146,9 @@ describe('Submission', () => {
       title: 'My Manuscript',
       manuscriptType: 'research-article',
       subjectAreas: ['cancer-biology'],
-      suggestedSeniorEditors: ['Senior 1', 'Senior 2'],
+      suggestedSeniorEditors: [0, 2],
       opposedSeniorEditors: [],
-      suggestedReviewingEditors: ['Editor 1', 'Editor 2'],
+      suggestedReviewingEditors: [7, 9],
       opposedReviewingEditors: [],
       suggestedReviewers: [
         { name: 'Reviewer 1', email: 'reviewer1@mail.com' },

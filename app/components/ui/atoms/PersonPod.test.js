@@ -21,7 +21,7 @@ const propsWithClickableFunctionality = {
   institution: 'Utrecht University',
   isKeywordClickable: true,
   isStatusShown: false,
-  keywords: 'cell biology',
+  keywords: ['cell biology'],
   name: 'Richard Aldrich',
   onIconClick: handleIconClick,
   onKeywordClick: handleKeywordClick,
