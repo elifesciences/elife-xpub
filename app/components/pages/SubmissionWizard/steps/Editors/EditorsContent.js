@@ -1,5 +1,6 @@
 import React from 'react'
 import { Box } from 'grid-styled'
+import { Action } from '@pubsweet/ui'
 import MoreButton from '../../../../ui/molecules/MoreButton'
 import { FormH3 } from '../../../../ui/atoms/FormHeadings'
 
@@ -8,7 +9,10 @@ import {
   ExcludedReviewer,
   SuggestedReviewer,
 } from './FormSections'
-import EditorSection from './EditorSection'
+import PeoplePickerControl from './PeoplePickerControl'
+import Textarea from '../../../../ui/atoms/Textarea'
+import CalloutBox from '../../../../ui/atoms/CalloutBox'
+import ValidatedField from '../../../../ui/atoms/ValidatedField'
 
 const minimax = {
   suggestedSeniorEditors: { min: 2, max: 2 },
@@ -16,6 +20,24 @@ const minimax = {
   suggestedReviewingEditors: { min: 2, max: 2 },
   opposedReviewingEditors: { min: 0, max: 2 },
 }
+
+const OptionalExclude = ({
+  boxVisible,
+  children,
+  onRequestClose,
+  onRequestOpen,
+  roleName,
+}) =>
+  boxVisible ? (
+    <CalloutBox onClose={onRequestClose}>{children}</CalloutBox>
+  ) : (
+    <Box>
+      Would you like to{' '}
+      <Action onClick={onRequestOpen} type="button">
+        exclude a {roleName}
+      </Action>?
+    </Box>
+  )
 
 class ReviewerSuggestions extends React.Component {
   state = {
@@ -77,39 +99,115 @@ class ReviewerSuggestions extends React.Component {
     } = this.props
     return (
       <React.Fragment>
-        <EditorSection
-          hideBox={this.hideBox}
-          hideModal={this.hideModal}
-          isBoxVisible={this.isBoxVisible}
-          isModalVisible={this.isModalVisible}
-          minimax={minimax}
-          opposedKey="opposedSeniorEditors"
-          people={seniorEditors}
-          removeSelection={this.removeSelection}
-          roleName="senior editor"
-          showBox={this.showBox}
-          showModal={this.showModal}
-          suggestedKey="suggestedSeniorEditors"
-          updateSelection={setFieldValue}
-          values={values}
-        />
+        <Box mb={5}>
+          <FormH3>Suggest Senior Editors</FormH3>
 
-        <EditorSection
-          hideBox={this.hideBox}
-          hideModal={this.hideModal}
-          isBoxVisible={this.isBoxVisible}
-          isModalVisible={this.isModalVisible}
-          minimax={minimax}
-          opposedKey="opposedReviewingEditors"
-          people={reviewingEditors}
-          removeSelection={this.removeSelection}
-          roleName="reviewing editor"
-          showBox={this.showBox}
-          showModal={this.showModal}
-          suggestedKey="suggestedReviewingEditors"
-          updateSelection={setFieldValue}
-          values={values}
-        />
+          <Box mb={2}>
+            <PeoplePickerControl
+              initialSelection={values.suggestedSeniorEditors}
+              maxSelection={minimax.suggestedSeniorEditors.max}
+              minSelection={minimax.suggestedSeniorEditors.min}
+              modalOpen={this.isModalVisible('suggestedSeniorEditors')}
+              onCancel={() => this.hideModal('suggestedSeniorEditors')}
+              onRequestModal={() => this.showModal('suggestedSeniorEditors')}
+              onRequestRemove={person =>
+                this.removeSelection('suggestedSeniorEditors', person)
+              }
+              onSubmit={selection => {
+                this.hideModal('suggestedSeniorEditors')
+                setFieldValue('suggestedSeniorEditors', selection)
+              }}
+              options={seniorEditors}
+            />
+          </Box>
+
+          <OptionalExclude
+            boxVisible={this.isBoxVisible('opposedSeniorEditors')}
+            onRequestClose={() => this.hideBox('opposedSeniorEditors')}
+            onRequestOpen={() => this.showBox('opposedSeniorEditors')}
+            roleName="senior editor"
+          >
+            <FormH3>Exclude a Senior Editor</FormH3>
+
+            <PeoplePickerControl
+              initialSelection={values.opposedSeniorEditors}
+              maxSelection={minimax.opposedSeniorEditors.max}
+              minSelection={minimax.opposedSeniorEditors.min}
+              modalOpen={this.isModalVisible('opposedSeniorEditors')}
+              onCancel={() => this.hideModal('opposedSeniorEditors')}
+              onRequestModal={() => this.showModal('opposedSeniorEditors')}
+              onRequestRemove={person =>
+                this.removeSelection('opposedSeniorEditors', person)
+              }
+              onSubmit={selection => {
+                this.hideModal('opposedSeniorEditors')
+                setFieldValue('opposedSeniorEditors', selection)
+              }}
+              options={seniorEditors}
+            />
+
+            <ValidatedField
+              component={Textarea}
+              label="Reason for exclusion"
+              name="opposedSeniorEditorsReason"
+            />
+          </OptionalExclude>
+        </Box>
+
+        <Box mb={5}>
+          <FormH3>Suggest Reviewing Editors</FormH3>
+
+          <Box mb={2}>
+            <PeoplePickerControl
+              initialSelection={values.suggestedReviewingEditors}
+              maxSelection={minimax.suggestedReviewingEditors.max}
+              minSelection={minimax.suggestedReviewingEditors.min}
+              modalOpen={this.isModalVisible('suggestedReviewingEditors')}
+              onCancel={() => this.hideModal('suggestedReviewingEditors')}
+              onRequestModal={() => this.showModal('suggestedReviewingEditors')}
+              onRequestRemove={person =>
+                this.removeSelection('suggestedReviewingEditors', person)
+              }
+              onSubmit={selection => {
+                this.hideModal('suggestedReviewingEditors')
+                setFieldValue('suggestedReviewingEditors', selection)
+              }}
+              options={reviewingEditors}
+            />
+          </Box>
+
+          <OptionalExclude
+            boxVisible={this.isBoxVisible('opposedReviewingEditors')}
+            onRequestClose={() => this.hideBox('opposedReviewingEditors')}
+            onRequestOpen={() => this.showBox('opposedReviewingEditors')}
+            roleName="senior editor"
+          >
+            <FormH3>Exclude a Reviewing Editor</FormH3>
+
+            <PeoplePickerControl
+              initialSelection={values.opposedReviewingEditors}
+              maxSelection={minimax.opposedReviewingEditors.max}
+              minSelection={minimax.opposedReviewingEditors.min}
+              modalOpen={this.isModalVisible('opposedReviewingEditors')}
+              onCancel={() => this.hideModal('opposedReviewingEditors')}
+              onRequestModal={() => this.showModal('opposedReviewingEditors')}
+              onRequestRemove={person =>
+                this.removeSelection('opposedReviewingEditors', person)
+              }
+              onSubmit={selection => {
+                this.hideModal('opposedReviewingEditors')
+                setFieldValue('opposedReviewingEditors', selection)
+              }}
+              options={reviewingEditors}
+            />
+
+            <ValidatedField
+              component={Textarea}
+              label="Reason for exclusion"
+              name="opposedReviewingEditorsReason"
+            />
+          </OptionalExclude>
+        </Box>
 
         <Box mb={5}>
           <FormH3>Suggest Reviewers</FormH3>
