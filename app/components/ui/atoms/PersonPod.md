@@ -3,87 +3,87 @@
 Clickable keywords:
 
 ```js
-<PersonPod.ChosenPersonPod
+<PersonPod
   name="Richard Aldrich"
   institution="Utrecht University"
   keywords="cell biology"
   isKeywordClickable={true}
   onKeywordClick={() => console.log('keyword clicked')}
-  onIconClick={() => console.log('icon clicked')}
   isStatusShown={false}
-  iconState="add"
+  iconType="add"
+  onIconClick={() => console.log('icon clicked')}
 />
 ```
 
 Showing the person's status:
 
 ```js
-<PersonPod.ChosenPersonPod
+<PersonPod
   name="Richard Aldrich"
   institution="Utrecht University"
   keywords="cell biology"
   isKeywordClickable={true}
   onKeywordClick={() => console.log('keyword clicked')}
-  onIconClick={() => console.log('icon clicked')}
   status="Currently unavailable"
   isStatusShown={true}
-  iconState="add"
+  iconType="add"
+  onIconClick={() => console.log('icon clicked')}
 />
 ```
 
 Removal icon:
 
 ```js
-<PersonPod.ChosenPersonPod
+<PersonPod
   name="Richard Aldrich"
   institution="Utrecht University"
   keywords="cell biology"
   isKeywordClickable={false}
   onKeywordClick={() => console.log('keyword clicked')}
-  onIconClick={() => console.log('icon clicked')}
   status="Currently unavailable"
   isStatusShown={true}
-  iconState="remove"
+  iconType="remove"
+  onIconClick={() => console.log('icon clicked')}
 />
 ```
 
 Selected icon:
 
 ```js
-<PersonPod.ChosenPersonPod
+<PersonPod
   name="Richard Aldrich"
   institution="Utrecht University"
   keywords="cell biology"
   isKeywordClickable={false}
   onKeywordClick={() => console.log('keyword clicked')}
-  onIconClick={() => console.log('icon clicked')}
   status="Currently unavailable"
   isStatusShown={true}
-  iconState="selected"
+  iconType="selected"
+  onIconClick={() => console.log('icon clicked')}
 />
 ```
 
 Disabled:
 
 ```js
-<PersonPod.ChosenPersonPod
+<PersonPod
   name="Richard Aldrich"
   institution="Utrecht University"
   keywords="cell biology"
   isKeywordClickable={false}
   onKeywordClick={() => console.log('keyword clicked')}
-  onIconClick={() => console.log('icon clicked')}
   status="Currently unavailable"
   isStatusShown={true}
-  iconState="add"
-  disabled
+  iconType="add"
+  isIconClickable={false}
+  onIconClick={() => console.log('icon clicked')}
 />
 ```
 
 ### ChoosePersonPod
 
 ```js
-<PersonPod.ChoosePersonPod
+<PersonPod.SelectButton
   role="Senior Editor(s)"
   isRequired={true}
   onIconClick={() => console.log('icon clicked')}
@@ -91,7 +91,7 @@ Disabled:
 ```
 
 ```js
-<PersonPod.ChoosePersonPod
+<PersonPod.SelectButton
   role="Reviewing Editor(s)"
   isRequired={false}
   onIconClick={() => console.log('icon clicked')}
