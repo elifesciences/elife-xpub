@@ -17,18 +17,29 @@ const MAX_EXCLUDED_EDITORS = 2
 
 const ReviewerSuggestions = ({ values, setFieldValue }) => {
   const MAX_REVIEWERS = 6
+  const START_GROW_INDEX = 2
 
   const SuggestedReviewerFocusHandler = index => {
+    if (index < START_GROW_INDEX) {
+      return
+    }
     const visibleReviwersHaveData = () => {
-      const reviewerHasData = reviewer => reviewer.name !== '' || reviewer.email !== ''
+      const reviewerHasData = reviewer =>
+        reviewer.name !== '' || reviewer.email !== ''
 
       let allFilled = true
 
-      values.suggestedReviewers.forEach(reviewer => {
-        if (!reviewerHasData(reviewer)) {
+      for (
+        let currentIndex = 0;
+        currentIndex < values.suggestedReviewers.length;
+        currentIndex += 1
+      ) {
+        const reviewer = values.suggestedReviewers[currentIndex]
+        // check all but the current row (=index) for data
+        if (index !== currentIndex && !reviewerHasData(reviewer)) {
           allFilled = false
         }
-      })
+      }
       return allFilled
     }
 
