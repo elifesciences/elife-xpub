@@ -1,4 +1,5 @@
 import yup from 'yup'
+import './SuggestedReviewersValidator'
 
 // TODO only the initially displayed fields should be required,
 // fields added by the user should be optional
@@ -14,16 +15,7 @@ const opposedEditorValidator = () =>
     }),
   )
 
-const suggestedReviewerValidator = () =>
-  yup.array(
-    yup.object({
-      name: yup.string().required('Name is required'),
-      email: yup
-        .string()
-        .email('Must be a valid email')
-        .required('Email is required'),
-    }),
-  )
+const suggestedReviewerValidator = () => yup.array().validReviewers()
 
 const opposedReviewerValidator = () =>
   yup.array(

@@ -17,6 +17,36 @@ const userData = {
   oauth: { accessToken: 'f7617529-f46a-40b1-99f4-4181859783ca' },
 }
 
+const fullManuscript = {
+  title: 'My Manuscript',
+  manuscriptType: 'research-article',
+  subjectAreas: ['cancer-biology'],
+  suggestedSeniorEditors: ['Senior 1', 'Senior 2'],
+  opposedSeniorEditors: [],
+  suggestedReviewingEditors: ['Editor 1', 'Editor 2'],
+  opposedReviewingEditors: [],
+  suggestedReviewers: [
+    { name: 'Reviewer 1', email: 'reviewer1@mail.com' },
+    { name: 'Reviewer 2', email: 'reviewer2@mail.com' },
+    { name: 'Reviewer 3', email: 'reviewer3@mail.com' },
+  ],
+  opposedReviewers: [],
+  noConflictOfInterest: false,
+  submissionMeta: {
+    coverLetter: 'my cover letter',
+    author: {
+      firstName: 'Firstname',
+      lastName: 'Lastname',
+      email: 'mymail@mail.com',
+      institution: 'Institution Inc',
+    },
+    hasCorrespondent: false,
+    discussion: false,
+    previousArticle: false,
+    cosubmission: [],
+  },
+}
+
 describe('Submission', () => {
   let userId
 
@@ -142,35 +172,6 @@ describe('Submission', () => {
 
   describe('finishSubmission', () => {
     let id, initialManuscript
-    const fullManuscript = {
-      title: 'My Manuscript',
-      manuscriptType: 'research-article',
-      subjectAreas: ['cancer-biology'],
-      suggestedSeniorEditors: ['Senior 1', 'Senior 2'],
-      opposedSeniorEditors: [],
-      suggestedReviewingEditors: ['Editor 1', 'Editor 2'],
-      opposedReviewingEditors: [],
-      suggestedReviewers: [
-        { name: 'Reviewer 1', email: 'reviewer1@mail.com' },
-        { name: 'Reviewer 2', email: 'reviewer2@mail.com' },
-        { name: 'Reviewer 3', email: 'reviewer3@mail.com' },
-      ],
-      opposedReviewers: [],
-      noConflictOfInterest: false,
-      submissionMeta: {
-        coverLetter: 'my cover letter',
-        author: {
-          firstName: 'Firstname',
-          lastName: 'Lastname',
-          email: 'mymail@mail.com',
-          institution: 'Institution Inc',
-        },
-        hasCorrespondent: false,
-        discussion: false,
-        previousArticle: false,
-        cosubmission: [],
-      },
-    }
 
     beforeEach(async () => {
       initialManuscript = {

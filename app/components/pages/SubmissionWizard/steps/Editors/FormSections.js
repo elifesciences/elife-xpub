@@ -92,18 +92,20 @@ export const ExcludedReviewingEditor = ({ index, values, setFieldValue }) => (
   </CalloutBox>
 )
 
-export const SuggestedReviewer = ({ index }) => (
+export const SuggestedReviewer = ({ focusHandler, index }) => (
   <TwoColumnRow
     left={
       <ValidatedField
         label="Suggested reviewer name"
         name={`suggestedReviewers.${index}.name`}
+        onFocus={() => focusHandler(index)}
       />
     }
     right={
       <ValidatedField
         label="Suggested reviewer email"
         name={`suggestedReviewers.${index}.email`}
+        onFocus={() => focusHandler(index)}
         type="email"
       />
     }

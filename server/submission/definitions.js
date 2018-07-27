@@ -17,7 +17,7 @@ const typeDefs = `
       uploadManuscript(id: ID!, file: Upload!): Manuscript!
       finishSubmission(data: ManuscriptInput!): Manuscript!
     }
-    
+
     type Manuscript {
       id: ID
       title: String
@@ -34,7 +34,7 @@ const typeDefs = `
       submissionMeta: SubmissionMeta
       manuscriptPersons: [ManuscriptPerson!]!
     }
-    
+
     input ManuscriptInput {
       id: ID!
       title: String
@@ -57,7 +57,7 @@ const typeDefs = `
       alias: UserAlias
       metadata: ManuscriptPersonMetadata
     }
-    
+
     type UserAlias {
       id: ID!
       firstName: String!
@@ -66,9 +66,9 @@ const typeDefs = `
       email: String!
       institution: String!
     }
-    
+
     union ManuscriptPersonMetadata = AuthorMetadata | ReviewerMetadata
-    
+
     type AuthorMetadata {
       rank: Int!
       #contributions: AuthorMetadataContribution!
@@ -76,7 +76,7 @@ const typeDefs = `
       confirmed: Boolean
       conflictOfInterest: String
     }
-    
+
     type ReviewerMetadata {
       rank: Int!
       coRelationship: [ManuscriptPerson]
@@ -84,8 +84,8 @@ const typeDefs = `
       conflictOfInterest: String
       revealIdentity: Boolean!
     }
-    
-    
+
+
     enum ManuscriptRole {
       DEPUTYEDITOR
       SENIOREDITOR
@@ -219,6 +219,19 @@ const emptyManuscript = {
   },
   manuscriptPersons: [],
 }
+const MAX_SUGGESTED_REVIEWERS = 6
+
+const suggestedReviewerWithEmail = Joi.object().keys({
+  name: Joi.string().required(),
+  email: Joi.string()
+    .email()
+    .required(),
+})
+
+const suggestedReviewerWithoutEmail = Joi.object().keys({
+  name: Joi.string().allow(['']),
+  email: Joi.exist(),
+})
 
 const possibleStages = ['INITIAL', 'QA']
 const manuscriptSchema = Joi.object()
@@ -292,16 +305,14 @@ const manuscriptSchema = Joi.object()
         reason: Joi.string().required(),
       }),
     ),
-    suggestedReviewers: Joi.array().items(
-      Joi.object()
-        .keys({
-          name: Joi.string().required(),
-          email: Joi.string()
-            .email()
-            .required(),
-        })
-        .required(),
-    ),
+    suggestedReviewers: Joi.array()
+      .ordered(
+        suggestedReviewerWithEmail,
+        suggestedReviewerWithEmail,
+        suggestedReviewerWithEmail,
+      )
+      .items(suggestedReviewerWithoutEmail)
+      .max(MAX_SUGGESTED_REVIEWERS),
     opposedReviewers: Joi.array().items(
       Joi.object().keys({
         name: Joi.string().required(),
