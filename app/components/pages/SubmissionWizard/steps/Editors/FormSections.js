@@ -98,14 +98,14 @@ export const SuggestedReviewer = ({ focusHandler, index }) => (
       <ValidatedField
         label="Suggested reviewer name"
         name={`suggestedReviewers.${index}.name`}
-        onFocus={focusHandler(index)}
+        onFocus={() => focusHandler(index)}
       />
     }
     right={
       <ValidatedField
         label="Suggested reviewer email"
         name={`suggestedReviewers.${index}.email`}
-        onFocus={focusHandler(index)}
+        onFocus={() => focusHandler(index)}
         type="email"
       />
     }
