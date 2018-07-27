@@ -43,7 +43,6 @@ const ValidationMessage = ({ message }) => (
 class EditorsContent extends React.Component {
   state = {
     boxVisibility: {},
-    modalVisibility: {},
   }
 
   showBox = name => {
@@ -60,16 +59,18 @@ class EditorsContent extends React.Component {
   }
 
   showModal = name => {
-    this.setState({ modalVisibility: { [name]: true } })
+    this.props.history.push(this.props.history.location, { showModal: name })
   }
 
-  hideModal = name => {
-    this.setState({ modalVisibility: { [name]: false } })
+  hideModal = () => {
+    this.props.history.goBack()
   }
 
   isBoxVisible = name => this.state.boxVisibility[name]
 
-  isModalVisible = name => !!this.state.modalVisibility[name]
+  isModalVisible = name =>
+    !!this.props.history.location.state &&
+    this.props.history.location.state.showModal === name
 
   removeSelection = (name, person) => {
     this.props.setFieldValue(

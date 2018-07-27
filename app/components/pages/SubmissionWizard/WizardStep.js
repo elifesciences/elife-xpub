@@ -36,7 +36,7 @@ const WizardStep = ({
 
             <FormH2>{title}</FormH2>
 
-            <FormComponent values={values} {...formProps} />
+            <FormComponent history={history} values={values} {...formProps} />
 
             <Flex mt={6}>
               {previousUrl && (

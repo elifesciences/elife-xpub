@@ -33,9 +33,11 @@ function makeWrapper(props) {
   return mount(
     <ThemeProvider theme={theme}>
       <Formik
-        component={EditorsContent}
         initialValues={formValues}
         onSubmit={jest.fn()}
+        render={formProps => (
+          <EditorsContent history={{ location: {} }} {...formProps} />
+        )}
         validationSchema={schema}
         {...props}
       />
