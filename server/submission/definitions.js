@@ -229,7 +229,7 @@ const suggestedReviewerWithEmail = Joi.object().keys({
 })
 
 const suggestedReviewerWithoutEmail = Joi.object().keys({
-  name: Joi.string().required(),
+  name: Joi.string().allow(['']),
   email: Joi.exist(),
 })
 

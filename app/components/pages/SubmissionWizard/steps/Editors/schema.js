@@ -16,14 +16,6 @@ const opposedEditorValidator = () =>
   )
 
 const suggestedReviewerValidator = () => yup.array().validReviewers()
-//  yup.array(
-//    yup.object({
-//      name: yup.string().required('Name is required'),
-//      email: yup.string()
-//              .email('Must be a valid email')
-//              .required('Email is required')
-//    })
-// )
 
 const opposedReviewerValidator = () =>
   yup.array(
