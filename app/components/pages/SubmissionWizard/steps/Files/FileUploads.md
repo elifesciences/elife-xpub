@@ -1,9 +1,14 @@
-A set of controls for uploading files
+A form step for uploading a manuscript and writing the cover letter
 
 ```js
 const { Formik } = formik
 const { schema } = require('./schema')
-const empty = { coverLetter: '' }
+const empty = {
+  submissionMeta: {
+    coverLetter:
+      '<p><b>How do you feel about writing cover letters?</b></p><p></p>',
+  },
+}
 ;<Formik
   initialValues={empty}
   onSubmit={data => console.log(data)}
