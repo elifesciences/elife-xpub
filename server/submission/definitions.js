@@ -285,15 +285,25 @@ const manuscriptSchema = Joi.object()
     opposedSeniorEditors: Joi.array()
       .items(Joi.number())
       .required(),
-    // TODO conditionally require
-    opposedSeniorEditorsReason: Joi.string().allow(''),
+    opposedSeniorEditorsReason: Joi.string().when('opposedSeniorEditors', {
+      is: Joi.array().min(1),
+      then: Joi.string().required(),
+      otherwise: Joi.string().allow(''),
+    }),
     suggestedReviewingEditors: Joi.array()
       .items(Joi.number().required())
       .required(),
     opposedReviewingEditors: Joi.array()
       .items(Joi.number())
       .required(),
-    opposedReviewingEditorsReason: Joi.string().allow(''),
+    opposedReviewingEditorsReason: Joi.string().when(
+      'opposedReviewingEditors',
+      {
+        is: Joi.array().min(1),
+        then: Joi.string().required(),
+        otherwise: Joi.string().allow(''),
+      },
+    ),
     suggestedReviewers: Joi.array().items(
       Joi.object()
         .keys({

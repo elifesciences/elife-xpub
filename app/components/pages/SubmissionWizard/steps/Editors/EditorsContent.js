@@ -1,6 +1,6 @@
 import React from 'react'
 import { Box } from 'grid-styled'
-import { Action } from '@pubsweet/ui'
+import { Action, ErrorText } from '@pubsweet/ui'
 import MoreButton from '../../../../ui/molecules/MoreButton'
 import { FormH3 } from '../../../../ui/atoms/FormHeadings'
 
@@ -13,13 +13,7 @@ import PeoplePickerControl from './PeoplePickerControl'
 import Textarea from '../../../../ui/atoms/Textarea'
 import CalloutBox from '../../../../ui/atoms/CalloutBox'
 import ValidatedField from '../../../../ui/atoms/ValidatedField'
-
-const minimax = {
-  suggestedSeniorEditors: { min: 2, max: 2 },
-  opposedSeniorEditors: { min: 0, max: 2 },
-  suggestedReviewingEditors: { min: 2, max: 2 },
-  opposedReviewingEditors: { min: 0, max: 2 },
-}
+import { limits } from './schema'
 
 const OptionalExclude = ({
   boxVisible,
@@ -41,6 +35,10 @@ const OptionalExclude = ({
       </Action>?
     </Box>
   )
+
+const ValidationMessage = ({ message }) => (
+  <div aria-live="polite">{message && <ErrorText>{message}</ErrorText>}</div>
+)
 
 class EditorsContent extends React.Component {
   state = {
@@ -95,6 +93,8 @@ class EditorsContent extends React.Component {
 
   render() {
     const {
+      errors,
+      touched,
       values,
       setFieldValue,
       seniorEditors,
@@ -108,8 +108,8 @@ class EditorsContent extends React.Component {
           <Box data-test-id="suggested-senior-editors" mb={2}>
             <PeoplePickerControl
               initialSelection={values.suggestedSeniorEditors}
-              maxSelection={minimax.suggestedSeniorEditors.max}
-              minSelection={minimax.suggestedSeniorEditors.min}
+              maxSelection={limits.suggestedSeniorEditors.max}
+              minSelection={limits.suggestedSeniorEditors.min}
               modalOpen={this.isModalVisible('suggestedSeniorEditors')}
               onCancel={() => this.hideModal('suggestedSeniorEditors')}
               onRequestModal={() => this.showModal('suggestedSeniorEditors')}
@@ -121,6 +121,11 @@ class EditorsContent extends React.Component {
                 setFieldValue('suggestedSeniorEditors', selection)
               }}
               options={seniorEditors}
+            />
+            <ValidationMessage
+              message={
+                touched.suggestedSeniorEditors && errors.suggestedSeniorEditors
+              }
             />
           </Box>
 
@@ -135,8 +140,8 @@ class EditorsContent extends React.Component {
 
             <PeoplePickerControl
               initialSelection={values.opposedSeniorEditors}
-              maxSelection={minimax.opposedSeniorEditors.max}
-              minSelection={minimax.opposedSeniorEditors.min}
+              maxSelection={limits.opposedSeniorEditors.max}
+              minSelection={limits.opposedSeniorEditors.min}
               modalOpen={this.isModalVisible('opposedSeniorEditors')}
               onCancel={() => this.hideModal('opposedSeniorEditors')}
               onRequestModal={() => this.showModal('opposedSeniorEditors')}
@@ -148,6 +153,12 @@ class EditorsContent extends React.Component {
                 setFieldValue('opposedSeniorEditors', selection)
               }}
               options={seniorEditors}
+            />
+
+            <ValidationMessage
+              message={
+                touched.opposedSeniorEditors && errors.opposedSeniorEditors
+              }
             />
 
             <ValidatedField
@@ -164,8 +175,8 @@ class EditorsContent extends React.Component {
           <Box data-test-id="suggested-reviewing-editors" mb={2}>
             <PeoplePickerControl
               initialSelection={values.suggestedReviewingEditors}
-              maxSelection={minimax.suggestedReviewingEditors.max}
-              minSelection={minimax.suggestedReviewingEditors.min}
+              maxSelection={limits.suggestedReviewingEditors.max}
+              minSelection={limits.suggestedReviewingEditors.min}
               modalOpen={this.isModalVisible('suggestedReviewingEditors')}
               onCancel={() => this.hideModal('suggestedReviewingEditors')}
               onRequestModal={() => this.showModal('suggestedReviewingEditors')}
@@ -178,6 +189,13 @@ class EditorsContent extends React.Component {
               }}
               options={reviewingEditors}
             />
+
+            <ValidationMessage
+              message={
+                touched.suggestedReviewingEditors &&
+                errors.suggestedReviewingEditors
+              }
+            />
           </Box>
 
           <OptionalExclude
@@ -185,14 +203,14 @@ class EditorsContent extends React.Component {
             data-test-id="opposed-reviewing-editors"
             onRequestClose={() => this.hideBox('opposedReviewingEditors')}
             onRequestOpen={() => this.showBox('opposedReviewingEditors')}
-            roleName="senior editor"
+            roleName="reviewing editor"
           >
             <FormH3>Exclude a Reviewing Editor</FormH3>
 
             <PeoplePickerControl
               initialSelection={values.opposedReviewingEditors}
-              maxSelection={minimax.opposedReviewingEditors.max}
-              minSelection={minimax.opposedReviewingEditors.min}
+              maxSelection={limits.opposedReviewingEditors.max}
+              minSelection={limits.opposedReviewingEditors.min}
               modalOpen={this.isModalVisible('opposedReviewingEditors')}
               onCancel={() => this.hideModal('opposedReviewingEditors')}
               onRequestModal={() => this.showModal('opposedReviewingEditors')}
@@ -204,6 +222,13 @@ class EditorsContent extends React.Component {
                 setFieldValue('opposedReviewingEditors', selection)
               }}
               options={reviewingEditors}
+            />
+
+            <ValidationMessage
+              message={
+                touched.opposedReviewingEditors &&
+                errors.opposedReviewingEditors
+              }
             />
 
             <ValidatedField
