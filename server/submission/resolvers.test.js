@@ -32,6 +32,22 @@ describe('Submission', () => {
     mailer.clearMails()
   })
 
+  describe('editors', () => {
+    it('returns a list of senior editors', async () => {
+      const result = await Query.editors({}, { role: 'senior-editor' })
+      expect(result).toHaveLength(40)
+      expect(result[0]).toEqual({
+        id: '8d7e57b3',
+        institution: undefined,
+        name: 'Richard Aldrich',
+        subjectAreas: [
+          'Structural Biology and Molecular Biophysics',
+          'Neuroscience',
+        ],
+      })
+    })
+  })
+
   describe('currentSubmission', () => {
     it('Gets form data', async () => {
       const expectedManuscript = {
@@ -146,9 +162,9 @@ describe('Submission', () => {
       title: 'My Manuscript',
       manuscriptType: 'research-article',
       subjectAreas: ['cancer-biology'],
-      suggestedSeniorEditors: [0, 2],
+      suggestedSeniorEditors: ['ab12', 'cd34'],
       opposedSeniorEditors: [],
-      suggestedReviewingEditors: [7, 9],
+      suggestedReviewingEditors: ['ef56', 'gh78'],
       opposedReviewingEditors: [],
       suggestedReviewers: [
         { name: 'Reviewer 1', email: 'reviewer1@mail.com' },
