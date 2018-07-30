@@ -1,7 +1,7 @@
 import React from 'react'
 
 import PersonPod from '../../../../ui/atoms/PersonPod'
-import TwoColumnLayout from '../../TwoColumnLayout'
+import TwoColumnLayout from '../../../../global/layout/TwoColumnLayout'
 import PeoplePickerModal from './PeoplePickerModal'
 
 const PeoplePickerControl = ({
@@ -20,6 +20,7 @@ const PeoplePickerControl = ({
       iconType="remove"
       institution={person.institution}
       isKeywordClickable={false}
+      key={person.id}
       keywords={person.subjectAreas}
       name={person.name}
       onIconClick={() => onRequestRemove(person)}
@@ -30,6 +31,7 @@ const PeoplePickerControl = ({
     items.push(
       <PersonPod.SelectButton
         isRequired={items.length < minSelection}
+        key="chooser"
         onIconClick={onRequestModal}
         roleName="Editor"
       />,
@@ -37,7 +39,7 @@ const PeoplePickerControl = ({
 
   return (
     <React.Fragment>
-      <TwoColumnLayout items={items} mb={3} />
+      <TwoColumnLayout>{items}</TwoColumnLayout>
       <PeoplePickerModal
         initialSelection={initialSelection}
         maxSelection={maxSelection}

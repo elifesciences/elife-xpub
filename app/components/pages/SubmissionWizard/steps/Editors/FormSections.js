@@ -5,7 +5,7 @@ import ValidatedField from '../../../../ui/atoms/ValidatedField'
 import CalloutBox from '../../../../ui/atoms/CalloutBox'
 import Textarea from '../../../../ui/atoms/Textarea'
 import { FormH3 } from '../../../../ui/atoms/FormHeadings'
-import TwoColumnLayout from '../../TwoColumnLayout'
+import TwoColumnLayout from '../../../../global/layout/TwoColumnLayout'
 
 const createCloseHandler = (index, values, fieldName, setFieldValue) => () =>
   setFieldValue(
@@ -15,19 +15,17 @@ const createCloseHandler = (index, values, fieldName, setFieldValue) => () =>
   )
 
 export const SuggestedReviewer = ({ index }) => (
-  <TwoColumnLayout
-    items={[
-      <ValidatedField
-        label="Suggested reviewer name"
-        name={`suggestedReviewers.${index}.name`}
-      />,
-      <ValidatedField
-        label="Suggested reviewer email"
-        name={`suggestedReviewers.${index}.email`}
-        type="email"
-      />,
-    ]}
-  />
+  <TwoColumnLayout bottomSpacing={false}>
+    <ValidatedField
+      label="Suggested reviewer name"
+      name={`suggestedReviewers.${index}.name`}
+    />
+    <ValidatedField
+      label="Suggested reviewer email"
+      name={`suggestedReviewers.${index}.email`}
+      type="email"
+    />
+  </TwoColumnLayout>
 )
 
 export const ExcludedReviewer = ({ index, values, setFieldValue }) => (
@@ -40,19 +38,17 @@ export const ExcludedReviewer = ({ index, values, setFieldValue }) => (
     )}
   >
     <FormH3>Exclude a Reviewer</FormH3>
-    <TwoColumnLayout
-      items={[
-        <ValidatedField
-          label="Excluded reviewer name"
-          name={`opposedReviewers.${index}.name`}
-        />,
-        <ValidatedField
-          label="Excluded reviewer email"
-          name={`opposedReviewers.${index}.email`}
-          type="email"
-        />,
-      ]}
-    />
+    <TwoColumnLayout bottomSpacing={false}>
+      <ValidatedField
+        label="Excluded reviewer name"
+        name={`opposedReviewers.${index}.name`}
+      />
+      <ValidatedField
+        label="Excluded reviewer email"
+        name={`opposedReviewers.${index}.email`}
+        type="email"
+      />
+    </TwoColumnLayout>
     <ValidatedField
       component={Textarea}
       label="Reason for exclusion"
