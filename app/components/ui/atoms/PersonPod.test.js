@@ -58,7 +58,7 @@ describe('PersonPod component', () => {
     expect(
       wrapper.find('button[data-test-id="clickable-keyword"]').exists(),
     ).toBe(false)
-    const keywords = wrapper.find('p[data-test-id="non-clickable-keyword"]')
+    const keywords = wrapper.find('span[data-test-id="non-clickable-keyword"]')
     expect(keywords.exists()).toBe(true)
     keywords.simulate('click')
     expect(handleKeywordClick.mock.calls).toHaveLength(0)

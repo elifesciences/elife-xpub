@@ -20,6 +20,7 @@ const PeoplePickerControl = ({
       iconType="remove"
       institution={person.institution}
       isKeywordClickable={false}
+      keywords={person.subjectAreas}
       name={person.name}
       onIconClick={() => onRequestRemove(person)}
     />
