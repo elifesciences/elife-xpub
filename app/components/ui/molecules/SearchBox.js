@@ -48,39 +48,10 @@ class SearchBox extends React.Component {
   isSearchable = () => this.canSelectMore()
   render() {
     const customStyles = {
-      control: (base, state) => ({
-        ...base,
-        marginBottom: '28px',
-      }),
       valueContainer: (base, state) => ({
         ...base,
         padding: this.props.theme.space[2],
         height: this.props.theme.space[5],
-      }),
-      multiValue: (base, state) => ({
-        ...base,
-        backgroundColor: this.props.theme.colorPrimary,
-        color: this.props.theme.colorTextReverse,
-        marginRight: '20px',
-        marginTop: '96px',
-        marginLeft: '-12px',
-      }),
-      multiValueLabel: (base, state) => ({
-        ...base,
-        color: this.props.theme.colorTextReverse,
-        fontSize: this.props.theme.fontSizeBase,
-        padding: '8px 4px 8px 8px',
-        paddingLeft: '8px',
-      }),
-      multiValueRemove: (base, state) => ({
-        ...base,
-        padding: `0 ${this.props.theme.gridUnit} 0 0`,
-        backgroundColor: this.props.theme.colorPrimary,
-        ':hover': {
-          cursor: 'pointer',
-          backgroundColor: this.props.theme.colorPrimary,
-          color: this.props.theme.colorTextReverse,
-        },
       }),
     }
     return (
