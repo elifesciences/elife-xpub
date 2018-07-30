@@ -21,7 +21,7 @@ const PeoplePickerModal = ({ open, ...props }) => (
       {innerProps => (
         <React.Fragment>
           <Centerer p={3}>
-            <Flex>
+            <Flex data-test-id="people-picker-body">
               <Box flex="1 1 auto" mx={[0, 0, 0, '16.666%']}>
                 <PeoplePicker.Body {...innerProps} />
               </Box>

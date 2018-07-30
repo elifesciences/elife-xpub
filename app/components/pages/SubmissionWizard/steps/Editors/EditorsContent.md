@@ -8,7 +8,7 @@ const data = {
   opposedSeniorEditors: [
     { id: 3, name: 'Charlie Badger', institution: 'Badger University' },
   ],
-  suggestedReviewingEditors: ['', ''],
+  suggestedReviewingEditors: [],
   opposedReviewingEditors: [],
   suggestedReviewers: [
     { name: '', email: '' },

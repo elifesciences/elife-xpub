@@ -14,7 +14,7 @@ const Container = styled.div`
   }
 `
 
-const Icon = ({ children, size, color, ...props }) => {
+const Icon = ({ children, size, color, className, ...props }) => {
   const SelectedIcon = icons[children]
   if (!SelectedIcon) {
     // eslint-disable-next-line no-console
@@ -22,7 +22,13 @@ const Icon = ({ children, size, color, ...props }) => {
     return ''
   }
   return (
-    <Container color={color} role="img" size={size} {...props}>
+    <Container
+      className={className}
+      color={color}
+      role="img"
+      size={size}
+      {...props}
+    >
       <SelectedIcon {...props} />
     </Container>
   )

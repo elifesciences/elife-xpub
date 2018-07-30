@@ -5,10 +5,10 @@ import theme from '@elifesciences/elife-theme'
 import PeoplePicker from './PeoplePicker'
 
 const people = [
-  { id: 1, name: 'Annie' },
-  { id: 2, name: 'Bobby' },
-  { id: 3, name: 'Chastity' },
-  { id: 4, name: 'Dave' },
+  { id: 1, name: 'Annie', institution: 'eLife' },
+  { id: 2, name: 'Bobby', institution: 'eLife' },
+  { id: 3, name: 'Chastity', institution: 'eLife' },
+  { id: 4, name: 'Dave', institution: 'eLife' },
 ]
 
 const makeWrapper = props =>

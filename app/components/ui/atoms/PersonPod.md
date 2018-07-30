@@ -8,7 +8,7 @@ Clickable keywords:
   institution="Utrecht University"
   keywords="cell biology"
   isKeywordClickable={true}
-  onKeywordClick={() => console.log('keyword clicked')}
+  onKeywordClick={keyword => console.log(keyword, 'clicked')}
   isStatusShown={false}
   iconType="add"
   onIconClick={() => console.log('icon clicked')}

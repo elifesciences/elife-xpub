@@ -9,6 +9,7 @@ const typeDefs = `
       orcidDetails: Person
       manuscript(id: ID!): Manuscript!
       manuscripts: [Manuscript]!
+      editors(role: ManuscriptRole!): [EditorUser]
     }
     extend type Mutation {
       createSubmission: Manuscript!
@@ -23,10 +24,12 @@ const typeDefs = `
       title: String
       manuscriptType: String
       subjectAreas: [String]
-      suggestedSeniorEditors: [String]
-      opposedSeniorEditors: [OpposedEditor]
-      suggestedReviewingEditors: [String]
-      opposedReviewingEditors: [OpposedEditor]
+      suggestedSeniorEditors: [EditorUser]
+      opposedSeniorEditors: [EditorUser]
+      opposedSeniorEditorsReason: String
+      suggestedReviewingEditors: [EditorUser]
+      opposedReviewingEditors: [EditorUser]
+      opposedReviewingEditorsReason: String
       suggestedReviewers: [SuggestedReviewer]
       opposedReviewers: [OpposedReviewer]
       noConflictOfInterest: Boolean
@@ -40,10 +43,12 @@ const typeDefs = `
       title: String
       manuscriptType: String
       subjectAreas: [String]
-      suggestedSeniorEditors: [String]
-      opposedSeniorEditors: [OpposedEditorInput]
-      suggestedReviewingEditors: [String]
-      opposedReviewingEditors: [OpposedEditorInput]
+      suggestedSeniorEditors: [ID]
+      opposedSeniorEditors: [ID]
+      opposedSeniorEditorsReason: String
+      suggestedReviewingEditors: [ID]
+      opposedReviewingEditors: [ID]
+      opposedReviewingEditorsReason: String
       suggestedReviewers: [SuggestedReviewerInput]
       opposedReviewers: [OpposedReviewerInput]
       noConflictOfInterest: Boolean
@@ -134,13 +139,11 @@ const typeDefs = `
       title: String!
       author: String
     }
-    type OpposedEditor {
+    type EditorUser {
+      id: ID
       name: String
-      reason: String
-    }
-    input OpposedEditorInput {
-      name: String
-      reason: String
+      institution: String
+      subjectAreas: [String]
     }
     type SuggestedReviewer {
       name: String
@@ -176,10 +179,12 @@ const emptyManuscript = {
   title: '',
   manuscriptType: '',
   subjectAreas: [],
-  suggestedSeniorEditors: ['', ''],
+  suggestedSeniorEditors: [],
   opposedSeniorEditors: [],
-  suggestedReviewingEditors: ['', ''],
+  opposedSeniorEditorsReason: '',
+  suggestedReviewingEditors: [],
   opposedReviewingEditors: [],
+  opposedReviewingEditorsReason: '',
   suggestedReviewers: [
     { name: '', email: '' },
     { name: '', email: '' },
@@ -275,22 +280,29 @@ const manuscriptSchema = Joi.object()
       })
       .required(),
     suggestedSeniorEditors: Joi.array()
-      .items(Joi.string().required())
+      .items(Joi.number().required())
       .required(),
-    opposedSeniorEditors: Joi.array().items(
-      Joi.object().keys({
-        name: Joi.string().required(),
-        reason: Joi.string().required(),
-      }),
-    ),
+    opposedSeniorEditors: Joi.array()
+      .items(Joi.number())
+      .required(),
+    opposedSeniorEditorsReason: Joi.string().when('opposedSeniorEditors', {
+      is: Joi.array().min(1),
+      then: Joi.string().required(),
+      otherwise: Joi.string().allow(''),
+    }),
     suggestedReviewingEditors: Joi.array()
-      .items(Joi.string().required())
+      .items(Joi.number().required())
       .required(),
-    opposedReviewingEditors: Joi.array().items(
-      Joi.object().keys({
-        name: Joi.string().required(),
-        reason: Joi.string().required(),
-      }),
+    opposedReviewingEditors: Joi.array()
+      .items(Joi.number())
+      .required(),
+    opposedReviewingEditorsReason: Joi.string().when(
+      'opposedReviewingEditors',
+      {
+        is: Joi.array().min(1),
+        then: Joi.string().required(),
+        otherwise: Joi.string().allow(''),
+      },
     ),
     suggestedReviewers: Joi.array().items(
       Joi.object()

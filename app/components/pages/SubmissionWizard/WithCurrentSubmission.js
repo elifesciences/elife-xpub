@@ -11,6 +11,7 @@ import {
   FINISH_SUBMISSION,
 } from './operations'
 import CosubmissionModifier from './formDataModifiers/CosubmissionModifier'
+import EditorSuggestionsModifier from './formDataModifiers/EditorSuggestionsModifier'
 
 class WithCurrentSubmission extends React.Component {
   state = { error: null, values: null, loading: true }
@@ -43,7 +44,7 @@ class WithCurrentSubmission extends React.Component {
     }
   }
 
-  dataModifiers = [new CosubmissionModifier()]
+  dataModifiers = [new CosubmissionModifier(), new EditorSuggestionsModifier()]
 
   setData(data) {
     const values = cloneDeep(data.currentSubmission || data.createSubmission)

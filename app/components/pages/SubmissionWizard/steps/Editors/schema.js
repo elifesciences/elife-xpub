@@ -1,18 +1,27 @@
+/* eslint-disable no-template-curly-in-string */
 import yup from 'yup'
 
 // TODO only the initially displayed fields should be required,
 // fields added by the user should be optional
 
-const suggestedEditorValidator = () =>
-  yup.array(yup.string().required('Suggested editors are required'))
+const limits = {
+  suggestedSeniorEditors: { min: 2, max: 2 },
+  opposedSeniorEditors: { min: 0, max: 2 },
+  suggestedReviewingEditors: { min: 2, max: 2 },
+  opposedReviewingEditors: { min: 0, max: 2 },
+}
 
-const opposedEditorValidator = () =>
-  yup.array(
-    yup.object({
-      name: yup.string().required('This field is required'),
-      reason: yup.string().required('This field is required'),
-    }),
-  )
+const editorValidator = key =>
+  yup
+    .array()
+    .min(limits[key].min, 'Please suggest at least ${min} editors')
+    .max(limits[key].max, 'Please suggest no more than ${max} editors')
+
+const opposedReasonValidator = key =>
+  yup.string().when(key, {
+    is: editors => !!editors.length,
+    then: yup.string().required('Please provide a reason for exclusion'),
+  })
 
 const suggestedReviewerValidator = () =>
   yup.array(
@@ -38,10 +47,14 @@ const opposedReviewerValidator = () =>
   )
 
 const schema = yup.object().shape({
-  suggestedSeniorEditors: suggestedEditorValidator(),
-  opposedSeniorEditors: opposedEditorValidator(),
-  suggestedReviewingEditors: suggestedEditorValidator(),
-  opposedReviewingEditors: opposedEditorValidator(),
+  suggestedSeniorEditors: editorValidator('suggestedSeniorEditors'),
+  opposedSeniorEditors: editorValidator('opposedSeniorEditors'),
+  opposedSeniorEditorsReason: opposedReasonValidator('opposedSeniorEditors'),
+  suggestedReviewingEditors: editorValidator('suggestedReviewingEditors'),
+  opposedReviewingEditors: editorValidator('opposedReviewingEditors'),
+  opposedReviewingEditorsReason: opposedReasonValidator(
+    'opposedReviewingEditors',
+  ),
   suggestedReviewers: suggestedReviewerValidator(),
   opposedReviewers: opposedReviewerValidator(),
   noConflictOfInterest: yup
@@ -49,22 +62,8 @@ const schema = yup.object().shape({
     .required()
     .oneOf(
       [true],
-      'Please do not suggest people with a known confilct of interest',
+      'Please do not suggest people with a known conflict of interest',
     ),
 })
 
-const empty = {
-  suggestedSeniorEditors: ['', ''],
-  opposedSeniorEditors: [],
-  suggestedReviewingEditors: ['', ''],
-  opposedReviewingEditors: [],
-  suggestedReviewers: [
-    { name: '', email: '' },
-    { name: '', email: '' },
-    { name: '', email: '' },
-  ],
-  opposedReviewers: [],
-  noConflictOfInterest: false,
-}
-
-export { schema, empty }
+export { schema, limits }
