@@ -29,23 +29,10 @@ class SearchBox extends React.Component {
   handleChange = selectedOption => {
     this.setState({ selectedOption })
   }
-  canSelectMore = () => {
-    const { selectedOption } = this.state
-    if (selectedOption) {
-      if (selectedOption.length > 1) {
-        return false
-      }
-    }
-    return true
-  }
   isMenuOpen = () => {
     const { inputValue } = this.state
-    if (this.canSelectMore()) {
-      return inputValue.length > 0
-    }
-    return false
+    return inputValue.length > 0
   }
-  isSearchable = () => this.canSelectMore()
   render() {
     const customStyles = {
       valueContainer: (base, state) => ({
@@ -62,7 +49,6 @@ class SearchBox extends React.Component {
           ClearIndicator: null,
         }}
         isMulti
-        isSearchable={this.isSearchable()}
         menuIsOpen={this.isMenuOpen()}
         onChange={this.handleChange}
         onInputChange={this.inputChange}
