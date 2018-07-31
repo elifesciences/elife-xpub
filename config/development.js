@@ -1,5 +1,6 @@
 const { deferConfig } = require('config/defer')
 const winston = require('winston')
+const path = require('path')
 
 winston.level = 'debug'
 
@@ -27,5 +28,9 @@ module.exports = {
     clientID: '',
     clientSecret: '',
     sandbox: true,
+  },
+
+  forever: {
+    watchDirectory: path.resolve(__dirname, '..', 'server'),
   },
 }

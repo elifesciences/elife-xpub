@@ -1,0 +1,27 @@
+GET /people/8d7e57b3
+accept-encoding: gzip, deflate
+
+HTTP/1.1 200 OK
+server: nginx
+content-type: application/vnd.elife.person+json;version=1
+cache-control: max-age=300, public, stale-if-error=86400, stale-while-revalidate=300
+etag: "8453f476311389a634212b92cf2b9f73"
+x-ua-compatible: IE=edge
+content-language: en
+x-content-type-options: nosniff
+x-frame-options: SAMEORIGIN
+access-control-allow-origin: *
+x-kong-upstream-latency: 72
+x-kong-proxy-latency: 0
+via: kong/0.9.5, 1.1 varnish
+accept-ranges: bytes
+date: Tue, 31 Jul 2018 10:16:39 GMT
+age: 0
+connection: close
+x-served-by: cache-lcy19245-LCY
+x-cache: MISS
+x-cache-hits: 0
+x-timer: S1533032199.103558,VS0,VE481
+vary: Accept, Authorization, Accept-Encoding
+
+{"id":"8d7e57b3","type":{"id":"senior-editor","label":"Senior Editor"},"name":{"preferred":"Richard Aldrich","index":"Aldrich, Richard"},"image":{"uri":"https:\/\/iiif.elifesciences.org\/journal-cms\/person%2F2014-04%2Fdsc_107220-20version202.jpg","alt":"Richard Aldrich","source":{"mediaType":"image\/jpeg","uri":"https:\/\/iiif.elifesciences.org\/journal-cms\/person%2F2014-04%2Fdsc_107220-20version202.jpg\/full\/full\/0\/default.jpg","filename":"dsc_107220-20version202.jpg"},"size":{"width":1965,"height":2455}},"profile":[{"text":"Rick Aldrich is the Karl Folkers Chair II in Interdisciplinary Biomedical Research and Professor of Neuroscience at The University of Texas at Austin. He joined the faculty in 2006 and served as chair until 2011. Previously he was on the faculty of Neurobiology (1985-1990) and of Molecular and Cellular Physiology (1990-2006) at Stanford University where he served as department chair from 2001\u20132004. He was an investigator with the Howard Hughes Medical Institute from 1990 to 2006. His work is on molecular mechanisms of ion channels and calcium signaling proteins, with an emphasis on understanding gated conformational changes and allosteric mechanisms. Work in the laboratory is multidisciplinary including electrophysiology, biochemistry, spectroscopy, informatics and computation. He is a member of the National Academy of Science and the American Academy of Arts and Sciences, and is a Fellow of the American Association for the Advancement of Science and of the Biophysical Society. He is past president of the Biophysical Society and the Society of General Physiologists, and has received the Kenneth Cole Award for Membrane Physiology from the Biophysical Society and Alden Spencer Award for Neuroscience Research from Columbia University.","type":"paragraph"}],"research":{"focuses":["ion channels","calcium binding proteins","membrane transport","allostery and cooperativity","cellular neurophysiology","biochemical neuroscience"],"expertises":[{"id":"structural-biology-molecular-biophysics","name":"Structural Biology and Molecular Biophysics"},{"id":"neuroscience","name":"Neuroscience"}]},"competingInterests":"Richard Aldrich is employed by The University of Texas at Austin. He receives research funding from the National Institutes of Health.He is a member of the National Academy of Science and the American Academy of Arts and Sciences, and is a Fellow of the American Association for the Advancement of Science and of the Biophysical Society. He serves actively on the editorial boards of Proceedings of the National Academy of Sciences and The Journal of General Physiology."}

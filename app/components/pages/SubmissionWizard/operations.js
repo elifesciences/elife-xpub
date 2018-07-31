@@ -5,6 +5,7 @@ const editorFragment = gql`
     id
     name
     institution
+    subjectAreas
   }
 `
 
