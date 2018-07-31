@@ -8,7 +8,7 @@ import { Box, Flex } from 'grid-styled'
 
 import SelectedItem from '../atoms/SelectedItem'
 import PersonPod from '../atoms/PersonPod'
-import TwoColumnLayout from '../../pages/SubmissionWizard/TwoColumnLayout'
+import TwoColumnLayout from '../../global/layout/TwoColumnLayout'
 
 const MAX_DISPLAYED_PODS = 30
 
@@ -64,8 +64,8 @@ const PeoplePickerBody = ({
         selection={selection}
       />
     </Flex>
-    <TwoColumnLayout
-      items={people
+    <TwoColumnLayout>
+      {people
         .map(person => (
           <PersonPod
             iconType={isSelected(person) ? 'selected' : 'add'}
@@ -82,7 +82,7 @@ const PeoplePickerBody = ({
           />
         ))
         .slice(0, MAX_DISPLAYED_PODS)}
-    />
+    </TwoColumnLayout>
   </React.Fragment>
 )
 
