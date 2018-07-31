@@ -3,10 +3,20 @@ const { Formik } = formik
 const { schema } = require('./schema')
 const data = {
   suggestedSeniorEditors: [
-    { id: 1, name: 'Alfred Badger', institution: 'Institute of Badgers' },
+    {
+      id: 1,
+      name: 'Alfred Badger',
+      institution: 'Institute of Badgers',
+      subjectAreas: ['Human Biology and Medicine', 'Neuroscience'],
+    },
   ],
   opposedSeniorEditors: [
-    { id: 3, name: 'Charlie Badger', institution: 'Badger University' },
+    {
+      id: 3,
+      name: 'Charlie Badger',
+      institution: 'Badger University',
+      subjectAreas: ['Cell Biology'],
+    },
   ],
   suggestedReviewingEditors: [],
   opposedReviewingEditors: [],
@@ -19,7 +29,14 @@ const data = {
   noConflictOfInterest: false,
 }
 ;<Formik
-  component={ReviewerSuggestions}
+  render={formProps => (
+    <EditorsContent
+      history={{ location: {} }}
+      seniorEditors={[]}
+      reviewingEditors={[]}
+      {...formProps}
+    />
+  )}
   initialValues={data}
   onSubmit={values => console.log(values)}
   validationSchema={schema}

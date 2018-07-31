@@ -10,6 +10,9 @@ import Icon from './Icon'
 const RegularP = styled.p`
   font-size: ${th('fontSizeBase')};
   line-height: ${th('fontLineHeightBase')};
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
   margin: 0;
 `
 
@@ -17,6 +20,9 @@ const SmallP = styled.p`
   font-size: ${th('fontSizeBaseSmall')};
   line-height: ${th('fontLineHeightBaseSmall')};
   // vertical spacing of 6px comes from: 24px grid - fontLineHeightBaseSmall
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
   margin: 3px 0;
 `
 
@@ -40,6 +46,10 @@ const StyledPod = styled(Flex)`
   font-size: ${th('fontSizeBase')};
   min-width: 312px;
   height: 120px;
+`
+
+const CollapsibleBox = styled(Box)`
+  min-width: 0;
 `
 
 const PersonPodContainer = ({
@@ -88,31 +98,40 @@ const PersonText = ({
   isStatusShown = false,
   status = '',
   ...props
-}) => (
-  <Box {...props} m={2}>
-    <RegularP>{name}</RegularP>
-    <RegularP>{institution}</RegularP>
-    {isKeywordClickable &&
-      keywords &&
-      keywords.map(keyword => (
-        <SmallAction
-          data-test-id="clickable-keyword"
-          key={keyword}
-          onClick={() => onKeywordClick(keyword)}
-        >
-          {keyword}
-        </SmallAction>
-      ))}
-    {!isKeywordClickable &&
-      keywords &&
-      keywords.map(keyword => (
-        <SmallP data-test-id="non-clickable-keyword" key={keyword}>
-          {keyword}
-        </SmallP>
-      ))}
-    {isStatusShown && <SmallP>{status}</SmallP>}
-  </Box>
-)
+}) => {
+  let keywordList
+  if (isKeywordClickable) {
+    keywordList = keywords.map(keyword => (
+      <SmallAction
+        data-test-id="clickable-keyword"
+        key={keyword}
+        onClick={() => onKeywordClick(keyword)}
+      >
+        {keyword}
+      </SmallAction>
+    ))
+  } else {
+    keywordList = keywords.map(keyword => (
+      <span data-test-id="non-clickable-keyword" key={keyword}>
+        {keyword}
+      </span>
+    ))
+  }
+
+  const separatedKeywords = keywordList.reduce(
+    (accu, elem) => (accu === null ? [elem] : [...accu, ', ', elem]),
+    null,
+  )
+
+  return (
+    <CollapsibleBox m={2} {...props}>
+      <RegularP>{name}</RegularP>
+      <RegularP>{institution}</RegularP>
+      <SmallP>{separatedKeywords}</SmallP>
+      {isStatusShown && <SmallP>{status}</SmallP>}
+    </CollapsibleBox>
+  )
+}
 
 const PersonPod = ({
   isIconClickable = true,
@@ -169,7 +188,7 @@ PersonText.propTypes = {
 }
 
 PersonText.defaultProps = {
-  keywords: null,
+  keywords: [],
   onKeywordClick: null,
   isStatusShown: false,
   status: '',
