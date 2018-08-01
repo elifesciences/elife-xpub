@@ -1,0 +1,174 @@
+interface Object {
+    id: ID!
+    created: DateTime!
+    updated: DateTime
+}
+
+type Organization implements Object {
+    id: ID!
+    created: DateTime!
+    updated: DateTime
+    name: String!
+    journals: [Journal]
+}
+
+type Journal implements Object {
+    id: ID!
+    created: DateTime!
+    updated: DateTime
+    journalTitle: String!
+    manuscripts: [Manuscript]
+    meta: JournalMeta
+}
+
+type JournalMeta {
+    publisherName: String
+}
+
+type Manuscript implements Object {
+    id: ID!
+    created: DateTime!
+    updated: DateTime
+    manuscriptVersions: [ManuscriptVersion]
+    files: [File]
+    teams: [Team]
+    reviews: [Review]
+    status: String
+    formState: String
+    decision: String
+    meta: ManuscriptMeta
+}
+
+type ManuscriptVersion implements Object {
+    id: ID!
+    created: DateTime!
+    updated: DateTime
+    files: [File]
+    teams: [Team]
+    reviews: [Review]
+    status: String
+    formState: String
+    decision: String
+    meta: ManuscriptMeta
+}
+
+type ManuscriptMeta {
+    title: String!
+    articleType: String
+    articleIds: [ArticleId]
+    abstract: String
+    subjects: [String]
+    history: [MetaDate]
+    publicationDates: [MetaDate]
+    notes: [Note]
+}
+
+type ArticleId {
+    pubIdType: String
+    id: String
+}
+
+type MetaDate {
+    type: String
+    date: DateTime
+}
+
+type Note implements Object {
+    id: ID!
+    created: DateTime!
+    updated: DateTime
+    notesType: String
+    content: String
+}
+
+type File implements Object  {
+    id: ID!
+    created: DateTime!
+    updated: DateTime
+    type: String
+    label: String
+    filename: String
+    url: String
+    mimeType: String
+    size: Int
+}
+
+type Review implements Object  {
+    id: ID!
+    created: DateTime!
+    updated: DateTime
+    comments: [Comment]
+    recommendation: String
+    open: Boolean
+    user: User
+}
+
+type Comment {
+    type: String
+    content: String
+    files: [File]
+}
+
+type AuditLog {
+    id: ID!
+    created: DateTime!
+    updated: DateTime
+    user: User
+    action: String
+    object: Object
+    objectType: String
+}
+
+type Team {
+    id: ID!
+    created: DateTime!
+    updated: DateTime
+    members: [TeamMember]
+    role: String
+    object: Object
+    objectType: String
+}
+
+type TeamMember {
+    user: User
+    status: String
+    alias: Alias
+}
+
+type Alias {
+    name: Name
+    email: Email
+    aff: String
+}
+
+type User {
+    id: ID!
+    created: DateTime!
+    updated: DateTime
+    identities: [Identity]
+    defaultIdentity: String
+}
+
+union Identity = Local | External
+
+type Local {
+    name: Name
+    email: Email
+    aff: String
+}
+
+type External {
+    identifier: String
+    email: Email
+    aff: String
+    identifier: String
+}
+
+type Name {
+    surname: String
+    givenNames: String
+    title: String
+}
+
+scalar DateTime
+scalar Email
