@@ -37,6 +37,20 @@ const StyledButton = styled.button`
   height: 100%;
   border: none;
   padding: 0 calc(${th('gridUnit')} * 2);
+
+  // careful, this is brittle & relies heavily on the icons' structure
+
+  &:hover {
+    // plus & rubbish icons
+    svg > path {
+      fill: #666666;
+    }
+
+    // selected tick icon
+    svg > g > circle {
+      fill: #1378bb;
+    }
+  }
 `
 
 const StyledPod = styled(Flex)`
