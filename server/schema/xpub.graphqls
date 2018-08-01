@@ -119,13 +119,12 @@ type AuditLog {
     objectType: String
 }
 
-type Team {
-    id: ID!
+extend type Team {
     created: DateTime!
     updated: DateTime
-    members: [TeamMember]
+    teamMembers: [TeamMember]
     role: String
-    object: Object
+    objectId: Object
     objectType: String
 }
 
@@ -141,8 +140,7 @@ type Alias {
     aff: String
 }
 
-type User {
-    id: ID!
+extend type User {
     created: DateTime!
     updated: DateTime
     identities: [Identity]
