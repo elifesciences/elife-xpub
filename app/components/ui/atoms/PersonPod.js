@@ -38,16 +38,13 @@ const StyledButton = styled.button`
   border: none;
   padding: 0 calc(${th('gridUnit')} * 2);
 
-  // careful, this is brittle & relies heavily on the icons' structure
-
   &:hover {
-    // plus & rubbish icons
-    svg > path {
+    .plus-icon,
+    .rubbish-bin {
       fill: #666666;
     }
 
-    // selected tick icon
-    svg > g > circle {
+    .selected-tick-circle {
       fill: #1378bb;
     }
   }
