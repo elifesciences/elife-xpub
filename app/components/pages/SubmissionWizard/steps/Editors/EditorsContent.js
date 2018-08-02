@@ -82,7 +82,7 @@ class EditorsContent extends React.Component {
   suggestedReviewerFocusHandler = index => {
     const MAX_REVIEWERS = 6
     const START_GROW_INDEX = 2
-    console.log('~~~~~~~~~~~~~~~~~ focus')
+
     if (index < START_GROW_INDEX) {
       return
     }
