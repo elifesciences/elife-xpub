@@ -18,7 +18,7 @@ const typeDefs = `
       manuscripts: [Manuscript]!
       editors(role: String!): [EditorUser]
     }
-    
+
     extend type Mutation {
       createSubmission: Manuscript!
       deleteManuscript(id: ID!): ID!
@@ -26,7 +26,7 @@ const typeDefs = `
       uploadManuscript(id: ID!, file: Upload!): Manuscript!
       finishSubmission(data: ManuscriptInput!): Manuscript!
     }
-        
+
     extend type Manuscript {
       # todo: these should be handled through teams
       suggestedSeniorEditors: [EditorUser]
@@ -36,13 +36,13 @@ const typeDefs = `
       suggestedReviewers: [SuggestedReviewer]
       opposedReviewers: [OpposedReviewer]
       author: Alias
-    
+
       # todo: these should be handled through notes
       opposedSeniorEditorsReason: String
       opposedReviewingEditorsReason: String
       coverLetter: String
     }
-    
+
     input ManuscriptInput {
       id: ID!
       suggestedSeniorEditors: [ID]
@@ -83,8 +83,8 @@ const typeDefs = `
       INITIAL
       QA
     }
-    
-    type EditorUser {      
+
+    type EditorUser {
       id: ID
       name: String
       aff: String
@@ -157,6 +157,14 @@ const emptyManuscript = {
   cosubmission: [],
   teams: [],
 }
+const MAX_SUGGESTED_REVIEWERS = 6
+
+const suggestedReviewer = Joi.object().keys({
+  name: Joi.string().required(),
+  email: Joi.string()
+    .email()
+    .required(),
+})
 
 const possibleStatuses = ['INITIAL', 'QA']
 const manuscriptSchema = Joi.object()
@@ -216,14 +224,12 @@ const manuscriptSchema = Joi.object()
         otherwise: Joi.string().allow(''),
       },
     ),
-    suggestedReviewers: Joi.array().items(
-      Joi.object().keys({
-        name: Joi.string().required(),
-        email: Joi.string()
-          .email()
-          .required(),
-      }),
-    ),
+    suggestedReviewers: Joi.array()
+      .ordered(suggestedReviewer, suggestedReviewer, suggestedReviewer)
+      // any suggested reviewer past third is optional to max, but is validated
+      // in the same way
+      .items(suggestedReviewer)
+      .max(MAX_SUGGESTED_REVIEWERS),
     opposedReviewers: Joi.array().items(
       Joi.object().keys({
         name: Joi.string().required(),

@@ -1,5 +1,6 @@
 /* eslint-disable no-template-curly-in-string */
 import yup from 'yup'
+import './SuggestedReviewersValidator'
 
 // TODO only the initially displayed fields should be required,
 // fields added by the user should be optional
@@ -23,16 +24,16 @@ const opposedReasonValidator = key =>
     then: yup.string().required('Please provide a reason for exclusion'),
   })
 
-const suggestedReviewerValidator = () =>
-  yup.array(
-    yup.object({
-      name: yup.string().required('Name is required'),
-      email: yup
-        .string()
-        .email('Must be a valid email')
-        .required('Email is required'),
-    }),
-  )
+const suggestedReviewerValidator = () => yup.array().validReviewers()
+yup.array(
+  yup.object({
+    name: yup.string().required('Name is required'),
+    email: yup
+      .string()
+      .email('Must be a valid email')
+      .required('Email is required'),
+  }),
+)
 
 const opposedReviewerValidator = () =>
   yup.array(
