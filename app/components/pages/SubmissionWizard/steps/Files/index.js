@@ -7,9 +7,11 @@ const UPLOAD_MUTATION = gql`
   mutation UploadFile($id: ID!, $file: Upload!) {
     uploadManuscript(id: $id, file: $file) {
       id
-      title
+      meta {
+        title
+      }
       files {
-        name
+        filename
         type
       }
     }
@@ -41,7 +43,7 @@ const FileUploadsPage = ({
             uploadFile({
               variables: { file, id: values.id },
             }).then(({ data }) => {
-              setFieldValue('title', data.uploadManuscript.title)
+              setFieldValue('meta.title', data.uploadManuscript.meta.title)
               setFieldValue(fieldName, data.uploadManuscript.files)
             })
           }

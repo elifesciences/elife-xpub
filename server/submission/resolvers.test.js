@@ -38,7 +38,7 @@ describe('Submission', () => {
       expect(result).toHaveLength(40)
       expect(result[0]).toEqual({
         id: '8d7e57b3',
-        institution: undefined,
+        aff: undefined,
         name: 'Richard Aldrich',
         subjectAreas: [
           'Structural Biology and Molecular Biophysics',
@@ -51,15 +51,15 @@ describe('Submission', () => {
   describe('currentSubmission', () => {
     it('Gets form data', async () => {
       const expectedManuscript = {
-        title: 'title',
-        submissionMeta: {
-          stage: 'INITIAL',
-          author: {
-            firstName: 'Firstname',
-            lastName: 'Lastname',
-            email: 'email@example.com',
-            institution: 'institution',
-          },
+        meta: {
+          title: 'title',
+        },
+        status: 'INITIAL',
+        author: {
+          firstName: 'Firstname',
+          lastName: 'Lastname',
+          email: 'email@example.com',
+          aff: 'institution',
         },
       }
       await save(manuscriptGqlToDb(expectedManuscript, userId))
@@ -75,29 +75,29 @@ describe('Submission', () => {
 
     it('Returns null object when user has no manuscripts in the db (db not empty)', async () => {
       await save({
-        title: 'title',
-        submissionMeta: {
-          createdBy: '9f72f2b8-bb4a-43fa-8b80-c7ac505c8c5f',
-          stage: 'INITIAL',
-          author: {
-            firstName: 'Firstname 1',
-            lastName: 'Lastname 1',
-            email: 'email1@example.com',
-            institution: 'institution 1',
-          },
+        createdBy: '9f72f2b8-bb4a-43fa-8b80-c7ac505c8c5f',
+        meta: {
+          title: 'title',
+        },
+        status: 'INITIAL',
+        author: {
+          firstName: 'Firstname 1',
+          lastName: 'Lastname 1',
+          email: 'email1@example.com',
+          aff: 'institution 1',
         },
       })
       await save({
-        title: 'title 2',
-        submissionMeta: {
-          createdBy: 'bcd735c6-9b62-441a-a085-7d1e8a7834c6',
-          stage: 'QA',
-          author: {
-            firstName: 'Firstname 2',
-            lastName: 'Lastname 2',
-            email: 'email2@example.com',
-            institution: 'institution 2',
-          },
+        createdBy: 'bcd735c6-9b62-441a-a085-7d1e8a7834c6',
+        meta: {
+          title: 'title 2',
+        },
+        status: 'QA',
+        author: {
+          firstName: 'Firstname 2',
+          lastName: 'Lastname 2',
+          email: 'email2@example.com',
+          aff: 'institution 2',
         },
       })
 
@@ -107,7 +107,7 @@ describe('Submission', () => {
   })
 
   describe('createSubmission', () => {
-    it('adds new manuscript to the db for current user with stage INITIAL', async () => {
+    it('adds new manuscript to the db for current user with status INITIAL', async () => {
       const manuscript = await Mutation.createSubmission(
         {},
         {},
@@ -115,8 +115,8 @@ describe('Submission', () => {
       )
 
       const manuscripts = await select({
-        'submissionMeta.createdBy': userId,
-        'submissionMeta.stage': 'INITIAL',
+        createdBy: userId,
+        status: 'INITIAL',
       })
       expect(manuscripts.length).toBeGreaterThan(0)
       expect(manuscripts[0].id).toBe(manuscript.id)
@@ -129,15 +129,15 @@ describe('Submission', () => {
       const id = await save(manuscriptGqlToDb(manuscript, userId))
       const manuscriptInput = {
         id,
-        title: 'New Title',
-        submissionMeta: {
-          coverLetter: 'this is some long text',
-          author: {
-            firstName: 'todo first name',
-            lastName: 'todo last name',
-            email: 'todo@mail.com',
-            institution: 'TODO',
-          },
+        meta: {
+          title: 'New Title',
+        },
+        coverLetter: 'this is some long text',
+        author: {
+          firstName: 'todo first name',
+          lastName: 'todo last name',
+          email: 'todo@mail.com',
+          aff: 'TODO',
         },
       }
 
@@ -159,9 +159,11 @@ describe('Submission', () => {
   describe('finishSubmission', () => {
     let id, initialManuscript
     const fullManuscript = {
-      title: 'My Manuscript',
-      manuscriptType: 'research-article',
-      subjectAreas: ['cancer-biology'],
+      meta: {
+        title: 'My manuscript',
+        articleType: 'research-article',
+        subjects: ['cancer-biology'],
+      },
       suggestedSeniorEditors: ['ab12', 'cd34'],
       opposedSeniorEditors: [],
       suggestedReviewingEditors: ['ef56', 'gh78'],
@@ -172,32 +174,27 @@ describe('Submission', () => {
         { name: 'Reviewer 3', email: 'reviewer3@mail.com' },
       ],
       opposedReviewers: [],
-      noConflictOfInterest: false,
-      submissionMeta: {
-        coverLetter: 'my cover letter',
-        author: {
-          firstName: 'Firstname',
-          lastName: 'Lastname',
-          email: 'mymail@mail.com',
-          institution: 'Institution Inc',
-        },
-        hasCorrespondent: false,
-        discussion: false,
-        previousArticle: false,
-        cosubmission: [],
+      suggestionsConflict: false,
+      coverLetter: 'my cover letter',
+      author: {
+        firstName: 'Firstname',
+        lastName: 'Lastname',
+        email: 'mymail@mail.com',
+        aff: 'Institution Inc',
       },
+      previouslyDiscussed: '',
+      previouslySubmitted: [],
+      cosubmission: [],
     }
 
     beforeEach(async () => {
       initialManuscript = {
-        submissionMeta: {
-          createdBy: userId,
-          stage: 'INITIAL',
-        },
+        createdBy: userId,
+        status: 'INITIAL',
         files: [
           {
             url: 'fake-path.pdf',
-            name: 'FakeManuscript.pdf',
+            filename: 'FakeManuscript.pdf',
             type: 'MANUSCRIPT_SOURCE',
           },
         ],
@@ -205,7 +202,7 @@ describe('Submission', () => {
       id = await save(manuscriptGqlToDb(initialManuscript, userId))
     })
 
-    it('stores data to the backend with a new stage of QA', async () => {
+    it('stores data to the backend with a new status of QA', async () => {
       const manuscript = lodash.cloneDeep(fullManuscript)
       manuscript.id = id
       const returnedManuscript = await Mutation.finishSubmission(
@@ -216,11 +213,11 @@ describe('Submission', () => {
         { user: userId },
       )
 
-      expect(returnedManuscript.submissionMeta.stage).toBe('QA')
+      expect(returnedManuscript.status).toBe('QA')
 
       const storedManuscript = await selectId(id)
       const expectedManuscript = lodash.merge(initialManuscript, manuscript)
-      expectedManuscript.submissionMeta.stage = 'QA'
+      expectedManuscript.status = 'QA'
       expect(expectedManuscript).toMatchObject(storedManuscript)
     })
 
@@ -241,7 +238,7 @@ describe('Submission', () => {
     it('does not send a verification email if the submitter is the corresponding author', async () => {
       const manuscript = lodash.cloneDeep(fullManuscript)
       manuscript.id = id
-      manuscript.submissionMeta.author.email = userData.email
+      manuscript.author.email = userData.email
       await Mutation.finishSubmission(
         {},
         {
@@ -301,9 +298,11 @@ describe('Submission', () => {
       const manuscript = await Mutation.uploadManuscript({}, { id, file })
       expect(manuscript).toMatchObject({
         id,
-        title:
-          'The Relationship Between Lamport Clocks and Interrupts Using Obi',
-        files: [{ name: 'manuscript.pdf' }],
+        meta: {
+          title:
+            'The Relationship Between Lamport Clocks and Interrupts Using Obi',
+        },
+        files: [{ filename: 'manuscript.pdf' }],
       })
     })
   })

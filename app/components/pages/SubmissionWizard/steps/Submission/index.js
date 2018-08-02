@@ -10,16 +10,16 @@ import OptionalSection from './OptionalSection'
 const ManuscriptMetadata = ({ values, setFieldValue, setFieldTouched }) => (
   <React.Fragment>
     <Box mb={3}>
-      <ValidatedField label="Manuscript title" name="title" />
+      <ValidatedField label="Manuscript title" name="meta.title" />
     </Box>
 
     <Box mb={3} w={1 / 2}>
       <ValidatedField
         component={Menu}
         label="Article type"
-        name="manuscriptType"
-        onBlur={value => setFieldValue('manuscriptType', value)}
-        onChange={value => setFieldValue('manuscriptType', value)}
+        name="meta.articleType"
+        onBlur={value => setFieldValue('meta.articleType', value)}
+        onChange={value => setFieldValue('meta.articleType', value)}
         options={[
           { value: 'research-article', label: 'Research article' },
           { value: 'feature', label: 'Feature article' },
@@ -32,68 +32,61 @@ const ManuscriptMetadata = ({ values, setFieldValue, setFieldTouched }) => (
       <ValidatedField
         component={SubjectAreaDropdown}
         label="Subject areas"
-        name="subjectAreas"
-        onBlur={e => setFieldTouched('subjectAreas', true)}
+        name="meta.subjects"
+        onBlur={e => setFieldTouched('meta.subjects', true)}
         onChange={selectedOptions => {
-          const subjectAreas = selectedOptions.map(option => option.value)
-          setFieldValue('subjectAreas', subjectAreas)
+          const subjects = selectedOptions.map(option => option.value)
+          setFieldValue('meta.subjects', subjects)
         }}
-        savedValues={values.subjectAreas}
+        savedValues={values.meta.subjects}
       />
     </Box>
 
     <OptionalSection
       label="This manuscript has been discussed with an eLife editor"
-      namedAs="discussion"
-      onClose={() => setFieldValue('submissionMeta.discussion', null)}
-      onOpen={() => setFieldValue('submissionMeta.discussion', '')}
-      open={values.submissionMeta.discussion !== null}
+      namedAs="previouslyDiscussedToggle"
+      onClose={() => setFieldValue('previouslyDiscussed', null)}
+      onOpen={() => setFieldValue('previouslyDiscussed', '')}
+      open={values.previouslyDiscussed !== null}
     >
       <ValidatedField
         component={Textarea}
         label="What did you discuss and with whom?"
-        name="submissionMeta.discussion"
+        name="previouslyDiscussed"
       />
     </OptionalSection>
 
     <OptionalSection
       label="This manuscript has been previously considered by eLife"
-      namedAs="previousArticle"
-      onClose={() => setFieldValue('submissionMeta.previousArticle', null)}
-      onOpen={() => setFieldValue('submissionMeta.previousArticle', '')}
-      open={values.submissionMeta.previousArticle !== null}
+      namedAs="previouslySubmittedToggle"
+      onClose={() => setFieldValue('previouslySubmitted', [])}
+      onOpen={() => setFieldValue('previouslySubmitted', [''])}
+      open={values.previouslySubmitted.length}
     >
-      <ValidatedField
-        label="Article title"
-        name="submissionMeta.previousArticle"
-      />
+      <ValidatedField label="Article title" name="previouslySubmitted.0" />
     </OptionalSection>
 
     <OptionalSection
       label="This manuscript is part of a co-submission"
-      namedAs="cosubmission"
-      onClose={() =>
-        setFieldValue('submissionMeta.firstCosubmissionTitle', null)
-      }
-      onOpen={() => setFieldValue('submissionMeta.firstCosubmissionTitle', '')}
-      open={values.submissionMeta.firstCosubmissionTitle !== null}
+      namedAs="cosubmissionToggle"
+      onClose={() => setFieldValue('firstCosubmissionTitle', null)}
+      onOpen={() => setFieldValue('firstCosubmissionTitle', '')}
+      open={values.firstCosubmissionTitle !== null}
     >
       <Box mb={2}>
         <ValidatedField
           label="Second article title"
-          name="submissionMeta.firstCosubmissionTitle"
+          name="firstCosubmissionTitle"
         />
       </Box>
 
-      {values.submissionMeta.secondCosubmissionTitle === null ? (
+      {values.secondCosubmissionTitle === null ? (
         // If null showing the link to show the second title...
         <Box>
           Would you like to{' '}
           <Action
-            name="submissionMeta.moreSubmission"
-            onClick={() =>
-              setFieldValue('submissionMeta.secondCosubmissionTitle', '', false)
-            }
+            name="moreSubmission"
+            onClick={() => setFieldValue('secondCosubmissionTitle', '', false)}
             type="button"
           >
             include
@@ -105,7 +98,7 @@ const ManuscriptMetadata = ({ values, setFieldValue, setFieldTouched }) => (
         <Box mb={2}>
           <ValidatedField
             label="Third article title (optional)"
-            name="submissionMeta.secondCosubmissionTitle"
+            name="secondCosubmissionTitle"
           />
         </Box>
       )}

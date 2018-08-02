@@ -45,8 +45,8 @@ const resolvers = {
   Query: {
     async currentSubmission(_, vars, ctx) {
       const rows = await db.select({
-        'submissionMeta.createdBy': ctx.user,
-        'submissionMeta.stage': 'INITIAL',
+        createdBy: ctx.user,
+        status: 'INITIAL',
       })
 
       if (!rows.length) {
@@ -109,15 +109,15 @@ const resolvers = {
         throw new Error(errorManuscript)
       }
 
-      newManuscript.submissionMeta.stage = 'QA'
+      newManuscript.status = 'QA'
       const newManuscriptDb = db.manuscriptGqlToDb(newManuscript, ctx.user)
       await db.update(newManuscriptDb, data.id)
 
       const user = await User.find(ctx.user)
-      if (user.email !== newManuscript.submissionMeta.author.email) {
+      if (user.email !== newManuscript.author.email) {
         mailer
           .send({
-            to: newManuscript.submissionMeta.author.email,
+            to: newManuscript.author.email,
             text: 'Please verify that you are a corresponding author',
           })
           .catch(err => {
@@ -196,10 +196,10 @@ const resolvers = {
       const manuscript = await db.selectId(id)
       manuscript.files.push({
         url: manuscriptSourcePath,
-        name: filename,
+        filename,
         type: 'MANUSCRIPT_SOURCE',
       })
-      manuscript.title = title
+      manuscript.meta.title = title
       await db.update(db.manuscriptGqlToDb(manuscript), id)
 
       return manuscript
@@ -218,19 +218,6 @@ const resolvers = {
     },
     async opposedReviewingEditors(manuscript) {
       return elifeApi.peopleById(manuscript.opposedReviewingEditors)
-    },
-  },
-
-  ManuscriptPersonMetadata: {
-    __resolveType: obj => {
-      switch (true) {
-        case obj.corresponding !== undefined:
-          return 'AuthorMetadata'
-        case obj.revealIdentity !== undefined:
-          return 'ReviewerMetadata'
-        default:
-          return null
-      }
     },
   },
 }

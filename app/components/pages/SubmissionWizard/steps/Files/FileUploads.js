@@ -35,9 +35,9 @@ const FileUploads = ({
       <ValidatedField
         component={Editor}
         id="coverLetter"
-        name="submissionMeta.coverLetter"
-        onBlur={value => setFieldValue('submissionMeta.coverLetter', value)}
-        onChange={value => setFieldValue('submissionMeta.coverLetter', value)}
+        name="coverLetter"
+        onBlur={value => setFieldValue('coverLetter', value)}
+        onChange={value => setFieldValue('coverLetter', value)}
       />
     </Box>
     <Box width={1}>

@@ -10,7 +10,7 @@ describe('Editors form validation', () => {
       suggestedReviewingEditors: [{ id: 1 }, { id: 2 }],
       opposedReviewingEditors: [{ id: 3 }],
       opposedReviewingEditorsReason: 'Just because',
-      noConflictOfInterest: true,
+      suggestionsConflict: true,
     }
 
     expect(() => schema.validateSync(validData)).not.toThrow()
@@ -24,7 +24,7 @@ describe('Editors form validation', () => {
       suggestedReviewingEditors: [],
       opposedReviewingEditors: [{ id: 1 }, { id: 2 }, { id: 3 }],
       opposedReviewingEditorsReason: '',
-      noConflictOfInterest: false,
+      suggestionsConflict: false,
       suggestedReviewers: [{ name: '', email: 'bloop' }],
     }
 
@@ -44,7 +44,7 @@ describe('Editors form validation', () => {
       ],
       suggestedReviewingEditors: 'Please suggest at least 2 editors',
       suggestedSeniorEditors: 'Please suggest at least 2 editors',
-      noConflictOfInterest:
+      suggestionsConflict:
         'Please do not suggest people with a known conflict of interest',
     })
   })

@@ -6,7 +6,7 @@ const data = {
     {
       id: 1,
       name: 'Alfred Badger',
-      institution: 'Institute of Badgers',
+      aff: 'Institute of Badgers',
       subjectAreas: ['Human Biology and Medicine', 'Neuroscience'],
     },
   ],
@@ -14,7 +14,7 @@ const data = {
     {
       id: 3,
       name: 'Charlie Badger',
-      institution: 'Badger University',
+      aff: 'Badger University',
       subjectAreas: ['Cell Biology'],
     },
   ],

@@ -10,7 +10,7 @@ const request = (endpoint, query = {}) =>
 const convertPerson = apiPerson => ({
   id: apiPerson.id,
   name: apiPerson.name.preferred,
-  institution: apiPerson.affiliations && apiPerson.affiliations[0].name[0],
+  aff: apiPerson.affiliations && apiPerson.affiliations[0].name[0],
   subjectAreas: apiPerson.research.expertises.map(e => e.name),
 })
 

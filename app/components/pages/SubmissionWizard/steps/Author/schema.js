@@ -12,13 +12,11 @@ const email = () =>
 const institution = () => yup.string().required('Institution is required')
 
 const schema = yup.object().shape({
-  submissionMeta: yup.object().shape({
-    author: yup.object().shape({
-      firstName: firstName(),
-      lastName: lastName(),
-      email: email(),
-      institution: institution(),
-    }),
+  author: yup.object().shape({
+    firstName: firstName(),
+    lastName: lastName(),
+    email: email(),
+    aff: institution(),
   }),
 })
 

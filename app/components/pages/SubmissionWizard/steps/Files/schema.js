@@ -9,15 +9,13 @@ function stripHtml(html) {
 }
 
 const schema = yup.object().shape({
-  submissionMeta: yup.object({
-    coverLetter: yup
-      .string()
-      .test(
-        'hasContent',
-        `Your cover letter should be at least ${MIN_WORDS} words long`,
-        value => stripHtml(value).split(/\s+/).length > MIN_WORDS,
-      ),
-  }),
+  coverLetter: yup
+    .string()
+    .test(
+      'hasContent',
+      `Your cover letter should be at least ${MIN_WORDS} words long`,
+      value => stripHtml(value).split(/\s+/).length > MIN_WORDS,
+    ),
   files: yup.array().min(1, 'Please upload a manuscript'),
 })
 

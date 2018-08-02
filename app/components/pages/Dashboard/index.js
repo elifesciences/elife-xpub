@@ -8,10 +8,10 @@ export const MANUSCRIPTS_QUERY = gql`
   query DashboardManuscripts {
     manuscripts {
       id
-      title
-      submissionMeta {
-        stage
+      meta {
+        title
       }
+      status
     }
   }
 `

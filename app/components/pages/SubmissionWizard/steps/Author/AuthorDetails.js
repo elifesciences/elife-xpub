@@ -17,20 +17,14 @@ const AuthorDetails = ({ fetchOrcid, loading, error }) => (
     </ErrorText>
 
     <TwoColumnLayout bottomSpacing={false}>
-      <ValidatedField
-        label="First name"
-        name="submissionMeta.author.firstName"
-      />
-      <ValidatedField label="Last name" name="submissionMeta.author.lastName" />
+      <ValidatedField label="First name" name="author.firstName" />
+      <ValidatedField label="Last name" name="author.lastName" />
       <ValidatedField
         label="Email (correspondence)"
-        name="submissionMeta.author.email"
+        name="author.email"
         type="email"
       />
-      <ValidatedField
-        label="Institution"
-        name="submissionMeta.author.institution"
-      />
+      <ValidatedField label="Institution" name="author.aff" />
     </TwoColumnLayout>
   </React.Fragment>
 )

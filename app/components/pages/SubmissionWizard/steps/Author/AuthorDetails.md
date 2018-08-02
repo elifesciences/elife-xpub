@@ -6,13 +6,11 @@ const { Formik } = formik
 const { schema } = require('./schema')
 
 const empty = {
-  submissionMeta: {
-    author: {
-      firstName: '',
-      lastName: '',
-      email: '',
-      institution: '',
-    },
+  author: {
+    firstName: '',
+    lastName: '',
+    email: '',
+    aff: '',
   },
 }
 ;<Formik

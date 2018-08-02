@@ -12,7 +12,7 @@ const formValues = {
     {
       id: 1,
       name: 'Alfred Badger',
-      institution: 'Institute of Badgers',
+      aff: 'Institute of Badgers',
     },
   ],
   opposedSeniorEditors: [],
@@ -26,7 +26,7 @@ const formValues = {
     { name: '', email: '' },
   ],
   opposedReviewers: [],
-  noConflictOfInterest: false,
+  suggestionsConflict: false,
 }
 
 function makeWrapper(props) {
@@ -36,7 +36,12 @@ function makeWrapper(props) {
         initialValues={formValues}
         onSubmit={jest.fn()}
         render={formProps => (
-          <EditorsContent history={{ location: {} }} {...formProps} />
+          <EditorsContent
+            history={{ location: {} }}
+            reviewingEditors={[]}
+            seniorEditors={[]}
+            {...formProps}
+          />
         )}
         validationSchema={schema}
         {...props}

@@ -57,7 +57,7 @@ const schema = yup.object().shape({
   ),
   suggestedReviewers: suggestedReviewerValidator(),
   opposedReviewers: opposedReviewerValidator(),
-  noConflictOfInterest: yup
+  suggestionsConflict: yup
     .bool()
     .required()
     .oneOf(

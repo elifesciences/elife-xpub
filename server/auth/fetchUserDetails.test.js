@@ -14,7 +14,7 @@ describe('Fetch ORCID author details', () => {
       firstName: 'Test',
       lastName: 'User',
       email: 'elife@mailinator.com',
-      institution: 'University of eLife',
+      aff: 'University of eLife',
     })
   })
 })

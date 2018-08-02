@@ -6,26 +6,26 @@ const people = [
   {
     id: 1,
     name: 'Annie Badger',
-    institution: 'A University',
-    keywords: 'cell biology',
+    aff: 'A University',
+    subjectAreas: ['cell biology'],
   },
   {
     id: 2,
     name: 'Bobby Badger',
-    institution: 'B College',
-    keywords: 'biochemistry and chemical biology',
+    aff: 'B College',
+    subjectAreas: ['biochemistry and chemical', 'biology'],
   },
   {
     id: 3,
     name: 'Chastity Badger',
-    institution: 'C Institute',
-    keywords: 'ecology',
+    aff: 'C Institute',
+    subjectAreas: ['ecology'],
   },
   {
     id: 4,
     name: 'Dave Badger',
-    institution: 'D Research Lab',
-    keywords: 'neuroscience',
+    aff: 'D Research Lab',
+    subjectAreas: ['neuroscience'],
   },
 ]
 ;<div>

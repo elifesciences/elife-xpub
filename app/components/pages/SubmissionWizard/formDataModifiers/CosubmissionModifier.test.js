@@ -5,72 +5,63 @@ const modifier = new CosubmissionModifier()
 describe('CosubmissionModifier', () => {
   describe('from form to API', () => {
     it('handles no titles', () => {
-      const values = { submissionMeta: {} }
-      const originalValues = { submissionMeta: {} }
+      const values = {}
+      const originalValues = {}
       modifier.fromForm(values, originalValues)
 
-      expect(values.submissionMeta.cosubmission).toEqual([])
+      expect(values.cosubmission).toEqual([])
     })
 
     it('handles first title', () => {
-      const values = { submissionMeta: {} }
+      const values = {}
       const originalValues = {
-        submissionMeta: { firstCosubmissionTitle: 'hey' },
+        firstCosubmissionTitle: 'hey',
       }
       modifier.fromForm(values, originalValues)
 
-      expect(values.submissionMeta.cosubmission).toEqual([{ title: 'hey' }])
+      expect(values.cosubmission).toEqual(['hey'])
     })
 
     it('handles both titles', () => {
-      const values = { submissionMeta: {} }
+      const values = {}
       const originalValues = {
-        submissionMeta: {
-          firstCosubmissionTitle: 'hey',
-          secondCosubmissionTitle: 'there',
-        },
+        firstCosubmissionTitle: 'hey',
+        secondCosubmissionTitle: 'there',
       }
       modifier.fromForm(values, originalValues)
 
-      expect(values.submissionMeta.cosubmission).toEqual([
-        { title: 'hey' },
-        { title: 'there' },
-      ])
+      expect(values.cosubmission).toEqual(['hey', 'there'])
     })
 
     it('ignores second title if first not set', () => {
-      const values = { submissionMeta: {} }
+      const values = {}
       const originalValues = {
-        submissionMeta: {
-          firstCosubmissionTitle: null,
-          secondCosubmissionTitle: 'there',
-        },
+        firstCosubmissionTitle: null,
+        secondCosubmissionTitle: 'there',
       }
       modifier.fromForm(values, originalValues)
 
-      expect(values.submissionMeta.cosubmission).toEqual([])
+      expect(values.cosubmission).toEqual([])
     })
 
     it('ignores empty strings', () => {
-      const values = { submissionMeta: {} }
+      const values = {}
       const originalValues = {
-        submissionMeta: {
-          firstCosubmissionTitle: '',
-          secondCosubmissionTitle: '',
-        },
+        firstCosubmissionTitle: '',
+        secondCosubmissionTitle: '',
       }
       modifier.fromForm(values, originalValues)
 
-      expect(values.submissionMeta.cosubmission).toEqual([])
+      expect(values.cosubmission).toEqual([])
     })
   })
 
   describe('from API to form', () => {
     it('handles no titles', () => {
-      const values = { submissionMeta: { cosubmission: [] } }
+      const values = { cosubmission: [] }
       modifier.toForm(values)
 
-      expect(values.submissionMeta).toEqual({
+      expect(values).toEqual({
         cosubmission: [],
         firstCosubmissionTitle: null,
         secondCosubmissionTitle: null,
@@ -79,12 +70,12 @@ describe('CosubmissionModifier', () => {
 
     it('handles one title', () => {
       const values = {
-        submissionMeta: { cosubmission: [{ title: 'hey' }] },
+        cosubmission: ['hey'],
       }
       modifier.toForm(values)
 
-      expect(values.submissionMeta).toEqual({
-        cosubmission: [{ title: 'hey' }],
+      expect(values).toEqual({
+        cosubmission: ['hey'],
         firstCosubmissionTitle: 'hey',
         secondCosubmissionTitle: null,
       })
@@ -92,14 +83,12 @@ describe('CosubmissionModifier', () => {
 
     it('handles two titles', () => {
       const values = {
-        submissionMeta: {
-          cosubmission: [{ title: 'hey' }, { title: 'there' }],
-        },
+        cosubmission: ['hey', 'there'],
       }
       modifier.toForm(values)
 
-      expect(values.submissionMeta).toEqual({
-        cosubmission: [{ title: 'hey' }, { title: 'there' }],
+      expect(values).toEqual({
+        cosubmission: ['hey', 'there'],
         firstCosubmissionTitle: 'hey',
         secondCosubmissionTitle: 'there',
       })

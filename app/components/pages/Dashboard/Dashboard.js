@@ -47,12 +47,10 @@ const Dashboard = ({ manuscripts, deleteManuscript }) => (
             <tr key={manuscript.id}>
               <Cell data-test-id="title">
                 <Link data-test-id="title" to={`/manuscript/${manuscript.id}`}>
-                  {manuscript.title || '(Untitled manuscript)'}
+                  {manuscript.meta.title || '(Untitled manuscript)'}
                 </Link>
               </Cell>
-              <Cell data-test-id="stage">
-                {manuscript.submissionMeta.stage}
-              </Cell>
+              <Cell data-test-id="stage">{manuscript.status}</Cell>
               <Cell>
                 <Button onClick={() => deleteManuscript(manuscript.id)} small>
                   Delete

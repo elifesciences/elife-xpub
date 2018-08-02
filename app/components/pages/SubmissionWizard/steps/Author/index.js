@@ -9,7 +9,7 @@ const ORCID_DETAILS_QUERY = gql`
       firstName
       lastName
       email
-      institution
+      aff
     }
   }
 `
@@ -35,7 +35,7 @@ class AuthorDetailsPage extends React.Component {
       .then(({ data }) => {
         const author = this.sanitizeAuthor(data.orcidDetails)
         this.setState({ loading: false })
-        this.props.setFieldValue('submissionMeta.author', author)
+        this.props.setFieldValue('author', author)
       })
       .catch(error => this.setState({ loading: false, error: error.message }))
   }
