@@ -79,6 +79,45 @@ class EditorsContent extends React.Component {
     )
   }
 
+  suggestedReviewerFocusHandler = index => {
+    const MAX_REVIEWERS = 6
+    const START_GROW_INDEX = 2
+    console.log('~~~~~~~~~~~~~~~~~ focus')
+    if (index < START_GROW_INDEX) {
+      return
+    }
+    const visibleReviwersHaveData = () => {
+      const reviewerHasData = reviewer =>
+        reviewer.name !== '' || reviewer.email !== ''
+
+      let allFilled = true
+      if (!this.props.values.suggestedReviewers) {
+        return false
+      }
+
+      for (
+        let currentIndex = 0;
+        currentIndex < this.props.values.suggestedReviewers.length;
+        currentIndex += 1
+      ) {
+        const reviewer = this.props.values.suggestedReviewers[currentIndex]
+        // check all but the current row (=index) for data
+        if (index !== currentIndex && !reviewerHasData(reviewer)) {
+          allFilled = false
+        }
+      }
+      return allFilled
+    }
+
+    const maximumReached =
+      this.props.values.suggestedReviewers.length === MAX_REVIEWERS
+
+    if (visibleReviwersHaveData() && !maximumReached) {
+      // create a new reviewer entry row
+      this.props.values.suggestedReviewers.push({ name: '', email: '' })
+    }
+  }
+
   static getDerivedStateFromProps(nextProps, prevState) {
     return {
       boxVisibility: {
@@ -246,7 +285,10 @@ class EditorsContent extends React.Component {
           {values.suggestedReviewers.map((_, index) => (
             // eslint-disable-next-line react/no-array-index-key
             <Box key={index} mb={2}>
-              <SuggestedReviewer index={index} />
+              <SuggestedReviewer
+                focusHandler={this.suggestedReviewerFocusHandler}
+                index={index}
+              />
             </Box>
           ))}
 
