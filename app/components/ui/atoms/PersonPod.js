@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { th } from '@pubsweet/ui-toolkit'
-import { Action, Button } from '@pubsweet/ui'
+import { Action } from '@pubsweet/ui'
 import { Flex, Box } from 'grid-styled'
 
 import Icon from './Icon'
@@ -32,9 +32,22 @@ const SmallAction = styled(Action)`
   margin: 3px 0;
 `
 
-const StyledButton = styled(Button)`
+const StyledButton = styled.button`
+  background-color: inherit;
   height: 100%;
   border: none;
+  padding: 0 calc(${th('gridUnit')} * 2);
+
+  &:hover {
+    .plus-icon,
+    .rubbish-bin {
+      fill: #666666;
+    }
+
+    .selected-tick-circle {
+      fill: #1378bb;
+    }
+  }
 `
 
 const StyledPod = styled(Flex)`
