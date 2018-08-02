@@ -14,15 +14,17 @@ const createCloseHandler = (index, values, fieldName, setFieldValue) => () =>
     false,
   )
 
-export const SuggestedReviewer = ({ index }) => (
+export const SuggestedReviewer = ({ focusHandler, index }) => (
   <TwoColumnLayout bottomSpacing={false}>
     <ValidatedField
       label="Suggested reviewer name"
       name={`suggestedReviewers.${index}.name`}
-    />
+      onFocus={() => focusHandler(index)}
+      />
     <ValidatedField
       label="Suggested reviewer email"
       name={`suggestedReviewers.${index}.email`}
+      onFocus={() => focusHandler(index)}
       type="email"
     />
   </TwoColumnLayout>
