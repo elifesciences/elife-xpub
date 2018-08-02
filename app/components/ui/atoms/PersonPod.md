@@ -3,10 +3,10 @@
 Clickable keywords:
 
 ```js
-<PersonPod
-  name="Richard Aldrich"
+;<PersonPod
+  name="Brian B Aldrich"
   institution="Utrecht University"
-  keywords="cell biology"
+  keywords={['Cell Biology', 'Biochemistry and Chemical Biology']}
   isKeywordClickable={true}
   onKeywordClick={keyword => console.log(keyword, 'clicked')}
   isStatusShown={false}
@@ -18,12 +18,15 @@ Clickable keywords:
 Showing the person's status:
 
 ```js
-<PersonPod
-  name="Richard Aldrich"
+;<PersonPod
+  name="Brian B Aldrich"
   institution="Utrecht University"
-  keywords="cell biology"
-  isKeywordClickable={true}
-  onKeywordClick={() => console.log('keyword clicked')}
+  keywords={[
+    'Structural Biology and Molecular Biophysics',
+    'Biochemistry and Chemical Biology',
+    'Plant Biology',
+  ]}
+  isKeywordClickable={false}
   status="Currently unavailable"
   isStatusShown={true}
   iconType="add"
@@ -34,10 +37,10 @@ Showing the person's status:
 Removal icon:
 
 ```js
-<PersonPod
-  name="Richard Aldrich"
-  institution="Utrecht University"
-  keywords="cell biology"
+;<PersonPod
+  name="Brian B Aldrich"
+  institution="National Centre for Biological Sciences, Tata Institute of Fundamental Research"
+  keywords={['Human Biology and Medicine', 'Neuroscience']}
   isKeywordClickable={false}
   onKeywordClick={() => console.log('keyword clicked')}
   status="Currently unavailable"
@@ -50,13 +53,11 @@ Removal icon:
 Selected icon:
 
 ```js
-<PersonPod
-  name="Richard Aldrich"
+;<PersonPod
+  name="Brian B Aldrich"
   institution="Utrecht University"
-  keywords="cell biology"
+  keywords={['Cell Biology']}
   isKeywordClickable={false}
-  onKeywordClick={() => console.log('keyword clicked')}
-  status="Currently unavailable"
   isStatusShown={true}
   iconType="selected"
   onIconClick={() => console.log('icon clicked')}
@@ -66,24 +67,20 @@ Selected icon:
 Disabled:
 
 ```js
-<PersonPod
-  name="Richard Aldrich"
+;<PersonPod
+  name="Brian B Aldrich"
   institution="Utrecht University"
-  keywords="cell biology"
+  keywords={['Cell Biology']}
   isKeywordClickable={false}
-  onKeywordClick={() => console.log('keyword clicked')}
-  status="Currently unavailable"
-  isStatusShown={true}
   iconType="add"
   isIconClickable={false}
-  onIconClick={() => console.log('icon clicked')}
 />
 ```
 
-### ChoosePersonPod
+### SelectButton
 
 ```js
-<PersonPod.SelectButton
+;<PersonPod.SelectButton
   role="Senior Editor(s)"
   isRequired={true}
   onIconClick={() => console.log('icon clicked')}
@@ -91,7 +88,7 @@ Disabled:
 ```
 
 ```js
-<PersonPod.SelectButton
+;<PersonPod.SelectButton
   role="Reviewing Editor(s)"
   isRequired={false}
   onIconClick={() => console.log('icon clicked')}

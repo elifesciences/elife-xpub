@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { th } from '@pubsweet/ui-toolkit'
 import { Box, Flex } from 'grid-styled'
 
-import Centerer from '../../../../global/Centerer'
+import Centerer from '../../../../global/layout/Centerer'
 import ModalOverlay from '../../../../ui/molecules/ModalOverlay'
 import PeoplePicker from '../../../../ui/molecules/PeoplePicker'
 
@@ -13,6 +13,12 @@ const ButtonBarContainer = styled.div`
   left: 0;
   width: 100vw;
   border-top: ${th('borderWidth')} ${th('borderStyle')} ${th('colorBorder')};
+  background-color: ${th('colorBackground')};
+`
+
+const MainColumn = styled(Box).attrs({ mx: [0, 0, 0, '16.666%'] })`
+  flex: 1 1 auto;
+  min-width: 0;
 `
 
 const PeoplePickerModal = ({ open, ...props }) => (
@@ -22,17 +28,17 @@ const PeoplePickerModal = ({ open, ...props }) => (
         <React.Fragment>
           <Centerer p={3}>
             <Flex data-test-id="people-picker-body">
-              <Box flex="1 1 auto" mx={[0, 0, 0, '16.666%']}>
+              <MainColumn mb={7}>
                 <PeoplePicker.Body {...innerProps} />
-              </Box>
+              </MainColumn>
             </Flex>
           </Centerer>
           <ButtonBarContainer>
             <Centerer py={[3, 3, 3, 4]}>
               <Flex>
-                <Box flex="1 1 auto" mx={[0, 0, 0, '16.666%']}>
+                <MainColumn>
                   <PeoplePicker.Buttons {...innerProps} />
-                </Box>
+                </MainColumn>
               </Flex>
             </Centerer>
           </ButtonBarContainer>

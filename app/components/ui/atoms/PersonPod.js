@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { th } from '@pubsweet/ui-toolkit'
-import { Action, Button } from '@pubsweet/ui'
+import { Action } from '@pubsweet/ui'
 import { Flex, Box } from 'grid-styled'
 
 import Icon from './Icon'
@@ -10,6 +10,9 @@ import Icon from './Icon'
 const RegularP = styled.p`
   font-size: ${th('fontSizeBase')};
   line-height: ${th('fontLineHeightBase')};
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
   margin: 0;
 `
 
@@ -17,6 +20,9 @@ const SmallP = styled.p`
   font-size: ${th('fontSizeBaseSmall')};
   line-height: ${th('fontLineHeightBaseSmall')};
   // vertical spacing of 6px comes from: 24px grid - fontLineHeightBaseSmall
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
   margin: 3px 0;
 `
 
@@ -26,9 +32,22 @@ const SmallAction = styled(Action)`
   margin: 3px 0;
 `
 
-const StyledButton = styled(Button)`
+const StyledButton = styled.button`
+  background-color: inherit;
   height: 100%;
   border: none;
+  padding: 0 calc(${th('gridUnit')} * 2);
+
+  &:hover {
+    .plus-icon,
+    .rubbish-bin {
+      fill: #666666;
+    }
+
+    .selected-tick-circle {
+      fill: #1378bb;
+    }
+  }
 `
 
 const StyledPod = styled(Flex)`
@@ -40,6 +59,10 @@ const StyledPod = styled(Flex)`
   font-size: ${th('fontSizeBase')};
   min-width: 312px;
   height: 120px;
+`
+
+const CollapsibleBox = styled(Box)`
+  min-width: 0;
 `
 
 const PersonPodContainer = ({
@@ -88,31 +111,40 @@ const PersonText = ({
   isStatusShown = false,
   status = '',
   ...props
-}) => (
-  <Box {...props} m={2}>
-    <RegularP>{name}</RegularP>
-    <RegularP>{institution}</RegularP>
-    {isKeywordClickable &&
-      keywords &&
-      keywords.map(keyword => (
-        <SmallAction
-          data-test-id="clickable-keyword"
-          key={keyword}
-          onClick={() => onKeywordClick(keyword)}
-        >
-          {keyword}
-        </SmallAction>
-      ))}
-    {!isKeywordClickable &&
-      keywords &&
-      keywords.map(keyword => (
-        <SmallP data-test-id="non-clickable-keyword" key={keyword}>
-          {keyword}
-        </SmallP>
-      ))}
-    {isStatusShown && <SmallP>{status}</SmallP>}
-  </Box>
-)
+}) => {
+  let keywordList
+  if (isKeywordClickable) {
+    keywordList = keywords.map(keyword => (
+      <SmallAction
+        data-test-id="clickable-keyword"
+        key={keyword}
+        onClick={() => onKeywordClick(keyword)}
+      >
+        {keyword}
+      </SmallAction>
+    ))
+  } else {
+    keywordList = keywords.map(keyword => (
+      <span data-test-id="non-clickable-keyword" key={keyword}>
+        {keyword}
+      </span>
+    ))
+  }
+
+  const separatedKeywords = keywordList.reduce(
+    (accu, elem) => (accu === null ? [elem] : [...accu, ', ', elem]),
+    null,
+  )
+
+  return (
+    <CollapsibleBox m={2} {...props}>
+      <RegularP>{name}</RegularP>
+      <RegularP>{institution}</RegularP>
+      <SmallP>{separatedKeywords}</SmallP>
+      {isStatusShown && <SmallP>{status}</SmallP>}
+    </CollapsibleBox>
+  )
+}
 
 const PersonPod = ({
   isIconClickable = true,
@@ -169,7 +201,7 @@ PersonText.propTypes = {
 }
 
 PersonText.defaultProps = {
-  keywords: null,
+  keywords: [],
   onKeywordClick: null,
   isStatusShown: false,
   status: '',

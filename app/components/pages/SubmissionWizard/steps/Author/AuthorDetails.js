@@ -1,7 +1,7 @@
 import React from 'react'
 import { Action, ErrorText } from '@pubsweet/ui'
 import ValidatedField from '../../../../ui/atoms/ValidatedField'
-import TwoColumnLayout from '../../TwoColumnLayout'
+import TwoColumnLayout from '../../../../global/layout/TwoColumnLayout'
 
 const AuthorDetails = ({ fetchOrcid, loading, error }) => (
   <React.Fragment>
@@ -16,27 +16,22 @@ const AuthorDetails = ({ fetchOrcid, loading, error }) => (
       {error}
     </ErrorText>
 
-    <TwoColumnLayout
-      items={[
-        <ValidatedField
-          label="First name"
-          name="submissionMeta.author.firstName"
-        />,
-        <ValidatedField
-          label="Last name"
-          name="submissionMeta.author.lastName"
-        />,
-        <ValidatedField
-          label="Email (correspondence)"
-          name="submissionMeta.author.email"
-          type="email"
-        />,
-        <ValidatedField
-          label="Institution"
-          name="submissionMeta.author.institution"
-        />,
-      ]}
-    />
+    <TwoColumnLayout bottomSpacing={false}>
+      <ValidatedField
+        label="First name"
+        name="submissionMeta.author.firstName"
+      />
+      <ValidatedField label="Last name" name="submissionMeta.author.lastName" />
+      <ValidatedField
+        label="Email (correspondence)"
+        name="submissionMeta.author.email"
+        type="email"
+      />
+      <ValidatedField
+        label="Institution"
+        name="submissionMeta.author.institution"
+      />
+    </TwoColumnLayout>
   </React.Fragment>
 )
 

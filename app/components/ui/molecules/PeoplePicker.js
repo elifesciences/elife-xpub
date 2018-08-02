@@ -8,6 +8,9 @@ import { Box, Flex } from 'grid-styled'
 
 import SelectedItem from '../atoms/SelectedItem'
 import PersonPod from '../atoms/PersonPod'
+import TwoColumnLayout from '../../global/layout/TwoColumnLayout'
+
+const MAX_DISPLAYED_PODS = 30
 
 const SelectedItems = ({ selection, onCloseClick }) => (
   <Flex>
@@ -53,7 +56,7 @@ const PeoplePickerBody = ({
   toggleSelection,
 }) => (
   <React.Fragment>
-    <Flex justifyContent="space-between">
+    <Flex justifyContent="space-between" mb={3}>
       <SelectedItems onCloseClick={toggleSelection} selection={selection} />
       <SelectionHint
         maxSelection={maxSelection}
@@ -61,24 +64,25 @@ const PeoplePickerBody = ({
         selection={selection}
       />
     </Flex>
-    <Flex flexWrap="wrap" mx={-2}>
-      {people.map(person => (
-        <Box key={person.id} p={2} width={1 / 2}>
+    <TwoColumnLayout>
+      {people
+        .map(person => (
           <PersonPod
             iconType={isSelected(person) ? 'selected' : 'add'}
             institution={person.institution}
             isIconClickable={
               isSelected(person) || selection.length < maxSelection
             }
-            isKeywordClickable
-            keywords={person.keywords}
+            isKeywordClickable={false}
+            key={person.id}
+            keywords={person.subjectAreas}
             name={person.name}
             onIconClick={() => toggleSelection(person)}
             // onKeywordClick will need to be added, once we know what the desired behaviour is
           />
-        </Box>
-      ))}
-    </Flex>
+        ))
+        .slice(0, MAX_DISPLAYED_PODS)}
+    </TwoColumnLayout>
   </React.Fragment>
 )
 

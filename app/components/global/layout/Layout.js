@@ -1,6 +1,6 @@
 import React from 'react'
 import Centerer from './Centerer'
-import AppBar from './AppBar'
+import AppBar from '../AppBar'
 
 const Layout = ({ children }) => (
   <React.Fragment>

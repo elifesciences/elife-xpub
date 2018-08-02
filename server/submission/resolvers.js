@@ -18,6 +18,7 @@ const uploadsPath = config.get('pubsweet-server').uploads
 
 const db = require('../db-helpers/')
 const fetchOrcidDetails = require('../auth/fetchUserDetails')
+const elifeApi = require('./elife-api')
 
 const staticManifest = `<dar>
   <documents>
@@ -27,22 +28,6 @@ const staticManifest = `<dar>
   </assets>
 </dar>
 `
-
-// dummy editor data
-const people = {
-  '1': { id: 1, role: 'SENIOREDITOR', name: 'Annie Badger' },
-  '2': { id: 2, role: 'SENIOREDITOR', name: 'Bobby Badger' },
-  '3': { id: 3, role: 'SENIOREDITOR', name: 'Chastity Badger' },
-  '4': { id: 4, role: 'SENIOREDITOR', name: 'Dave Badger' },
-  '5': { id: 5, role: 'SENIOREDITOR', name: 'Edwina Badger' },
-  '6': { id: 6, role: 'SENIOREDITOR', name: 'Frederic Badger' },
-  '7': { id: 7, role: 'REVIEWINGEDITOR', name: 'Annie Falstaff' },
-  '8': { id: 8, role: 'REVIEWINGEDITOR', name: 'Bobby Falstaff' },
-  '9': { id: 9, role: 'REVIEWINGEDITOR', name: 'Chastity Falstaff' },
-  '10': { id: 10, role: 'REVIEWINGEDITOR', name: 'Dave Falstaff' },
-  '11': { id: 11, role: 'REVIEWINGEDITOR', name: 'Edwina Falstaff' },
-  '12': { id: 12, role: 'REVIEWINGEDITOR', name: 'Frederic Falstaff' },
-}
 
 const mergeObjects = (...inputs) =>
   lodash.mergeWith(
@@ -81,7 +66,7 @@ const resolvers = {
       return db.select({ type: 'manuscript' })
     },
     async editors(_, { role }) {
-      return lodash.filter(people, { role })
+      return elifeApi.people(role)
     },
   },
 
@@ -223,16 +208,16 @@ const resolvers = {
 
   Manuscript: {
     async suggestedSeniorEditors(manuscript) {
-      return manuscript.suggestedSeniorEditors.map(id => people[id])
+      return elifeApi.peopleById(manuscript.suggestedSeniorEditors)
     },
     async opposedSeniorEditors(manuscript) {
-      return manuscript.opposedSeniorEditors.map(id => people[id])
+      return elifeApi.peopleById(manuscript.opposedSeniorEditors)
     },
     async suggestedReviewingEditors(manuscript) {
-      return manuscript.suggestedReviewingEditors.map(id => people[id])
+      return elifeApi.peopleById(manuscript.suggestedReviewingEditors)
     },
     async opposedReviewingEditors(manuscript) {
-      return manuscript.opposedReviewingEditors.map(id => people[id])
+      return elifeApi.peopleById(manuscript.opposedReviewingEditors)
     },
   },
 

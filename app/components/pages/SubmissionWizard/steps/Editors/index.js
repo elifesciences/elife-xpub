@@ -4,20 +4,21 @@ import { Query } from 'react-apollo'
 import EditorsContent from './EditorsContent'
 
 const EDITOR_LIST_QUERY = gql`
-  query EditorList($role: ManuscriptRole!) {
+  query EditorList($role: String!) {
     editors(role: $role) {
       id
       name
       institution
+      subjectAreas
     }
   }
 `
 
 const EditorsContainer = ({ ...props }) => (
-  <Query query={EDITOR_LIST_QUERY} variables={{ role: 'REVIEWINGEDITOR' }}>
+  <Query query={EDITOR_LIST_QUERY} variables={{ role: 'reviewing-editor' }}>
     {({ data: { editors: reviewingEditors = [] } }) => (
       // TODO handle errors
-      <Query query={EDITOR_LIST_QUERY} variables={{ role: 'SENIOREDITOR' }}>
+      <Query query={EDITOR_LIST_QUERY} variables={{ role: 'senior-editor' }}>
         {({ data: { editors: seniorEditors = [] } }) => (
           <EditorsContent
             reviewingEditors={reviewingEditors}

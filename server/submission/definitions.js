@@ -9,7 +9,7 @@ const typeDefs = `
       orcidDetails: Person
       manuscript(id: ID!): Manuscript!
       manuscripts: [Manuscript]!
-      editors(role: ManuscriptRole!): [EditorUser]
+      editors(role: String!): [EditorUser]
     }
     extend type Mutation {
       createSubmission: Manuscript!
@@ -288,10 +288,10 @@ const manuscriptSchema = Joi.object()
       })
       .required(),
     suggestedSeniorEditors: Joi.array()
-      .items(Joi.number().required())
+      .items(Joi.string().required())
       .required(),
     opposedSeniorEditors: Joi.array()
-      .items(Joi.number())
+      .items(Joi.string())
       .required(),
     opposedSeniorEditorsReason: Joi.string().when('opposedSeniorEditors', {
       is: Joi.array().min(1),
@@ -299,10 +299,10 @@ const manuscriptSchema = Joi.object()
       otherwise: Joi.string().allow(''),
     }),
     suggestedReviewingEditors: Joi.array()
-      .items(Joi.number().required())
+      .items(Joi.string().required())
       .required(),
     opposedReviewingEditors: Joi.array()
-      .items(Joi.number())
+      .items(Joi.string())
       .required(),
     opposedReviewingEditorsReason: Joi.string().when(
       'opposedReviewingEditors',
