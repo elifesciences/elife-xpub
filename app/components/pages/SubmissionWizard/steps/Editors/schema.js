@@ -10,6 +10,7 @@ const limits = {
   opposedSeniorEditors: { min: 0, max: 2 },
   suggestedReviewingEditors: { min: 2, max: 2 },
   opposedReviewingEditors: { min: 0, max: 2 },
+  // suggestedReviewers, limits are specified in the Validator class
 }
 
 const editorValidator = key =>
@@ -24,16 +25,11 @@ const opposedReasonValidator = key =>
     then: yup.string().required('Please provide a reason for exclusion'),
   })
 
-const suggestedReviewerValidator = () => yup.array().validReviewers()
-yup.array(
-  yup.object({
-    name: yup.string().required('Name is required'),
-    email: yup
-      .string()
-      .email('Must be a valid email')
-      .required('Email is required'),
-  }),
-)
+const suggestedReviewerValidator = () =>
+  yup
+    .array()
+    .removeBlankReviewers()
+    .validReviewers()
 
 const opposedReviewerValidator = () =>
   yup.array(

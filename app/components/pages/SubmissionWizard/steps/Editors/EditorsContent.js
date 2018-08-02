@@ -41,6 +41,12 @@ const ValidationMessage = ({ message }) => (
 )
 
 class EditorsContent extends React.Component {
+  constructor() {
+    super()
+    this.START_GROW_INDEX = 2
+    this.MAX_REVIEWERS = 6
+  }
+
   state = {
     boxVisibility: {},
   }
@@ -80,27 +86,26 @@ class EditorsContent extends React.Component {
   }
 
   suggestedReviewerFocusHandler = index => {
-    const MAX_REVIEWERS = 6
-    const START_GROW_INDEX = 2
-
-    if (index < START_GROW_INDEX) {
+    if (index < this.START_GROW_INDEX) {
       return
     }
+
+    const reviewers = this.props.values.suggestedReviewers
+
     const visibleReviwersHaveData = () => {
-      const reviewerHasData = reviewer =>
-        reviewer.name !== '' || reviewer.email !== ''
+      const reviewerHasData = reviewer => reviewer.name + reviewer.email !== ''
 
       let allFilled = true
-      if (!this.props.values.suggestedReviewers) {
+      if (!reviewers) {
         return false
       }
 
       for (
         let currentIndex = 0;
-        currentIndex < this.props.values.suggestedReviewers.length;
+        currentIndex < reviewers.length;
         currentIndex += 1
       ) {
-        const reviewer = this.props.values.suggestedReviewers[currentIndex]
+        const reviewer = reviewers[currentIndex]
         // check all but the current row (=index) for data
         if (index !== currentIndex && !reviewerHasData(reviewer)) {
           allFilled = false
@@ -109,12 +114,12 @@ class EditorsContent extends React.Component {
       return allFilled
     }
 
-    const maximumReached =
-      this.props.values.suggestedReviewers.length === MAX_REVIEWERS
+    const maximumReached = reviewers.length === this.MAX_REVIEWERS
 
     if (visibleReviwersHaveData() && !maximumReached) {
+      console.log('~~~ADDING REVIEWER')
       // create a new reviewer entry row
-      this.props.values.suggestedReviewers.push({ name: '', email: '' })
+      reviewers.push({ name: '', email: '' })
     }
   }
 
