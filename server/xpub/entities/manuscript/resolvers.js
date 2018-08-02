@@ -1,6 +1,6 @@
 const config = require('config')
 const User = require('../user')
-const { pubsubs } = require('pubsweet-server/src/graphql/pubsubs')
+const { pubsub, asyncIterators } = require('pubsweet-server/src/graphql/pubsub')
 const mailer = require('@pubsweet/component-send-email')
 const logger = require('@pubsweet/logger')
 const request = require('request-promise-native')
@@ -11,7 +11,7 @@ const path = require('path')
 const crypto = require('crypto')
 const Joi = require('joi')
 
-const ON_UPLOAD_PROGRESS = 'uploadProgress'
+const { ON_UPLOAD_PROGRESS } = asyncIterators
 
 const parseString = promisify(xml2js.parseString)
 const randomBytes = promisify(crypto.randomBytes)
@@ -141,7 +141,9 @@ const resolvers = {
       stream.on('data', chunk => {
         uploadedSize += chunk.length
         const uploadProgress = Math.floor(uploadedSize * 100 / fileSize)
-        pubsubs[context.user].publish(ON_UPLOAD_PROGRESS, { uploadProgress })
+        pubsub.publish(`${ON_UPLOAD_PROGRESS}.${context.user}`, {
+          uploadProgress,
+        })
       })
       const saveFilePromise = new Promise((resolve, reject) => {
         saveFileStream.on('finish', () => resolve(true))
@@ -193,11 +195,6 @@ const resolvers = {
       await Manuscript.save(manuscript)
 
       return manuscript
-    },
-  },
-  Subscription: {
-    uploadProgress: {
-      subscribe: (_, vars, context) => pubsubs[context.user].asyncIterator(ON_UPLOAD_PROGRESS),
     },
   },
 
