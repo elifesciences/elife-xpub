@@ -1,0 +1,83 @@
+extend type Manuscript {
+  previouslyDiscussed: String
+  previouslySubmitted: [String!]
+  coSubmission: [String!]
+  relatedManuscripts: [RelatedManuscript!]
+  suggestionsConflict: Boolean!
+  qcIssues: [QCIssue!]
+}
+
+# syntax supported in graphql-js >v14.0.0-rc.1
+extend union Identity = OrcidIdentity
+
+type OrcidIdentity {
+  orcidId: String!
+  name: String
+  email: String
+  accessToken: String
+  refreshToken: String
+}
+
+extend type TeamMember {
+  meta: TeamMemberMeta
+}
+
+extend type Alias {
+  firstName: String
+  lastName: String
+}
+
+union TeamMemberMeta = AuthorMetadata | ReviewerMetadata
+
+type AuthorMetadata {
+  rank: Int!
+  # to be defined
+  #contributions: AuthorMetadataContribution!
+  corresponding: Boolean!
+  conflictOfInterest: String
+}
+
+type ReviewerMetadata {
+  rank: Int!
+  # Accounts for instances where a post-doc has helped review
+  coRelationship: [TeamMember]
+  conflictOfInterest: String
+  revealIdentity: Boolean!
+}
+
+extend type File {
+  # Refers to changes to individual files
+  lastChangeDate: DateTime!
+  lastChangeUser: User!
+}
+
+type RelatedManuscript {
+  connectionType: SubmissionRelationship!
+  submissionIdentifier: String!
+  title: String!
+}
+
+enum SubmissionRelationship {
+  COSUBMISSION
+  RESUBMISSION
+  ADVANCE
+  SCIENTIFICCORRESPONDENCE
+}
+
+type QCIssue {
+  id: ID!
+  created: DateTime!
+  updated: DateTime
+  # To be defined
+  #location: QCIssueLocation!
+  comments: [QCComment!]!
+  resolved: Boolean!
+}
+
+type QCComment {
+  id: ID!
+  created: DateTime!
+  updated: DateTime!
+  user: User!
+  text: String!
+}
