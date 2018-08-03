@@ -1,73 +1,81 @@
 import React from 'react'
-import styled, { withTheme } from 'styled-components'
-import PropTypes from 'prop-types'
-import Select from 'react-select'
-import { th } from '@pubsweet/ui-toolkit'
+import styled from 'styled-components'
+import Autosuggest from 'react-autosuggest'
 
 import Icon from '../atoms/Icon'
+import theme from './SearchBox.local.css'
 
-const IconContainer = styled.div`
-  margin-right: ${th('space.2')};
+const Root = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 0px;
+  position: relative;
 `
 
-const MyDropdownIndicator = ({ innerRef, innerProps }) => (
-  <IconContainer>
-    <Icon size={3} {...innerProps}>
-      Search
-    </Icon>
-  </IconContainer>
-)
+const IconContainer = styled.div`
+  position: absolute;
+  right: 10px;
+  display: flex;
+  align-items: center;
+  height: 100%;
+`
 
 class SearchBox extends React.Component {
   state = {
-    selectedOption: null,
-    inputValue: '',
+    value: '',
+    suggestions: [],
   }
-  inputChange = inputValue => {
-    this.setState({ inputValue })
+  onChange = (_, { newValue }) => {
+    this.setState({
+      value: newValue,
+    })
   }
-  handleChange = selectedOption => {
-    this.setState({ selectedOption })
+  onSuggestionsFetchRequested = ({ value }) => {
+    this.setState({
+      suggestions: this.getSuggestions(value),
+    })
   }
-  isMenuOpen = () => {
-    const { inputValue } = this.state
-    return inputValue.length > 0
+  onSuggestionsClearRequested = () => {
+    this.setState({
+      suggestions: [],
+    })
   }
+
+  getSuggestions = value => {
+    const inputValue = value.trim().toLowerCase()
+    const inputLength = inputValue.length
+    return inputLength === 0
+      ? []
+      : this.props.options.filter(
+          option => option.value.toLowerCase().search(inputValue) >= 0,
+        )
+  }
+  getSuggestionValue = suggestion => suggestion.value
+  renderSuggestion = suggestion => <div>{suggestion.value}</div>
   render() {
-    const customStyles = {
-      valueContainer: (base, state) => ({
-        ...base,
-        padding: this.props.theme.space[2],
-        height: this.props.theme.space[5],
-      }),
+    const { value, suggestions } = this.state
+    const inputProps = {
+      placeholder: 'Search...',
+      value,
+      onChange: this.onChange,
     }
     return (
-      <Select
-        components={{
-          DropdownIndicator: MyDropdownIndicator,
-          IndicatorSeparator: null,
-          ClearIndicator: null,
-        }}
-        isMulti
-        menuIsOpen={this.isMenuOpen()}
-        onChange={this.handleChange}
-        onInputChange={this.inputChange}
-        options={this.props.options}
-        placeholder="Search..."
-        styles={customStyles}
-        value={this.state.selectedOption}
-      />
+      <Root>
+        <IconContainer>
+          <Icon size={3}>Search</Icon>
+        </IconContainer>
+        <Autosuggest
+          getSuggestionValue={this.getSuggestionValue}
+          inputProps={inputProps}
+          onSuggestionsClearRequested={this.onSuggestionsClearRequested}
+          onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
+          renderSuggestion={this.renderSuggestion}
+          suggestions={suggestions}
+          theme={theme}
+        />
+      </Root>
     )
   }
 }
 
-SearchBox.propTypes = {
-  options: PropTypes.arrayOf(
-    PropTypes.shape({
-      value: PropTypes.string,
-      label: PropTypes.string,
-    }),
-  ).isRequired,
-}
-
-export default withTheme(SearchBox)
+export default SearchBox

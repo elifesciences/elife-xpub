@@ -1,13 +1,11 @@
 Search box
 
 ```js
-initialState = { value: '' }
-;<SearchBox
+<SearchBox
   options={[
-    { value: 'first', label: 'first option' },
-    { value: 'second', label: 'second option' },
+    { value: 'first option' },
+    { value: 'final option' },
+    { value: 'second option' },
   ]}
-  value={state.value}
-  onChange={event => setState({ value: event.target.value })}
 />
 ```
