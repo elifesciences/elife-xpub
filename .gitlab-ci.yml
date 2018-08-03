@@ -3,7 +3,7 @@ variables:
   DOCKER_HOST: tcp://localhost:2375/
   IMAGE_ORG: xpub
   IMAGE_NAME: xpub-elife
-  BASE_DOMAIN: gateway.xpub.semioticsquares.com
+  BASE_DOMAIN: gateway.xpub.elifesciences.yld.io
   CONFIGURATION_REPOSITORY: https://gitlab.coko.foundation/yld/xpub-deployment-config-postgres.git
 
 services:
