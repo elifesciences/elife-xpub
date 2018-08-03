@@ -1,23 +1,23 @@
 import yup, { ValidationError } from 'yup'
-import { cloneDeep } from 'lodash'
+import { cloneDeep, countBy, findIndex } from 'lodash'
 
-const NUM_MANDATORY = 3
+const MIN_REVIEWERS = 3
+const MAX_REVIEWERS = 6
+
+export const suggestedReviewersLimits = {
+  min: MIN_REVIEWERS,
+  max: MAX_REVIEWERS,
+}
 
 class SuggestedReviewersValidator {
   constructor() {
-    this.schema1 = yup.object({
+    this.schema = yup.object({
       name: yup.string().required('Name is required'),
       email: yup
         .string()
         .email('Must be a valid email')
         .required('Email is required'),
     })
-    this.schema2 = yup.object({
-      name: yup.string(),
-      email: yup.string(),
-    })
-
-    this.MAXIMUM = 6
   }
 
   validate(reviewers, parentYup) {
@@ -28,15 +28,13 @@ class SuggestedReviewersValidator {
       // invalid if no reviewer specified
       return false
     }
-
     for (let index = 0; index < reviewers.length; index += 1) {
       const element = reviewers[index]
+      const isBlank = element.name + element.email === ''
+
       try {
-        if (index < NUM_MANDATORY) {
-          this.schema1.validateSync(element, opts)
-        } else {
-          this.schema2.validateSync(element, opts)
-        }
+        if (index < MIN_REVIEWERS || (index >= MIN_REVIEWERS && !isBlank))
+          this.schema.validateSync(element, opts)
       } catch (e) {
         e.inner.forEach(thrownError => {
           const error = cloneDeep(thrownError)
@@ -46,19 +44,27 @@ class SuggestedReviewersValidator {
       }
     }
 
+    // Check for duplicates...
+    const results = countBy(reviewers, 'name')
+    Object.keys(results).map(item => {
+      if (results[item] > 1) {
+        const offendingIndex = findIndex(reviewers, { name: item })
+        console.log('~~~ Duplicate:', reviewers[offendingIndex])
+      }
+      return true
+    })
+
     if (errors.length) {
       this.throwValidationError('reviewers went wrong', errors)
     }
 
-    if (reviewers.length < NUM_MANDATORY) {
-      this.throwValidationError(`Need at least ${NUM_MANDATORY}`)
+    if (reviewers.length < MIN_REVIEWERS) {
+      this.throwValidationError(`Need at least ${MIN_REVIEWERS}`)
     }
 
-    if (reviewers.length > this.MAXIMUM) {
-      this.throwValidationError(`Cannot exceed ${this.MAXIMUM}`)
+    if (reviewers.length > this.MAX_REVIEWERS) {
+      this.throwValidationError(`Cannot exceed ${MAX_REVIEWERS}`)
     }
-
-    // TODO: Check for dups
 
     return true
   }
@@ -82,27 +88,6 @@ class SuggestedReviewersValidator {
       },
     })
   }
-
-  static removeBlankReviewers(formats, parseStrict) {
-    return this.transform((value, originalValue) => {
-      if (!value || value.length <= NUM_MANDATORY) {
-        return
-      }
-      // minus 2 as we never check the last one
-      for (let index = value.length - 2; index >= 0; index -= 1) {
-        const element = value[index]
-        const elementIsBlank = element.name + element.email === ''
-        if (elementIsBlank) {
-          if (value.length > NUM_MANDATORY) {
-            console.log('~~~ REMOVING REVIEWER', index)
-            value.splice(index, 1)
-          }
-        }
-      }
-    })
-  }
-
-  static init() {}
 }
 
 const addValidReviewers = () => {
@@ -113,13 +98,4 @@ const addValidReviewers = () => {
   )
 }
 
-const addRemoveBlanks = () => {
-  yup.addMethod(
-    yup.array,
-    'removeBlankReviewers',
-    SuggestedReviewersValidator.removeBlankReviewers,
-  )
-}
-
 addValidReviewers()
-addRemoveBlanks()

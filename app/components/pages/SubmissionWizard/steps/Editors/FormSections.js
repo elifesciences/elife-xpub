@@ -6,6 +6,7 @@ import CalloutBox from '../../../../ui/atoms/CalloutBox'
 import Textarea from '../../../../ui/atoms/Textarea'
 import { FormH3 } from '../../../../ui/atoms/FormHeadings'
 import TwoColumnLayout from '../../../../global/layout/TwoColumnLayout'
+import { limits } from './schema'
 
 const createCloseHandler = (index, values, fieldName, setFieldValue) => () =>
   setFieldValue(
@@ -14,17 +15,25 @@ const createCloseHandler = (index, values, fieldName, setFieldValue) => () =>
     false,
   )
 
-export const SuggestedReviewer = ({ focusHandler, index }) => (
+export const SuggestedReviewer = ({ changeHandler, index }) => (
   <TwoColumnLayout bottomSpacing={false}>
     <ValidatedField
-      label="Suggested reviewer name"
+      label={
+        index < limits.suggestedReviewers.min
+          ? 'Suggested reviewer name'
+          : 'Optional suggested reviewer name'
+      }
       name={`suggestedReviewers.${index}.name`}
-      onFocus={() => focusHandler(index)}
-      />
+      onChange={event => changeHandler(event)}
+    />
     <ValidatedField
-      label="Suggested reviewer email"
+      label={
+        index < limits.suggestedReviewers.min
+          ? 'Suggested reviewer email'
+          : 'Optional suggested reviewer email'
+      }
       name={`suggestedReviewers.${index}.email`}
-      onFocus={() => focusHandler(index)}
+      onChange={event => changeHandler(event)}
       type="email"
     />
   </TwoColumnLayout>

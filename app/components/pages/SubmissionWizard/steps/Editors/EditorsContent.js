@@ -1,3 +1,4 @@
+import { cloneDeep } from 'lodash'
 import React from 'react'
 import { Box } from 'grid-styled'
 import { Action, ErrorText } from '@pubsweet/ui'
@@ -90,41 +91,42 @@ class EditorsContent extends React.Component {
     this.props.setFieldTouched(name, true)
   }
 
-  suggestedReviewerFocusHandler = index => {
-    if (index < this.START_GROW_INDEX) {
-      return
-    }
+  handleSuggestedReviewersChanged = event => {
+    this.props.handleChange(event)
+
+    const MAXIMUM = limits.suggestedReviewers.max
+
+    const itemIsBlank = item => item.name + item.email === ''
+    // const anyBlankMandatory = (revs) => itemIsBlank(revs[0]) || itemIsBlank(revs[1]) || itemIsBlank(revs[0])
 
     const reviewers = this.props.values.suggestedReviewers
 
-    const visibleReviwersHaveData = () => {
-      const reviewerHasData = reviewer => reviewer.name + reviewer.email !== ''
-
-      let allFilled = true
-      if (!reviewers) {
-        return false
-      }
-
-      for (
-        let currentIndex = 0;
-        currentIndex < reviewers.length;
-        currentIndex += 1
-      ) {
-        const reviewer = reviewers[currentIndex]
-        // check all but the current row (=index) for data
-        if (index !== currentIndex && !reviewerHasData(reviewer)) {
-          allFilled = false
+    // logic only kicks in for the optional reviewers
+    if (reviewers) {
+      // first count the blanks at the end
+      let numBlanks = 0
+      for (let index = reviewers.length - 1; index > 0; index -= 1) {
+        const item = reviewers[index]
+        if (itemIsBlank(item)) {
+          numBlanks += 1
+        } else {
+          break
         }
       }
-      return allFilled
-    }
-
-    const maximumReached = reviewers.length === this.MAX_REVIEWERS
-
-    if (visibleReviwersHaveData() && !maximumReached) {
-      console.log('~~~ADDING REVIEWER')
-      // create a new reviewer entry row
-      reviewers.push({ name: '', email: '' })
+      // if we have no blanks then add if one if less than max
+      if (numBlanks === 0) {
+        if (reviewers.length < MAXIMUM) {
+          const newReviewers = cloneDeep(reviewers)
+          newReviewers.push({ name: '', email: '' })
+          this.props.setFieldValue('suggestedReviewers', newReviewers)
+        }
+      } else if (numBlanks > 1) {
+        const numToGo = numBlanks - 1
+        // we have more than one blank line so tidy up
+        const newReviewers = cloneDeep(reviewers)
+        newReviewers.splice(newReviewers.length - numToGo, numToGo)
+        this.props.setFieldValue('suggestedReviewers', newReviewers)
+      }
     }
   }
 
@@ -292,7 +294,7 @@ class EditorsContent extends React.Component {
             // eslint-disable-next-line react/no-array-index-key
             <Box key={index} mb={2}>
               <SuggestedReviewer
-                focusHandler={this.suggestedReviewerFocusHandler}
+                changeHandler={this.handleSuggestedReviewersChanged}
                 index={index}
               />
             </Box>
