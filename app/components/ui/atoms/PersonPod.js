@@ -79,6 +79,7 @@ const PersonPodContainer = ({
         data-test-id="person-pod-button"
         disabled={!isIconClickable}
         onClick={onIconClick}
+        type="button"
       >
         {icon}
       </StyledButton>
