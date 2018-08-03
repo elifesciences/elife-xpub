@@ -1,6 +1,6 @@
 /* eslint-disable no-template-curly-in-string */
 import yup from 'yup'
-import './SuggestedReviewersValidator'
+import { suggestedReviewersLimits } from './SuggestedReviewersValidator'
 
 // TODO only the initially displayed fields should be required,
 // fields added by the user should be optional
@@ -10,7 +10,10 @@ const limits = {
   opposedSeniorEditors: { min: 0, max: 2 },
   suggestedReviewingEditors: { min: 2, max: 2 },
   opposedReviewingEditors: { min: 0, max: 2 },
-  // suggestedReviewers, limits are specified in the Validator class
+  suggestedReviewers: {
+    min: suggestedReviewersLimits.min,
+    max: suggestedReviewersLimits.max,
+  },
 }
 
 const editorValidator = key =>
@@ -25,11 +28,7 @@ const opposedReasonValidator = key =>
     then: yup.string().required('Please provide a reason for exclusion'),
   })
 
-const suggestedReviewerValidator = () =>
-  yup
-    .array()
-    .removeBlankReviewers()
-    .validReviewers()
+const suggestedReviewerValidator = () => yup.array().validReviewers()
 
 const opposedReviewerValidator = () =>
   yup.array(
