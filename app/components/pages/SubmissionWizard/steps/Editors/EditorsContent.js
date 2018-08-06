@@ -72,11 +72,16 @@ class EditorsContent extends React.Component {
     !!this.props.history.location.state &&
     this.props.history.location.state.showModal === name
 
+  setSelection = (name, selection) => {
+    this.hideModal(name)
+    this.props.setFieldValue(name, selection)
+    this.props.setFieldTouched(name, true)
+  }
+
   removeSelection = (name, person) => {
-    this.props.setFieldValue(
-      name,
-      this.props.values[name].filter(p => p.id !== person.id),
-    )
+    const value = this.props.values[name].filter(p => p.id !== person.id)
+    this.props.setFieldValue(name, value)
+    this.props.setFieldTouched(name, true)
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
@@ -117,10 +122,9 @@ class EditorsContent extends React.Component {
               onRequestRemove={person =>
                 this.removeSelection('suggestedSeniorEditors', person)
               }
-              onSubmit={selection => {
-                this.hideModal('suggestedSeniorEditors')
-                setFieldValue('suggestedSeniorEditors', selection)
-              }}
+              onSubmit={selection =>
+                this.setSelection('suggestedSeniorEditors', selection)
+              }
               options={seniorEditors}
             />
             <ValidationMessage
@@ -149,10 +153,9 @@ class EditorsContent extends React.Component {
               onRequestRemove={person =>
                 this.removeSelection('opposedSeniorEditors', person)
               }
-              onSubmit={selection => {
-                this.hideModal('opposedSeniorEditors')
-                setFieldValue('opposedSeniorEditors', selection)
-              }}
+              onSubmit={selection =>
+                this.setSelection('opposedSeniorEditors', selection)
+              }
               options={seniorEditors}
             />
 
@@ -184,10 +187,9 @@ class EditorsContent extends React.Component {
               onRequestRemove={person =>
                 this.removeSelection('suggestedReviewingEditors', person)
               }
-              onSubmit={selection => {
-                this.hideModal('suggestedReviewingEditors')
-                setFieldValue('suggestedReviewingEditors', selection)
-              }}
+              onSubmit={selection =>
+                this.setSelection('suggestedReviewingEditors', selection)
+              }
               options={reviewingEditors}
             />
 
@@ -218,10 +220,9 @@ class EditorsContent extends React.Component {
               onRequestRemove={person =>
                 this.removeSelection('opposedReviewingEditors', person)
               }
-              onSubmit={selection => {
-                this.hideModal('opposedReviewingEditors')
-                setFieldValue('opposedReviewingEditors', selection)
-              }}
+              onSubmit={selection =>
+                this.setSelection('opposedReviewingEditors', selection)
+              }
               options={reviewingEditors}
             />
 
