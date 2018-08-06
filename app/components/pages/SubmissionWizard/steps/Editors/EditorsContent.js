@@ -1,3 +1,4 @@
+import { cloneDeep } from 'lodash'
 import React from 'react'
 import { Box } from 'grid-styled'
 import { Action, ErrorText } from '@pubsweet/ui'
@@ -41,6 +42,12 @@ const ValidationMessage = ({ message }) => (
 )
 
 class EditorsContent extends React.Component {
+  constructor() {
+    super()
+    this.START_GROW_INDEX = 2
+    this.MAX_REVIEWERS = 6
+  }
+
   state = {
     boxVisibility: {},
   }
@@ -77,6 +84,45 @@ class EditorsContent extends React.Component {
       name,
       this.props.values[name].filter(p => p.id !== person.id),
     )
+  }
+
+  handleSuggestedReviewersChanged = event => {
+    this.props.handleChange(event)
+
+    const MAXIMUM = limits.suggestedReviewers.max
+
+    const itemIsBlank = item => item.name + item.email === ''
+    // const anyBlankMandatory = (revs) => itemIsBlank(revs[0]) || itemIsBlank(revs[1]) || itemIsBlank(revs[0])
+
+    const reviewers = this.props.values.suggestedReviewers
+
+    // logic only kicks in for the optional reviewers
+    if (reviewers) {
+      // first count the blanks at the end
+      let numBlanks = 0
+      for (let index = reviewers.length - 1; index > 0; index -= 1) {
+        const item = reviewers[index]
+        if (itemIsBlank(item)) {
+          numBlanks += 1
+        } else {
+          break
+        }
+      }
+      // if we have no blanks then add if one if less than max
+      if (numBlanks === 0) {
+        if (reviewers.length < MAXIMUM) {
+          const newReviewers = cloneDeep(reviewers)
+          newReviewers.push({ name: '', email: '' })
+          this.props.setFieldValue('suggestedReviewers', newReviewers)
+        }
+      } else if (numBlanks > 1) {
+        const numToGo = numBlanks - 1
+        // we have more than one blank line so tidy up
+        const newReviewers = cloneDeep(reviewers)
+        newReviewers.splice(newReviewers.length - numToGo, numToGo)
+        this.props.setFieldValue('suggestedReviewers', newReviewers)
+      }
+    }
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
@@ -246,7 +292,10 @@ class EditorsContent extends React.Component {
           {values.suggestedReviewers.map((_, index) => (
             // eslint-disable-next-line react/no-array-index-key
             <Box key={index} mb={2}>
-              <SuggestedReviewer index={index} />
+              <SuggestedReviewer
+                changeHandler={this.handleSuggestedReviewersChanged}
+                index={index}
+              />
             </Box>
           ))}
 
