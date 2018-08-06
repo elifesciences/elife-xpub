@@ -316,15 +316,7 @@ class EditorsContent extends React.Component {
           <Box>
             Would you like to{' '}
             <MoreButton
-              empty=""
-              fieldName="suggestedReviewers"
-              objectName="reviewer"
-              setFieldValue={setFieldValue}
-              values={values}
-            />{' '}
-            or{' '}
-            <MoreButton
-              empty={{ name: '', email: '', reason: '' }}
+              empty={{ name: '', email: '' }}
               fieldName="opposedReviewers"
               objectName="reviewer"
               setFieldValue={setFieldValue}

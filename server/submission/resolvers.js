@@ -45,6 +45,65 @@ const mergeObjects = (...inputs) =>
     },
   )
 
+function applyManuscriptInput(originalManuscript, manuscriptInput) {
+  const manuscript = mergeObjects(
+    {},
+    originalManuscript,
+    lodash.pick(manuscriptInput, [
+      'meta',
+      'coverLetter',
+      'opposedSeniorEditorsReason',
+      'opposedReviewingEditorsReason',
+      'previouslyDiscussed',
+      'previouslySubmitted',
+      'cosubmission',
+      'opposedReviewers',
+      'suggestionsConflict',
+    ]),
+  )
+
+  // reshape suggested editors into teams
+  const editorSuggestionRoles = [
+    'suggestedSeniorEditor',
+    'opposedSeniorEditor',
+    'suggestedReviewingEditor',
+    'opposedReviewingEditor',
+  ]
+  const editorSuggestionTeams = editorSuggestionRoles.map(role => {
+    const key = `${role}s`
+    const suggestedEditorIds = manuscriptInput[key] || []
+    const teamMembers = suggestedEditorIds.map(id => ({
+      meta: { elifePersonId: id },
+    }))
+    return { role, teamMembers }
+  })
+  manuscript.teams = manuscript.teams
+    .filter(team => !editorSuggestionRoles.includes(team.role))
+    .concat(editorSuggestionTeams)
+
+  // reshape suggested reviewers into teams
+  const reviewerSuggestionRoles = ['suggestedReviewer']
+  const reviewerSuggestionTeams = reviewerSuggestionRoles.map(role => {
+    const key = `${role}s`
+    const suggestedReviewerAliases = manuscriptInput[key] || []
+    const teamMembers = suggestedReviewerAliases.map(meta => ({ meta }))
+    return { role, teamMembers }
+  })
+  manuscript.teams = manuscript.teams
+    .filter(team => !reviewerSuggestionRoles.includes(team.role))
+    .concat(reviewerSuggestionTeams)
+
+  // move author into team
+  manuscript.teams = manuscript.teams
+    .filter(team => team.role !== 'author')
+    .concat({
+      role: 'author',
+      teamMembers: [{ alias: manuscriptInput.author }],
+    })
+
+  return manuscript
+}
+
 const resolvers = {
   Query: {
     async currentSubmission(_, vars, ctx) {
@@ -88,27 +147,27 @@ const resolvers = {
     },
 
     async updateSubmission(_, { data }, ctx) {
-      logger.debug('Update Submission - starting')
-
-      const manuscript = await db.selectId(data.id)
-      db.checkPermission(manuscript, ctx.user)
-      mergeObjects(manuscript, data)
+      const originalManuscript = await db.selectId(data.id)
+      db.checkPermission(originalManuscript, ctx.user)
+      const manuscript = applyManuscriptInput(originalManuscript, data)
 
       await db.update(db.manuscriptGqlToDb(manuscript, ctx.user), data.id)
       logger.debug(`Updated Submission ${data.id} by user ${ctx.user}`)
 
       return manuscript
     },
-    async finishSubmission(_, { data }, ctx) {
-      const manuscript = await db.selectId(data.id)
-      db.checkPermission(manuscript, ctx.user)
-      const newManuscript = mergeObjects({}, manuscript, data)
 
+    async finishSubmission(_, { data }, ctx) {
       // Before validation remove any blank optional reviewers the UI made.
-      removeOptionalBlankReviewers(newManuscript.suggestedReviewers)
+      const modifiedInputData = {
+        ...data,
+        suggestedReviewers: removeOptionalBlankReviewers(
+          data.suggestedReviewers,
+        ),
+      }
 
       const { error: errorManuscript } = Joi.validate(
-        newManuscript,
+        modifiedInputData,
         manuscriptSchema,
       )
       if (errorManuscript) {
@@ -116,15 +175,24 @@ const resolvers = {
         throw new Error(errorManuscript)
       }
 
-      newManuscript.status = 'QA'
-      const newManuscriptDb = db.manuscriptGqlToDb(newManuscript, ctx.user)
-      await db.update(newManuscriptDb, data.id)
+      const originalManuscript = await db.selectId(modifiedInputData.id)
+      db.checkPermission(originalManuscript, ctx.user)
+      const manuscript = applyManuscriptInput(
+        originalManuscript,
+        modifiedInputData,
+      )
+
+      manuscript.status = 'QA'
+      await db.update(
+        db.manuscriptGqlToDb(manuscript, ctx.user),
+        modifiedInputData.id,
+      )
 
       const user = await User.find(ctx.user)
-      if (user.email !== newManuscript.author.email) {
+      if (user.email !== modifiedInputData.author.email) {
         mailer
           .send({
-            to: newManuscript.author.email,
+            to: modifiedInputData.author.email,
             text: 'Please verify that you are a corresponding author',
           })
           .catch(err => {
@@ -134,7 +202,7 @@ const resolvers = {
           })
       }
 
-      return newManuscript
+      return manuscript
     },
 
     async uploadManuscript(_, { file, id }) {
@@ -214,17 +282,41 @@ const resolvers = {
   },
 
   Manuscript: {
-    async suggestedSeniorEditors(manuscript) {
-      return elifeApi.peopleById(manuscript.suggestedSeniorEditors)
+    async author(manuscript) {
+      const team = manuscript.teams.find(t => t.role === 'author')
+      if (!team) return { firstName: '', lastName: '', email: '', aff: '' }
+      return team.teamMembers[0].alias
     },
-    async opposedSeniorEditors(manuscript) {
-      return elifeApi.peopleById(manuscript.opposedSeniorEditors)
+
+    async assignees(manuscript, { role }) {
+      const team = manuscript.teams.find(t => t.role === role)
+      if (!team) return []
+
+      switch (role) {
+        case 'suggestedSeniorEditor':
+        case 'opposedSeniorEditor':
+        case 'suggestedReviewingEditor':
+        case 'opposedReviewingEditor': {
+          const assigneeIds = team.teamMembers.map(
+            member => member.meta.elifePersonId,
+          )
+          return elifeApi.peopleById(assigneeIds)
+        }
+        case 'suggestedReviewer':
+          return team.teamMembers.map(member => member.meta)
+
+        default:
+          throw new Error(`Unhandled role type ${role}`)
+      }
     },
-    async suggestedReviewingEditors(manuscript) {
-      return elifeApi.peopleById(manuscript.suggestedReviewingEditors)
-    },
-    async opposedReviewingEditors(manuscript) {
-      return elifeApi.peopleById(manuscript.opposedReviewingEditors)
+  },
+
+  Assignee: {
+    __resolveType: assignee => {
+      if (assignee.name !== undefined) return 'ReviewerAlias'
+      if (assignee.firstName !== undefined) return 'AuthorAlias'
+      if (assignee.subjectAreas !== undefined) return 'EditorAlias'
+      return null
     },
   },
 }
