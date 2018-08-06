@@ -47,7 +47,7 @@ class SearchBox extends React.Component {
     return inputLength === 0
       ? []
       : this.props.options.filter(
-          option => option.value.toLowerCase().search(inputValue) >= 0,
+          option => option.value.toLowerCase().includes(inputValue),
         )
   }
   getSuggestionValue = suggestion => suggestion.value
