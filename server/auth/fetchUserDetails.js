@@ -33,7 +33,7 @@ module.exports = async user => {
   const email = _.get(personResponse, 'body.emails.email[0].email')
 
   const employments = _.get(employmentsResponse, 'body.employment-summary')
-  const institution = employments.length
+  const aff = employments.length
     ? // sort by most recently ended
       employments
         .sort((a, b) => toDate(a['end-date']) - toDate(b['end-date']))
@@ -44,11 +44,11 @@ module.exports = async user => {
     first: ${firstName},
     last: ${lastName}
     email: ${email},
-    institution: ${institution}`)
+    aff: ${aff}`)
   return {
     firstName,
     lastName,
     email,
-    institution,
+    aff,
   }
 }

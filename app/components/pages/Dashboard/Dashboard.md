@@ -3,7 +3,7 @@
 ```js
 ;<Dashboard
   manuscripts={[
-    { id: 1, title: 'Something interesting', submissionMeta: { stage: 'QC' } },
+    { id: 1, status: 'QC', meta: { title: 'Something interesting' } },
   ]}
   deleteManuscript={id => console.log('delete', id)}
 />

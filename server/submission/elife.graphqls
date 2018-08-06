@@ -1,7 +1,7 @@
 extend type Manuscript {
   previouslyDiscussed: String
   previouslySubmitted: [String!]
-  coSubmission: [String!]
+  cosubmission: [String!]
   relatedManuscripts: [RelatedManuscript!]
   suggestionsConflict: Boolean!
   qcIssues: [QCIssue!]

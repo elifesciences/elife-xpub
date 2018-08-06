@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 /*
  * Data Modifiers -
  *    CosubmissionModifier
@@ -7,40 +8,35 @@
  * view model.
  */
 export default class CosubmissionModifier {
-  omitList = () => [
-    'submissionMeta.firstCosubmissionTitle',
-    'submissionMeta.secondCosubmissionTitle',
-  ]
+  omitList = () => ['firstCosubmissionTitle', 'secondCosubmissionTitle']
 
   toForm = values => {
-    const { submissionMeta } = values
-    const { cosubmission } = submissionMeta
+    const { cosubmission } = values
 
     const cosubLen = cosubmission.length
     if (cosubLen) {
-      submissionMeta.firstCosubmissionTitle = cosubmission[0].title
+      values.firstCosubmissionTitle = cosubmission[0]
     } else {
-      submissionMeta.firstCosubmissionTitle = null
+      values.firstCosubmissionTitle = null
     }
 
     if (cosubLen > 1) {
-      submissionMeta.secondCosubmissionTitle = cosubmission[1].title
+      values.secondCosubmissionTitle = cosubmission[1]
     } else {
-      submissionMeta.secondCosubmissionTitle = null
+      values.secondCosubmissionTitle = null
     }
   }
 
   fromForm = (values, originalValues) => {
-    const { submissionMeta } = values
-    const first = originalValues.submissionMeta.firstCosubmissionTitle
-    const second = originalValues.submissionMeta.secondCosubmissionTitle
-    submissionMeta.cosubmission = []
+    const first = originalValues.firstCosubmissionTitle
+    const second = originalValues.secondCosubmissionTitle
+    values.cosubmission = []
 
     if (typeof first === 'string' && first.length) {
-      submissionMeta.cosubmission.push({ title: first })
+      values.cosubmission.push(first)
 
       if (typeof second === 'string' && second.length) {
-        submissionMeta.cosubmission.push({ title: second })
+        values.cosubmission.push(second)
       }
     }
   }

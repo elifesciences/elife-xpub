@@ -22,7 +22,8 @@ function manuscriptGqlToDb(manuscript, owner) {
   const manuscriptDb = _.cloneDeep(manuscript)
   delete manuscriptDb.id
   if (owner) {
-    manuscriptDb.submissionMeta.createdBy = owner
+    // todo: model this with submitter team
+    manuscriptDb.createdBy = owner
   }
   manuscriptDb.type = 'manuscript'
   return manuscriptDb
@@ -46,7 +47,7 @@ const update = async (obj, id) => {
 }
 
 const checkPermission = (manuscript, user) => {
-  if (user !== manuscript.submissionMeta.createdBy) {
+  if (user !== manuscript.createdBy) {
     throw new Error('Manuscript not owned by user')
   }
 }

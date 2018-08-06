@@ -3,25 +3,21 @@ import { Selector } from 'testcafe'
 
 const metadata = {
   url: `${config.get('pubsweet-server.baseUrl')}/submit/metadata`,
-  title: Selector('[name=title]'),
+  title: Selector('[name="meta.title"]'),
   articleType: Selector('[role=listbox] button'),
   articleTypes: Selector('[role=option]'),
   subjectAreaLabel: Selector('label[for=subject-area-select]'),
 
-  discussionCheckbox: Selector('[name="discussion"]'),
-  discussionText: Selector('[name="submissionMeta.discussion"]'),
+  discussionCheckbox: Selector('[name="previouslyDiscussedToggle"]'),
+  discussionText: Selector('[name="previouslyDiscussed"]'),
 
-  previousArticleCheckbox: Selector('[name="previousArticle"]'),
-  previousArticleText: Selector('[name="submissionMeta.previousArticle"]'),
+  previousArticleCheckbox: Selector('[name="previouslySubmittedToggle"]'),
+  previousArticleText: Selector('[name="previouslySubmitted.0"]'),
 
-  cosubmissionCheckbox: Selector('[name="cosubmission"]'),
-  firstCosubmissionTitle: Selector(
-    '[name="submissionMeta.firstCosubmissionTitle"]',
-  ),
-  secondCosubmissionTitle: Selector(
-    '[name="submissionMeta.secondCosubmissionTitle"]',
-  ),
-  moreSubmission: Selector('[name="submissionMeta.moreSubmission"]'),
+  cosubmissionCheckbox: Selector('[name="cosubmissionToggle"]'),
+  firstCosubmissionTitle: Selector('[name="firstCosubmissionTitle"]'),
+  secondCosubmissionTitle: Selector('[name="secondCosubmissionTitle"]'),
+  moreSubmission: Selector('[name="moreSubmission"]'),
 }
 
 export default metadata

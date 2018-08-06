@@ -4,7 +4,7 @@ const editorFragment = gql`
   fragment EditorDetails on EditorUser {
     id
     name
-    institution
+    aff
     subjectAreas
   }
 `
@@ -12,9 +12,12 @@ const editorFragment = gql`
 const manuscriptFragment = gql`
   fragment WholeManuscript on Manuscript {
     id
-    title
-    manuscriptType
-    subjectAreas
+    status
+    meta {
+      title
+      articleType
+      subjects
+    }
     suggestedSeniorEditors {
       ...EditorDetails
     }
@@ -38,34 +41,21 @@ const manuscriptFragment = gql`
       email
       reason
     }
-    noConflictOfInterest
+    suggestionsConflict
     files {
-      name
+      filename
       type
     }
-    submissionMeta {
-      coverLetter
-      author {
-        firstName
-        lastName
-        email
-        institution
-      }
-      stage
-      discussion
-      previousArticle
-      cosubmission {
-        title
-      }
+    coverLetter
+    author {
+      firstName
+      lastName
+      email
+      aff
     }
-    manuscriptPersons {
-      role
-      metadata {
-        ... on AuthorMetadata {
-          confirmed
-        }
-      }
-    }
+    previouslyDiscussed
+    previouslySubmitted
+    cosubmission
   }
   ${editorFragment}
 `

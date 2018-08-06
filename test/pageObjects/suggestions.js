@@ -29,7 +29,7 @@ const suggestions = {
       .typeText('[name="suggestedReviewers.1.email"]', 'frances@example.net')
       .typeText('[name="suggestedReviewers.2.name"]', 'George')
       .typeText('[name="suggestedReviewers.2.email"]', 'george@example.org'),
-  conflictOfInterest: Selector('[name=noConflictOfInterest]').parent(),
+  conflictOfInterest: Selector('[name=suggestionsConflict]').parent(),
 }
 
 export default suggestions

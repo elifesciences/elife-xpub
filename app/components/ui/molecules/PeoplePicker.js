@@ -69,7 +69,7 @@ const PeoplePickerBody = ({
         .map(person => (
           <PersonPod
             iconType={isSelected(person) ? 'selected' : 'add'}
-            institution={person.institution}
+            institution={person.aff}
             isIconClickable={
               isSelected(person) || selection.length < maxSelection
             }

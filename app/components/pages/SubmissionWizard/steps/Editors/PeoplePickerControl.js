@@ -18,7 +18,7 @@ const PeoplePickerControl = ({
   const items = initialSelection.map(person => (
     <PersonPod
       iconType="remove"
-      institution={person.institution}
+      institution={person.aff}
       isKeywordClickable={false}
       key={person.id}
       keywords={person.subjectAreas}

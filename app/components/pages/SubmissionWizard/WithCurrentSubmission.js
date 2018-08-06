@@ -63,12 +63,7 @@ class WithCurrentSubmission extends React.Component {
     mutation,
     { isAutoSave = false, refetchQueries = [] } = {},
   ) {
-    const omitList = [
-      '__typename',
-      'files',
-      'manuscriptPersons',
-      'submissionMeta.stage',
-    ]
+    const omitList = ['__typename', 'files', 'teams', 'status']
 
     this.dataModifiers.forEach(modifier => {
       omitList.push(...modifier.omitList())

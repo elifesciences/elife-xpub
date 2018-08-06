@@ -1,9 +1,16 @@
 const Joi = require('joi')
+const fs = require('fs')
+
+const xpubSchema = fs.readFileSync(`${__dirname}/xpub.graphqls`)
+const elifeSchema = fs.readFileSync(`${__dirname}/elife.graphqls`)
 
 /**
  * types & input types should be kept in sync
  */
 const typeDefs = `
+    ${xpubSchema}
+    ${elifeSchema}
+
     extend type Query {
       currentSubmission: Manuscript
       orcidDetails: Person
@@ -11,6 +18,7 @@ const typeDefs = `
       manuscripts: [Manuscript]!
       editors(role: String!): [EditorUser]
     }
+    
     extend type Mutation {
       createSubmission: Manuscript!
       deleteManuscript(id: ID!): ID!
@@ -18,31 +26,25 @@ const typeDefs = `
       uploadManuscript(id: ID!, file: Upload!): Manuscript!
       finishSubmission(data: ManuscriptInput!): Manuscript!
     }
-    
-    type Manuscript {
-      id: ID
-      title: String
-      manuscriptType: String
-      subjectAreas: [String]
+        
+    extend type Manuscript {
+      # todo: these should be handled through teams
       suggestedSeniorEditors: [EditorUser]
       opposedSeniorEditors: [EditorUser]
-      opposedSeniorEditorsReason: String
       suggestedReviewingEditors: [EditorUser]
       opposedReviewingEditors: [EditorUser]
-      opposedReviewingEditorsReason: String
       suggestedReviewers: [SuggestedReviewer]
       opposedReviewers: [OpposedReviewer]
-      noConflictOfInterest: Boolean
-      files: [File]
-      submissionMeta: SubmissionMeta
-      manuscriptPersons: [ManuscriptPerson!]!
+      author: Alias
+    
+      # todo: these should be handled through notes
+      opposedSeniorEditorsReason: String
+      opposedReviewingEditorsReason: String
+      coverLetter: String
     }
     
     input ManuscriptInput {
       id: ID!
-      title: String
-      manuscriptType: String
-      subjectAreas: [String]
       suggestedSeniorEditors: [ID]
       opposedSeniorEditors: [ID]
       opposedSeniorEditorsReason: String
@@ -51,98 +53,41 @@ const typeDefs = `
       opposedReviewingEditorsReason: String
       suggestedReviewers: [SuggestedReviewerInput]
       opposedReviewers: [OpposedReviewerInput]
-      noConflictOfInterest: Boolean
-      submissionMeta: SubmissionMetaInput
-    }
-
-    type ManuscriptPerson {
-      user: User
-      role: ManuscriptRole!
-      #Alias has no use once upgraded to a User. Is there any way to move the information from one place to the other?
-      alias: UserAlias
-      metadata: ManuscriptPersonMetadata
-    }
-    
-    type UserAlias {
-      id: ID!
-      firstName: String!
-      lastName: String!
-      publishedName: String
-      email: String!
-      institution: String!
-    }
-    
-    union ManuscriptPersonMetadata = AuthorMetadata | ReviewerMetadata
-    
-    type AuthorMetadata {
-      rank: Int!
-      #contributions: AuthorMetadataContribution!
-      corresponding: Boolean!
-      confirmed: Boolean
-      conflictOfInterest: String
-    }
-    
-    type ReviewerMetadata {
-      rank: Int!
-      coRelationship: [ManuscriptPerson]
-      #Accounts for instances where a post-doc has helped review
-      conflictOfInterest: String
-      revealIdentity: Boolean!
-    }
-    
-    
-    enum ManuscriptRole {
-      DEPUTYEDITOR
-      SENIOREDITOR
-      REVIEWINGEDITOR
-      REVIEWER
-      AUTHOR
-      SUBMITTER
-    }
-
-    type SubmissionMeta {
-      coverLetter: String
-      author: Person
-      stage: SubmissionStage
-      discussion: String
-      previousArticle: String
-      cosubmission: [ArticleSearchParams]
-    }
-    input SubmissionMetaInput {
       coverLetter: String
       author: PersonInput
-      discussion: String
-      previousArticle: String
-      cosubmission: [ArticleSearchParamsInput!]!
+      previouslyDiscussed: String
+      previouslySubmitted: [String]
+      cosubmission: [String!]!
+      suggestionsConflict: Boolean
+      meta: ManuscriptMetaInput
+    }
+
+    input ManuscriptMetaInput {
+      title: String
+      articleType: String
+      subjects: [String]
     }
     type Person {
       firstName: String
       lastName: String
       email: String
-      institution: String
+      aff: String
     }
     input PersonInput {
       firstName: String
       lastName: String
       email: String
-      institution: String
+      aff: String
     }
     enum SubmissionStage {
       INITIAL
       QA
     }
-    type ArticleSearchParams {
-      title: String!
-      author: String
-    }
-    input ArticleSearchParamsInput {
-      title: String!
-      author: String
-    }
-    type EditorUser {
+    
+    type EditorUser {      
       id: ID
       name: String
-      institution: String
+      aff: String
       subjectAreas: [String]
     }
     type SuggestedReviewer {
@@ -163,12 +108,7 @@ const typeDefs = `
       email: String
       reason: String
     }
-    type File {
-      name: String
-      url: String
-      size: String
-      type: String
-    }
+
 `
 
 /**
@@ -176,9 +116,11 @@ const typeDefs = `
  */
 const emptyManuscript = {
   id: '',
-  title: '',
-  manuscriptType: '',
-  subjectAreas: [],
+  meta: {
+    title: '',
+    articleType: '',
+    subjects: [],
+  },
   suggestedSeniorEditors: [],
   opposedSeniorEditors: [],
   opposedSeniorEditorsReason: '',
@@ -191,10 +133,9 @@ const emptyManuscript = {
     { name: '', email: '' },
   ],
   opposedReviewers: [],
-  noConflictOfInterest: false,
+  suggestionsConflict: false,
   files: [],
-  submissionMeta: {
-    coverLetter: `
+  coverLetter: `
 <p><strong>How will your work make others in the field think differently and move the field forward?</strong></p>
 <p></p>
 <p><strong>How does your work relate to the current literature on the topic?</strong></p>
@@ -204,87 +145,58 @@ const emptyManuscript = {
 <p><strong>Have you made clear in the letter what the work has and has not achieved?</strong></p>
 <p></p>
 `,
-    author: {
-      firstName: '',
-      lastName: '',
-      email: '',
-      institution: '',
-    },
-    hasCorrespondent: false,
-    correspondent: {
-      firstName: '',
-      lastName: '',
-      email: '',
-      institution: '',
-    },
-    stage: 'INITIAL',
-    discussion: null,
-    previousArticle: null,
-    cosubmission: [],
+  author: {
+    firstName: '',
+    lastName: '',
+    email: '',
+    aff: '',
   },
-  manuscriptPersons: [],
+  status: 'INITIAL',
+  previouslyDiscussed: null,
+  previouslySubmitted: [],
+  cosubmission: [],
+  teams: [],
 }
 
-const possibleStages = ['INITIAL', 'QA']
+const possibleStatuses = ['INITIAL', 'QA']
 const manuscriptSchema = Joi.object()
   .keys({
     id: Joi.string().required(),
-    title: Joi.string().required(),
-    manuscriptType: Joi.string().required(),
-    subjectAreas: Joi.array()
-      .min(1)
-      .max(2)
-      .required(),
+    createdBy: Joi.string(),
     files: Joi.array().min(1),
-    submissionMeta: Joi.object()
+    meta: Joi.object()
       .keys({
-        // TODO remove this once we have an ORM
-        createdBy: Joi.string(),
-        coverLetter: Joi.string().required(),
-        author: Joi.object()
-          .keys({
-            firstName: Joi.string().required(),
-            lastName: Joi.string().required(),
-            email: Joi.string()
-              .email()
-              .required(),
-            institution: Joi.string().required(),
-          })
-          .required(),
-        hasCorrespondent: Joi.boolean().required(),
-        correspondent: Joi.when('hasCorrespondent', {
-          is: true,
-          then: Joi.object()
-            .keys({
-              firstName: Joi.string().required(),
-              lastName: Joi.string().required(),
-              email: Joi.string().required(),
-              institution: Joi.string().required(),
-            })
-            .required(),
-        }),
-        stage: Joi.string()
-          .valid(possibleStages)
-          .required(),
-        discussion: Joi.when('discussedPreviously', {
-          is: true,
-          then: Joi.string().required(),
-        }),
-        previousArticle: Joi.when('consideredPreviously', {
-          is: true,
-          then: Joi.string().required(),
-        }),
-        cosubmission: Joi.array()
-          .items(Joi.object().keys({ title: Joi.string().required() }))
+        title: Joi.string().required(),
+        articleType: Joi.string().required(),
+        subjects: Joi.array()
+          .min(1)
+          .max(2)
           .required(),
       })
+      .required(),
+    coverLetter: Joi.string().required(),
+    author: Joi.object()
+      .keys({
+        firstName: Joi.string().required(),
+        lastName: Joi.string().required(),
+        email: Joi.string()
+          .email()
+          .required(),
+        aff: Joi.string().required(),
+      })
+      .required(),
+    status: Joi.string()
+      .valid(possibleStatuses)
+      .required(),
+    previouslyDiscussed: Joi.string().allow('', null),
+    previouslySubmitted: Joi.array().items(Joi.string()),
+    cosubmission: Joi.array()
+      .items(Joi.string())
       .required(),
     suggestedSeniorEditors: Joi.array()
       .items(Joi.string().required())
       .required(),
-    opposedSeniorEditors: Joi.array()
-      .items(Joi.string())
-      .required(),
+    opposedSeniorEditors: Joi.array(),
     opposedSeniorEditorsReason: Joi.string().when('opposedSeniorEditors', {
       is: Joi.array().min(1),
       then: Joi.string().required(),
@@ -305,14 +217,12 @@ const manuscriptSchema = Joi.object()
       },
     ),
     suggestedReviewers: Joi.array().items(
-      Joi.object()
-        .keys({
-          name: Joi.string().required(),
-          email: Joi.string()
-            .email()
-            .required(),
-        })
-        .required(),
+      Joi.object().keys({
+        name: Joi.string().required(),
+        email: Joi.string()
+          .email()
+          .required(),
+      }),
     ),
     opposedReviewers: Joi.array().items(
       Joi.object().keys({
@@ -323,8 +233,8 @@ const manuscriptSchema = Joi.object()
         reason: Joi.string().required(),
       }),
     ),
-    manuscriptPersons: Joi.array(),
-    noConflictOfInterest: Joi.boolean().required(),
+    teams: Joi.array(),
+    suggestionsConflict: Joi.boolean().required(),
   })
   .required()
 

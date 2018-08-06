@@ -8,7 +8,7 @@ const EDITOR_LIST_QUERY = gql`
     editors(role: $role) {
       id
       name
-      institution
+      aff
       subjectAreas
     }
   }
