@@ -18,16 +18,11 @@ class SuggestedReviewersValidator {
         .email('Must be a valid email')
         .required('Email is required'),
     })
+    this.thingsNotDuplicated = ['name', 'email']
   }
 
-  validate(reviewers, parentYup) {
-    const errors = []
+  checkArrayContents(reviewers, errors) {
     const opts = { abortEarly: false }
-
-    if (!reviewers) {
-      // invalid if no reviewer specified
-      return false
-    }
     for (let index = 0; index < reviewers.length; index += 1) {
       const element = reviewers[index]
       const isBlank = element.name + element.email === ''
@@ -43,16 +38,52 @@ class SuggestedReviewersValidator {
         })
       }
     }
+  }
 
-    // Check for duplicates...
-    const results = countBy(reviewers, 'name')
+  static checkArrayForDuplicateKey(key, reviewers) {
+    const dupIndexes = []
+    // Check for duplicates
+    const results = countBy(reviewers, key)
     Object.keys(results).map(item => {
       if (results[item] > 1) {
-        const offendingIndex = findIndex(reviewers, { name: item })
-        console.log('~~~ Duplicate:', reviewers[offendingIndex])
+        const search = {}
+        search[key] = item
+        const offendingIndex = findIndex(reviewers, search)
+        dupIndexes.push(offendingIndex)
       }
       return true
     })
+    // return list of offending indexes
+    return dupIndexes
+  }
+
+  checkArrayForDuplicates(reviewers, errors) {
+    this.thingsNotDuplicated.forEach(key => {
+      const dupIndexes = SuggestedReviewersValidator.checkArrayForDuplicateKey(
+        key,
+        reviewers,
+      )
+      if (dupIndexes.length > 0) {
+        // create errors here
+        dupIndexes.forEach(index => {
+          const e = new ValidationError(`Duplicated ${key}`)
+          e.path = `suggestedReviewers.${index}.${key}`
+          errors.push(e)
+        })
+      }
+    })
+  }
+
+  validate(reviewers, parentYup) {
+    const errors = []
+
+    if (!reviewers) {
+      // invalid if no reviewers specified
+      return false
+    }
+
+    this.checkArrayContents(reviewers, errors)
+    this.checkArrayForDuplicates(reviewers, errors)
 
     if (errors.length) {
       this.throwValidationError('reviewers went wrong', errors)
