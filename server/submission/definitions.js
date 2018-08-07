@@ -158,6 +158,31 @@ const emptyManuscript = {
   teams: [],
 }
 const MAX_SUGGESTED_REVIEWERS = 6
+const MIN_SUGGESTED_REVIEWERS = 3
+
+const removeOptionalBlankReviewers = reviewers => {
+  const itemIsBlank = item => item.name + item.email === ''
+
+  let numBlanks = 0
+  for (
+    let index = reviewers.length - 1;
+    index >= MIN_SUGGESTED_REVIEWERS;
+    index -= 1
+  ) {
+    const item = reviewers[index]
+    if (itemIsBlank(item)) {
+      numBlanks += 1
+    } else {
+      break
+    }
+  }
+
+  if (numBlanks > 0) {
+    reviewers.splice(reviewers.length - numBlanks, numBlanks)
+    return reviewers
+  }
+  return null
+}
 
 const suggestedReviewer = Joi.object().keys({
   name: Joi.string().required(),
@@ -248,4 +273,5 @@ module.exports = {
   typeDefs,
   emptyManuscript,
   manuscriptSchema,
+  removeOptionalBlankReviewers,
 }

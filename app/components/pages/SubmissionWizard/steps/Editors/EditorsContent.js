@@ -42,12 +42,6 @@ const ValidationMessage = ({ message }) => (
 )
 
 class EditorsContent extends React.Component {
-  constructor() {
-    super()
-    this.START_GROW_INDEX = 2
-    this.MAX_REVIEWERS = 6
-  }
-
   state = {
     boxVisibility: {},
   }
@@ -94,10 +88,10 @@ class EditorsContent extends React.Component {
   handleSuggestedReviewersChanged = event => {
     this.props.handleChange(event)
 
-    const MAXIMUM = limits.suggestedReviewers.max
+    const MAX_REVIEWERS = limits.suggestedReviewers.max
+    const MIN_REVIEWERS = limits.suggestedReviewers.min
 
     const itemIsBlank = item => item.name + item.email === ''
-    // const anyBlankMandatory = (revs) => itemIsBlank(revs[0]) || itemIsBlank(revs[1]) || itemIsBlank(revs[0])
 
     const reviewers = this.props.values.suggestedReviewers
 
@@ -115,17 +109,19 @@ class EditorsContent extends React.Component {
       }
       // if we have no blanks then add if one if less than max
       if (numBlanks === 0) {
-        if (reviewers.length < MAXIMUM) {
+        if (reviewers.length < MAX_REVIEWERS) {
           const newReviewers = cloneDeep(reviewers)
           newReviewers.push({ name: '', email: '' })
           this.props.setFieldValue('suggestedReviewers', newReviewers)
         }
       } else if (numBlanks > 1) {
         const numToGo = numBlanks - 1
-        // we have more than one blank line so tidy up
-        const newReviewers = cloneDeep(reviewers)
-        newReviewers.splice(newReviewers.length - numToGo, numToGo)
-        this.props.setFieldValue('suggestedReviewers', newReviewers)
+        if (reviewers.length - numToGo >= MIN_REVIEWERS) {
+          // we have more than one blank line so tidy up
+          const newReviewers = cloneDeep(reviewers)
+          newReviewers.splice(newReviewers.length - numToGo, numToGo)
+          this.props.setFieldValue('suggestedReviewers', newReviewers)
+        }
       }
     }
   }

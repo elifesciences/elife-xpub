@@ -1,6 +1,7 @@
 import { cloneDeep } from 'lodash'
 import yup, { ValidationError } from 'yup'
 import './SuggestedReviewersValidator'
+import { limits } from './schema'
 
 const schema = yup.array().validReviewers()
 
@@ -25,26 +26,17 @@ const expectInvalidName = (error, index) => {
   expect(error.path).toBe(`suggestedReviewers.${index}.name`)
 }
 
-const expectToHaveBadEmail = (reviewers, index) => {
-  try {
-    schema.validateSync(reviewers)
-  } catch (e) {
-    expect(e.inner).toHaveLength(1)
-    expectInvalidEmail(e.inner[0], index)
-    throw e
-  }
+const expectDuplicateEmail = (error, index) => {
+  const duplicateEmail = 'ValidationError: Duplicated email'
+  expect(error.toString()).toBe(duplicateEmail)
+  expect(error.path).toBe(`suggestedReviewers.${index}.email`)
 }
 
-const expectToHaveBadName = (reviewers, index) => {
-  try {
-    schema.validateSync(reviewers)
-  } catch (e) {
-    expect(e.inner).toHaveLength(1)
-    expectInvalidName(e.inner[0], index)
-    throw e
-  }
+const expectDuplicateName = (error, index) => {
+  const duplicateName = 'ValidationError: Duplicated name'
+  expect(error.toString()).toBe(duplicateName)
+  expect(error.path).toBe(`suggestedReviewers.${index}.name`)
 }
-
 const expectToHaveBadNameAndEmail = (reviewers, index) => {
   try {
     schema.validateSync(reviewers)
@@ -52,6 +44,17 @@ const expectToHaveBadNameAndEmail = (reviewers, index) => {
     expect(e.inner).toHaveLength(2)
     expectInvalidName(e.inner[0], index)
     expectInvalidEmail(e.inner[1], index)
+    throw e
+  }
+}
+
+const expectToHaveDuplicateNameAndEmail = (reviewers, index) => {
+  try {
+    schema.validateSync(reviewers)
+  } catch (e) {
+    expect(e.inner).toHaveLength(2)
+    expectDuplicateName(e.inner[0], index)
+    expectDuplicateEmail(e.inner[1], index)
     throw e
   }
 }
@@ -68,39 +71,14 @@ const isCheckingNameAndEmail = index => {
   })
 }
 
-const isCheckingEmail = index => {
+const checksForDuplicate = index => {
   const data = cloneDeep(validReviewers)
-  data[index].email = 'not-an-email'
-
-  it(`fails when reviewer ${index + 1} has bad email`, () => {
-    expect(() => expectToHaveBadEmail(data, index)).toThrow(ValidationError)
-  })
-}
-
-const isNotCheckingEmail = index => {
-  const data = cloneDeep(validReviewers)
-  data[index].email = 'not-an-email'
-
-  it(`ok when reviewer ${index + 1} has bad email`, () => {
-    schema.validateSync(data)
-  })
-}
-
-const isCheckingName = index => {
-  const data = cloneDeep(validReviewers)
-  data[index].name = ''
-
-  it(`fails when reviewer ${index + 1} has bad name`, () => {
-    expect(() => expectToHaveBadName(data, index)).toThrow(ValidationError)
-  })
-}
-
-const isNotCheckingName = index => {
-  const data = cloneDeep(validReviewers)
-  data[index].name = ''
-
-  it(`ok when reviewer ${index + 1} has bad name`, () => {
-    schema.validateSync(data)
+  const dupIndex = 0
+  data[index] = data[dupIndex]
+  it('catches duplicate name and emails', () => {
+    expect(() => expectToHaveDuplicateNameAndEmail(data, dupIndex)).toThrow(
+      ValidationError,
+    )
   })
 }
 
@@ -113,30 +91,17 @@ describe('Happy day', () => {
   })
 })
 
-describe('First three need good emails', () => {
-  for (let index = 0; index < validReviewers.length; index += 1) {
-    if (index < 3) {
-      isCheckingEmail(index)
-    } else {
-      isNotCheckingEmail(index)
-    }
-  }
-})
-
-describe('First three need good names', () => {
-  for (let index = 0; index < validReviewers.length; index += 1) {
-    if (index < 3) {
-      isCheckingName(index)
-    } else {
-      isNotCheckingName(index)
-    }
-  }
-})
-
 describe('Multiple errors can be shown', () => {
   for (let index = 0; index < validReviewers.length; index += 1) {
-    if (index < 3) {
+    if (index < limits.suggestedReviewers.max) {
       isCheckingNameAndEmail(index)
     }
   }
+})
+
+describe('Duplicates are caught', () => {
+  // check within the mandatory rows
+  checksForDuplicate(2)
+  // check within the optional rows too
+  checksForDuplicate(5)
 })

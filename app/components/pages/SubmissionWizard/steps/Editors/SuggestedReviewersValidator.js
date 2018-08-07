@@ -28,8 +28,9 @@ class SuggestedReviewersValidator {
       const isBlank = element.name + element.email === ''
 
       try {
-        if (index < MIN_REVIEWERS || (index >= MIN_REVIEWERS && !isBlank))
+        if (index < MIN_REVIEWERS || (index >= MIN_REVIEWERS && !isBlank)) {
           this.schema.validateSync(element, opts)
+        }
       } catch (e) {
         e.inner.forEach(thrownError => {
           const error = cloneDeep(thrownError)
@@ -48,8 +49,11 @@ class SuggestedReviewersValidator {
       if (results[item] > 1) {
         const search = {}
         search[key] = item
-        const offendingIndex = findIndex(reviewers, search)
-        dupIndexes.push(offendingIndex)
+        // don't mark blanks as duplicates
+        if (item !== '') {
+          const offendingIndex = findIndex(reviewers, search)
+          dupIndexes.push(offendingIndex)
+        }
       }
       return true
     })
@@ -72,6 +76,25 @@ class SuggestedReviewersValidator {
         })
       }
     })
+  }
+
+  static removeOptionalBlankReviewers(reviewers) {
+    const itemIsBlank = item => item.name + item.email === ''
+
+    let numBlanks = 0
+    for (let index = reviewers.length - 1; index >= MIN_REVIEWERS; index -= 1) {
+      const item = reviewers[index]
+      if (itemIsBlank(item)) {
+        numBlanks += 1
+      } else {
+        break
+      }
+    }
+
+    if (numBlanks > 0) {
+      const numToGo = numBlanks - 1
+      reviewers.splice(reviewers.length - numToGo, numToGo)
+    }
   }
 
   validate(reviewers, parentYup) {
