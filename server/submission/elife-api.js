@@ -25,10 +25,12 @@ const people = async role => {
       'per-page': 100,
       type: role,
     })
-    items = items.concat(response.body.items)
+    if (response.body.items) {
+      items = items.concat(response.body.items)
+    }
     page += 1
   } while (items.length < response.body.total)
-  return items.map(convertPerson)
+  return !items || items.length === 0 ? [] : items.map(convertPerson)
 }
 
 const person = async id => {
