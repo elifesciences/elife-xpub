@@ -93,37 +93,43 @@ class EditorsContent extends React.Component {
 
     const itemIsBlank = item => item.name + item.email === ''
 
-    const reviewers = this.props.values.suggestedReviewers
+    // defer the execution of the function until the default change has been
+    // handled so we're operating on the updated
+    // "this.props.values.suggestedReviewers"
+    this.setState({}, () => {
+      const reviewers = this.props.values.suggestedReviewers
 
-    // logic only kicks in for the optional reviewers
-    if (reviewers) {
-      // first count the blanks at the end
-      let numBlanks = 0
-      for (let index = reviewers.length - 1; index > 0; index -= 1) {
-        const item = reviewers[index]
-        if (itemIsBlank(item)) {
-          numBlanks += 1
-        } else {
-          break
+      // logic only kicks in for the optional reviewers
+      if (reviewers) {
+        // first count the blanks at the end
+        let numBlanks = 0
+        for (let index = reviewers.length - 1; index > 0; index -= 1) {
+          const item = reviewers[index]
+          if (itemIsBlank(item)) {
+            numBlanks += 1
+          } else {
+            break
+          }
+        }
+
+        // if we have no blanks then add if one if less than max
+        if (numBlanks === 0) {
+          if (reviewers.length < MAX_REVIEWERS) {
+            const newReviewers = cloneDeep(reviewers)
+            newReviewers.push({ name: '', email: '' })
+            this.props.setFieldValue('suggestedReviewers', newReviewers)
+          }
+        } else if (numBlanks > 1) {
+          const numToGo = numBlanks - 1
+          if (reviewers.length - numToGo >= MIN_REVIEWERS) {
+            // we have more than one blank line so tidy up
+            const newReviewers = cloneDeep(reviewers)
+            newReviewers.splice(newReviewers.length - numToGo, numToGo)
+            this.props.setFieldValue('suggestedReviewers', newReviewers)
+          }
         }
       }
-      // if we have no blanks then add if one if less than max
-      if (numBlanks === 0) {
-        if (reviewers.length < MAX_REVIEWERS) {
-          const newReviewers = cloneDeep(reviewers)
-          newReviewers.push({ name: '', email: '' })
-          this.props.setFieldValue('suggestedReviewers', newReviewers)
-        }
-      } else if (numBlanks > 1) {
-        const numToGo = numBlanks - 1
-        if (reviewers.length - numToGo >= MIN_REVIEWERS) {
-          // we have more than one blank line so tidy up
-          const newReviewers = cloneDeep(reviewers)
-          newReviewers.splice(newReviewers.length - numToGo, numToGo)
-          this.props.setFieldValue('suggestedReviewers', newReviewers)
-        }
-      }
-    }
+    })
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
