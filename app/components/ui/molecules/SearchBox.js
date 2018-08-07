@@ -46,18 +46,25 @@ class SearchBox extends React.Component {
     const inputLength = inputValue.length
     return inputLength === 0
       ? []
-      : this.props.options.filter(
-          option => option.value.toLowerCase().includes(inputValue),
+      : this.props.options.filter(option =>
+          option.value.toLowerCase().includes(inputValue),
         )
   }
   getSuggestionValue = suggestion => suggestion.value
   renderSuggestion = suggestion => <div>{suggestion.value}</div>
+  onKeyDown = event => {
+    // key code for enter is 13
+    if (event.keyCode === 13) {
+      this.props.onSubmit(this.state.value)
+    }
+  }
   render() {
     const { value, suggestions } = this.state
     const inputProps = {
       placeholder: 'Search...',
       value,
       onChange: this.onChange,
+      onKeyDown: this.onKeyDown,
     }
     return (
       <Root>
