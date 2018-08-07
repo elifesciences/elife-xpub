@@ -6,6 +6,7 @@ import { Box, Flex } from 'grid-styled'
 import Centerer from '../../../../global/layout/Centerer'
 import ModalOverlay from '../../../../ui/molecules/ModalOverlay'
 import PeoplePicker from '../../../../ui/molecules/PeoplePicker'
+import SearchBox from '../../../../ui/molecules/SearchBox'
 
 const ButtonBarContainer = styled.div`
   position: fixed;
@@ -26,6 +27,17 @@ const PeoplePickerModal = ({ open, ...props }) => (
     <PeoplePicker {...props}>
       {innerProps => (
         <React.Fragment>
+          <Centerer p={3}>
+            <Flex mx={-2}>
+              <Box
+                mx={[0, 0, 0, '16.666%']}
+                px={[2, 2, 2, 1]}
+                width={[1, 1, 1 / 2, 0.33]}
+              >
+                <SearchBox options={[]} />
+              </Box>
+            </Flex>
+          </Centerer>
           <Centerer p={3}>
             <Flex data-test-id="people-picker-body">
               <MainColumn mb={7}>
