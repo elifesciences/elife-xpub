@@ -250,10 +250,8 @@ const manuscriptSchema = Joi.object()
       },
     ),
     suggestedReviewers: Joi.array()
-      .ordered(suggestedReviewer, suggestedReviewer, suggestedReviewer)
-      // any suggested reviewer past third is optional to max, but is validated
-      // in the same way
       .items(suggestedReviewer)
+      .min(MIN_SUGGESTED_REVIEWERS)
       .max(MAX_SUGGESTED_REVIEWERS),
     opposedReviewers: Joi.array().items(
       Joi.object().keys({
