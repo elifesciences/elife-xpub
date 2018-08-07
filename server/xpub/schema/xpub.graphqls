@@ -81,7 +81,7 @@ type Note implements Object {
     content: String
 }
 
-type File implements Object  {
+type File implements Object {
     id: ID!
     created: DateTime!
     updated: DateTime
@@ -93,7 +93,7 @@ type File implements Object  {
     size: Int
 }
 
-type Review implements Object  {
+type Review implements Object {
     id: ID!
     created: DateTime!
     updated: DateTime
@@ -112,7 +112,6 @@ type Comment {
 type AuditLog {
     id: ID!
     created: DateTime!
-    updated: DateTime
     user: User
     action: String
     object: Object
