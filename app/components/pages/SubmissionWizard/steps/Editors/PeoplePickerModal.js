@@ -25,37 +25,40 @@ const MainColumn = styled(Box).attrs({ mx: [0, 0, 0, '16.666%'] })`
 const PeoplePickerModal = ({ open, ...props }) => (
   <ModalOverlay open={open}>
     <PeoplePicker {...props}>
-      {innerProps => (
-        <React.Fragment>
-          <Centerer p={3}>
-            <Flex mx={-2}>
-              <Box
-                mx={[0, 0, 0, '16.666%']}
-                px={[2, 2, 2, 1]}
-                width={[1, 1, 1 / 2, 0.33]}
-              >
-                <SearchBox options={[]} />
-              </Box>
-            </Flex>
-          </Centerer>
-          <Centerer p={3}>
-            <Flex data-test-id="people-picker-body">
-              <MainColumn mb={7}>
-                <PeoplePicker.Body {...innerProps} />
-              </MainColumn>
-            </Flex>
-          </Centerer>
-          <ButtonBarContainer>
-            <Centerer py={[3, 3, 3, 4]}>
-              <Flex>
-                <MainColumn>
-                  <PeoplePicker.Buttons {...innerProps} />
+      {innerProps => {
+        const people = innerProps.people.map(person => ({ value: person.name }))
+        return (
+          <React.Fragment>
+            <Centerer p={3}>
+              <Flex mx={-2}>
+                <Box
+                  mx={[0, 0, 0, '16.666%']}
+                  px={[2, 2, 2, 1]}
+                  width={[1, 1, 1 / 2, 0.33]}
+                >
+                  <SearchBox options={people} />
+                </Box>
+              </Flex>
+            </Centerer>
+            <Centerer p={3}>
+              <Flex data-test-id="people-picker-body">
+                <MainColumn mb={7}>
+                  <PeoplePicker.Body {...innerProps} />
                 </MainColumn>
               </Flex>
             </Centerer>
-          </ButtonBarContainer>
-        </React.Fragment>
-      )}
+            <ButtonBarContainer>
+              <Centerer py={[3, 3, 3, 4]}>
+                <Flex>
+                  <MainColumn>
+                    <PeoplePicker.Buttons {...innerProps} />
+                  </MainColumn>
+                </Flex>
+              </Centerer>
+            </ButtonBarContainer>
+          </React.Fragment>
+        )
+      }}
     </PeoplePicker>
   </ModalOverlay>
 )
