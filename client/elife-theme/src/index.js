@@ -1,6 +1,7 @@
 /* eslint-disable import/extensions */
 import './fonts/index.css'
 import * as elements from './elements'
+import * as icons from './icons'
 
 const gridUnit = 6
 
@@ -78,6 +79,7 @@ export default {
   },
 }
 
+export { icons }
 export { default as TextBoldIcon } from './icons/TextBold'
 export { default as TextItalicIcon } from './icons/TextItalic'
 export { default as TextSubIcon } from './icons/TextSub'
