@@ -77,6 +77,12 @@ export default {
     ...elements,
     'xpub-edit': elements.xpubEdit,
   },
+
+  icons: {
+    '@pubsweet-pending.PeoplePicker.PersonPod.add': icons.Plus,
+    '@pubsweet-pending.PeoplePicker.PersonPod.remove': icons.RubbishBin,
+    '@pubsweet-pending.PeoplePicker.PersonPod.selected': icons.SelectedTick,
+  },
 }
 
 export { icons }
