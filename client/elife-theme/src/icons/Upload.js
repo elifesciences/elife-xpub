@@ -38,7 +38,7 @@ function percentageToDasharray(percentage, circleRadius) {
   return `${lineLength}, ${spaceLength}`
 }
 
-const Upload = ({ color, percentage, ...otherProps }) => {
+const Upload = ({ color, percentage, size, ...otherProps }) => {
   const circleRadius = 24
   const dashArray = percentageToDasharray(percentage, circleRadius)
   const dashOffset = Math.PI * circleRadius / 2
@@ -46,12 +46,14 @@ const Upload = ({ color, percentage, ...otherProps }) => {
   return (
     <AnimationRoot>
       <svg
+        height={otherProps.theme.space[size]}
         onClick={() => {
           animateUpload(animate)
           animate = !animate
         }}
         version="1.1"
         viewBox="0 0 52 52"
+        width={otherProps.theme.space[size]}
         xmlns="http://www.w3.org/2000/svg"
         {...otherProps}
       >

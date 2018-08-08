@@ -1,14 +1,11 @@
 import React from 'react'
 import styled from 'styled-components'
 import Autosuggest from 'react-autosuggest'
+import { SearchIcon } from '@elifesciences/elife-theme'
 
-import Icon from '../atoms/Icon'
 import theme from './SearchBox.local.css'
 
 const Root = styled.div`
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 0px;
   position: relative;
 `
 
@@ -46,8 +43,8 @@ class SearchBox extends React.Component {
     const inputLength = inputValue.length
     return inputLength === 0
       ? []
-      : this.props.options.filter(
-          option => option.value.toLowerCase().includes(inputValue),
+      : this.props.options.filter(option =>
+          option.value.toLowerCase().includes(inputValue),
         )
   }
   getSuggestionValue = suggestion => suggestion.value
@@ -62,7 +59,7 @@ class SearchBox extends React.Component {
     return (
       <Root>
         <IconContainer>
-          <Icon size={3}>Search</Icon>
+          <SearchIcon />
         </IconContainer>
         <Autosuggest
           getSuggestionValue={this.getSuggestionValue}

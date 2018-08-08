@@ -6,10 +6,10 @@ const UploadSuccess = props => {
   const { color, size, ...otherProps } = props
   return (
     <svg
-      height={size}
+      height={props.theme.space[size]}
       version="1.1"
       viewBox="0 0 52 52"
-      width={size}
+      width={props.theme.space[size]}
       xmlns="http://www.w3.org/2000/svg"
       {...otherProps}
     >

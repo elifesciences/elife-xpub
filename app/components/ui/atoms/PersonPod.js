@@ -5,7 +5,49 @@ import { th } from '@pubsweet/ui-toolkit'
 import { Action } from '@pubsweet/ui'
 import { Flex, Box } from 'grid-styled'
 
-import Icon from './Icon'
+import {
+  PlusIcon,
+  RubbishBinIcon,
+  SelectedTickIcon,
+} from '@elifesciences/elife-theme'
+
+const StyledPlusIcon = styled(PlusIcon)`
+  fill: ${th('colorTextSecondary')};
+  height: ${th('space.3')}
+  width: ${th('space.3')}
+`
+
+const StyledRubbishBinIcon = styled(RubbishBinIcon)`
+  fill: ${th('colorTextSecondary')};
+  height: ${th('space.3')}
+  width: ${th('space.3')}
+`
+
+const StyledSelectedTickIcon = styled(SelectedTickIcon)`
+  .selected-tick-circle {
+    fill: ${th('colorPrimary')};
+  }
+  height: ${th('space.4')}
+  width: ${th('space.4')}
+`
+
+const StyledButton = styled.button`
+  background-color: inherit;
+  height: 100%;
+  border: none;
+  padding: 0 calc(${th('gridUnit')} * 2);
+
+  &:hover {
+    .plus-icon,
+    .rubbish-bin {
+      fill: #666666;
+    }
+
+    .selected-tick-circle {
+      fill: #1378bb;
+    }
+  }
+`
 
 const RegularP = styled.p`
   font-size: ${th('fontSizeBase')};
@@ -30,24 +72,6 @@ const SmallAction = styled(Action)`
   font-size: ${th('fontSizeBaseSmall')};
   line-height: ${th('fontLineHeightBaseSmall')};
   margin: 3px 0;
-`
-
-const StyledButton = styled.button`
-  background-color: inherit;
-  height: 100%;
-  border: none;
-  padding: 0 calc(${th('gridUnit')} * 2);
-
-  &:hover {
-    .plus-icon,
-    .rubbish-bin {
-      fill: #666666;
-    }
-
-    .selected-tick-circle {
-      fill: #1378bb;
-    }
-  }
 `
 
 const StyledPod = styled(Flex)`
@@ -87,19 +111,15 @@ const PersonPodContainer = ({
   </StyledPod>
 )
 
-const plusIcon = <Icon size={3}>Plus</Icon>
-const rubbishBinIcon = <Icon size={3}>RubbishBin</Icon>
-const selectedTickIcon = <Icon size={4}>SelectedTick</Icon>
-
 const PodIcon = ({ iconType }) => {
   switch (iconType) {
     case 'remove':
-      return rubbishBinIcon
+      return <StyledRubbishBinIcon />
     case 'selected':
-      return selectedTickIcon
+      return <StyledSelectedTickIcon />
     case 'add':
     default:
-      return plusIcon
+      return <StyledPlusIcon />
   }
 }
 
@@ -173,7 +193,7 @@ const ChooserText = ({ roleName, isRequired, ...props }) => (
 
 const SelectButton = ({ isIconClickable, onIconClick, ...props }) => (
   <PersonPodContainer
-    icon={plusIcon}
+    icon={<PodIcon iconType="add" />}
     isIconClickable
     onIconClick={onIconClick}
     textContainer={<ChooserText {...props} />}
