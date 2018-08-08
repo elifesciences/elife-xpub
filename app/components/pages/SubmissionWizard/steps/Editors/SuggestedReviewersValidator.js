@@ -41,7 +41,7 @@ class SuggestedReviewersValidator {
     }
   }
 
-  static checkArrayForDuplicateKey(key, reviewers) {
+  static checkArrayForDuplicateByKey(key, reviewers) {
     const dupIndexes = []
     // Check for duplicates
     const results = countBy(reviewers, key)
@@ -63,7 +63,7 @@ class SuggestedReviewersValidator {
 
   checkArrayForDuplicates(reviewers, errors) {
     this.thingsNotDuplicated.forEach(key => {
-      const dupIndexes = SuggestedReviewersValidator.checkArrayForDuplicateKey(
+      const dupIndexes = SuggestedReviewersValidator.checkArrayForDuplicateByKey(
         key,
         reviewers,
       )
