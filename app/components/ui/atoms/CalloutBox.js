@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { Box } from 'grid-styled'
 import { th } from '@pubsweet/ui-toolkit'
-import Icon from './Icon'
+import { CrossIcon } from '@elifesciences/elife-theme'
 
 const Frame = styled(props => <Box {...props} />).attrs({
   mb: 2,
@@ -13,19 +13,14 @@ const Frame = styled(props => <Box {...props} />).attrs({
   position: relative;
 `
 
-const CloseButton = styled(Icon).attrs({
-  size: 2,
-  children: 'Cross',
-})`
+const CloseButton = styled(CrossIcon)`
   position: absolute;
   top: ${th('space.2')};
   right: ${th('space.2')};
-  padding: ${th('space.1')};
   cursor: pointer;
-  svg {
-    stroke: ${th('colorTextSecondary')};
-    fill: ${th('colorTextSecondary')};
-  }
+  fill: ${th('colorTextSecondary')};
+  height: ${th('space.3')};
+  width: ${th('space.3')};
 `
 
 const CalloutBox = ({ onClose, children, ...props }) => (

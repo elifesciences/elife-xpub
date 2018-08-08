@@ -4,7 +4,13 @@ import styled, { withTheme } from 'styled-components'
 import { th } from '@pubsweet/ui-toolkit'
 import Select, { createFilter, components } from 'react-select'
 
-import CrossIcon from '../../../../ui/atoms/icons/Cross'
+import { CrossIcon } from '@elifesciences/elife-theme'
+
+const StyledCrossIcon = styled(CrossIcon)`
+  fill: currentColor;
+  height: 20px;
+  width: 20px;
+`
 
 const Root = styled.div``
 
@@ -193,23 +199,15 @@ class SubjectAreaDropdown extends React.Component {
 
     const TagRemovalIcon = props => (
       <components.MultiValueRemove {...props}>
-        <CrossIcon {...props} theme={theme} />
+        <StyledCrossIcon theme={theme} />
       </components.MultiValueRemove>
     )
-
-    const StyledTagRemovalIcon = styled(TagRemovalIcon)`
-      svg {
-        padding: ${th('space.1')};
-        width: ${th('space.3')};
-        height: ${th('space.3')};
-      }
-    `
 
     const selectChildProps = {
       components: {
         ClearIndicator: null,
         IndicatorSeparator: null,
-        MultiValueRemove: StyledTagRemovalIcon,
+        MultiValueRemove: TagRemovalIcon,
       },
       inputId: 'subject-area-select',
       isMulti: true,

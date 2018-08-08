@@ -77,3 +77,17 @@ export default {
     'xpub-edit': elements.xpubEdit,
   },
 }
+
+export { default as TextBoldIcon } from './icons/TextBold'
+export { default as TextItalicIcon } from './icons/TextItalic'
+export { default as TextSubIcon } from './icons/TextSub'
+export { default as TextSupIcon } from './icons/TextSup'
+export { default as TextUnderlineIcon } from './icons/TextUnderline'
+export { default as UploadIcon } from './icons/Upload'
+export { default as UploadSuccessIcon } from './icons/UploadSuccess'
+export { default as UploadFailureIcon } from './icons/UploadFailure'
+export { default as CrossIcon } from './icons/Cross'
+export { default as PlusIcon } from './icons/Plus'
+export { default as SelectedTickIcon } from './icons/SelectedTick'
+export { default as RubbishBinIcon } from './icons/RubbishBin'
+export { default as SearchIcon } from './icons/Search'

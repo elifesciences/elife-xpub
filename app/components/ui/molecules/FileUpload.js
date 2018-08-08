@@ -7,7 +7,11 @@ import { ErrorText, Action } from '@pubsweet/ui'
 import { th } from '@pubsweet/ui-toolkit'
 import { get } from 'lodash'
 
-import Icon from '../atoms/Icon'
+import {
+  UploadIcon,
+  UploadFailureIcon,
+  UploadSuccessIcon,
+} from '@elifesciences/elife-theme'
 
 const VALID_FILE_TYPES = [
   'application/pdf',
@@ -41,7 +45,7 @@ const DropzoneContent = ({
   if (conversion.converting) {
     return (
       <React.Fragment>
-        <Icon size={5}>Upload</Icon>
+        <UploadIcon size={5} />
         <Instruction data-test-id="dropzoneMessage">
           Manuscript is uploading
         </Instruction>
@@ -56,7 +60,7 @@ const DropzoneContent = ({
     )
     return (
       <React.Fragment>
-        <Icon size={5}>UploadFailure</Icon>
+        <UploadFailureIcon size={5} />
         <ErrorText data-test-id="dropzoneMessage">
           {errorMessage}. Try to <Action onClick={dropzoneOpen}>upload</Action>{' '}
           your Manuscript again.
@@ -67,7 +71,7 @@ const DropzoneContent = ({
   if (formError) {
     return (
       <React.Fragment>
-        <Icon size={5}>UploadFailure</Icon>
+        <UploadFailureIcon size={5} />
         <ErrorText data-test-id="dropzoneMessage">
           Please <Action onClick={dropzoneOpen}>upload</Action> your Manuscript.
         </ErrorText>
@@ -77,7 +81,7 @@ const DropzoneContent = ({
   if (conversion.completed) {
     return (
       <React.Fragment>
-        <Icon size={5}>UploadSuccess</Icon>
+        <UploadSuccessIcon size={5} />
         <Instruction data-test-id="dropzoneMessage">
           Success!{' '}
           <Action data-test-id="preview" to={previewUrl}>
@@ -90,7 +94,7 @@ const DropzoneContent = ({
   }
   return (
     <React.Fragment>
-      <Icon size={5}>Upload</Icon>
+      <UploadIcon size={5} />
       <Instruction data-test-id="dropzoneMessage">
         <Action onClick={dropzoneOpen}>Upload</Action> your manuscript or drag
         it here.

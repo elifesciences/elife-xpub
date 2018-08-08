@@ -3,22 +3,25 @@
 import React from 'react'
 import { Box } from 'grid-styled'
 import ConfigurableEditor from 'xpub-edit/src/components/configurable/ConfigurableEditor'
+import {
+  TextBoldIcon,
+  TextItalicIcon,
+  TextUnderlineIcon,
+  TextSubIcon,
+  TextSupIcon,
+} from '@elifesciences/elife-theme'
+
 import FileUpload from '../../../../ui/molecules/FileUpload'
 import ValidatedField from '../../../../ui/atoms/ValidatedField'
-import IconTextBold from '../../../../ui/atoms/icons/TextBold'
-import IconTextItalic from '../../../../ui/atoms/icons/TextItalic'
-import IconTextUnderline from '../../../../ui/atoms/icons/TextUnderline'
-import IconTextSub from '../../../../ui/atoms/icons/TextSub'
-import IconTextSup from '../../../../ui/atoms/icons/TextSup'
 
 // order of props affects order of menu buttons
 const Editor = ({ validationStatus, ...props }) => (
   <ConfigurableEditor
-    bold={{ icon: <IconTextBold /> }}
-    italic={{ icon: <IconTextItalic /> }}
-    underline={{ icon: <IconTextUnderline /> }}
-    subscript={{ icon: <IconTextSub /> }}
-    superscript={{ icon: <IconTextSup /> }}
+    bold={{ icon: <TextBoldIcon /> }}
+    italic={{ icon: <TextItalicIcon /> }}
+    underline={{ icon: <TextUnderlineIcon /> }}
+    subscript={{ icon: <TextSubIcon /> }}
+    superscript={{ icon: <TextSupIcon /> }}
     {...props}
   />
 )
