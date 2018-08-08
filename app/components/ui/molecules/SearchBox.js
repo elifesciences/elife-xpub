@@ -49,12 +49,19 @@ class SearchBox extends React.Component {
   }
   getSuggestionValue = suggestion => suggestion.value
   renderSuggestion = suggestion => <div>{suggestion.value}</div>
+  onKeyDown = event => {
+    // key code for enter is 13
+    if (event.keyCode === 13) {
+      this.props.onSubmit(this.state.value)
+    }
+  }
   render() {
     const { value, suggestions } = this.state
     const inputProps = {
       placeholder: 'Search...',
       value,
       onChange: this.onChange,
+      onKeyDown: this.onKeyDown,
     }
     return (
       <Root>
