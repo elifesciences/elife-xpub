@@ -15,7 +15,7 @@ const createCloseHandler = (index, values, fieldName, setFieldValue) => () =>
     false,
   )
 
-export const SuggestedReviewer = ({ changeHandler, index }) => (
+export const SuggestedReviewer = ({ handleChange, index }) => (
   <TwoColumnLayout bottomSpacing={false}>
     <ValidatedField
       label={
@@ -24,7 +24,7 @@ export const SuggestedReviewer = ({ changeHandler, index }) => (
           : 'Optional suggested reviewer name'
       }
       name={`suggestedReviewers.${index}.name`}
-      onChange={event => changeHandler(event)}
+      onChange={event => handleChange(event)}
     />
     <ValidatedField
       label={
@@ -33,7 +33,7 @@ export const SuggestedReviewer = ({ changeHandler, index }) => (
           : 'Optional suggested reviewer email'
       }
       name={`suggestedReviewers.${index}.email`}
-      onChange={event => changeHandler(event)}
+      onChange={event => handleChange(event)}
       type="email"
     />
   </TwoColumnLayout>
