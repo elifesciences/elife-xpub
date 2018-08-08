@@ -1,3 +1,4 @@
+import { cloneDeep } from 'lodash'
 import React from 'react'
 import { Box } from 'grid-styled'
 import { Action, ErrorText } from '@pubsweet/ui'
@@ -82,6 +83,53 @@ class EditorsContent extends React.Component {
     const value = this.props.values[name].filter(p => p.id !== person.id)
     this.props.setFieldValue(name, value)
     this.props.setFieldTouched(name, true)
+  }
+
+  handleSuggestedReviewersChanged = event => {
+    this.props.handleChange(event)
+
+    const MAX_REVIEWERS = limits.suggestedReviewers.max
+    const MIN_REVIEWERS = limits.suggestedReviewers.min
+
+    const itemIsBlank = item => item.name + item.email === ''
+
+    // defer the execution of the function until the default change has been
+    // handled so we're operating on the updated
+    // "this.props.values.suggestedReviewers"
+    this.setState({}, () => {
+      const reviewers = this.props.values.suggestedReviewers
+
+      // logic only kicks in for the optional reviewers
+      if (reviewers) {
+        // first count the blanks at the end
+        let numBlanks = 0
+        for (let index = reviewers.length - 1; index > 0; index -= 1) {
+          const item = reviewers[index]
+          if (itemIsBlank(item)) {
+            numBlanks += 1
+          } else {
+            break
+          }
+        }
+
+        // if we have no blanks then add if one if less than max
+        if (numBlanks === 0) {
+          if (reviewers.length < MAX_REVIEWERS) {
+            const newReviewers = cloneDeep(reviewers)
+            newReviewers.push({ name: '', email: '' })
+            this.props.setFieldValue('suggestedReviewers', newReviewers)
+          }
+        } else if (numBlanks > 1) {
+          const numToGo = numBlanks - 1
+          if (reviewers.length - numToGo >= MIN_REVIEWERS) {
+            // we have more than one blank line so tidy up
+            const newReviewers = cloneDeep(reviewers)
+            newReviewers.splice(newReviewers.length - numToGo, numToGo)
+            this.props.setFieldValue('suggestedReviewers', newReviewers)
+          }
+        }
+      }
+    })
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
@@ -247,7 +295,10 @@ class EditorsContent extends React.Component {
           {values.suggestedReviewers.map((_, index) => (
             // eslint-disable-next-line react/no-array-index-key
             <Box key={index} mb={2}>
-              <SuggestedReviewer index={index} />
+              <SuggestedReviewer
+                changeHandler={this.handleSuggestedReviewersChanged}
+                index={index}
+              />
             </Box>
           ))}
 

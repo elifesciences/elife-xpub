@@ -10,7 +10,11 @@ const fs = require('fs-extra')
 const path = require('path')
 const crypto = require('crypto')
 const Joi = require('joi')
-const { emptyManuscript, manuscriptSchema } = require('./definitions')
+const {
+  emptyManuscript,
+  manuscriptSchema,
+  removeOptionalBlankReviewers,
+} = require('./definitions')
 
 const parseString = promisify(xml2js.parseString)
 const randomBytes = promisify(crypto.randomBytes)
@@ -99,6 +103,9 @@ const resolvers = {
       const manuscript = await db.selectId(data.id)
       db.checkPermission(manuscript, ctx.user)
       const newManuscript = mergeObjects({}, manuscript, data)
+
+      // Before validation remove any blank optional reviewers the UI made.
+      removeOptionalBlankReviewers(newManuscript.suggestedReviewers)
 
       const { error: errorManuscript } = Joi.validate(
         newManuscript,

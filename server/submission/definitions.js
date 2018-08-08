@@ -18,7 +18,7 @@ const typeDefs = `
       manuscripts: [Manuscript]!
       editors(role: String!): [EditorUser]
     }
-    
+
     extend type Mutation {
       createSubmission: Manuscript!
       deleteManuscript(id: ID!): ID!
@@ -26,7 +26,7 @@ const typeDefs = `
       uploadManuscript(id: ID!, file: Upload!): Manuscript!
       finishSubmission(data: ManuscriptInput!): Manuscript!
     }
-        
+
     extend type Manuscript {
       # todo: these should be handled through teams
       suggestedSeniorEditors: [EditorUser]
@@ -36,13 +36,13 @@ const typeDefs = `
       suggestedReviewers: [SuggestedReviewer]
       opposedReviewers: [OpposedReviewer]
       author: Alias
-    
+
       # todo: these should be handled through notes
       opposedSeniorEditorsReason: String
       opposedReviewingEditorsReason: String
       coverLetter: String
     }
-    
+
     input ManuscriptInput {
       id: ID!
       suggestedSeniorEditors: [ID]
@@ -83,8 +83,8 @@ const typeDefs = `
       INITIAL
       QA
     }
-    
-    type EditorUser {      
+
+    type EditorUser {
       id: ID
       name: String
       aff: String
@@ -157,6 +157,39 @@ const emptyManuscript = {
   cosubmission: [],
   teams: [],
 }
+const MAX_SUGGESTED_REVIEWERS = 6
+const MIN_SUGGESTED_REVIEWERS = 3
+
+const removeOptionalBlankReviewers = reviewers => {
+  const itemIsBlank = item => item.name + item.email === ''
+
+  let numBlanks = 0
+  for (
+    let index = reviewers.length - 1;
+    index >= MIN_SUGGESTED_REVIEWERS;
+    index -= 1
+  ) {
+    const item = reviewers[index]
+    if (itemIsBlank(item)) {
+      numBlanks += 1
+    } else {
+      break
+    }
+  }
+
+  if (numBlanks > 0) {
+    reviewers.splice(reviewers.length - numBlanks, numBlanks)
+    return reviewers
+  }
+  return null
+}
+
+const suggestedReviewer = Joi.object().keys({
+  name: Joi.string().required(),
+  email: Joi.string()
+    .email()
+    .required(),
+})
 
 const possibleStatuses = ['INITIAL', 'QA']
 const manuscriptSchema = Joi.object()
@@ -216,14 +249,10 @@ const manuscriptSchema = Joi.object()
         otherwise: Joi.string().allow(''),
       },
     ),
-    suggestedReviewers: Joi.array().items(
-      Joi.object().keys({
-        name: Joi.string().required(),
-        email: Joi.string()
-          .email()
-          .required(),
-      }),
-    ),
+    suggestedReviewers: Joi.array()
+      .items(suggestedReviewer)
+      .min(MIN_SUGGESTED_REVIEWERS)
+      .max(MAX_SUGGESTED_REVIEWERS),
     opposedReviewers: Joi.array().items(
       Joi.object().keys({
         name: Joi.string().required(),
@@ -242,4 +271,5 @@ module.exports = {
   typeDefs,
   emptyManuscript,
   manuscriptSchema,
+  removeOptionalBlankReviewers,
 }

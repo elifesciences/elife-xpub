@@ -11,6 +11,11 @@ describe('Editors form validation', () => {
       opposedReviewingEditors: [{ id: 3 }],
       opposedReviewingEditorsReason: 'Just because',
       suggestionsConflict: true,
+      suggestedReviewers: [
+        { name: 'A', email: 'a@here.com' },
+        { name: 'B', email: 'b@here.com' },
+        { name: 'C', email: 'c@here.com' },
+      ],
     }
 
     expect(() => schema.validateSync(validData)).not.toThrow()
