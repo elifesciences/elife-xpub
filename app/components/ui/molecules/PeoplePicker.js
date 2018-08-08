@@ -107,7 +107,10 @@ const PeoplePickerButtons = ({ isValid, onCancel, onSubmit }) => (
 class PeoplePicker extends React.Component {
   constructor(props) {
     super(props)
-    this.state = { selection: this.props.initialSelection }
+    this.state = {
+      selection: this.props.initialSelection,
+      searchValue: '',
+    }
   }
 
   toggleSelection(person) {
@@ -138,9 +141,25 @@ class PeoplePicker extends React.Component {
     )
   }
 
+  searchSubmit = searchValue => {
+    this.setState({ searchValue })
+  }
+
+  filterPeople() {
+    const searchValue = this.state.searchValue.toLowerCase()
+    return this.props.people.filter(person =>
+      person.name.toLowerCase().includes(searchValue),
+    )
+  }
+
   render() {
+    const { people, ...otherProps } = this.props
+    const searchOptions = people.map(person => ({ value: person.name }))
     return this.props.children({
-      ...this.props,
+      ...otherProps,
+      people: this.state.searchValue ? this.filterPeople() : people,
+      searchSubmit: this.searchSubmit,
+      searchOptions,
       isSelected: person => this.isSelected(person),
       isValid: this.isValid(),
       selection: this.state.selection,
