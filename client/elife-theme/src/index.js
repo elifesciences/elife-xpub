@@ -82,6 +82,11 @@ export default {
     '@pubsweet-pending.PeoplePicker.PersonPod.add': icons.Plus,
     '@pubsweet-pending.PeoplePicker.PersonPod.remove': icons.RubbishBin,
     '@pubsweet-pending.PeoplePicker.PersonPod.selected': icons.SelectedTick,
+    '@pubsweet-pending.FileUploads.Editor.bold': icons.TextBold,
+    '@pubsweet-pending.FileUploads.Editor.italic': icons.TextItalic,
+    '@pubsweet-pending.FileUploads.Editor.underline': icons.TextUnderline,
+    '@pubsweet-pending.FileUploads.Editor.sub': icons.TextSub,
+    '@pubsweet-pending.FileUploads.Editor.sup': icons.TextSup,
   },
 }
 

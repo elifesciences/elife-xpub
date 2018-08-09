@@ -3,16 +3,54 @@
 import React from 'react'
 import { Box } from 'grid-styled'
 import ConfigurableEditor from 'xpub-edit/src/components/configurable/ConfigurableEditor'
-import {
-  TextBoldIcon,
-  TextItalicIcon,
-  TextUnderlineIcon,
-  TextSubIcon,
-  TextSupIcon,
-} from '@elifesciences/elife-theme'
 
+import Icon from '../../../../ui/atoms/Icon'
 import FileUpload from '../../../../ui/molecules/FileUpload'
 import ValidatedField from '../../../../ui/atoms/ValidatedField'
+
+const TextBoldIcon = props => (
+  <Icon
+    iconName="Bold"
+    overrideName="@pubsweet-pending.FileUploads.Editor.bold"
+    {...props}
+  />
+)
+
+const TextItalicIcon = props => (
+  <Icon
+    iconName="Italic"
+    overrideName="@pubsweet-pending.FileUploads.Editor.italic"
+    {...props}
+  />
+)
+
+const TextUnderlineIcon = props => (
+  <Icon
+    iconName="Underline"
+    overrideName="@pubsweet-pending.FileUploads.Editor.underline"
+    {...props}
+  />
+)
+
+const TextSubIcon = props => (
+  <Icon
+    // TODO: conversation with Pubsweet - what should we default to
+    // when there's no obvious react-feather equivalent?
+    iconName=""
+    overrideName="@pubsweet-pending.FileUploads.Editor.sub"
+    {...props}
+  />
+)
+
+const TextSupIcon = props => (
+  <Icon
+    // TODO: conversation with Pubsweet - what should we default to
+    // when there's no obvious react-feather equivalent?
+    iconName=""
+    overrideName="@pubsweet-pending.FileUploads.Editor.sup"
+    {...props}
+  />
+)
 
 // order of props affects order of menu buttons
 const Editor = ({ validationStatus, ...props }) => (
