@@ -174,6 +174,7 @@ class EditorsContent extends React.Component {
                 this.setSelection('suggestedSeniorEditors', selection)
               }
               options={seniorEditors}
+              title="Senior Editors"
             />
             <ValidationMessage
               message={
@@ -205,6 +206,7 @@ class EditorsContent extends React.Component {
                 this.setSelection('opposedSeniorEditors', selection)
               }
               options={seniorEditors}
+              title="Senior Editors"
             />
 
             <ValidationMessage
@@ -239,6 +241,7 @@ class EditorsContent extends React.Component {
                 this.setSelection('suggestedReviewingEditors', selection)
               }
               options={reviewingEditors}
+              title="Reviewing Editors"
             />
 
             <ValidationMessage
@@ -272,6 +275,7 @@ class EditorsContent extends React.Component {
                 this.setSelection('opposedReviewingEditors', selection)
               }
               options={reviewingEditors}
+              title="Reviewing Editors"
             />
 
             <ValidationMessage
