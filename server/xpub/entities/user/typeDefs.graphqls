@@ -1,0 +1,4 @@
+extend type Query {
+  orcidDetails: AuthorAlias
+  editors(role: String!): [EditorAlias]
+}

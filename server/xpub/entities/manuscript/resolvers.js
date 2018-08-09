@@ -1,6 +1,5 @@
-const lodash = require('lodash')
 const config = require('config')
-const User = require('pubsweet-server/src/models/User')
+const User = require('../user')
 const mailer = require('@pubsweet/component-send-email')
 const logger = require('@pubsweet/logger')
 const request = require('request-promise-native')
@@ -10,19 +9,14 @@ const fs = require('fs-extra')
 const path = require('path')
 const crypto = require('crypto')
 const Joi = require('joi')
-const {
-  emptyManuscript,
-  manuscriptSchema,
-  removeOptionalBlankReviewers,
-} = require('./definitions')
 
 const parseString = promisify(xml2js.parseString)
 const randomBytes = promisify(crypto.randomBytes)
 const uploadsPath = config.get('pubsweet-server').uploads
 
-const db = require('../db-helpers/')
-const fetchOrcidDetails = require('../auth/fetchUserDetails')
-const elifeApi = require('./elife-api')
+const Manuscript = require('.')
+const manuscriptInputSchema = require('./helpers/manuscriptInputValidationSchema')
+const elifeApi = require('../user/helpers/elife-api')
 
 const staticManifest = `<dar>
   <documents>
@@ -33,166 +27,77 @@ const staticManifest = `<dar>
 </dar>
 `
 
-const mergeObjects = (...inputs) =>
-  lodash.mergeWith(
-    ...inputs,
-    // always replace arrays instead of merging
-    (objValue, srcValue) => {
-      if (lodash.isArray(srcValue)) {
-        return srcValue
-      }
-      return undefined
-    },
-  )
-
-function applyManuscriptInput(originalManuscript, manuscriptInput) {
-  const manuscript = mergeObjects(
-    {},
-    originalManuscript,
-    lodash.pick(manuscriptInput, [
-      'meta',
-      'coverLetter',
-      'opposedSeniorEditorsReason',
-      'opposedReviewingEditorsReason',
-      'previouslyDiscussed',
-      'previouslySubmitted',
-      'cosubmission',
-      'opposedReviewers',
-      'suggestionsConflict',
-    ]),
-  )
-
-  // reshape suggested editors into teams
-  const editorSuggestionRoles = [
-    'suggestedSeniorEditor',
-    'opposedSeniorEditor',
-    'suggestedReviewingEditor',
-    'opposedReviewingEditor',
-  ]
-  const editorSuggestionTeams = editorSuggestionRoles.map(role => {
-    const key = `${role}s`
-    const suggestedEditorIds = manuscriptInput[key] || []
-    const teamMembers = suggestedEditorIds.map(id => ({
-      meta: { elifePersonId: id },
-    }))
-    return { role, teamMembers }
-  })
-  manuscript.teams = manuscript.teams
-    .filter(team => !editorSuggestionRoles.includes(team.role))
-    .concat(editorSuggestionTeams)
-
-  // reshape suggested reviewers into teams
-  const reviewerSuggestionRoles = ['suggestedReviewer']
-  const reviewerSuggestionTeams = reviewerSuggestionRoles.map(role => {
-    const key = `${role}s`
-    const suggestedReviewerAliases = manuscriptInput[key] || []
-    const teamMembers = suggestedReviewerAliases.map(meta => ({ meta }))
-    return { role, teamMembers }
-  })
-  manuscript.teams = manuscript.teams
-    .filter(team => !reviewerSuggestionRoles.includes(team.role))
-    .concat(reviewerSuggestionTeams)
-
-  // move author into team
-  manuscript.teams = manuscript.teams
-    .filter(team => team.role !== 'author')
-    .concat({
-      role: 'author',
-      teamMembers: [{ alias: manuscriptInput.author }],
-    })
-
-  return manuscript
-}
-
 const resolvers = {
   Query: {
     async currentSubmission(_, vars, ctx) {
-      const rows = await db.select({
-        createdBy: ctx.user,
-        status: 'INITIAL',
-      })
-
-      if (!rows.length) {
+      const manuscripts = await Manuscript.findByStatus('INITIAL', ctx.user)
+      if (!manuscripts.length) {
         return null
       }
 
-      return rows[0]
-    },
-    async orcidDetails(_, vars, ctx) {
-      const user = await User.find(ctx.user)
-      return fetchOrcidDetails(user)
+      return manuscripts[0]
     },
     async manuscript(_, { id }) {
-      return db.selectId(id)
+      return Manuscript.find(id)
     },
     async manuscripts() {
-      return db.select({ type: 'manuscript' })
-    },
-    async editors(_, { role }) {
-      return elifeApi.people(role)
+      return Manuscript.all()
     },
   },
 
   Mutation: {
     async createSubmission(_, vars, ctx) {
-      const manuscript = lodash.cloneDeep(emptyManuscript)
-      const manuscriptDb = db.manuscriptGqlToDb(manuscript, ctx.user)
-      manuscript.id = await db.save(manuscriptDb)
-      return manuscript
+      const manuscript = Manuscript.new()
+      manuscript.createdBy = ctx.user
+      return Manuscript.save(manuscript)
     },
 
     async deleteManuscript(_, { id }) {
-      await db.deleteManuscript(id)
+      await Manuscript.delete(id)
       return id
     },
 
     async updateSubmission(_, { data }, ctx) {
-      const originalManuscript = await db.selectId(data.id)
-      db.checkPermission(originalManuscript, ctx.user)
-      const manuscript = applyManuscriptInput(originalManuscript, data)
+      const originalManuscript = await Manuscript.find(data.id)
+      Manuscript.checkPermission(originalManuscript, ctx.user)
+      const manuscript = Manuscript.applyInput(originalManuscript, data)
 
-      await db.update(db.manuscriptGqlToDb(manuscript, ctx.user), data.id)
+      await Manuscript.save(manuscript)
       logger.debug(`Updated Submission ${data.id} by user ${ctx.user}`)
 
       return manuscript
     },
 
     async finishSubmission(_, { data }, ctx) {
-      // Before validation remove any blank optional reviewers the UI made.
-      const modifiedInputData = {
-        ...data,
-        suggestedReviewers: removeOptionalBlankReviewers(
-          data.suggestedReviewers,
-        ),
-      }
-
+      const modifiedManuscriptInput = Manuscript.removeOptionalBlankReviewers(
+        data,
+      )
       const { error: errorManuscript } = Joi.validate(
-        modifiedInputData,
-        manuscriptSchema,
+        modifiedManuscriptInput,
+        manuscriptInputSchema,
       )
       if (errorManuscript) {
         logger.error(`Bad manuscript data: ${errorManuscript}`)
         throw new Error(errorManuscript)
       }
 
-      const originalManuscript = await db.selectId(modifiedInputData.id)
-      db.checkPermission(originalManuscript, ctx.user)
-      const manuscript = applyManuscriptInput(
+      const originalManuscript = await Manuscript.find(
+        modifiedManuscriptInput.id,
+      )
+      Manuscript.checkPermission(originalManuscript, ctx.user)
+      const manuscript = Manuscript.applyInput(
         originalManuscript,
-        modifiedInputData,
+        modifiedManuscriptInput,
       )
 
       manuscript.status = 'QA'
-      await db.update(
-        db.manuscriptGqlToDb(manuscript, ctx.user),
-        modifiedInputData.id,
-      )
+      await Manuscript.save(manuscript)
 
       const user = await User.find(ctx.user)
-      if (user.email !== modifiedInputData.author.email) {
+      if (user.email !== modifiedManuscriptInput.author.email) {
         mailer
           .send({
-            to: modifiedInputData.author.email,
+            to: modifiedManuscriptInput.author.email,
             text: 'Please verify that you are a corresponding author',
           })
           .catch(err => {
@@ -268,14 +173,14 @@ const resolvers = {
         title = titleArray[0]
       }
 
-      const manuscript = await db.selectId(id)
+      const manuscript = await Manuscript.find(id)
       manuscript.files.push({
         url: manuscriptSourcePath,
         filename,
         type: 'MANUSCRIPT_SOURCE',
       })
       manuscript.meta.title = title
-      await db.update(db.manuscriptGqlToDb(manuscript), id)
+      await Manuscript.save(manuscript)
 
       return manuscript
     },
@@ -313,9 +218,9 @@ const resolvers = {
 
   Assignee: {
     __resolveType: assignee => {
+      if (assignee.subjectAreas !== undefined) return 'EditorAlias'
       if (assignee.name !== undefined) return 'ReviewerAlias'
       if (assignee.firstName !== undefined) return 'AuthorAlias'
-      if (assignee.subjectAreas !== undefined) return 'EditorAlias'
       return null
     },
   },

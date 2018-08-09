@@ -1,5 +1,6 @@
 /* eslint-disable no-await-in-loop */
 const superagent = require('superagent')
+const logger = require('@pubsweet/logger')
 
 const apiRoot = 'https://api.elifesciences.org/'
 
@@ -15,6 +16,7 @@ const convertPerson = apiPerson => ({
 })
 
 const people = async role => {
+  logger.debug('Fetching people with role', role, 'from public API')
   let items = []
   let response
   let page = 1
@@ -34,6 +36,7 @@ const people = async role => {
 }
 
 const person = async id => {
+  logger.debug('Fetching person with ID', id, 'from public API')
   const response = await request(`people/${id}`)
   return convertPerson(response.body)
 }
