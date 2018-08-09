@@ -27,10 +27,6 @@ const typeDefs = `
       finishSubmission(data: ManuscriptInput!): Manuscript!
     }
 
-    extend type Subscription {
-      uploadProgress: Int!
-    }
-
     extend type Manuscript {
       # todo: these should be handled through teams
       opposedReviewers: [OpposedReviewer]

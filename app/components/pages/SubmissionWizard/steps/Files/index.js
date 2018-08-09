@@ -36,31 +36,30 @@ const FileUploadsPage = ({
       const fieldName = 'files'
       return (
         <Subscription subscription={ON_UPLOAD_PROGRESS}>
-          {({ uploadData, uploadLoading }) => (
+          {({ data: uploadData, loading: uploadLoading }) => (
             <FileUploads
-               conversion={{
-                 converting: loading,
-                 // TODO import this constant from somewhere (data model package?)
-                 completed: values[fieldName].some(
-                   file => file.type === 'MANUSCRIPT_SOURCE',
-                 ),
-                 // progress: !uploadLoading && uploadData.uploadProgress,
-                 progress: 10,
-                 error: uploadError,
+              conversion={{
+                converting: loading,
+                // TODO import this constant from somewhere (data model package?)
+                completed: values[fieldName].some(
+                  file => file.type === 'MANUSCRIPT_SOURCE',
+                ),
+                progress: uploadLoading ? 0 : uploadData.uploadProgress,
+                error: uploadError,
               }}
               formError={errors[fieldName] && touched[fieldName]}
               onDrop={([file]) =>
-                      uploadFile({
-                        variables: { file, id: values.id, fileSize: file.size },
-                      }).then(({ data }) => {
-                        setFieldValue('meta.title', data.uploadManuscript.meta.title)
-                        setFieldValue(fieldName, data.uploadManuscript.files)
-                      })
+                uploadFile({
+                  variables: { file, id: values.id, fileSize: file.size },
+                }).then(({ data }) => {
+                  setFieldValue('meta.title', data.uploadManuscript.meta.title)
+                  setFieldValue(fieldName, data.uploadManuscript.files)
+                })
               }
               previewUrl={`/manuscript/${values.id}`}
               setFieldValue={setFieldValue}
               {...props}
-              />
+            />
           )}
         </Subscription>
       )
