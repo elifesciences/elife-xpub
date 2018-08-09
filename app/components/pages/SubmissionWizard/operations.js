@@ -1,11 +1,17 @@
 import gql from 'graphql-tag'
 
 const editorFragment = gql`
-  fragment EditorDetails on EditorUser {
+  fragment EditorDetails on EditorAlias {
     id
     name
     aff
     subjectAreas
+  }
+`
+const reviewerFragment = gql`
+  fragment ReviewerDetails on ReviewerAlias {
+    name
+    email
   }
 `
 
@@ -18,23 +24,22 @@ const manuscriptFragment = gql`
       articleType
       subjects
     }
-    suggestedSeniorEditors {
+    suggestedSeniorEditors: assignees(role: "suggestedSeniorEditor") {
       ...EditorDetails
     }
-    opposedSeniorEditors {
+    opposedSeniorEditors: assignees(role: "opposedSeniorEditor") {
       ...EditorDetails
     }
     opposedSeniorEditorsReason
-    suggestedReviewingEditors {
+    suggestedReviewingEditors: assignees(role: "suggestedReviewingEditor") {
       ...EditorDetails
     }
-    opposedReviewingEditors {
+    opposedReviewingEditors: assignees(role: "opposedReviewingEditor") {
       ...EditorDetails
     }
     opposedReviewingEditorsReason
-    suggestedReviewers {
-      name
-      email
+    suggestedReviewers: assignees(role: "suggestedReviewer") {
+      ...ReviewerDetails
     }
     opposedReviewers {
       name
@@ -58,6 +63,7 @@ const manuscriptFragment = gql`
     cosubmission
   }
   ${editorFragment}
+  ${reviewerFragment}
 `
 
 export const GET_CURRENT_SUBMISSION = gql`

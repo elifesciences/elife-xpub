@@ -55,12 +55,6 @@ describe('Submission', () => {
           title: 'title',
         },
         status: 'INITIAL',
-        author: {
-          firstName: 'Firstname',
-          lastName: 'Lastname',
-          email: 'email@example.com',
-          aff: 'institution',
-        },
       }
       await save(manuscriptGqlToDb(expectedManuscript, userId))
 
@@ -80,12 +74,6 @@ describe('Submission', () => {
           title: 'title',
         },
         status: 'INITIAL',
-        author: {
-          firstName: 'Firstname 1',
-          lastName: 'Lastname 1',
-          email: 'email1@example.com',
-          aff: 'institution 1',
-        },
       })
       await save({
         createdBy: 'bcd735c6-9b62-441a-a085-7d1e8a7834c6',
@@ -93,12 +81,6 @@ describe('Submission', () => {
           title: 'title 2',
         },
         status: 'QA',
-        author: {
-          firstName: 'Firstname 2',
-          lastName: 'Lastname 2',
-          email: 'email2@example.com',
-          aff: 'institution 2',
-        },
       })
 
       const manuscript = await Query.currentSubmission({}, {}, { user: userId })
@@ -125,20 +107,13 @@ describe('Submission', () => {
 
   describe('updateSubmission', () => {
     it('updates the current submission for user with data', async () => {
-      const manuscript = lodash.merge({}, emptyManuscript)
-      const id = await save(manuscriptGqlToDb(manuscript, userId))
+      const id = await save(manuscriptGqlToDb(emptyManuscript, userId))
       const manuscriptInput = {
         id,
         meta: {
           title: 'New Title',
         },
         coverLetter: 'this is some long text',
-        author: {
-          firstName: 'todo first name',
-          lastName: 'todo last name',
-          email: 'todo@mail.com',
-          aff: 'TODO',
-        },
       }
 
       await Mutation.updateSubmission(
@@ -151,8 +126,7 @@ describe('Submission', () => {
       )
 
       const actualManuscript = await selectId(id)
-      const expectedManuscript = lodash.merge({}, manuscriptInput)
-      expect(actualManuscript).toMatchObject(expectedManuscript)
+      expect(actualManuscript).toMatchObject(manuscriptInput)
     })
   })
 
@@ -198,11 +172,12 @@ describe('Submission', () => {
             type: 'MANUSCRIPT_SOURCE',
           },
         ],
+        teams: [],
       }
       id = await save(manuscriptGqlToDb(initialManuscript, userId))
     })
 
-    it('stores data to the backend with a new status of QA', async () => {
+    it('stores data with a new status of QA', async () => {
       const manuscript = lodash.cloneDeep(fullManuscript)
       manuscript.id = id
       const returnedManuscript = await Mutation.finishSubmission(
@@ -216,9 +191,39 @@ describe('Submission', () => {
       expect(returnedManuscript.status).toBe('QA')
 
       const storedManuscript = await selectId(id)
-      const expectedManuscript = lodash.merge(initialManuscript, manuscript)
-      expectedManuscript.status = 'QA'
-      expect(expectedManuscript).toMatchObject(storedManuscript)
+      expect(storedManuscript.status).toBe('QA')
+      expect(storedManuscript.meta.title).toBe('My manuscript')
+    })
+
+    it('removes blank optional reviewer rows', async () => {
+      const manuscript = lodash.cloneDeep(fullManuscript)
+      manuscript.id = id
+      manuscript.suggestedReviewers = [
+        { name: 'Reviewer 1', email: 'reviewer1@mail.com' },
+        { name: 'Reviewer 2', email: 'reviewer2@mail.com' },
+        { name: 'Reviewer 3', email: 'reviewer3@mail.com' },
+        { name: '', email: '' },
+        { name: 'Reviewer 4', email: 'reviewer4@mail.com' },
+        { name: '', email: '' },
+      ]
+      await Mutation.finishSubmission(
+        {},
+        {
+          data: manuscript,
+        },
+        { user: userId },
+      )
+
+      const storedManuscript = await selectId(id)
+      const team = storedManuscript.teams.find(
+        t => t.role === 'suggestedReviewer',
+      )
+      expect(team.teamMembers.map(member => member.meta)).toEqual([
+        { name: 'Reviewer 1', email: 'reviewer1@mail.com' },
+        { name: 'Reviewer 2', email: 'reviewer2@mail.com' },
+        { name: 'Reviewer 3', email: 'reviewer3@mail.com' },
+        { name: 'Reviewer 4', email: 'reviewer4@mail.com' },
+      ])
     })
 
     it("sends a verification email if the submitter is not the corresponding author - email address entered on step 1 of the wizard differs from submitter's login email", async () => {

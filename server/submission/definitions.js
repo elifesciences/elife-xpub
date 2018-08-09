@@ -13,10 +13,10 @@ const typeDefs = `
 
     extend type Query {
       currentSubmission: Manuscript
-      orcidDetails: Person
+      orcidDetails: AuthorAlias
       manuscript(id: ID!): Manuscript!
       manuscripts: [Manuscript]!
-      editors(role: String!): [EditorUser]
+      editors(role: String!): [EditorAlias]
     }
 
     extend type Mutation {
@@ -29,11 +29,6 @@ const typeDefs = `
 
     extend type Manuscript {
       # todo: these should be handled through teams
-      suggestedSeniorEditors: [EditorUser]
-      opposedSeniorEditors: [EditorUser]
-      suggestedReviewingEditors: [EditorUser]
-      opposedReviewingEditors: [EditorUser]
-      suggestedReviewers: [SuggestedReviewer]
       opposedReviewers: [OpposedReviewer]
       author: Alias
 
@@ -51,10 +46,10 @@ const typeDefs = `
       suggestedReviewingEditors: [ID]
       opposedReviewingEditors: [ID]
       opposedReviewingEditorsReason: String
-      suggestedReviewers: [SuggestedReviewerInput]
+      suggestedReviewers: [ReviewerAliasInput]
       opposedReviewers: [OpposedReviewerInput]
       coverLetter: String
-      author: PersonInput
+      author: AuthorAliasInput
       previouslyDiscussed: String
       previouslySubmitted: [String]
       cosubmission: [String!]!
@@ -67,34 +62,36 @@ const typeDefs = `
       articleType: String
       subjects: [String]
     }
-    type Person {
-      firstName: String
-      lastName: String
-      email: String
-      aff: String
-    }
-    input PersonInput {
-      firstName: String
-      lastName: String
-      email: String
-      aff: String
-    }
     enum SubmissionStage {
       INITIAL
       QA
     }
 
-    type EditorUser {
+    # temporary solution awaiting more clarity on team member metadata in shared data model
+    union Assignee = EditorAlias | ReviewerAlias | AuthorAlias
+    type AuthorAlias {
+      firstName: String
+      lastName: String
+      email: String
+      aff: String
+    }
+    input AuthorAliasInput {
+      firstName: String
+      lastName: String
+      email: String
+      aff: String
+    }
+    type EditorAlias {
       id: ID
       name: String
       aff: String
       subjectAreas: [String]
     }
-    type SuggestedReviewer {
+    type ReviewerAlias {
       name: String
       email: String
     }
-    input SuggestedReviewerInput {
+    input ReviewerAliasInput {
       name: String
       email: String
     }
@@ -121,17 +118,8 @@ const emptyManuscript = {
     articleType: '',
     subjects: [],
   },
-  suggestedSeniorEditors: [],
-  opposedSeniorEditors: [],
   opposedSeniorEditorsReason: '',
-  suggestedReviewingEditors: [],
-  opposedReviewingEditors: [],
   opposedReviewingEditorsReason: '',
-  suggestedReviewers: [
-    { name: '', email: '' },
-    { name: '', email: '' },
-    { name: '', email: '' },
-  ],
   opposedReviewers: [],
   suggestionsConflict: false,
   files: [],
@@ -145,17 +133,20 @@ const emptyManuscript = {
 <p><strong>Have you made clear in the letter what the work has and has not achieved?</strong></p>
 <p></p>
 `,
-  author: {
-    firstName: '',
-    lastName: '',
-    email: '',
-    aff: '',
-  },
   status: 'INITIAL',
   previouslyDiscussed: null,
   previouslySubmitted: [],
   cosubmission: [],
-  teams: [],
+  teams: [
+    {
+      role: 'suggestedReviewer',
+      teamMembers: [
+        { meta: { name: '', email: '' } },
+        { meta: { name: '', email: '' } },
+        { meta: { name: '', email: '' } },
+      ],
+    },
+  ],
 }
 const MAX_SUGGESTED_REVIEWERS = 6
 const MIN_SUGGESTED_REVIEWERS = 3
@@ -163,25 +154,9 @@ const MIN_SUGGESTED_REVIEWERS = 3
 const removeOptionalBlankReviewers = reviewers => {
   const itemIsBlank = item => item.name + item.email === ''
 
-  let numBlanks = 0
-  for (
-    let index = reviewers.length - 1;
-    index >= MIN_SUGGESTED_REVIEWERS;
-    index -= 1
-  ) {
-    const item = reviewers[index]
-    if (itemIsBlank(item)) {
-      numBlanks += 1
-    } else {
-      break
-    }
-  }
-
-  if (numBlanks > 0) {
-    reviewers.splice(reviewers.length - numBlanks, numBlanks)
-    return reviewers
-  }
-  return null
+  return reviewers.filter(
+    (item, index) => index < MIN_SUGGESTED_REVIEWERS || !itemIsBlank(item),
+  )
 }
 
 const suggestedReviewer = Joi.object().keys({
@@ -191,12 +166,9 @@ const suggestedReviewer = Joi.object().keys({
     .required(),
 })
 
-const possibleStatuses = ['INITIAL', 'QA']
 const manuscriptSchema = Joi.object()
   .keys({
     id: Joi.string().required(),
-    createdBy: Joi.string(),
-    files: Joi.array().min(1),
     meta: Joi.object()
       .keys({
         title: Joi.string().required(),
@@ -218,9 +190,6 @@ const manuscriptSchema = Joi.object()
         aff: Joi.string().required(),
       })
       .required(),
-    status: Joi.string()
-      .valid(possibleStatuses)
-      .required(),
     previouslyDiscussed: Joi.string().allow('', null),
     previouslySubmitted: Joi.array().items(Joi.string()),
     cosubmission: Joi.array()
@@ -229,7 +198,9 @@ const manuscriptSchema = Joi.object()
     suggestedSeniorEditors: Joi.array()
       .items(Joi.string().required())
       .required(),
-    opposedSeniorEditors: Joi.array(),
+    opposedSeniorEditors: Joi.array()
+      .items(Joi.string())
+      .required(),
     opposedSeniorEditorsReason: Joi.string().when('opposedSeniorEditors', {
       is: Joi.array().min(1),
       then: Joi.string().required(),
@@ -262,7 +233,6 @@ const manuscriptSchema = Joi.object()
         reason: Joi.string().required(),
       }),
     ),
-    teams: Joi.array(),
     suggestionsConflict: Joi.boolean().required(),
   })
   .required()

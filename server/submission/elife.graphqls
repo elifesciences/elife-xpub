@@ -5,6 +5,7 @@ extend type Manuscript {
   relatedManuscripts: [RelatedManuscript!]
   suggestionsConflict: Boolean!
   qcIssues: [QCIssue!]
+  assignees(role: String!): [Assignee]
 }
 
 # syntax supported in graphql-js >v14.0.0-rc.1
@@ -27,7 +28,7 @@ extend type Alias {
   lastName: String
 }
 
-union TeamMemberMeta = AuthorMetadata | ReviewerMetadata
+union TeamMemberMeta = AuthorMetadata | ReviewerMetadata | EditorMetadata
 
 type AuthorMetadata {
   rank: Int!
@@ -43,6 +44,10 @@ type ReviewerMetadata {
   coRelationship: [TeamMember]
   conflictOfInterest: String
   revealIdentity: Boolean!
+}
+
+type EditorMetadata {
+  elifePersonId: ID
 }
 
 extend type File {
