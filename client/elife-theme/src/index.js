@@ -91,11 +91,7 @@ export default {
 }
 
 export { icons }
-export { default as TextBoldIcon } from './icons/TextBold'
-export { default as TextItalicIcon } from './icons/TextItalic'
-export { default as TextSubIcon } from './icons/TextSub'
-export { default as TextSupIcon } from './icons/TextSup'
-export { default as TextUnderlineIcon } from './icons/TextUnderline'
+
 export { default as UploadIcon } from './icons/Upload'
 export { default as UploadSuccessIcon } from './icons/UploadSuccess'
 export { default as UploadFailureIcon } from './icons/UploadFailure'
