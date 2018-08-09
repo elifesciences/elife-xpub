@@ -14,6 +14,7 @@ const PeoplePickerControl = ({
   onSubmit,
   options,
   modalOpen,
+  title,
 }) => {
   const items = initialSelection.map(person => (
     <PersonPod
@@ -48,6 +49,7 @@ const PeoplePickerControl = ({
         onSubmit={onSubmit}
         open={modalOpen}
         people={options}
+        title={title}
       />
     </React.Fragment>
   )

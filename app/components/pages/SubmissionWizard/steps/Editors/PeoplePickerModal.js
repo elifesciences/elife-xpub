@@ -7,6 +7,7 @@ import Centerer from '../../../../global/layout/Centerer'
 import ModalOverlay from '../../../../ui/molecules/ModalOverlay'
 import PeoplePicker from '../../../../ui/molecules/PeoplePicker'
 import SearchBox from '../../../../ui/molecules/SearchBox'
+import { FormH1 } from '../../../../ui/atoms/FormHeadings'
 
 const ButtonBarContainer = styled.div`
   position: fixed;
@@ -22,12 +23,19 @@ const MainColumn = styled(Box).attrs({ mx: [0, 0, 0, '16.666%'] })`
   min-width: 0;
 `
 
-const PeoplePickerModal = ({ open, ...props }) => (
+const PeoplePickerModal = ({ open, title, ...props }) => (
   <ModalOverlay open={open}>
     <PeoplePicker {...props}>
       {innerProps => (
         <React.Fragment>
-          <Centerer p={3}>
+          <Centerer pt={3} px={3}>
+            <Flex>
+              <MainColumn>
+                <FormH1>Choose {title}</FormH1>
+              </MainColumn>
+            </Flex>
+          </Centerer>
+          <Centerer mb={3} px={3}>
             <Flex mx={-2}>
               <Box
                 mx={[0, 0, 0, '16.666%']}
@@ -41,7 +49,7 @@ const PeoplePickerModal = ({ open, ...props }) => (
               </Box>
             </Flex>
           </Centerer>
-          <Centerer p={3}>
+          <Centerer mb={3} px={3}>
             <Flex data-test-id="people-picker-body">
               <MainColumn mb={7}>
                 <PeoplePicker.Body {...innerProps} />
