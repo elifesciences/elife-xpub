@@ -7,7 +7,7 @@ import Centerer from '../../../../global/layout/Centerer'
 import ModalOverlay from '../../../../ui/molecules/ModalOverlay'
 import PeoplePicker from '../../../../ui/molecules/PeoplePicker'
 import SearchBox from '../../../../ui/molecules/SearchBox'
-import { FormH1 } from '../../../../ui/atoms/FormHeadings'
+import { FormH2 } from '../../../../ui/atoms/FormHeadings'
 
 const ButtonBarContainer = styled.div`
   position: fixed;
@@ -31,7 +31,7 @@ const PeoplePickerModal = ({ open, title, ...props }) => (
           <Centerer pt={3} px={3}>
             <Flex>
               <MainColumn>
-                <FormH1>Choose {title}</FormH1>
+                <FormH2>Choose {title}</FormH2>
               </MainColumn>
             </Flex>
           </Centerer>
