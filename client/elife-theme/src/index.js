@@ -87,6 +87,7 @@ export default {
     '@pubsweet-pending.FileUploads.Editor.underline': icons.TextUnderline,
     '@pubsweet-pending.FileUploads.Editor.sub': icons.TextSub,
     '@pubsweet-pending.FileUploads.Editor.sup': icons.TextSup,
+    '@pubsweet-pending.PeoplePicker.search': icons.Search,
   },
 }
 
