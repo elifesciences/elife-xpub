@@ -43,6 +43,7 @@ const PeoplePickerModal = ({ open, title, ...props }) => (
                 width={[1, 1, 1 / 2, 0.33]}
               >
                 <SearchBox
+                  filterFunction={innerProps.filterFunction}
                   onSubmit={innerProps.searchSubmit}
                   options={innerProps.searchOptions}
                 />

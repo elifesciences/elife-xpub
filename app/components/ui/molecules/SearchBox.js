@@ -43,12 +43,35 @@ class SearchBox extends React.Component {
     const inputLength = inputValue.length
     return inputLength === 0
       ? []
-      : this.props.options.filter(option =>
-          option.value.toLowerCase().includes(inputValue),
-        )
+      : this.props.filterFunction(this.props.options, inputValue, 'value')
   }
-  getSuggestionValue = suggestion => suggestion.value
-  renderSuggestion = suggestion => <div>{suggestion.value}</div>
+  getSuggestionValue = suggestion => this.state.value
+  onSuggestionSelected = (_, { suggestion }) => {
+    this.setState(
+      {
+        value: suggestion.value,
+      },
+      () => this.props.onSubmit(suggestion.value),
+    )
+  }
+  renderSuggestion = suggestion => {
+    const inputValue = this.state.value
+    const beforeMatch = suggestion.value.slice(0, suggestion.matchIndex)
+    const matched = suggestion.value.slice(
+      suggestion.matchIndex,
+      suggestion.matchIndex + inputValue.length,
+    )
+    const afterMatch = suggestion.value.slice(
+      suggestion.matchIndex + inputValue.length,
+    )
+    return (
+      <div>
+        {beforeMatch}
+        <b>{matched}</b>
+        {afterMatch}
+      </div>
+    )
+  }
   onKeyDown = event => {
     // key code for enter is 13
     if (event.keyCode === 13) {
@@ -72,6 +95,7 @@ class SearchBox extends React.Component {
           getSuggestionValue={this.getSuggestionValue}
           inputProps={inputProps}
           onSuggestionsClearRequested={this.onSuggestionsClearRequested}
+          onSuggestionSelected={this.onSuggestionSelected}
           onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
           renderSuggestion={this.renderSuggestion}
           suggestions={suggestions}
