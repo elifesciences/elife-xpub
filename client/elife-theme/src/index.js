@@ -92,6 +92,7 @@ export default {
     '@pubsweet-pending.FileUpload.UploadFailure': icons.UploadFailure,
     '@pubsweet-pending.FileUpload.UploadSuccess': icons.UploadSuccess,
     '@pubsweet-pending.MultiselectDropdown': icons.Cross,
+    '@pubsweet-pending.Tags.Remove': icons.Cross,
   },
 }
 
