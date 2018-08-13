@@ -88,13 +88,12 @@ export default {
     '@pubsweet-pending.FileUploads.Editor.sub': icons.TextSub,
     '@pubsweet-pending.FileUploads.Editor.sup': icons.TextSup,
     '@pubsweet-pending.PeoplePicker.search': icons.Search,
+    '@pubsweet-pending.FileUpload.Upload': icons.Upload,
+    '@pubsweet-pending.FileUpload.UploadFailure': icons.UploadFailure,
+    '@pubsweet-pending.FileUpload.UploadSuccess': icons.UploadSuccess,
   },
 }
 
 export { icons }
 
-export { default as UploadIcon } from './icons/Upload'
-export { default as UploadSuccessIcon } from './icons/UploadSuccess'
-export { default as UploadFailureIcon } from './icons/UploadFailure'
 export { default as CrossIcon } from './icons/Cross'
-export { default as SearchIcon } from './icons/Search'
