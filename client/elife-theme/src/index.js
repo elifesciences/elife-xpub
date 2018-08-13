@@ -93,9 +93,8 @@ export default {
     '@pubsweet-pending.FileUpload.UploadSuccess': icons.UploadSuccess,
     '@pubsweet-pending.MultiselectDropdown': icons.Cross,
     '@pubsweet-pending.Tags.Remove': icons.Cross,
+    '@pubsweet-pending.CalloutBox.CloseIcon': icons.Cross,
   },
 }
 
 export { icons }
-
-export { default as CrossIcon } from './icons/Cross'
