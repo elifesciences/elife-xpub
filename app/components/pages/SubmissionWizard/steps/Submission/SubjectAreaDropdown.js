@@ -4,7 +4,15 @@ import styled, { withTheme } from 'styled-components'
 import { th } from '@pubsweet/ui-toolkit'
 import Select, { createFilter, components } from 'react-select'
 
-import { CrossIcon } from '@elifesciences/elife-theme'
+import Icon from '../../../../ui/atoms/Icon'
+
+const CrossIcon = props => (
+  <Icon
+    iconName="X"
+    overrideName="@pubsweet-pending.MultiselectDropdown"
+    {...props}
+  />
+)
 
 const StyledCrossIcon = styled(CrossIcon)`
   fill: currentColor;
