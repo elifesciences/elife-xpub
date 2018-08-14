@@ -2,13 +2,12 @@ const lodash = require('lodash')
 const config = require('config')
 const fs = require('fs-extra')
 const { createTables } = require('@pubsweet/db-manager')
-const User = require('pubsweet-server/src/models/User')
+const User = require('../user')
+const Manuscript = require('.')
 const mailer = require('@pubsweet/component-send-email')
-const { save, select, selectId, manuscriptGqlToDb } = require('../db-helpers/')
 const { Mutation, Query } = require('./resolvers')
-const { emptyManuscript } = require('./definitions')
 
-const replaySetup = require('../../test/helpers/replay-setup')
+const replaySetup = require('../../../../test/helpers/replay-setup')
 
 const userData = {
   username: 'testuser',
@@ -26,37 +25,21 @@ describe('Submission', () => {
       fs.remove(config.get('pubsweet-server.uploads')),
       createTables(true),
     ])
-    const user = new User(userData)
-    await user.save()
+    const user = await User.save(userData)
     userId = user.id
     mailer.clearMails()
-  })
-
-  describe('editors', () => {
-    it('returns a list of senior editors', async () => {
-      const result = await Query.editors({}, { role: 'senior-editor' })
-      expect(result).toHaveLength(40)
-      expect(result[0]).toEqual({
-        id: '8d7e57b3',
-        aff: undefined,
-        name: 'Richard Aldrich',
-        subjectAreas: [
-          'Structural Biology and Molecular Biophysics',
-          'Neuroscience',
-        ],
-      })
-    })
   })
 
   describe('currentSubmission', () => {
     it('Gets form data', async () => {
       const expectedManuscript = {
+        createdBy: userId,
         meta: {
           title: 'title',
         },
         status: 'INITIAL',
       }
-      await save(manuscriptGqlToDb(expectedManuscript, userId))
+      await Manuscript.save(expectedManuscript)
 
       const manuscript = await Query.currentSubmission({}, {}, { user: userId })
       expect(manuscript).toMatchObject(expectedManuscript)
@@ -68,14 +51,14 @@ describe('Submission', () => {
     })
 
     it('Returns null object when user has no manuscripts in the db (db not empty)', async () => {
-      await save({
+      await Manuscript.save({
         createdBy: '9f72f2b8-bb4a-43fa-8b80-c7ac505c8c5f',
         meta: {
           title: 'title',
         },
         status: 'INITIAL',
       })
-      await save({
+      await Manuscript.save({
         createdBy: 'bcd735c6-9b62-441a-a085-7d1e8a7834c6',
         meta: {
           title: 'title 2',
@@ -96,10 +79,7 @@ describe('Submission', () => {
         { user: userId },
       )
 
-      const manuscripts = await select({
-        createdBy: userId,
-        status: 'INITIAL',
-      })
+      const manuscripts = await Manuscript.findByStatus('INITIAL', userId)
       expect(manuscripts.length).toBeGreaterThan(0)
       expect(manuscripts[0].id).toBe(manuscript.id)
     })
@@ -107,9 +87,11 @@ describe('Submission', () => {
 
   describe('updateSubmission', () => {
     it('updates the current submission for user with data', async () => {
-      const id = await save(manuscriptGqlToDb(emptyManuscript, userId))
+      const blankManuscript = Manuscript.new()
+      blankManuscript.createdBy = userId
+      const manuscript = await Manuscript.save(blankManuscript)
       const manuscriptInput = {
-        id,
+        id: manuscript.id,
         meta: {
           title: 'New Title',
         },
@@ -125,7 +107,7 @@ describe('Submission', () => {
         { user: userId },
       )
 
-      const actualManuscript = await selectId(id)
+      const actualManuscript = await Manuscript.find(manuscript.id)
       expect(actualManuscript).toMatchObject(manuscriptInput)
     })
   })
@@ -174,7 +156,8 @@ describe('Submission', () => {
         ],
         teams: [],
       }
-      id = await save(manuscriptGqlToDb(initialManuscript, userId))
+      const manuscript = await Manuscript.save(initialManuscript)
+      id = manuscript.id
     })
 
     it('stores data with a new status of QA', async () => {
@@ -190,7 +173,7 @@ describe('Submission', () => {
 
       expect(returnedManuscript.status).toBe('QA')
 
-      const storedManuscript = await selectId(id)
+      const storedManuscript = await Manuscript.find(id)
       expect(storedManuscript.status).toBe('QA')
       expect(storedManuscript.meta.title).toBe('My manuscript')
     })
@@ -214,7 +197,7 @@ describe('Submission', () => {
         { user: userId },
       )
 
-      const storedManuscript = await selectId(id)
+      const storedManuscript = await Manuscript.find(id)
       const team = storedManuscript.teams.find(
         t => t.role === 'suggestedReviewer',
       )
@@ -290,11 +273,11 @@ describe('Submission', () => {
 
   describe('uploadManuscript', () => {
     it('extracts title from PDF', async () => {
-      const id = await save(manuscriptGqlToDb(emptyManuscript, userId))
+      const { id } = await Manuscript.save(Manuscript.new())
       const file = {
         filename: 'manuscript.pdf',
         stream: fs.createReadStream(
-          `${__dirname}/../../test/fixtures/dummy-manuscript-2.pdf`,
+          `${__dirname}/../../../../test/fixtures/dummy-manuscript-2.pdf`,
         ),
         encoding: 'utf8',
         mimetype: 'application/pdf',

@@ -1,0 +1,92 @@
+extend type Query {
+  currentSubmission: Manuscript
+  manuscript(id: ID!): Manuscript!
+  manuscripts: [Manuscript]!
+}
+
+extend type Mutation {
+  createSubmission: Manuscript!
+  deleteManuscript(id: ID!): ID!
+  updateSubmission(data: ManuscriptInput!, isAutoSave: Boolean): Manuscript!
+  uploadManuscript(id: ID!, file: Upload!): Manuscript!
+  finishSubmission(data: ManuscriptInput!): Manuscript!
+}
+
+extend type Manuscript {
+  # todo: these should be handled through teams
+  opposedReviewers: [OpposedReviewer]
+  author: Alias
+
+  # todo: these should be handled through notes
+  opposedSeniorEditorsReason: String
+  opposedReviewingEditorsReason: String
+  coverLetter: String
+}
+
+input ManuscriptInput {
+  id: ID!
+  suggestedSeniorEditors: [ID]
+  opposedSeniorEditors: [ID]
+  opposedSeniorEditorsReason: String
+  suggestedReviewingEditors: [ID]
+  opposedReviewingEditors: [ID]
+  opposedReviewingEditorsReason: String
+  suggestedReviewers: [ReviewerAliasInput]
+  opposedReviewers: [OpposedReviewerInput]
+  coverLetter: String
+  author: AuthorAliasInput
+  previouslyDiscussed: String
+  previouslySubmitted: [String]
+  cosubmission: [String!]!
+  suggestionsConflict: Boolean
+  meta: ManuscriptMetaInput
+}
+
+input ManuscriptMetaInput {
+  title: String
+  articleType: String
+  subjects: [String]
+}
+enum SubmissionStage {
+  INITIAL
+  QA
+}
+
+# temporary solution awaiting more clarity on team member metadata in shared data model
+union Assignee = EditorAlias | ReviewerAlias | AuthorAlias
+type AuthorAlias {
+  firstName: String
+  lastName: String
+  email: String
+  aff: String
+}
+input AuthorAliasInput {
+  firstName: String
+  lastName: String
+  email: String
+  aff: String
+}
+type EditorAlias {
+  id: ID
+  name: String
+  aff: String
+  subjectAreas: [String]
+}
+type ReviewerAlias {
+  name: String
+  email: String
+}
+input ReviewerAliasInput {
+  name: String
+  email: String
+}
+type OpposedReviewer {
+  name: String
+  email: String
+  reason: String
+}
+input OpposedReviewerInput {
+  name: String
+  email: String
+  reason: String
+}
