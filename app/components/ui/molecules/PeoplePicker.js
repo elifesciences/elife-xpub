@@ -145,19 +145,24 @@ class PeoplePicker extends React.Component {
     this.setState({ searchValue })
   }
 
-  filterPeople() {
+  filterPeople(people) {
     const searchValue = this.state.searchValue.toLowerCase()
-    return this.props.people.filter(person =>
+    return people.filter(person =>
       person.name.toLowerCase().includes(searchValue),
     )
   }
 
   render() {
     const { people, ...otherProps } = this.props
-    const searchOptions = people.map(person => ({ value: person.name }))
+    const sortedPeople = [...people].sort((a, b) =>
+      a.name.localeCompare(b.name),
+    )
+    const searchOptions = sortedPeople.map(person => ({ value: person.name }))
     return this.props.children({
       ...otherProps,
-      people: this.state.searchValue ? this.filterPeople() : people,
+      people: this.state.searchValue
+        ? this.filterPeople(sortedPeople)
+        : sortedPeople,
       searchSubmit: this.searchSubmit,
       searchOptions,
       isSelected: person => this.isSelected(person),
