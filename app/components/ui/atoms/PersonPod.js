@@ -5,11 +5,15 @@ import { th } from '@pubsweet/ui-toolkit'
 import { Action } from '@pubsweet/ui'
 import { Flex, Box } from 'grid-styled'
 
-import {
-  PlusIcon,
-  RubbishBinIcon,
-  SelectedTickIcon,
-} from '@elifesciences/elife-theme'
+import Icon from './Icon'
+
+const PlusIcon = props => (
+  <Icon
+    iconName="Plus"
+    overrideName="@pubsweet-pending.PeoplePicker.PersonPod.add"
+    {...props}
+  />
+)
 
 const StyledPlusIcon = styled(PlusIcon)`
   fill: ${th('colorTextSecondary')};
@@ -17,14 +21,30 @@ const StyledPlusIcon = styled(PlusIcon)`
   width: ${th('space.3')}
 `
 
+const RubbishBinIcon = props => (
+  <Icon
+    iconName="Trash"
+    overrideName="@pubsweet-pending.PeoplePicker.PersonPod.remove"
+    {...props}
+  />
+)
+
 const StyledRubbishBinIcon = styled(RubbishBinIcon)`
   fill: ${th('colorTextSecondary')};
   height: ${th('space.3')}
   width: ${th('space.3')}
 `
 
+const SelectedTickIcon = props => (
+  <Icon
+    iconName="CheckCircle"
+    overrideName="@pubsweet-pending.PeoplePicker.PersonPod.selected"
+    {...props}
+  />
+)
+
 const StyledSelectedTickIcon = styled(SelectedTickIcon)`
-  .selected-tick-circle {
+  circle {
     fill: ${th('colorPrimary')};
   }
   height: ${th('space.4')}
@@ -34,16 +54,14 @@ const StyledSelectedTickIcon = styled(SelectedTickIcon)`
 const StyledButton = styled.button`
   background-color: inherit;
   height: 100%;
+  width: ${th('space.5')};
   border: none;
-  padding: 0 calc(${th('gridUnit')} * 2);
 
-  &:hover {
-    .plus-icon,
-    .rubbish-bin {
+  &:hover ${StyledPlusIcon}, &:hover ${StyledRubbishBinIcon} {
       fill: #666666;
     }
 
-    .selected-tick-circle {
+  &:hover ${StyledSelectedTickIcon} > circle {
       fill: #1378bb;
     }
   }

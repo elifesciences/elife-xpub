@@ -7,11 +7,46 @@ import { ErrorText, Action } from '@pubsweet/ui'
 import { th } from '@pubsweet/ui-toolkit'
 import { get } from 'lodash'
 
-import {
-  UploadIcon,
-  UploadFailureIcon,
-  UploadSuccessIcon,
-} from '@elifesciences/elife-theme'
+import Icon from '../atoms/Icon'
+
+const UploadIcon = props => (
+  <Icon
+    iconName="Upload"
+    overrideName="@pubsweet-pending.FileUpload.Upload"
+    {...props}
+  />
+)
+
+const StyledUploadIcon = styled(UploadIcon)`
+  width: ${th('space.5')}
+  height: ${th('space.5')}
+`
+
+const UploadFailureIcon = props => (
+  <Icon
+    iconName="XCircle"
+    overrideName="@pubsweet-pending.FileUpload.UploadFailure"
+    {...props}
+  />
+)
+
+const StyledUploadFailureIcon = styled(UploadFailureIcon)`
+  width: ${th('space.5')}
+  height: ${th('space.5')}
+`
+
+const UploadSuccessIcon = props => (
+  <Icon
+    iconName="CheckCircle"
+    overrideName="@pubsweet-pending.FileUpload.UploadSuccess"
+    {...props}
+  />
+)
+
+const StyledUploadSuccessIcon = styled(UploadSuccessIcon)`
+  width: ${th('space.5')}
+  height: ${th('space.5')}
+`
 
 const VALID_FILE_TYPES = [
   'application/pdf',
@@ -45,7 +80,7 @@ const DropzoneContent = ({
   if (conversion.converting) {
     return (
       <React.Fragment>
-        <UploadIcon size={5} />
+        <StyledUploadIcon />
         <Instruction data-test-id="dropzoneMessage">
           Manuscript is uploading
         </Instruction>
@@ -60,7 +95,7 @@ const DropzoneContent = ({
     )
     return (
       <React.Fragment>
-        <UploadFailureIcon size={5} />
+        <StyledUploadFailureIcon />
         <ErrorText data-test-id="dropzoneMessage">
           {errorMessage}. Try to <Action onClick={dropzoneOpen}>upload</Action>{' '}
           your Manuscript again.
@@ -71,7 +106,7 @@ const DropzoneContent = ({
   if (formError) {
     return (
       <React.Fragment>
-        <UploadFailureIcon size={5} />
+        <StyledUploadFailureIcon />
         <ErrorText data-test-id="dropzoneMessage">
           Please <Action onClick={dropzoneOpen}>upload</Action> your Manuscript.
         </ErrorText>
@@ -81,7 +116,7 @@ const DropzoneContent = ({
   if (conversion.completed) {
     return (
       <React.Fragment>
-        <UploadSuccessIcon size={5} />
+        <StyledUploadSuccessIcon />
         <Instruction data-test-id="dropzoneMessage">
           Success!{' '}
           <Action data-test-id="preview" to={previewUrl}>
@@ -94,7 +129,7 @@ const DropzoneContent = ({
   }
   return (
     <React.Fragment>
-      <UploadIcon size={5} />
+      <StyledUploadIcon />
       <Instruction data-test-id="dropzoneMessage">
         <Action onClick={dropzoneOpen}>Upload</Action> your manuscript or drag
         it here.

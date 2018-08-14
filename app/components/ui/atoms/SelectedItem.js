@@ -2,7 +2,19 @@ import React from 'react'
 import styled from 'styled-components'
 import { th } from '@pubsweet/ui-toolkit'
 
-import { CrossIcon } from '@elifesciences/elife-theme'
+import Icon from './Icon'
+
+const CrossIcon = props => (
+  <Icon iconName="X" overrideName="@pubsweet-pending.Tags.Remove" {...props} />
+)
+
+const StyledIcon = styled(CrossIcon)`
+  margin-left: ${th('space.1')};
+  cursor: pointer;
+  fill: ${th('colorTextReverse')};
+  height: ${th('space.3')};
+  width: ${th('space.3')};
+`
 
 const Root = styled.div`
   border-radius: ${th('borderRadius')};
@@ -12,14 +24,6 @@ const Root = styled.div`
   color: ${th('colorTextReverse')};
   display: inline-flex;
   align-items: center;
-`
-
-const StyledIcon = styled(CrossIcon)`
-  margin-left: ${th('space.1')};
-  cursor: pointer;
-  fill: ${th('colorTextReverse')};
-  height: ${th('space.3')};
-  width: ${th('space.3')};
 `
 
 const SelectedItem = ({ label, onCloseClick }) => (

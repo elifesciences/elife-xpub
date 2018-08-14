@@ -1,6 +1,7 @@
 /* eslint-disable import/extensions */
 import './fonts/index.css'
 import * as elements from './elements'
+import * as icons from './icons'
 
 const gridUnit = 6
 
@@ -76,18 +77,24 @@ export default {
     ...elements,
     'xpub-edit': elements.xpubEdit,
   },
+
+  icons: {
+    '@pubsweet-pending.PeoplePicker.PersonPod.add': icons.Plus,
+    '@pubsweet-pending.PeoplePicker.PersonPod.remove': icons.RubbishBin,
+    '@pubsweet-pending.PeoplePicker.PersonPod.selected': icons.SelectedTick,
+    '@pubsweet-pending.FileUploads.Editor.bold': icons.TextBold,
+    '@pubsweet-pending.FileUploads.Editor.italic': icons.TextItalic,
+    '@pubsweet-pending.FileUploads.Editor.underline': icons.TextUnderline,
+    '@pubsweet-pending.FileUploads.Editor.sub': icons.TextSub,
+    '@pubsweet-pending.FileUploads.Editor.sup': icons.TextSup,
+    '@pubsweet-pending.PeoplePicker.search': icons.Search,
+    '@pubsweet-pending.FileUpload.Upload': icons.Upload,
+    '@pubsweet-pending.FileUpload.UploadFailure': icons.UploadFailure,
+    '@pubsweet-pending.FileUpload.UploadSuccess': icons.UploadSuccess,
+    '@pubsweet-pending.MultiselectDropdown': icons.Cross,
+    '@pubsweet-pending.Tags.Remove': icons.Cross,
+    '@pubsweet-pending.CalloutBox.CloseIcon': icons.Cross,
+  },
 }
 
-export { default as TextBoldIcon } from './icons/TextBold'
-export { default as TextItalicIcon } from './icons/TextItalic'
-export { default as TextSubIcon } from './icons/TextSub'
-export { default as TextSupIcon } from './icons/TextSup'
-export { default as TextUnderlineIcon } from './icons/TextUnderline'
-export { default as UploadIcon } from './icons/Upload'
-export { default as UploadSuccessIcon } from './icons/UploadSuccess'
-export { default as UploadFailureIcon } from './icons/UploadFailure'
-export { default as CrossIcon } from './icons/Cross'
-export { default as PlusIcon } from './icons/Plus'
-export { default as SelectedTickIcon } from './icons/SelectedTick'
-export { default as RubbishBinIcon } from './icons/RubbishBin'
-export { default as SearchIcon } from './icons/Search'
+export { icons }

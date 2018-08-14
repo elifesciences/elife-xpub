@@ -1,9 +1,24 @@
 import React from 'react'
 import styled from 'styled-components'
 import Autosuggest from 'react-autosuggest'
-import { SearchIcon } from '@elifesciences/elife-theme'
+import { th } from '@pubsweet/ui-toolkit'
 
+import Icon from '../atoms/Icon'
 import theme from './SearchBox.local.css'
+
+const SearchIcon = props => (
+  <Icon
+    iconName="Search"
+    overrideName="@pubsweet-pending.PeoplePicker.search"
+    {...props}
+  />
+)
+
+const StyledSearchIcon = styled(SearchIcon)`
+  width: ${th('space.3')};
+  height: ${th('space.3')};
+  fill: ${th('colorTextSecondary')};
+`
 
 const Root = styled.div`
   position: relative;
@@ -66,7 +81,7 @@ class SearchBox extends React.Component {
     return (
       <Root>
         <IconContainer>
-          <SearchIcon />
+          <StyledSearchIcon />
         </IconContainer>
         <Autosuggest
           getSuggestionValue={this.getSuggestionValue}
