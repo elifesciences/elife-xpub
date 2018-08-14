@@ -16,8 +16,6 @@ const CrossIcon = props => (
 
 const StyledCrossIcon = styled(CrossIcon)`
   fill: currentColor;
-  height: 20px;
-  width: 20px;
 `
 
 const Root = styled.div``

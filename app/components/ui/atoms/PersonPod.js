@@ -7,43 +7,39 @@ import { Flex, Box } from 'grid-styled'
 
 import Icon from './Icon'
 
-const PlusIcon = props => (
+const AddIcon = props => (
   <Icon
     iconName="Plus"
-    overrideName="@pubsweet-pending.PeoplePicker.PersonPod.add"
+    overrideName="@pubsweet-pending.PeoplePicker.PersonPod.Add"
     {...props}
   />
 )
 
-const StyledPlusIcon = styled(PlusIcon)`
+const StyledAddIcon = styled(AddIcon)`
   fill: ${th('colorTextSecondary')};
-  height: ${th('space.3')}
-  width: ${th('space.3')}
 `
 
-const RubbishBinIcon = props => (
+const TrashIcon = props => (
   <Icon
     iconName="Trash"
-    overrideName="@pubsweet-pending.PeoplePicker.PersonPod.remove"
+    overrideName="@pubsweet-pending.PeoplePicker.PersonPod.Remove"
     {...props}
   />
 )
 
-const StyledRubbishBinIcon = styled(RubbishBinIcon)`
+const StyledRemoveIcon = styled(TrashIcon)`
   fill: ${th('colorTextSecondary')};
-  height: ${th('space.3')}
-  width: ${th('space.3')}
 `
 
-const SelectedTickIcon = props => (
+const CheckCircleIcon = props => (
   <Icon
     iconName="CheckCircle"
-    overrideName="@pubsweet-pending.PeoplePicker.PersonPod.selected"
+    overrideName="@pubsweet-pending.PeoplePicker.PersonPod.Selected"
     {...props}
   />
 )
 
-const StyledSelectedTickIcon = styled(SelectedTickIcon)`
+const StyledSelectedIcon = styled(CheckCircleIcon)`
   circle {
     fill: ${th('colorPrimary')};
   }
@@ -57,11 +53,11 @@ const StyledButton = styled.button`
   width: ${th('space.5')};
   border: none;
 
-  &:hover ${StyledPlusIcon}, &:hover ${StyledRubbishBinIcon} {
+  &:hover ${StyledAddIcon}, &:hover ${StyledRemoveIcon} {
       fill: #666666;
     }
 
-  &:hover ${StyledSelectedTickIcon} > circle {
+  &:hover ${StyledSelectedIcon} > circle {
       fill: #1378bb;
     }
   }
@@ -132,12 +128,12 @@ const PersonPodContainer = ({
 const PodIcon = ({ iconType }) => {
   switch (iconType) {
     case 'remove':
-      return <StyledRubbishBinIcon />
+      return <StyledRemoveIcon />
     case 'selected':
-      return <StyledSelectedTickIcon />
+      return <StyledSelectedIcon />
     case 'add':
     default:
-      return <StyledPlusIcon />
+      return <StyledAddIcon />
   }
 }
 

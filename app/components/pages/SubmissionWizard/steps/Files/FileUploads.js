@@ -8,46 +8,46 @@ import Icon from '../../../../ui/atoms/Icon'
 import FileUpload from '../../../../ui/molecules/FileUpload'
 import ValidatedField from '../../../../ui/atoms/ValidatedField'
 
-const TextBoldIcon = props => (
+const FormatBoldIcon = props => (
   <Icon
     iconName="Bold"
-    overrideName="@pubsweet-pending.FileUploads.Editor.bold"
+    overrideName="@pubsweet-pending.FileUploads.Editor.Bold"
     {...props}
   />
 )
 
-const TextItalicIcon = props => (
+const FormatItalicIcon = props => (
   <Icon
     iconName="Italic"
-    overrideName="@pubsweet-pending.FileUploads.Editor.italic"
+    overrideName="@pubsweet-pending.FileUploads.Editor.Italic"
     {...props}
   />
 )
 
-const TextUnderlineIcon = props => (
+const FormatUnderlineIcon = props => (
   <Icon
     iconName="Underline"
-    overrideName="@pubsweet-pending.FileUploads.Editor.underline"
+    overrideName="@pubsweet-pending.FileUploads.Editor.Underlined"
     {...props}
   />
 )
 
-const TextSubIcon = props => (
+const FormatSubscriptIcon = props => (
   <Icon
     // TODO: conversation with Pubsweet - what should we default to
     // when there's no obvious react-feather equivalent?
     iconName=""
-    overrideName="@pubsweet-pending.FileUploads.Editor.sub"
+    overrideName="@pubsweet-pending.FileUploads.Editor.Subscript"
     {...props}
   />
 )
 
-const TextSupIcon = props => (
+const FormatSuperscriptIcon = props => (
   <Icon
     // TODO: conversation with Pubsweet - what should we default to
     // when there's no obvious react-feather equivalent?
     iconName=""
-    overrideName="@pubsweet-pending.FileUploads.Editor.sup"
+    overrideName="@pubsweet-pending.FileUploads.Editor.Superscript"
     {...props}
   />
 )
@@ -55,11 +55,11 @@ const TextSupIcon = props => (
 // order of props affects order of menu buttons
 const Editor = ({ validationStatus, ...props }) => (
   <ConfigurableEditor
-    bold={{ icon: <TextBoldIcon /> }}
-    italic={{ icon: <TextItalicIcon /> }}
-    underline={{ icon: <TextUnderlineIcon /> }}
-    subscript={{ icon: <TextSubIcon /> }}
-    superscript={{ icon: <TextSupIcon /> }}
+    bold={{ icon: <FormatBoldIcon /> }}
+    italic={{ icon: <FormatItalicIcon /> }}
+    underline={{ icon: <FormatUnderlineIcon /> }}
+    subscript={{ icon: <FormatSubscriptIcon /> }}
+    superscript={{ icon: <FormatSuperscriptIcon /> }}
     {...props}
   />
 )

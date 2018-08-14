@@ -12,8 +12,6 @@ const StyledIcon = styled(CrossIcon)`
   margin-left: ${th('space.1')};
   cursor: pointer;
   fill: ${th('colorTextReverse')};
-  height: ${th('space.3')};
-  width: ${th('space.3')};
 `
 
 const Root = styled.div`
