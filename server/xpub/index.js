@@ -30,4 +30,7 @@ const resolvers = merge(
 module.exports = {
   typeDefs,
   resolvers,
+  // TODO enable migrations once clobbering issue in pubsweet is resolved
+  // https://gitlab.coko.foundation/pubsweet/pubsweet/issues/419
+  // migrationsPath: `./schema/migrations`,
 }
