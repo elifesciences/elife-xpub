@@ -43,22 +43,24 @@ class SearchBox extends React.Component {
     })
   }
   onSuggestionsFetchRequested = ({ value }) => {
+    const inputValue = value.trim().toLowerCase()
+    const inputLength = inputValue.length
+    let suggestions = []
+    if (inputLength !== 0) {
+      suggestions = this.props.filterFunction(
+        this.props.options,
+        inputValue,
+        'value',
+      )
+    }
     this.setState({
-      suggestions: this.getSuggestions(value),
+      suggestions,
     })
   }
   onSuggestionsClearRequested = () => {
     this.setState({
       suggestions: [],
     })
-  }
-
-  getSuggestions = value => {
-    const inputValue = value.trim().toLowerCase()
-    const inputLength = inputValue.length
-    return inputLength === 0
-      ? []
-      : this.props.filterFunction(this.props.options, inputValue, 'value')
   }
   getSuggestionValue = suggestion => this.state.value
   onSuggestionSelected = (_, { suggestion }) => {
