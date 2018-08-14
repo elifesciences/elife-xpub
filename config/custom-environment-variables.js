@@ -1,7 +1,9 @@
 module.exports = {
-  'pubsweet-client': {
+  'pubsweet-server': {
     baseUrl: 'PUBSWEET_BASEURL',
     secret: 'PUBSWEET_SECRET',
+  },
+  'pubsweet-client': {
     sha: 'CI_COMMIT_SHA',
   },
   'auth-orcid': {
