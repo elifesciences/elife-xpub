@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { withTheme } from 'styled-components'
 
 const UploadFailure = props => {
-  const { color, size, ...otherProps } = props
+  const { size, ...otherProps } = props
   return (
     <svg
       height={props.theme.space[size]}

@@ -38,7 +38,7 @@ function percentageToDasharray(percentage, circleRadius) {
   return `${lineLength}, ${spaceLength}`
 }
 
-const Upload = ({ color, percentage, size, ...otherProps }) => {
+const Upload = ({ percentage, size, ...otherProps }) => {
   const circleRadius = 24
   const dashArray = percentageToDasharray(percentage, circleRadius)
   const dashOffset = Math.PI * circleRadius / 2
