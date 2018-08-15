@@ -1,4 +1,4 @@
-import yup from 'yup'
+import * as yup from 'yup'
 
 const firstName = () => yup.string().required('First name is required')
 const lastName = () => yup.string().required('Last name is required')

@@ -1,5 +1,5 @@
 import { cloneDeep } from 'lodash'
-import yup, { ValidationError } from 'yup'
+import * as yup from 'yup'
 import './SuggestedReviewersValidator'
 import { limits } from './schema'
 
@@ -66,7 +66,7 @@ const isCheckingNameAndEmail = index => {
 
   it(`fails when reviewer ${index + 1} has bad name and email`, () => {
     expect(() => expectToHaveBadNameAndEmail(data, index)).toThrow(
-      ValidationError,
+      yup.ValidationError,
     )
   })
 }
@@ -77,7 +77,7 @@ const checksForDuplicate = index => {
   data[index] = data[dupIndex]
   it('catches duplicate name and emails', () => {
     expect(() => expectToHaveDuplicateNameAndEmail(data, dupIndex)).toThrow(
-      ValidationError,
+      yup.ValidationError,
     )
   })
 }

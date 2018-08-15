@@ -1,4 +1,4 @@
-import yup, { ValidationError } from 'yup'
+import * as yup from 'yup'
 import { cloneDeep, countBy, findIndex } from 'lodash'
 
 const MIN_REVIEWERS = 3
@@ -70,7 +70,7 @@ class SuggestedReviewersValidator {
       if (dupIndexes.length > 0) {
         // create errors here
         dupIndexes.forEach(index => {
-          const e = new ValidationError(`Duplicated ${key}`)
+          const e = new yup.ValidationError(`Duplicated ${key}`)
           e.path = `suggestedReviewers.${index}.${key}`
           errors.push(e)
         })
@@ -124,7 +124,7 @@ class SuggestedReviewersValidator {
   }
 
   throwValidationError = (message, errors) => {
-    const parentError = new ValidationError(message)
+    const parentError = new yup.ValidationError(message)
     parentError.path = 'suggestedReviewers'
     parentError.inner = errors
     throw parentError

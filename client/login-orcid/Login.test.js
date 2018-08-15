@@ -18,12 +18,10 @@ describe('ORCID Login component', () => {
   })
 
   it('redirects when a token is given', () => {
-    global.localStorage = { setItem: jest.fn() }
-
     const wrapper = makeWrapper({
       location: { hash: '#123abc' },
     })
     expect(wrapper.name()).toBe('Redirect')
-    expect(global.localStorage.setItem).toHaveBeenCalledWith('token', '123abc')
+    expect(localStorage.getItem('token')).toBe('123abc')
   })
 })
