@@ -21,6 +21,7 @@ const Manuscript = {
   find: dataAccess.selectById,
   all: dataAccess.selectAll,
   findByStatus: dataAccess.selectByStatus,
+  delete: dataAccess.delete,
 
   new: () => lodash.cloneDeep(emptyManuscript),
 
