@@ -87,7 +87,7 @@ const Manuscript = {
       .filter(team => team.role !== 'author')
       .concat({
         role: 'author',
-        teamMembers: [{ alias: input.author }],
+        teamMembers: [{ alias: input.author, meta: { corresponding: true } }],
       })
 
     return manuscript
