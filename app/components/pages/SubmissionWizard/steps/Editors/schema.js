@@ -1,5 +1,5 @@
 /* eslint-disable no-template-curly-in-string */
-import yup from 'yup'
+import * as yup from 'yup'
 import { suggestedReviewersLimits } from './SuggestedReviewersValidator'
 
 // TODO only the initially displayed fields should be required,

@@ -7,8 +7,8 @@
   "main": "index.js",
   "keywords": [],
   "dependencies": {
-    "config": "^1.30.0",
-    "dar-server": "^0.5.0",
+    "config": "^2.0.1",
+    "dar-server": "^0.5.1",
     "express": "^4.16.2"
   },
   "peerDependencies": {

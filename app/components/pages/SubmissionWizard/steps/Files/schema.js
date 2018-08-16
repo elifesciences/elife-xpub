@@ -1,4 +1,4 @@
-import yup from 'yup'
+import * as yup from 'yup'
 
 const MIN_WORDS = 60
 
