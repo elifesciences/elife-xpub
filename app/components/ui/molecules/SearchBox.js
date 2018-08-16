@@ -9,7 +9,7 @@ import theme from './SearchBox.local.css'
 const SearchIcon = props => (
   <Icon
     iconName="Search"
-    overrideName="@pubsweet-pending.PeoplePicker.search"
+    overrideName="@pubsweet-pending.PeoplePicker.Search"
     {...props}
   />
 )

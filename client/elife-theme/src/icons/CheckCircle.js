@@ -1,6 +1,6 @@
 import React from 'react'
 
-const SelectedTick = props => (
+const CheckCircle = props => (
   <svg viewBox="0 0 36 36" {...props}>
     <g fill="none" fillRule="evenodd">
       <circle cx={18} cy={18} r={18} />
@@ -9,4 +9,4 @@ const SelectedTick = props => (
   </svg>
 )
 
-export default SelectedTick
+export default CheckCircle
