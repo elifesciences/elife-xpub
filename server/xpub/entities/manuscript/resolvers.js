@@ -1,6 +1,9 @@
 const config = require('config')
 const User = require('../user')
-const { pubsub, asyncIterators } = require('pubsweet-server/src/graphql/pubsub')
+const {
+  getPubsub,
+  asyncIterators,
+} = require('pubsweet-server/src/graphql/pubsub')
 const mailer = require('@pubsweet/component-send-email')
 const logger = require('@pubsweet/logger')
 const request = require('request-promise-native')
@@ -138,6 +141,7 @@ const resolvers = {
       stream.pipe(saveFileStream)
 
       let uploadedSize = 0
+      const pubsub = await getPubsub()
       stream.on('data', chunk => {
         uploadedSize += chunk.length
         const uploadProgress = Math.floor(uploadedSize * 100 / fileSize)
