@@ -5,7 +5,7 @@ import styled from 'styled-components'
 import { Button } from '@pubsweet/ui'
 import { th } from '@pubsweet/ui-toolkit'
 import { Box, Flex } from 'grid-styled'
-import { cloneDeep } from 'lodash'
+import { cloneDeep, escapeRegExp } from 'lodash'
 
 import SelectedItem from '../atoms/SelectedItem'
 import PersonPod from '../atoms/PersonPod'
@@ -176,7 +176,7 @@ class PeoplePicker extends React.Component {
     })
 
     let matches = []
-    const re = new RegExp(`^${inputValue}`)
+    const re = new RegExp(`^${escapeRegExp(inputValue)}`)
     const filterNthMatches = (person, n) => {
       const words = person[field].match(/[^ ]+/g)
       if (words.length <= n) {
@@ -194,7 +194,7 @@ class PeoplePicker extends React.Component {
   }
 
   getMatchIndex = (inputValue, option) => {
-    const re = new RegExp(`${inputValue}`)
+    const re = new RegExp(escapeRegExp(inputValue))
     const match = re.exec(option.toLowerCase())
     if (match) return match.index
     return -1
