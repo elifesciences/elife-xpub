@@ -5,6 +5,7 @@ import styled from 'styled-components'
 import { Button } from '@pubsweet/ui'
 import { th } from '@pubsweet/ui-toolkit'
 import { Box, Flex } from 'grid-styled'
+import { cloneDeep, escapeRegExp } from 'lodash'
 
 import SelectedItem from '../atoms/SelectedItem'
 import PersonPod from '../atoms/PersonPod'
@@ -35,7 +36,8 @@ const SelectionHint = ({ selection, minSelection, maxSelection }) => {
     const numRequired = minSelection - selectionLength
     return (
       <div>
-        {numRequired} more suggestion{numRequired === 1 ? '' : 's'} required
+        {numRequired} more suggestion
+        {numRequired === 1 ? '' : 's'} required
       </div>
     )
   }
@@ -145,11 +147,57 @@ class PeoplePicker extends React.Component {
     this.setState({ searchValue })
   }
 
-  filterPeople(people) {
-    const searchValue = this.state.searchValue.toLowerCase()
-    return people.filter(person =>
-      person.name.toLowerCase().includes(searchValue),
-    )
+  filterPeople = (people, searchValue, field) => {
+    if (!searchValue) return people
+
+    const inputValue = searchValue.trim().toLowerCase()
+    if (!inputValue) return people
+
+    if (inputValue.split(' ').length > 1) {
+      const matches = people.filter(person =>
+        person[field].toLowerCase().includes(inputValue),
+      )
+      return matches.map(elem => {
+        const clonedElem = cloneDeep(elem)
+        clonedElem.matchIndex = elem[field].toLowerCase().indexOf(inputValue)
+        return clonedElem
+      })
+    }
+    return this.filterPeopleSingle(people, inputValue, field)
+  }
+
+  filterPeopleSingle = (people, inputValue, field) => {
+    let maxWords = 0
+    people.forEach(person => {
+      const numWords = person[field].match(/[^ ]+/g).length
+      if (numWords > maxWords) {
+        maxWords = numWords
+      }
+    })
+
+    let matches = []
+    const re = new RegExp(`^${escapeRegExp(inputValue)}`)
+    const filterNthMatches = (person, n) => {
+      const words = person[field].match(/[^ ]+/g)
+      if (words.length <= n) {
+        return false
+      }
+      return re.test(words[n].toLowerCase())
+    }
+
+    for (let i = 0; i < maxWords; i += 1) {
+      /* matches for ith word, starting at 0 */
+      const ithMatches = people.filter(person => filterNthMatches(person, i))
+      matches = matches.concat(ithMatches)
+    }
+    return matches
+  }
+
+  getMatchIndex = (inputValue, option) => {
+    const re = new RegExp(escapeRegExp(inputValue))
+    const match = re.exec(option.toLowerCase())
+    if (match) return match.index
+    return -1
   }
 
   render() {
@@ -160,11 +208,11 @@ class PeoplePicker extends React.Component {
     const searchOptions = sortedPeople.map(person => ({ value: person.name }))
     return this.props.children({
       ...otherProps,
-      people: this.state.searchValue
-        ? this.filterPeople(sortedPeople)
-        : sortedPeople,
+      people: this.filterPeople(sortedPeople, this.state.searchValue, 'name'),
       searchSubmit: this.searchSubmit,
       searchOptions,
+      filterFunction: this.filterPeople,
+      getMatchIndex: this.getMatchIndex,
       isSelected: person => this.isSelected(person),
       isValid: this.isValid(),
       selection: this.state.selection,

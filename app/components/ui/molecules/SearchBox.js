@@ -43,8 +43,18 @@ class SearchBox extends React.Component {
     })
   }
   onSuggestionsFetchRequested = ({ value }) => {
+    const inputValue = value.trim().toLowerCase()
+    const inputLength = inputValue.length
+    let suggestions = []
+    if (inputLength !== 0) {
+      suggestions = this.props.filterFunction(
+        this.props.options,
+        inputValue,
+        'value',
+      )
+    }
     this.setState({
-      suggestions: this.getSuggestions(value),
+      suggestions,
     })
   }
   onSuggestionsClearRequested = () => {
@@ -52,18 +62,36 @@ class SearchBox extends React.Component {
       suggestions: [],
     })
   }
-
-  getSuggestions = value => {
-    const inputValue = value.trim().toLowerCase()
-    const inputLength = inputValue.length
-    return inputLength === 0
-      ? []
-      : this.props.options.filter(option =>
-          option.value.toLowerCase().includes(inputValue),
-        )
+  getSuggestionValue = suggestion => this.state.value
+  onSuggestionSelected = (_, { suggestion }) => {
+    this.setState(
+      {
+        value: suggestion.value,
+      },
+      () => this.props.onSubmit(suggestion.value),
+    )
   }
-  getSuggestionValue = suggestion => suggestion.value
-  renderSuggestion = suggestion => <div>{suggestion.value}</div>
+  renderSuggestion = suggestion => {
+    const inputValue = this.state.value.trim().toLowerCase()
+    const matchIndex = this.props.getMatchIndex(inputValue, suggestion.value)
+    if (matchIndex < 0) {
+      // this shouldn't happen/error
+      return ''
+    }
+    const beforeMatch = suggestion.value.slice(0, matchIndex)
+    const matched = suggestion.value.slice(
+      matchIndex,
+      matchIndex + inputValue.length,
+    )
+    const afterMatch = suggestion.value.slice(matchIndex + inputValue.length)
+    return (
+      <div>
+        {beforeMatch}
+        <b>{matched}</b>
+        {afterMatch}
+      </div>
+    )
+  }
   onKeyDown = event => {
     // key code for enter is 13
     if (event.keyCode === 13) {
@@ -87,6 +115,7 @@ class SearchBox extends React.Component {
           getSuggestionValue={this.getSuggestionValue}
           inputProps={inputProps}
           onSuggestionsClearRequested={this.onSuggestionsClearRequested}
+          onSuggestionSelected={this.onSuggestionSelected}
           onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
           renderSuggestion={this.renderSuggestion}
           suggestions={suggestions}
