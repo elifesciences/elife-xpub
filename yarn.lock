@@ -206,7 +206,31 @@
     lodash "^4.17.4"
     styled-components "^3.2.5"
 
-"@pubsweet/ui@^8.0.1", "@pubsweet/ui@^8.4.0":
+"@pubsweet/ui@^8.0.1":
+  version "8.3.0"
+  resolved "https://registry.yarnpkg.com/@pubsweet/ui/-/ui-8.3.0.tgz#b8da7be8d9110594abdd18476e3808c9606a74b4"
+  dependencies:
+    "@pubsweet/ui-toolkit" "^1.2.0"
+    babel-jest "^21.2.0"
+    classnames "^2.2.5"
+    enzyme "^3.2.0"
+    enzyme-adapter-react-16 "^1.1.1"
+    invariant "^2.2.3"
+    lodash "^4.17.4"
+    moment "^2.22.1"
+    prop-types "^15.5.10"
+    react "^16.2.0"
+    react-dom "^16.2.0"
+    react-feather "^1.0.8"
+    react-redux "^5.0.2"
+    react-router-dom "^4.2.2"
+    react-tag-autocomplete "^5.5.0"
+    recompose "^0.26.0"
+    redux "^3.6.0"
+    redux-form "^7.0.3"
+    styled-components "^3.2.5"
+
+"@pubsweet/ui@^8.4.0":
   version "8.4.0"
   resolved "https://registry.yarnpkg.com/@pubsweet/ui/-/ui-8.4.0.tgz#3c63f4fd8b2484abd819ec852db801c03f968ef3"
   dependencies:
@@ -8820,7 +8844,7 @@ prompt@^1.0.0:
     utile "0.3.x"
     winston "2.1.x"
 
-"prompt@github:flatiron/prompt#1c95d1d8d333b5fbc13fa5f0619f3dcf0d514f87":
+prompt@flatiron/prompt#1c95d1d8d333b5fbc13fa5f0619f3dcf0d514f87:
   version "1.0.0"
   resolved "https://codeload.github.com/flatiron/prompt/tar.gz/1c95d1d8d333b5fbc13fa5f0619f3dcf0d514f87"
   dependencies:
@@ -12383,7 +12407,7 @@ xmlbuilder@~9.0.1:
   version "9.0.7"
   resolved "https://registry.yarnpkg.com/xmlbuilder/-/xmlbuilder-9.0.7.tgz#132ee63d2ec5565c557e20f4c22df9aca686b10d"
 
-xpub-edit@^2.4.1:
+xpub-edit@^2.5.0:
   version "2.5.0"
   resolved "https://registry.yarnpkg.com/xpub-edit/-/xpub-edit-2.5.0.tgz#9be67916476690a57a2b6dd4971ecf48aee0e6a4"
   dependencies:

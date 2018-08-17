@@ -1,6 +1,8 @@
 const lodash = require('lodash')
 const emptyManuscript = require('./helpers/empty')
 const dataAccess = require('./data-access')
+const TeamManager = require('../team')
+const FileManager = require('../file')
 
 const mergeObjects = (...inputs) =>
   lodash.mergeWith(
@@ -26,12 +28,30 @@ const Manuscript = {
   new: () => lodash.cloneDeep(emptyManuscript),
 
   save: async manuscript => {
-    if (manuscript.id) {
+    // TODO wrap these queries in a transaction
+    let { id } = manuscript
+    if (id) {
       await dataAccess.update(manuscript)
-      return manuscript
+    } else {
+      id = await dataAccess.insert(manuscript)
     }
 
-    const id = await dataAccess.insert(manuscript)
+    if (manuscript.teams) {
+      await Promise.all(
+        manuscript.teams.map(team =>
+          TeamManager.save({ objectId: id, objectType: 'manuscript', ...team }),
+        ),
+      )
+    }
+
+    if (manuscript.files) {
+      await Promise.all(
+        manuscript.files.map(file =>
+          FileManager.save({ manuscriptId: id, ...file }),
+        ),
+      )
+    }
+
     return { ...manuscript, id }
   },
 
@@ -106,9 +126,10 @@ const Manuscript = {
   },
 
   checkPermission: (manuscript, user) => {
-    if (user !== manuscript.createdBy) {
-      throw new Error('Manuscript not owned by user')
-    }
+    // TODO
+    // if (user !== manuscript.createdBy) {
+    //   throw new Error('Manuscript not owned by user')
+    // }
   },
 }
 
