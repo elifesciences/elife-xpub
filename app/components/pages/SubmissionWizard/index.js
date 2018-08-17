@@ -5,10 +5,12 @@ import AuthorDetails from './steps/Author'
 import FileUploads from './steps/Files'
 import ManuscriptMetadata from './steps/Submission'
 import ReviewerSuggestions from './steps/Editors'
+import Disclosure from './steps/Disclosure'
 import { schema as fileUploadsSchema } from './steps/Files/schema'
 import { schema as authorDetailsSchema } from './steps/Author/schema'
 import { schema as manuscriptMetadataSchema } from './steps/Submission/schema'
 import { schema as reviewerSuggestionsSchema } from './steps/Editors/schema'
+import { schema as disclosureSchema } from './steps/Disclosure/schema'
 import WizardStep from './WizardStep'
 
 const SubmissionPage = ({ match, history }) => (
@@ -60,16 +62,33 @@ const SubmissionPage = ({ match, history }) => (
           render={() => (
             <WizardStep
               component={ReviewerSuggestions}
+              handleSubmit={progressSubmission}
+              handleUpdate={updateSubmission}
+              history={history}
+              initialValues={initialValues}
+              nextUrl={`${match.path}/disclosure`}
+              previousUrl={`${match.path}/metadata`}
+              step={3}
+              title="Who should review your work?"
+              validationSchema={reviewerSuggestionsSchema}
+            />
+          )}
+        />
+        <Route
+          path={`${match.path}/disclosure`}
+          render={() => (
+            <WizardStep
+              component={Disclosure}
               handleSubmit={finishSubmission}
               handleUpdate={updateSubmission}
               history={history}
               initialValues={initialValues}
               nextUrl="/dashboard"
-              previousUrl={`${match.path}/metadata`}
-              step={3}
+              previousUrl={`${match.path}/suggestions`}
+              step={4}
               submitButtonText="Submit"
-              title="Who should review your work?"
-              validationSchema={reviewerSuggestionsSchema}
+              title="Disclosure of data to editors"
+              validationSchema={disclosureSchema}
             />
           )}
         />
