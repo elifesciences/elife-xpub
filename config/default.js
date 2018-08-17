@@ -18,7 +18,6 @@ module.exports = {
     enableExperimentalGraphql: true,
     morganLogFormat:
       ':remote-addr [:date[clf]] :method :url :status :graphql[operation] :res[content-length] :response-time ms',
-    wsPort: 5000,
   },
   'pubsweet-client': {
     API_ENDPOINT: '/api',
