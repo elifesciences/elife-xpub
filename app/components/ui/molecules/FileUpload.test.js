@@ -51,14 +51,14 @@ it('displays success if conversion.completed is set', () => {
   expect(dropzoneContentWrapper.text()).toBe(manuscriptUploadSuccess)
 })
 
-it('displays uploading if conversion.converting is set', () => {
+it.skip('displays uploading if conversion.converting is set', () => {
   const dropzoneContentWrapper = makeCheerioWrapper({
     conversion: { converting: true },
   })
   expect(dropzoneContentWrapper.text()).toBe(manuscriptUploading)
 })
 
-it('displays uploading even if there are errors', () => {
+it.skip('displays uploading even if there are errors', () => {
   const dropzoneContentWrapper = makeCheerioWrapper({
     conversion: { converting: true, error: new Error('Boo') },
     formError: true,
