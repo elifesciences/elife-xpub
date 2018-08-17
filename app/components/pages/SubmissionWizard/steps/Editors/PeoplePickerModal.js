@@ -44,6 +44,7 @@ const PeoplePickerModal = ({ open, title, ...props }) => (
               >
                 <SearchBox
                   filterFunction={innerProps.filterFunction}
+                  getMatchIndex={innerProps.getMatchIndex}
                   onSubmit={innerProps.searchSubmit}
                   options={innerProps.searchOptions}
                 />

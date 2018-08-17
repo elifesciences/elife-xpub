@@ -36,7 +36,8 @@ const SelectionHint = ({ selection, minSelection, maxSelection }) => {
     const numRequired = minSelection - selectionLength
     return (
       <div>
-        {numRequired} more suggestion{numRequired === 1 ? '' : 's'} required
+        {numRequired} more suggestion
+        {numRequired === 1 ? '' : 's'} required
       </div>
     )
   }
@@ -174,43 +175,29 @@ class PeoplePicker extends React.Component {
       }
     })
 
-    let j
     let matches = []
-    const matchIndex = []
     const re = new RegExp(`^${inputValue}`)
-
     const filterNthMatches = (person, n) => {
       const words = person[field].match(/[^ ]+/g)
       if (words.length <= n) {
         return false
       }
-      const match = re.exec(words[n].toLowerCase())
-      if (match) {
-        matchIndex[j] = 0
-        for (let k = 0; k < n; k += 1) {
-          matchIndex[j] += words[k].length + 1
-        }
-        j += 1
-        return true
-      }
-      return false
-    }
-
-    const addMatchIndex = person => {
-      const clonedPerson = cloneDeep(person)
-      clonedPerson.matchIndex = matchIndex[j]
-      j += 1
-      return clonedPerson
+      return re.test(words[n].toLowerCase())
     }
 
     for (let i = 0; i < maxWords; i += 1) {
-      /* matches for ith word */
-      j = 0
+      /* matches for ith word, starting at 0 */
       const ithMatches = people.filter(person => filterNthMatches(person, i))
-      j = 0
-      matches = matches.concat(ithMatches.map(addMatchIndex))
+      matches = matches.concat(ithMatches)
     }
     return matches
+  }
+
+  getMatchIndex = (inputValue, option) => {
+    const re = new RegExp(`${inputValue}`)
+    const match = re.exec(option.toLowerCase())
+    if (match) return match.index
+    return -1
   }
 
   render() {
@@ -225,6 +212,7 @@ class PeoplePicker extends React.Component {
       searchSubmit: this.searchSubmit,
       searchOptions,
       filterFunction: this.filterPeople,
+      getMatchIndex: this.getMatchIndex,
       isSelected: person => this.isSelected(person),
       isValid: this.isValid(),
       selection: this.state.selection,

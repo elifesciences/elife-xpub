@@ -72,15 +72,18 @@ class SearchBox extends React.Component {
     )
   }
   renderSuggestion = suggestion => {
-    const inputValue = this.state.value
-    const beforeMatch = suggestion.value.slice(0, suggestion.matchIndex)
+    const inputValue = this.state.value.trim().toLowerCase()
+    const matchIndex = this.props.getMatchIndex(inputValue, suggestion.value)
+    if (matchIndex < 0) {
+      // this shouldn't happen/error
+      return ''
+    }
+    const beforeMatch = suggestion.value.slice(0, matchIndex)
     const matched = suggestion.value.slice(
-      suggestion.matchIndex,
-      suggestion.matchIndex + inputValue.length,
+      matchIndex,
+      matchIndex + inputValue.length,
     )
-    const afterMatch = suggestion.value.slice(
-      suggestion.matchIndex + inputValue.length,
-    )
+    const afterMatch = suggestion.value.slice(matchIndex + inputValue.length)
     return (
       <div>
         {beforeMatch}
