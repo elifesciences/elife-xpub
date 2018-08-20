@@ -46,6 +46,19 @@ class EditorsContent extends React.Component {
     boxVisibility: {},
   }
 
+  static getDerivedStateFromProps(nextProps, prevState) {
+    return {
+      boxVisibility: {
+        opposedSeniorEditors:
+          !!nextProps.values.opposedSeniorEditors.length ||
+          prevState.boxVisibility.opposedSeniorEditors,
+        opposedReviewingEditors:
+          !!nextProps.values.opposedReviewingEditors.length ||
+          prevState.boxVisibility.opposedReviewingEditors,
+      },
+    }
+  }
+
   showBox = name => {
     this.setState({
       boxVisibility: { ...this.state.boxVisibility, [name]: true },
@@ -130,19 +143,6 @@ class EditorsContent extends React.Component {
         }
       }
     })
-  }
-
-  static getDerivedStateFromProps(nextProps, prevState) {
-    return {
-      boxVisibility: {
-        opposedSeniorEditors:
-          !!nextProps.values.opposedSeniorEditors.length ||
-          prevState.boxVisibility.opposedSeniorEditors,
-        opposedReviewingEditors:
-          !!nextProps.values.opposedReviewingEditors.length ||
-          prevState.boxVisibility.opposedReviewingEditors,
-      },
-    }
   }
 
   render() {
