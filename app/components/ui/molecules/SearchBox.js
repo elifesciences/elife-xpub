@@ -37,11 +37,7 @@ class SearchBox extends React.Component {
     value: '',
     suggestions: [],
   }
-  onChange = (_, { newValue }) => {
-    this.setState({
-      value: newValue,
-    })
-  }
+  getSuggestionValue = suggestion => this.state.value
   onSuggestionsFetchRequested = ({ value }) => {
     const inputValue = value.trim().toLowerCase()
     const inputLength = inputValue.length
@@ -62,7 +58,6 @@ class SearchBox extends React.Component {
       suggestions: [],
     })
   }
-  getSuggestionValue = suggestion => this.state.value
   onSuggestionSelected = (_, { suggestion }) => {
     this.setState(
       {
@@ -70,6 +65,17 @@ class SearchBox extends React.Component {
       },
       () => this.props.onSubmit(suggestion.value),
     )
+  }
+  onChange = (_, { newValue }) => {
+    this.setState({
+      value: newValue,
+    })
+  }
+  onKeyDown = event => {
+    // key code for enter is 13
+    if (event.keyCode === 13) {
+      this.props.onSubmit(this.state.value)
+    }
   }
   renderSuggestion = suggestion => {
     const inputValue = this.state.value.trim().toLowerCase()
@@ -91,12 +97,6 @@ class SearchBox extends React.Component {
         {afterMatch}
       </div>
     )
-  }
-  onKeyDown = event => {
-    // key code for enter is 13
-    if (event.keyCode === 13) {
-      this.props.onSubmit(this.state.value)
-    }
   }
   render() {
     const { value, suggestions } = this.state
