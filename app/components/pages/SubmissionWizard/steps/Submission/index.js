@@ -63,7 +63,7 @@ const ManuscriptMetadata = ({ values, setFieldValue, setFieldTouched }) => (
       onOpen={() => setFieldValue('previouslySubmitted', [''])}
       open={values.previouslySubmitted.length}
     >
-      <ValidatedField label="Article title" name="previouslySubmitted.0" />
+      <ValidatedField label="Previous article title" name="previouslySubmitted.0" />
     </OptionalSection>
 
     <OptionalSection
@@ -75,7 +75,7 @@ const ManuscriptMetadata = ({ values, setFieldValue, setFieldTouched }) => (
     >
       <Box mb={2}>
         <ValidatedField
-          label="Second article title"
+          label="Title of co-submitted article"
           name="firstCosubmissionTitle"
         />
       </Box>
@@ -89,15 +89,15 @@ const ManuscriptMetadata = ({ values, setFieldValue, setFieldTouched }) => (
             onClick={() => setFieldValue('secondCosubmissionTitle', '', false)}
             type="button"
           >
-            include
+            add
           </Action>{' '}
-          another cosubmission
+          another co-submission
         </Box>
       ) : (
         // the second title is not null so show it
         <Box mb={2}>
           <ValidatedField
-            label="Third article title (optional)"
+            label="Title of co-submitted article (optional)"
             name="secondCosubmissionTitle"
           />
         </Box>

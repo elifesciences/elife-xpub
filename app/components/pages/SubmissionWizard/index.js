@@ -83,7 +83,7 @@ const SubmissionPage = ({ match, history }) => (
               initialValues={initialValues}
               nextUrl={`${match.path}/upload`}
               step={0}
-              title="Who is the corresponding author?"
+              title="Your details"
               validationSchema={authorDetailsSchema}
             />
           )}
