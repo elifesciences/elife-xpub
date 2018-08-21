@@ -63,6 +63,9 @@
       "<rootDir>/server"
     ]
   },
+  "resolutions": {
+    "styled-system": "2.3.6"
+  },
   "workspaces": [
     "client/*",
     "server/*"
@@ -81,10 +84,10 @@
     "lodash": "^4.17.5",
     "omit-deep-lodash": "^1.1.2",
     "prop-types": "^15.6.2",
-    "react": "^16.4.2",
-    "react-apollo": "^2.1.11",
     "pubsweet-client": "^4.1.0",
     "pubsweet-server": "^8.0.0",
+    "react": "^16.4.2",
+    "react-apollo": "^2.1.11",
     "react-autosuggest": "^9.3.4",
     "react-dom": "^16.4.2",
     "react-dropzone": "^4.3.0",

@@ -8820,7 +8820,7 @@ prompt@^1.0.0:
     utile "0.3.x"
     winston "2.1.x"
 
-"prompt@github:flatiron/prompt#1c95d1d8d333b5fbc13fa5f0619f3dcf0d514f87":
+prompt@flatiron/prompt#1c95d1d8d333b5fbc13fa5f0619f3dcf0d514f87:
   version "1.0.0"
   resolved "https://codeload.github.com/flatiron/prompt/tar.gz/1c95d1d8d333b5fbc13fa5f0619f3dcf0d514f87"
   dependencies:
@@ -10896,13 +10896,7 @@ styled-normalize@^3.0.1:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/styled-normalize/-/styled-normalize-3.0.1.tgz#217efb96598690addd04699ca71af0db3473fea2"
 
-"styled-system@>=2.0.0 || >=3.0.0":
-  version "3.0.2"
-  resolved "https://registry.yarnpkg.com/styled-system/-/styled-system-3.0.2.tgz#2189a6d829117d212fb6ac8ebc4260fdb75d1109"
-  dependencies:
-    prop-types "^15.6.2"
-
-styled-system@^2.3.1:
+styled-system@2.3.6, "styled-system@>=2.0.0 || >=3.0.0", styled-system@^2.3.1:
   version "2.3.6"
   resolved "https://registry.yarnpkg.com/styled-system/-/styled-system-2.3.6.tgz#a38c1ffa04a5c35adec46473984e463c48b16f7c"
   dependencies:
