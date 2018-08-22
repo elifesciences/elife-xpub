@@ -5,7 +5,7 @@ const schema = yup.object().shape({
   disclosureConsent: yup
     .bool()
     .required()
-    .oneOf([true], 'Your consent is required for submission'),
+    .oneOf([true], 'We are unable to proceed without your consent'),
 })
 
 export { schema }
