@@ -80,9 +80,9 @@ const DropzoneContent = ({
   if (conversion.converting) {
     return (
       <React.Fragment>
-        <StyledUploadIcon percentage={conversion.progress} />
+        <StyledUploadIcon />
         <Instruction data-test-id="dropzoneMessage">
-          Manuscript is uploading {conversion.progress}%
+          Manuscript is uploading
         </Instruction>
       </React.Fragment>
     )
@@ -177,7 +177,6 @@ FileUpload.propTypes = {
     completed: PropTypes.bool,
     error: PropTypes.instanceOf(Error),
     converting: PropTypes.bool,
-    progress: PropTypes.number,
   }),
   formError: PropTypes.bool,
 }

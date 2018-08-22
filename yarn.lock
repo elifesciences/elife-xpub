@@ -177,22 +177,22 @@
     aws-sdk "^2.185.0"
     nodemailer "^4.4.2"
 
-"@pubsweet/db-manager@^1.3.0":
-  version "1.3.0"
-  resolved "https://registry.yarnpkg.com/@pubsweet/db-manager/-/db-manager-1.3.0.tgz#84473189bf0cc53278e68266d961021c550ac6f5"
+"@pubsweet/db-manager@^1.3.1":
+  version "1.3.1"
+  resolved "https://registry.yarnpkg.com/@pubsweet/db-manager/-/db-manager-1.3.1.tgz#1501a06839cd1fa0d8abf9a8639b73f593454e2c"
   dependencies:
-    "@pubsweet/logger" "^0.2.5"
+    "@pubsweet/logger" "^0.2.6"
     fs-extra "^4.0.2"
     isomorphic-fetch "^2.2.1"
     joi "^13.1.0"
     pg "^7.4.1"
-    pubsweet-server "^8.0.0"
+    pubsweet-server "^8.0.1"
     tmp "^0.0.33"
     umzug "^2.1.0"
 
-"@pubsweet/logger@^0.2.5":
-  version "0.2.5"
-  resolved "https://registry.yarnpkg.com/@pubsweet/logger/-/logger-0.2.5.tgz#0fbe1bdd2581fe97927a2c72e449315047569532"
+"@pubsweet/logger@^0.2.6":
+  version "0.2.6"
+  resolved "https://registry.yarnpkg.com/@pubsweet/logger/-/logger-0.2.6.tgz#376f8860304e5209d040adc82e62802ae031ed2f"
   dependencies:
     config "^1.26.2"
     joi "^13.1.0"
@@ -206,9 +206,33 @@
     lodash "^4.17.4"
     styled-components "^3.2.5"
 
-"@pubsweet/ui@^8.0.1", "@pubsweet/ui@^8.4.0":
-  version "8.4.0"
-  resolved "https://registry.yarnpkg.com/@pubsweet/ui/-/ui-8.4.0.tgz#3c63f4fd8b2484abd819ec852db801c03f968ef3"
+"@pubsweet/ui@^8.0.1":
+  version "8.3.0"
+  resolved "https://registry.yarnpkg.com/@pubsweet/ui/-/ui-8.3.0.tgz#b8da7be8d9110594abdd18476e3808c9606a74b4"
+  dependencies:
+    "@pubsweet/ui-toolkit" "^1.2.0"
+    babel-jest "^21.2.0"
+    classnames "^2.2.5"
+    enzyme "^3.2.0"
+    enzyme-adapter-react-16 "^1.1.1"
+    invariant "^2.2.3"
+    lodash "^4.17.4"
+    moment "^2.22.1"
+    prop-types "^15.5.10"
+    react "^16.2.0"
+    react-dom "^16.2.0"
+    react-feather "^1.0.8"
+    react-redux "^5.0.2"
+    react-router-dom "^4.2.2"
+    react-tag-autocomplete "^5.5.0"
+    recompose "^0.26.0"
+    redux "^3.6.0"
+    redux-form "^7.0.3"
+    styled-components "^3.2.5"
+
+"@pubsweet/ui@^8.5.0":
+  version "8.5.0"
+  resolved "https://registry.yarnpkg.com/@pubsweet/ui/-/ui-8.5.0.tgz#91dd438e320431ca8e60b0f41d49cd46e1ccb66a"
   dependencies:
     "@pubsweet/ui-toolkit" "^1.2.0"
     babel-jest "^21.2.0"
@@ -253,8 +277,8 @@
   resolved "https://registry.yarnpkg.com/@types/lodash/-/lodash-4.14.116.tgz#5ccf215653e3e8c786a58390751033a9adca0eb9"
 
 "@types/node@*":
-  version "10.7.1"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-10.7.1.tgz#b704d7c259aa40ee052eec678758a68d07132a2e"
+  version "10.7.0"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-10.7.0.tgz#d384b2c8625414ab2aa18fdf989c288d6a7a8202"
 
 "@types/zen-observable@^0.8.0":
   version "0.8.0"
@@ -885,8 +909,8 @@ autoprefixer@^9.0.0:
     postcss-value-parser "^3.2.3"
 
 aws-sdk@^2.185.0:
-  version "2.295.0"
-  resolved "https://registry.yarnpkg.com/aws-sdk/-/aws-sdk-2.295.0.tgz#b034cd101702a6e31a59e6ff9e953986d573310d"
+  version "2.293.0"
+  resolved "https://registry.yarnpkg.com/aws-sdk/-/aws-sdk-2.293.0.tgz#5474110972d1595f4386e3e0c350af9f6b71ccc8"
   dependencies:
     buffer "4.9.1"
     events "1.1.1"
@@ -2277,9 +2301,9 @@ chrome-remote-interface@^0.25.3:
     commander "2.11.x"
     ws "3.3.x"
 
-ci-info@^1.3.0:
-  version "1.3.1"
-  resolved "https://registry.yarnpkg.com/ci-info/-/ci-info-1.3.1.tgz#da21bc65a5f0d0d250c19a169065532b42fa048c"
+ci-info@^1.0.0:
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/ci-info/-/ci-info-1.3.0.tgz#ea8219b0355a58692b762baf1cdd76ceb4503283"
 
 cipher-base@^1.0.0, cipher-base@^1.0.1, cipher-base@^1.0.3:
   version "1.0.4"
@@ -3565,8 +3589,8 @@ enzyme-adapter-utils@^1.5.0:
     prop-types "^15.6.2"
 
 enzyme@^3.2.0, enzyme@^3.3.0:
-  version "3.4.3"
-  resolved "https://registry.yarnpkg.com/enzyme/-/enzyme-3.4.3.tgz#86c4a1219a967cddb8d0359f28e119a93302014b"
+  version "3.4.1"
+  resolved "https://registry.yarnpkg.com/enzyme/-/enzyme-3.4.1.tgz#d305af5bdb30b8aca56d199110421588c670ea0e"
   dependencies:
     array.prototype.flat "^1.2.1"
     cheerio "^1.0.0-rc.2"
@@ -5582,10 +5606,10 @@ is-callable@^1.1.1, is-callable@^1.1.3, is-callable@^1.1.4:
   resolved "https://registry.yarnpkg.com/is-callable/-/is-callable-1.1.4.tgz#1e1adf219e1eeb684d691f9d6a05ff0d30a24d75"
 
 is-ci@^1.0.10:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/is-ci/-/is-ci-1.2.0.tgz#3f4a08d6303a09882cef3f0fb97439c5f5ce2d53"
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/is-ci/-/is-ci-1.1.0.tgz#247e4162e7860cebbdaf30b774d6b0ac7dcfe7a5"
   dependencies:
-    ci-info "^1.3.0"
+    ci-info "^1.0.0"
 
 is-data-descriptor@^0.1.4:
   version "0.1.4"
@@ -7340,8 +7364,8 @@ nanoid@^0.2.2:
   resolved "https://registry.yarnpkg.com/nanoid/-/nanoid-0.2.2.tgz#e2ebc6ad3db5e0454fd8124d30ca39b06555fe56"
 
 nanoid@^1.0.1:
-  version "1.2.1"
-  resolved "https://registry.yarnpkg.com/nanoid/-/nanoid-1.2.1.tgz#922bf6c10e35f7b208993768dad643577c907adf"
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/nanoid/-/nanoid-1.2.0.tgz#e2c4dfa45c2bed995d0214aae157ce5052cfcb1d"
 
 nanomatch@^1.2.9:
   version "1.2.13"
@@ -7546,8 +7570,8 @@ node-version@^1.0.0:
   resolved "https://registry.yarnpkg.com/node-version/-/node-version-1.2.0.tgz#34fde3ffa8e1149bd323983479dda620e1b5060d"
 
 nodemailer@^4.4.2:
-  version "4.6.8"
-  resolved "https://registry.yarnpkg.com/nodemailer/-/nodemailer-4.6.8.tgz#f82fb407828bf2e76d92acc34b823d83e774f89c"
+  version "4.6.7"
+  resolved "https://registry.yarnpkg.com/nodemailer/-/nodemailer-4.6.7.tgz#b68de7f36d65618bdeeeb76234e3547d51266373"
 
 nomnom@~1.6.2:
   version "1.6.2"
@@ -8820,7 +8844,7 @@ prompt@^1.0.0:
     utile "0.3.x"
     winston "2.1.x"
 
-prompt@flatiron/prompt#1c95d1d8d333b5fbc13fa5f0619f3dcf0d514f87:
+"prompt@github:flatiron/prompt#1c95d1d8d333b5fbc13fa5f0619f3dcf0d514f87":
   version "1.0.0"
   resolved "https://codeload.github.com/flatiron/prompt/tar.gz/1c95d1d8d333b5fbc13fa5f0619f3dcf0d514f87"
   dependencies:
@@ -8991,10 +9015,10 @@ public-encrypt@^4.0.0:
     randombytes "^2.0.1"
 
 pubsweet-client@^4.1.0:
-  version "4.1.0"
-  resolved "https://registry.yarnpkg.com/pubsweet-client/-/pubsweet-client-4.1.0.tgz#dde1d5f8c3e5c516bbad45d6e41c9e5f56ba00c8"
+  version "4.1.1"
+  resolved "https://registry.yarnpkg.com/pubsweet-client/-/pubsweet-client-4.1.1.tgz#4077d5a7f477c74464bdf257f24df975eb32ca5a"
   dependencies:
-    "@pubsweet/ui" "^8.4.0"
+    "@pubsweet/ui" "^8.5.0"
     "@pubsweet/ui-toolkit" "^1.2.0"
     apollo-cache-inmemory "^1.2.4"
     apollo-client "^2.3.4"
@@ -9027,11 +9051,11 @@ pubsweet-client@^4.1.0:
     styled-normalize "^3.0.1"
     subscriptions-transport-ws "^0.9.12"
 
-pubsweet-server@^8.0.0:
-  version "8.0.0"
-  resolved "https://registry.yarnpkg.com/pubsweet-server/-/pubsweet-server-8.0.0.tgz#f1dea811dbde1803e9c4eaa8472e09061bda2e15"
+pubsweet-server@^8.0.0, pubsweet-server@^8.0.1:
+  version "8.0.1"
+  resolved "https://registry.yarnpkg.com/pubsweet-server/-/pubsweet-server-8.0.1.tgz#cea5a08ad10092ae8dce02dbe1dd1f572ca43f43"
   dependencies:
-    "@pubsweet/logger" "^0.2.5"
+    "@pubsweet/logger" "^0.2.6"
     apollo-server-express "^1.3.2"
     apollo-upload-server "^4.0.2"
     authsome "^0.1.0"
@@ -9072,11 +9096,11 @@ pubsweet-sse@^1.0.0:
   resolved "https://registry.yarnpkg.com/pubsweet-sse/-/pubsweet-sse-1.0.0.tgz#dd36aa378a302b518d417b545b064da65aec876a"
 
 pubsweet@^2.3.0:
-  version "2.3.0"
-  resolved "https://registry.yarnpkg.com/pubsweet/-/pubsweet-2.3.0.tgz#2064a6eed67d70c8e6f5700342359e2622a6261e"
+  version "2.3.1"
+  resolved "https://registry.yarnpkg.com/pubsweet/-/pubsweet-2.3.1.tgz#18d37e996a223b0174c752b7a2f457a1ab52790e"
   dependencies:
-    "@pubsweet/db-manager" "^1.3.0"
-    "@pubsweet/logger" "^0.2.5"
+    "@pubsweet/db-manager" "^1.3.1"
+    "@pubsweet/logger" "^0.2.6"
     bluebird "^3.5.0"
     colors "^1.1.2"
     commander "^2.9.0"
@@ -9085,7 +9109,7 @@ pubsweet@^2.3.0:
     fs-extra "^4.0.2"
     inflection "^1.12.0"
     prompt flatiron/prompt#1c95d1d8d333b5fbc13fa5f0619f3dcf0d514f87
-    pubsweet-server "^8.0.0"
+    pubsweet-server "^8.0.1"
     require-relative "^0.8.7"
     uuid "^3.0.1"
     webpack "^3.8.1"
@@ -9260,14 +9284,14 @@ react-apollo@^2.1.0, react-apollo@^2.1.11:
     prop-types "^15.6.0"
 
 react-autosuggest@^9.3.4:
-  version "9.4.0"
-  resolved "https://registry.yarnpkg.com/react-autosuggest/-/react-autosuggest-9.4.0.tgz#3146bc9afa4f171bed067c542421edec5ca94294"
+  version "9.3.4"
+  resolved "https://registry.yarnpkg.com/react-autosuggest/-/react-autosuggest-9.3.4.tgz#e47ff800081b2f7c678165bfb7cc84b07f462336"
   dependencies:
     prop-types "^15.5.10"
-    react-autowhatever "^10.1.2"
+    react-autowhatever "^10.1.0"
     shallow-equal "^1.0.0"
 
-react-autowhatever@^10.1.2:
+react-autowhatever@^10.1.0:
   version "10.1.2"
   resolved "https://registry.yarnpkg.com/react-autowhatever/-/react-autowhatever-10.1.2.tgz#200ffc41373b2189e3f6140ac7bdb82363a79fd3"
   dependencies:
@@ -11059,8 +11083,8 @@ substance@1.0.0-preview.53:
     nth-check "1.0.1"
 
 substance@^1.0.0-preview.53:
-  version "1.0.0-preview.85"
-  resolved "https://registry.yarnpkg.com/substance/-/substance-1.0.0-preview.85.tgz#d30306e78dbe808adc1a75b427246000ce586958"
+  version "1.0.0-preview.83"
+  resolved "https://registry.yarnpkg.com/substance/-/substance-1.0.0-preview.83.tgz#58e30f684418da589d4fd6e97d1f09ff2a2b5ddc"
   dependencies:
     boolbase "1.0.0"
     css-what "2.1.0"
@@ -12378,8 +12402,8 @@ xmlbuilder@~9.0.1:
   resolved "https://registry.yarnpkg.com/xmlbuilder/-/xmlbuilder-9.0.7.tgz#132ee63d2ec5565c557e20f4c22df9aca686b10d"
 
 xpub-edit@^2.4.1:
-  version "2.5.0"
-  resolved "https://registry.yarnpkg.com/xpub-edit/-/xpub-edit-2.5.0.tgz#9be67916476690a57a2b6dd4971ecf48aee0e6a4"
+  version "2.4.1"
+  resolved "https://registry.yarnpkg.com/xpub-edit/-/xpub-edit-2.4.1.tgz#0c86f30367ff8181db6148ab0af89637855ca97a"
   dependencies:
     "@pubsweet/ui-toolkit" "^1.2.0"
     prosemirror-commands "^1.0.1"
