@@ -177,26 +177,18 @@
     aws-sdk "^2.185.0"
     nodemailer "^4.4.2"
 
-"@pubsweet/db-manager@^1.2.1":
-  version "1.2.1"
-  resolved "https://registry.yarnpkg.com/@pubsweet/db-manager/-/db-manager-1.2.1.tgz#6b79f634bd3b448d2ac954014113cd21b1fdd7bb"
+"@pubsweet/db-manager@^1.3.1":
+  version "1.3.1"
+  resolved "https://registry.yarnpkg.com/@pubsweet/db-manager/-/db-manager-1.3.1.tgz#1501a06839cd1fa0d8abf9a8639b73f593454e2c"
   dependencies:
-    "@pubsweet/logger" "^0.2.4"
+    "@pubsweet/logger" "^0.2.6"
     fs-extra "^4.0.2"
     isomorphic-fetch "^2.2.1"
     joi "^13.1.0"
     pg "^7.4.1"
-    pubsweet-server "^7.2.0"
+    pubsweet-server "^8.0.1"
     tmp "^0.0.33"
     umzug "^2.1.0"
-
-"@pubsweet/logger@^0.2.4":
-  version "0.2.4"
-  resolved "https://registry.yarnpkg.com/@pubsweet/logger/-/logger-0.2.4.tgz#e7cf19661ef8d8f3b38868731d15620cb38f96b5"
-  dependencies:
-    config "^1.26.2"
-    joi "^13.1.0"
-    lodash "^4.17.4"
 
 "@pubsweet/logger@^0.2.6":
   version "0.2.6"
@@ -4933,12 +4925,6 @@ graphql-tools@^2.18.0:
     iterall "^1.1.3"
     uuid "^3.1.0"
 
-graphql@^0.12.3:
-  version "0.12.3"
-  resolved "https://registry.yarnpkg.com/graphql/-/graphql-0.12.3.tgz#11668458bbe28261c0dcb6e265f515ba79f6ce07"
-  dependencies:
-    iterall "1.1.3"
-
 graphql@^0.13.0, graphql@^0.13.2:
   version "0.13.2"
   resolved "https://registry.yarnpkg.com/graphql/-/graphql-0.13.2.tgz#4c740ae3c222823e7004096f832e7b93b2108270"
@@ -5995,10 +5981,6 @@ istanbul-reports@^1.3.0:
   resolved "https://registry.yarnpkg.com/istanbul-reports/-/istanbul-reports-1.3.0.tgz#2f322e81e1d9520767597dca3c20a0cce89a3554"
   dependencies:
     handlebars "^4.0.3"
-
-iterall@1.1.3:
-  version "1.1.3"
-  resolved "https://registry.yarnpkg.com/iterall/-/iterall-1.1.3.tgz#1cbbff96204056dde6656e2ed2e2226d0e6d72c9"
 
 iterall@^1.1.3, iterall@^1.2.1, iterall@^1.2.2:
   version "1.2.2"
@@ -8862,7 +8844,7 @@ prompt@^1.0.0:
     utile "0.3.x"
     winston "2.1.x"
 
-prompt@flatiron/prompt#1c95d1d8d333b5fbc13fa5f0619f3dcf0d514f87:
+"prompt@github:flatiron/prompt#1c95d1d8d333b5fbc13fa5f0619f3dcf0d514f87":
   version "1.0.0"
   resolved "https://codeload.github.com/flatiron/prompt/tar.gz/1c95d1d8d333b5fbc13fa5f0619f3dcf0d514f87"
   dependencies:
@@ -9069,45 +9051,7 @@ pubsweet-client@^4.1.0:
     styled-normalize "^3.0.1"
     subscriptions-transport-ws "^0.9.12"
 
-pubsweet-server@^7.2.0:
-  version "7.2.0"
-  resolved "https://registry.yarnpkg.com/pubsweet-server/-/pubsweet-server-7.2.0.tgz#b930f910b013957e2dfd54b856f2f91ead2b9351"
-  dependencies:
-    "@pubsweet/logger" "^0.2.4"
-    apollo-server-express "^1.3.2"
-    apollo-upload-server "^4.0.2"
-    authsome "^0.1.0"
-    bcrypt "^2.0.1"
-    bluebird "^3.5.1"
-    body-parser "^1.15.2"
-    colors "^1.1.2"
-    config "^1.26.2"
-    cookie-parser "^1.4.3"
-    dotenv "^4.0.0"
-    express "^4.16.1"
-    graphql "^0.12.3"
-    graphql-tools "^2.18.0"
-    helmet "^3.8.1"
-    http-status-codes "^1.0.6"
-    joi "^13.1.0"
-    jsonwebtoken "^7.1.7"
-    lodash "^4.0.0"
-    minimist "^1.2.0"
-    morgan "^1.8.2"
-    multer "^1.1.0"
-    passport "^0.3.2"
-    passport-anonymous "^1.0.1"
-    passport-http-bearer "^1.0.1"
-    passport-local "^1.0.0"
-    pg "^7.4.1"
-    promise-queue "^2.2.3"
-    prompt "^1.0.0"
-    pubsweet-sse "^1.0.0"
-    require-relative "^0.8.7"
-    uuid "^3.0.1"
-    winston "^2.2.0"
-
-pubsweet-server@^8.0.0:
+pubsweet-server@^8.0.0, pubsweet-server@^8.0.1:
   version "8.0.1"
   resolved "https://registry.yarnpkg.com/pubsweet-server/-/pubsweet-server-8.0.1.tgz#cea5a08ad10092ae8dce02dbe1dd1f572ca43f43"
   dependencies:
@@ -9151,12 +9095,12 @@ pubsweet-sse@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/pubsweet-sse/-/pubsweet-sse-1.0.0.tgz#dd36aa378a302b518d417b545b064da65aec876a"
 
-pubsweet@^2.2.8:
-  version "2.2.8"
-  resolved "https://registry.yarnpkg.com/pubsweet/-/pubsweet-2.2.8.tgz#c0bd09d837a78fec673c011a42cc3578d31fc474"
+pubsweet@^2.3.0:
+  version "2.3.1"
+  resolved "https://registry.yarnpkg.com/pubsweet/-/pubsweet-2.3.1.tgz#18d37e996a223b0174c752b7a2f457a1ab52790e"
   dependencies:
-    "@pubsweet/db-manager" "^1.2.1"
-    "@pubsweet/logger" "^0.2.4"
+    "@pubsweet/db-manager" "^1.3.1"
+    "@pubsweet/logger" "^0.2.6"
     bluebird "^3.5.0"
     colors "^1.1.2"
     commander "^2.9.0"
@@ -9165,7 +9109,7 @@ pubsweet@^2.2.8:
     fs-extra "^4.0.2"
     inflection "^1.12.0"
     prompt flatiron/prompt#1c95d1d8d333b5fbc13fa5f0619f3dcf0d514f87
-    pubsweet-server "^7.2.0"
+    pubsweet-server "^8.0.1"
     require-relative "^0.8.7"
     uuid "^3.0.1"
     webpack "^3.8.1"
