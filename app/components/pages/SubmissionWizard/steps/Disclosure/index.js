@@ -62,9 +62,10 @@ const Disclosure = ({ values, setFieldValue, setFieldTouched }) => {
           (by emailing{' '}
           <StyledLink href="mailto:data@elifesciences.org">
             data@elifesciences.org
-          </StyledLink>). Please enter your name and check the box below to give
-          this consent. Without this consent we will not be able to evaluate
-          your submission.
+          </StyledLink>
+          ). Please enter your name and check the box below to give this
+          consent. Without this consent we will not be able to evaluate your
+          submission.
         </RegularP>
       </Box>
       <Box mb={3} w={1 / 2}>
@@ -76,7 +77,7 @@ const Disclosure = ({ values, setFieldValue, setFieldTouched }) => {
       <ValidatedField
         component={ValueCheckbox}
         label="I agree on behalf of all authors"
-        name="disclosure-consent"
+        name="disclosureConsent"
       />
     </React.Fragment>
   )
