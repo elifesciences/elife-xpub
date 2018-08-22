@@ -26,6 +26,8 @@ const emptyManuscript = {
   previouslyDiscussed: null,
   previouslySubmitted: [],
   cosubmission: [],
+  submitterSignature: '',
+  disclosureConsent: false,
   teams: [
     {
       role: 'suggestedReviewer',
