@@ -12,6 +12,6 @@
     "express": "^4.16.2"
   },
   "peerDependencies": {
-    "pubsweet-server": "^8.0.0"
+    "pubsweet-server": "^7.0.0"
   }
 }

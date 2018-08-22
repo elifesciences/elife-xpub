@@ -51,16 +51,14 @@ it('displays success if conversion.completed is set', () => {
   expect(dropzoneContentWrapper.text()).toBe(manuscriptUploadSuccess)
 })
 
-// TODO fix this tests to account for upload %
-it.skip('displays uploading if conversion.converting is set', () => {
+it('displays uploading if conversion.converting is set', () => {
   const dropzoneContentWrapper = makeCheerioWrapper({
     conversion: { converting: true },
   })
   expect(dropzoneContentWrapper.text()).toBe(manuscriptUploading)
 })
 
-// TODO fix these tests to account for upload %
-it.skip('displays uploading even if there are errors', () => {
+it('displays uploading even if there are errors', () => {
   const dropzoneContentWrapper = makeCheerioWrapper({
     conversion: { converting: true, error: new Error('Boo') },
     formError: true,
