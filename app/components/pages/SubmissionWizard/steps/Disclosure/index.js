@@ -4,22 +4,13 @@ import { Box } from 'grid-styled'
 import { Checkbox } from '@pubsweet/ui'
 import { th } from '@pubsweet/ui-toolkit'
 
+import Paragraph from '../../../../ui/atoms/Paragraph'
+import SmallParagraph from '../../../../ui/atoms/SmallParagraph'
+import ExternalLink from '../../../../ui/atoms/ExternalLink'
 import { FormH3 } from '../../../../ui/atoms/FormHeadings'
 import ValidatedField from '../../../../ui/atoms/ValidatedField'
 
-const StyledLink = styled.a`
-  color: ${th('colorPrimary')};
-  text-decoration: none;
-`
-
-const RegularP = styled.p`
-  font-size: ${th('fontSizeBase')};
-  line-height: ${th('fontLineHeightBase')};
-`
-
-const SmallP = styled.p`
-  font-size: ${th('fontSizeBaseSmall')};
-  line-height: ${th('fontLineHeightBaseSmall')};
+const StyledSmallParagraph = styled(SmallParagraph)`
   color: ${th('colorTextSecondary')};
 `
 
@@ -36,17 +27,17 @@ const Disclosure = ({ values, setFieldValue, setFieldTouched }) => {
     <React.Fragment>
       <Box mb={4}>
         <FormH3>{values.meta.title}</FormH3>
-        <RegularP>
+        <Paragraph>
           {values.author.firstName} {values.author.lastName}
-        </RegularP>
-        <SmallP>{formattedArticleType}</SmallP>
+        </Paragraph>
+        <StyledSmallParagraph>{formattedArticleType}</StyledSmallParagraph>
       </Box>
       <Box mb={4}>
-        <RegularP>
+        <Paragraph>
           Our{' '}
-          <StyledLink href="https://elifesciences.org/privacy-notice">
+          <ExternalLink href="https://elifesciences.org/privacy-notice">
             privacy policy
-          </StyledLink>{' '}
+          </ExternalLink>{' '}
           explains that we share your personal information with various third
           parties to enable us to review and publish your manuscript, and that
           we protect your data with detailed contractual arrangements with those
@@ -60,13 +51,13 @@ const Disclosure = ({ values, setFieldValue, setFieldTouched }) => {
           in the UK. Because of this risk, we ask for your explicit consent to
           share your personal data with them, which you can withdraw at any time
           (by emailing{' '}
-          <StyledLink href="mailto:data@elifesciences.org">
+          <ExternalLink href="mailto:data@elifesciences.org">
             data@elifesciences.org
-          </StyledLink>
+          </ExternalLink>
           ). Please enter your name and check the box below to give this
           consent. Without this consent we will not be able to evaluate your
           submission.
-        </RegularP>
+        </Paragraph>
       </Box>
       <Box mb={3} w={1 / 2}>
         <ValidatedField

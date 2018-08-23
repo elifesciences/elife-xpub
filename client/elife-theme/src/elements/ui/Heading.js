@@ -9,23 +9,23 @@ export default css`
 export const H1 = css`
   padding-top: 18px;
   margin-bottom: 18px;
-  line-height: ${th('fontLineHeight1')};
+  line-height: ${th('lineHeight1')};
 `
 
 export const H2 = css`
   padding-top: 9px;
   margin-bottom: 9px;
-  line-height: ${th('fontLineHeight2')};
+  line-height: ${th('lineHeight2')};
 `
 
 export const H3 = css`
   padding-top: 12px;
   margin-bottom: 12px;
-  line-height: ${th('fontLineHeight3')};
+  line-height: ${th('lineHeight3')};
 `
 
 export const H4 = css`
   padding-top: 12px;
   margin-bottom: 12px;
-  line-height: ${th('fontLineHeight4')};
+  line-height: ${th('lineHeight4')};
 `

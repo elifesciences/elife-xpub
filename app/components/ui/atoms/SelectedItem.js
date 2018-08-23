@@ -17,7 +17,7 @@ const StyledIcon = styled(CrossIcon)`
 const Root = styled.div`
   border-radius: ${th('borderRadius')};
   background-color: ${th('colorPrimary')};
-  line-height: ${th('fontLineHeightBase')};
+  line-height: ${th('lineHeightBase')};
   padding: ${th('space.1')} ${th('space.2')} ${th('space.1')} ${th('space.2')}
   color: ${th('colorTextReverse')};
   display: inline-flex;

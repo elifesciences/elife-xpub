@@ -17,7 +17,7 @@ const Input = styled.textarea`
 
   font-family: inherit;
   font-size: ${th('fontSizeBase')};
-  line-height: ${th('fontLineHeightBase')};
+  line-height: ${th('lineHeightBase')};
 
   padding: ${th('space.2')};
   width: 100%;
