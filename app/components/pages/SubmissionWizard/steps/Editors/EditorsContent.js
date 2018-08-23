@@ -33,7 +33,8 @@ const OptionalExclude = ({
       Would you like to{' '}
       <Action onClick={onRequestOpen} type="button">
         exclude a {roleName}
-      </Action>?
+      </Action>
+      ?
     </Box>
   )
 
@@ -305,18 +306,29 @@ class EditorsContent extends React.Component {
               />
             </Box>
           ))}
-
-          {values.opposedReviewers.map((_, index) => (
-            // eslint-disable-next-line react/no-array-index-key
-            <Box key={index} my={3}>
-              <ExcludedReviewer
-                index={index}
-                setFieldValue={setFieldValue}
-                values={values}
-              />
-            </Box>
-          ))}
-
+          <OptionalExclude
+            boxVisible={this.isBoxVisible('opposedReviewers')}
+            data-test-id="opposed-reviewers"
+            onRequestClose={() => this.hideBox('opposedReviewers')}
+            onRequestOpen={() => this.showBox('opposedReviewers')}
+            roleName="reviewer"
+          >
+            {values.opposedReviewers.map((_, index) => (
+              // eslint-disable-next-line react/no-array-index-key
+              <Box key={index} my={3}>
+                <ExcludedReviewer
+                  index={index}
+                  setFieldValue={setFieldValue}
+                  values={values}
+                />
+              </Box>
+            ))}
+          </OptionalExclude>
+          <ValidatedField
+            component={Textarea}
+            label="Reason for exclusion"
+            name="opposedReviewers.reason"
+          />
           <Box>
             Would you like to{' '}
             <MoreButton
@@ -326,7 +338,8 @@ class EditorsContent extends React.Component {
               setFieldValue={setFieldValue}
               type="exclude"
               values={values}
-            />?
+            />
+            ?
           </Box>
         </Box>
 

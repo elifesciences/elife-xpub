@@ -3,7 +3,6 @@ import { Checkbox } from '@pubsweet/ui'
 
 import ValidatedField from '../../../../ui/atoms/ValidatedField'
 import CalloutBox from '../../../../ui/atoms/CalloutBox'
-import Textarea from '../../../../ui/atoms/Textarea'
 import { FormH3 } from '../../../../ui/atoms/FormHeadings'
 import TwoColumnLayout from '../../../../global/layout/TwoColumnLayout'
 import { limits } from './schema'
@@ -20,8 +19,8 @@ export const SuggestedReviewer = ({ changeHandler, index }) => (
     <ValidatedField
       label={
         index < limits.suggestedReviewers.min
-          ? 'Suggested reviewer name'
-          : 'Optional suggested reviewer name'
+          ? `Suggested reviewer ${index + 1} name`
+          : `Optional suggested reviewer ${index + 1} name`
       }
       name={`suggestedReviewers.${index}.name`}
       onChange={changeHandler}
@@ -60,11 +59,6 @@ export const ExcludedReviewer = ({ index, values, setFieldValue }) => (
         type="email"
       />
     </TwoColumnLayout>
-    <ValidatedField
-      component={Textarea}
-      label="Reason for exclusion"
-      name={`opposedReviewers.${index}.reason`}
-    />
   </CalloutBox>
 )
 
