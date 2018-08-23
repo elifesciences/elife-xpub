@@ -9,6 +9,7 @@ module.exports = {
     baseUrl: deferConfig(
       cfg => `http://localhost:${cfg['pubsweet-server'].port}`,
     ),
+    hostname: 'localhost',
     secret: 'not very secret',
     graphiql: true,
     logger: winston,
