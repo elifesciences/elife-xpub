@@ -9014,9 +9014,9 @@ public-encrypt@^4.0.0:
     parse-asn1 "^5.0.0"
     randombytes "^2.0.1"
 
-pubsweet-client@^4.1.0:
-  version "4.1.1"
-  resolved "https://registry.yarnpkg.com/pubsweet-client/-/pubsweet-client-4.1.1.tgz#4077d5a7f477c74464bdf257f24df975eb32ca5a"
+pubsweet-client@^4.1.2:
+  version "4.1.2"
+  resolved "https://registry.yarnpkg.com/pubsweet-client/-/pubsweet-client-4.1.2.tgz#95a6cece3e6666b8f29e1bebe2a994313c80f2ba"
   dependencies:
     "@pubsweet/ui" "^8.5.0"
     "@pubsweet/ui-toolkit" "^1.2.0"
