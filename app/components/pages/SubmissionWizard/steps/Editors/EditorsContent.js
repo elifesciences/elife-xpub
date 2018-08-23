@@ -196,7 +196,7 @@ class EditorsContent extends React.Component {
             data-test-id="opposed-senior-editors"
             onRequestClose={() => this.hideBox('opposedSeniorEditors')}
             onRequestOpen={() => this.showBox('opposedSeniorEditors')}
-            roleName="senior editor"
+            roleName="Senior Editor"
           >
             <FormH3>Exclude a Senior Editor</FormH3>
 
@@ -265,7 +265,7 @@ class EditorsContent extends React.Component {
             data-test-id="opposed-reviewing-editors"
             onRequestClose={() => this.hideBox('opposedReviewingEditors')}
             onRequestOpen={() => this.showBox('opposedReviewingEditors')}
-            roleName="reviewing editor"
+            roleName="Reviewing Editor"
           >
             <FormH3>Exclude a Reviewing Editor</FormH3>
 
