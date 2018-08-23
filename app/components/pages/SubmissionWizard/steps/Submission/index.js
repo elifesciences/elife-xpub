@@ -21,8 +21,8 @@ const ManuscriptMetadata = ({ values, setFieldValue, setFieldTouched }) => (
         onBlur={value => setFieldValue('meta.articleType', value)}
         onChange={value => setFieldValue('meta.articleType', value)}
         options={[
-          { value: 'research-article', label: 'Research article' },
-          { value: 'feature', label: 'Feature article' },
+          { value: 'research-article', label: 'Research Article' },
+          { value: 'feature', label: 'Feature Article' },
         ]}
         placeholder="Please choose"
       />
