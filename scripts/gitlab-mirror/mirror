@@ -1,0 +1,21 @@
+#!/bin/bash
+
+TARGET=$1
+MIRROR=$2
+DELAY=${3:-60}
+SSH_KEY=${4:-gitlab-mirror}
+
+# Set up ssh and add a valid key
+eval `ssh-agent -s`
+ssh-add /root/.ssh/$SSH_KEY
+
+while true
+do
+mkdir -p repo/
+git clone --mirror $TARGET repo/
+cd repo
+git push --mirror $MIRROR
+cd ..
+rm -rf repo
+sleep $DELAY
+done
