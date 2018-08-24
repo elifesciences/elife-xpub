@@ -34,7 +34,7 @@ const PeoplePickerControl = ({
         isRequired={items.length < minSelection}
         key="chooser"
         onIconClick={onRequestModal}
-        roleName="Editor"
+        roleName="editor"
       />,
     )
 

@@ -98,7 +98,7 @@ const DropzoneContent = ({
         <StyledUploadFailureIcon />
         <ErrorText data-test-id="dropzoneMessage">
           {errorMessage}. Try to <Action onClick={dropzoneOpen}>upload</Action>{' '}
-          your Manuscript again.
+          your manuscript again.
         </ErrorText>
       </React.Fragment>
     )
@@ -108,7 +108,7 @@ const DropzoneContent = ({
       <React.Fragment>
         <StyledUploadFailureIcon />
         <ErrorText data-test-id="dropzoneMessage">
-          Please <Action onClick={dropzoneOpen}>upload</Action> your Manuscript.
+          Please <Action onClick={dropzoneOpen}>upload</Action> your manuscript.
         </ErrorText>
       </React.Fragment>
     )
@@ -122,7 +122,7 @@ const DropzoneContent = ({
           <Action data-test-id="preview" to={previewUrl}>
             Preview
           </Action>{' '}
-          or <Action onClick={dropzoneOpen}>replace</Action> your Manuscript.
+          or <Action onClick={dropzoneOpen}>replace</Action> your manuscript.
         </Instruction>
       </React.Fragment>
     )

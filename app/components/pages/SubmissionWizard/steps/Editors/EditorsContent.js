@@ -33,7 +33,8 @@ const OptionalExclude = ({
       Would you like to{' '}
       <Action onClick={onRequestOpen} type="button">
         exclude a {roleName}
-      </Action>?
+      </Action>
+      ?
     </Box>
   )
 
@@ -174,7 +175,7 @@ class EditorsContent extends React.Component {
                 this.setSelection('suggestedSeniorEditors', selection)
               }
               options={seniorEditors}
-              title="Senior Editors"
+              title="senior editors"
             />
             <ValidationMessage
               message={
@@ -206,7 +207,7 @@ class EditorsContent extends React.Component {
                 this.setSelection('opposedSeniorEditors', selection)
               }
               options={seniorEditors}
-              title="Senior Editors"
+              title="senior editors"
             />
 
             <ValidationMessage
@@ -241,7 +242,7 @@ class EditorsContent extends React.Component {
                 this.setSelection('suggestedReviewingEditors', selection)
               }
               options={reviewingEditors}
-              title="Reviewing Editors"
+              title="reviewing editors"
             />
 
             <ValidationMessage
@@ -326,7 +327,8 @@ class EditorsContent extends React.Component {
               setFieldValue={setFieldValue}
               type="exclude"
               values={values}
-            />?
+            />
+            ?
           </Box>
         </Box>
 
