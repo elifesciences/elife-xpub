@@ -38,7 +38,7 @@ export const Steps = {
   `,
 
   StepTitle: css`
-    line-height: ${th('fontLineHeight5')};
+    line-height: ${th('lineHeight5')};
     font-size: ${th('fontSizeBaseSmall')};
     color: ${({ isCurrent }) =>
       isCurrent ? th('colorText') : th('colorFurniture')};

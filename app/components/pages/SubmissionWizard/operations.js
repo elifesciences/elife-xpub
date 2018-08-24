@@ -61,6 +61,8 @@ const manuscriptFragment = gql`
     previouslyDiscussed
     previouslySubmitted
     cosubmission
+    submitterSignature
+    disclosureConsent
   }
   ${editorFragment}
   ${reviewerFragment}

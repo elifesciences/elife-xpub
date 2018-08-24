@@ -10,6 +10,7 @@ const ProgressBar = ({ currentStep }) => (
       <Steps.Step title="Files" />
       <Steps.Step title="Submission" />
       <Steps.Step title="Editors" />
+      <Steps.Step title="Disclosure" />
     </Steps>
   </Box>
 )

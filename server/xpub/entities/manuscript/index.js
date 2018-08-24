@@ -49,6 +49,8 @@ const Manuscript = {
         'cosubmission',
         'opposedReviewers',
         'suggestionsConflict',
+        'submitterSignature',
+        'disclosureConsent',
       ]),
     )
 

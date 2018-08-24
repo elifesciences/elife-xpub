@@ -2,6 +2,8 @@ extend type Manuscript {
   previouslyDiscussed: String
   previouslySubmitted: [String!]
   cosubmission: [String!]
+  submitterSignature: String
+  disclosureConsent: Boolean
   relatedManuscripts: [RelatedManuscript!]
   suggestionsConflict: Boolean!
   qcIssues: [QCIssue!]

@@ -7,7 +7,7 @@ import { th } from '@pubsweet/ui-toolkit'
 
 const MessageWrapper = styled.div`
   // consistent height even when empty
-  min-height: ${th('fontLineHeightBaseSmall')};
+  min-height: ${th('lineHeightBaseSmall')};
   // inverse of bottom margin on FieldComponent
   margin-top: ${th('space.1')};
   font-size: ${th('fontSizeBaseSmall')};

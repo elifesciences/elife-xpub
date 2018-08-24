@@ -65,7 +65,7 @@ const StyledButton = styled.button`
 
 const RegularP = styled.p`
   font-size: ${th('fontSizeBase')};
-  line-height: ${th('fontLineHeightBase')};
+  line-height: ${th('lineHeightBase')};
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -74,8 +74,8 @@ const RegularP = styled.p`
 
 const SmallP = styled.p`
   font-size: ${th('fontSizeBaseSmall')};
-  line-height: ${th('fontLineHeightBaseSmall')};
-  // vertical spacing of 6px comes from: 24px grid - fontLineHeightBaseSmall
+  line-height: ${th('lineHeightBaseSmall')};
+  // vertical spacing of 6px comes from: 24px grid - lineHeightBaseSmall
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -84,7 +84,7 @@ const SmallP = styled.p`
 
 const SmallAction = styled(Action)`
   font-size: ${th('fontSizeBaseSmall')};
-  line-height: ${th('fontLineHeightBaseSmall')};
+  line-height: ${th('lineHeightBaseSmall')};
   margin: 3px 0;
 `
 
