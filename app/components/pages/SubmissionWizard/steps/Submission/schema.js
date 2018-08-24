@@ -12,7 +12,7 @@ const schema = yup.object().shape({
   }),
   previouslyDiscussed: yup
     .string()
-    .notOneOf(['', undefined], 'Please describe your previous discussion')
+    .notOneOf(['', undefined], 'Please describe your previous interaction')
     .nullable(),
   previouslySubmitted: yup.array(
     yup
