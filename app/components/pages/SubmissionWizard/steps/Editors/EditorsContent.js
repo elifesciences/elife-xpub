@@ -2,8 +2,7 @@ import { cloneDeep } from 'lodash'
 import React from 'react'
 import { Box } from 'grid-styled'
 import { Action, ErrorText } from '@pubsweet/ui'
-import MoreButton from '../../../../ui/molecules/MoreButton'
-import { FormH3 } from '../../../../ui/atoms/FormHeadings'
+import { FormH3, FormH4 } from '../../../../ui/atoms/FormHeadings'
 
 import {
   Declaration,
@@ -33,9 +32,27 @@ const OptionalExclude = ({
       Would you like to{' '}
       <Action onClick={onRequestOpen} type="button">
         exclude a {roleName}
-      </Action>?
+      </Action>
+      ?
     </Box>
   )
+/*
+ * If using the OptionalExclude component you need to extend the function
+ * below, to define when its visible.
+ */
+const OptionalExcludeVisibilites = (nextProps, prevState) => ({
+  boxVisibility: {
+    opposedSeniorEditors:
+      !!nextProps.values.opposedSeniorEditors.length ||
+      prevState.boxVisibility.opposedSeniorEditors,
+    opposedReviewingEditors:
+      !!nextProps.values.opposedReviewingEditors.length ||
+      prevState.boxVisibility.opposedReviewingEditors,
+    opposedReviewers:
+      !!nextProps.values.opposedReviewers.length ||
+      prevState.boxVisibility.opposedReviewers,
+  },
+})
 
 const ValidationMessage = ({ message }) => (
   <div aria-live="polite">{message && <ErrorText>{message}</ErrorText>}</div>
@@ -47,16 +64,7 @@ class EditorsContent extends React.Component {
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
-    return {
-      boxVisibility: {
-        opposedSeniorEditors:
-          !!nextProps.values.opposedSeniorEditors.length ||
-          prevState.boxVisibility.opposedSeniorEditors,
-        opposedReviewingEditors:
-          !!nextProps.values.opposedReviewingEditors.length ||
-          prevState.boxVisibility.opposedReviewingEditors,
-      },
-    }
+    return OptionalExcludeVisibilites(nextProps, prevState)
   }
 
   showBox = name => {
@@ -188,7 +196,7 @@ class EditorsContent extends React.Component {
             data-test-id="opposed-senior-editors"
             onRequestClose={() => this.hideBox('opposedSeniorEditors')}
             onRequestOpen={() => this.showBox('opposedSeniorEditors')}
-            roleName="senior editor"
+            roleName="Senior Editor"
           >
             <FormH3>Exclude a Senior Editor</FormH3>
 
@@ -257,7 +265,7 @@ class EditorsContent extends React.Component {
             data-test-id="opposed-reviewing-editors"
             onRequestClose={() => this.hideBox('opposedReviewingEditors')}
             onRequestOpen={() => this.showBox('opposedReviewingEditors')}
-            roleName="reviewing editor"
+            roleName="Reviewing Editor"
           >
             <FormH3>Exclude a Reviewing Editor</FormH3>
 
@@ -306,28 +314,32 @@ class EditorsContent extends React.Component {
             </Box>
           ))}
 
-          {values.opposedReviewers.map((_, index) => (
-            // eslint-disable-next-line react/no-array-index-key
-            <Box key={index} my={3}>
-              <ExcludedReviewer
-                index={index}
-                setFieldValue={setFieldValue}
-                values={values}
-              />
-            </Box>
-          ))}
+          <OptionalExclude
+            boxVisible={this.isBoxVisible('opposedReviewers')}
+            data-test-id="opposed-reviewers"
+            onRequestClose={() => this.hideBox('opposedReviewers')}
+            onRequestOpen={() => this.showBox('opposedReviewers')}
+            roleName="reviewer"
+          >
+            <FormH4>Exclude Reviewers</FormH4>
 
-          <Box>
-            Would you like to{' '}
-            <MoreButton
-              empty={{ name: '', email: '' }}
-              fieldName="opposedReviewers"
-              objectName="reviewer"
-              setFieldValue={setFieldValue}
-              type="exclude"
-              values={values}
-            />?
-          </Box>
+            {values.opposedReviewers.map((_, index) => (
+              // eslint-disable-next-line react/no-array-index-key
+              <Box key={index} my={3}>
+                <ExcludedReviewer
+                  index={index}
+                  setFieldValue={setFieldValue}
+                  values={values}
+                />
+              </Box>
+            ))}
+
+            <ValidatedField
+              component={Textarea}
+              label="Reason for exclusion"
+              name="opposedReviewersReason"
+            />
+          </OptionalExclude>
         </Box>
 
         <Declaration />

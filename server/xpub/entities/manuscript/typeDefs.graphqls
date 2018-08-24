@@ -20,6 +20,7 @@ extend type Manuscript {
   # todo: these should be handled through notes
   opposedSeniorEditorsReason: String
   opposedReviewingEditorsReason: String
+  opposedReviewersReason: String
   coverLetter: String
 }
 
@@ -33,6 +34,7 @@ input ManuscriptInput {
   opposedReviewingEditorsReason: String
   suggestedReviewers: [ReviewerAliasInput]
   opposedReviewers: [OpposedReviewerInput]
+  opposedReviewersReason: String
   coverLetter: String
   author: AuthorAliasInput
   previouslyDiscussed: String

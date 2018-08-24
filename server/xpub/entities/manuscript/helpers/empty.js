@@ -9,7 +9,8 @@ const emptyManuscript = {
   },
   opposedSeniorEditorsReason: '',
   opposedReviewingEditorsReason: '',
-  opposedReviewers: [],
+  opposedReviewersReason: '',
+  opposedReviewers: [{ name: '', email: '' }, { name: '', email: '' }],
   suggestionsConflict: false,
   files: [],
   coverLetter: `

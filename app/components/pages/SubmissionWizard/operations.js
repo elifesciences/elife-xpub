@@ -46,6 +46,7 @@ const manuscriptFragment = gql`
       email
       reason
     }
+    opposedReviewersReason
     suggestionsConflict
     files {
       filename
