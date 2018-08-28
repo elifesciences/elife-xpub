@@ -1,10 +1,9 @@
 import { cloneDeep } from 'lodash'
 import React from 'react'
 import { Box } from 'grid-styled'
-import { Action, ErrorText } from '@pubsweet/ui'
+import { Action, ErrorText, Checkbox } from '@pubsweet/ui'
 import { FormH3 } from '../../../../ui/atoms/FormHeadings'
 
-import { Declaration, SuggestedReviewer } from './FormSections'
 import PeoplePickerControl from './PeoplePickerControl'
 import Textarea from '../../../../ui/atoms/Textarea'
 import CalloutBox from '../../../../ui/atoms/CalloutBox'
@@ -36,6 +35,10 @@ const OptionalExclude = ({
 
 const ValidationMessage = ({ message }) => (
   <div aria-live="polite">{message && <ErrorText>{message}</ErrorText>}</div>
+)
+
+const ValueCheckbox = ({ value, validationStatus, ...props }) => (
+  <Checkbox checked={value} {...props} />
 )
 
 class EditorsContent extends React.Component {
@@ -298,10 +301,27 @@ class EditorsContent extends React.Component {
           {values.suggestedReviewers.map((_, index) => (
             // eslint-disable-next-line react/no-array-index-key
             <Box key={index} mb={2}>
-              <SuggestedReviewer
-                changeHandler={this.handleSuggestedReviewersChanged}
-                index={index}
-              />
+              <TwoColumnLayout bottomSpacing={false}>
+                <ValidatedField
+                  label={
+                    index < limits.suggestedReviewers.min
+                      ? `Reviewer ${index + 1} name`
+                      : `Reviewer ${index + 1} name (optional)`
+                  }
+                  name={`suggestedReviewers.${index}.name`}
+                  onChange={this.handleSuggestedReviewersChanged}
+                />
+                <ValidatedField
+                  label={
+                    index < limits.suggestedReviewers.min
+                      ? `Reviewer ${index + 1} email`
+                      : `Reviewer ${index + 1} email (optional)`
+                  }
+                  name={`suggestedReviewers.${index}.email`}
+                  onChange={this.handleSuggestedReviewersChanged}
+                  type="email"
+                />
+              </TwoColumnLayout>
             </Box>
           ))}
 
@@ -345,7 +365,11 @@ class EditorsContent extends React.Component {
           </OptionalExclude>
         </Box>
 
-        <Declaration />
+        <ValidatedField
+          component={ValueCheckbox}
+          label="I declare that, to the best of my knowledge, these experts have no conflict of interest"
+          name="suggestionsConflict"
+        />
       </React.Fragment>
     )
   }
