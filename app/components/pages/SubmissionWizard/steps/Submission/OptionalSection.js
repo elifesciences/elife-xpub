@@ -1,8 +1,8 @@
 import React from 'react'
 import { Box } from 'grid-styled'
-import { Checkbox } from '@pubsweet/ui'
 
 import CalloutBox from '../../../../ui/atoms/CalloutBox'
+import ControlledCheckbox from '../../../../ui/atoms/ControlledCheckbox'
 
 const OptionalSection = ({
   label,
@@ -14,11 +14,11 @@ const OptionalSection = ({
 }) => (
   <Box mb={4}>
     <Box mb={2}>
-      <Checkbox
-        checked={open}
+      <ControlledCheckbox
         label={label}
         name={namedAs}
         onChange={open ? onClose : onOpen}
+        value={open}
       />
     </Box>
     {!!open && <CalloutBox>{children}</CalloutBox>}

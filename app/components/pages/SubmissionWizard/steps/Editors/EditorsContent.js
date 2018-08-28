@@ -1,13 +1,14 @@
 import { cloneDeep } from 'lodash'
 import React from 'react'
 import { Box } from 'grid-styled'
-import { Action, ErrorText, Checkbox } from '@pubsweet/ui'
+import { Action, ErrorText } from '@pubsweet/ui'
 import { FormH3 } from '../../../../ui/atoms/FormHeadings'
 
 import PeoplePickerControl from './PeoplePickerControl'
 import Textarea from '../../../../ui/atoms/Textarea'
 import CalloutBox from '../../../../ui/atoms/CalloutBox'
 import ValidatedField from '../../../../ui/atoms/ValidatedField'
+import ControlledCheckbox from '../../../../ui/atoms/ControlledCheckbox'
 import TwoColumnLayout from '../../../../global/layout/TwoColumnLayout'
 import { limits } from './schema'
 
@@ -35,10 +36,6 @@ const OptionalExclude = ({
 
 const ValidationMessage = ({ message }) => (
   <div aria-live="polite">{message && <ErrorText>{message}</ErrorText>}</div>
-)
-
-const ValueCheckbox = ({ value, validationStatus, ...props }) => (
-  <Checkbox checked={value} {...props} />
 )
 
 class EditorsContent extends React.Component {
@@ -366,7 +363,7 @@ class EditorsContent extends React.Component {
         </Box>
 
         <ValidatedField
-          component={ValueCheckbox}
+          component={ControlledCheckbox}
           label="I declare that, to the best of my knowledge, these experts have no conflict of interest"
           name="suggestionsConflict"
         />
