@@ -13,13 +13,15 @@ SSH_KEY=${4:-/root/.ssh/gitlab-mirror}
 eval `ssh-agent -s`
 ssh-add $SSH_KEY
 
-while true
-do
+# Clone the original repo and push to mirror
 mkdir -p repo/
 git clone --mirror $TARGET repo/
 cd repo
 git push --mirror $MIRROR
-cd ..
-rm -rf repo
+
+# Update the mirror
+while true
+do
+git remote update
 sleep $DELAY
 done
