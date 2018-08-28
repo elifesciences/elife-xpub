@@ -9,7 +9,7 @@ const OptionalSection = ({
   children,
   onClose,
   onOpen,
-  open,
+  value,
   namedAs,
 }) => (
   <Box mb={4}>
@@ -17,11 +17,11 @@ const OptionalSection = ({
       <ControlledCheckbox
         label={label}
         name={namedAs}
-        onChange={open ? onClose : onOpen}
-        value={open}
+        onChange={value ? onClose : onOpen}
+        value={value}
       />
     </Box>
-    {!!open && <CalloutBox>{children}</CalloutBox>}
+    {!!value && <CalloutBox>{children}</CalloutBox>}
   </Box>
 )
 

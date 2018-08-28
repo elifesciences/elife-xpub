@@ -47,7 +47,7 @@ const ManuscriptMetadata = ({ values, setFieldValue, setFieldTouched }) => (
       namedAs="previouslyDiscussedToggle"
       onClose={() => setFieldValue('previouslyDiscussed', null)}
       onOpen={() => setFieldValue('previouslyDiscussed', '')}
-      open={values.previouslyDiscussed !== null}
+      value={values.previouslyDiscussed !== null}
     >
       <ValidatedField
         component={Textarea}
@@ -61,7 +61,7 @@ const ManuscriptMetadata = ({ values, setFieldValue, setFieldTouched }) => (
       namedAs="previouslySubmittedToggle"
       onClose={() => setFieldValue('previouslySubmitted', [])}
       onOpen={() => setFieldValue('previouslySubmitted', [''])}
-      open={values.previouslySubmitted.length}
+      value={values.previouslySubmitted.length}
     >
       <ValidatedField
         label="Previous article title"
@@ -74,7 +74,7 @@ const ManuscriptMetadata = ({ values, setFieldValue, setFieldTouched }) => (
       namedAs="cosubmissionToggle"
       onClose={() => setFieldValue('firstCosubmissionTitle', null)}
       onOpen={() => setFieldValue('firstCosubmissionTitle', '')}
-      open={values.firstCosubmissionTitle !== null}
+      value={values.firstCosubmissionTitle !== null}
     >
       <Box mb={2}>
         <ValidatedField
