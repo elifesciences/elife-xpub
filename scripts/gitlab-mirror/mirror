@@ -3,11 +3,11 @@
 TARGET=$1
 MIRROR=$2
 DELAY=${3:-60}
-SSH_KEY=${4:-gitlab-mirror}
+SSH_KEY=${4:-/root/.ssh/gitlab-mirror}
 
 # Set up ssh and add a valid key
 eval `ssh-agent -s`
-ssh-add /root/.ssh/$SSH_KEY
+ssh-add $SSH_KEY
 
 while true
 do
