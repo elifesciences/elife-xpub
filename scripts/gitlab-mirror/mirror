@@ -22,6 +22,6 @@ git push --mirror $MIRROR
 # Update the mirror
 while true
 do
-git remote update
+git remote update --prune
 sleep $DELAY
 done
