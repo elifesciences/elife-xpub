@@ -33,7 +33,8 @@ const OptionalExclude = ({
       Would you like to{' '}
       <Action onClick={onRequestOpen} type="button">
         exclude a {roleName}
-      </Action>?
+      </Action>
+      ?
     </Box>
   )
 
@@ -44,6 +45,19 @@ const ValidationMessage = ({ message }) => (
 class EditorsContent extends React.Component {
   state = {
     boxVisibility: {},
+  }
+
+  static getDerivedStateFromProps(nextProps, prevState) {
+    return {
+      boxVisibility: {
+        opposedSeniorEditors:
+          !!nextProps.values.opposedSeniorEditors.length ||
+          prevState.boxVisibility.opposedSeniorEditors,
+        opposedReviewingEditors:
+          !!nextProps.values.opposedReviewingEditors.length ||
+          prevState.boxVisibility.opposedReviewingEditors,
+      },
+    }
   }
 
   showBox = name => {
@@ -132,19 +146,6 @@ class EditorsContent extends React.Component {
     })
   }
 
-  static getDerivedStateFromProps(nextProps, prevState) {
-    return {
-      boxVisibility: {
-        opposedSeniorEditors:
-          !!nextProps.values.opposedSeniorEditors.length ||
-          prevState.boxVisibility.opposedSeniorEditors,
-        opposedReviewingEditors:
-          !!nextProps.values.opposedReviewingEditors.length ||
-          prevState.boxVisibility.opposedReviewingEditors,
-      },
-    }
-  }
-
   render() {
     const {
       errors,
@@ -174,7 +175,7 @@ class EditorsContent extends React.Component {
                 this.setSelection('suggestedSeniorEditors', selection)
               }
               options={seniorEditors}
-              title="Senior Editors"
+              title="senior editors"
             />
             <ValidationMessage
               message={
@@ -206,7 +207,7 @@ class EditorsContent extends React.Component {
                 this.setSelection('opposedSeniorEditors', selection)
               }
               options={seniorEditors}
-              title="Senior Editors"
+              title="senior editors"
             />
 
             <ValidationMessage
@@ -241,7 +242,7 @@ class EditorsContent extends React.Component {
                 this.setSelection('suggestedReviewingEditors', selection)
               }
               options={reviewingEditors}
-              title="Reviewing Editors"
+              title="reviewing editors"
             />
 
             <ValidationMessage
@@ -326,7 +327,8 @@ class EditorsContent extends React.Component {
               setFieldValue={setFieldValue}
               type="exclude"
               values={values}
-            />?
+            />
+            ?
           </Box>
         </Box>
 

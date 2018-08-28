@@ -78,6 +78,8 @@ const manuscriptInputSchema = Joi.object()
       }),
     ),
     suggestionsConflict: Joi.boolean().required(),
+    submitterSignature: Joi.string().required(),
+    disclosureConsent: Joi.bool().required(),
   })
   .required()
 

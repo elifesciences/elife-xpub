@@ -144,7 +144,7 @@ const resolvers = {
       const pubsub = await getPubsub()
       stream.on('data', chunk => {
         uploadedSize += chunk.length
-        const uploadProgress = Math.floor(uploadedSize * 100 / fileSize)
+        const uploadProgress = Math.floor((uploadedSize * 100) / fileSize)
         pubsub.publish(`${ON_UPLOAD_PROGRESS}.${context.user}`, {
           uploadProgress,
         })

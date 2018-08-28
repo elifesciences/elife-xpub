@@ -20,8 +20,8 @@ export const SuggestedReviewer = ({ changeHandler, index }) => (
     <ValidatedField
       label={
         index < limits.suggestedReviewers.min
-          ? 'Suggested reviewer name'
-          : 'Optional suggested reviewer name'
+          ? `Reviewer ${index + 1} name`
+          : `Reviewer ${index + 1} name (optional)`
       }
       name={`suggestedReviewers.${index}.name`}
       onChange={changeHandler}
@@ -29,8 +29,8 @@ export const SuggestedReviewer = ({ changeHandler, index }) => (
     <ValidatedField
       label={
         index < limits.suggestedReviewers.min
-          ? 'Suggested reviewer email'
-          : 'Optional suggested reviewer email'
+          ? `Reviewer ${index + 1} email`
+          : `Reviewer ${index + 1} email (optional)`
       }
       name={`suggestedReviewers.${index}.email`}
       onChange={changeHandler}

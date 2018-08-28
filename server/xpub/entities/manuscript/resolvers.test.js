@@ -141,6 +141,8 @@ describe('Submission', () => {
       previouslyDiscussed: '',
       previouslySubmitted: [],
       cosubmission: [],
+      submitterSignature: 'Sneha Berry',
+      disclosureConsent: true,
     }
 
     beforeEach(async () => {

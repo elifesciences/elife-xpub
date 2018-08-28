@@ -19,9 +19,9 @@ function makeCheerioWrapper(props) {
 }
 
 const manuscriptUpload = 'Upload your manuscript or drag it here.'
-const noManuscriptError = 'Please upload your Manuscript.'
-const badManuscriptError = 'Try to upload your Manuscript again.'
-const manuscriptUploadSuccess = 'Success! Preview or replace your Manuscript.'
+const noManuscriptError = 'Please upload your manuscript.'
+const badManuscriptError = 'Try to upload your manuscript again.'
+const manuscriptUploadSuccess = 'Success! Preview or replace your manuscript.'
 const manuscriptUploading = 'Manuscript is uploading'
 
 it('displays upload manuscript if nothing is set', () => {

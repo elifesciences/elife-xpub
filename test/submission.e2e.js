@@ -7,6 +7,7 @@ import {
   fileUploads,
   metadata,
   suggestions,
+  disclosure,
 } from './pageObjects'
 import setFixtureHooks from './helpers/set-fixture-hooks'
 
@@ -73,6 +74,12 @@ test('Happy path', async t => {
   // reviewer suggestions
   await suggestions.fillWithDummyData()
   await t.click(suggestions.conflictOfInterest).click(submission.next)
+
+  // data disclosure
+  await t
+    .click(disclosure.submitterName)
+    .typeText('[name="submitterSignature"]', 'Joe Bloggs')
+  await t.click(disclosure.consentCheckbox).click(submission.next)
 
   // dashboard
   await t
@@ -147,6 +154,12 @@ test('Corresponding author', async t => {
   // reviewer suggestions
   await suggestions.fillWithDummyData()
   await t.click(suggestions.conflictOfInterest).click(submission.next)
+
+  // data disclosure
+  await t
+    .click(disclosure.submitterName)
+    .typeText('[name="submitterSignature"]', 'Joe Bloggs')
+  await t.click(disclosure.consentCheckbox).click(submission.next)
 
   // dashboard
   await t
