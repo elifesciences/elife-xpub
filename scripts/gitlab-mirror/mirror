@@ -1,5 +1,9 @@
 #!/bin/bash
 
+###
+# ./mirror TARGET MIRROR [DELAY] [SSH_KEY]
+###
+
 TARGET=$1
 MIRROR=$2
 DELAY=${3:-60}
