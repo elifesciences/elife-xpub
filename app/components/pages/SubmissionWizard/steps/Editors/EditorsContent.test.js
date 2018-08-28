@@ -26,6 +26,7 @@ const formValues = {
     { name: '', email: '' },
   ],
   opposedReviewers: [],
+  opposedReviewersReason: '',
   suggestionsConflict: false,
 }
 

@@ -44,8 +44,8 @@ const manuscriptFragment = gql`
     opposedReviewers {
       name
       email
-      reason
     }
+    opposedReviewersReason
     suggestionsConflict
     files {
       filename

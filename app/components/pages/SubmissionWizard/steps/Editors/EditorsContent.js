@@ -2,18 +2,14 @@ import { cloneDeep } from 'lodash'
 import React from 'react'
 import { Box } from 'grid-styled'
 import { Action, ErrorText } from '@pubsweet/ui'
-import MoreButton from '../../../../ui/molecules/MoreButton'
 import { FormH3 } from '../../../../ui/atoms/FormHeadings'
 
-import {
-  Declaration,
-  ExcludedReviewer,
-  SuggestedReviewer,
-} from './FormSections'
+import { Declaration, SuggestedReviewer } from './FormSections'
 import PeoplePickerControl from './PeoplePickerControl'
 import Textarea from '../../../../ui/atoms/Textarea'
 import CalloutBox from '../../../../ui/atoms/CalloutBox'
 import ValidatedField from '../../../../ui/atoms/ValidatedField'
+import TwoColumnLayout from '../../../../global/layout/TwoColumnLayout'
 import { limits } from './schema'
 
 const OptionalExclude = ({
@@ -56,6 +52,9 @@ class EditorsContent extends React.Component {
         opposedReviewingEditors:
           !!nextProps.values.opposedReviewingEditors.length ||
           prevState.boxVisibility.opposedReviewingEditors,
+        opposedReviewers:
+          !!nextProps.values.opposedReviewers.length ||
+          prevState.boxVisibility.opposedReviewers,
       },
     }
   }
@@ -151,7 +150,6 @@ class EditorsContent extends React.Component {
       errors,
       touched,
       values,
-      setFieldValue,
       seniorEditors,
       reviewingEditors,
     } = this.props
@@ -307,29 +305,44 @@ class EditorsContent extends React.Component {
             </Box>
           ))}
 
-          {values.opposedReviewers.map((_, index) => (
-            // eslint-disable-next-line react/no-array-index-key
-            <Box key={index} my={3}>
-              <ExcludedReviewer
-                index={index}
-                setFieldValue={setFieldValue}
-                values={values}
-              />
-            </Box>
-          ))}
+          <OptionalExclude
+            boxVisible={this.isBoxVisible('opposedReviewers')}
+            data-test-id="opposed-reviewers"
+            onRequestClose={() => this.hideBox('opposedReviewers')}
+            onRequestOpen={() => this.showBox('opposedReviewers')}
+            roleName="reviewer"
+          >
+            <FormH3>Exclude Reviewers</FormH3>
 
-          <Box>
-            Would you like to{' '}
-            <MoreButton
-              empty={{ name: '', email: '' }}
-              fieldName="opposedReviewers"
-              objectName="reviewer"
-              setFieldValue={setFieldValue}
-              type="exclude"
-              values={values}
+            <TwoColumnLayout bottomSpacing={false}>
+              <ValidatedField
+                label="Excluded reviewer 1 name"
+                name="opposedReviewers.0.name"
+              />
+              <ValidatedField
+                label="Excluded reviewer 1 email"
+                name="opposedReviewers.0.email"
+                type="email"
+              />
+            </TwoColumnLayout>
+            <TwoColumnLayout bottomSpacing={false}>
+              <ValidatedField
+                label="Excluded reviewer 2 name"
+                name="opposedReviewers.1.name"
+              />
+              <ValidatedField
+                label="Excluded reviewer 2 email"
+                name="opposedReviewers.1.email"
+                type="email"
+              />
+            </TwoColumnLayout>
+
+            <ValidatedField
+              component={Textarea}
+              label="Reason for exclusion"
+              name="opposedReviewersReason"
             />
-            ?
-          </Box>
+          </OptionalExclude>
         </Box>
 
         <Declaration />
