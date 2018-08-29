@@ -16,6 +16,11 @@ describe('Editors form validation', () => {
         { name: 'B', email: 'b@here.com' },
         { name: 'C', email: 'c@here.com' },
       ],
+      opposedReviewers: [
+        { name: 'D', email: 'd@here.com' },
+        { name: 'E', email: 'e@here.com' },
+      ],
+      opposedReviewersReason: 'Some conflict',
     }
 
     expect(() => schema.validateSync(validData)).not.toThrow()
@@ -31,6 +36,8 @@ describe('Editors form validation', () => {
       opposedReviewingEditorsReason: '',
       suggestionsConflict: false,
       suggestedReviewers: [{ name: '', email: 'bloop' }],
+      opposedReviewers: [{ name: 'Jane Doe', email: 'jane@doe.com' }],
+      opposedReviewersReason: '',
     }
 
     let errors
@@ -51,6 +58,7 @@ describe('Editors form validation', () => {
       suggestedSeniorEditors: 'Please suggest at least 2 editors',
       suggestionsConflict:
         'Please do not suggest people with a known conflict of interest',
+      opposedReviewersReason: 'Please provide a reason for exclusion',
     })
   })
 })

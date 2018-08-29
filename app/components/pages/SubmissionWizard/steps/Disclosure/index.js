@@ -1,7 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
 import { Box } from 'grid-styled'
-import { Checkbox } from '@pubsweet/ui'
 import { th } from '@pubsweet/ui-toolkit'
 
 import Paragraph from '../../../../ui/atoms/Paragraph'
@@ -9,14 +8,11 @@ import SmallParagraph from '../../../../ui/atoms/SmallParagraph'
 import ExternalLink from '../../../../ui/atoms/ExternalLink'
 import { FormH3 } from '../../../../ui/atoms/FormHeadings'
 import ValidatedField from '../../../../ui/atoms/ValidatedField'
+import ControlledCheckbox from '../../../../ui/atoms/ControlledCheckbox'
 
 const StyledSmallParagraph = styled(SmallParagraph)`
   color: ${th('colorTextSecondary')};
 `
-
-const ValueCheckbox = ({ value, ...props }) => (
-  <Checkbox checked={value} {...props} />
-)
 
 const Disclosure = ({ values, setFieldValue, setFieldTouched }) => {
   const formattedArticleType = values.meta.articleType
@@ -66,7 +62,7 @@ const Disclosure = ({ values, setFieldValue, setFieldTouched }) => {
         />
       </Box>
       <ValidatedField
-        component={ValueCheckbox}
+        component={ControlledCheckbox}
         label="I agree on behalf of all authors"
         name="disclosureConsent"
       />

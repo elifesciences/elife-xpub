@@ -1,27 +1,27 @@
 import React from 'react'
 import { Box } from 'grid-styled'
-import { Checkbox } from '@pubsweet/ui'
 
 import CalloutBox from '../../../../ui/atoms/CalloutBox'
+import ControlledCheckbox from '../../../../ui/atoms/ControlledCheckbox'
 
 const OptionalSection = ({
   label,
   children,
   onClose,
   onOpen,
-  open,
+  value,
   namedAs,
 }) => (
   <Box mb={4}>
     <Box mb={2}>
-      <Checkbox
-        checked={open}
+      <ControlledCheckbox
         label={label}
         name={namedAs}
-        onChange={open ? onClose : onOpen}
+        onChange={value ? onClose : onOpen}
+        value={value}
       />
     </Box>
-    {!!open && <CalloutBox>{children}</CalloutBox>}
+    {!!value && <CalloutBox>{children}</CalloutBox>}
   </Box>
 )
 
