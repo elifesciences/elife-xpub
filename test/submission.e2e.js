@@ -3,7 +3,7 @@ import replaySetup from './helpers/replay-setup'
 import {
   dashboard,
   wizardStep,
-  authorDetails,
+  author,
   fileUploads,
   metadata,
   suggestions,
@@ -29,25 +29,25 @@ test('Happy path', async t => {
 
   // author details initially empty
   await t
-    .expect(authorDetails.firstNameField.value)
+    .expect(author.firstNameField.value)
     .eql('')
-    .expect(authorDetails.secondNameField.value)
+    .expect(author.secondNameField.value)
     .eql('')
-    .expect(authorDetails.emailField.value)
+    .expect(author.emailField.value)
     .eql('')
-    .expect(authorDetails.institutionField.value)
+    .expect(author.institutionField.value)
     .eql('')
 
   // author details pre-populated using Orcid API
   await t
-    .click(authorDetails.orcidPrefill)
-    .expect(authorDetails.firstNameField.value)
+    .click(author.orcidPrefill)
+    .expect(author.firstNameField.value)
     .eql('Test', 'First name is populated by query to the Orcid API')
-    .expect(authorDetails.secondNameField.value)
+    .expect(author.secondNameField.value)
     .eql('User', 'Last name is populated by query to the Orcid API')
-    .expect(authorDetails.emailField.value)
+    .expect(author.emailField.value)
     .eql('elife@mailinator.com', 'Email is populated by query to the Orcid API')
-    .expect(authorDetails.institutionField.value)
+    .expect(author.institutionField.value)
     .eql(
       'University of eLife',
       'Institution is populated by query to the Orchid API',
@@ -131,15 +131,15 @@ test('Happy path', async t => {
 test('Ability to progress through the wizard is tied to validation', async t => {
   replaySetup('success')
   await dashboard.login()
-  await t.navigateTo(authorDetails.url)
+  await t.navigateTo(author.url)
 
   // set author details
   await t
-    .typeText(authorDetails.firstNameField, 'Anne')
-    .typeText(authorDetails.secondNameField, 'Author')
-    .typeText(authorDetails.emailField, 'anne.author@life')
-    .typeText(authorDetails.institutionField, 'University of eLife')
-    .expect(Selector(authorDetails.emailValidationMessage).textContent)
+    .typeText(author.firstNameField, 'Anne')
+    .typeText(author.secondNameField, 'Author')
+    .typeText(author.emailField, 'anne.author@life')
+    .typeText(author.institutionField, 'University of eLife')
+    .expect(Selector(author.emailValidationMessage).textContent)
     .eql(
       'Must be a valid email address',
       'Error is displayed when user enters invalid email',
@@ -149,10 +149,10 @@ test('Ability to progress through the wizard is tied to validation', async t => 
     .wait(1000)
     .expect(getPageUrl())
     .eql(
-      authorDetails.url,
+      author.url,
       'Validation errors prevent progress to the next page',
     )
-    .typeText(authorDetails.emailField, '.ac.uk')
+    .typeText(author.emailField, '.ac.uk')
     .click(wizardStep.next)
     .expect(getPageUrl())
     .eql(
@@ -163,13 +163,13 @@ test('Ability to progress through the wizard is tied to validation', async t => 
 
 test('Form entries are saved when a user navigates to the next page of the wizard', async t => {
   await dashboard.login()
-  await t.navigateTo(authorDetails.url)
+  await t.navigateTo(author.url)
 
   await t
-    .typeText(authorDetails.firstNameField, 'Meghan')
-    .typeText(authorDetails.secondNameField, 'Moggy')
-    .typeText(authorDetails.emailField, 'meghan@example.com')
-    .typeText(authorDetails.institutionField, 'iTunes U')
+.typeText(author.firstNameField, 'Meghan')
+.typeText(author.secondNameField, 'Moggy')
+.typeText(author.emailField, 'meghan@example.com')
+.typeText(author.institutionField, 'iTunes U')
     .click(wizardStep.next)
 
   // ensure save completed before reloading
@@ -177,12 +177,12 @@ test('Form entries are saved when a user navigates to the next page of the wizar
   await t.click(wizardStep.back)
 
   await t
-    .expect(authorDetails.firstNameField.value)
+    .expect(author.firstNameField.value)
     .eql('Meghan', 'First name has been saved')
-    .expect(authorDetails.secondNameField.value)
+    .expect(author.secondNameField.value)
     .eql('Moggy', 'Second name has been saved')
-    .expect(authorDetails.emailField.value)
+    .expect(author.emailField.value)
     .eql('meghan@example.com', 'Email has been saved')
-    .expect(authorDetails.institutionField.value)
+    .expect(author.institutionField.value)
     .eql('iTunes U', 'Institution has been saved')
 })

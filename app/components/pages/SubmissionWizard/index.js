@@ -1,13 +1,13 @@
 import React from 'react'
 import { Route, Switch } from 'react-router-dom'
 import WithCurrentSubmission from './WithCurrentSubmission'
-import AuthorDetails from './steps/Author'
+import AuthorPageContainer from './steps/Author'
 import FileUploads from './steps/Files'
 import ManuscriptMetadata from './steps/Submission'
 import ReviewerSuggestions from './steps/Editors'
 import Disclosure from './steps/Disclosure'
 import { schema as fileUploadsSchema } from './steps/Files/schema'
-import { schema as authorDetailsSchema } from './steps/Author/schema'
+import { schema as authorPageSchema } from './steps/Author/schema'
 import { schema as manuscriptMetadataSchema } from './steps/Submission/schema'
 import { schema as reviewerSuggestionsSchema } from './steps/Editors/schema'
 import { schema as disclosureSchema } from './steps/Disclosure/schema'
@@ -95,7 +95,7 @@ const SubmissionPage = ({ match, history }) => (
         <Route
           render={() => (
             <WizardStep
-              component={AuthorDetails}
+              component={AuthorPageContainer}
               handleSubmit={progressSubmission}
               handleUpdate={updateSubmission}
               history={history}
@@ -103,7 +103,7 @@ const SubmissionPage = ({ match, history }) => (
               nextUrl={`${match.path}/files`}
               step={0}
               title="Your details"
-              validationSchema={authorDetailsSchema}
+              validationSchema={authorPageSchema}
             />
           )}
         />

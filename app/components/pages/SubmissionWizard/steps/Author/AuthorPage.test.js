@@ -1,10 +1,10 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import AuthorDetails from './AuthorDetails'
+import AuthorPage from './AuthorPage'
 
-const makeWrapper = (props = {}) => shallow(<AuthorDetails {...props} />)
+const makeWrapper = (props = {}) => shallow(<AuthorPage {...props} />)
 
-describe('AuthorDetails', () => {
+describe('AuthorPage', () => {
   it('is not loading initially', () => {
     const wrapper = makeWrapper()
     expect(wrapper.text()).not.toContain('Loading')
