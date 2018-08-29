@@ -1,5 +1,5 @@
 import config from 'config'
-import { Selector, t } from 'testcafe'
+import { Selector } from 'testcafe'
 
 const suggestions = {
   url: `${config.get('pubsweet-server.baseUrl')}/submit/suggestions`,
@@ -13,22 +13,18 @@ const suggestions = {
     '[data-test-id="people-picker-body"] [data-test-id="person-pod-button"]',
   ),
   peoplePickerSubmit: Selector('[data-test-id="people-picker-add"]'),
-  fillWithDummyData: () =>
-    t
-      .click(suggestions.suggestedSeniorEditorSelection)
-      .click(suggestions.peoplePickerOptions.nth(0))
-      .click(suggestions.peoplePickerOptions.nth(2))
-      .click(suggestions.peoplePickerSubmit)
-      .click(suggestions.suggestedReviewingEditorSelection)
-      .click(suggestions.peoplePickerOptions.nth(1))
-      .click(suggestions.peoplePickerOptions.nth(4))
-      .click(suggestions.peoplePickerSubmit)
-      .typeText('[name="suggestedReviewers.0.name"]', 'Edward')
-      .typeText('[name="suggestedReviewers.0.email"]', 'edward@example.com')
-      .typeText('[name="suggestedReviewers.1.name"]', 'Frances')
-      .typeText('[name="suggestedReviewers.1.email"]', 'frances@example.net')
-      .typeText('[name="suggestedReviewers.2.name"]', 'George')
-      .typeText('[name="suggestedReviewers.2.email"]', 'george@example.org'),
+  firstReviewerName: Selector('[name="suggestedReviewers.0.name"]'),
+  firstReviewerEmail: Selector('[name="suggestedReviewers.0.email"]'),
+  secondReviewerName: Selector('[name="suggestedReviewers.1.name"]'),
+  secondReviewerEmail: Selector('[name="suggestedReviewers.1.email"]'),
+  thirdReviewerName: Selector('[name="suggestedReviewers.2.name"]'),
+  thirdReviewerEmail: Selector('[name="suggestedReviewers.2.email"]'),
+  fourthReviewerName: Selector('[name="suggestedReviewers.3.name"]'),
+  fourthReviewerEmail: Selector('[name="suggestedReviewers.3.email"]'),
+  fifthReviewerName: Selector('[name="suggestedReviewers.4.name"]'),
+  fifthReviewerEmail: Selector('[name="suggestedReviewers.4.email"]'),
+  sixthReviewerName: Selector('[name="suggestedReviewers.5.name"]'),
+  sixthReviewerEmail: Selector('[name="suggestedReviewers.5.email"]'),
   conflictOfInterest: Selector('[name=suggestionsConflict]').parent(),
 }
 
