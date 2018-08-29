@@ -2,7 +2,7 @@ import { ClientFunction, Selector } from 'testcafe'
 import replaySetup from './helpers/replay-setup'
 import {
   dashboard,
-  submission,
+  wizardStep,
   authorDetails,
   fileUploads,
   metadata,
@@ -52,7 +52,7 @@ test('Happy path', async t => {
       'University of eLife',
       'Institution is populated by query to the Orchid API',
     )
-    .click(submission.next)
+    .click(wizardStep.next)
 
   // file uploads
   await t
@@ -66,7 +66,7 @@ test('Happy path', async t => {
     .eql(manuscript.title)
   // only way to get back to wizard is with browser back button at the moment
   await goBack()
-  await t.click(submission.next)
+  await t.click(wizardStep.next)
 
   // metadata
   await t
@@ -86,8 +86,8 @@ test('Happy path', async t => {
     .typeText(metadata.firstCosubmissionTitle, 'Another title')
     .click(metadata.moreSubmission)
     .typeText(metadata.secondCosubmissionTitle, 'Yet another title')
-    .click(submission.next)
-    .click(submission.next)
+    .click(wizardStep.next)
+    .click(wizardStep.next)
 
   // reviewer suggestions
   await t
@@ -112,13 +112,13 @@ test('Happy path', async t => {
     .typeText(suggestions.sixthReviewerName, 'Emily')
     .typeText(suggestions.sixthReviewerEmail, 'emily@example.org')
     .click(suggestions.conflictOfInterest)
-    .click(submission.next)
+    .click(wizardStep.next)
 
   // data disclosure
   await t
     .typeText(disclosure.submitterName, 'Joe Bloggs')
     .click(disclosure.consentCheckbox)
-    .click(submission.next)
+    .click(wizardStep.next)
 
   // dashboard
   await t
@@ -144,7 +144,7 @@ test('Ability to progress through the wizard is tied to validation', async t => 
       'Must be a valid email address',
       'Error is displayed when user enters invalid email',
     )
-    .click(submission.next)
+    .click(wizardStep.next)
     // without this wait the tests sometimes fail on CI ¯\_(ツ)_/¯
     .wait(1000)
     .expect(getPageUrl())
@@ -153,7 +153,7 @@ test('Ability to progress through the wizard is tied to validation', async t => 
       'Validation errors prevent progress to the next page',
     )
     .typeText(authorDetails.emailField, '.ac.uk')
-    .click(submission.next)
+    .click(wizardStep.next)
     .expect(getPageUrl())
     .eql(
       fileUploads.url,
@@ -170,11 +170,11 @@ test('Form entries are saved when a user navigates to the next page of the wizar
     .typeText(authorDetails.secondNameField, 'Moggy')
     .typeText(authorDetails.emailField, 'meghan@example.com')
     .typeText(authorDetails.institutionField, 'iTunes U')
-    .click(submission.next)
+    .click(wizardStep.next)
 
   // ensure save completed before reloading
   await fileUploads.editor
-  await t.click(submission.back)
+  await t.click(wizardStep.back)
 
   await t
     .expect(authorDetails.firstNameField.value)
