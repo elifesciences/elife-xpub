@@ -6,7 +6,7 @@ import {
   author,
   fileUploads,
   metadata,
-  suggestions,
+  editors,
   disclosure,
 } from './pageObjects'
 import setFixtureHooks from './helpers/set-fixture-hooks'
@@ -68,7 +68,7 @@ test('Happy path', async t => {
   await goBack()
   await t.click(wizardStep.next)
 
-  // metadata
+  // adding manuscript metadata
   await t
     .expect(metadata.title.value)
     .eql(manuscript.title)
@@ -89,29 +89,29 @@ test('Happy path', async t => {
     .click(wizardStep.next)
     .click(wizardStep.next)
 
-  // reviewer suggestions
+  // selecting suggested and excluded editors & reviewers
   await t
-    .click(suggestions.suggestedSeniorEditorSelection)
-    .click(suggestions.peoplePickerOptions.nth(0))
-    .click(suggestions.peoplePickerOptions.nth(2))
-    .click(suggestions.peoplePickerSubmit)
-    .click(suggestions.suggestedReviewingEditorSelection)
-    .click(suggestions.peoplePickerOptions.nth(1))
-    .click(suggestions.peoplePickerOptions.nth(4))
-    .click(suggestions.peoplePickerSubmit)
-    .typeText(suggestions.firstReviewerName, 'Edward')
-    .typeText(suggestions.firstReviewerEmail, 'edward@example.com')
-    .typeText(suggestions.secondReviewerName, 'Frances')
-    .typeText(suggestions.secondReviewerEmail, 'frances@example.net')
-    .typeText(suggestions.thirdReviewerName, 'George')
-    .typeText(suggestions.thirdReviewerEmail, 'george@example.org')
-    .typeText(suggestions.fourthReviewerName, 'Ayesha')
-    .typeText(suggestions.fourthReviewerEmail, 'ayesha@example.com')
-    .typeText(suggestions.fifthReviewerName, 'Sneha')
-    .typeText(suggestions.fifthReviewerEmail, 'sneha@example.net')
-    .typeText(suggestions.sixthReviewerName, 'Emily')
-    .typeText(suggestions.sixthReviewerEmail, 'emily@example.org')
-    .click(suggestions.conflictOfInterest)
+    .click(editors.suggestedSeniorEditorSelection)
+    .click(editors.peoplePickerOptions.nth(0))
+    .click(editors.peoplePickerOptions.nth(2))
+    .click(editors.peoplePickerSubmit)
+    .click(editors.suggestedReviewingEditorSelection)
+    .click(editors.peoplePickerOptions.nth(1))
+    .click(editors.peoplePickerOptions.nth(4))
+    .click(editors.peoplePickerSubmit)
+    .typeText(editors.firstReviewerName, 'Edward')
+    .typeText(editors.firstReviewerEmail, 'edward@example.com')
+    .typeText(editors.secondReviewerName, 'Frances')
+    .typeText(editors.secondReviewerEmail, 'frances@example.net')
+    .typeText(editors.thirdReviewerName, 'George')
+    .typeText(editors.thirdReviewerEmail, 'george@example.org')
+    .typeText(editors.fourthReviewerName, 'Ayesha')
+    .typeText(editors.fourthReviewerEmail, 'ayesha@example.com')
+    .typeText(editors.fifthReviewerName, 'Sneha')
+    .typeText(editors.fifthReviewerEmail, 'sneha@example.net')
+    .typeText(editors.sixthReviewerName, 'Emily')
+    .typeText(editors.sixthReviewerEmail, 'emily@example.org')
+    .click(editors.conflictOfInterest)
     .click(wizardStep.next)
 
   // data disclosure
@@ -148,10 +148,7 @@ test('Ability to progress through the wizard is tied to validation', async t => 
     // without this wait the tests sometimes fail on CI ¯\_(ツ)_/¯
     .wait(1000)
     .expect(getPageUrl())
-    .eql(
-      author.url,
-      'Validation errors prevent progress to the next page',
-    )
+    .eql(author.url, 'Validation errors prevent progress to the next page')
     .typeText(author.emailField, '.ac.uk')
     .click(wizardStep.next)
     .expect(getPageUrl())
@@ -166,10 +163,10 @@ test('Form entries are saved when a user navigates to the next page of the wizar
   await t.navigateTo(author.url)
 
   await t
-.typeText(author.firstNameField, 'Meghan')
-.typeText(author.secondNameField, 'Moggy')
-.typeText(author.emailField, 'meghan@example.com')
-.typeText(author.institutionField, 'iTunes U')
+    .typeText(author.firstNameField, 'Meghan')
+    .typeText(author.secondNameField, 'Moggy')
+    .typeText(author.emailField, 'meghan@example.com')
+    .typeText(author.institutionField, 'iTunes U')
     .click(wizardStep.next)
 
   // ensure save completed before reloading

@@ -4,12 +4,12 @@ import WithCurrentSubmission from './WithCurrentSubmission'
 import AuthorPageContainer from './steps/Author'
 import FileUploads from './steps/Files'
 import ManuscriptMetadata from './steps/Submission'
-import ReviewerSuggestions from './steps/Editors'
+import EditorsPageContainer from './steps/Editors'
 import Disclosure from './steps/Disclosure'
 import { schema as fileUploadsSchema } from './steps/Files/schema'
 import { schema as authorPageSchema } from './steps/Author/schema'
 import { schema as manuscriptMetadataSchema } from './steps/Submission/schema'
-import { schema as reviewerSuggestionsSchema } from './steps/Editors/schema'
+import { schema as editorsPageSchema } from './steps/Editors/schema'
 import { schema as disclosureSchema } from './steps/Disclosure/schema'
 import WizardStep from './WizardStep'
 
@@ -61,7 +61,7 @@ const SubmissionPage = ({ match, history }) => (
           path={`${match.path}/editors`}
           render={() => (
             <WizardStep
-              component={ReviewerSuggestions}
+              component={EditorsPageContainer}
               handleSubmit={progressSubmission}
               handleUpdate={updateSubmission}
               history={history}
@@ -70,7 +70,7 @@ const SubmissionPage = ({ match, history }) => (
               previousUrl={`${match.path}/submission`}
               step={3}
               title="Who should review your work?"
-              validationSchema={reviewerSuggestionsSchema}
+              validationSchema={editorsPageSchema}
             />
           )}
         />

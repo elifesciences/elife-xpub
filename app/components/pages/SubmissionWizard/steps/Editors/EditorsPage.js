@@ -38,7 +38,7 @@ const ValidationMessage = ({ message }) => (
   <div aria-live="polite">{message && <ErrorText>{message}</ErrorText>}</div>
 )
 
-class EditorsContent extends React.Component {
+class EditorsPage extends React.Component {
   state = {
     boxVisibility: {},
   }
@@ -372,4 +372,4 @@ class EditorsContent extends React.Component {
   }
 }
 
-export default EditorsContent
+export default EditorsPage

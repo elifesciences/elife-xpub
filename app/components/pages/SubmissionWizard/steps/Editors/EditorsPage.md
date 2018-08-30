@@ -31,7 +31,7 @@ const data = {
 }
 ;<Formik
   render={formProps => (
-    <EditorsContent
+    <EditorsPage
       history={{ location: {} }}
       seniorEditors={[]}
       reviewingEditors={[]}
