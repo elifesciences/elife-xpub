@@ -1,7 +1,7 @@
 export { default as dashboard } from './dashboard'
 export { default as wizardStep } from './wizardStep'
 export { default as author } from './author'
-export { default as fileUploads } from './file-uploads'
+export { default as files } from './files'
 export { default as metadata } from './metadata'
 export { default as editors } from './editors'
 export { default as disclosure } from './disclosure'

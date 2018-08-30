@@ -2,12 +2,12 @@ import React from 'react'
 import { Route, Switch } from 'react-router-dom'
 import WithCurrentSubmission from './WithCurrentSubmission'
 import AuthorPageContainer from './steps/Author'
-import FileUploads from './steps/Files'
+import FilesPageContainer from './steps/Files'
 import ManuscriptMetadata from './steps/Submission'
 import EditorsPageContainer from './steps/Editors'
 import Disclosure from './steps/Disclosure'
-import { schema as fileUploadsSchema } from './steps/Files/schema'
 import { schema as authorPageSchema } from './steps/Author/schema'
+import { schema as filesPageSchema } from './steps/Files/schema'
 import { schema as manuscriptMetadataSchema } from './steps/Submission/schema'
 import { schema as editorsPageSchema } from './steps/Editors/schema'
 import { schema as disclosureSchema } from './steps/Disclosure/schema'
@@ -27,7 +27,7 @@ const SubmissionPage = ({ match, history }) => (
           path={`${match.path}/files`}
           render={() => (
             <WizardStep
-              component={FileUploads}
+              component={FilesPageContainer}
               handleSubmit={progressSubmission}
               handleUpdate={updateSubmission}
               history={history}
@@ -36,7 +36,7 @@ const SubmissionPage = ({ match, history }) => (
               previousUrl={`${match.path}`}
               step={1}
               title="Write your cover letter and upload your manuscript"
-              validationSchema={fileUploadsSchema}
+              validationSchema={filesPageSchema}
             />
           )}
         />

@@ -4,7 +4,7 @@ import {
   dashboard,
   wizardStep,
   author,
-  fileUploads,
+  files,
   metadata,
   editors,
   disclosure,
@@ -54,14 +54,14 @@ test('Happy path', async t => {
     )
     .click(wizardStep.next)
 
-  // file uploads
+  // uploading files - manuscript and cover letter
   await t
-    .typeText(fileUploads.editor, '\nPlease consider this for publication')
-    .setFilesToUpload(fileUploads.manuscriptUpload, manuscript.file)
+    .typeText(files.editor, '\nPlease consider this for publication')
+    .setFilesToUpload(files.manuscriptUpload, manuscript.file)
     // wait for editor onChange
     .wait(1000)
     // manuscript preview page
-    .click(fileUploads.preview)
+    .click(files.preview)
     .expect(Selector('.sc-title-group').textContent)
     .eql(manuscript.title)
   // only way to get back to wizard is with browser back button at the moment
@@ -152,10 +152,7 @@ test('Ability to progress through the wizard is tied to validation', async t => 
     .typeText(author.emailField, '.ac.uk')
     .click(wizardStep.next)
     .expect(getPageUrl())
-    .eql(
-      fileUploads.url,
-      'Entering valid inputs enables progress to the next page',
-    )
+    .eql(files.url, 'Entering valid inputs enables progress to the next page')
 })
 
 test('Form entries are saved when a user navigates to the next page of the wizard', async t => {
@@ -170,7 +167,7 @@ test('Form entries are saved when a user navigates to the next page of the wizar
     .click(wizardStep.next)
 
   // ensure save completed before reloading
-  await fileUploads.editor
+  await files.editor
   await t.click(wizardStep.back)
 
   await t
