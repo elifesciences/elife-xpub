@@ -5,12 +5,12 @@ import AuthorPageContainer from './steps/Author'
 import FilesPageContainer from './steps/Files'
 import SubmissionPage from './steps/Submission'
 import EditorsPageContainer from './steps/Editors'
-import Disclosure from './steps/Disclosure'
+import DisclosurePage from './steps/Disclosure'
 import { schema as authorPageSchema } from './steps/Author/schema'
 import { schema as filesPageSchema } from './steps/Files/schema'
 import { schema as submissionPageSchema } from './steps/Submission/schema'
 import { schema as editorsPageSchema } from './steps/Editors/schema'
-import { schema as disclosureSchema } from './steps/Disclosure/schema'
+import { schema as disclosurePageSchema } from './steps/Disclosure/schema'
 import WizardStep from './WizardStep'
 
 const SubmissionWizard = ({ match, history }) => (
@@ -78,7 +78,7 @@ const SubmissionWizard = ({ match, history }) => (
           path={`${match.path}/disclosure`}
           render={() => (
             <WizardStep
-              component={Disclosure}
+              component={DisclosurePage}
               handleSubmit={finishSubmission}
               handleUpdate={updateSubmission}
               history={history}
@@ -88,7 +88,7 @@ const SubmissionWizard = ({ match, history }) => (
               step={4}
               submitButtonText="Submit"
               title="Disclosure of data to editors"
-              validationSchema={disclosureSchema}
+              validationSchema={disclosurePageSchema}
             />
           )}
         />

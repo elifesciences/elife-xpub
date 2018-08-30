@@ -114,7 +114,7 @@ test('Happy path', async t => {
     .click(editors.conflictOfInterest)
     .click(wizardStep.next)
 
-  // data disclosure
+  // consenting to data disclosure
   await t
     .typeText(disclosure.submitterName, 'Joe Bloggs')
     .click(disclosure.consentCheckbox)

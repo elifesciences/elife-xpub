@@ -14,7 +14,7 @@ const StyledSmallParagraph = styled(SmallParagraph)`
   color: ${th('colorTextSecondary')};
 `
 
-const Disclosure = ({ values, setFieldValue, setFieldTouched }) => {
+const DisclosurePage = ({ values, setFieldValue, setFieldTouched }) => {
   const formattedArticleType = values.meta.articleType
     .toUpperCase()
     .replace(/-+/g, ' ')
@@ -70,4 +70,4 @@ const Disclosure = ({ values, setFieldValue, setFieldTouched }) => {
   )
 }
 
-export default Disclosure
+export default DisclosurePage
