@@ -139,7 +139,7 @@ const PodIcon = ({ iconType }) => {
 
 const PersonText = ({
   name,
-  institution,
+  institution = '',
   keywords,
   isKeywordClickable,
   onKeywordClick = null,
@@ -174,7 +174,8 @@ const PersonText = ({
   return (
     <CollapsibleBox m={2} {...props}>
       <RegularP>{name}</RegularP>
-      <RegularP>{institution}</RegularP>
+      {institution && <RegularP>{institution}</RegularP>}
+      {!institution && <Box mb={3} />}
       <SmallP>{separatedKeywords}</SmallP>
       {isStatusShown && <SmallP>{status}</SmallP>}
     </CollapsibleBox>
@@ -227,7 +228,7 @@ PodIcon.propTypes = {
 
 PersonText.propTypes = {
   name: PropTypes.string.isRequired,
-  institution: PropTypes.string.isRequired,
+  institution: PropTypes.string,
   keywords: PropTypes.arrayOf(PropTypes.string.isRequired),
   isKeywordClickable: PropTypes.bool.isRequired,
   onKeywordClick: PropTypes.func,
@@ -236,6 +237,7 @@ PersonText.propTypes = {
 }
 
 PersonText.defaultProps = {
+  institution: '',
   keywords: [],
   onKeywordClick: null,
   isStatusShown: false,
