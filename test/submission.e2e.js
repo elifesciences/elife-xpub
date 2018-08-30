@@ -5,7 +5,7 @@ import {
   wizardStep,
   author,
   files,
-  metadata,
+  submission,
   editors,
   disclosure,
 } from './pageObjects'
@@ -70,22 +70,22 @@ test('Happy path', async t => {
 
   // adding manuscript metadata
   await t
-    .expect(metadata.title.value)
+    .expect(submission.title.value)
     .eql(manuscript.title)
-    .click(metadata.articleType)
-    .click(metadata.articleTypes.nth(0))
-    .click(metadata.subjectAreaLabel)
+    .click(submission.articleType)
+    .click(submission.articleTypes.nth(0))
+    .click(submission.subjectAreaLabel)
     .pressKey('enter')
     .pressKey('down')
     .pressKey('enter')
-    .click(metadata.discussionCheckbox)
-    .typeText(metadata.discussionText, 'Spoke to Bob about another article')
-    .click(metadata.previousArticleCheckbox)
-    .typeText(metadata.previousArticleText, 'A title')
-    .click(metadata.cosubmissionCheckbox)
-    .typeText(metadata.firstCosubmissionTitle, 'Another title')
-    .click(metadata.moreSubmission)
-    .typeText(metadata.secondCosubmissionTitle, 'Yet another title')
+    .click(submission.discussionCheckbox)
+    .typeText(submission.discussionText, 'Spoke to Bob about another article')
+    .click(submission.previousArticleCheckbox)
+    .typeText(submission.previousArticleText, 'A title')
+    .click(submission.cosubmissionCheckbox)
+    .typeText(submission.firstCosubmissionTitle, 'Another title')
+    .click(submission.moreSubmission)
+    .typeText(submission.secondCosubmissionTitle, 'Yet another title')
     .click(wizardStep.next)
     .click(wizardStep.next)
 

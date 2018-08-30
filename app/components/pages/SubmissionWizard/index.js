@@ -3,17 +3,17 @@ import { Route, Switch } from 'react-router-dom'
 import WithCurrentSubmission from './WithCurrentSubmission'
 import AuthorPageContainer from './steps/Author'
 import FilesPageContainer from './steps/Files'
-import ManuscriptMetadata from './steps/Submission'
+import SubmissionPage from './steps/Submission'
 import EditorsPageContainer from './steps/Editors'
 import Disclosure from './steps/Disclosure'
 import { schema as authorPageSchema } from './steps/Author/schema'
 import { schema as filesPageSchema } from './steps/Files/schema'
-import { schema as manuscriptMetadataSchema } from './steps/Submission/schema'
+import { schema as submissionPageSchema } from './steps/Submission/schema'
 import { schema as editorsPageSchema } from './steps/Editors/schema'
 import { schema as disclosureSchema } from './steps/Disclosure/schema'
 import WizardStep from './WizardStep'
 
-const SubmissionPage = ({ match, history }) => (
+const SubmissionWizard = ({ match, history }) => (
   <WithCurrentSubmission>
     {({
       initialValues,
@@ -44,7 +44,7 @@ const SubmissionPage = ({ match, history }) => (
           path={`${match.path}/submission`}
           render={() => (
             <WizardStep
-              component={ManuscriptMetadata}
+              component={SubmissionPage}
               handleSubmit={progressSubmission}
               handleUpdate={updateSubmission}
               history={history}
@@ -53,7 +53,7 @@ const SubmissionPage = ({ match, history }) => (
               previousUrl={`${match.path}/files`}
               step={2}
               title="Help us get your work seen by the right people"
-              validationSchema={manuscriptMetadataSchema}
+              validationSchema={submissionPageSchema}
             />
           )}
         />
@@ -112,4 +112,4 @@ const SubmissionPage = ({ match, history }) => (
   </WithCurrentSubmission>
 )
 
-export default SubmissionPage
+export default SubmissionWizard

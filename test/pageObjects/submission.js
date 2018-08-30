@@ -1,7 +1,7 @@
 import config from 'config'
 import { Selector } from 'testcafe'
 
-const metadata = {
+const submission = {
   url: `${config.get('pubsweet-server.baseUrl')}/submit/submission`,
   title: Selector('[name="meta.title"]'),
   articleType: Selector('[role=listbox] button'),
@@ -20,4 +20,4 @@ const metadata = {
   moreSubmission: Selector('[name="moreSubmission"]'),
 }
 
-export default metadata
+export default submission
