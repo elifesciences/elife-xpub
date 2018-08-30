@@ -2,7 +2,7 @@ import config from 'config'
 import { Selector } from 'testcafe'
 
 const suggestions = {
-  url: `${config.get('pubsweet-server.baseUrl')}/submit/suggestions`,
+  url: `${config.get('pubsweet-server.baseUrl')}/submit/editors`,
   suggestedSeniorEditorSelection: Selector(
     '[data-test-id="suggested-senior-editors"] [data-test-id="person-pod-button"]',
   ),
