@@ -128,10 +128,9 @@ const Manuscript = {
   },
 
   checkPermission: (manuscript, user) => {
-    // TODO
-    // if (user !== manuscript.createdBy) {
-    //   throw new Error('Manuscript not owned by user')
-    // }
+    if (user !== manuscript.createdBy) {
+      throw new Error('Manuscript not owned by user')
+    }
   },
 }
 

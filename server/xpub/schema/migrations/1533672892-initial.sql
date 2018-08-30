@@ -22,6 +22,7 @@ CREATE TABLE manuscript (
     -- points to "previous" (i.e. older) version of manuscript
     -- first version has previous_version = null
     -- id of current version does not change
+    created_by TEXT NOT NULL,
     previous_version UUID REFERENCES manuscript,
     status TEXT NOT NULL,
     form_state TEXT,

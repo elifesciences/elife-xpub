@@ -40,6 +40,7 @@ const getValues = (id, manuscript) => [
   manuscript.opposedReviewingEditorsReason,
   manuscript.opposedReviewers,
   manuscript.qcIssues,
+  manuscript.createdBy,
 ]
 
 const dataAccess = {
@@ -69,10 +70,11 @@ const dataAccess = {
          FROM manuscript m
                 LEFT JOIN team t ON m.id = t.object_id
                 LEFT JOIN file f ON m.id = f.manuscript_id
-         WHERE m.status = $1
+         WHERE
+                m.status = $1 AND
+                m.created_by = $2
          GROUP BY m.id`,
-      // TODO restrict by user
-      [status],
+      [status, user],
     )
     return rows.map(mapRow)
   },
@@ -110,8 +112,9 @@ const dataAccess = {
                                 opposed_senior_editors_reason,
                                 opposed_reviewing_editors_reason,
                                 opposed_reviewers,
-                                qc_issues)
-         VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19)`,
+                                qc_issues,
+                                created_by)
+         VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20)`,
       values,
     )
     return id
@@ -137,7 +140,8 @@ const dataAccess = {
              opposed_senior_editors_reason    = $16,
              opposed_reviewing_editors_reason = $17,
              opposed_reviewers                = $18,
-             qc_issues                        = $19
+             qc_issues                        = $19,
+             created_by                       = $20
          WHERE id = $1`,
       getValues(manuscript.id, manuscript),
     )
