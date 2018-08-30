@@ -1,21 +1,24 @@
-require('pubsweet-server/src/db')
 const emptyManuscript = require('./helpers/empty')
 const dataAccess = require('./data-access')
 const { createTables } = require('@pubsweet/db-manager')
 
-// const migrate = true
-// dataAccess.config(migrate)
+let testId = 0
+let initializing = false
+
 const initializeDatabase = async () => {
+  initializing = true
   await createTables(true)
+
   testId = await dataAccess.insert(emptyManuscript)
-  console.log('Inserted: ', testId)
+  console.log('Created testId', testId)
+
+  initializing = false
   return testId
 }
 
-const clearDatabase = () => {
-  console.log('clear')
+const clearDatabase = async () => {
+  await dataAccess.delete(testId)
 }
-let testId = 0
 
 describe('ManuscriptAccessLayer', () => {
   beforeEach(async () => {
@@ -26,10 +29,9 @@ describe('ManuscriptAccessLayer', () => {
     clearDatabase()
   })
 
-  // console.debug('Using database: ', dataAccess.db.options.database)
-  it('initializes the db', async () => {
-    console.log('Searching for: ', testId)
+  it('initializes the db correctly', async () => {
+    expect(initializing).toBeFalsy()
     const result = await dataAccess.selectById(testId)
-    console.log('RESULT: ', JSON.stringify(result))
+    expect(result.id).toBe(testId)
   })
 })
