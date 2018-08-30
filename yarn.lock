@@ -177,22 +177,30 @@
     aws-sdk "^2.185.0"
     nodemailer "^4.4.2"
 
-"@pubsweet/db-manager@^1.3.0":
-  version "1.3.0"
-  resolved "https://registry.yarnpkg.com/@pubsweet/db-manager/-/db-manager-1.3.0.tgz#84473189bf0cc53278e68266d961021c550ac6f5"
+"@pubsweet/db-manager@^1.3.1":
+  version "1.3.1"
+  resolved "https://registry.yarnpkg.com/@pubsweet/db-manager/-/db-manager-1.3.1.tgz#1501a06839cd1fa0d8abf9a8639b73f593454e2c"
   dependencies:
-    "@pubsweet/logger" "^0.2.5"
+    "@pubsweet/logger" "^0.2.6"
     fs-extra "^4.0.2"
     isomorphic-fetch "^2.2.1"
     joi "^13.1.0"
     pg "^7.4.1"
-    pubsweet-server "^8.0.0"
+    pubsweet-server "^8.0.1"
     tmp "^0.0.33"
     umzug "^2.1.0"
 
 "@pubsweet/logger@^0.2.5":
   version "0.2.5"
   resolved "https://registry.yarnpkg.com/@pubsweet/logger/-/logger-0.2.5.tgz#0fbe1bdd2581fe97927a2c72e449315047569532"
+  dependencies:
+    config "^1.26.2"
+    joi "^13.1.0"
+    lodash "^4.17.4"
+
+"@pubsweet/logger@^0.2.6":
+  version "0.2.6"
+  resolved "https://registry.yarnpkg.com/@pubsweet/logger/-/logger-0.2.6.tgz#376f8860304e5209d040adc82e62802ae031ed2f"
   dependencies:
     config "^1.26.2"
     joi "^13.1.0"
@@ -230,9 +238,9 @@
     redux-form "^7.0.3"
     styled-components "^3.2.5"
 
-"@pubsweet/ui@^8.4.0":
-  version "8.4.0"
-  resolved "https://registry.yarnpkg.com/@pubsweet/ui/-/ui-8.4.0.tgz#3c63f4fd8b2484abd819ec852db801c03f968ef3"
+"@pubsweet/ui@^8.5.0":
+  version "8.5.0"
+  resolved "https://registry.yarnpkg.com/@pubsweet/ui/-/ui-8.5.0.tgz#91dd438e320431ca8e60b0f41d49cd46e1ccb66a"
   dependencies:
     "@pubsweet/ui-toolkit" "^1.2.0"
     babel-jest "^21.2.0"
@@ -9018,7 +9026,7 @@ pubsweet-client@^4.1.3:
   version "4.1.3"
   resolved "https://registry.yarnpkg.com/pubsweet-client/-/pubsweet-client-4.1.3.tgz#696b415e1e8ec2b752580d2c5e07561d0a1da1af"
   dependencies:
-    "@pubsweet/ui" "^8.4.0"
+    "@pubsweet/ui" "^8.5.0"
     "@pubsweet/ui-toolkit" "^1.2.0"
     apollo-cache-inmemory "^1.2.4"
     apollo-client "^2.3.4"
@@ -9091,16 +9099,56 @@ pubsweet-server@^8.0.0:
     uuid "^3.0.1"
     winston "^2.2.0"
 
+pubsweet-server@^8.0.1:
+  version "8.0.1"
+  resolved "https://registry.yarnpkg.com/pubsweet-server/-/pubsweet-server-8.0.1.tgz#cea5a08ad10092ae8dce02dbe1dd1f572ca43f43"
+  dependencies:
+    "@pubsweet/logger" "^0.2.6"
+    apollo-server-express "^1.3.2"
+    apollo-upload-server "^4.0.2"
+    authsome "^0.1.0"
+    bcrypt "^2.0.1"
+    bluebird "^3.5.1"
+    body-parser "^1.15.2"
+    colors "^1.1.2"
+    config "^1.26.2"
+    cookie-parser "^1.4.3"
+    dotenv "^4.0.0"
+    express "^4.16.1"
+    graphql "^0.13.2"
+    graphql-postgres-subscriptions "^1.0.2"
+    graphql-tools "^2.18.0"
+    helmet "^3.8.1"
+    http-status-codes "^1.0.6"
+    joi "^13.1.0"
+    jsonwebtoken "^7.1.7"
+    lodash "^4.0.0"
+    minimist "^1.2.0"
+    morgan "^1.8.2"
+    multer "^1.1.0"
+    passport "^0.3.2"
+    passport-anonymous "^1.0.1"
+    passport-http-bearer "^1.0.1"
+    passport-local "^1.0.0"
+    pg "^7.4.1"
+    promise-queue "^2.2.3"
+    prompt "^1.0.0"
+    pubsweet-sse "^1.0.0"
+    require-relative "^0.8.7"
+    subscriptions-transport-ws "^0.9.12"
+    uuid "^3.0.1"
+    winston "^2.2.0"
+
 pubsweet-sse@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/pubsweet-sse/-/pubsweet-sse-1.0.0.tgz#dd36aa378a302b518d417b545b064da65aec876a"
 
-pubsweet@^2.3.0:
-  version "2.3.0"
-  resolved "https://registry.yarnpkg.com/pubsweet/-/pubsweet-2.3.0.tgz#2064a6eed67d70c8e6f5700342359e2622a6261e"
+pubsweet@^2.3.1:
+  version "2.3.1"
+  resolved "https://registry.yarnpkg.com/pubsweet/-/pubsweet-2.3.1.tgz#18d37e996a223b0174c752b7a2f457a1ab52790e"
   dependencies:
-    "@pubsweet/db-manager" "^1.3.0"
-    "@pubsweet/logger" "^0.2.5"
+    "@pubsweet/db-manager" "^1.3.1"
+    "@pubsweet/logger" "^0.2.6"
     bluebird "^3.5.0"
     colors "^1.1.2"
     commander "^2.9.0"
@@ -9109,7 +9157,7 @@ pubsweet@^2.3.0:
     fs-extra "^4.0.2"
     inflection "^1.12.0"
     prompt flatiron/prompt#1c95d1d8d333b5fbc13fa5f0619f3dcf0d514f87
-    pubsweet-server "^8.0.0"
+    pubsweet-server "^8.0.1"
     require-relative "^0.8.7"
     uuid "^3.0.1"
     webpack "^3.8.1"
@@ -12401,9 +12449,9 @@ xmlbuilder@~9.0.1:
   version "9.0.7"
   resolved "https://registry.yarnpkg.com/xmlbuilder/-/xmlbuilder-9.0.7.tgz#132ee63d2ec5565c557e20f4c22df9aca686b10d"
 
-xpub-edit@^2.5.0:
-  version "2.5.0"
-  resolved "https://registry.yarnpkg.com/xpub-edit/-/xpub-edit-2.5.0.tgz#9be67916476690a57a2b6dd4971ecf48aee0e6a4"
+xpub-edit@^2.4.1:
+  version "2.5.1"
+  resolved "https://registry.yarnpkg.com/xpub-edit/-/xpub-edit-2.5.1.tgz#be42cb35df1ea37adfcd1a35da2c0810ccbbe2bb"
   dependencies:
     "@pubsweet/ui-toolkit" "^1.2.0"
     prosemirror-commands "^1.0.1"
