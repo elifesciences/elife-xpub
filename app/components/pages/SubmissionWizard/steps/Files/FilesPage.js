@@ -11,7 +11,7 @@ import ValidatedField from '../../../../ui/atoms/ValidatedField'
 const FormatBoldIcon = props => (
   <Icon
     iconName="Bold"
-    overrideName="@pubsweet-pending.FileUploads.Editor.Bold"
+    overrideName="@pubsweet-pending.FilesPage.Editor.Bold"
     {...props}
   />
 )
@@ -19,7 +19,7 @@ const FormatBoldIcon = props => (
 const FormatItalicIcon = props => (
   <Icon
     iconName="Italic"
-    overrideName="@pubsweet-pending.FileUploads.Editor.Italic"
+    overrideName="@pubsweet-pending.FilesPage.Editor.Italic"
     {...props}
   />
 )
@@ -27,7 +27,7 @@ const FormatItalicIcon = props => (
 const FormatUnderlineIcon = props => (
   <Icon
     iconName="Underline"
-    overrideName="@pubsweet-pending.FileUploads.Editor.Underlined"
+    overrideName="@pubsweet-pending.FilesPage.Editor.Underlined"
     {...props}
   />
 )
@@ -37,7 +37,7 @@ const FormatSubscriptIcon = props => (
     // TODO: conversation with Pubsweet - what should we default to
     // when there's no obvious react-feather equivalent?
     iconName=""
-    overrideName="@pubsweet-pending.FileUploads.Editor.Subscript"
+    overrideName="@pubsweet-pending.FilesPage.Editor.Subscript"
     {...props}
   />
 )
@@ -47,7 +47,7 @@ const FormatSuperscriptIcon = props => (
     // TODO: conversation with Pubsweet - what should we default to
     // when there's no obvious react-feather equivalent?
     iconName=""
-    overrideName="@pubsweet-pending.FileUploads.Editor.Superscript"
+    overrideName="@pubsweet-pending.FilesPage.Editor.Superscript"
     {...props}
   />
 )
@@ -64,7 +64,7 @@ const Editor = ({ validationStatus, ...props }) => (
   />
 )
 
-const FileUploads = ({
+const FilesPage = ({
   setFieldValue,
   onDrop,
   conversion,
@@ -93,4 +93,4 @@ const FileUploads = ({
   </React.Fragment>
 )
 
-export default FileUploads
+export default FilesPage

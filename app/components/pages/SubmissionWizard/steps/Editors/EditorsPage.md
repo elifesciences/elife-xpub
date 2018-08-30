@@ -1,3 +1,8 @@
+A form for the author to suggest
+
+- which senior editors, reviewing editors & reviewers they would like to be assigned to review their manuscript
+- certain people that should be excluded from the review & a reason as to why
+
 ```js
 const { Formik } = formik
 const { schema } = require('./schema')
@@ -31,7 +36,7 @@ const data = {
 }
 ;<Formik
   render={formProps => (
-    <EditorsContent
+    <EditorsPage
       history={{ location: {} }}
       seniorEditors={[]}
       reviewingEditors={[]}

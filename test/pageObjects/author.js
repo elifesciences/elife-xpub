@@ -1,7 +1,7 @@
 import config from 'config'
 import { Selector } from 'testcafe'
 
-const authorDetails = {
+const author = {
   url: `${config.get('pubsweet-server.baseUrl')}/submit`,
   orcidPrefill: Selector('[data-test-id=orcid-prefill]'),
   firstNameField: Selector('[name="author.firstName"]'),
@@ -11,4 +11,4 @@ const authorDetails = {
   institutionField: Selector('[name="author.aff"]'),
 }
 
-export default authorDetails
+export default author

@@ -14,7 +14,7 @@ const empty = {
   },
 }
 ;<Formik
-  component={AuthorDetails}
+  component={AuthorPage}
   initialValues={empty}
   onSubmit={values => console.log(values)}
   validationSchema={schema}
@@ -25,7 +25,7 @@ Loading orcid data
 
 ```js
 const { Formik } = formik
-;<Formik render={props => <AuthorDetails loading={true} {...props} />} />
+;<Formik render={props => <AuthorPage loading={true} {...props} />} />
 ```
 
 Loading orcid data failed
@@ -34,7 +34,7 @@ Loading orcid data failed
 const { Formik } = formik
 ;<Formik
   render={props => (
-    <AuthorDetails error="ORCID is down for maintenance" {...props} />
+    <AuthorPage error="ORCID is down for maintenance" {...props} />
   )}
 />
 ```

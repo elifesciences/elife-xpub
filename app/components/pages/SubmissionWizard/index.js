@@ -1,19 +1,19 @@
 import React from 'react'
 import { Route, Switch } from 'react-router-dom'
 import WithCurrentSubmission from './WithCurrentSubmission'
-import AuthorDetails from './steps/Author'
-import FileUploads from './steps/Files'
-import ManuscriptMetadata from './steps/Submission'
-import ReviewerSuggestions from './steps/Editors'
-import Disclosure from './steps/Disclosure'
-import { schema as fileUploadsSchema } from './steps/Files/schema'
-import { schema as authorDetailsSchema } from './steps/Author/schema'
-import { schema as manuscriptMetadataSchema } from './steps/Submission/schema'
-import { schema as reviewerSuggestionsSchema } from './steps/Editors/schema'
-import { schema as disclosureSchema } from './steps/Disclosure/schema'
+import AuthorPageContainer from './steps/Author'
+import FilesPageContainer from './steps/Files'
+import SubmissionPage from './steps/Submission'
+import EditorsPageContainer from './steps/Editors'
+import DisclosurePage from './steps/Disclosure'
+import { schema as authorPageSchema } from './steps/Author/schema'
+import { schema as filesPageSchema } from './steps/Files/schema'
+import { schema as submissionPageSchema } from './steps/Submission/schema'
+import { schema as editorsPageSchema } from './steps/Editors/schema'
+import { schema as disclosurePageSchema } from './steps/Disclosure/schema'
 import WizardStep from './WizardStep'
 
-const SubmissionPage = ({ match, history }) => (
+const SubmissionWizard = ({ match, history }) => (
   <WithCurrentSubmission>
     {({
       initialValues,
@@ -27,7 +27,7 @@ const SubmissionPage = ({ match, history }) => (
           path={`${match.path}/files`}
           render={() => (
             <WizardStep
-              component={FileUploads}
+              component={FilesPageContainer}
               handleSubmit={progressSubmission}
               handleUpdate={updateSubmission}
               history={history}
@@ -36,7 +36,7 @@ const SubmissionPage = ({ match, history }) => (
               previousUrl={`${match.path}`}
               step={1}
               title="Write your cover letter and upload your manuscript"
-              validationSchema={fileUploadsSchema}
+              validationSchema={filesPageSchema}
             />
           )}
         />
@@ -44,7 +44,7 @@ const SubmissionPage = ({ match, history }) => (
           path={`${match.path}/submission`}
           render={() => (
             <WizardStep
-              component={ManuscriptMetadata}
+              component={SubmissionPage}
               handleSubmit={progressSubmission}
               handleUpdate={updateSubmission}
               history={history}
@@ -53,7 +53,7 @@ const SubmissionPage = ({ match, history }) => (
               previousUrl={`${match.path}/files`}
               step={2}
               title="Help us get your work seen by the right people"
-              validationSchema={manuscriptMetadataSchema}
+              validationSchema={submissionPageSchema}
             />
           )}
         />
@@ -61,7 +61,7 @@ const SubmissionPage = ({ match, history }) => (
           path={`${match.path}/editors`}
           render={() => (
             <WizardStep
-              component={ReviewerSuggestions}
+              component={EditorsPageContainer}
               handleSubmit={progressSubmission}
               handleUpdate={updateSubmission}
               history={history}
@@ -70,7 +70,7 @@ const SubmissionPage = ({ match, history }) => (
               previousUrl={`${match.path}/submission`}
               step={3}
               title="Who should review your work?"
-              validationSchema={reviewerSuggestionsSchema}
+              validationSchema={editorsPageSchema}
             />
           )}
         />
@@ -78,7 +78,7 @@ const SubmissionPage = ({ match, history }) => (
           path={`${match.path}/disclosure`}
           render={() => (
             <WizardStep
-              component={Disclosure}
+              component={DisclosurePage}
               handleSubmit={finishSubmission}
               handleUpdate={updateSubmission}
               history={history}
@@ -88,14 +88,14 @@ const SubmissionPage = ({ match, history }) => (
               step={4}
               submitButtonText="Submit"
               title="Disclosure of data to editors"
-              validationSchema={disclosureSchema}
+              validationSchema={disclosurePageSchema}
             />
           )}
         />
         <Route
           render={() => (
             <WizardStep
-              component={AuthorDetails}
+              component={AuthorPageContainer}
               handleSubmit={progressSubmission}
               handleUpdate={updateSubmission}
               history={history}
@@ -103,7 +103,7 @@ const SubmissionPage = ({ match, history }) => (
               nextUrl={`${match.path}/files`}
               step={0}
               title="Your details"
-              validationSchema={authorDetailsSchema}
+              validationSchema={authorPageSchema}
             />
           )}
         />
@@ -112,4 +112,4 @@ const SubmissionPage = ({ match, history }) => (
   </WithCurrentSubmission>
 )
 
-export default SubmissionPage
+export default SubmissionWizard

@@ -1,7 +1,7 @@
 import React from 'react'
 import gql from 'graphql-tag'
 import { Mutation, Subscription } from 'react-apollo'
-import FileUploads from './FileUploads'
+import FilesPage from './FilesPage'
 
 const UPLOAD_MUTATION = gql`
   mutation UploadFile($id: ID!, $file: Upload!, $fileSize: Int!) {
@@ -24,7 +24,7 @@ const ON_UPLOAD_PROGRESS = gql`
   }
 `
 
-const FileUploadsPage = ({
+const FilesPageContainer = ({
   setFieldValue,
   errors,
   touched,
@@ -37,7 +37,7 @@ const FileUploadsPage = ({
       return (
         <Subscription subscription={ON_UPLOAD_PROGRESS}>
           {({ data: uploadData, loading: uploadLoading }) => (
-            <FileUploads
+            <FilesPage
               conversion={{
                 converting: loading,
                 // TODO import this constant from somewhere (data model package?)
@@ -67,4 +67,4 @@ const FileUploadsPage = ({
   </Mutation>
 )
 
-export default FileUploadsPage
+export default FilesPageContainer

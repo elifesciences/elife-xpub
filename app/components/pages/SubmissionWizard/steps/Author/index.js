@@ -1,7 +1,7 @@
 import React from 'react'
 import gql from 'graphql-tag'
 import { withApollo } from 'react-apollo'
-import AuthorDetails from './AuthorDetails'
+import AuthorPage from './AuthorPage'
 
 const ORCID_DETAILS_QUERY = gql`
   query GetOrcidDetails {
@@ -14,7 +14,7 @@ const ORCID_DETAILS_QUERY = gql`
   }
 `
 
-class AuthorDetailsPage extends React.Component {
+class AuthorPageContainer extends React.Component {
   constructor(props) {
     super(props)
     this.state = {}
@@ -41,7 +41,7 @@ class AuthorDetailsPage extends React.Component {
   }
   render() {
     return (
-      <AuthorDetails
+      <AuthorPage
         fetchOrcid={this.runQuery}
         handleSubmit={this.props.handleSubmit}
         {...this.state}
@@ -50,4 +50,4 @@ class AuthorDetailsPage extends React.Component {
   }
 }
 
-export default withApollo(AuthorDetailsPage)
+export default withApollo(AuthorPageContainer)
