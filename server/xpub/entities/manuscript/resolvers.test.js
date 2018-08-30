@@ -167,6 +167,7 @@ describe('Submission', () => {
         { name: 'Reviewer 3', email: 'reviewer3@mail.com' },
       ],
       opposedReviewers: [],
+      opposedReviewersReason: '',
       suggestionsConflict: false,
       coverLetter: 'my cover letter',
       author: {

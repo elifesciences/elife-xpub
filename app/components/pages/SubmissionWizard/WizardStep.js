@@ -41,7 +41,9 @@ const WizardStep = ({
             <Flex mt={6}>
               {previousUrl && (
                 <Box mr={3}>
-                  <ButtonLink to={previousUrl}>Back</ButtonLink>
+                  <ButtonLink data-test-id="back" to={previousUrl}>
+                    Back
+                  </ButtonLink>
                 </Box>
               )}
               <Box>

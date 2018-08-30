@@ -68,6 +68,7 @@ const Manuscript = {
         'previouslySubmitted',
         'cosubmission',
         'opposedReviewers',
+        'opposedReviewersReason',
         'suggestionsConflict',
         'submitterSignature',
         'disclosureConsent',

@@ -2,7 +2,7 @@ import { ClientFunction, Selector } from 'testcafe'
 import replaySetup from './helpers/replay-setup'
 import {
   dashboard,
-  submission,
+  wizardStep,
   authorDetails,
   fileUploads,
   metadata,
@@ -18,6 +18,9 @@ const manuscript = {
   title: 'The Relationship Between Lamport Clocks and Interrupts Using Obi',
   file: './fixtures/dummy-manuscript-2.pdf',
 }
+
+const getPageUrl = ClientFunction(() => window.location.href)
+const goBack = ClientFunction(() => window.history.back())
 
 test('Happy path', async t => {
   replaySetup('success')
@@ -49,7 +52,7 @@ test('Happy path', async t => {
       'University of eLife',
       'Institution is populated by query to the Orchid API',
     )
-    .click(submission.next)
+    .click(wizardStep.next)
 
   // file uploads
   await t
@@ -57,79 +60,13 @@ test('Happy path', async t => {
     .setFilesToUpload(fileUploads.manuscriptUpload, manuscript.file)
     // wait for editor onChange
     .wait(1000)
-    .click(submission.next)
-
-  // metadata
-  await t
-    .expect(metadata.title.value)
-    .eql(manuscript.title)
-    .click(metadata.articleType)
-    .click(metadata.articleTypes.nth(0))
-    .click(metadata.subjectAreaLabel)
-    .pressKey('enter')
-    .pressKey('down')
-    .pressKey('enter')
-    .click(submission.next)
-
-  // reviewer suggestions
-  await suggestions.fillWithDummyData()
-  await t.click(suggestions.conflictOfInterest).click(submission.next)
-
-  // data disclosure
-  await t
-    .click(disclosure.submitterName)
-    .typeText('[name="submitterSignature"]', 'Joe Bloggs')
-  await t.click(disclosure.consentCheckbox).click(submission.next)
-
-  // dashboard
-  await t
-    .expect(dashboard.titles.textContent)
-    .eql(manuscript.title)
-    .expect(dashboard.stages.textContent)
-    .eql('QA')
-})
-
-test('Corresponding author', async t => {
-  replaySetup('success')
-  await dashboard.login()
-  await t.navigateTo(authorDetails.url)
-
-  // set author details
-  await t
-    .typeText(authorDetails.firstNameField, 'Anne')
-    .typeText(authorDetails.secondNameField, 'Author')
-    .typeText(authorDetails.emailField, 'anne.author@life')
-    .typeText(authorDetails.institutionField, 'University of eLife')
-    .expect(Selector(authorDetails.emailValidationMessage).textContent)
-    .eql(
-      'Must be a valid email address',
-      'Error is displayed when user enters invalid email',
-    )
-    .click(submission.next)
-    // without this wait the tests sometimes fail on CI ¯\_(ツ)_/¯
-    .wait(1000)
-    .expect(ClientFunction(() => window.location.href)())
-    .eql(
-      authorDetails.url,
-      'Validation errors prevent progress to the next page',
-    )
-    .typeText(authorDetails.emailField, '.ac.uk')
-    .click(submission.next)
-
-  // file uploads
-  await t
-    .typeText(fileUploads.editor, '\nPlease consider this for publication')
-    .setFilesToUpload(fileUploads.manuscriptUpload, manuscript.file)
-    // wait for editor onChange
-    .wait(1000)
-
+    // manuscript preview page
     .click(fileUploads.preview)
     .expect(Selector('.sc-title-group').textContent)
     .eql(manuscript.title)
-
-  const goBack = ClientFunction(() => window.history.back())
+  // only way to get back to wizard is with browser back button at the moment
   await goBack()
-  await t.click(submission.next)
+  await t.click(wizardStep.next)
 
   // metadata
   await t
@@ -149,17 +86,39 @@ test('Corresponding author', async t => {
     .typeText(metadata.firstCosubmissionTitle, 'Another title')
     .click(metadata.moreSubmission)
     .typeText(metadata.secondCosubmissionTitle, 'Yet another title')
-    .click(submission.next)
+    .click(wizardStep.next)
+    .click(wizardStep.next)
 
   // reviewer suggestions
-  await suggestions.fillWithDummyData()
-  await t.click(suggestions.conflictOfInterest).click(submission.next)
+  await t
+    .click(suggestions.suggestedSeniorEditorSelection)
+    .click(suggestions.peoplePickerOptions.nth(0))
+    .click(suggestions.peoplePickerOptions.nth(2))
+    .click(suggestions.peoplePickerSubmit)
+    .click(suggestions.suggestedReviewingEditorSelection)
+    .click(suggestions.peoplePickerOptions.nth(1))
+    .click(suggestions.peoplePickerOptions.nth(4))
+    .click(suggestions.peoplePickerSubmit)
+    .typeText(suggestions.firstReviewerName, 'Edward')
+    .typeText(suggestions.firstReviewerEmail, 'edward@example.com')
+    .typeText(suggestions.secondReviewerName, 'Frances')
+    .typeText(suggestions.secondReviewerEmail, 'frances@example.net')
+    .typeText(suggestions.thirdReviewerName, 'George')
+    .typeText(suggestions.thirdReviewerEmail, 'george@example.org')
+    .typeText(suggestions.fourthReviewerName, 'Ayesha')
+    .typeText(suggestions.fourthReviewerEmail, 'ayesha@example.com')
+    .typeText(suggestions.fifthReviewerName, 'Sneha')
+    .typeText(suggestions.fifthReviewerEmail, 'sneha@example.net')
+    .typeText(suggestions.sixthReviewerName, 'Emily')
+    .typeText(suggestions.sixthReviewerEmail, 'emily@example.org')
+    .click(suggestions.conflictOfInterest)
+    .click(wizardStep.next)
 
   // data disclosure
   await t
-    .click(disclosure.submitterName)
-    .typeText('[name="submitterSignature"]', 'Joe Bloggs')
-  await t.click(disclosure.consentCheckbox).click(submission.next)
+    .typeText(disclosure.submitterName, 'Joe Bloggs')
+    .click(disclosure.consentCheckbox)
+    .click(wizardStep.next)
 
   // dashboard
   await t
@@ -169,7 +128,40 @@ test('Corresponding author', async t => {
     .eql('QA')
 })
 
-test('Submission form details are saved to server on submit', async t => {
+test('Ability to progress through the wizard is tied to validation', async t => {
+  replaySetup('success')
+  await dashboard.login()
+  await t.navigateTo(authorDetails.url)
+
+  // set author details
+  await t
+    .typeText(authorDetails.firstNameField, 'Anne')
+    .typeText(authorDetails.secondNameField, 'Author')
+    .typeText(authorDetails.emailField, 'anne.author@life')
+    .typeText(authorDetails.institutionField, 'University of eLife')
+    .expect(Selector(authorDetails.emailValidationMessage).textContent)
+    .eql(
+      'Must be a valid email address',
+      'Error is displayed when user enters invalid email',
+    )
+    .click(wizardStep.next)
+    // without this wait the tests sometimes fail on CI ¯\_(ツ)_/¯
+    .wait(1000)
+    .expect(getPageUrl())
+    .eql(
+      authorDetails.url,
+      'Validation errors prevent progress to the next page',
+    )
+    .typeText(authorDetails.emailField, '.ac.uk')
+    .click(wizardStep.next)
+    .expect(getPageUrl())
+    .eql(
+      fileUploads.url,
+      'Entering valid inputs enables progress to the next page',
+    )
+})
+
+test('Form entries are saved when a user navigates to the next page of the wizard', async t => {
   await dashboard.login()
   await t.navigateTo(authorDetails.url)
 
@@ -178,11 +170,11 @@ test('Submission form details are saved to server on submit', async t => {
     .typeText(authorDetails.secondNameField, 'Moggy')
     .typeText(authorDetails.emailField, 'meghan@example.com')
     .typeText(authorDetails.institutionField, 'iTunes U')
-    .click(submission.next)
+    .click(wizardStep.next)
 
   // ensure save completed before reloading
   await fileUploads.editor
-  await t.navigateTo(authorDetails.url)
+  await t.click(wizardStep.back)
 
   await t
     .expect(authorDetails.firstNameField.value)

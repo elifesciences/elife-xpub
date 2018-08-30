@@ -38,7 +38,6 @@ const opposedReviewerValidator = () =>
         .string()
         .email('Must be a valid email')
         .required('Email is required'),
-      reason: yup.string().required('Required'),
     }),
   )
 
@@ -53,6 +52,7 @@ const schema = yup.object().shape({
   ),
   suggestedReviewers: suggestedReviewerValidator(),
   opposedReviewers: opposedReviewerValidator(),
+  opposedReviewersReason: opposedReasonValidator('opposedReviewers'),
   suggestionsConflict: yup
     .bool()
     .required()

@@ -2,7 +2,7 @@ import config from 'config'
 import { Selector } from 'testcafe'
 
 const metadata = {
-  url: `${config.get('pubsweet-server.baseUrl')}/submit/metadata`,
+  url: `${config.get('pubsweet-server.baseUrl')}/submit/submission`,
   title: Selector('[name="meta.title"]'),
   articleType: Selector('[role=listbox] button'),
   articleTypes: Selector('[role=option]'),

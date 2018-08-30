@@ -26,6 +26,7 @@ const data = {
     { name: '', email: '' },
   ],
   opposedReviewers: [],
+  opposedReviewersReason: '',
   noConflictOfInterest: false,
 }
 ;<Formik

@@ -24,7 +24,7 @@ const SubmissionPage = ({ match, history }) => (
       <Switch>
         <Route
           exact
-          path={`${match.path}/upload`}
+          path={`${match.path}/files`}
           render={() => (
             <WizardStep
               component={FileUploads}
@@ -32,7 +32,7 @@ const SubmissionPage = ({ match, history }) => (
               handleUpdate={updateSubmission}
               history={history}
               initialValues={initialValues}
-              nextUrl={`${match.path}/metadata`}
+              nextUrl={`${match.path}/submission`}
               previousUrl={`${match.path}`}
               step={1}
               title="Write your cover letter and upload your manuscript"
@@ -41,7 +41,7 @@ const SubmissionPage = ({ match, history }) => (
           )}
         />
         <Route
-          path={`${match.path}/metadata`}
+          path={`${match.path}/submission`}
           render={() => (
             <WizardStep
               component={ManuscriptMetadata}
@@ -49,8 +49,8 @@ const SubmissionPage = ({ match, history }) => (
               handleUpdate={updateSubmission}
               history={history}
               initialValues={initialValues}
-              nextUrl={`${match.path}/suggestions`}
-              previousUrl={`${match.path}/upload`}
+              nextUrl={`${match.path}/editors`}
+              previousUrl={`${match.path}/files`}
               step={2}
               title="Help us get your work seen by the right people"
               validationSchema={manuscriptMetadataSchema}
@@ -58,7 +58,7 @@ const SubmissionPage = ({ match, history }) => (
           )}
         />
         <Route
-          path={`${match.path}/suggestions`}
+          path={`${match.path}/editors`}
           render={() => (
             <WizardStep
               component={ReviewerSuggestions}
@@ -67,7 +67,7 @@ const SubmissionPage = ({ match, history }) => (
               history={history}
               initialValues={initialValues}
               nextUrl={`${match.path}/disclosure`}
-              previousUrl={`${match.path}/metadata`}
+              previousUrl={`${match.path}/submission`}
               step={3}
               title="Who should review your work?"
               validationSchema={reviewerSuggestionsSchema}
@@ -83,8 +83,8 @@ const SubmissionPage = ({ match, history }) => (
               handleUpdate={updateSubmission}
               history={history}
               initialValues={initialValues}
-              nextUrl="/dashboard"
-              previousUrl={`${match.path}/suggestions`}
+              nextUrl="/"
+              previousUrl={`${match.path}/editors`}
               step={4}
               submitButtonText="Submit"
               title="Disclosure of data to editors"
@@ -100,7 +100,7 @@ const SubmissionPage = ({ match, history }) => (
               handleUpdate={updateSubmission}
               history={history}
               initialValues={initialValues}
-              nextUrl={`${match.path}/upload`}
+              nextUrl={`${match.path}/files`}
               step={0}
               title="Your details"
               validationSchema={authorDetailsSchema}

@@ -74,9 +74,13 @@ const manuscriptInputSchema = Joi.object()
         email: Joi.string()
           .email()
           .required(),
-        reason: Joi.string().required(),
       }),
     ),
+    opposedReviewersReason: Joi.string().when('opposedReviewers', {
+      is: Joi.array().min(1),
+      then: Joi.string().required(),
+      otherwise: Joi.string().allow(''),
+    }),
     suggestionsConflict: Joi.boolean().required(),
     submitterSignature: Joi.string().required(),
     disclosureConsent: Joi.bool().required(),
