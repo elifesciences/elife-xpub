@@ -284,29 +284,5 @@ describe('Submission', () => {
 
   describe('uploadManuscript', () => {
     // TODO subscribe to uploadProgress before this or mock
-    // it.skip('extracts title from PDF', async () => {
-    //   const { id } = await Manuscript.save(Manuscript.new())
-    //   const file = {
-    //     filename: 'manuscript.pdf',
-    //     stream: fs.createReadStream(
-    //       `${__dirname}/../../../../test/fixtures/dummy-manuscript-2.pdf`,
-    //     ),
-    //     encoding: 'utf8',
-    //     mimetype: 'application/pdf',
-    //     size: 73947,
-    //   }
-    //   const manuscript = await Mutation.uploadManuscript(
-    //     {},
-    //     { id, file, fileSize: file.size },
-    //   )
-    //   expect(manuscript).toMatchObject({
-    //     id,
-    //     meta: {
-    //       title:
-    //         'The Relationship Between Lamport Clocks and Interrupts Using Obi',
-    //     },
-    //     files: [{ filename: 'manuscript.pdf' }],
-    //   })
-    // })
   })
 })
