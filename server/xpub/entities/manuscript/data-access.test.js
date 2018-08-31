@@ -1,33 +1,15 @@
-const emptyManuscript = require('./helpers/empty')
 const dataAccess = require('./data-access')
 const { createTables } = require('@pubsweet/db-manager')
-const lodash = require('lodash')
+const testData = require('./data-access.test.data')
 
 let testId = 0
 let initializing = false
-
-async function addManuscripts(count) {
-  expect(initializing).toBeFalsy()
-  const range = Array.from(Array(count).keys())
-  const added = await Promise.all(
-    range.map(async number => {
-      const manu = lodash.cloneDeep(emptyManuscript)
-      manu.meta.title = `Title ${number}`
-      manu.createdBy = 'me'
-      const id = await dataAccess.insert(manu)
-      const result = await dataAccess.selectById(id)
-      expect(result.id).toBe(id)
-      return id
-    }),
-  )
-  return added
-}
 
 const initializeDatabase = async () => {
   initializing = true
   await createTables(true)
 
-  testId = await dataAccess.insert(emptyManuscript)
+  testId = await testData.initialize(dataAccess)
   console.log('Created testId', testId)
 
   initializing = false
@@ -69,7 +51,7 @@ describe('ManuscriptAccessLayer', () => {
 
   it('inserts a manuscript', async () => {
     expect(initializing).toBeFalsy()
-    const manu = lodash.cloneDeep(emptyManuscript)
+    const manu = testData.getBlankManuscript()
     manu.meta.title = 'new one'
     manu.createdBy = 'me'
 
@@ -97,7 +79,7 @@ describe('ManuscriptAccessLayer', () => {
     expect(initializing).toBeFalsy()
 
     const MAX = 100
-    const added = await addManuscripts(100)
+    const added = await testData.addManuscripts(dataAccess, 100)
 
     added.push(testId)
     expect(added).toHaveLength(MAX + 1)
@@ -113,7 +95,7 @@ describe('ManuscriptAccessLayer', () => {
 
   it('selects by status', async () => {
     expect(initializing).toBeFalsy()
-    const added = await addManuscripts(10)
+    const added = await testData.addManuscripts(dataAccess, 10)
 
     // get even indexes
     const markedTest = added.filter((id, index) => index % 2)
