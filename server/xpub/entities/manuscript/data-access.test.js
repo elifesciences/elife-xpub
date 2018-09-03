@@ -25,8 +25,8 @@ describe('ManuscriptAccessLayer', () => {
     testId = await initializeDatabase()
   })
 
-  afterEach(() => {
-    clearDatabase()
+  afterEach(async () => {
+    await clearDatabase()
   })
 
   it('initializes the db', async () => {
