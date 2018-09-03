@@ -23,7 +23,13 @@ const Manuscript = {
   find: dataAccess.selectById,
   all: dataAccess.selectAll,
   findByStatus: dataAccess.selectByStatus,
-  delete: dataAccess.delete,
+
+  delete: async id => {
+    const manuscript = await dataAccess.selectById(id)
+    await Promise.all(manuscript.files.map(file => FileManager.delete(file.id)))
+    await Promise.all(manuscript.teams.map(team => TeamManager.delete(team.id)))
+    await dataAccess.delete(id)
+  },
 
   new: () => lodash.cloneDeep(emptyManuscript),
 

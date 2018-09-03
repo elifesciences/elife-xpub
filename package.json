@@ -34,7 +34,7 @@
     "start:styleguide": "docker-compose run --no-deps -p 6060:6060 app yarn run styleguide",
     "stop:services": "docker-compose down -v",
     "styleguide": "styleguidist server",
-    "test": "jest",
+    "test": "jest --runInBand",
     "test:e2e": "NODE_ENV=test testcafe \"${BROWSER:-chrome}\" 'test/**/*.e2e.js'",
     "update": "yarn upgrade-interactive --latest"
   },

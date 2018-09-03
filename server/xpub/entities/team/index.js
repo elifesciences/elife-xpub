@@ -5,6 +5,7 @@ const empty = { teamMembers: [] }
 
 const Team = {
   find: dataAccess.selectById,
+  delete: dataAccess.delete,
   new: () => lodash.cloneDeep(empty),
   save: async team => {
     if (team.id) {

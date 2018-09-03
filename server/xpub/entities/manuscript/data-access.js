@@ -47,8 +47,8 @@ const dataAccess = {
   async selectById(id) {
     const { rows } = await db.query(
       `SELECT m.*,
-                COALESCE(jsonb_agg(t.*) FILTER (WHERE t.id IS NOT NULL), '[]') AS teams,
-                COALESCE(jsonb_agg(f.*) FILTER (WHERE f.id IS NOT NULL), '[]') AS files
+                COALESCE(jsonb_agg(DISTINCT t.*) FILTER (WHERE t.id IS NOT NULL), '[]') AS teams,
+                COALESCE(jsonb_agg(DISTINCT f.*) FILTER (WHERE f.id IS NOT NULL), '[]') AS files
          FROM manuscript m
                 LEFT JOIN team t ON m.id = t.object_id
                 LEFT JOIN file f ON m.id = f.manuscript_id
@@ -65,8 +65,8 @@ const dataAccess = {
   async selectByStatus(status, user) {
     const { rows } = await db.query(
       `SELECT m.*,
-                COALESCE(jsonb_agg(t.*) FILTER (WHERE t.id IS NOT NULL), '[]') AS teams,
-                COALESCE(jsonb_agg(f.*) FILTER (WHERE f.id IS NOT NULL), '[]') AS files
+                COALESCE(jsonb_agg(DISTINCT t.*) FILTER (WHERE t.id IS NOT NULL), '[]') AS teams,
+                COALESCE(jsonb_agg(DISTINCT f.*) FILTER (WHERE f.id IS NOT NULL), '[]') AS files
          FROM manuscript m
                 LEFT JOIN team t ON m.id = t.object_id
                 LEFT JOIN file f ON m.id = f.manuscript_id
@@ -81,7 +81,9 @@ const dataAccess = {
 
   async selectAll() {
     const { rows } = await db.query(
-      `SELECT m.*, jsonb_agg(t.*) AS teams, jsonb_agg(f.*) AS files
+      `SELECT m.*,
+              COALESCE(jsonb_agg(DISTINCT t.*) FILTER (WHERE t.id IS NOT NULL), '[]') AS teams,
+              COALESCE(jsonb_agg(DISTINCT f.*) FILTER (WHERE f.id IS NOT NULL), '[]') AS files
          FROM manuscript m
                 LEFT JOIN team t ON m.id = t.object_id
                 LEFT JOIN file f ON m.id = f.manuscript_id

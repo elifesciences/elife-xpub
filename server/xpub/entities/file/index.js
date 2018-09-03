@@ -5,6 +5,7 @@ const empty = { teamMembers: [] }
 
 const FileManager = {
   find: dataAccess.selectById,
+  delete: dataAccess.delete,
   new: () => lodash.cloneDeep(empty),
   save: async file => {
     if (file.id) {
