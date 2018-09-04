@@ -11,7 +11,7 @@ CREATE TABLE journal (
     created TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT current_timestamp,
     updated TIMESTAMP WITH TIME ZONE,
     journal_title TEXT NOT NULL,
-    "meta.publisher_name" TEXT
+    "meta,publisher_name" TEXT
 );
 
 CREATE TABLE manuscript (
@@ -27,13 +27,13 @@ CREATE TABLE manuscript (
     status TEXT NOT NULL,
     form_state TEXT,
     decision TEXT,
-    "meta.title" TEXT,
-    "meta.article_type" TEXT,
-    "meta.article_ids" JSONB[],
-    "meta.abstract" TEXT,
-    "meta.subjects" TEXT[],
-    "meta.publication_dates" JSONB[],
-    "meta.notes" JSONB[]
+    "meta,title" TEXT,
+    "meta,article_type" TEXT,
+    "meta,article_ids" JSONB[],
+    "meta,abstract" TEXT,
+    "meta,subjects" TEXT[],
+    "meta,publication_dates" JSONB[],
+    "meta,notes" JSONB[]
 );
 
 CREATE TABLE file (
