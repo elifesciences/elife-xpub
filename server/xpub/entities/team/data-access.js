@@ -32,7 +32,10 @@ const dataAccess = {
 
   update(team) {
     const row = entityToRow(team, columnNames)
-    const query = buildQuery.update(row).table('team')
+    const query = buildQuery
+      .update(row)
+      .table('team')
+      .where('id', team.id)
     return runQuery(query)
   },
 
