@@ -1,13 +1,5 @@
 const uuid = require('uuid')
-const knex = require('knex')
-const db = require('pubsweet-server/src/db')
-const { rowToEntity, entityToRow } = require('../../util')
-
-const buildQuery = knex({ client: 'pg' })
-const runQuery = query => {
-  const sql = query.toString()
-  return db.query(sql)
-}
+const { rowToEntity, entityToRow, buildQuery, runQuery } = require('../../util')
 
 const columnNames = [
   'journal_id',
@@ -81,20 +73,21 @@ const dataAccess = {
 
   update(manuscript) {
     const row = entityToRow(manuscript, columnNames)
-    const query = buildQuery('manuscript')
+    const query = buildQuery
       .update(row)
+      .table('manuscript')
       .where('id', manuscript.id)
 
     return runQuery(query)
   },
 
   delete(id) {
-    return db.query(
-      `DELETE
-         FROM manuscript
-         WHERE id = $1`,
-      [id],
-    )
+    const query = buildQuery
+      .delete()
+      .from('manuscript')
+      .where({ id })
+    return runQuery(query)
   },
 }
+
 module.exports = dataAccess

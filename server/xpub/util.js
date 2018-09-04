@@ -1,4 +1,12 @@
 const lodash = require('lodash')
+const knex = require('knex')
+const db = require('pubsweet-server/src/db')
+
+const buildQuery = knex({ client: 'pg' })
+const runQuery = query => {
+  const sql = query.toString()
+  return db.query(sql)
+}
 
 const keyToCamelCase = snakeKey =>
   snakeKey
@@ -21,11 +29,11 @@ const rowToEntity = row => {
   return row
 }
 
-const entityToRow = (manuscript, columns) =>
-  columns.reduce((entity, columnName) => {
+const entityToRow = (entity, columns) =>
+  columns.reduce((row, columnName) => {
     const camelKey = keyToCamelCase(columnName)
-    const value = lodash.get(manuscript, camelKey)
-    return { ...entity, [columnName]: value }
+    const value = lodash.get(entity, camelKey)
+    return { ...row, [columnName]: value }
   }, {})
 
-module.exports = { rowToEntity, entityToRow }
+module.exports = { buildQuery, runQuery, rowToEntity, entityToRow }

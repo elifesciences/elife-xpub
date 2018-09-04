@@ -1,67 +1,49 @@
 const uuid = require('uuid')
-const lodash = require('lodash')
-const db = require('pubsweet-server/src/db')
+const { rowToEntity, entityToRow, buildQuery, runQuery } = require('../../util')
 
-const mapRow = row =>
-  lodash.transform(row, (team, val, key) => {
-    const camelKey = key
-      .split('.')
-      .map(lodash.camelCase)
-      .join('.')
-    lodash.set(team, camelKey, val)
-  })
-
-const getValues = (id, team) => [
-  id,
-  team.teamMembers,
-  team.role,
-  team.objectId,
-  team.objectType,
-]
+const columnNames = ['team_members', 'role', 'object_id', 'object_type']
 
 const dataAccess = {
   async selectById(id) {
-    const { rows } = await db.query(`SELECT * FROM team WHERE id = $1`, [id])
+    const { rows } = await runQuery(
+      buildQuery
+        .select()
+        .from('team')
+        .where({ id }),
+    )
     if (!rows.length) {
       throw new Error('Team not found')
     }
-    return mapRow(rows[0])
+    return rowToEntity(rows[0])
   },
 
   async selectAll() {
-    const { rows } = await db.query(`SELECT * FROM team`)
-    return rows.map(mapRow)
+    const { rows } = await runQuery(buildQuery.select().from('team'))
+    return rows.map(rowToEntity)
   },
 
   async insert(team) {
-    const id = uuid.v4()
-    await db.query(
-      `INSERT INTO team (
-        id, 
-        team_members, 
-        role, 
-        object_id, 
-        object_type
-      ) VALUES ($1, $2, $3, $4, $5)`,
-      getValues(id, team),
-    )
-    return id
+    const row = entityToRow(team, columnNames)
+    row.id = uuid.v4()
+    const query = buildQuery.insert(row).into('team')
+    await runQuery(query)
+    return row.id
   },
 
   update(team) {
-    return db.query(
-      `UPDATE team SET
-        team_members = $2,
-        role = $3,
-        object_id = $4,
-        object_type = $5
-      WHERE id = $1`,
-      getValues(team.id, team),
-    )
+    const row = entityToRow(team, columnNames)
+    const query = buildQuery.update(row).table('team')
+    return runQuery(query)
   },
 
   delete(id) {
-    return db.query(`DELETE FROM team WHERE id = $1`, [id])
+    return runQuery(
+      buildQuery
+        .delete()
+        .from('team')
+        .where({ id }),
+    )
   },
 }
+
 module.exports = dataAccess
