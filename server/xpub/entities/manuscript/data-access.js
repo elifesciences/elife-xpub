@@ -1,5 +1,5 @@
 const uuid = require('uuid')
-const { rowToEntity, entityToRow, buildQuery, runQuery } = require('../../util')
+const { rowToEntity, entityToRow, buildQuery, runQuery } = require('../util')
 
 const columnNames = [
   'journal_id',
