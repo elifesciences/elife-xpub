@@ -22,6 +22,12 @@ const SubmissionPage = ({ values, setFieldValue, setFieldTouched }) => (
         onChange={value => setFieldValue('meta.articleType', value)}
         options={[
           { value: 'research-article', label: 'Research Article' },
+          { value: 'short-report', label: 'Short Report' },
+          { value: 'tools-resources', label: 'Tools and Resources' },
+          {
+            value: 'scientific-correspondence',
+            label: 'Scientific Correspondence',
+          },
           { value: 'feature', label: 'Feature Article' },
         ]}
         placeholder="Please choose"
