@@ -1,56 +1,93 @@
 const uuid = require('uuid')
-const db = require('pubsweet-server/src/db')
+const { rowToEntity, entityToRow, buildQuery, runQuery } = require('../util')
 
-const mapRow = row => ({ ...row.data, id: row.id, type: undefined })
+const columnNames = [
+  'journal_id',
+  'status',
+  'meta,title',
+  'meta,article_type',
+  'meta,article_ids',
+  'meta,abstract',
+  'meta,subjects',
+  'meta,notes',
+  'previously_discussed',
+  'previously_submitted',
+  'cosubmission',
+  'related_manuscripts',
+  'suggestions_conflict',
+  'cover_letter',
+  'opposed_senior_editors_reason',
+  'opposed_reviewing_editors_reason',
+  'opposed_reviewers',
+  'qc_issues',
+  'created_by',
+]
+
+const joinSelect = buildQuery
+  .select(
+    'manuscript.*',
+    buildQuery.raw(
+      "COALESCE(jsonb_agg(DISTINCT team.*) FILTER (WHERE team.id IS NOT NULL), '[]') AS teams",
+    ),
+    buildQuery.raw(
+      "COALESCE(jsonb_agg(DISTINCT file.*) FILTER (WHERE file.id IS NOT NULL), '[]') AS files",
+    ),
+  )
+  .from('manuscript')
+  .leftJoin('team', 'manuscript.id', 'team.object_id')
+  .leftJoin('file', 'manuscript.id', 'file.manuscript_id')
+  .groupBy('manuscript.id')
 
 const dataAccess = {
   async selectById(id) {
-    const { rows } = await db.query(
-      `SELECT id, data FROM entities WHERE id = $1`,
-      [id],
-    )
+    const query = joinSelect.clone().where({ 'manuscript.id': id })
+    const { rows } = await runQuery(query)
+
     if (!rows.length) {
       throw new Error('Manuscript not found')
     }
-    return mapRow(rows[0])
+    return rowToEntity(rows[0])
   },
 
   async selectByStatus(status, user) {
-    const { rows } = await db.query(
-      `SELECT id, data FROM entities WHERE data->>'status' = $1 AND data->>'createdBy' = $2`,
-      [status, user],
-    )
-    return rows.map(mapRow)
+    const query = joinSelect
+      .clone()
+      .where({ 'manuscript.status': status, 'manuscript.created_by': user })
+    const { rows } = await runQuery(query)
+    return rows.map(rowToEntity)
   },
 
   async selectAll() {
-    const { rows } = await db.query(
-      `SELECT id, data FROM entities WHERE data->>'type' = 'manuscript'`,
-    )
-    return rows.map(mapRow)
+    const { rows } = await runQuery(joinSelect)
+    return rows.map(rowToEntity)
   },
 
   async insert(manuscript) {
-    const id = uuid.v4()
-    await db.query('INSERT INTO entities (id, data) VALUES ($1, $2)', [
-      id,
-      { ...manuscript, type: 'manuscript' },
-    ])
-    return id
+    const row = entityToRow(manuscript, columnNames)
+    row.id = uuid.v4()
+    const query = buildQuery.insert(row).into('manuscript')
+
+    await runQuery(query)
+    return row.id
   },
 
   update(manuscript) {
-    return db.query('UPDATE entities SET data = $2 WHERE id = $1', [
-      manuscript.id,
-      { ...manuscript, type: 'manuscript' },
-    ])
+    const row = entityToRow(manuscript, columnNames)
+    const query = buildQuery
+      .update(row)
+      .table('manuscript')
+      .where('id', manuscript.id)
+
+    return runQuery(query)
   },
 
   delete(id) {
-    return db.query(
-      `DELETE FROM entities WHERE id = $1 AND data->>'type' = 'manuscript'`,
-      [id],
-    )
+    const query = buildQuery
+      .delete()
+      .from('manuscript')
+      .where({ id })
+    return runQuery(query)
   },
 }
+
 module.exports = dataAccess

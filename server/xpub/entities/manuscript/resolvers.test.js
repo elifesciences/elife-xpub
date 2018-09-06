@@ -6,8 +6,11 @@ const User = require('../user')
 const Manuscript = require('.')
 const mailer = require('@pubsweet/component-send-email')
 const { Mutation, Query } = require('./resolvers')
+const emptyManuscript = require('./helpers/empty')
 
 const replaySetup = require('../../../../test/helpers/replay-setup')
+
+let initializing = false
 
 const userData = {
   username: 'testuser',
@@ -20,6 +23,7 @@ describe('Submission', () => {
   let userId
 
   beforeEach(async () => {
+    initializing = true
     replaySetup('success')
     await Promise.all([
       fs.remove(config.get('pubsweet-server.uploads')),
@@ -28,10 +32,12 @@ describe('Submission', () => {
     const user = await User.save(userData)
     userId = user.id
     mailer.clearMails()
+    initializing = false
   })
 
   describe('currentSubmission', () => {
     it('Gets form data', async () => {
+      expect(initializing).toBe(false)
       const expectedManuscript = {
         createdBy: userId,
         meta: {
@@ -46,11 +52,13 @@ describe('Submission', () => {
     })
 
     it('Returns empty object when there are no manuscripts in the db', async () => {
+      expect(initializing).toBe(false)
       const manuscript = await Query.currentSubmission({}, {}, { user: userId })
       expect(manuscript).toBe(null)
     })
 
     it('Returns null object when user has no manuscripts in the db (db not empty)', async () => {
+      expect(initializing).toBe(false)
       await Manuscript.save({
         createdBy: '9f72f2b8-bb4a-43fa-8b80-c7ac505c8c5f',
         meta: {
@@ -67,7 +75,36 @@ describe('Submission', () => {
       })
 
       const manuscript = await Query.currentSubmission({}, {}, { user: userId })
-      expect(manuscript).toBe(null)
+      expect(manuscript).toBeNull()
+    })
+
+    it('Returns manuscript object when user has one manuscripts in the db (db not empty)', async () => {
+      expect(initializing).toBe(false)
+      await Manuscript.save({
+        createdBy: '9f72f2b8-bb4a-43fa-8b80-c7ac505c8c5f',
+        meta: {
+          title: 'title',
+        },
+        status: 'INITIAL',
+      })
+      await Manuscript.save({
+        createdBy: 'bcd735c6-9b62-441a-a085-7d1e8a7834c6',
+        meta: {
+          title: 'title 2',
+        },
+        status: 'QA',
+      })
+      await Manuscript.save({
+        createdBy: userId,
+        meta: {
+          title: 'mine',
+        },
+        status: 'INITIAL',
+      })
+
+      const manuscript = await Query.currentSubmission({}, {}, { user: userId })
+      expect(manuscript).not.toBeNull()
+      expect(manuscript.meta.title).toBe('mine')
     })
   })
 
@@ -147,18 +184,18 @@ describe('Submission', () => {
     }
 
     beforeEach(async () => {
-      initialManuscript = {
-        createdBy: userId,
-        status: 'INITIAL',
-        files: [
-          {
-            url: 'fake-path.pdf',
-            filename: 'FakeManuscript.pdf',
-            type: 'MANUSCRIPT_SOURCE',
-          },
-        ],
-        teams: [],
-      }
+      initialManuscript = lodash.cloneDeep(emptyManuscript)
+      initialManuscript.createdBy = userId
+      initialManuscript.status = 'INITIAL'
+      initialManuscript.files = [
+        {
+          url: 'fake-path.pdf',
+          filename: 'FakeManuscript.pdf',
+          type: 'MANUSCRIPT_SOURCE',
+        },
+      ]
+      initialManuscript.teams = []
+
       const manuscript = await Manuscript.save(initialManuscript)
       id = manuscript.id
     })
@@ -212,35 +249,6 @@ describe('Submission', () => {
       ])
     })
 
-    it("sends a verification email if the submitter is not the corresponding author - email address entered on step 1 of the wizard differs from submitter's login email", async () => {
-      const manuscript = lodash.cloneDeep(fullManuscript)
-      manuscript.id = id
-      await Mutation.finishSubmission(
-        {},
-        {
-          data: manuscript,
-        },
-        { user: userId },
-      )
-
-      expect(mailer.getMails()).toHaveLength(1)
-    })
-
-    it('does not send a verification email if the submitter is the corresponding author', async () => {
-      const manuscript = lodash.cloneDeep(fullManuscript)
-      manuscript.id = id
-      manuscript.author.email = userData.email
-      await Mutation.finishSubmission(
-        {},
-        {
-          data: manuscript,
-        },
-        { user: userId },
-      )
-
-      expect(mailer.getMails()).toHaveLength(0)
-    })
-
     // TODO more tests needed here
     it('fails when manuscript has incomplete data', async () => {
       const badManuscript = {
@@ -276,29 +284,5 @@ describe('Submission', () => {
 
   describe('uploadManuscript', () => {
     // TODO subscribe to uploadProgress before this or mock
-    it.skip('extracts title from PDF', async () => {
-      const { id } = await Manuscript.save(Manuscript.new())
-      const file = {
-        filename: 'manuscript.pdf',
-        stream: fs.createReadStream(
-          `${__dirname}/../../../../test/fixtures/dummy-manuscript-2.pdf`,
-        ),
-        encoding: 'utf8',
-        mimetype: 'application/pdf',
-        size: 73947,
-      }
-      const manuscript = await Mutation.uploadManuscript(
-        {},
-        { id, file, fileSize: file.size },
-      )
-      expect(manuscript).toMatchObject({
-        id,
-        meta: {
-          title:
-            'The Relationship Between Lamport Clocks and Interrupts Using Obi',
-        },
-        files: [{ filename: 'manuscript.pdf' }],
-      })
-    })
   })
 })

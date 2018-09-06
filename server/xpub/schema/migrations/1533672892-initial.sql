@@ -11,7 +11,7 @@ CREATE TABLE journal (
     created TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT current_timestamp,
     updated TIMESTAMP WITH TIME ZONE,
     journal_title TEXT NOT NULL,
-    "meta.publisher_name" TEXT
+    "meta,publisher_name" TEXT
 );
 
 CREATE TABLE manuscript (
@@ -22,17 +22,18 @@ CREATE TABLE manuscript (
     -- points to "previous" (i.e. older) version of manuscript
     -- first version has previous_version = null
     -- id of current version does not change
+    created_by TEXT NOT NULL,
     previous_version UUID REFERENCES manuscript,
     status TEXT NOT NULL,
     form_state TEXT,
     decision TEXT,
-    "meta.title" TEXT,
-    "meta.article_type" TEXT,
-    "meta.article_ids" JSONB,
-    "meta.abstract" TEXT,
-    "meta.subjects" JSONB,
-    "meta.publication_dates" JSONB,
-    "meta.notes" JSONB
+    "meta,title" TEXT,
+    "meta,article_type" TEXT,
+    "meta,article_ids" JSONB[],
+    "meta,abstract" TEXT,
+    "meta,subjects" TEXT[],
+    "meta,publication_dates" JSONB[],
+    "meta,notes" JSONB[]
 );
 
 CREATE TABLE file (
@@ -60,7 +61,7 @@ CREATE TABLE review (
     id UUID PRIMARY KEY,
     created TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT current_timestamp,
     updated TIMESTAMP WITH TIME ZONE,
-    comments JSONB,
+    comments JSONB[],
     recommendation TEXT,
     open BOOLEAN,
     user_id UUID NOT NULL REFERENCES "user"
@@ -79,7 +80,7 @@ CREATE TABLE team (
     id UUID PRIMARY KEY,
     created TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT current_timestamp,
     updated TIMESTAMP WITH TIME ZONE,
-    team_members JSONB NOT NULL,
+    team_members JSONB[] NOT NULL,
     role TEXT NOT NULL,
     object_id UUID NOT NULL,
     object_type TEXT NOT NULL
