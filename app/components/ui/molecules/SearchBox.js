@@ -66,6 +66,7 @@ const Root = styled.div`
     list-style: none;
     margin: 0;
     padding: 0;
+    z-index: 2;
   }
 
   .react-autosuggest__suggestion {
@@ -74,7 +75,8 @@ const Root = styled.div`
   }
 
   .react-autosuggest__suggestion--highlighted {
-    background-color: ${th('colorBackground')};
+    background-color: ${th('colorPrimary')};
+    color: ${th('colorTextReverse')};
   }
 `
 
