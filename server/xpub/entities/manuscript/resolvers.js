@@ -58,7 +58,10 @@ const resolvers = {
       return Manuscript.save(manuscript)
     },
 
-    async deleteManuscript(_, { id }) {
+    async deleteManuscript(_, { id }, ctx) {
+      const originalManuscript = await Manuscript.find(id)
+      Manuscript.checkPermission(originalManuscript, ctx.user)
+
       await Manuscript.delete(id)
       return id
     },
@@ -75,6 +78,9 @@ const resolvers = {
     },
 
     async finishSubmission(_, { data }, ctx) {
+      const requestedManuscript = await Manuscript.find(data.id)
+      Manuscript.checkPermission(requestedManuscript, ctx.user)
+
       const modifiedManuscriptInput = Manuscript.removeOptionalBlankReviewers(
         data,
       )
@@ -116,7 +122,10 @@ const resolvers = {
       return manuscript
     },
 
-    async uploadManuscript(_, { file, id, fileSize }, context) {
+    async uploadManuscript(_, { file, id, fileSize }, ctx) {
+      const requestedManuscript = await Manuscript.find(id)
+      Manuscript.checkPermission(requestedManuscript, ctx.user)
+
       const { stream, filename, mimetype } = await file
 
       const manuscriptContainer = path.join(uploadsPath, id)
@@ -145,7 +154,7 @@ const resolvers = {
       stream.on('data', chunk => {
         uploadedSize += chunk.length
         const uploadProgress = Math.floor((uploadedSize * 100) / fileSize)
-        pubsub.publish(`${ON_UPLOAD_PROGRESS}.${context.user}`, {
+        pubsub.publish(`${ON_UPLOAD_PROGRESS}.${ctx.user}`, {
           uploadProgress,
         })
       })

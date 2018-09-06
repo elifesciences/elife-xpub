@@ -21,7 +21,7 @@ jest.mock('@pubsweet/component-send-email', () => ({
   send(mailData) {
     return new Promise((resolve, reject) => {
       this.mails.push(mailData)
-      resolve();
+      resolve()
     })
   },
   getMails() {

@@ -1,6 +1,8 @@
 const lodash = require('lodash')
 const emptyManuscript = require('./helpers/empty')
 const dataAccess = require('./data-access')
+const TeamManager = require('../team')
+const FileManager = require('../file')
 
 const mergeObjects = (...inputs) =>
   lodash.mergeWith(
@@ -21,17 +23,41 @@ const Manuscript = {
   find: dataAccess.selectById,
   all: dataAccess.selectAll,
   findByStatus: dataAccess.selectByStatus,
-  delete: dataAccess.delete,
+
+  delete: async id => {
+    const manuscript = await dataAccess.selectById(id)
+    await Promise.all(manuscript.files.map(file => FileManager.delete(file.id)))
+    await Promise.all(manuscript.teams.map(team => TeamManager.delete(team.id)))
+    await dataAccess.delete(id)
+  },
 
   new: () => lodash.cloneDeep(emptyManuscript),
 
   save: async manuscript => {
-    if (manuscript.id) {
+    // TODO wrap these queries in a transaction
+    let { id } = manuscript
+    if (id) {
       await dataAccess.update(manuscript)
-      return manuscript
+    } else {
+      id = await dataAccess.insert(manuscript)
     }
 
-    const id = await dataAccess.insert(manuscript)
+    if (manuscript.teams) {
+      await Promise.all(
+        manuscript.teams.map(team =>
+          TeamManager.save({ objectId: id, objectType: 'manuscript', ...team }),
+        ),
+      )
+    }
+
+    if (manuscript.files) {
+      await Promise.all(
+        manuscript.files.map(file =>
+          FileManager.save({ manuscriptId: id, ...file }),
+        ),
+      )
+    }
+
     return { ...manuscript, id }
   },
 
@@ -70,31 +96,37 @@ const Manuscript = {
       }))
       return { role, teamMembers }
     })
-    manuscript.teams = manuscript.teams
-      .filter(team => !editorSuggestionRoles.includes(team.role))
-      .concat(editorSuggestionTeams)
 
     // reshape suggested reviewers into teams
-    const reviewerSuggestionRoles = ['suggestedReviewer']
+    const reviewerSuggestionRoles = ['suggestedReviewer', 'opposedReviewer']
     const reviewerSuggestionTeams = reviewerSuggestionRoles.map(role => {
       const key = `${role}s`
       const suggestedReviewerAliases = input[key] || []
       const teamMembers = suggestedReviewerAliases.map(meta => ({ meta }))
       return { role, teamMembers }
     })
-    manuscript.teams = manuscript.teams
-      .filter(team => !reviewerSuggestionRoles.includes(team.role))
-      .concat(reviewerSuggestionTeams)
 
     // move author into team
-    manuscript.teams = manuscript.teams
-      .filter(team => team.role !== 'author')
-      .concat({
-        role: 'author',
-        teamMembers: [{ alias: input.author, meta: { corresponding: true } }],
-      })
+    const authorTeam = {
+      role: 'author',
+      teamMembers: [{ alias: input.author, meta: { corresponding: true } }],
+    }
+
+    editorSuggestionTeams
+      .concat(reviewerSuggestionTeams)
+      .concat(authorTeam)
+      .forEach(team => Manuscript.addTeam(manuscript, team))
 
     return manuscript
+  },
+
+  addTeam: (manuscript, team) => {
+    const index = manuscript.teams.findIndex(t => t.role === team.role)
+    if (index >= 0) {
+      Object.assign(manuscript.teams[index], team)
+    } else {
+      manuscript.teams.push(team)
+    }
   },
 
   removeOptionalBlankReviewers: manuscript => {
