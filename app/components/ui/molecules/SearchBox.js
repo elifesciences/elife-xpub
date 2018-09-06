@@ -4,7 +4,6 @@ import Autosuggest from 'react-autosuggest'
 import { th } from '@pubsweet/ui-toolkit'
 
 import Icon from '../atoms/Icon'
-import theme from './SearchBox.local.css'
 
 const SearchIcon = props => (
   <Icon
@@ -22,6 +21,61 @@ const StyledSearchIcon = styled(SearchIcon)`
 
 const Root = styled.div`
   position: relative;
+
+  .react-autosuggest__input {
+    border: ${th('borderWidth')} ${th('borderStyle')} ${th('colorBorder')};
+    border-radius: ${th('borderRadius')};
+    font-family: ${th('fontInterface')};
+    font-size: ${th('fontSizeBase')};
+    line-height: ${th('lineHeightBase')};
+    padding: ${th('space.2')};
+    height: ${th('space.5')};
+    width: 100%;
+  }
+
+  .react-autosuggest__input::placeholder {
+    color: ${th('colorTextPlaceholder')};
+  }
+
+  .react-autosuggest__input--focused {
+    outline: none;
+  }
+
+  .react-autosuggest__input--open {
+    border-radius: 0 0 ${th('borderRadius')} ${th('borderRadius')};
+  }
+
+  .react-autosuggest__suggestions-container {
+    display: none;
+  }
+
+  .react-autosuggest__suggestions-container--open {
+    background-color: ${th('colorBackground')};
+    border: ${th('borderWidth')} ${th('borderStyle')} ${th('colorBorder')};
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+    display: block;
+
+    font-family: ${th('fontInterface')};
+    font-size: ${th('fontSizeBase')};
+    position: absolute;
+    width: 100%;
+  }
+
+  .react-autosuggest__suggestions-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .react-autosuggest__suggestion {
+    cursor: pointer;
+    padding: ${th('space.2')};
+  }
+
+  .react-autosuggest__suggestion--highlighted {
+    background-color: ${th('colorBackground')};
+  }
 `
 
 const IconContainer = styled.div`
@@ -99,6 +153,7 @@ class SearchBox extends React.Component {
     )
   }
   render() {
+    const { className } = this.props
     const { value, suggestions } = this.state
     const inputProps = {
       placeholder: 'Search...',
@@ -107,7 +162,7 @@ class SearchBox extends React.Component {
       onKeyDown: this.onKeyDown,
     }
     return (
-      <Root>
+      <Root className={className}>
         <IconContainer>
           <StyledSearchIcon />
         </IconContainer>
@@ -119,7 +174,6 @@ class SearchBox extends React.Component {
           onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
           renderSuggestion={this.renderSuggestion}
           suggestions={suggestions}
-          theme={theme}
         />
       </Root>
     )
