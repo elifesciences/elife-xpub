@@ -85,7 +85,7 @@
     "lodash": "^4.17.5",
     "omit-deep-lodash": "^1.1.2",
     "prop-types": "^15.6.2",
-    "pubsweet-client": "^4.1.3",
+    "pubsweet-client": "^4.2.1",
     "pubsweet-server": "^8.0.0",
     "react": "^16.4.2",
     "react-apollo": "^2.1.11",
