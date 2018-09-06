@@ -99,6 +99,20 @@ test:e2e:
     when: on_failure
     expire_in: 1 week
 
+test:dependencies:
+  image: $IMAGE_ORG/$IMAGE_NAME:$CI_COMMIT_SHA
+  stage: test
+  tags:
+  - elife-kubernetes-runner
+  except:
+  - schedules
+  variables:
+    GIT_STRATEGY: none
+    NODE_ENV: test
+  script:
+  - cd ${HOME}
+  - npm run test:dependencies
+
 push:latest:
   image: docker:latest
   stage: staging
