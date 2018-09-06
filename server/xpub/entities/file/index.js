@@ -1,7 +1,14 @@
 const lodash = require('lodash')
 const dataAccess = require('./data-access')
 
-const empty = { teamMembers: [] }
+const empty = {
+  filename: '',
+  label: '',
+  type: 0,
+  mime_type: '',
+  size: 0,
+  url: '',
+}
 
 const FileManager = {
   find: dataAccess.selectById,

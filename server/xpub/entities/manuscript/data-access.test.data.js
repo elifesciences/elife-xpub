@@ -1,12 +1,13 @@
+const dataAccess = require('./data-access')
 const emptyManuscript = require('./helpers/empty')
 const lodash = require('lodash')
 
-const initialize = async dataAccess => {
+const createSingleManuscript = async () => {
   const testId = await dataAccess.insert(emptyManuscript)
   return testId
 }
 
-const addManuscripts = async (dataAccess, count) => {
+const addManuscripts = async count => {
   const range = Array.from(Array(count).keys())
   const added = await Promise.all(
     range.map(async number => {
@@ -22,10 +23,7 @@ const addManuscripts = async (dataAccess, count) => {
   return added
 }
 
-const getBlankManuscript = () => lodash.cloneDeep(emptyManuscript)
-
 module.exports = {
-  initialize,
+  createSingleManuscript,
   addManuscripts,
-  getBlankManuscript,
 }

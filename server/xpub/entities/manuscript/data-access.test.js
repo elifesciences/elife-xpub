@@ -1,23 +1,17 @@
 const dataAccess = require('./data-access')
 const { createTables } = require('@pubsweet/db-manager')
 const testData = require('./data-access.test.data')
+const Manuscript = require('./index')
 
 let testId = 0
-let initializing = false
 
 const initializeDatabase = async () => {
-  initializing = true
   await createTables(true)
 
-  testId = await testData.initialize(dataAccess)
+  testId = await testData.createSingleManuscript()
   console.log('Created testId', testId)
 
-  initializing = false
   return testId
-}
-
-const clearDatabase = async () => {
-  await dataAccess.delete(testId)
 }
 
 describe('ManuscriptAccessLayer', () => {
@@ -25,12 +19,7 @@ describe('ManuscriptAccessLayer', () => {
     testId = await initializeDatabase()
   })
 
-  afterEach(async () => {
-    await clearDatabase()
-  })
-
   it('initializes the db', async () => {
-    expect(initializing).toBeFalsy()
     const result = await dataAccess.selectById(testId)
     expect(result.id).toBe(testId)
   })
@@ -40,7 +29,6 @@ describe('ManuscriptAccessLayer', () => {
   }
 
   it('deletes a manuscript', async () => {
-    expect(initializing).toBeFalsy()
     const result = await dataAccess.delete(testId)
     expect(result.command).toBe('DELETE')
     expect(result.rowCount).toBe(1)
@@ -50,8 +38,7 @@ describe('ManuscriptAccessLayer', () => {
   })
 
   it('inserts a manuscript', async () => {
-    expect(initializing).toBeFalsy()
-    const manu = testData.getBlankManuscript()
+    const manu = Manuscript.new()
     manu.meta.title = 'new one'
     manu.createdBy = 'me'
 
@@ -63,7 +50,6 @@ describe('ManuscriptAccessLayer', () => {
   })
 
   it('updates a manuscript', async () => {
-    expect(initializing).toBeFalsy()
     const manu = await dataAccess.selectById(testId)
     manu.meta.title = 'changed'
 
@@ -76,10 +62,8 @@ describe('ManuscriptAccessLayer', () => {
   })
 
   it('selects all manuscripts', async () => {
-    expect(initializing).toBeFalsy()
-
     const MAX = 100
-    const added = await testData.addManuscripts(dataAccess, 100)
+    const added = await testData.addManuscripts(100)
 
     added.push(testId)
     expect(added).toHaveLength(MAX + 1)
@@ -94,8 +78,7 @@ describe('ManuscriptAccessLayer', () => {
   })
 
   it('selects by status', async () => {
-    expect(initializing).toBeFalsy()
-    const added = await testData.addManuscripts(dataAccess, 10)
+    const added = await testData.addManuscripts(10)
 
     // get even indexes
     const markedTest = added.filter((id, index) => index % 2)
