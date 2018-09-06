@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { Box } from 'grid-styled'
 import { th } from '@pubsweet/ui-toolkit'
+import { format, parse } from 'date-fns'
 
 import Paragraph from '../../../../ui/atoms/Paragraph'
 import SmallParagraph from '../../../../ui/atoms/SmallParagraph'
@@ -14,7 +15,10 @@ const StyledSmallParagraph = styled(SmallParagraph)`
   color: ${th('colorTextSecondary')};
 `
 
-const Disclosure = ({ values, setFieldValue, setFieldTouched }) => {
+const localDate = parse(new Date())
+const formattedLocalDate = format(localDate, 'MMM D, YYYY')
+
+const DisclosurePage = ({ values, setFieldValue, setFieldTouched }) => {
   const formattedArticleType = values.meta.articleType
     .toUpperCase()
     .replace(/-+/g, ' ')
@@ -26,7 +30,9 @@ const Disclosure = ({ values, setFieldValue, setFieldTouched }) => {
         <Paragraph>
           {values.author.firstName} {values.author.lastName}
         </Paragraph>
-        <StyledSmallParagraph>{formattedArticleType}</StyledSmallParagraph>
+        <StyledSmallParagraph>
+          {formattedArticleType} {formattedLocalDate}
+        </StyledSmallParagraph>
       </Box>
       <Box mb={4}>
         <Paragraph>
@@ -70,4 +76,4 @@ const Disclosure = ({ values, setFieldValue, setFieldTouched }) => {
   )
 }
 
-export default Disclosure
+export default DisclosurePage

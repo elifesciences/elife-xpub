@@ -4,7 +4,7 @@ import { Formik } from 'formik'
 import { ThemeProvider } from 'styled-components'
 
 import theme from '@elifesciences/elife-theme'
-import EditorsContent from './EditorsContent'
+import EditorsPage from './EditorsPage'
 import { schema } from './schema'
 
 const formValues = {
@@ -37,7 +37,7 @@ function makeWrapper(props) {
         initialValues={formValues}
         onSubmit={jest.fn()}
         render={formProps => (
-          <EditorsContent
+          <EditorsPage
             history={{ location: {} }}
             reviewingEditors={[]}
             seniorEditors={[]}
@@ -52,7 +52,7 @@ function makeWrapper(props) {
 }
 
 // TODO better tests
-describe('EditorsContent component', () => {
+describe('EditorsPage component', () => {
   it('modals contents are initially hidden', () => {
     const wrapper = makeWrapper()
     expect(wrapper.find('PeoplePicker')).toHaveLength(0)

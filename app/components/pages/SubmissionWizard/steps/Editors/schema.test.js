@@ -1,7 +1,7 @@
 import { yupToFormErrors } from 'formik'
 import { schema } from './schema'
 
-describe('Editors form validation', () => {
+describe('Editors page form validation', () => {
   it('allows valid data', () => {
     const validData = {
       suggestedSeniorEditors: [{ id: 1 }, { id: 2 }],

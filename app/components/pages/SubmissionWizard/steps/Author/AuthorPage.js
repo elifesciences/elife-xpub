@@ -3,7 +3,7 @@ import { Action, ErrorText } from '@pubsweet/ui'
 import ValidatedField from '../../../../ui/atoms/ValidatedField'
 import TwoColumnLayout from '../../../../global/layout/TwoColumnLayout'
 
-const AuthorDetails = ({ fetchOrcid, loading, error }) => (
+const AuthorPage = ({ fetchOrcid, loading, error }) => (
   <React.Fragment>
     <p>
       <Action data-test-id="orcid-prefill" onClick={fetchOrcid}>
@@ -29,4 +29,4 @@ const AuthorDetails = ({ fetchOrcid, loading, error }) => (
   </React.Fragment>
 )
 
-export default AuthorDetails
+export default AuthorPage

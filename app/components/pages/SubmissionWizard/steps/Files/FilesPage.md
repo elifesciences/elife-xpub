@@ -13,7 +13,7 @@ const empty = {
   validationSchema={schema}
 >
   {({ setFieldValue, errors, ...props }) => (
-    <FileUploads
+    <FilesPage
       conversion={{
         error: errors.manuscriptUrl && new Error(errors.manuscriptUrl),
       }}

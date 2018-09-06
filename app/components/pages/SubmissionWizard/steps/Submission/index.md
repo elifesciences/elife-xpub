@@ -15,7 +15,7 @@ const empty = {
   cosubmission: [],
 }
 ;<Formik
-  component={ManuscriptMetadata}
+  component={SubmissionPage}
   initialValues={empty}
   onSubmit={values => console.log(values)}
   validationSchema={schema}

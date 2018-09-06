@@ -1,7 +1,7 @@
 import React from 'react'
 import gql from 'graphql-tag'
 import { Query } from 'react-apollo'
-import EditorsContent from './EditorsContent'
+import EditorsPage from './EditorsPage'
 
 const EDITOR_LIST_QUERY = gql`
   query EditorList($role: String!) {
@@ -14,13 +14,13 @@ const EDITOR_LIST_QUERY = gql`
   }
 `
 
-const EditorsContainer = ({ ...props }) => (
+const EditorsPageContainer = ({ ...props }) => (
   <Query query={EDITOR_LIST_QUERY} variables={{ role: 'reviewing-editor' }}>
     {({ data: { editors: reviewingEditors = [] } }) => (
       // TODO handle errors
       <Query query={EDITOR_LIST_QUERY} variables={{ role: 'senior-editor' }}>
         {({ data: { editors: seniorEditors = [] } }) => (
-          <EditorsContent
+          <EditorsPage
             reviewingEditors={reviewingEditors}
             seniorEditors={seniorEditors}
             {...props}
@@ -31,4 +31,4 @@ const EditorsContainer = ({ ...props }) => (
   </Query>
 )
 
-export default EditorsContainer
+export default EditorsPageContainer

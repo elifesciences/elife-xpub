@@ -7,7 +7,7 @@ import Textarea from '../../../../ui/atoms/Textarea'
 import SubjectAreaDropdown from './SubjectAreaDropdown'
 import OptionalSection from './OptionalSection'
 
-const ManuscriptMetadata = ({ values, setFieldValue, setFieldTouched }) => (
+const SubmissionPage = ({ values, setFieldValue, setFieldTouched }) => (
   <React.Fragment>
     <Box mb={3}>
       <ValidatedField label="Manuscript title" name="meta.title" />
@@ -22,6 +22,12 @@ const ManuscriptMetadata = ({ values, setFieldValue, setFieldTouched }) => (
         onChange={value => setFieldValue('meta.articleType', value)}
         options={[
           { value: 'research-article', label: 'Research Article' },
+          { value: 'short-report', label: 'Short Report' },
+          { value: 'tools-resources', label: 'Tools and Resources' },
+          {
+            value: 'scientific-correspondence',
+            label: 'Scientific Correspondence',
+          },
           { value: 'feature', label: 'Feature Article' },
         ]}
         placeholder="Please choose"
@@ -109,4 +115,4 @@ const ManuscriptMetadata = ({ values, setFieldValue, setFieldTouched }) => (
   </React.Fragment>
 )
 
-export default ManuscriptMetadata
+export default SubmissionPage
