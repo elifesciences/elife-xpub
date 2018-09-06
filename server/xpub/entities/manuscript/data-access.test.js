@@ -10,13 +10,11 @@ const initializeDatabase = async () => {
 
   testId = await testData.createSingleManuscript()
   console.log('Created testId', testId)
-
-  return testId
 }
 
 describe('ManuscriptAccessLayer', () => {
   beforeEach(async () => {
-    testId = await initializeDatabase()
+    await initializeDatabase()
   })
 
   it('initializes the db', async () => {

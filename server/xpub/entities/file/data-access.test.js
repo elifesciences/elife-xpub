@@ -18,13 +18,11 @@ const initializeDatabase = async () => {
   manuscriptId = await manuscriptTestData.createSingleManuscript()
   testId = await createAFile(manuscriptId, 'testFile')
   console.log('Created testId', testId)
-
-  return testId
 }
 
 describe('FileAccessLayer', () => {
   beforeEach(async () => {
-    testId = await initializeDatabase()
+    await initializeDatabase()
   })
 
   it('initializes the db', async () => {

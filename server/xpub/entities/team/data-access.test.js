@@ -24,13 +24,11 @@ const initializeDatabase = async () => {
   await createTables(true)
   testId = await createATeam('testTeam')
   console.log('Created testId', testId)
-
-  return testId
 }
 
 describe('TeamAccessLayer', () => {
   beforeEach(async () => {
-    testId = await initializeDatabase()
+    await initializeDatabase()
   })
 
   it('initializes the db', async () => {
