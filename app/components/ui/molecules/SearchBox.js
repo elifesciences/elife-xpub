@@ -2,24 +2,11 @@ import React from 'react'
 import styled from 'styled-components'
 import Autosuggest from 'react-autosuggest'
 import { th } from '@pubsweet/ui-toolkit'
+import { Flex } from 'grid-styled'
 
-import Icon from '../atoms/Icon'
+import SearchButton from './SearchIconButton'
 
-const SearchIcon = props => (
-  <Icon
-    iconName="Search"
-    overrideName="@pubsweet-pending.PeoplePicker.Search"
-    {...props}
-  />
-)
-
-const StyledSearchIcon = styled(SearchIcon)`
-  width: ${th('space.3')};
-  height: ${th('space.3')};
-  fill: ${th('colorTextSecondary')};
-`
-
-const Root = styled.div`
+const AutosuggestWrapper = styled.div`
   position: relative;
 
   .react-autosuggest__input {
@@ -79,14 +66,6 @@ const Root = styled.div`
   }
 `
 
-const IconContainer = styled.div`
-  position: absolute;
-  right: 10px;
-  display: flex;
-  align-items: center;
-  height: 100%;
-`
-
 class SearchBox extends React.Component {
   state = {
     value: '',
@@ -129,8 +108,11 @@ class SearchBox extends React.Component {
   onKeyDown = event => {
     // key code for enter is 13
     if (event.keyCode === 13) {
-      this.props.onSubmit(this.state.value)
+      this.handleSearch(this.state.value)
     }
+  }
+  handleSearch = event => {
+    this.props.onSubmit(this.state.value)
   }
   renderSuggestion = suggestion => {
     const inputValue = this.state.value.trim().toLowerCase()
@@ -154,7 +136,6 @@ class SearchBox extends React.Component {
     )
   }
   render() {
-    const { className } = this.props
     const { value, suggestions } = this.state
     const inputProps = {
       placeholder: 'Search...',
@@ -163,20 +144,20 @@ class SearchBox extends React.Component {
       onKeyDown: this.onKeyDown,
     }
     return (
-      <Root className={className}>
-        <IconContainer>
-          <StyledSearchIcon />
-        </IconContainer>
-        <Autosuggest
-          getSuggestionValue={this.getSuggestionValue}
-          inputProps={inputProps}
-          onSuggestionsClearRequested={this.onSuggestionsClearRequested}
-          onSuggestionSelected={this.onSuggestionSelected}
-          onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
-          renderSuggestion={this.renderSuggestion}
-          suggestions={suggestions}
-        />
-      </Root>
+      <Flex>
+        <AutosuggestWrapper>
+          <Autosuggest
+            getSuggestionValue={this.getSuggestionValue}
+            inputProps={inputProps}
+            onSuggestionsClearRequested={this.onSuggestionsClearRequested}
+            onSuggestionSelected={this.onSuggestionSelected}
+            onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
+            renderSuggestion={this.renderSuggestion}
+            suggestions={suggestions}
+          />
+        </AutosuggestWrapper>
+        <SearchButton onClick={this.handleSearch} />
+      </Flex>
     )
   }
 }
