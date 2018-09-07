@@ -35,6 +35,7 @@
     "stop:services": "docker-compose down -v",
     "styleguide": "styleguidist server",
     "test": "jest",
+    "test:dependencies": "duplicate-module-test react react-dom styled-components pubsweet-server",
     "test:e2e": "NODE_ENV=test testcafe \"${BROWSER:-chrome}\" 'test/**/*.e2e.js'",
     "update": "yarn upgrade-interactive --latest"
   },
@@ -72,7 +73,7 @@
   ],
   "dependencies": {
     "@elifesciences/elife-theme": "^1.0.0",
-    "@pubsweet/ui": "^8.5.0",
+    "@pubsweet/ui": "^8.6.1",
     "@pubsweet/ui-toolkit": "^1.1.3",
     "apollo-link-state": "^0.4.1",
     "config": "^2.0.1",
@@ -87,7 +88,7 @@
     "omit-deep-lodash": "^1.1.2",
     "prop-types": "^15.6.2",
     "pubsweet-client": "^4.2.1",
-    "pubsweet-server": "^8.0.1",
+    "pubsweet-server": "^8.1.0",
     "react": "^16.4.2",
     "react-apollo": "^2.1.11",
     "react-autosuggest": "^9.3.4",
@@ -107,6 +108,7 @@
     "yup": "^0.26.2"
   },
   "devDependencies": {
+    "@mapbox/duplicate-module-test": "^0.1.0",
     "babel-core": "^6.26.0",
     "babel-eslint": "^8.0.2",
     "babel-loader": "^7.1.2",
