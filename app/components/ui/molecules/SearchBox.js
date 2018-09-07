@@ -2,11 +2,13 @@ import React from 'react'
 import styled from 'styled-components'
 import Autosuggest from 'react-autosuggest'
 import { th } from '@pubsweet/ui-toolkit'
-import { Flex } from 'grid-styled'
+import { Flex, Box } from 'grid-styled'
 
 import SearchButton from './SearchIconButton'
 
-const AutosuggestWrapper = styled.div`
+const AutosuggestWrapper = styled(Box).attrs({
+  width: 1,
+})`
   position: relative;
 
   .react-autosuggest__input {
