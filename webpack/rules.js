@@ -34,12 +34,6 @@ module.exports = [
         ],
       },
 
-      // global CSS
-      {
-        test: /\.css$/,
-        use: ['style-loader', 'css-loader'],
-      },
-
       // files
       {
         exclude: [/\.jsx?$/, /\.mjs$/, /\.html$/, /\.json$/],

@@ -9433,7 +9433,7 @@ pubsweet-server@^8.0.1, pubsweet-server@^8.1.0:
     uuid "^3.0.1"
     winston "^2.2.0"
 
-pubsweet-sse@^1.0.1:
+pubsweet-sse@^1.0.0:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/pubsweet-sse/-/pubsweet-sse-1.0.1.tgz#675f699213a7c228a448e7c9f272a5a9e7585fcf"
 

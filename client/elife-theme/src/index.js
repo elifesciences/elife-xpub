@@ -1,5 +1,5 @@
 /* eslint-disable import/extensions */
-import './fonts/index.css'
+import './global';
 import * as elements from './elements'
 import * as icons from './icons'
 
