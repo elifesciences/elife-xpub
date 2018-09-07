@@ -1,9 +1,7 @@
 /* eslint-disable import/extensions */
-import global from './global';
+import './global';
 import * as elements from './elements'
 import * as icons from './icons'
-
-global();
 
 const gridUnit = 6
 
