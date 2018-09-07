@@ -5,9 +5,11 @@
   "main": "index.js",
   "scripts": {},
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "eLife",
+  "license": "MIT",
   "dependencies": {
-    "pdfkit": "^0.8.3"
+    "lodash": "^4.17.10",
+    "pdfkit": "^0.8.3",
+    "xmlbuilder": "^10.0.0"
   }
 }
