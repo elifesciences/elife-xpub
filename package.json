@@ -57,6 +57,9 @@
   },
   "jest": {
     "collectCoverage": true,
+    "moduleNameMapper": {
+      "\\.(css|less)$": "<rootDir>/__mocks__/styleMock.js"
+    },
     "projects": [
       "<rootDir>/client",
       "<rootDir>/app",
