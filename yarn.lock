@@ -9252,7 +9252,7 @@ pubsweet-client@^4.2.1:
     styled-normalize "^3.0.1"
     subscriptions-transport-ws "^0.9.12"
 
-pubsweet-server@^8.1.0:
+pubsweet-server@^8.0.1, pubsweet-server@^8.1.0:
   version "8.1.0"
   resolved "https://registry.yarnpkg.com/pubsweet-server/-/pubsweet-server-8.1.0.tgz#b2f8f35d4494d8c882be1cc939bf1f9c4d77d536"
   dependencies:
@@ -9286,13 +9286,13 @@ pubsweet-server@^8.1.0:
     pg "^7.4.1"
     promise-queue "^2.2.3"
     prompt "^1.0.0"
-    pubsweet-sse "^1.0.0"
+    pubsweet-sse "^1.0.1"
     require-relative "^0.8.7"
     subscriptions-transport-ws "^0.9.12"
     uuid "^3.0.1"
     winston "^2.2.0"
 
-pubsweet-sse@^1.0.1:
+pubsweet-sse@^1.0.0:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/pubsweet-sse/-/pubsweet-sse-1.0.1.tgz#675f699213a7c228a448e7c9f272a5a9e7585fcf"
 
