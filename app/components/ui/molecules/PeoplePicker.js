@@ -5,7 +5,7 @@ import styled from 'styled-components'
 import { Button } from '@pubsweet/ui'
 import { th } from '@pubsweet/ui-toolkit'
 import { Box, Flex } from 'grid-styled'
-import { cloneDeep, escapeRegExp } from 'lodash'
+import { escapeRegExp } from 'lodash'
 
 import SelectedItem from '../atoms/SelectedItem'
 import PersonPod from '../atoms/PersonPod'
@@ -154,14 +154,9 @@ class PeoplePicker extends React.Component {
     if (!inputValue) return people
 
     if (inputValue.split(' ').length > 1) {
-      const matches = people.filter(person =>
+      return people.filter(person =>
         person[field].toLowerCase().includes(inputValue),
       )
-      return matches.map(elem => {
-        const clonedElem = cloneDeep(elem)
-        clonedElem.matchIndex = elem[field].toLowerCase().indexOf(inputValue)
-        return clonedElem
-      })
     }
     return this.filterPeopleSingle(people, inputValue, field)
   }
