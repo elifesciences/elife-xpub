@@ -5,6 +5,7 @@ import { th } from '@pubsweet/ui-toolkit'
 import { Flex, Box } from 'grid-styled'
 
 import SearchButton from './SearchIconButton'
+import ClearSearchButton from './CrossIconButton'
 
 const AutosuggestWrapper = styled(Box).attrs({
   width: 1,
@@ -116,6 +117,11 @@ class SearchBox extends React.Component {
   handleSearch = event => {
     this.props.onSubmit(this.state.value)
   }
+  clearSearch = event => {
+    this.setState({
+      value: '',
+    })
+  }
   renderSuggestion = suggestion => {
     const inputValue = this.state.value.trim().toLowerCase()
     const matchIndex = this.props.getMatchIndex(inputValue, suggestion.value)
@@ -158,6 +164,10 @@ class SearchBox extends React.Component {
             suggestions={suggestions}
           />
         </AutosuggestWrapper>
+        <ClearSearchButton
+          iconOverrideName="@pubsweet-pending.PeoplePicker.ClearSearch"
+          onClick={this.clearSearch}
+        />
         <SearchButton onClick={this.handleSearch} />
       </Flex>
     )
