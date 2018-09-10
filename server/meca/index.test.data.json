@@ -1,0 +1,174 @@
+{
+  "journalId": null,
+  "updated": null,
+  "createdBy": "6d8cd1ce-15b6-46c1-b901-bc91598c8f2d",
+  "previousVersion": null,
+  "status": "INITIAL",
+  "formState": null,
+  "decision": null,
+  "meta": {
+    "title": "Test Manuscript",
+    "articleType": "research-article",
+    "articleIds": null,
+    "abstract": null,
+    "subjects": [
+      "biochemistry-chemical-biology",
+      "chromosomes-gene-expression"
+    ],
+    "publicationDates": null,
+    "notes": null
+  },
+  "coverLetter": "<p><b>How will your work make others in the field think differently and move the field forward?</b></p><p></p><p><b>How does your work relate to the current literature on the topic?</b></p><p></p><p><b>Who do you consider to be the most relevant audience for this work?</b></p><p></p><p><b>Have you made clear in the letter what the work has and has not achieved?</b></p><p>d</p><p>d</p><p>d</p><p>d</p><p>d</p><p>d</p><p>d</p>",
+  "previouslyDiscussed": "Talked to bob about it",
+  "previouslySubmitted": ["Original Test Title"],
+  "cosubmission": ["asdassss", "Another"],
+  "opposedSeniorEditorsReason": "From another galaxy",
+  "opposedReviewingEditorsReason": "Not any more",
+  "opposedReviewersReason": "Wandering days are over",
+  "suggestionsConflict": true,
+  "relatedManuscripts": null,
+  "submitterSignature": "",
+  "disclosureConsent": false,
+  "qcIssues": null,
+  "teams": [
+    {
+      "role": "opposedReviewingEditor",
+      "updated": null,
+      "objectId": "",
+      "objectType": "manuscript",
+      "teamMembers": [
+        {
+          "meta": {
+            "elifePersonId": "f78f3df1"
+          }
+        }
+      ]
+    },
+    {
+      "role": "suggestedSeniorEditor",
+      "updated": null,
+      "objectId": "",
+      "objectType": "manuscript",
+      "teamMembers": [
+        {
+          "meta": {
+            "elifePersonId": "590b9a04"
+          }
+        },
+        {
+          "meta": {
+            "elifePersonId": "1968254f"
+          }
+        }
+      ]
+    },
+    {
+      "role": "opposedSeniorEditor",
+      "updated": null,
+      "objectId": "",
+      "objectType": "manuscript",
+      "teamMembers": [
+        {
+          "meta": {
+            "elifePersonId": "1968254f"
+          }
+        }
+      ]
+    },
+    {
+      "role": "author",
+      "updated": null,
+      "objectId": "",
+      "objectType": "manuscript",
+      "teamMembers": [
+        {
+          "alias": {
+            "firstName": "Test",
+            "lastName": "User",
+            "email": "elife@mailinator.com",
+            "aff": "University of eLife"
+          },
+          "meta": {
+            "corresponding": true
+          }
+        }
+      ]
+    },
+    {
+      "role": "suggestedReviewer",
+      "updated": null,
+      "objectId": "",
+      "objectType": "manuscript",
+      "teamMembers": [
+        {
+          "meta": {
+            "name": "Edward Reviewer",
+            "email": "edward@example.com"
+          }
+        },
+        {
+          "meta": {
+            "name": "Frances Reviewer",
+            "email": "frances@example.org"
+          }
+        },
+        {
+          "meta": {
+            "name": "Gertrude Reviewer",
+            "email": "gertrude@example.net"
+          }
+        }
+      ]
+    },
+    {
+      "role": "suggestedReviewingEditor",
+      "updated": null,
+      "objectId": "",
+      "objectType": "manuscript",
+      "teamMembers": [
+        {
+          "meta": {
+            "elifePersonId": "ca22dd6b"
+          }
+        },
+        {
+          "meta": {
+            "elifePersonId": "6ce3402a"
+          }
+        }
+      ]
+    },
+    {
+      "role": "opposedReviewer",
+      "updated": null,
+      "objectId": "",
+      "objectType": "manuscript",
+      "teamMembers": [
+        {
+          "meta": {
+            "name": "Hoo",
+            "email": "laughing@example.com"
+          }
+        },
+        {
+          "meta": {
+            "name": "Who",
+            "email": "singing@example.com"
+          }
+        }
+      ]
+    }
+  ],
+  "files": [
+    {
+      "url": "uploads/604e06ca-882d-4b5b-a147-e016893e60e9/f357bfb6b9b0886c2afc1ea1ddcabc61.pdf",
+      "size": null,
+      "type": "MANUSCRIPT_SOURCE",
+      "label": null,
+      "updated": null,
+      "filename": "7de61e41-b163-4108-9198-1492e2b54a1f.pdf",
+      "mimeType": null,
+      "manuscriptId": ""
+    }
+  ]
+}

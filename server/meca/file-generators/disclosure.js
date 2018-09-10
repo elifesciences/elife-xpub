@@ -11,7 +11,18 @@ const privacyPolicy =
   'any time (by emailing data@elifesciences.org). Please enter your name and check the box below to give this consent. ' +
   'Without this consent we will not be able to evaluate your submission.'
 
-function generateDisclosurePdf(header) {
+function generateDisclosurePdf(manuscript, clientIp) {
+  const author = manuscript.teams.find(team => team.role === 'author')
+    .teamMembers[0]
+  const header = {
+    Journal: 'eLife',
+    'Manuscript #': manuscript.id,
+    Title: manuscript.meta.title,
+    Authors: `${author.alias.givenNames} ${author.alias.surname}`,
+    Date: new Date(),
+    'IP Address': clientIp,
+  }
+
   const doc = new PDFDocument()
 
   const bold = 'Helvetica-Bold'

@@ -11,17 +11,17 @@ content-language: en
 x-content-type-options: nosniff
 x-frame-options: SAMEORIGIN
 access-control-allow-origin: *
-x-kong-upstream-latency: 185
+x-kong-upstream-latency: 181
 x-kong-proxy-latency: 0
 via: kong/0.9.5, 1.1 varnish, 1.1 varnish
 accept-ranges: bytes
-date: Fri, 07 Sep 2018 15:23:32 GMT
-age: 278
+date: Mon, 10 Sep 2018 16:16:12 GMT
+age: 0
 connection: close
-x-served-by: cache-dca17721-DCA, cache-lcy19220-LCY
-x-cache: MISS, HIT
-x-cache-hits: 0, 3
-x-timer: S1536333813.702091,VS0,VE0
+x-served-by: cache-dca17740-DCA, cache-lcy19251-LCY
+x-cache: MISS, MISS
+x-cache-hits: 0, 0
+x-timer: S1536596172.784403,VS0,VE273
 vary: Accept, Authorization, Accept-Encoding
 
 {"id":"ca22dd6b","type":{"id":"reviewing-editor","label":"Reviewing Editor"},"name":{"preferred":"Alan G Hinnebusch","index":"Hinnebusch, Alan G"},"research":{"focuses":["protein synthesis","translational control"],"expertises":[{"id":"chromosomes-gene-expression","name":"Chromosomes and Gene Expression"}]},"affiliations":[{"name":["National Institute of Child Health and Human Development"],"address":{"formatted":["United States"],"components":{"country":"United States"}}}]}

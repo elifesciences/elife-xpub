@@ -38,18 +38,19 @@ function createXmlObject(manuscript, editorsById, affiliations) {
       'contrib-group': Object.entries(contribStructure).map(
         ([group, groupInfo]) => ({
           '@content-type': group,
-          contrib: groupInfo.keys.reduce(
-            (contribs, role) =>
-              contribs.concat(
-                manuscript.teams
-                  .find(team => team.role === role)
-                  .teamMembers.map(member => ({
-                    '@contrib-type': lodash.kebabCase(role),
-                    ...groupInfo.formatter(member, affiliations, editorsById),
-                  })),
-              ),
-            [],
-          ),
+          contrib: groupInfo.keys.reduce((contribs, role) => {
+            const team = manuscript.teams.find(t => t.role === role)
+            if (team) {
+              return contribs.concat(
+                team.teamMembers.map(member => ({
+                  '@contrib-type': lodash.kebabCase(role),
+                  ...groupInfo.formatter(member, affiliations, editorsById),
+                })),
+              )
+            }
+
+            return contribs
+          }, []),
         }),
       ),
 

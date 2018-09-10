@@ -1,0 +1,55 @@
+<transfer>
+    <source>
+        <service-provider>
+            <name>eLife-xPub</name>
+            <contact role="Product Manager">
+                <contact-name>
+                    <surname>Drury</surname>
+                    <given-names>Hannah</given-names>
+                </contact-name>
+                <email>h.drury@elifesciences.org</email>
+            </contact>
+        </service-provider>
+        <publication type="journal">
+            <title>eLife</title>
+            <contact role="Executive Editor">
+                <name>
+                    <surname>Collings</surname>
+                    <given-names>Andy</given-names>
+                </name>
+                <email>a.collings@elifesciences.org</email>
+                <phone>01223 855340</phone>
+            </contact>
+        </publication>
+    </source>
+    <destination>
+        <service-provider>
+            <name>eJournalPress</name>
+            <contact role="Project Manager">
+                <name>
+                    <surname>Plotkin</surname>
+                    <given-names>Joel</given-names>
+                </name>
+                <email>plotkin@ejournalpress.com</email>
+            </contact>
+            <publication type="journal">
+                <title>eLife</title>
+                <contact role="Executive Editor">
+                    <name>
+                        <surname>Collings</surname>
+                        <given-names>Andy</given-names>
+                    </name>
+                    <email>a.collings@elifesciences.org</email>
+                    <phone>01223 855340</phone>
+                </contact>
+            </publication>
+        </service-provider>
+        <security>
+            <authentication-code>{code}</authentication-code>
+        </security>
+    </destination>
+    <processing-instructions>
+        <instruction sequence="1">Import</instruction>
+        <comments>Free form comments</comments>
+    </processing-instructions>
+</transfer>
