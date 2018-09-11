@@ -25,6 +25,15 @@ module.exports = {
   darServer: {
     basePath: 'test/temp/uploads',
   },
+  meca: {
+    sftp: {
+      host: 'localhost',
+      port: 3022,
+      username: 'test',
+      password: 'tset',
+    },
+    remotePath: '/test',
+  },
   mailer: {
     transport: {
       sendmail: false,

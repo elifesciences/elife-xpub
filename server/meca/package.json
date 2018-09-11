@@ -12,9 +12,12 @@
     "jszip": "^3.1.5",
     "lodash": "^4.17.10",
     "pdfkit": "^0.8.3",
+    "ssh2-sftp-client": "^3.1.0",
     "xmlbuilder": "^10.0.0"
   },
   "devDependencies": {
+    "memory-fs": "^0.4.1",
+    "node-sftp-server": "^0.3.0",
     "replay": "^2.3.0"
   }
 }

@@ -1,4 +1,7 @@
+const SftpClient = require('ssh2-sftp-client')
+const config = require('config')
 const ManuscriptManager = require('@elifesciences/xpub-server/entities/manuscript')
+
 const articleGenerator = require('./file-generators/article')
 const coverLetterGenerator = require('./file-generators/coverLetter')
 const disclosureGenerator = require('./file-generators/disclosure')
@@ -20,4 +23,20 @@ async function generate(manuscriptId, clientIp) {
   })
 }
 
-module.exports = { generate }
+async function deliver(file, id) {
+  const sftp = new SftpClient()
+  await sftp.connect(config.get('meca.sftp'))
+
+  const remotePath = config.get('meca.remotePath')
+  await sftp.mkdir(remotePath, true)
+
+  await sftp.put(file, `${remotePath}/${id}`)
+  await sftp.end()
+}
+
+async function send(manuscriptId, clientIp) {
+  const archive = await generate(manuscriptId, clientIp)
+  await deliver(archive, manuscriptId)
+}
+
+module.exports = { generate, deliver, send }
