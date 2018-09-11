@@ -100,7 +100,7 @@ class SearchBox extends React.Component {
       {
         value: suggestion.value,
       },
-      () => this.props.onSubmit(suggestion.value),
+      () => this.handleSearch(),
     )
   }
   onChange = (_, { newValue }) => {
@@ -111,7 +111,7 @@ class SearchBox extends React.Component {
   onKeyDown = event => {
     // key code for enter is 13
     if (event.keyCode === 13) {
-      this.handleSearch(this.state.value)
+      this.handleSearch()
     }
   }
   handleSearch = event => {
