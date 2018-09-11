@@ -1,3 +1,5 @@
+require('newrelic')
+
 const logger = require('@pubsweet/logger')
 const startServer = require('pubsweet-server')
 
