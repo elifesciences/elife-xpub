@@ -3,12 +3,13 @@ import { mount } from 'enzyme'
 import { ThemeProvider } from 'styled-components'
 import theme from '@elifesciences/elife-theme'
 import PeoplePicker from './PeoplePicker'
+import SearchBox from './SearchBox'
 
 const people = [
-  { id: 1, name: 'Annie', institution: 'eLife' },
-  { id: 2, name: 'Bobby', institution: 'eLife' },
-  { id: 3, name: 'Chastity', institution: 'eLife' },
-  { id: 4, name: 'Dave', institution: 'eLife' },
+  { id: 1, name: 'Annie Nadine', institution: 'eLife' },
+  { id: 2, name: 'Bobby Aaron', institution: 'eLife' },
+  { id: 3, name: 'Chastity Andy', institution: 'eLife' },
+  { id: 4, name: 'Dave Paul', institution: 'eLife' },
 ]
 
 const makeWrapper = props =>
@@ -98,5 +99,69 @@ describe('PeoplePicker', () => {
       .find('svg')
       .simulate('click')
     expectSelectionLength(wrapper, 0)
+  })
+
+  describe('integration with Search Box', () => {
+    const searchWrapper = mount(
+      <ThemeProvider theme={theme}>
+        <PeoplePicker
+          // need inner props for search box
+          // eslint-disable-next-line react/no-children-prop
+          children={innerProps => (
+            <div>
+              <SearchBox
+                filterFunction={innerProps.filterFunction}
+                getMatchIndex={innerProps.getMatchIndex}
+                onSubmit={innerProps.searchSubmit}
+                options={innerProps.searchOptions}
+              />
+              <PeoplePicker.Body {...innerProps} />
+            </div>
+          )}
+          onCancel={jest.fn()}
+          onSubmit={jest.fn()}
+          people={people}
+        />
+      </ThemeProvider>,
+    )
+
+    function searchFor(inputValue) {
+      const input = searchWrapper.find('input')
+      input.simulate('change', { target: { value: inputValue } })
+      input.simulate('keyDown', { keyCode: 13, key: 'Enter' })
+    }
+
+    it('shows all people pods on empty search input', () => {
+      searchFor('')
+      expect(searchWrapper.find('PersonPod')).toHaveLength(people.length)
+    })
+
+    it('filters the people pods based on search input, single match', () => {
+      searchFor('annie')
+      expect(searchWrapper.find('PersonPod')).toHaveLength(1)
+      expect(searchWrapper.find('PersonPod').text()).toEqual('Annie Nadine')
+    })
+
+    it('filters the people pods based on search input, multiple matches', () => {
+      searchFor('an')
+      expect(searchWrapper.find('PersonPod')).toHaveLength(2)
+      expect(
+        searchWrapper
+          .find('PersonPod')
+          .at(0)
+          .text(),
+      ).toEqual('Annie Nadine')
+      expect(
+        searchWrapper
+          .find('PersonPod')
+          .at(1)
+          .text(),
+      ).toEqual('Chastity Andy')
+    })
+
+    it("doesn't match characters in the middle of the word", () => {
+      searchFor('s')
+      expect(searchWrapper.find('PersonPod')).toHaveLength(0)
+    })
   })
 })
