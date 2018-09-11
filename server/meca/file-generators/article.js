@@ -87,15 +87,15 @@ async function generateArticleXml(manuscript) {
     'suggestedSeniorEditor',
     'opposedSeniorEditor',
     'suggestedReviewingEditor',
-  ].reduce(
-    (ids, key) =>
-      ids.concat(
-        manuscript.teams
-          .find(team => team.role === key)
-          .teamMembers.map(member => member.meta.elifePersonId),
-      ),
-    [],
-  )
+  ].reduce((ids, key) => {
+    const team = manuscript.teams.find(t => t.role === key)
+    if (team) {
+      return ids.concat(
+        team.teamMembers.map(member => member.meta.elifePersonId),
+      )
+    }
+    return ids
+  }, [])
 
   const editors = await elifeApi.peopleById(editorIds)
   const editorsById = editors.reduce(
@@ -103,10 +103,11 @@ async function generateArticleXml(manuscript) {
     {},
   )
 
-  const affiliations = [
-    manuscript.teams.find(team => team.role === 'author').teamMembers[0].alias
-      .aff,
-  ].concat(editors.map(editor => editor.aff))
+  const affiliations = editors.map(editor => editor.aff)
+  const authors = manuscript.teams.find(team => team.role === 'author')
+  if (authors) {
+    affiliations.push(authors.teamMembers[0].alias.aff)
+  }
 
   const front = createXmlObject(manuscript, editorsById, affiliations)
   return xmlbuilder

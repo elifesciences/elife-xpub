@@ -10385,7 +10385,7 @@ replace-ext@1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/replace-ext/-/replace-ext-1.0.0.tgz#de63128373fcbf7c3ccfa4de5a480c45a67958eb"
 
-replay@^2.1.4:
+replay@^2.1.4, replay@^2.3.0:
   version "2.3.0"
   resolved "https://registry.yarnpkg.com/replay/-/replay-2.3.0.tgz#cc9ad4e82094dd001f8fd2f1d0a0add29b5cff85"
   dependencies:

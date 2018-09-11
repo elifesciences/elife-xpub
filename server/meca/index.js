@@ -16,7 +16,7 @@ async function generate(manuscriptId, clientIp) {
     'disclosure.pdf': disclosureGenerator(manuscript, clientIp),
     'manifest.xml': manifestGenerator(),
     'manuscript.pdf': manuscriptGenerator(manuscript),
-    'transfer.xml': transferGenerator(),
+    'transfer.xml': transferGenerator(''), // auth code not currently used
   })
 }
 

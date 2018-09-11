@@ -32,7 +32,12 @@ describe('Article XML generator', () => {
   describe('sample output', () => {
     test.each(snippets)('includes %s', async (name, snippet) => {
       const xml = await generateXml(sampleManuscript)
-      expect(xml).toMatch(snippet)
+      expect(xml).toContain(snippet)
     })
+  })
+
+  it("doesn't choke on missing teams", async () => {
+    const manuscriptWithoutTeams = { ...sampleManuscript, teams: [] }
+    await generateXml(manuscriptWithoutTeams)
   })
 })
