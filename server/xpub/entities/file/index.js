@@ -23,6 +23,9 @@ const FileManager = {
     const id = await dataAccess.insert(file)
     return { ...file, id }
   },
+  getContent: async file =>
+    // TODO get file content from S3
+    file.url,
 }
 
 module.exports = FileManager

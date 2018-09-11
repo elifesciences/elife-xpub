@@ -45,7 +45,7 @@ const Manuscript = {
     if (manuscript.teams) {
       await Promise.all(
         manuscript.teams.map(team =>
-          TeamManager.save({ objectId: id, objectType: 'manuscript', ...team }),
+          TeamManager.save({ ...team, objectId: id, objectType: 'manuscript' }),
         ),
       )
     }
@@ -53,7 +53,7 @@ const Manuscript = {
     if (manuscript.files) {
       await Promise.all(
         manuscript.files.map(file =>
-          FileManager.save({ manuscriptId: id, ...file }),
+          FileManager.save({ ...file, manuscriptId: id }),
         ),
       )
     }
@@ -145,6 +145,9 @@ const Manuscript = {
       throw new Error('Manuscript not owned by user')
     }
   },
+
+  getSource: manuscript =>
+    manuscript.files.find(file => file.type === 'MANUSCRIPT_SOURCE'),
 }
 
 module.exports = Manuscript

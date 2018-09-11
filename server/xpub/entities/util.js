@@ -1,11 +1,18 @@
 const lodash = require('lodash')
 const knex = require('knex')
+const logger = require('@pubsweet/logger')
 const db = require('pubsweet-server/src/db')
 
 const buildQuery = knex({ client: 'pg' })
-const runQuery = query => {
+
+const runQuery = async query => {
   const sql = query.toString()
-  return db.query(sql)
+  try {
+    return await db.query(sql)
+  } catch (err) {
+    logger.warn('Error running query', sql)
+    throw err
+  }
 }
 
 const keyToCamelCase = snakeKey =>

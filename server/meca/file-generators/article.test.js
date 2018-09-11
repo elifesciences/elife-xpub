@@ -1,8 +1,8 @@
 const generateXml = require('./article')
-const replaySetup = require('../../test/helpers/replay-setup')
+const Replay = require('replay')
 const sampleManuscript = require('./article.test.data')
 
-replaySetup('success')
+Replay.fixtures = `${__dirname}/../test/http-mocks`
 
 const snippets = [
   ['doctype', '<!DOCTYPE article SYSTEM "JATS-journalpublishing1.dtd">'],
@@ -32,7 +32,12 @@ describe('Article XML generator', () => {
   describe('sample output', () => {
     test.each(snippets)('includes %s', async (name, snippet) => {
       const xml = await generateXml(sampleManuscript)
-      expect(xml).toMatch(snippet)
+      expect(xml).toContain(snippet)
     })
+  })
+
+  it("doesn't choke on missing teams", async () => {
+    const manuscriptWithoutTeams = { ...sampleManuscript, teams: [] }
+    await generateXml(manuscriptWithoutTeams)
   })
 })
