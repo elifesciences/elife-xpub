@@ -14,7 +14,8 @@ const AutosuggestWrapper = styled(Box).attrs({
 
   .react-autosuggest__input {
     border: ${th('borderWidth')} ${th('borderStyle')} ${th('colorBorder')};
-    border-radius: ${th('borderRadius')};
+    border-right: ${th('colorBackground')};
+    border-radius: ${th('borderRadius')} 0 0 ${th('borderRadius')};
     font-family: ${th('fontInterface')};
     font-size: ${th('fontSizeBase')};
     line-height: ${th('lineHeightBase')};
@@ -66,6 +67,15 @@ const AutosuggestWrapper = styled(Box).attrs({
   .react-autosuggest__suggestion--highlighted {
     background-color: ${th('colorPrimary')};
     color: ${th('colorTextReverse')};
+  }
+`
+
+const StyledClearButton = styled(ClearSearchButton)`
+  fill: ${th('colorTextSecondary')};
+  border: ${th('borderWidth')} ${th('borderStyle')} ${th('colorBorder')};
+  border-left: ${th('colorBackground')};
+  &:focus {
+    border-left: ${th('colorBorder')};
   }
 `
 
@@ -167,7 +177,7 @@ class SearchBox extends React.Component {
             suggestions={suggestions}
           />
         </AutosuggestWrapper>
-        <ClearSearchButton
+        <StyledClearButton
           iconOverrideName="@pubsweet-pending.PeoplePicker.ClearSearch"
           onClick={this.clearSearch}
         />
