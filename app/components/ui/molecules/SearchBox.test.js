@@ -12,30 +12,30 @@ const searchOptions = [
   { value: 'second option' },
 ]
 
-function filterFunction(options, searchValue, field) {
-  if (!searchValue) return options
+const mockFilter = jest.fn((options, searchValue, field) => {
+  if (!searchValue) return []
 
   const inputValue = searchValue.trim().toLowerCase()
-  if (!inputValue) return options
+  if (!inputValue) return []
 
   return options.filter(option =>
     option[field].toLowerCase().includes(inputValue),
   )
-}
+})
 
-function getMatchIndex(inputValue, option) {
+const mockMatchIndex = jest.fn((inputValue, option) => {
   const re = new RegExp(escapeRegExp(inputValue))
   const match = re.exec(option.toLowerCase())
   if (match) return match.index
   return -1
-}
+})
 
 function makeWrapper() {
   return mount(
     <ThemeProvider theme={theme}>
       <SearchBox
-        filterFunction={filterFunction}
-        getMatchIndex={getMatchIndex}
+        filterFunction={mockFilter}
+        getMatchIndex={mockMatchIndex}
         onSubmit={jest.fn()}
         options={searchOptions}
       />
@@ -51,35 +51,30 @@ describe('SearchBox component tests', () => {
   })
 
   it('has search icon', () => {
-    expect(wrapper.find('#search-icon')).toHaveLength(1)
+    expect(wrapper.find('[data-test-id="search-icon"]')).toHaveLength(1)
   })
 
-  it("doesn't show any suggestions on empty input", () => {
-    wrapper.find('input').simulate('change', { target: { value: '' } })
-    expect(wrapper.find(SearchBox).instance().state.suggestions).toEqual([])
-  })
-
-  function compareSuggestions(searchValue) {
-    const expectedSuggestions = filterFunction(
-      searchOptions,
-      searchValue,
-      'value',
-    )
-    wrapper.find('input').simulate('change', { target: { value: searchValue } })
-    const receivedSuggestions = wrapper.find(SearchBox).instance().state
-      .suggestions
-    expect(receivedSuggestions).toEqual(expectedSuggestions)
-  }
-
-  it('typing something will show suggestions based on filtering function, test 1', () => {
-    compareSuggestions('option')
-  })
-
-  it('typing something will show suggestions based on filtering function, test 2', () => {
-    compareSuggestions('f')
-  })
-
-  it('typing something will show suggestions based on filtering function, test 3', () => {
-    compareSuggestions('xyz')
-  })
+  it.each([[1, 'option'], [2, 'f'], [3, 'xyz'], [4, '']])(
+    'typing something will show suggestions based on filtering function, test %i',
+    (index, searchValue) => {
+      /**
+       * these tests make the assumption that suggestions will
+       * be correctly rendered from the state of the component
+       *
+       * in the future this should be changed to check for the
+       * list of rendered suggestions directly
+       */
+      const expectedSuggestions = mockFilter(
+        searchOptions,
+        searchValue,
+        'value',
+      )
+      wrapper
+        .find('input')
+        .simulate('change', { target: { value: searchValue } })
+      const receivedSuggestions = wrapper.find(SearchBox).instance().state
+        .suggestions
+      expect(receivedSuggestions).toEqual(expectedSuggestions)
+    },
+  )
 })
