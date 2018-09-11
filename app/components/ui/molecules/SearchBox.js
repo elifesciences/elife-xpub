@@ -118,9 +118,12 @@ class SearchBox extends React.Component {
     this.props.onSubmit(this.state.value)
   }
   clearSearch = event => {
-    this.setState({
-      value: '',
-    })
+    this.setState(
+      {
+        value: '',
+      },
+      () => this.handleSearch(),
+    )
   }
   renderSuggestion = suggestion => {
     const inputValue = this.state.value.trim().toLowerCase()
