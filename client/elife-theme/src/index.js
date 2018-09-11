@@ -1,5 +1,5 @@
 /* eslint-disable import/extensions */
-import './global';
+import './global'
 import * as elements from './elements'
 import * as icons from './icons'
 
@@ -88,6 +88,7 @@ export default {
     '@pubsweet-pending.FilesPage.Editor.Subscript': icons.FormatSubscript,
     '@pubsweet-pending.FilesPage.Editor.Superscript': icons.FormatSuperscript,
     '@pubsweet-pending.PeoplePicker.Search': icons.Search,
+    '@pubsweet-pending.PeoplePicker.ClearSearch': icons.Cross,
     '@pubsweet-pending.FileUpload.Upload': icons.Upload,
     '@pubsweet-pending.FileUpload.UploadFailure': icons.UploadFailure,
     '@pubsweet-pending.FileUpload.UploadSuccess': icons.UploadSuccess,

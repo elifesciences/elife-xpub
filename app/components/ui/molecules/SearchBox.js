@@ -5,6 +5,7 @@ import { th } from '@pubsweet/ui-toolkit'
 import { Flex, Box } from 'grid-styled'
 
 import SearchButton from './SearchIconButton'
+import ClearSearchButton from './CrossIconButton'
 
 const AutosuggestWrapper = styled(Box).attrs({
   width: 1,
@@ -13,7 +14,8 @@ const AutosuggestWrapper = styled(Box).attrs({
 
   .react-autosuggest__input {
     border: ${th('borderWidth')} ${th('borderStyle')} ${th('colorBorder')};
-    border-radius: ${th('borderRadius')};
+    border-right: ${th('colorBackground')};
+    border-radius: ${th('borderRadius')} 0 0 ${th('borderRadius')};
     font-family: ${th('fontInterface')};
     font-size: ${th('fontSizeBase')};
     line-height: ${th('lineHeightBase')};
@@ -68,6 +70,15 @@ const AutosuggestWrapper = styled(Box).attrs({
   }
 `
 
+const StyledClearButton = styled(ClearSearchButton)`
+  fill: ${th('colorTextSecondary')};
+  border: ${th('borderWidth')} ${th('borderStyle')} ${th('colorBorder')};
+  border-left: ${th('colorBackground')};
+  &:focus {
+    border-left: ${th('colorBorder')};
+  }
+`
+
 class SearchBox extends React.Component {
   state = {
     value: '',
@@ -99,7 +110,7 @@ class SearchBox extends React.Component {
       {
         value: suggestion.value,
       },
-      () => this.props.onSubmit(suggestion.value),
+      () => this.handleSearch(),
     )
   }
   onChange = (_, { newValue }) => {
@@ -110,11 +121,19 @@ class SearchBox extends React.Component {
   onKeyDown = event => {
     // key code for enter is 13
     if (event.keyCode === 13) {
-      this.handleSearch(this.state.value)
+      this.handleSearch()
     }
   }
   handleSearch = event => {
     this.props.onSubmit(this.state.value)
+  }
+  clearSearch = event => {
+    this.setState(
+      {
+        value: '',
+      },
+      () => this.handleSearch(),
+    )
   }
   renderSuggestion = suggestion => {
     const inputValue = this.state.value.trim().toLowerCase()
@@ -158,6 +177,10 @@ class SearchBox extends React.Component {
             suggestions={suggestions}
           />
         </AutosuggestWrapper>
+        <StyledClearButton
+          iconOverrideName="@pubsweet-pending.PeoplePicker.ClearSearch"
+          onClick={this.clearSearch}
+        />
         <SearchButton onClick={this.handleSearch} />
       </Flex>
     )
