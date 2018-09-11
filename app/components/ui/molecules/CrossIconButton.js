@@ -4,9 +4,7 @@ import { th } from '@pubsweet/ui-toolkit'
 
 import Icon from '../atoms/Icon'
 
-const CrossIcon = ({ overrideName, ...props }) => (
-  <Icon iconName="X" overrideName={overrideName} {...props} />
-)
+const CrossIcon = props => <Icon iconName="X" {...props} />
 
 const IconButton = styled.button.attrs({
   type: 'button',
