@@ -39,4 +39,4 @@ async function send(manuscriptId, clientIp) {
   await deliver(archive, manuscriptId)
 }
 
-module.exports = { generate, deliver, send }
+module.exports = { send }
