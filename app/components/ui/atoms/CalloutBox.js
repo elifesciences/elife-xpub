@@ -12,11 +12,25 @@ const CrossIcon = props => (
   />
 )
 
-const CloseButton = styled(CrossIcon)`
+const IconButton = styled.button.attrs({
+  type: 'button',
+})`
+  background-color: transparent;
+  border: none;
+  line-height: 0;
+  padding: 0;
+`
+
+const CloseButton = ({ onClick, ...props }) => (
+  <IconButton onClick={onClick} {...props}>
+    <CrossIcon />
+  </IconButton>
+)
+
+const StyledCloseButton = styled(CloseButton)`
   position: absolute;
   top: ${th('space.2')};
   right: ${th('space.2')};
-  cursor: pointer;
   fill: ${th('colorTextSecondary')};
   height: ${th('space.3')};
   width: ${th('space.3')};
@@ -33,7 +47,7 @@ const Frame = styled(props => <Box {...props} />).attrs({
 
 const CalloutBox = ({ onClose, children, ...props }) => (
   <Frame {...props}>
-    {onClose && <CloseButton onClick={onClose} />}
+    {onClose && <StyledCloseButton onClick={onClose} />}
     <Box p={3}>{children}</Box>
   </Frame>
 )
