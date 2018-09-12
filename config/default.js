@@ -37,6 +37,7 @@ module.exports = {
       username: '',
       password: '',
     },
+    notificationEmail: '',
     remotePath: '/',
   },
   scienceBeam: {

@@ -5,7 +5,7 @@ const { createTables } = require('@pubsweet/db-manager')
 const ManuscriptManager = require('@elifesciences/xpub-server/entities/manuscript')
 const startSftpServer = require('./test/mock-ssh-server')
 const sampleManuscript = require('./index.test.data')
-const { send } = require('.')
+const mecaExport = require('.')
 
 Replay.fixtures = `${__dirname}/test/http-mocks`
 
@@ -27,7 +27,7 @@ describe('MECA integration test', () => {
   afterEach(done => server.close(done))
 
   it('generates an archive and uploads it', async () => {
-    await send(manuscriptId, sampleManuscript.createdBy)
+    await mecaExport(manuscriptId, sampleManuscript.createdBy)
 
     expect(mockFs.readdirSync('/')).toEqual(['test'])
     expect(mockFs.readdirSync('/test')).toEqual([manuscriptId])

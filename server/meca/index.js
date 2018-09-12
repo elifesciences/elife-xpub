@@ -34,9 +34,9 @@ async function deliver(file, id) {
   await sftp.end()
 }
 
-async function send(manuscriptId, userId, clientIp) {
+async function mecaExport(manuscriptId, userId, clientIp) {
   const archive = await generate(manuscriptId, userId, clientIp)
   await deliver(archive, manuscriptId)
 }
 
-module.exports = { send }
+module.exports = mecaExport

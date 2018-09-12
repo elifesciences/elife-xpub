@@ -32,6 +32,7 @@ module.exports = {
       username: 'test',
       password: 'tset',
     },
+    notificationEmail: 'test@example.com',
     remotePath: '/test',
   },
   mailer: {

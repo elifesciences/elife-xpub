@@ -1,12 +1,18 @@
+jest.mock('@elifesciences/xpub-meca-export', () =>
+  jest.fn(() => Promise.resolve()),
+)
+
 const lodash = require('lodash')
 const config = require('config')
 const fs = require('fs-extra')
+const logger = require('@pubsweet/logger')
 const { createTables } = require('@pubsweet/db-manager')
-const User = require('../user')
-const Manuscript = require('.')
 const mailer = require('@pubsweet/component-send-email')
+const mecaExport = require('@elifesciences/xpub-meca-export')
+const User = require('../user')
 const { Mutation, Query } = require('./resolvers')
 const emptyManuscript = require('./helpers/empty')
+const Manuscript = require('.')
 
 const replaySetup = require('../../../../test/helpers/replay-setup')
 
@@ -202,6 +208,8 @@ describe('Submission', () => {
     }
 
     beforeEach(async () => {
+      jest.clearAllMocks()
+
       initialManuscript = lodash.cloneDeep(emptyManuscript)
       initialManuscript.createdBy = userId
       initialManuscript.status = 'INITIAL'
@@ -223,9 +231,7 @@ describe('Submission', () => {
       manuscript.id = id
       const returnedManuscript = await Mutation.finishSubmission(
         {},
-        {
-          data: manuscript,
-        },
+        { data: manuscript },
         { user: userId },
       )
 
@@ -249,9 +255,7 @@ describe('Submission', () => {
       ]
       await Mutation.finishSubmission(
         {},
-        {
-          data: manuscript,
-        },
+        { data: manuscript },
         { user: userId },
       )
 
@@ -311,6 +315,37 @@ describe('Submission', () => {
       ).rejects.toThrow(
         '"title" is not allowed. "manuscriptType" is not allowed',
       )
+    })
+
+    it('sends email and updates status when export fails', async () => {
+      jest.spyOn(logger, 'error').mockImplementationOnce(() => {})
+      mecaExport.mockImplementationOnce(() =>
+        Promise.reject(new Error('Broked')),
+      )
+
+      const manuscript = lodash.cloneDeep(fullManuscript)
+      manuscript.id = id
+      await Mutation.finishSubmission(
+        {},
+        { data: manuscript },
+        { user: userId },
+      )
+
+      // resolver doesn't wait for export to complete so just keep retrying for a second
+      for (let i = 0; i < 100 && mailer.getMails().length === 0; i += 1) {
+        // eslint-disable-next-line no-await-in-loop
+        await new Promise(resolve => setTimeout(resolve, 10))
+      }
+
+      expect(mailer.getMails()).toMatchObject([
+        {
+          to: 'test@example.com',
+          subject: 'MECA export failed',
+        },
+      ])
+      expect(logger.error).toHaveBeenCalled()
+      const updatedManuscript = await Manuscript.find(manuscript.id, userId)
+      expect(updatedManuscript.status).toBe('FAILED_MECA_EXPORT')
     })
   })
 

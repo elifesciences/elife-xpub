@@ -1,5 +1,4 @@
 const config = require('config')
-const User = require('../user')
 const {
   getPubsub,
   asyncIterators,
@@ -13,6 +12,7 @@ const fs = require('fs-extra')
 const path = require('path')
 const crypto = require('crypto')
 const Joi = require('joi')
+const mecaExport = require('@elifesciences/xpub-meca-export')
 
 const { ON_UPLOAD_PROGRESS } = asyncIterators
 
@@ -79,7 +79,7 @@ const resolvers = {
       return manuscript
     },
 
-    async finishSubmission(_, { data }, { user }) {
+    async finishSubmission(_, { data }, { user, ip }) {
       const originalManuscript = await Manuscript.find(data.id, user)
 
       const manuscriptInput = Manuscript.removeOptionalBlankReviewers(data)
@@ -100,19 +100,29 @@ const resolvers = {
       manuscript.status = 'QA'
       await Manuscript.save(manuscript)
 
-      const userData = await User.find(user)
-      if (userData.email !== manuscriptInput.author.email) {
-        mailer
-          .send({
-            to: manuscriptInput.author.email,
-            text: 'Please verify that you are a corresponding author',
+      mecaExport(manuscript.id, user, ip)
+        .then(() =>
+          logger.info(`Manuscript ${manuscript.id} successfully exported`),
+        )
+        .catch(async err => {
+          logger.error('MECA export failed', err)
+          await Manuscript.save({
+            id: manuscript.id,
+            status: 'FAILED_MECA_EXPORT',
           })
-          .catch(err => {
-            logger.error(
-              `Error sending corresponding author verification email: ${err}`,
-            )
+          return mailer.send({
+            to: config.get('meca.notificationEmail'),
+            subject: 'MECA export failed',
+            text: `Manuscript ID: ${manuscript.id}
+Manuscript title: ${manuscript.meta.title}
+Error:
+
+${err}`,
           })
-      }
+        })
+        .catch(err => {
+          logger.error('Error handling MECA export failure', err)
+        })
 
       return manuscript
     },
