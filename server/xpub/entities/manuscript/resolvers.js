@@ -35,8 +35,8 @@ const staticManifest = `<dar>
 
 const resolvers = {
   Query: {
-    async currentSubmission(_, vars, ctx) {
-      const manuscripts = await Manuscript.findByStatus('INITIAL', ctx.user)
+    async currentSubmission(_, vars, { user }) {
+      const manuscripts = await Manuscript.findByStatus('INITIAL', user)
       if (!manuscripts.length) {
         return null
       }
@@ -52,12 +52,12 @@ const resolvers = {
   },
 
   Mutation: {
-    async createSubmission(_, vars, ctx) {
-      if (!ctx.user) {
+    async createSubmission(_, vars, { user }) {
+      if (!user) {
         throw new Error('Not logged in')
       }
       const manuscript = Manuscript.new()
-      manuscript.createdBy = ctx.user
+      manuscript.createdBy = user
       return Manuscript.save(manuscript)
     },
 
@@ -79,8 +79,8 @@ const resolvers = {
       return manuscript
     },
 
-    async finishSubmission(_, { data }, ctx) {
-      const originalManuscript = await Manuscript.find(data.id, ctx.user)
+    async finishSubmission(_, { data }, { user }) {
+      const originalManuscript = await Manuscript.find(data.id, user)
 
       const manuscriptInput = Manuscript.removeOptionalBlankReviewers(data)
       const { error: errorManuscript } = Joi.validate(
@@ -100,8 +100,8 @@ const resolvers = {
       manuscript.status = 'QA'
       await Manuscript.save(manuscript)
 
-      const user = await User.find(ctx.user)
-      if (user.email !== manuscriptInput.author.email) {
+      const userData = await User.find(user)
+      if (userData.email !== manuscriptInput.author.email) {
         mailer
           .send({
             to: manuscriptInput.author.email,
@@ -117,8 +117,8 @@ const resolvers = {
       return manuscript
     },
 
-    async uploadManuscript(_, { file, id, fileSize }, ctx) {
-      const manuscript = await Manuscript.find(id, ctx.user)
+    async uploadManuscript(_, { file, id, fileSize }, { user }) {
+      const manuscript = await Manuscript.find(id, user)
 
       const { stream, filename, mimetype } = await file
 
@@ -148,7 +148,7 @@ const resolvers = {
       stream.on('data', chunk => {
         uploadedSize += chunk.length
         const uploadProgress = Math.floor((uploadedSize * 100) / fileSize)
-        pubsub.publish(`${ON_UPLOAD_PROGRESS}.${ctx.user}`, {
+        pubsub.publish(`${ON_UPLOAD_PROGRESS}.${user}`, {
           uploadProgress,
         })
       })
