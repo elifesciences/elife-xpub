@@ -48,4 +48,8 @@ describe('MECA integration test', () => {
       'transfer.xml',
     ])
   })
+
+  it.skip('generates an archive and uploads it to S3', async () => {
+    await Promise.resolve()
+  })
 })
