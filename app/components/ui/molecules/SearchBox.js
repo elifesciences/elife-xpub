@@ -1,13 +1,20 @@
 import React from 'react'
 import styled from 'styled-components'
 import Autosuggest from 'react-autosuggest'
-import { th } from '@pubsweet/ui-toolkit'
 import { Flex, Box } from 'grid-styled'
-
-import SearchButton from './SearchIconButton'
+import { th } from '@pubsweet/ui-toolkit'
+import { Button } from '@pubsweet/ui'
 
 import Icon from '../atoms/Icon'
 import ButtonAsIconWrapper from '../atoms/ButtonAsIconWrapper'
+
+const SearchIcon = props => (
+  <Icon
+    iconName="Search"
+    overrideName="@pubsweet-pending.PeoplePicker.Search"
+    {...props}
+  />
+)
 
 const CrossIcon = props => (
   <Icon
@@ -16,6 +23,16 @@ const CrossIcon = props => (
     {...props}
   />
 )
+
+const StyledSearchButton = styled(Button).attrs({
+  primary: true,
+})`
+  fill: ${th('colorTextReverse')};
+  line-height: 0;
+  min-width: 0;
+  padding: ${th('space.1')};
+  margin: 0;
+`
 
 const StyledClearButton = styled(ButtonAsIconWrapper)`
   fill: ${th('colorTextSecondary')};
@@ -190,7 +207,9 @@ class SearchBox extends React.Component {
         <StyledClearButton onClick={this.clearSearch}>
           <CrossIcon />
         </StyledClearButton>
-        <SearchButton onClick={this.handleSearch} />
+        <StyledSearchButton onClick={this.handleSearch}>
+          <SearchIcon />
+        </StyledSearchButton>
       </Flex>
     )
   }
