@@ -163,5 +163,12 @@ describe('PeoplePicker', () => {
       searchFor('s')
       expect(searchWrapper.find('PersonPod')).toHaveLength(0)
     })
+
+    it('filters the people pods when you click on the search icon', () => {
+      const input = searchWrapper.find('input')
+      input.simulate('change', { target: { value: 'annie' } })
+      searchWrapper.find('[data-test-id="search-icon"]').simulate('click')
+      expect(searchWrapper.find('PersonPod').length).toBeGreaterThan(0)
+    })
   })
 })

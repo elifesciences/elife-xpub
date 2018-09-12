@@ -77,4 +77,15 @@ describe('SearchBox component tests', () => {
       expect(receivedSuggestions).toEqual(expectedSuggestions)
     },
   )
+
+  it('does nothing when clicking on X icon and nothing is typed', () => {
+    wrapper.find('[data-test-id="cross-icon"]').simulate('click')
+    expect(wrapper.find('input').props().value).toEqual('')
+  })
+
+  it('clears thes input field when x icon is clicked after typing something', () => {
+    wrapper.find('input').simulate('change', { target: { value: 'something' } })
+    wrapper.find('[data-test-id="cross-icon"]').simulate('click')
+    expect(wrapper.find('input').props().value).toEqual('')
+  })
 })

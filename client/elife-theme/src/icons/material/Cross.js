@@ -2,6 +2,7 @@ import React from 'react'
 
 const Cross = props => (
   <svg
+    data-test-id="cross-icon"
     height="24"
     viewBox="0 0 24 24"
     width="24"
