@@ -3,7 +3,7 @@ const config = require('config')
 const Replay = require('replay')
 const { createTables } = require('@pubsweet/db-manager')
 const ManuscriptManager = require('@elifesciences/xpub-server/entities/manuscript')
-const startSftpServer = require('./test/mock-ssh-server')
+const startSftpServer = require('./test/mock-sftp-server')
 const sampleManuscript = require('./index.test.data')
 const mecaExport = require('.')
 
@@ -15,9 +15,9 @@ describe('MECA integration test', () => {
   let mockFs
 
   beforeEach(async () => {
-    const result = startSftpServer(config.get('meca.sftp.port'))
-    server = result.server
-    mockFs = result.mockFs
+    const sftp = startSftpServer(config.get('meca.sftp.port'))
+    server = sftp.server
+    mockFs = sftp.mockFs
 
     await createTables(true)
     const { id } = await ManuscriptManager.save(sampleManuscript)
@@ -27,7 +27,7 @@ describe('MECA integration test', () => {
   afterEach(done => server.close(done))
 
   it('generates an archive and uploads it', async () => {
-    await mecaExport(manuscriptId, sampleManuscript.createdBy)
+    await send(manuscriptId, sampleManuscript.createdBy)
 
     expect(mockFs.readdirSync('/')).toEqual(['test'])
     expect(mockFs.readdirSync('/test')).toEqual([manuscriptId])
