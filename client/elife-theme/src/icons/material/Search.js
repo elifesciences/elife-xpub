@@ -2,6 +2,7 @@ import React from 'react'
 
 const Search = props => (
   <svg
+    data-test-id="search-icon"
     height="24"
     viewBox="0 0 24 24"
     width="24"
