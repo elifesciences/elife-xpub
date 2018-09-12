@@ -8,6 +8,7 @@ import { th } from '@pubsweet/ui-toolkit'
 import { get } from 'lodash'
 
 import Icon from '../atoms/Icon'
+import Paragraph from '../atoms/Paragraph'
 
 const UploadIcon = props => (
   <Icon
@@ -61,6 +62,10 @@ const StyledDropzone = styled(({ hasError, saveInnerRef, ...rest }) => (
     hasError ? th('colorError') : th('colorBorder')};
   border-width: 2px;
   padding: ${th('space.4')};
+`
+
+const StyledParagraph = styled(Paragraph)`
+  color: ${th('colorTextSecondary')};
 `
 
 const Instruction = styled.div`
@@ -134,6 +139,9 @@ const DropzoneContent = ({
         <Action onClick={dropzoneOpen}>Upload</Action> your manuscript or drag
         it here.
       </Instruction>
+      <StyledParagraph>
+        Please note that files larger than 10MB may result in review delays.
+      </StyledParagraph>
     </React.Fragment>
   )
 }
