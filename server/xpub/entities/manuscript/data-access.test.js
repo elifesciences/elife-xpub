@@ -9,7 +9,6 @@ const initializeDatabase = async () => {
   await createTables(true)
 
   testId = await testData.createSingleManuscript()
-  console.log('Created testId', testId)
 }
 
 describe('ManuscriptAccessLayer', () => {
@@ -18,12 +17,12 @@ describe('ManuscriptAccessLayer', () => {
   })
 
   it('initializes the db', async () => {
-    const result = await dataAccess.selectById(testId)
+    const result = await dataAccess.selectById(testId, 'me')
     expect(result.id).toBe(testId)
   })
 
   async function callSelectManuscript() {
-    await dataAccess.selectById(testId)
+    await dataAccess.selectById(testId, 'me')
   }
 
   it('deletes a manuscript', async () => {
@@ -41,21 +40,21 @@ describe('ManuscriptAccessLayer', () => {
     manu.createdBy = 'me'
 
     const newId = await dataAccess.insert(manu)
-    const retrieved = await dataAccess.selectById(newId)
+    const retrieved = await dataAccess.selectById(newId, 'me')
 
     expect(retrieved.meta.title).toBe('new one')
     expect(retrieved.createdBy).toBe('me')
   })
 
   it('updates a manuscript', async () => {
-    const manu = await dataAccess.selectById(testId)
+    const manu = await dataAccess.selectById(testId, 'me')
     manu.meta.title = 'changed'
 
     let result = await dataAccess.update(manu)
     expect(result.command).toBe('UPDATE')
     expect(result.rowCount).toBe(1)
 
-    result = await dataAccess.selectById(testId)
+    result = await dataAccess.selectById(testId, 'me')
     expect(result.meta.title).toBe('changed')
   })
 
@@ -65,7 +64,7 @@ describe('ManuscriptAccessLayer', () => {
 
     added.push(testId)
     expect(added).toHaveLength(MAX + 1)
-    const returned = await dataAccess.selectAll()
+    const returned = await dataAccess.selectAll('me')
     expect(returned).toHaveLength(MAX + 1)
     expect(returned).toHaveLength(added.length)
 
@@ -84,7 +83,7 @@ describe('ManuscriptAccessLayer', () => {
     // mark as Test
     await Promise.all(
       markedTest.map(async id => {
-        const result = await dataAccess.selectById(id)
+        const result = await dataAccess.selectById(id, 'me')
         expect(result.id).toBe(id)
 
         result.status = 'TEST'

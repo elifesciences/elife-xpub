@@ -15,7 +15,7 @@ const addManuscripts = async count => {
       manu.meta.title = `Title ${number}`
       manu.createdBy = 'me'
       const id = await dataAccess.insert(manu)
-      const result = await dataAccess.selectById(id)
+      const result = await dataAccess.selectById(id, 'me')
       expect(result.id).toBe(id)
       return id
     }),

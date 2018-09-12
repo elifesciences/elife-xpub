@@ -39,8 +39,10 @@ const joinSelect = buildQuery
   .groupBy('manuscript.id')
 
 const dataAccess = {
-  async selectById(id) {
-    const query = joinSelect.clone().where({ 'manuscript.id': id })
+  async selectById(id, user) {
+    const query = joinSelect
+      .clone()
+      .where({ 'manuscript.id': id, 'manuscript.created_by': user })
     const { rows } = await runQuery(query)
 
     if (!rows.length) {
@@ -57,8 +59,9 @@ const dataAccess = {
     return rows.map(rowToEntity)
   },
 
-  async selectAll() {
-    const { rows } = await runQuery(joinSelect)
+  async selectAll(user) {
+    const query = joinSelect.clone().where({ 'manuscript.created_by': user })
+    const { rows } = await runQuery(query)
     return rows.map(rowToEntity)
   },
 

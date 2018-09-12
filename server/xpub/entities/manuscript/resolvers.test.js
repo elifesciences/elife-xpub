@@ -10,34 +10,40 @@ const emptyManuscript = require('./helpers/empty')
 
 const replaySetup = require('../../../../test/helpers/replay-setup')
 
-let initializing = false
-
 const userData = {
   username: 'testuser',
   email: 'test@example.com',
   orcid: '0000-0003-3146-0256',
   oauth: { accessToken: 'f7617529-f46a-40b1-99f4-4181859783ca' },
 }
+const badUserData = {
+  username: 'baduser',
+  email: 'bad@example.com',
+  orcid: '0000-0001-0000-0000',
+  oauth: { accessToken: 'badbadbad-f46a-40b1-99f4-4181859783ca' },
+}
 
 describe('Submission', () => {
   let userId
+  let badUserId
 
   beforeEach(async () => {
-    initializing = true
     replaySetup('success')
     await Promise.all([
       fs.remove(config.get('pubsweet-server.uploads')),
       createTables(true),
     ])
-    const user = await User.save(userData)
+    const [user, badUser] = await Promise.all([
+      User.save(userData),
+      User.save(badUserData),
+    ])
     userId = user.id
+    badUserId = badUser.id
     mailer.clearMails()
-    initializing = false
   })
 
   describe('currentSubmission', () => {
     it('Gets form data', async () => {
-      expect(initializing).toBe(false)
       const expectedManuscript = {
         createdBy: userId,
         meta: {
@@ -51,26 +57,20 @@ describe('Submission', () => {
       expect(manuscript).toMatchObject(expectedManuscript)
     })
 
-    it('Returns empty object when there are no manuscripts in the db', async () => {
-      expect(initializing).toBe(false)
+    it('Returns null when there are no manuscripts in the db', async () => {
       const manuscript = await Query.currentSubmission({}, {}, { user: userId })
       expect(manuscript).toBe(null)
     })
 
-    it('Returns null object when user has no manuscripts in the db (db not empty)', async () => {
-      expect(initializing).toBe(false)
+    it('Returns null when user has no manuscripts in the db (db not empty)', async () => {
       await Manuscript.save({
         createdBy: '9f72f2b8-bb4a-43fa-8b80-c7ac505c8c5f',
-        meta: {
-          title: 'title',
-        },
+        meta: { title: 'title' },
         status: 'INITIAL',
       })
       await Manuscript.save({
         createdBy: 'bcd735c6-9b62-441a-a085-7d1e8a7834c6',
-        meta: {
-          title: 'title 2',
-        },
+        meta: { title: 'title 2' },
         status: 'QA',
       })
 
@@ -79,7 +79,6 @@ describe('Submission', () => {
     })
 
     it('Returns manuscript object when user has one manuscripts in the db (db not empty)', async () => {
-      expect(initializing).toBe(false)
       await Manuscript.save({
         createdBy: '9f72f2b8-bb4a-43fa-8b80-c7ac505c8c5f',
         meta: {
@@ -109,6 +108,12 @@ describe('Submission', () => {
   })
 
   describe('createSubmission', () => {
+    it('fails if no authenticated user', async () => {
+      await expect(Mutation.createSubmission({}, {}, {})).rejects.toThrow(
+        'Not logged in',
+      )
+    })
+
     it('adds new manuscript to the db for current user with status INITIAL', async () => {
       const manuscript = await Mutation.createSubmission(
         {},
@@ -123,6 +128,19 @@ describe('Submission', () => {
   })
 
   describe('updateSubmission', () => {
+    it("fails if manuscript doesn't belong to user", async () => {
+      const blankManuscript = Manuscript.new()
+      const manuscript = await Manuscript.save(blankManuscript)
+      const manuscriptInput = { id: manuscript.id }
+      await expect(
+        Mutation.updateSubmission(
+          {},
+          { data: manuscriptInput },
+          { user: badUserId },
+        ),
+      ).rejects.toThrow('Manuscript not found')
+    })
+
     it('updates the current submission for user with data', async () => {
       const blankManuscript = Manuscript.new()
       blankManuscript.createdBy = userId
@@ -144,7 +162,7 @@ describe('Submission', () => {
         { user: userId },
       )
 
-      const actualManuscript = await Manuscript.find(manuscript.id)
+      const actualManuscript = await Manuscript.find(manuscript.id, userId)
       expect(actualManuscript).toMatchObject(manuscriptInput)
     })
   })
@@ -213,7 +231,7 @@ describe('Submission', () => {
 
       expect(returnedManuscript.status).toBe('QA')
 
-      const storedManuscript = await Manuscript.find(id)
+      const storedManuscript = await Manuscript.find(id, userId)
       expect(storedManuscript.status).toBe('QA')
       expect(storedManuscript.meta.title).toBe('My manuscript')
     })
@@ -237,7 +255,7 @@ describe('Submission', () => {
         { user: userId },
       )
 
-      const storedManuscript = await Manuscript.find(id)
+      const storedManuscript = await Manuscript.find(id, userId)
       const team = storedManuscript.teams.find(
         t => t.role === 'suggestedReviewer',
       )
@@ -249,21 +267,34 @@ describe('Submission', () => {
       ])
     })
 
+    it("fails if manuscript doesn't belong to user", async () => {
+      const blankManuscript = Manuscript.new()
+      const manuscript = await Manuscript.save(blankManuscript)
+      const manuscriptInput = { id: manuscript.id }
+      await expect(
+        Mutation.finishSubmission(
+          {},
+          { data: manuscriptInput },
+          { user: badUserId },
+        ),
+      ).rejects.toThrow('Manuscript not found')
+    })
+
     // TODO more tests needed here
     it('fails when manuscript has incomplete data', async () => {
       const badManuscript = {
         id,
         title: 'Some Title',
       }
-      await Mutation.finishSubmission(
-        {},
-        {
-          data: badManuscript,
-        },
-        { user: userId },
-      ).catch(err => expect(err).toBeDefined())
-      expect.assertions(1)
+      await expect(
+        Mutation.finishSubmission(
+          {},
+          { data: badManuscript },
+          { user: userId },
+        ),
+      ).rejects.toThrow()
     })
+
     it('fails when manuscript has bad data types', async () => {
       const badManuscript = lodash.cloneDeep(fullManuscript)
       lodash.merge(badManuscript, {
@@ -271,18 +302,31 @@ describe('Submission', () => {
         title: 100,
         manuscriptType: {},
       })
-      await Mutation.finishSubmission(
-        {},
-        {
-          data: badManuscript,
-        },
-        { user: userId },
-      ).catch(err => expect(err).toBeDefined())
-      expect.assertions(1)
+      await expect(
+        Mutation.finishSubmission(
+          {},
+          { data: badManuscript },
+          { user: userId },
+        ),
+      ).rejects.toThrow(
+        '"title" is not allowed. "manuscriptType" is not allowed',
+      )
     })
   })
 
   describe('uploadManuscript', () => {
+    it("fails if manuscript doesn't belong to user", async () => {
+      const blankManuscript = Manuscript.new()
+      const manuscript = await Manuscript.save(blankManuscript)
+      await expect(
+        Mutation.uploadManuscript(
+          {},
+          { id: manuscript.id },
+          { user: badUserId },
+        ),
+      ).rejects.toThrow('Manuscript not found')
+    })
+
     // TODO subscribe to uploadProgress before this or mock
   })
 })

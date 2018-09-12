@@ -10,8 +10,8 @@ const manuscriptGenerator = require('./file-generators/manuscript')
 const transferGenerator = require('./file-generators/transfer')
 const archiveGenerator = require('./file-generators/archive')
 
-async function generate(manuscriptId, clientIp) {
-  const manuscript = await ManuscriptManager.find(manuscriptId)
+async function generate(manuscriptId, userId, clientIp) {
+  const manuscript = await ManuscriptManager.find(manuscriptId, userId)
 
   return archiveGenerator({
     'article.xml': articleGenerator(manuscript),
@@ -34,8 +34,8 @@ async function deliver(file, id) {
   await sftp.end()
 }
 
-async function send(manuscriptId, clientIp) {
-  const archive = await generate(manuscriptId, clientIp)
+async function send(manuscriptId, userId, clientIp) {
+  const archive = await generate(manuscriptId, userId, clientIp)
   await deliver(archive, manuscriptId)
 }
 
