@@ -2,7 +2,9 @@ import React from 'react'
 import styled from 'styled-components'
 import { Box } from 'grid-styled'
 import { th } from '@pubsweet/ui-toolkit'
+
 import Icon from './Icon'
+import ButtonAsIconWrapper from './ButtonAsIconWrapper'
 
 const CrossIcon = props => (
   <Icon
@@ -12,22 +14,7 @@ const CrossIcon = props => (
   />
 )
 
-const IconButton = styled.button.attrs({
-  type: 'button',
-})`
-  background-color: transparent;
-  border: none;
-  line-height: 0;
-  padding: 0;
-`
-
-const CloseButton = ({ onClick, ...props }) => (
-  <IconButton onClick={onClick} {...props}>
-    <CrossIcon />
-  </IconButton>
-)
-
-const StyledCloseButton = styled(CloseButton)`
+const StyledCloseButton = styled(ButtonAsIconWrapper)`
   position: absolute;
   top: ${th('space.2')};
   right: ${th('space.2')};
@@ -47,7 +34,11 @@ const Frame = styled(props => <Box {...props} />).attrs({
 
 const CalloutBox = ({ onClose, children, ...props }) => (
   <Frame {...props}>
-    {onClose && <StyledCloseButton onClick={onClose} />}
+    {onClose && (
+      <StyledCloseButton onClick={onClose}>
+        <CrossIcon />
+      </StyledCloseButton>
+    )}
     <Box p={3}>{children}</Box>
   </Frame>
 )

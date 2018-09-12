@@ -7,6 +7,7 @@ import { Flex, Box } from 'grid-styled'
 import SearchButton from './SearchIconButton'
 
 import Icon from '../atoms/Icon'
+import ButtonAsIconWrapper from '../atoms/ButtonAsIconWrapper'
 
 const CrossIcon = props => (
   <Icon
@@ -16,22 +17,7 @@ const CrossIcon = props => (
   />
 )
 
-const IconButton = styled.button.attrs({
-  type: 'button',
-})`
-  background-color: transparent;
-  border: none;
-  line-height: 0;
-  padding: 0;
-`
-
-const ClearSearchButton = ({ onClick, ...props }) => (
-  <IconButton onClick={onClick} {...props}>
-    <CrossIcon />
-  </IconButton>
-)
-
-const StyledClearButton = styled(ClearSearchButton)`
+const StyledClearButton = styled(ButtonAsIconWrapper)`
   fill: ${th('colorTextSecondary')};
   border: ${th('borderWidth')} ${th('borderStyle')} ${th('colorBorder')};
   border-left: ${th('colorBackground')};
@@ -201,7 +187,9 @@ class SearchBox extends React.Component {
             suggestions={suggestions}
           />
         </AutosuggestWrapper>
-        <StyledClearButton onClick={this.clearSearch} />
+        <StyledClearButton onClick={this.clearSearch}>
+          <CrossIcon />
+        </StyledClearButton>
         <SearchButton onClick={this.handleSearch} />
       </Flex>
     )

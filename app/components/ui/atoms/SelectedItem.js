@@ -3,31 +3,13 @@ import styled from 'styled-components'
 import { th } from '@pubsweet/ui-toolkit'
 
 import Icon from '../atoms/Icon'
+import ButttonAsIconWraper from './ButtonAsIconWrapper'
 
 const CrossIcon = ({ overrideName, ...props }) => (
-  <Icon
-    iconName="Paperclip"
-    overrideName="@pubsweet-pending.Tags.Remove"
-    {...props}
-  />
+  <Icon iconName="X" overrideName="@pubsweet-pending.Tags.Remove" {...props} />
 )
 
-const IconButton = styled.button.attrs({
-  type: 'button',
-})`
-  background-color: transparent;
-  border: none;
-  line-height: 0;
-  padding: 0;
-`
-
-const RemoveButton = ({ onClick, ...props }) => (
-  <IconButton onClick={onClick} {...props}>
-    <CrossIcon />
-  </IconButton>
-)
-
-const StyledRemoveButton = styled(RemoveButton)`
+const StyledRemoveButton = styled(ButttonAsIconWraper)`
   fill: ${th('colorTextReverse')};
   margin-left: ${th('space.1')};
 `
@@ -44,7 +26,10 @@ const Root = styled.div`
 
 const SelectedItem = ({ label, onCloseClick }) => (
   <Root>
-    {label} <StyledRemoveButton onClick={onCloseClick} />
+    {label}{' '}
+    <StyledRemoveButton onClick={onCloseClick}>
+      <CrossIcon />
+    </StyledRemoveButton>
   </Root>
 )
 
