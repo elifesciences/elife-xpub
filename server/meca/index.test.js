@@ -27,7 +27,7 @@ describe('MECA integration test', () => {
   afterEach(done => server.close(done))
 
   it('generates an archive and uploads it', async () => {
-    await send(manuscriptId)
+    await send(manuscriptId, sampleManuscript.createdBy)
 
     expect(mockFs.readdirSync('/')).toEqual(['test'])
     expect(mockFs.readdirSync('/test')).toEqual([manuscriptId])

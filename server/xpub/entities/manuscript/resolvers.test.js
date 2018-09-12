@@ -144,7 +144,7 @@ describe('Submission', () => {
         { user: userId },
       )
 
-      const actualManuscript = await Manuscript.find(manuscript.id)
+      const actualManuscript = await Manuscript.find(manuscript.id, userId)
       expect(actualManuscript).toMatchObject(manuscriptInput)
     })
   })
@@ -213,7 +213,7 @@ describe('Submission', () => {
 
       expect(returnedManuscript.status).toBe('QA')
 
-      const storedManuscript = await Manuscript.find(id)
+      const storedManuscript = await Manuscript.find(id, userId)
       expect(storedManuscript.status).toBe('QA')
       expect(storedManuscript.meta.title).toBe('My manuscript')
     })
@@ -237,7 +237,7 @@ describe('Submission', () => {
         { user: userId },
       )
 
-      const storedManuscript = await Manuscript.find(id)
+      const storedManuscript = await Manuscript.find(id, userId)
       const team = storedManuscript.teams.find(
         t => t.role === 'suggestedReviewer',
       )

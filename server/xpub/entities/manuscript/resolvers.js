@@ -43,49 +43,48 @@ const resolvers = {
 
       return manuscripts[0]
     },
-    async manuscript(_, { id }) {
-      return Manuscript.find(id)
+    async manuscript(_, { id }, { user }) {
+      return Manuscript.find(id, user)
     },
-    async manuscripts() {
-      return Manuscript.all()
+    async manuscripts(_, vars, { user }) {
+      return Manuscript.all(user)
     },
   },
 
   Mutation: {
     async createSubmission(_, vars, ctx) {
+      if (!ctx.user) {
+        throw new Error('Not logged in')
+      }
       const manuscript = Manuscript.new()
       manuscript.createdBy = ctx.user
       return Manuscript.save(manuscript)
     },
 
-    async deleteManuscript(_, { id }, ctx) {
-      const originalManuscript = await Manuscript.find(id)
-      Manuscript.checkPermission(originalManuscript, ctx.user)
+    // TODO restrict this in production
+    async deleteManuscript(_, { id }, { user }) {
+      await Manuscript.find(id, user)
 
       await Manuscript.delete(id)
       return id
     },
 
-    async updateSubmission(_, { data }, ctx) {
-      const originalManuscript = await Manuscript.find(data.id)
-      Manuscript.checkPermission(originalManuscript, ctx.user)
+    async updateSubmission(_, { data }, { user }) {
+      const originalManuscript = await Manuscript.find(data.id, user)
       const manuscript = Manuscript.applyInput(originalManuscript, data)
 
       await Manuscript.save(manuscript)
-      logger.debug(`Updated Submission ${data.id} by user ${ctx.user}`)
+      logger.debug(`Updated Submission ${data.id} by user ${user}`)
 
       return manuscript
     },
 
     async finishSubmission(_, { data }, ctx) {
-      const requestedManuscript = await Manuscript.find(data.id)
-      Manuscript.checkPermission(requestedManuscript, ctx.user)
+      const originalManuscript = await Manuscript.find(data.id, ctx.user)
 
-      const modifiedManuscriptInput = Manuscript.removeOptionalBlankReviewers(
-        data,
-      )
+      const manuscriptInput = Manuscript.removeOptionalBlankReviewers(data)
       const { error: errorManuscript } = Joi.validate(
-        modifiedManuscriptInput,
+        manuscriptInput,
         manuscriptInputSchema,
       )
       if (errorManuscript) {
@@ -93,23 +92,19 @@ const resolvers = {
         throw new Error(errorManuscript)
       }
 
-      const originalManuscript = await Manuscript.find(
-        modifiedManuscriptInput.id,
-      )
-      Manuscript.checkPermission(originalManuscript, ctx.user)
       const manuscript = Manuscript.applyInput(
         originalManuscript,
-        modifiedManuscriptInput,
+        manuscriptInput,
       )
 
       manuscript.status = 'QA'
       await Manuscript.save(manuscript)
 
       const user = await User.find(ctx.user)
-      if (user.email !== modifiedManuscriptInput.author.email) {
+      if (user.email !== manuscriptInput.author.email) {
         mailer
           .send({
-            to: modifiedManuscriptInput.author.email,
+            to: manuscriptInput.author.email,
             text: 'Please verify that you are a corresponding author',
           })
           .catch(err => {
@@ -123,8 +118,7 @@ const resolvers = {
     },
 
     async uploadManuscript(_, { file, id, fileSize }, ctx) {
-      const requestedManuscript = await Manuscript.find(id)
-      Manuscript.checkPermission(requestedManuscript, ctx.user)
+      const manuscript = await Manuscript.find(id, ctx.user)
 
       const { stream, filename, mimetype } = await file
 
@@ -198,7 +192,6 @@ const resolvers = {
         title = titleArray[0]
       }
 
-      const manuscript = await Manuscript.find(id)
       manuscript.files.push({
         url: manuscriptSourcePath,
         filename,
