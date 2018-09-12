@@ -22,7 +22,6 @@ const manuscript = {
 }
 
 const getPageUrl = ClientFunction(() => window.location.href)
-const goBack = ClientFunction(() => window.history.back())
 
 test('Happy path', async t => {
   const { mockFs, server } = await startSshServer(config.get('meca.sftp.port'))
@@ -64,13 +63,7 @@ test('Happy path', async t => {
     .setFilesToUpload(files.manuscriptUpload, manuscript.file)
     // wait for editor onChange
     .wait(1000)
-    // manuscript preview page
-    .click(files.preview)
-    .expect(Selector('.sc-title-group').textContent)
-    .eql(manuscript.title)
-  // only way to get back to wizard is with browser back button at the moment
-  await goBack()
-  await t.click(wizardStep.next)
+    .click(wizardStep.next)
 
   // adding manuscript metadata
   await t

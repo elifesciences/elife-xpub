@@ -64,13 +64,7 @@ const Editor = ({ validationStatus, ...props }) => (
   />
 )
 
-const FilesPage = ({
-  setFieldValue,
-  onDrop,
-  conversion,
-  formError,
-  previewUrl,
-}) => (
+const FilesPage = ({ setFieldValue, onDrop, conversion, formError }) => (
   <React.Fragment>
     <Box mb={3} width={1}>
       <ValidatedField
@@ -87,7 +81,6 @@ const FilesPage = ({
         data-test-id="upload"
         formError={formError}
         onDrop={onDrop}
-        previewUrl={previewUrl}
       />
     </Box>
   </React.Fragment>

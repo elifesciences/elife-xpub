@@ -76,12 +76,7 @@ const CentredFlex = styled(Flex)`
   text-align: center;
 `
 
-const DropzoneContent = ({
-  conversion,
-  formError,
-  dropzoneOpen,
-  previewUrl,
-}) => {
+const DropzoneContent = ({ conversion, formError, dropzoneOpen }) => {
   if (conversion.converting) {
     return (
       <React.Fragment>
@@ -123,11 +118,10 @@ const DropzoneContent = ({
       <React.Fragment>
         <StyledUploadSuccessIcon />
         <Instruction data-test-id="dropzoneMessage">
-          Success!{' '}
-          <Action data-test-id="preview" to={previewUrl}>
-            Preview
-          </Action>{' '}
-          or <Action onClick={dropzoneOpen}>replace</Action> your manuscript.
+          Success!
+          <br />
+          <br />
+          <Action onClick={dropzoneOpen}>Replace</Action> your manuscript.
         </Instruction>
       </React.Fragment>
     )
@@ -146,13 +140,7 @@ const DropzoneContent = ({
   )
 }
 
-const FileUpload = ({
-  onDrop,
-  conversion,
-  formError,
-  previewUrl,
-  ...props
-}) => {
+const FileUpload = ({ onDrop, conversion, formError, ...props }) => {
   let dropzoneRef
   return (
     <StyledDropzone
@@ -171,7 +159,6 @@ const FileUpload = ({
             conversion={conversion}
             dropzoneOpen={() => dropzoneRef.open()}
             formError={formError}
-            previewUrl={previewUrl}
           />
         </Box>
       </CentredFlex>

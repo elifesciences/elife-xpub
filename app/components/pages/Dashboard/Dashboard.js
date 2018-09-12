@@ -1,11 +1,11 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Link } from 'react-router-dom'
 import { Box } from 'grid-styled'
 import { Button } from '@pubsweet/ui'
 
 import { FormH2, FormH3 } from '../../ui/atoms/FormHeadings'
 import ButtonLink from '../../ui/atoms/ButtonLink'
+import Paragraph from '../../ui/atoms/Paragraph'
 
 /* Temporary dashboard view pending receipt of designs */
 
@@ -46,9 +46,9 @@ const Dashboard = ({ manuscripts, deleteManuscript }) => (
           {manuscripts.map(manuscript => (
             <tr key={manuscript.id}>
               <Cell data-test-id="title">
-                <Link data-test-id="title" to={`/manuscript/${manuscript.id}`}>
+                <Paragraph data-test-id="title">
                   {manuscript.meta.title || '(Untitled manuscript)'}
-                </Link>
+                </Paragraph>
               </Cell>
               <Cell data-test-id="stage">{manuscript.status}</Cell>
               <Cell>
