@@ -30,6 +30,15 @@ module.exports = {
   darServer: {
     basePath: 'uploads',
   },
+  meca: {
+    sftp: {
+      host: '',
+      port: 22,
+      username: '',
+      password: '',
+    },
+    remotePath: '/',
+  },
   scienceBeam: {
     url: 'https://sciencebeam-texture.elifesciences.org/api/convert',
   },

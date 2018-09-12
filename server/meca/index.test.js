@@ -1,24 +1,40 @@
 const JsZip = require('jszip')
-const ManuscriptManager = require('@elifesciences/xpub-server/entities/manuscript')
-const { createTables } = require('@pubsweet/db-manager')
+const config = require('config')
 const Replay = require('replay')
+const { createTables } = require('@pubsweet/db-manager')
+const ManuscriptManager = require('@elifesciences/xpub-server/entities/manuscript')
+const startSftpServer = require('./test/mock-ssh-server')
 const sampleManuscript = require('./index.test.data')
-const { generate } = require('.')
+const { send } = require('.')
 
 Replay.fixtures = `${__dirname}/test/http-mocks`
 
-let manuscriptId
-
 describe('MECA integration test', () => {
+  let manuscriptId
+  let server
+  let mockFs
+
   beforeEach(async () => {
+    const result = startSftpServer(config.get('meca.sftp.port'))
+    server = result.server
+    mockFs = result.mockFs
+
     await createTables(true)
     const { id } = await ManuscriptManager.save(sampleManuscript)
     manuscriptId = id
   })
 
-  it('generates an archive with the right files', async () => {
-    const buffer = await generate(manuscriptId)
-    const zip = await JsZip.loadAsync(buffer)
+  afterEach(done => server.close(done))
+
+  it('generates an archive and uploads it', async () => {
+    await send(manuscriptId)
+
+    expect(mockFs.readdirSync('/')).toEqual(['test'])
+    expect(mockFs.readdirSync('/test')).toEqual([manuscriptId])
+
+    const zip = await JsZip.loadAsync(
+      mockFs.readFileSync(`/test/${manuscriptId}`),
+    )
     const fileNames = zip
       .filter(() => true)
       .map(file => file.name)
