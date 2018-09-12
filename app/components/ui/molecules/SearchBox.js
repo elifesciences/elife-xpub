@@ -5,7 +5,40 @@ import { th } from '@pubsweet/ui-toolkit'
 import { Flex, Box } from 'grid-styled'
 
 import SearchButton from './SearchIconButton'
-import ClearSearchButton from './CrossIconButton'
+
+import Icon from '../atoms/Icon'
+
+const CrossIcon = props => (
+  <Icon
+    iconName="X"
+    overrideName="@pubsweet-pending.PeoplePicker.ClearSearch"
+    {...props}
+  />
+)
+
+const IconButton = styled.button.attrs({
+  type: 'button',
+})`
+  background-color: transparent;
+  border: none;
+  line-height: 0;
+  padding: 0;
+`
+
+const ClearSearchButton = ({ onClick, ...props }) => (
+  <IconButton onClick={onClick} {...props}>
+    <CrossIcon />
+  </IconButton>
+)
+
+const StyledClearButton = styled(ClearSearchButton)`
+  fill: ${th('colorTextSecondary')};
+  border: ${th('borderWidth')} ${th('borderStyle')} ${th('colorBorder')};
+  border-left: ${th('colorBackground')};
+  &:focus {
+    border-left: ${th('colorBorder')};
+  }
+`
 
 const AutosuggestWrapper = styled(Box).attrs({
   width: 1,
@@ -67,15 +100,6 @@ const AutosuggestWrapper = styled(Box).attrs({
   .react-autosuggest__suggestion--highlighted {
     background-color: ${th('colorPrimary')};
     color: ${th('colorTextReverse')};
-  }
-`
-
-const StyledClearButton = styled(ClearSearchButton)`
-  fill: ${th('colorTextSecondary')};
-  border: ${th('borderWidth')} ${th('borderStyle')} ${th('colorBorder')};
-  border-left: ${th('colorBackground')};
-  &:focus {
-    border-left: ${th('colorBorder')};
   }
 `
 
@@ -177,10 +201,7 @@ class SearchBox extends React.Component {
             suggestions={suggestions}
           />
         </AutosuggestWrapper>
-        <StyledClearButton
-          iconOverrideName="@pubsweet-pending.PeoplePicker.ClearSearch"
-          onClick={this.clearSearch}
-        />
+        <StyledClearButton onClick={this.clearSearch} />
         <SearchButton onClick={this.handleSearch} />
       </Flex>
     )
