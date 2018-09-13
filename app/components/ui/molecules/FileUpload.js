@@ -68,10 +68,6 @@ const StyledParagraph = styled(Paragraph)`
   color: ${th('colorTextSecondary')};
 `
 
-const Instruction = styled.div`
-  margin-top: ${th('space.3')};
-`
-
 const CentredFlex = styled(Flex)`
   text-align: center;
 `
@@ -81,9 +77,9 @@ const DropzoneContent = ({ conversion, formError, dropzoneOpen }) => {
     return (
       <React.Fragment>
         <StyledUploadIcon />
-        <Instruction data-test-id="dropzoneMessage">
+        <Paragraph data-test-id="dropzoneMessage">
           Manuscript is uploading
-        </Instruction>
+        </Paragraph>
       </React.Fragment>
     )
   }
@@ -117,22 +113,20 @@ const DropzoneContent = ({ conversion, formError, dropzoneOpen }) => {
     return (
       <React.Fragment>
         <StyledUploadSuccessIcon />
-        <Instruction data-test-id="dropzoneMessage">
-          Success!
-          <br />
-          <br />
+        <Paragraph data-test-id="dropzoneMessage">Success!</Paragraph>
+        <Paragraph>
           <Action onClick={dropzoneOpen}>Replace</Action> your manuscript.
-        </Instruction>
+        </Paragraph>
       </React.Fragment>
     )
   }
   return (
     <React.Fragment>
       <StyledUploadIcon />
-      <Instruction data-test-id="dropzoneMessage">
+      <Paragraph data-test-id="dropzoneMessage">
         <Action onClick={dropzoneOpen}>Upload</Action> your manuscript or drag
         it here.
-      </Instruction>
+      </Paragraph>
       <StyledParagraph>
         Please note that files larger than 10MB may result in review delays.
       </StyledParagraph>
