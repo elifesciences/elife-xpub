@@ -88,13 +88,11 @@ export default {
     '@pubsweet-pending.FilesPage.Editor.Subscript': icons.FormatSubscript,
     '@pubsweet-pending.FilesPage.Editor.Superscript': icons.FormatSuperscript,
     '@pubsweet-pending.PeoplePicker.Search': icons.Search,
-    '@pubsweet-pending.PeoplePicker.ClearSearch': icons.Cross,
     '@pubsweet-pending.FileUpload.Upload': icons.Upload,
     '@pubsweet-pending.FileUpload.UploadFailure': icons.UploadFailure,
     '@pubsweet-pending.FileUpload.UploadSuccess': icons.UploadSuccess,
     '@pubsweet-pending.MultiselectDropdown': icons.Cross,
-    '@pubsweet-pending.Tags.Remove': icons.Cross,
-    '@pubsweet-pending.CalloutBox.CloseIcon': icons.Cross,
+    cross: icons.Cross,
   },
 }
 

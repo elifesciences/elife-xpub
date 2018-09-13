@@ -2,21 +2,13 @@ import React from 'react'
 import styled from 'styled-components'
 import { Box } from 'grid-styled'
 import { th } from '@pubsweet/ui-toolkit'
-import Icon from './Icon'
 
-const CrossIcon = props => (
-  <Icon
-    iconName="X"
-    overrideName="@pubsweet-pending.CalloutBox.CloseIcon"
-    {...props}
-  />
-)
+import CloseButton from './CrossIconButton'
 
-const CloseButton = styled(CrossIcon)`
+const StyledCloseButton = styled(CloseButton)`
   position: absolute;
   top: ${th('space.2')};
   right: ${th('space.2')};
-  cursor: pointer;
   fill: ${th('colorTextSecondary')};
   height: ${th('space.3')};
   width: ${th('space.3')};
@@ -33,7 +25,7 @@ const Frame = styled(props => <Box {...props} />).attrs({
 
 const CalloutBox = ({ onClose, children, ...props }) => (
   <Frame {...props}>
-    {onClose && <CloseButton onClick={onClose} />}
+    {onClose && <StyledCloseButton onClick={onClose} />}
     <Box p={3}>{children}</Box>
   </Frame>
 )

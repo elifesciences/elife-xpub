@@ -1,11 +1,39 @@
 import React from 'react'
 import styled from 'styled-components'
 import Autosuggest from 'react-autosuggest'
-import { th } from '@pubsweet/ui-toolkit'
 import { Flex, Box } from 'grid-styled'
+import { th } from '@pubsweet/ui-toolkit'
+import { Button } from '@pubsweet/ui'
 
-import SearchButton from './SearchIconButton'
-import ClearSearchButton from './CrossIconButton'
+import Icon from '../atoms/Icon'
+import ClearSearchButton from '../atoms/CrossIconButton'
+
+const SearchIcon = props => (
+  <Icon
+    iconName="Search"
+    overrideName="@pubsweet-pending.PeoplePicker.Search"
+    {...props}
+  />
+)
+
+const StyledSearchButton = styled(Button).attrs({
+  primary: true,
+})`
+  fill: ${th('colorTextReverse')};
+  line-height: 0;
+  min-width: 0;
+  padding: ${th('space.1')};
+  margin: 0;
+`
+
+const StyledClearButton = styled(ClearSearchButton)`
+  fill: ${th('colorTextSecondary')};
+  border: ${th('borderWidth')} ${th('borderStyle')} ${th('colorBorder')};
+  border-left: ${th('colorBackground')};
+  &:focus {
+    border-left: ${th('colorBorder')};
+  }
+`
 
 const AutosuggestWrapper = styled(Box).attrs({
   width: 1,
@@ -67,15 +95,6 @@ const AutosuggestWrapper = styled(Box).attrs({
   .react-autosuggest__suggestion--highlighted {
     background-color: ${th('colorPrimary')};
     color: ${th('colorTextReverse')};
-  }
-`
-
-const StyledClearButton = styled(ClearSearchButton)`
-  fill: ${th('colorTextSecondary')};
-  border: ${th('borderWidth')} ${th('borderStyle')} ${th('colorBorder')};
-  border-left: ${th('colorBackground')};
-  &:focus {
-    border-left: ${th('colorBorder')};
   }
 `
 
@@ -177,11 +196,10 @@ class SearchBox extends React.Component {
             suggestions={suggestions}
           />
         </AutosuggestWrapper>
-        <StyledClearButton
-          iconOverrideName="@pubsweet-pending.PeoplePicker.ClearSearch"
-          onClick={this.clearSearch}
-        />
-        <SearchButton onClick={this.handleSearch} />
+        <StyledClearButton onClick={this.clearSearch} />
+        <StyledSearchButton onClick={this.handleSearch}>
+          <SearchIcon />
+        </StyledSearchButton>
       </Flex>
     )
   }
