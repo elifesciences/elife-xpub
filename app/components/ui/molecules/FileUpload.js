@@ -68,27 +68,18 @@ const StyledParagraph = styled(Paragraph)`
   color: ${th('colorTextSecondary')};
 `
 
-const Instruction = styled.div`
-  margin-top: ${th('space.3')};
-`
-
 const CentredFlex = styled(Flex)`
   text-align: center;
 `
 
-const DropzoneContent = ({
-  conversion,
-  formError,
-  dropzoneOpen,
-  previewUrl,
-}) => {
+const DropzoneContent = ({ conversion, formError, dropzoneOpen }) => {
   if (conversion.converting) {
     return (
       <React.Fragment>
         <StyledUploadIcon />
-        <Instruction data-test-id="dropzoneMessage">
+        <Paragraph data-test-id="dropzoneMessage">
           Manuscript is uploading
-        </Instruction>
+        </Paragraph>
       </React.Fragment>
     )
   }
@@ -122,23 +113,20 @@ const DropzoneContent = ({
     return (
       <React.Fragment>
         <StyledUploadSuccessIcon />
-        <Instruction data-test-id="dropzoneMessage">
-          Success!{' '}
-          <Action data-test-id="preview" to={previewUrl}>
-            Preview
-          </Action>{' '}
-          or <Action onClick={dropzoneOpen}>replace</Action> your manuscript.
-        </Instruction>
+        <Paragraph data-test-id="dropzoneMessage">Success!</Paragraph>
+        <Paragraph>
+          <Action onClick={dropzoneOpen}>Replace</Action> your manuscript.
+        </Paragraph>
       </React.Fragment>
     )
   }
   return (
     <React.Fragment>
       <StyledUploadIcon />
-      <Instruction data-test-id="dropzoneMessage">
+      <Paragraph data-test-id="dropzoneMessage">
         <Action onClick={dropzoneOpen}>Upload</Action> your manuscript or drag
         it here.
-      </Instruction>
+      </Paragraph>
       <StyledParagraph>
         Please note that files larger than 10MB may result in review delays.
       </StyledParagraph>
@@ -146,13 +134,7 @@ const DropzoneContent = ({
   )
 }
 
-const FileUpload = ({
-  onDrop,
-  conversion,
-  formError,
-  previewUrl,
-  ...props
-}) => {
+const FileUpload = ({ onDrop, conversion, formError, ...props }) => {
   let dropzoneRef
   return (
     <StyledDropzone
@@ -171,7 +153,6 @@ const FileUpload = ({
             conversion={conversion}
             dropzoneOpen={() => dropzoneRef.open()}
             formError={formError}
-            previewUrl={previewUrl}
           />
         </Box>
       </CentredFlex>

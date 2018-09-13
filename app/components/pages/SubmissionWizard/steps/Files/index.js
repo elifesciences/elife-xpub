@@ -56,7 +56,6 @@ const FilesPageContainer = ({
                   setFieldValue(fieldName, data.uploadManuscript.files)
                 })
               }
-              previewUrl={`/manuscript/${values.id}`}
               setFieldValue={setFieldValue}
               {...props}
             />
