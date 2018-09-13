@@ -1,4 +1,6 @@
 import { ClientFunction, Selector } from 'testcafe'
+import config from 'config'
+import startSshServer from '@elifesciences/xpub-meca-export/test/mock-ssh-server'
 import replaySetup from './helpers/replay-setup'
 import {
   dashboard,
@@ -23,7 +25,9 @@ const getPageUrl = ClientFunction(() => window.location.href)
 const goBack = ClientFunction(() => window.history.back())
 
 test('Happy path', async t => {
+  const { mockFs, server } = await startSshServer(config.get('meca.sftp.port'))
   replaySetup('success')
+
   await dashboard.login()
   await t.navigateTo(dashboard.url).click('[data-test-id=submit]')
 
@@ -126,6 +130,12 @@ test('Happy path', async t => {
     .eql(manuscript.title)
     .expect(dashboard.stages.textContent)
     .eql('QA')
+
+  // SFTP server
+  await t.wait(500)
+  server.close()
+  const dirListing = mockFs.readdirSync('/test')
+  await t.expect(dirListing.length).eql(1)
 })
 
 test('Ability to progress through the wizard is tied to validation', async t => {
