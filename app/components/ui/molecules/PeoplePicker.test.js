@@ -168,7 +168,13 @@ describe('PeoplePicker', () => {
       const input = searchWrapper.find('input')
       input.simulate('change', { target: { value: 'annie' } })
       searchWrapper.find('[data-test-id="search-icon"]').simulate('click')
-      expect(searchWrapper.find('PersonPod').length).toBeGreaterThan(0)
+      expect(searchWrapper.find('PersonPod')).toHaveLength(1)
+    })
+
+    it('shows all person pods again after clicking the x icon', () => {
+      searchFor('annie')
+      searchWrapper.find('[data-test-id="cross-icon"]').simulate('click')
+      expect(searchWrapper.find('PersonPod')).toHaveLength(people.length)
     })
   })
 })
