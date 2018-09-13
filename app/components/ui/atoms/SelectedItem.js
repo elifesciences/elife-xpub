@@ -2,14 +2,9 @@ import React from 'react'
 import styled from 'styled-components'
 import { th } from '@pubsweet/ui-toolkit'
 
-import Icon from '../atoms/Icon'
-import ButttonAsIconWraper from './ButtonAsIconWrapper'
+import RemoveButton from './CrossIconButton'
 
-const CrossIcon = ({ overrideName, ...props }) => (
-  <Icon iconName="X" overrideName="@pubsweet-pending.Tags.Remove" {...props} />
-)
-
-const StyledRemoveButton = styled(ButttonAsIconWraper)`
+const StyledRemoveButton = styled(RemoveButton)`
   fill: ${th('colorTextReverse')};
   margin-left: ${th('space.1')};
 `
@@ -26,10 +21,7 @@ const Root = styled.div`
 
 const SelectedItem = ({ label, onCloseClick }) => (
   <Root>
-    {label}{' '}
-    <StyledRemoveButton onClick={onCloseClick}>
-      <CrossIcon />
-    </StyledRemoveButton>
+    {label} <StyledRemoveButton onClick={onCloseClick} />
   </Root>
 )
 
