@@ -6,9 +6,9 @@ import { suggestedReviewersLimits } from './SuggestedReviewersValidator'
 // fields added by the user should be optional
 
 const limits = {
-  suggestedSeniorEditors: { min: 2, max: 2 },
+  suggestedSeniorEditors: { min: 2, max: 6 },
   opposedSeniorEditors: { min: 0, max: 2 },
-  suggestedReviewingEditors: { min: 2, max: 2 },
+  suggestedReviewingEditors: { min: 2, max: 6 },
   opposedReviewingEditors: { min: 0, max: 2 },
   suggestedReviewers: {
     min: suggestedReviewersLimits.min,
