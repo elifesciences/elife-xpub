@@ -5,7 +5,6 @@ import styled from 'styled-components'
 import Dropzone from 'react-dropzone'
 import { ErrorText, Action } from '@pubsweet/ui'
 import { th } from '@pubsweet/ui-toolkit'
-import { get } from 'lodash'
 
 import Icon from '../atoms/Icon'
 import Paragraph from '../atoms/Paragraph'
@@ -66,6 +65,11 @@ const StyledDropzone = styled(({ hasError, saveInnerRef, ...rest }) => (
 
 const StyledParagraph = styled(Paragraph)`
   color: ${th('colorTextSecondary')};
+  margin-top: 0;
+`
+
+const DropzoneErrorText = styled(ErrorText)`
+  display: inline;
 `
 
 const CentredFlex = styled(Flex)`
@@ -84,18 +88,16 @@ const DropzoneContent = ({ conversion, formError, dropzoneOpen }) => {
     )
   }
   if (conversion.error) {
-    const errorMessage = get(
-      conversion,
-      'error.message',
-      'Error Uploading File',
-    )
     return (
       <React.Fragment>
         <StyledUploadFailureIcon />
-        <ErrorText data-test-id="dropzoneMessage">
-          {errorMessage}. Try to <Action onClick={dropzoneOpen}>upload</Action>{' '}
-          your manuscript again.
-        </ErrorText>
+        <Paragraph data-test-id="dropzoneMessage">
+          <DropzoneErrorText>Oops!</DropzoneErrorText> Unable to upload
+          manuscript. Please <Action onClick={dropzoneOpen}>try again.</Action>
+          <StyledParagraph>
+            Files should be in .docx or .pdf format and no larger than 100MB.
+          </StyledParagraph>
+        </Paragraph>
       </React.Fragment>
     )
   }
