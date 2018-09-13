@@ -115,9 +115,9 @@ const DropzoneContent = ({ conversion, formError, dropzoneOpen }) => {
     return (
       <React.Fragment>
         <StyledUploadSuccessIcon />
-        <Paragraph data-test-id="dropzoneMessage">Success!</Paragraph>
-        <Paragraph>
-          <Action onClick={dropzoneOpen}>Replace</Action> your manuscript.
+        <Paragraph data-test-id="dropzoneMessage">
+          Success! <Action onClick={dropzoneOpen}>Replace</Action> your
+          manuscript.
         </Paragraph>
       </React.Fragment>
     )
