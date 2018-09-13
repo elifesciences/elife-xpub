@@ -41,9 +41,8 @@ const manuscriptFragment = gql`
     suggestedReviewers: assignees(role: "suggestedReviewer") {
       ...ReviewerDetails
     }
-    opposedReviewers {
-      name
-      email
+    opposedReviewers: assignees(role: "opposedReviewer") {
+      ...ReviewerDetails
     }
     opposedReviewersReason
     suggestionsConflict

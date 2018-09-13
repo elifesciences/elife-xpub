@@ -11,23 +11,15 @@ const mailer = require('@pubsweet/component-send-email')
 const mecaExport = require('@elifesciences/xpub-meca-export')
 const User = require('../user')
 const { Mutation, Query } = require('./resolvers')
-const emptyManuscript = require('./helpers/empty')
 const Manuscript = require('.')
+const {
+  userData,
+  badUserData,
+  expectedManuscript,
+  manuscriptInput,
+} = require('./resolvers.test.data')
 
 const replaySetup = require('../../../../test/helpers/replay-setup')
-
-const userData = {
-  username: 'testuser',
-  email: 'test@example.com',
-  orcid: '0000-0003-3146-0256',
-  oauth: { accessToken: 'f7617529-f46a-40b1-99f4-4181859783ca' },
-}
-const badUserData = {
-  username: 'baduser',
-  email: 'bad@example.com',
-  orcid: '0000-0001-0000-0000',
-  oauth: { accessToken: 'badbadbad-f46a-40b1-99f4-4181859783ca' },
-}
 
 describe('Submission', () => {
   let userId
@@ -50,17 +42,17 @@ describe('Submission', () => {
 
   describe('currentSubmission', () => {
     it('Gets form data', async () => {
-      const expectedManuscript = {
+      const manuscriptData = {
         createdBy: userId,
         meta: {
           title: 'title',
         },
         status: 'INITIAL',
       }
-      await Manuscript.save(expectedManuscript)
+      await Manuscript.save(manuscriptData)
 
       const manuscript = await Query.currentSubmission({}, {}, { user: userId })
-      expect(manuscript).toMatchObject(expectedManuscript)
+      expect(manuscript).toMatchObject(manuscriptData)
     })
 
     it('Returns null when there are no manuscripts in the db', async () => {
@@ -137,11 +129,10 @@ describe('Submission', () => {
     it("fails if manuscript doesn't belong to user", async () => {
       const blankManuscript = Manuscript.new()
       const manuscript = await Manuscript.save(blankManuscript)
-      const manuscriptInput = { id: manuscript.id }
       await expect(
         Mutation.updateSubmission(
           {},
-          { data: manuscriptInput },
+          { data: { id: manuscript.id } },
           { user: badUserId },
         ),
       ).rejects.toThrow('Manuscript not found')
@@ -151,68 +142,29 @@ describe('Submission', () => {
       const blankManuscript = Manuscript.new()
       blankManuscript.createdBy = userId
       const manuscript = await Manuscript.save(blankManuscript)
-      const manuscriptInput = {
-        id: manuscript.id,
-        meta: {
-          title: 'New Title',
-        },
-        coverLetter: 'this is some long text',
-      }
 
       await Mutation.updateSubmission(
         {},
         {
-          data: manuscriptInput,
+          data: { id: manuscript.id, ...manuscriptInput },
           isAutoSave: true,
         },
         { user: userId },
       )
 
       const actualManuscript = await Manuscript.find(manuscript.id, userId)
-      expect(actualManuscript).toMatchObject(manuscriptInput)
+      expect(actualManuscript).toMatchObject(expectedManuscript)
     })
   })
 
   describe('finishSubmission', () => {
     let id, initialManuscript
-    const fullManuscript = {
-      meta: {
-        title: 'My manuscript',
-        articleType: 'research-article',
-        subjects: ['cancer-biology'],
-      },
-      suggestedSeniorEditors: ['ab12', 'cd34'],
-      opposedSeniorEditors: [],
-      suggestedReviewingEditors: ['ef56', 'gh78'],
-      opposedReviewingEditors: [],
-      suggestedReviewers: [
-        { name: 'Reviewer 1', email: 'reviewer1@mail.com' },
-        { name: 'Reviewer 2', email: 'reviewer2@mail.com' },
-        { name: 'Reviewer 3', email: 'reviewer3@mail.com' },
-      ],
-      opposedReviewers: [],
-      opposedReviewersReason: '',
-      suggestionsConflict: false,
-      coverLetter: 'my cover letter',
-      author: {
-        firstName: 'Firstname',
-        lastName: 'Lastname',
-        email: 'mymail@mail.com',
-        aff: 'Institution Inc',
-      },
-      previouslyDiscussed: '',
-      previouslySubmitted: [],
-      cosubmission: [],
-      submitterSignature: 'Sneha Berry',
-      disclosureConsent: true,
-    }
 
     beforeEach(async () => {
       jest.clearAllMocks()
 
-      initialManuscript = lodash.cloneDeep(emptyManuscript)
+      initialManuscript = Manuscript.new()
       initialManuscript.createdBy = userId
-      initialManuscript.status = 'INITIAL'
       initialManuscript.files = [
         {
           url: 'fake-path.pdf',
@@ -220,30 +172,29 @@ describe('Submission', () => {
           type: 'MANUSCRIPT_SOURCE',
         },
       ]
-      initialManuscript.teams = []
 
       const manuscript = await Manuscript.save(initialManuscript)
       id = manuscript.id
     })
 
     it('stores data with a new status of QA', async () => {
-      const manuscript = lodash.cloneDeep(fullManuscript)
-      manuscript.id = id
       const returnedManuscript = await Mutation.finishSubmission(
         {},
-        { data: manuscript },
+        { data: { ...manuscriptInput, id } },
         { user: userId },
       )
 
       expect(returnedManuscript.status).toBe('QA')
 
       const storedManuscript = await Manuscript.find(id, userId)
-      expect(storedManuscript.status).toBe('QA')
-      expect(storedManuscript.meta.title).toBe('My manuscript')
+      expect(storedManuscript).toMatchObject({
+        ...expectedManuscript,
+        status: 'QA',
+      })
     })
 
     it('removes blank optional reviewer rows', async () => {
-      const manuscript = lodash.cloneDeep(fullManuscript)
+      const manuscript = lodash.cloneDeep(manuscriptInput)
       manuscript.id = id
       manuscript.suggestedReviewers = [
         { name: 'Reviewer 1', email: 'reviewer1@mail.com' },
@@ -274,11 +225,10 @@ describe('Submission', () => {
     it("fails if manuscript doesn't belong to user", async () => {
       const blankManuscript = Manuscript.new()
       const manuscript = await Manuscript.save(blankManuscript)
-      const manuscriptInput = { id: manuscript.id }
       await expect(
         Mutation.finishSubmission(
           {},
-          { data: manuscriptInput },
+          { data: { id: manuscript.id } },
           { user: badUserId },
         ),
       ).rejects.toThrow('Manuscript not found')
@@ -300,7 +250,7 @@ describe('Submission', () => {
     })
 
     it('fails when manuscript has bad data types', async () => {
-      const badManuscript = lodash.cloneDeep(fullManuscript)
+      const badManuscript = lodash.cloneDeep(manuscriptInput)
       lodash.merge(badManuscript, {
         id,
         title: 100,
@@ -323,7 +273,7 @@ describe('Submission', () => {
         Promise.reject(new Error('Broked')),
       )
 
-      const manuscript = lodash.cloneDeep(fullManuscript)
+      const manuscript = lodash.cloneDeep(manuscriptInput)
       manuscript.id = id
       await Mutation.finishSubmission(
         {},

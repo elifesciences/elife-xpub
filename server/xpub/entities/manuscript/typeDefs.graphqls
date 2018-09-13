@@ -14,7 +14,6 @@ extend type Mutation {
 
 extend type Manuscript {
   # todo: these should be handled through teams
-  opposedReviewers: [OpposedReviewer]
   author: Alias
 
   # todo: these should be handled through notes

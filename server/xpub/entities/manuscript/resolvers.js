@@ -234,6 +234,7 @@ ${err}`,
           return elifeApi.peopleById(assigneeIds)
         }
         case 'suggestedReviewer':
+        case 'opposedReviewer':
           return team.teamMembers.map(member => member.meta)
 
         default:
