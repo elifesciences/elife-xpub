@@ -352,7 +352,9 @@ describe('Submission', () => {
   describe('uploadManuscript', () => {
     it("fails if manuscript doesn't belong to user", async () => {
       const blankManuscript = Manuscript.new()
+      blankManuscript.createdBy = userId
       const manuscript = await Manuscript.save(blankManuscript)
+
       await expect(
         Mutation.uploadManuscript(
           {},
@@ -363,5 +365,35 @@ describe('Submission', () => {
     })
 
     // TODO subscribe to uploadProgress before this or mock
+  })
+
+  describe('deleteManuscript', () => {
+    it("fails if manuscript doesn't belong to user", async () => {
+      const blankManuscript = Manuscript.new()
+      blankManuscript.createdBy = userId
+      const manuscript = await Manuscript.save(blankManuscript)
+
+      await expect(
+        Mutation.deleteManuscript(
+          {},
+          { id: manuscript.id },
+          { user: badUserId },
+        ),
+      ).rejects.toThrow('Manuscript not found')
+    })
+
+    it('removes manuscript from database', async () => {
+      const blankManuscript = Manuscript.new()
+      blankManuscript.createdBy = userId
+      const manuscript = await Manuscript.save(blankManuscript)
+      await Mutation.deleteManuscript(
+        {},
+        { id: manuscript.id },
+        { user: userId },
+      )
+
+      const manuscripts = await Manuscript.all(userId)
+      expect(manuscripts).toEqual([])
+    })
   })
 })

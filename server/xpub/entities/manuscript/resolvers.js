@@ -63,9 +63,7 @@ const resolvers = {
 
     // TODO restrict this in production
     async deleteManuscript(_, { id }, { user }) {
-      await Manuscript.find(id, user)
-
-      await Manuscript.delete(id)
+      await Manuscript.delete(id, user)
       return id
     },
 

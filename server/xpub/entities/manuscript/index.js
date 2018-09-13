@@ -24,8 +24,8 @@ const Manuscript = {
   all: dataAccess.selectAll,
   findByStatus: dataAccess.selectByStatus,
 
-  delete: async id => {
-    const manuscript = await dataAccess.selectById(id)
+  delete: async (id, user) => {
+    const manuscript = await dataAccess.selectById(id, user)
     await Promise.all(manuscript.files.map(file => FileManager.delete(file.id)))
     await Promise.all(manuscript.teams.map(team => TeamManager.delete(team.id)))
     await dataAccess.delete(id)
