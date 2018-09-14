@@ -1,0 +1,27 @@
+GET /people/510b7c69
+accept-encoding: gzip, deflate
+
+HTTP/1.1 200 OK
+server: nginx
+content-type: application/vnd.elife.person+json;version=1
+cache-control: max-age=300, public, stale-if-error=86400, stale-while-revalidate=300
+etag: "81157f8b1af5d96c2e7ea73645fcc574"
+x-ua-compatible: IE=edge
+content-language: en
+x-content-type-options: nosniff
+x-frame-options: SAMEORIGIN
+access-control-allow-origin: *
+x-kong-upstream-latency: 130
+x-kong-proxy-latency: 0
+via: kong/0.9.5, 1.1 varnish, 1.1 varnish
+accept-ranges: bytes
+date: Fri, 14 Sep 2018 09:52:36 GMT
+age: 0
+connection: close
+x-served-by: cache-dca17744-DCA, cache-lcy19237-LCY
+x-cache: MISS, MISS
+x-cache-hits: 0, 0
+x-timer: S1536918756.091724,VS0,VE205
+vary: Accept, Authorization, Accept-Encoding
+
+{"id":"510b7c69","type":{"id":"reviewing-editor","label":"Reviewing Editor"},"name":{"preferred":"Allan Spradling","index":"Spradling, Allan"},"research":{"focuses":["stem cell differentiation and morphogenesis","ovary","female reproduction","polyploid cell","epigenetics"],"organisms":["Drosophila"],"expertises":[{"id":"developmental-biology","name":"Developmental Biology"},{"id":"stem-cells-regenerative-medicine","name":"Stem Cells and Regenerative Medicine"},{"id":"chromosomes-gene-expression","name":"Chromosomes and Gene Expression"}]},"affiliations":[{"name":["Carnegie Institution for Science"],"address":{"formatted":["United States"],"components":{"country":"United States"}}}]}

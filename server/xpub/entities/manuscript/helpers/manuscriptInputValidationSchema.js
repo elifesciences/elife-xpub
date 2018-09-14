@@ -1,5 +1,9 @@
 const Joi = require('joi')
 
+const MIN_SUGGESTED_SENIOR_EDITORS = 2
+const MAX_SUGGESTED_SENIOR_EDITORS = 6
+const MIN_SUGGESTED_REVIEWING_EDITORS = 2
+const MAX_SUGGESTED_REVIEWING_EDITORS = 6
 const MAX_SUGGESTED_REVIEWERS = 6
 const MIN_SUGGESTED_REVIEWERS = 3
 
@@ -34,6 +38,8 @@ const manuscriptInputSchema = Joi.object()
       .required(),
     suggestedSeniorEditors: Joi.array()
       .items(Joi.string().required())
+      .min(MIN_SUGGESTED_SENIOR_EDITORS)
+      .max(MAX_SUGGESTED_SENIOR_EDITORS)
       .required(),
     opposedSeniorEditors: Joi.array()
       .items(Joi.string())
@@ -45,6 +51,8 @@ const manuscriptInputSchema = Joi.object()
     }),
     suggestedReviewingEditors: Joi.array()
       .items(Joi.string().required())
+      .min(MIN_SUGGESTED_REVIEWING_EDITORS)
+      .max(MAX_SUGGESTED_REVIEWING_EDITORS)
       .required(),
     opposedReviewingEditors: Joi.array()
       .items(Joi.string())
