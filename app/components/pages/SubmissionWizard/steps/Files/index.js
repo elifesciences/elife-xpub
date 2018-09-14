@@ -26,6 +26,8 @@ const ON_UPLOAD_PROGRESS = gql`
 
 const FilesPageContainer = ({
   setFieldValue,
+  setFieldError,
+  setFieldTouched,
   errors,
   touched,
   values,
@@ -47,15 +49,27 @@ const FilesPageContainer = ({
                 progress: uploadLoading ? 0 : uploadData.uploadProgress,
                 error: uploadError,
               }}
-              formError={errors[fieldName] && touched[fieldName]}
-              onDrop={([file]) =>
+              formError={touched[fieldName] && errors[fieldName]}
+              onDrop={files => {
+                setFieldTouched(fieldName, true, false)
+
+                if (files.length > 1) {
+                  setFieldError(fieldName, 'Only one file can be uploaded.')
+                  return
+                }
+                if (files.length === 0) {
+                  setFieldError(fieldName, 'That file is not supported.')
+                  return
+                }
+
+                const [file] = files
                 uploadFile({
                   variables: { file, id: values.id, fileSize: file.size },
                 }).then(({ data }) => {
                   setFieldValue('meta.title', data.uploadManuscript.meta.title)
                   setFieldValue(fieldName, data.uploadManuscript.files)
                 })
-              }
+              }}
               setFieldValue={setFieldValue}
               {...props}
             />
