@@ -36,10 +36,8 @@ module.exports = {
         Bucket: ''
       },
       region: '',
-      credentials: {
-        accessKeyId: '',
-        secretAccessKey: ''
-      }
+      accessKeyId: '',
+      secretAccessKey: ''
     },
     sftp: {
       host: '',

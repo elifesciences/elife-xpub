@@ -26,6 +26,16 @@ module.exports = {
     basePath: 'test/temp/uploads',
   },
   meca: {
+    s3: {
+      params: {
+        Bucket: 'test'
+      },
+      region: 'eu-west-1',
+      accessKeyId: '',
+      secretAccessKey: '',
+      endpoint: 'localhost',
+      s3ForcePathStyle: true
+    },
     sftp: {
       host: 'localhost',
       port: 3022,

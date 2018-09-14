@@ -955,7 +955,7 @@ async@^1.5.2:
   version "1.5.2"
   resolved "https://registry.yarnpkg.com/async/-/async-1.5.2.tgz#ec6a61ae56480c0c3cb241c95618e20892f9672a"
 
-async@^2.1.2, async@^2.1.4, async@^2.4.1, async@^2.5.0:
+async@^2.0.0, async@^2.1.2, async@^2.1.4, async@^2.4.1, async@^2.5.0:
   version "2.6.1"
   resolved "https://registry.yarnpkg.com/async/-/async-2.6.1.tgz#b245a23ca71930044ec53fa46aa00a3e87c6a610"
   dependencies:
@@ -2719,6 +2719,10 @@ commander@2.17.x, commander@^2.11.0, commander@^2.14.1, commander@^2.16.0, comma
   version "2.17.1"
   resolved "https://registry.yarnpkg.com/commander/-/commander-2.17.1.tgz#bd77ab7de6de94205ceacc72f1716d29f20a77bf"
 
+commander@^2.6.0:
+  version "2.18.0"
+  resolved "https://registry.yarnpkg.com/commander/-/commander-2.18.0.tgz#2bf063ddee7c7891176981a2cc798e5754bc6970"
+
 commander@~2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/commander/-/commander-2.1.0.tgz#d121bbae860d9992a3d517ba96f56588e47c6781"
@@ -4396,7 +4400,7 @@ expect@^23.6.0:
     jest-message-util "^23.4.0"
     jest-regex-util "^23.3.0"
 
-express@^4.15.3, express@^4.16.1, express@^4.16.2:
+express@^4.10.6, express@^4.15.3, express@^4.16.1, express@^4.16.2:
   version "4.16.3"
   resolved "http://registry.npmjs.org/express/-/express-4.16.3.tgz#6af8a502350db3246ecc4becf6b5a34d22f7ed53"
   dependencies:
@@ -6945,6 +6949,10 @@ jss@^9.8.7:
     symbol-observable "^1.1.0"
     warning "^3.0.0"
 
+jstoxml@^1.0.0:
+  version "1.4.3"
+  resolved "https://registry.yarnpkg.com/jstoxml/-/jstoxml-1.4.3.tgz#c5ee5851e14bbee1d69091b94bdeae2f4b43577c"
+
 jsx-ast-utils@^2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/jsx-ast-utils/-/jsx-ast-utils-2.0.1.tgz#e801b1b39985e20fffc87b40e3748080e2dcac7f"
@@ -7798,6 +7806,16 @@ moment@2.x.x, moment@^2.10.3, moment@^2.14.1, moment@^2.22.1:
 moo@^0.4.3:
   version "0.4.3"
   resolved "https://registry.yarnpkg.com/moo/-/moo-0.4.3.tgz#3f847a26f31cf625a956a87f2b10fbc013bfd10e"
+
+morgan@^1.5.1:
+  version "1.9.1"
+  resolved "https://registry.yarnpkg.com/morgan/-/morgan-1.9.1.tgz#0a8d16734a1d9afbc824b99df87e738e58e2da59"
+  dependencies:
+    basic-auth "~2.0.0"
+    debug "2.6.9"
+    depd "~1.1.2"
+    on-finished "~2.3.0"
+    on-headers "~1.0.1"
 
 morgan@^1.8.2:
   version "1.9.0"
@@ -9460,6 +9478,10 @@ promise-inflight@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/promise-inflight/-/promise-inflight-1.0.1.tgz#98472870bf228132fcbdd868129bad12c3c029e3"
 
+promise-limit@^2.6.0:
+  version "2.7.0"
+  resolved "https://registry.yarnpkg.com/promise-limit/-/promise-limit-2.7.0.tgz#eb5737c33342a030eaeaecea9b3d3a93cb592b26"
+
 promise-queue@^2.2.3:
   version "2.2.5"
   resolved "https://registry.yarnpkg.com/promise-queue/-/promise-queue-2.2.5.tgz#2f6f5f7c0f6d08109e967659c79b88a9ed5e93b4"
@@ -10908,11 +10930,29 @@ rxjs@^5.4.2:
   dependencies:
     symbol-observable "1.0.1"
 
-rxjs@^6.1.0:
+rxjs@^6.0.0, rxjs@^6.1.0:
   version "6.3.2"
   resolved "https://registry.yarnpkg.com/rxjs/-/rxjs-6.3.2.tgz#6a688b16c4e6e980e62ea805ec30648e1c60907f"
   dependencies:
     tslib "^1.9.0"
+
+s3rver@^2.2.6:
+  version "2.2.6"
+  resolved "https://registry.yarnpkg.com/s3rver/-/s3rver-2.2.6.tgz#99419b72af2e0fa1b75833518641f2b17279e913"
+  dependencies:
+    async "^2.0.0"
+    commander "^2.6.0"
+    concat-stream "^1.5.2"
+    express "^4.10.6"
+    fs-extra "^7.0.0"
+    jstoxml "^1.0.0"
+    lodash "^4.17.5"
+    morgan "^1.5.1"
+    promise-limit "^2.6.0"
+    rxjs "^6.0.0"
+    winston "^2.1.0"
+    xml2js "^0.4.4"
+    xmlbuilder "^10.0.0"
 
 safe-buffer@5.1.1:
   version "5.1.1"
@@ -13151,7 +13191,7 @@ winston@0.8.x:
     pkginfo "0.3.x"
     stack-trace "0.0.x"
 
-winston@2.x, winston@^2.2.0:
+winston@2.x, winston@^2.1.0, winston@^2.2.0:
   version "2.4.4"
   resolved "https://registry.yarnpkg.com/winston/-/winston-2.4.4.tgz#a01e4d1d0a103cf4eada6fc1f886b3110d71c34b"
   dependencies:
@@ -13248,7 +13288,7 @@ xml-parse-from-string@^1.0.0:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/xml-parse-from-string/-/xml-parse-from-string-1.0.1.tgz#a9029e929d3dbcded169f3c6e28238d95a5d5a28"
 
-xml2js@0.4.19, xml2js@^0.4.19, xml2js@^0.4.5:
+xml2js@0.4.19, xml2js@^0.4.19, xml2js@^0.4.4, xml2js@^0.4.5:
   version "0.4.19"
   resolved "https://registry.yarnpkg.com/xml2js/-/xml2js-0.4.19.tgz#686c20f213209e94abf0d1bcf1efaa291c7827a7"
   dependencies:
