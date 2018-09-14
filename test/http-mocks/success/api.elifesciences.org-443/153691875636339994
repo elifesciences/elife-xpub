@@ -1,0 +1,27 @@
+GET /people/447a936e
+accept-encoding: gzip, deflate
+
+HTTP/1.1 200 OK
+server: nginx
+content-type: application/vnd.elife.person+json;version=1
+cache-control: max-age=300, public, stale-if-error=86400, stale-while-revalidate=300
+etag: "687aa3123ead8566394ab58cf3fc277b"
+x-ua-compatible: IE=edge
+content-language: en
+x-content-type-options: nosniff
+x-frame-options: SAMEORIGIN
+access-control-allow-origin: *
+x-kong-upstream-latency: 137
+x-kong-proxy-latency: 0
+via: kong/0.9.5, 1.1 varnish, 1.1 varnish
+accept-ranges: bytes
+date: Fri, 14 Sep 2018 09:52:36 GMT
+age: 0
+connection: close
+x-served-by: cache-dca17751-DCA, cache-lcy19250-LCY
+x-cache: MISS, MISS
+x-cache-hits: 0, 0
+x-timer: S1536918756.104839,VS0,VE254
+vary: Accept, Authorization, Accept-Encoding
+
+{"id":"447a936e","type":{"id":"reviewing-editor","label":"Reviewing Editor"},"name":{"preferred":"Alison Goate","index":"Goate, Alison"},"research":{"focuses":["dementia","addiction"],"organisms":["human"],"expertises":[{"id":"neuroscience","name":"Neuroscience"}]},"affiliations":[{"name":["The Icahn School of Medicine at Mount Sinai"],"address":{"formatted":["United States"],"components":{"country":"United States"}}}]}
