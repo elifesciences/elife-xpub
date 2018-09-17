@@ -15,11 +15,7 @@ async function startServer(options) {
     });
   });
 
-  const s3 = new AWS.S3({
-    ...options,
-    endpoint: new AWS.Endpoint('http://localhost:4578'),
-    s3ForcePathStyle: true
-  });
+  const s3 = new AWS.S3({ ...options });
 
   await new Promise((resolve, reject) => {
     // S3 functions modify parameters, so we clone the parameters

@@ -64,11 +64,6 @@ describe('MECA integration test', () => {
   it('generates an archive and uploads it to S3', async () => {
     await send(manuscriptId)
 
-    console.log({
-          ...config.get('meca.s3.params'),
-          Key: manuscriptId
-    })
-
     const zip = await JsZip.loadAsync(
       new Promise((resolve, reject) => {
         s3.getObject({
@@ -76,7 +71,7 @@ describe('MECA integration test', () => {
           Key: manuscriptId
         }, (err, data) => {
           if(err) reject(err)
-          resolve(data)
+          resolve(data.Body)
         })
       })
     )
