@@ -127,12 +127,6 @@ ${err}`,
     },
 
     async uploadManuscript(_, { file, id, fileSize }, { user }) {
-      if (fileSize > config.get('fileUpload.maxSizeMB') * 1e6) {
-        throw new Error(
-          `File size shouldn't exceed ${config.get('fileUpload.maxSizeMB')}MB`,
-        )
-      }
-
       const manuscript = await Manuscript.find(id, user)
 
       const { stream, filename, mimetype } = await file
@@ -170,6 +164,30 @@ ${err}`,
       // save source file locally
       const saveFileStream = fs.createWriteStream(manuscriptSourcePath)
       stream.pipe(progressReport).pipe(saveFileStream)
+
+      /* let uploadedSize = 0 */
+      /* const pubsub = await getPubsub() */
+      /* stream.on('data', chunk => { */
+      /*   uploadedSize += chunk.length */
+      /*   if (uploadedSize > config.get('fileUpload.maxSizeMB') * 1e6) { */
+      /*     throw new Error( */
+      /*       `File size shouldn't exceed ${config.get( */
+      /*         'fileUpload.maxSizeMB', */
+      /*       )}MB`, */
+      /*     ) */
+      /*   } */
+      /*   const uploadProgress = Math.floor((uploadedSize * 100) / fileSize) */
+      /*   pubsub.publish(`${ON_UPLOAD_PROGRESS}.${user}`, { */
+      /*     uploadProgress, */
+      /*   }) */
+      /* }) */
+      /* stream.on('end', () => { */
+      /*   if (uploadedSize !== fileSize) { */
+      /*     logger.warn( */
+      /*       'Reported file size for manuscript is different than the actual file size', */
+      /*     ) */
+      /*   } */
+      /* }) */
 
       const saveFilePromise = new Promise((resolve, reject) => {
         saveFileStream.on('finish', () => resolve(true))
