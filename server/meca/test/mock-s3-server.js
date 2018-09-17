@@ -22,7 +22,10 @@ async function startServer(options) {
   });
 
   await new Promise((resolve, reject) => {
-    s3.createBucket(options.params, function(err, data) {
+    // S3 functions modify parameters, so we clone the parameters
+    const params = Object.assign({}, options.params)
+
+    s3.createBucket(params, function(err, data) {
       if(err) reject(err)
       resolve(data)
     })
