@@ -5,6 +5,7 @@ import styled from 'styled-components'
 import Dropzone from 'react-dropzone'
 import { ErrorText, Action } from '@pubsweet/ui'
 import { th } from '@pubsweet/ui-toolkit'
+import config from 'config'
 
 import Icon from '../atoms/Icon'
 
@@ -51,8 +52,6 @@ const VALID_FILE_TYPES = [
   'application/pdf',
   'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
 ]
-
-const MAX_FILE_SIZE_MB = 100
 
 const StyledDropzone = styled(({ hasError, saveInnerRef, ...rest }) => (
   <Dropzone ref={saveInnerRef} {...rest} />
@@ -145,7 +144,7 @@ const FileUpload = ({ onDrop, conversion, formError, ...props }) => {
       {...props}
       disableClick
       hasError={!!(formError || conversion.error)}
-      maxSize={MAX_FILE_SIZE_MB * 1e6}
+      maxSize={config.fileUpload.maxSizeMB * 1e6}
       saveInnerRef={node => {
         dropzoneRef = node
       }}

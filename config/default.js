@@ -58,5 +58,8 @@ module.exports = {
   scienceBeam: {
     url: 'https://sciencebeam-texture.elifesciences.org/api/convert',
   },
-  publicKeys: ['pubsweet-client', 'authsome', 'validations'],
+  fileUpload: {
+    maxSizeMB: 100,
+  },
+  publicKeys: ['pubsweet-client', 'authsome', 'validations', 'fileUpload'],
 }

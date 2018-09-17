@@ -16,7 +16,6 @@ const { Transform } = require('stream')
 const mecaExport = require('@elifesciences/xpub-meca-export')
 
 const { ON_UPLOAD_PROGRESS } = asyncIterators
-const MAX_FILE_SIZE_MB = 100
 
 const parseString = promisify(xml2js.parseString)
 const randomBytes = promisify(crypto.randomBytes)
@@ -128,8 +127,10 @@ ${err}`,
     },
 
     async uploadManuscript(_, { file, id, fileSize }, { user }) {
-      if (fileSize > MAX_FILE_SIZE_MB * 1e6) {
-        throw new Error(`File size shouldn't exceed ${MAX_FILE_SIZE_MB}MB`)
+      if (fileSize > config.get('fileUpload.maxSizeMB') * 1e6) {
+        throw new Error(
+          `File size shouldn't exceed ${config.get('fileUpload.maxSizeMB')}MB`,
+        )
       }
 
       const manuscript = await Manuscript.find(id, user)
