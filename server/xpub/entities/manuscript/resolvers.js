@@ -5,13 +5,14 @@ const {
 } = require('pubsweet-server/src/graphql/pubsub')
 const mailer = require('@pubsweet/component-send-email')
 const logger = require('@pubsweet/logger')
-const request = require('request')
+const request = require('request-promise-native')
 const { promisify } = require('util')
 const xml2js = require('xml2js')
 const fs = require('fs-extra')
 const path = require('path')
 const crypto = require('crypto')
 const Joi = require('joi')
+const { Transform } = require('stream')
 const mecaExport = require('@elifesciences/xpub-meca-export')
 
 const { ON_UPLOAD_PROGRESS } = asyncIterators
@@ -147,50 +148,43 @@ ${err}`,
         'manifest.xml',
       )
 
+      const pubsub = await getPubsub()
+      let uploadedSize = 0
+      const progressReport = new Transform({
+        transform(chunk, encoding, done) {
+          uploadedSize += chunk.length
+          const uploadProgress = Math.floor((uploadedSize * 100) / fileSize)
+          pubsub.publish(`${ON_UPLOAD_PROGRESS}.${user}`, {
+            uploadProgress,
+          })
+          done(null, chunk)
+        },
+      })
+
       // save source file locally
       const saveFileStream = fs.createWriteStream(manuscriptSourcePath)
-      stream.pipe(saveFileStream)
+      stream.pipe(progressReport).pipe(saveFileStream)
 
-      // pause stream while we set up other listeners
-      stream.pause()
-
-      let uploadedSize = 0
-      const pubsub = await getPubsub()
-      stream.on('data', chunk => {
-        uploadedSize += chunk.length
-        const uploadProgress = Math.floor((uploadedSize * 100) / fileSize)
-        pubsub.publish(`${ON_UPLOAD_PROGRESS}.${user}`, {
-          uploadProgress,
-        })
-      })
       const saveFilePromise = new Promise((resolve, reject) => {
         saveFileStream.on('finish', () => resolve(true))
         saveFileStream.on('error', reject)
       })
 
       // also send source file to conversion service
-      const convertFileStream = request.post(config.get('scienceBeam.url'), {
+      const convertFileRequest = request.post(config.get('scienceBeam.url'), {
         qs: { filename },
         headers: { 'content-type': mimetype },
       })
-      stream.pipe(convertFileStream)
-      const convertedFilePromise = new Promise((resolve, reject) => {
-        const chunks = []
-        convertFileStream.on('data', chunk => chunks.push(chunk))
-        convertFileStream.on('end', () => resolve(Buffer.concat(chunks)))
-        convertFileStream.on('error', reject)
-      })
-
-      // setup done, resume stream
-      stream.resume()
+      stream.pipe(convertFileRequest)
 
       let title = ''
       try {
-        const xmlBuffer = await convertedFilePromise
+        const xmlBuffer = await convertFileRequest
         const [xmlData] = await Promise.all([
           parseString(xmlBuffer.toString('utf8')),
           fs.writeFile(manuscriptJatsPath, xmlBuffer),
           fs.writeFile(manuscriptManifestPath, darManifest),
+          saveFilePromise,
         ])
 
         if (xmlData.article) {
@@ -205,8 +199,6 @@ ${err}`,
       } catch (err) {
         logger.warn('Manuscript conversion failed', err)
       }
-
-      await saveFilePromise
 
       manuscript.files.push({
         url: manuscriptSourcePath,
