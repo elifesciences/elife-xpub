@@ -5,7 +5,7 @@ const {
 } = require('pubsweet-server/src/graphql/pubsub')
 const mailer = require('@pubsweet/component-send-email')
 const logger = require('@pubsweet/logger')
-const request = require('request-promise-native')
+const request = require('request')
 const { promisify } = require('util')
 const xml2js = require('xml2js')
 const fs = require('fs-extra')
@@ -24,7 +24,7 @@ const Manuscript = require('.')
 const manuscriptInputSchema = require('./helpers/manuscriptInputValidationSchema')
 const elifeApi = require('../user/helpers/elife-api')
 
-const staticManifest = `<dar>
+const darManifest = `<dar>
   <documents>
     <document id="manuscript" type="article" path="manuscript.xml" />
   </documents>
@@ -151,6 +151,9 @@ ${err}`,
       const saveFileStream = fs.createWriteStream(manuscriptSourcePath)
       stream.pipe(saveFileStream)
 
+      // pause stream while we set up other listeners
+      stream.pause()
+
       let uploadedSize = 0
       const pubsub = await getPubsub()
       stream.on('data', chunk => {
@@ -178,27 +181,32 @@ ${err}`,
         convertFileStream.on('error', reject)
       })
 
-      const [xmlString] = await Promise.all([
-        convertedFilePromise,
-        saveFilePromise,
-      ])
-
-      const [xmlData] = await Promise.all([
-        parseString(xmlString.toString('utf8')),
-        fs.writeFile(manuscriptJatsPath, xmlString),
-        fs.writeFile(manuscriptManifestPath, staticManifest),
-      ])
+      // setup done, resume stream
+      stream.resume()
 
       let title = ''
-      if (xmlData.article) {
-        const firstArticle = xmlData.article.front[0]
-        const articleMeta = firstArticle['article-meta']
-        const firstMeta = articleMeta[0]
-        const titleGroup = firstMeta['title-group']
-        const firstTitleGroup = titleGroup[0]
-        const titleArray = firstTitleGroup['article-title']
-        title = titleArray[0]
+      try {
+        const xmlBuffer = await convertedFilePromise
+        const [xmlData] = await Promise.all([
+          parseString(xmlBuffer.toString('utf8')),
+          fs.writeFile(manuscriptJatsPath, xmlBuffer),
+          fs.writeFile(manuscriptManifestPath, darManifest),
+        ])
+
+        if (xmlData.article) {
+          const firstArticle = xmlData.article.front[0]
+          const articleMeta = firstArticle['article-meta']
+          const firstMeta = articleMeta[0]
+          const titleGroup = firstMeta['title-group']
+          const firstTitleGroup = titleGroup[0]
+          const titleArray = firstTitleGroup['article-title']
+          title = titleArray[0]
+        }
+      } catch (err) {
+        logger.warn('Manuscript conversion failed', err)
       }
+
+      await saveFilePromise
 
       manuscript.files.push({
         url: manuscriptSourcePath,
