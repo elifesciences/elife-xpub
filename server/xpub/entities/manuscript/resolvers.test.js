@@ -314,7 +314,57 @@ describe('Submission', () => {
       ).rejects.toThrow('Manuscript not found')
     })
 
-    // TODO subscribe to uploadProgress before this or mock
+    it('sets empty title if ScienceBeam fails', async () => {
+      jest.spyOn(logger, 'warn').mockImplementationOnce(() => {})
+      replaySetup('error')
+      const blankManuscript = Manuscript.new()
+      blankManuscript.createdBy = userId
+      const { id } = await Manuscript.save(blankManuscript)
+      const file = {
+        filename: 'manuscript.pdf',
+        stream: fs.createReadStream(
+          `${__dirname}/../../../../test/fixtures/dummy-manuscript-2.pdf`,
+        ),
+        mimetype: 'application/pdf',
+      }
+      const manuscript = await Mutation.uploadManuscript(
+        {},
+        { id, file, fileSize: 73947 },
+        { user: userId },
+      )
+      expect(manuscript).toMatchObject({
+        id,
+        meta: { title: '' },
+        files: [{ filename: 'manuscript.pdf' }],
+      })
+      expect(logger.warn).toHaveBeenCalled()
+    })
+
+    it('extracts title from PDF', async () => {
+      const blankManuscript = Manuscript.new()
+      blankManuscript.createdBy = userId
+      const { id } = await Manuscript.save(blankManuscript)
+      const file = {
+        filename: 'manuscript.pdf',
+        stream: fs.createReadStream(
+          `${__dirname}/../../../../test/fixtures/dummy-manuscript-2.pdf`,
+        ),
+        mimetype: 'application/pdf',
+      }
+      const manuscript = await Mutation.uploadManuscript(
+        {},
+        { id, file, fileSize: 73947 },
+        { user: userId },
+      )
+      expect(manuscript).toMatchObject({
+        id,
+        meta: {
+          title:
+            'The Relationship Between Lamport Clocks and Interrupts Using Obi',
+        },
+        files: [{ filename: 'manuscript.pdf' }],
+      })
+    })
   })
 
   describe('deleteManuscript', () => {
