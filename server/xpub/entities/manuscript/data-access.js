@@ -18,7 +18,9 @@ const columnNames = [
   'cover_letter',
   'opposed_senior_editors_reason',
   'opposed_reviewing_editors_reason',
-  'opposed_reviewers',
+  'opposed_reviewers_reason',
+  'submitter_signature',
+  'disclosure_consent',
   'qc_issues',
   'created_by',
 ]

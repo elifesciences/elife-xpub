@@ -9,7 +9,6 @@ const emptyManuscript = {
   },
   opposedSeniorEditorsReason: '',
   opposedReviewingEditorsReason: '',
-  opposedReviewers: [],
   opposedReviewersReason: '',
   suggestionsConflict: false,
   files: [],
