@@ -5,10 +5,8 @@ import styled from 'styled-components'
 import Dropzone from 'react-dropzone'
 import { ErrorText, Action } from '@pubsweet/ui'
 import { th } from '@pubsweet/ui-toolkit'
-import { get } from 'lodash'
 
 import Icon from '../atoms/Icon'
-import Paragraph from '../atoms/Paragraph'
 
 const UploadIcon = props => (
   <Icon
@@ -54,6 +52,8 @@ const VALID_FILE_TYPES = [
   'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
 ]
 
+const MAX_FILE_SIZE_MB = 100
+
 const StyledDropzone = styled(({ hasError, saveInnerRef, ...rest }) => (
   <Dropzone ref={saveInnerRef} {...rest} />
 ))`
@@ -64,8 +64,17 @@ const StyledDropzone = styled(({ hasError, saveInnerRef, ...rest }) => (
   padding: ${th('space.4')};
 `
 
-const StyledParagraph = styled(Paragraph)`
+const UploadInstruction = styled.p`
+  margin-bottom: 0;
+`
+
+const UploadNote = styled.p`
   color: ${th('colorTextSecondary')};
+  margin-top: 0;
+`
+
+const DropzoneErrorText = styled(ErrorText.withComponent('span'))`
+  display: inline;
 `
 
 const CentredFlex = styled(Flex)`
@@ -77,35 +86,28 @@ const DropzoneContent = ({ conversion, formError, dropzoneOpen }) => {
     return (
       <React.Fragment>
         <StyledUploadIcon />
-        <Paragraph data-test-id="dropzoneMessage">
+        <UploadInstruction data-test-id="dropzoneMessage">
           Manuscript is uploading
-        </Paragraph>
+        </UploadInstruction>
       </React.Fragment>
     )
   }
-  if (conversion.error) {
-    const errorMessage = get(
-      conversion,
-      'error.message',
-      'Error Uploading File',
-    )
+  const displayError = conversion.error
+    ? 'Unable to upload manuscript.'
+    : formError
+
+  if (displayError) {
     return (
       <React.Fragment>
         <StyledUploadFailureIcon />
-        <ErrorText data-test-id="dropzoneMessage">
-          {errorMessage}. Try to <Action onClick={dropzoneOpen}>upload</Action>{' '}
-          your manuscript again.
-        </ErrorText>
-      </React.Fragment>
-    )
-  }
-  if (formError) {
-    return (
-      <React.Fragment>
-        <StyledUploadFailureIcon />
-        <ErrorText data-test-id="dropzoneMessage">
-          Please <Action onClick={dropzoneOpen}>upload</Action> your manuscript.
-        </ErrorText>
+        <UploadInstruction data-test-id="dropzoneMessage">
+          <DropzoneErrorText>Oops!</DropzoneErrorText> {displayError} Please{' '}
+          <Action onClick={dropzoneOpen}>try again.</Action>
+        </UploadInstruction>
+
+        <UploadNote>
+          Files should be in .docx or .pdf format and no larger than 100MB.
+        </UploadNote>
       </React.Fragment>
     )
   }
@@ -113,23 +115,23 @@ const DropzoneContent = ({ conversion, formError, dropzoneOpen }) => {
     return (
       <React.Fragment>
         <StyledUploadSuccessIcon />
-        <Paragraph data-test-id="dropzoneMessage">Success!</Paragraph>
-        <Paragraph>
-          <Action onClick={dropzoneOpen}>Replace</Action> your manuscript.
-        </Paragraph>
+        <UploadInstruction data-test-id="dropzoneMessage">
+          Success! <Action onClick={dropzoneOpen}>Replace</Action> your
+          manuscript.
+        </UploadInstruction>
       </React.Fragment>
     )
   }
   return (
     <React.Fragment>
       <StyledUploadIcon />
-      <Paragraph data-test-id="dropzoneMessage">
+      <UploadInstruction data-test-id="dropzoneMessage">
         <Action onClick={dropzoneOpen}>Upload</Action> your manuscript or drag
         it here.
-      </Paragraph>
-      <StyledParagraph>
+      </UploadInstruction>
+      <UploadNote>
         Please note that files larger than 10MB may result in review delays.
-      </StyledParagraph>
+      </UploadNote>
     </React.Fragment>
   )
 }
@@ -143,6 +145,7 @@ const FileUpload = ({ onDrop, conversion, formError, ...props }) => {
       {...props}
       disableClick
       hasError={!!(formError || conversion.error)}
+      maxSize={MAX_FILE_SIZE_MB * 1e6}
       saveInnerRef={node => {
         dropzoneRef = node
       }}
@@ -168,12 +171,12 @@ FileUpload.propTypes = {
     converting: PropTypes.bool,
     progress: PropTypes.number,
   }),
-  formError: PropTypes.bool,
+  formError: PropTypes.string,
 }
 
 FileUpload.defaultProps = {
   conversion: {},
-  formError: false,
+  formError: '',
 }
 
 export default FileUpload

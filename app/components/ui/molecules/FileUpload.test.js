@@ -20,7 +20,7 @@ function makeCheerioWrapper(props) {
 
 const manuscriptUpload = 'Upload your manuscript or drag it here.'
 const noManuscriptError = 'Please upload your manuscript.'
-const badManuscriptError = 'Try to upload your manuscript again.'
+const conversionFailure = 'Unable to upload manuscript.'
 const manuscriptUploadSuccess = 'Success!'
 const manuscriptUploading = 'Manuscript is uploading'
 
@@ -29,30 +29,30 @@ it('displays upload manuscript if nothing is set', () => {
   expect(dropzoneContentWrapper.text()).toContain(manuscriptUpload)
 })
 
-it('displays error if formError is set', () => {
-  const dropzoneContentWrapper = makeCheerioWrapper({ formError: true })
-  expect(dropzoneContentWrapper.text()).toBe(noManuscriptError)
+it('displays formError if set', () => {
+  const dropzoneContentWrapper = makeCheerioWrapper({
+    formError: noManuscriptError,
+  })
+  expect(dropzoneContentWrapper.text()).toContain(noManuscriptError)
 })
 
-it('displays error if conversion.error is set', () => {
+it('displays fixed failure message if conversion.error is set', () => {
   const uploadError = new Error('Bad file type')
   const dropzoneContentWrapper = makeCheerioWrapper({
     conversion: { error: uploadError },
   })
-  expect(dropzoneContentWrapper.text()).toBe(
-    `${uploadError.message}. ${badManuscriptError}`,
-  )
+  expect(dropzoneContentWrapper.text()).toContain(conversionFailure)
 })
 
 it('displays success if conversion.completed is set', () => {
   const dropzoneContentWrapper = makeCheerioWrapper({
     conversion: { completed: true },
   })
-  expect(dropzoneContentWrapper.text()).toBe(manuscriptUploadSuccess)
+  expect(dropzoneContentWrapper.text()).toContain(manuscriptUploadSuccess)
 })
 
 // TODO fix this tests to account for upload %
-it.skip('displays uploading if conversion.converting is set', () => {
+it('displays uploading if conversion.converting is set', () => {
   const dropzoneContentWrapper = makeCheerioWrapper({
     conversion: { converting: true },
   })
@@ -60,10 +60,10 @@ it.skip('displays uploading if conversion.converting is set', () => {
 })
 
 // TODO fix these tests to account for upload %
-it.skip('displays uploading even if there are errors', () => {
+it('displays uploading even if there are errors', () => {
   const dropzoneContentWrapper = makeCheerioWrapper({
     conversion: { converting: true, error: new Error('Boo') },
-    formError: true,
+    formError: noManuscriptError,
   })
   expect(dropzoneContentWrapper.text()).toBe(manuscriptUploading)
 })
