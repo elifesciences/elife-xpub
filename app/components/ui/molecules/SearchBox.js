@@ -19,15 +19,18 @@ const SearchIcon = props => (
 const StyledSearchButton = styled(Button).attrs({
   primary: true,
 })`
+  border-radius: 0 ${th('borderRadius')} ${th('borderRadius')} 0;
   fill: ${th('colorTextReverse')};
   line-height: 0;
   min-width: 0;
+  width: ${th('space.5')};
   padding: ${th('space.1')};
   margin: 0;
 `
 
 const StyledClearButton = styled(ClearSearchButton)`
   fill: ${th('colorTextSecondary')};
+  width: ${th('space.5')};
   border: ${th('borderWidth')} ${th('borderStyle')} ${th('colorBorder')};
   border-left: ${th('colorBackground')};
   &:focus {
