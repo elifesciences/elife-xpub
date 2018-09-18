@@ -31,20 +31,24 @@ module.exports = {
       params: {
         Bucket: 'test',
       },
-      endpoint: new AWS.Endpoint('http://localhost:4578'),
-      s3ForcePathStyle: true,
-      region: 'eu-west-1',
-      accessKeyId: 'test',
-      secretAccessKey: 'test',
+      connectionOptions: {
+        endpoint: new AWS.Endpoint('http://localhost:4578'),
+        s3ForcePathStyle: true,
+        region: 'eu-west-1',
+        accessKeyId: 'test',
+        secretAccessKey: 'test',
+      },
     },
     sftp: {
-      host: 'localhost',
-      port: 3022,
-      username: 'test',
-      password: 'tset',
+      connectionOptions: {
+        host: 'localhost',
+        port: 3022,
+        username: 'test',
+        password: 'tset',
+      },
+      remotePath: '/test',
     },
     notificationEmail: 'test@example.com',
-    remotePath: '/test',
   },
   mailer: {
     transport: {

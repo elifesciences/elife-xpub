@@ -1,6 +1,6 @@
 import { ClientFunction, Selector } from 'testcafe'
 import config from 'config'
-import startSshServer from '@elifesciences/xpub-meca-export/test/mock-ssh-server'
+import startSshServer from '@elifesciences/xpub-meca-export/test/mock-sftp-server'
 import replaySetup from './helpers/replay-setup'
 import {
   dashboard,
@@ -24,7 +24,9 @@ const manuscript = {
 const getPageUrl = ClientFunction(() => window.location.href)
 
 test('Happy path', async t => {
-  const { mockFs, server } = await startSshServer(config.get('meca.sftp.port'))
+  const { mockFs, server } = await startSshServer(
+    config.get('meca.sftp.connectionOptions.port'),
+  )
   replaySetup('success')
 
   await dashboard.login()

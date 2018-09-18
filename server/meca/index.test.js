@@ -1,4 +1,3 @@
-const util = require('util')
 const JsZip = require('jszip')
 const config = require('config')
 const Replay = require('replay')
@@ -11,10 +10,11 @@ const mecaExport = require('.')
 
 Replay.fixtures = `${__dirname}/test/http-mocks`
 
-const getFilenames = zip => zip
-  .filter(() => true)
-  .map(file => file.name)
-  .sort()
+const getFilenames = zip =>
+  zip
+    .filter(() => true)
+    .map(file => file.name)
+    .sort()
 
 describe('MECA integration test', () => {
   let manuscriptId
@@ -22,10 +22,13 @@ describe('MECA integration test', () => {
 
   beforeEach(async () => {
     // setup mock sftp server
-    sftp = startSftpServer(config.get('meca.sftp.port'))
+    sftp = startSftpServer(config.get('meca.sftp.connectionOptions.port'))
 
     // setup mock S3 server
-    const server = await startS3Server(config.get('meca.s3'))
+    const server = await startS3Server(
+      config.get('meca.s3.connectionOptions'),
+      config.get('meca.s3.params'),
+    )
     s3Server = server.instance
     s3 = server.s3
 
@@ -42,7 +45,7 @@ describe('MECA integration test', () => {
   })
 
   it('generates an archive and uploads it', async () => {
-    await send(manuscriptId, sampleManuscript.createdBy)
+    await mecaExport(manuscriptId, sampleManuscript.createdBy)
 
     expect(sftp.mockFs.readdirSync('/')).toEqual(['test'])
     expect(sftp.mockFs.readdirSync('/test')).toEqual([manuscriptId])
@@ -62,18 +65,21 @@ describe('MECA integration test', () => {
   })
 
   it('generates an archive and uploads it to S3', async () => {
-    await send(manuscriptId)
+    await mecaExport(manuscriptId, sampleManuscript.createdBy)
 
     const zip = await JsZip.loadAsync(
       new Promise((resolve, reject) => {
-        s3.getObject({
-          ...config.get('meca.s3.params'),
-          Key: manuscriptId
-        }, (err, data) => {
-          if(err) reject(err)
-          resolve(data.Body)
-        })
-      })
+        s3.getObject(
+          {
+            ...config.get('meca.s3.params'),
+            Key: manuscriptId,
+          },
+          (err, data) => {
+            if (err) reject(err)
+            resolve(data.Body)
+          },
+        )
+      }),
     )
 
     expect(getFilenames(zip)).toEqual([

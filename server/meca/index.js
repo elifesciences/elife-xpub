@@ -1,3 +1,4 @@
+const logger = require('@pubsweet/logger')
 const ManuscriptManager = require('@elifesciences/xpub-server/entities/manuscript')
 
 const articleGenerator = require('./file-generators/article')
@@ -24,6 +25,7 @@ async function generate(manuscriptId, userId, clientIp) {
 }
 
 async function mecaExport(manuscriptId, userId, clientIp) {
+  logger.info(`Starting meca export for manuscript ${manuscriptId}`)
   const archive = await generate(manuscriptId, userId, clientIp)
   await upload(archive, manuscriptId)
 }
