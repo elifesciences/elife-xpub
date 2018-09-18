@@ -23,7 +23,7 @@ async function generate(manuscriptId, userId, clientIp) {
   })
 }
 
-async function send(manuscriptId, userId, clientIp) {
+async function mecaExport(manuscriptId, userId, clientIp) {
   const archive = await generate(manuscriptId, userId, clientIp)
   await upload(archive, manuscriptId)
 }
