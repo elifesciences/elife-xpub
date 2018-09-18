@@ -29,13 +29,13 @@ module.exports = {
   meca: {
     s3: {
       params: {
-        Bucket: 'test'
+        Bucket: 'test',
       },
       endpoint: new AWS.Endpoint('http://localhost:4578'),
       s3ForcePathStyle: true,
       region: 'eu-west-1',
-      accessKeyId: '',
-      secretAccessKey: '',
+      accessKeyId: 'test',
+      secretAccessKey: 'test',
     },
     sftp: {
       host: 'localhost',
