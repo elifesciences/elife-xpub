@@ -5,6 +5,7 @@ jest.mock('@elifesciences/xpub-meca-export', () =>
 const lodash = require('lodash')
 const config = require('config')
 const fs = require('fs-extra')
+const stream = require('stream')
 const logger = require('@pubsweet/logger')
 const { createTables } = require('@pubsweet/db-manager')
 const mailer = require('@pubsweet/component-send-email')
@@ -364,6 +365,27 @@ describe('Submission', () => {
         },
         files: [{ filename: 'manuscript.pdf' }],
       })
+    })
+
+    it(`fails if manuscript size is bigger than ${config.get(
+      'fileUpload.maxSizeMB',
+    )}MB`, async () => {
+      const blankManuscript = Manuscript.new()
+      blankManuscript.createdBy = userId
+      const { id } = await Manuscript.save(blankManuscript)
+
+      const maxFileSize = config.get('fileUpload.maxSizeMB')
+      const fileSize = maxFileSize * 1e6 + 1
+      const bufferStream = new stream.PassThrough()
+      bufferStream.end(Buffer.alloc(fileSize))
+      const file = {
+        filename: 'manuscript.pdf',
+        stream: bufferStream,
+        mimetype: 'application/pdf',
+      }
+      await expect(
+        Mutation.uploadManuscript({}, { id, file, fileSize }, { user: userId }),
+      ).rejects.toThrow(`File size shouldn't exceed ${maxFileSize}MB`)
     })
   })
 
