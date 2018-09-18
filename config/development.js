@@ -34,4 +34,13 @@ module.exports = {
   forever: {
     watchDirectory: path.resolve(__dirname, '..', 'server'),
   },
+
+  meca: {
+    s3: {
+      disableUpload: true,
+    },
+    sftp: {
+      disableUpload: true,
+    },
+  },
 }

@@ -4,6 +4,10 @@ const s3 = require('./client/s3')
 const logger = require('@pubsweet/logger')
 
 async function uploadToS3(file, id) {
+  if (config.get('meca.s3.disableUpload')) {
+    logger.warn('Meca S3 upload is disabled')
+    return
+  }
   const params = {
     ...config.get('meca.s3.params'),
     Body: file,
@@ -23,6 +27,11 @@ async function uploadToS3(file, id) {
 }
 
 async function uploadToSFTP(file, id) {
+  if (config.get('meca.sftp.disableUpload')) {
+    logger.warn('Meca SFTP is disabled')
+    return
+  }
+  logger.info(`Uploading to SFTP`)
   const sftp = await SFTP()
   const remotePath = config.get('meca.sftp.remotePath')
   await sftp.mkdir(remotePath, true)

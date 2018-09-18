@@ -36,7 +36,7 @@
     "styleguide": "styleguidist server",
     "test": "jest",
     "test:dependencies": "duplicate-module-test react react-dom styled-components pubsweet-server",
-    "test:e2e": "NODE_ENV=test testcafe \"${BROWSER:-chrome}\" 'test/**/*.e2e.js'",
+    "test:e2e": "NODE_ENV=test NODE_APP_INSTANCE=e2e testcafe \"${BROWSER:-chrome}\" 'test/**/*.e2e.js'",
     "update": "yarn upgrade-interactive --latest"
   },
   "lint-staged": {

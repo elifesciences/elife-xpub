@@ -38,6 +38,7 @@ module.exports = {
         accessKeyId: 'test',
         secretAccessKey: 'test',
       },
+      disableUpload: false,
     },
     sftp: {
       connectionOptions: {
@@ -47,6 +48,7 @@ module.exports = {
         password: 'tset',
       },
       remotePath: '/test',
+      disableUpload: false,
     },
     notificationEmail: 'test@example.com',
   },
