@@ -12,7 +12,7 @@ async function uploadToS3(file, id) {
     ...config.get('meca.s3.params'),
     Body: file,
     Key: id,
-    ACL: 'public-read',
+    ACL: 'private',
     ContentType: 'application/zip',
   }
 
