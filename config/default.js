@@ -31,14 +31,29 @@ module.exports = {
     basePath: 'uploads',
   },
   meca: {
+    s3: {
+      params: {
+        Bucket: '',
+      },
+      connectionOptions: {
+        s3ForcePathStyle: true,
+        region: '',
+        accessKeyId: '',
+        secretAccessKey: '',
+      },
+      disableUpload: false,
+    },
     sftp: {
-      host: '',
-      port: 22,
-      username: '',
-      password: '',
+      connectionOptions: {
+        host: '',
+        port: 22,
+        username: '',
+        password: '',
+      },
+      remotePath: '',
+      disableUpload: false,
     },
     notificationEmail: '',
-    remotePath: '/',
   },
   scienceBeam: {
     url: 'https://sciencebeam-texture.elifesciences.org/api/convert',

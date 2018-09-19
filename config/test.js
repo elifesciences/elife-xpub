@@ -1,4 +1,5 @@
 const { deferConfig } = require('config/defer')
+const AWS = require('aws-sdk')
 
 module.exports = {
   'pubsweet-server': {
@@ -26,14 +27,30 @@ module.exports = {
     basePath: 'test/temp/uploads',
   },
   meca: {
+    s3: {
+      params: {
+        Bucket: 'test',
+      },
+      connectionOptions: {
+        endpoint: new AWS.Endpoint('http://localhost:4578'),
+        s3ForcePathStyle: true,
+        region: 'eu-west-1',
+        accessKeyId: 'test',
+        secretAccessKey: 'test',
+      },
+      disableUpload: false,
+    },
     sftp: {
-      host: 'localhost',
-      port: 3022,
-      username: 'test',
-      password: 'tset',
+      connectionOptions: {
+        host: 'localhost',
+        port: 3022,
+        username: 'test',
+        password: 'tset',
+      },
+      remotePath: '/test',
+      disableUpload: false,
     },
     notificationEmail: 'test@example.com',
-    remotePath: '/test',
   },
   mailer: {
     transport: {
