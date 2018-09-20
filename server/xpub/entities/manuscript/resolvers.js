@@ -127,6 +127,23 @@ ${err}`,
     },
 
     async uploadManuscript(_, { file, id, fileSize }, { user }) {
+      /**
+       * TODO
+       * this is not a proper way to check for the file size
+       * fileSize is sent from the frontend and might be different
+       * than the actual file size
+       *
+       * for now this is fine since nginx has the same file size limit
+       * as this resolver, but in the future if the two values are not
+       * equal anymore we should stop the stream chain and make sure
+       * everything is revoked (e.g. stored file is unlinked)
+       */
+      if (fileSize > config.get('fileUpload.maxSizeMB') * 1e6) {
+        throw new Error(
+          `File size shouldn't exceed ${config.get('fileUpload.maxSizeMB')}MB`,
+        )
+      }
+
       const manuscript = await Manuscript.find(id, user)
 
       const { stream, filename, mimetype } = await file
@@ -160,34 +177,17 @@ ${err}`,
           done(null, chunk)
         },
       })
+      progressReport.on('end', () => {
+        if (uploadedSize !== fileSize) {
+          logger.warn(
+            'Reported file size for manuscript is different than the actual file size',
+          )
+        }
+      })
 
       // save source file locally
       const saveFileStream = fs.createWriteStream(manuscriptSourcePath)
       stream.pipe(progressReport).pipe(saveFileStream)
-
-      /* let uploadedSize = 0 */
-      /* const pubsub = await getPubsub() */
-      /* stream.on('data', chunk => { */
-      /*   uploadedSize += chunk.length */
-      /*   if (uploadedSize > config.get('fileUpload.maxSizeMB') * 1e6) { */
-      /*     throw new Error( */
-      /*       `File size shouldn't exceed ${config.get( */
-      /*         'fileUpload.maxSizeMB', */
-      /*       )}MB`, */
-      /*     ) */
-      /*   } */
-      /*   const uploadProgress = Math.floor((uploadedSize * 100) / fileSize) */
-      /*   pubsub.publish(`${ON_UPLOAD_PROGRESS}.${user}`, { */
-      /*     uploadProgress, */
-      /*   }) */
-      /* }) */
-      /* stream.on('end', () => { */
-      /*   if (uploadedSize !== fileSize) { */
-      /*     logger.warn( */
-      /*       'Reported file size for manuscript is different than the actual file size', */
-      /*     ) */
-      /*   } */
-      /* }) */
 
       const saveFilePromise = new Promise((resolve, reject) => {
         saveFileStream.on('finish', () => resolve(true))
