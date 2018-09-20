@@ -23,20 +23,20 @@ module.exports = {
   'orcid-server': {
     port: 8080,
   },
-  meca: {
+  aws: {
+    credentials: {
+      region: 'eu-west-1',
+      accessKeyId: 'test',
+      secretAccessKey: 'test',
+    },
     s3: {
       params: {
         Bucket: 'test',
       },
-      connectionOptions: {
-        endpoint: new AWS.Endpoint('http://localhost:4578'),
-        s3ForcePathStyle: true,
-        region: 'eu-west-1',
-        accessKeyId: 'test',
-        secretAccessKey: 'test',
-      },
-      disableUpload: false,
+      endpoint: new AWS.Endpoint('http://localhost:4578'),
     },
+  },
+  meca: {
     sftp: {
       connectionOptions: {
         host: 'localhost',
@@ -45,7 +45,6 @@ module.exports = {
         password: 'tset',
       },
       remotePath: '/test',
-      disableUpload: false,
     },
     notificationEmail: 'test@example.com',
   },

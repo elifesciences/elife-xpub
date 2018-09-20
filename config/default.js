@@ -34,17 +34,22 @@ module.exports = {
     from: 'dev@example.com',
     path: `${__dirname}/mailer`,
   },
+  aws: {
+    credentials: {
+      region: '',
+      accessKeyId: '',
+      secretAccessKey: '',
+    },
+    s3: {
+      s3ForcePathStyle: true,
+      params: {
+        Bucket: 'demo-elife-xpub',
+      },
+    },
+  },
   meca: {
     s3: {
-      params: {
-        Bucket: '',
-      },
-      connectionOptions: {
-        s3ForcePathStyle: true,
-        region: '',
-        accessKeyId: '',
-        secretAccessKey: '',
-      },
+      remotePath: 'meca-archive/',
       disableUpload: false,
     },
     sftp: {

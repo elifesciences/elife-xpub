@@ -8,9 +8,6 @@ const logger = require('@pubsweet/logger')
 const request = require('request-promise-native')
 const { promisify } = require('util')
 const xml2js = require('xml2js')
-const fs = require('fs-extra')
-const path = require('path')
-const crypto = require('crypto')
 const Joi = require('joi')
 const { Transform } = require('stream')
 const mecaExport = require('@elifesciences/xpub-meca-export')
@@ -18,27 +15,17 @@ const mecaExport = require('@elifesciences/xpub-meca-export')
 const { ON_UPLOAD_PROGRESS } = asyncIterators
 
 const parseString = promisify(xml2js.parseString)
-const randomBytes = promisify(crypto.randomBytes)
-const uploadsPath = config.get('pubsweet-server').uploads
 
-const Manuscript = require('.')
+const ManuscriptManager = require('.')
+const FileManager = require('../file')
 const manuscriptInputSchema = require('./helpers/manuscriptInputValidationSchema')
 const elifeApi = require('../user/helpers/elife-api')
-
-const darManifest = `<dar>
-  <documents>
-    <document id="manuscript" type="article" path="manuscript.xml" />
-  </documents>
-  <assets>
-  </assets>
-</dar>
-`
 
 const resolvers = {
   Query: {
     async currentSubmission(_, vars, { user }) {
-      const manuscripts = await Manuscript.findByStatus(
-        Manuscript.statuses.INITIAL,
+      const manuscripts = await ManuscriptManager.findByStatus(
+        ManuscriptManager.statuses.INITIAL,
         user,
       )
       if (!manuscripts.length) {
@@ -48,10 +35,10 @@ const resolvers = {
       return manuscripts[0]
     },
     async manuscript(_, { id }, { user }) {
-      return Manuscript.find(id, user)
+      return ManuscriptManager.find(id, user)
     },
     async manuscripts(_, vars, { user }) {
-      return Manuscript.all(user)
+      return ManuscriptManager.all(user)
     },
   },
 
@@ -60,31 +47,33 @@ const resolvers = {
       if (!user) {
         throw new Error('Not logged in')
       }
-      const manuscript = Manuscript.new()
+      const manuscript = ManuscriptManager.new()
       manuscript.createdBy = user
-      return Manuscript.save(manuscript)
+      return ManuscriptManager.save(manuscript)
     },
 
     // TODO restrict this in production
     async deleteManuscript(_, { id }, { user }) {
-      await Manuscript.delete(id, user)
+      await ManuscriptManager.delete(id, user)
       return id
     },
 
     async updateSubmission(_, { data }, { user }) {
-      const originalManuscript = await Manuscript.find(data.id, user)
-      const manuscript = Manuscript.applyInput(originalManuscript, data)
+      const originalManuscript = await ManuscriptManager.find(data.id, user)
+      const manuscript = ManuscriptManager.applyInput(originalManuscript, data)
 
-      await Manuscript.save(manuscript)
+      await ManuscriptManager.save(manuscript)
       logger.debug(`Updated Submission ${data.id} by user ${user}`)
 
       return manuscript
     },
 
     async finishSubmission(_, { data }, { user, ip }) {
-      const originalManuscript = await Manuscript.find(data.id, user)
+      const originalManuscript = await ManuscriptManager.find(data.id, user)
 
-      const manuscriptInput = Manuscript.removeOptionalBlankReviewers(data)
+      const manuscriptInput = ManuscriptManager.removeOptionalBlankReviewers(
+        data,
+      )
       const { error: errorManuscript } = Joi.validate(
         manuscriptInput,
         manuscriptInputSchema,
@@ -94,27 +83,28 @@ const resolvers = {
         throw new Error(errorManuscript)
       }
 
-      const manuscript = Manuscript.applyInput(
+      const manuscript = ManuscriptManager.applyInput(
         originalManuscript,
         manuscriptInput,
       )
 
-      manuscript.status = Manuscript.statuses.MECA_EXPORT_PENDING
-      await Manuscript.save(manuscript)
+      manuscript.status = ManuscriptManager.statuses.MECA_EXPORT_PENDING
+      await ManuscriptManager.save(manuscript)
 
-      mecaExport(manuscript.id, user, ip)
+      const content = 'dummy content'
+      mecaExport(manuscript, content, ip)
         .then(() => {
           logger.info(`Manuscript ${manuscript.id} successfully exported`)
-          return Manuscript.save({
+          return ManuscriptManager.save({
             id: manuscript.id,
-            status: Manuscript.statuses.MECA_EXPORT_SUCCEEDED,
+            status: ManuscriptManager.statuses.MECA_EXPORT_SUCCEEDED,
           })
         })
         .catch(async err => {
           logger.error('MECA export failed', err)
-          await Manuscript.save({
+          await ManuscriptManager.save({
             id: manuscript.id,
-            status: Manuscript.statuses.MECA_EXPORT_FAILED,
+            status: ManuscriptManager.statuses.MECA_EXPORT_FAILED,
           })
           return mailer.send({
             to: config.get('meca.notificationEmail'),
@@ -151,25 +141,16 @@ ${err}`,
         )
       }
 
-      const manuscript = await Manuscript.find(id, user)
+      const manuscript = await ManuscriptManager.find(id, user)
 
       const { stream, filename, mimetype } = await file
-
-      const manuscriptContainer = path.join(uploadsPath, id)
-      await fs.ensureDir(manuscriptContainer)
-      const raw = await randomBytes(16)
-      const generatedFilename = raw.toString('hex') + path.extname(filename)
-      const manuscriptSourcePath = path.join(
-        manuscriptContainer,
-        generatedFilename,
-      )
-      const manuscriptJatsPath = path.join(
-        manuscriptContainer,
-        'manuscript.xml',
-      )
-      const manuscriptManifestPath = path.join(
-        manuscriptContainer,
-        'manifest.xml',
+      const fileEntity = await FileManager.save(
+        FileManager.new({
+          manuscriptId: manuscript.id,
+          url: `manuscripts/${id}`,
+          filename,
+          type: 'MANUSCRIPT_SOURCE',
+        }),
       )
 
       const pubsub = await getPubsub()
@@ -203,13 +184,12 @@ ${err}`,
       })
 
       // save source file locally
-      const saveFileStream = fs.createWriteStream(manuscriptSourcePath)
-      stream.pipe(progressReport).pipe(saveFileStream)
-
-      const saveFilePromise = new Promise((resolve, reject) => {
-        saveFileStream.on('finish', () => resolve(true))
-        saveFileStream.on('error', reject)
-      })
+      const saveFileStream = stream.pipe(progressReport)
+      const saveFilePromise = FileManager.putContent(
+        fileEntity,
+        saveFileStream,
+        { size: fileSize },
+      )
 
       // also send source file to conversion service
       const convertFileRequest = request.post(config.get('scienceBeam.url'), {
@@ -223,8 +203,6 @@ ${err}`,
         const xmlBuffer = await convertFileRequest
         const [xmlData] = await Promise.all([
           parseString(xmlBuffer.toString('utf8')),
-          fs.writeFile(manuscriptJatsPath, xmlBuffer),
-          fs.writeFile(manuscriptManifestPath, darManifest),
           saveFilePromise,
         ])
 
@@ -241,15 +219,10 @@ ${err}`,
         logger.warn('Manuscript conversion failed', err)
       }
 
-      manuscript.files.push({
-        url: manuscriptSourcePath,
-        filename,
-        type: 'MANUSCRIPT_SOURCE',
-      })
       manuscript.meta.title = title
-      await Manuscript.save(manuscript)
+      await ManuscriptManager.save(manuscript)
 
-      return manuscript
+      return ManuscriptManager.find(id, user)
     },
   },
 

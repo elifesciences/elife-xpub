@@ -9,21 +9,14 @@ async function uploadToS3(file, id) {
     return
   }
   const params = {
-    ...config.get('meca.s3.params'),
     Body: file,
-    Key: id,
+    Key: `${config.get('meca.s3.remotePath')}/${id}.zip`,
     ACL: 'private',
     ContentType: 'application/zip',
   }
 
-  await new Promise((resolve, reject) => {
-    logger.info(`Uploading to S3`)
-    s3.putObject(params, (err, data) => {
-      logger.info(`S3 data: ${data}`)
-      if (err) reject(err)
-      resolve()
-    })
-  })
+  logger.info(`Uploading to S3`)
+  await s3.putObject(params).promise()
 }
 
 async function uploadToSFTP(file, id) {
