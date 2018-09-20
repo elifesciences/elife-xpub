@@ -3,13 +3,13 @@ import config from 'config'
 import startSshServer from '@elifesciences/xpub-meca-export/test/mock-sftp-server'
 import replaySetup from './helpers/replay-setup'
 import {
-  dashboard,
-  wizardStep,
   author,
+  dashboard,
+  disclosure,
+  editors,
   files,
   submission,
-  editors,
-  disclosure,
+  wizardStep,
 } from './pageObjects'
 import setFixtureHooks from './helpers/set-fixture-hooks'
 
@@ -22,6 +22,22 @@ const manuscript = {
 }
 
 const getPageUrl = ClientFunction(() => window.location.href)
+const autoRetry = async (fn, timeout = 5000) => {
+  const delay = 100
+  const start = Date.now()
+  while (true) {
+    try {
+      // eslint-disable-next-line no-await-in-loop
+      return await fn()
+    } catch (err) {
+      if (Date.now() > start + timeout) {
+        throw err
+      }
+    }
+    // eslint-disable-next-line no-await-in-loop
+    await new Promise(resolve => setTimeout(resolve, delay))
+  }
+}
 
 test('Happy path', async t => {
   const { mockFs, server } = await startSshServer(
@@ -86,7 +102,6 @@ test('Happy path', async t => {
     .click(submission.moreSubmission)
     .typeText(submission.secondCosubmissionTitle, 'Yet another title')
     .click(wizardStep.next)
-    .click(wizardStep.next)
 
   // selecting suggested and excluded editors & reviewers
   await t
@@ -106,6 +121,8 @@ test('Happy path', async t => {
     .click(editors.peoplePickerOptions.nth(10))
     .click(editors.peoplePickerOptions.nth(11))
     .click(editors.peoplePickerSubmit)
+    .expect(editors.validationErrors.withText(/./).count)
+    .eql(0)
     .typeText(editors.firstReviewerName, 'Edward')
     .typeText(editors.firstReviewerEmail, 'edward@example.com')
     .typeText(editors.secondReviewerName, 'Frances')
@@ -135,10 +152,8 @@ test('Happy path', async t => {
     .eql('QA')
 
   // SFTP server
-  await t.wait(500)
+  await autoRetry(() => t.expect(mockFs.readdirSync('/test').length).eql(1))
   server.close()
-  const dirListing = mockFs.readdirSync('/test')
-  await t.expect(dirListing.length).eql(1)
 })
 
 test('Ability to progress through the wizard is tied to validation', async t => {
