@@ -10,7 +10,9 @@ const logger = require('@pubsweet/logger')
 const { createTables } = require('@pubsweet/db-manager')
 const mailer = require('@pubsweet/component-send-email')
 const mecaExport = require('@elifesciences/xpub-meca-export')
+const startS3rver = require('../../test/mock-s3-server')
 const User = require('../user')
+const FileManager = require('../file')
 const { Mutation, Query } = require('./resolvers')
 const Manuscript = require('.')
 const {
@@ -211,6 +213,25 @@ describe('Submission', () => {
       })
     })
 
+    it('calls meca export with correct arguments', async () => {
+      const ip = '1.2.3.4'
+      await Mutation.finishSubmission(
+        {},
+        { data: { ...manuscriptInput, id } },
+        { user: profileId, ip },
+      )
+
+      expect(mecaExport).toHaveBeenCalled()
+      const [
+        actualManuscript,
+        actualContent,
+        actualIp,
+      ] = mecaExport.mock.calls[0]
+      expect(actualManuscript.id).toBe(id)
+      expect(actualContent).toBe('A real PDF')
+      expect(actualIp).toBe(ip)
+    })
+
     it('removes blank optional reviewer rows', async () => {
       const manuscript = lodash.cloneDeep(manuscriptInput)
       manuscript.id = id
@@ -320,6 +341,20 @@ describe('Submission', () => {
   })
 
   describe('uploadManuscript', () => {
+    let s3Server
+
+    beforeEach(async () => {
+      const server = await startS3rver({
+        ...config.get('aws.credentials'),
+        ...config.get('aws.s3'),
+      })
+      s3Server = server.instance
+    })
+
+    afterEach(done => {
+      s3Server.close(done)
+    })
+
     it("fails if manuscript doesn't belong to user", async () => {
       const blankManuscript = Manuscript.new()
       blankManuscript.createdBy = userId
@@ -332,6 +367,29 @@ describe('Submission', () => {
           { user: badProfileId },
         ),
       ).rejects.toThrow('Manuscript not found')
+    })
+
+    it('saves manuscript to S3', async () => {
+      const blankManuscript = Manuscript.new()
+      blankManuscript.createdBy = userId
+      const { id } = await Manuscript.save(blankManuscript)
+      const file = {
+        filename: 'manuscript.pdf',
+        stream: fs.createReadStream(
+          `${__dirname}/../../../../test/fixtures/dummy-manuscript-2.pdf`,
+        ),
+        mimetype: 'application/pdf',
+      }
+      const manuscript = await Mutation.uploadManuscript(
+        {},
+        { id, file, fileSize: 73947 },
+        { user: profileId },
+      )
+
+      const pdfBinary = await FileManager.getContent(
+        Manuscript.getSource(manuscript),
+      )
+      expect(pdfBinary.toString().substr(0, 6)).toEqual('%PDF-1')
     })
 
     it('sets empty title if ScienceBeam fails', async () => {
