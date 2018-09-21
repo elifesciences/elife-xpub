@@ -167,14 +167,28 @@ ${err}`,
 
       const pubsub = await getPubsub()
       let uploadedSize = 0
+      let startTime = process.hrtime()
       const progressReport = new Transform({
         transform(chunk, encoding, done) {
           uploadedSize += chunk.length
           const uploadProgress = Math.floor((uploadedSize * 100) / fileSize)
+          if (uploadProgress < 100) {
+            const elapsedTime = process.hrtime(startTime)
+            // MS_IN_S = 1e3, NS_IN_MS = 1e6
+            const elapsedTimeMs = elapsedTime[0] * 1e3 + elapsedTime[1] / 1e6
+            if (elapsedTimeMs < 500) {
+              return done(null, chunk)
+            }
+            startTime = process.hrtime()
+          }
+          logger.info(
+            'Sent websocket message to graphql-postgres-subscriptions with uploadProgress ',
+            uploadProgress,
+          )
           pubsub.publish(`${ON_UPLOAD_PROGRESS}.${user}`, {
             uploadProgress,
           })
-          done(null, chunk)
+          return done(null, chunk)
         },
       })
       progressReport.on('end', () => {
