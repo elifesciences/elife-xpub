@@ -15,6 +15,11 @@ module.exports = {
     module: {
       rules: require('./webpack/rules.js'),
     },
+    resolve: {
+      alias: {
+        config: path.resolve(__dirname, 'styleguide', 'config.json'),
+      },
+    },
   },
   context: {
     formik: 'formik',
