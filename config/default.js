@@ -27,9 +27,6 @@ module.exports = {
     from: 'dev@example.com',
     path: `${__dirname}/mailer`,
   },
-  darServer: {
-    basePath: 'uploads',
-  },
   meca: {
     s3: {
       params: {

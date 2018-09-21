@@ -3249,18 +3249,6 @@ dar-server@^0.4.1:
     parse-formdata "^1.0.2"
     yargs "^11.0.0"
 
-dar-server@^0.5.1:
-  version "0.5.1"
-  resolved "https://registry.yarnpkg.com/dar-server/-/dar-server-0.5.1.tgz#8f54d7b22edc52064b2410edce2cf7dff7425c9d"
-  dependencies:
-    colors "^1.1.2"
-    express "^4.16.2"
-    fs-extra "^5.0.0"
-    glob "^7.1.2"
-    parse-formdata "^1.0.2"
-    substance "^1.0.0-preview.53"
-    yargs "^11.0.0"
-
 dashdash@^1.12.0:
   version "1.14.1"
   resolved "https://registry.yarnpkg.com/dashdash/-/dashdash-1.14.1.tgz#853cfa0f7cbe2fed5de20326b8dd581035f6e2f0"
@@ -11901,17 +11889,6 @@ substance-texture@1.0.0-preview.1.11:
 substance@1.0.0-preview.53:
   version "1.0.0-preview.53"
   resolved "https://registry.yarnpkg.com/substance/-/substance-1.0.0-preview.53.tgz#0b392e4d3c027605235dffd19b624d7bf10d7eaf"
-  dependencies:
-    boolbase "1.0.0"
-    css-what "2.1.0"
-    domelementtype "1.3.0"
-    entities "1.1.1"
-    lodash-es "^4.17.10"
-    nth-check "1.0.1"
-
-substance@^1.0.0-preview.53:
-  version "1.0.0-preview.88"
-  resolved "https://registry.yarnpkg.com/substance/-/substance-1.0.0-preview.88.tgz#d08d3f5eb437f5a94f5e97a550d5157764b7c016"
   dependencies:
     boolbase "1.0.0"
     css-what "2.1.0"
