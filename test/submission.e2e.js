@@ -1,6 +1,7 @@
 import { ClientFunction, Selector } from 'testcafe'
 import config from 'config'
 import startSshServer from '@elifesciences/xpub-meca-export/test/mock-sftp-server'
+import ManuscriptManager from '@elifesciences/xpub-server/entities/manuscript'
 import replaySetup from './helpers/replay-setup'
 import {
   author,
@@ -149,7 +150,8 @@ test('Happy path', async t => {
     .expect(dashboard.titles.textContent)
     .eql(manuscript.title)
     .expect(dashboard.stages.textContent)
-    .eql('QA')
+    // TODO this might cause a race condition
+    .eql(ManuscriptManager.statuses.MECA_EXPORT_PENDING)
 
   // SFTP server
   await autoRetry(() => t.expect(mockFs.readdirSync('/test').length).eql(1))

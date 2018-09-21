@@ -17,6 +17,13 @@ const mergeObjects = (...inputs) =>
   )
 
 const Manuscript = {
+  statuses: {
+    INITIAL: 'INITIAL',
+    MECA_EXPORT_PENDING: 'MECA_EXPORT_PENDING',
+    MECA_EXPORT_FAILED: 'MECA_EXPORT_FAILED',
+    MECA_EXPORT_SUCCEEDED: 'MECA_EXPORT_SUCCEEDED',
+  },
+
   MAX_SUGGESTED_REVIEWERS: 6,
   MIN_SUGGESTED_REVIEWERS: 3,
 
