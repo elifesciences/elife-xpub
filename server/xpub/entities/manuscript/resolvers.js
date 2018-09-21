@@ -181,10 +181,6 @@ ${err}`,
             }
             startTime = process.hrtime()
           }
-          logger.info(
-            'Sent websocket message to graphql-postgres-subscriptions with uploadProgress ',
-            uploadProgress,
-          )
           pubsub.publish(`${ON_UPLOAD_PROGRESS}.${user}`, {
             uploadProgress,
           })
