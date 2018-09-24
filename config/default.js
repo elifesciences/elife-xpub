@@ -28,8 +28,6 @@ module.exports = {
     path: `${__dirname}/mailer`,
   },
   'auth-orcid': {
-    // get the oauth credentials from another developer or
-    // create new ones at https://orcid.org/content/register-client-application-sandbox
     clientID: '',
     clientSecret: '',
     sandbox: true,
