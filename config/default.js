@@ -11,7 +11,14 @@ module.exports = {
     components,
   },
   'pubsweet-server': {
-    db: {},
+    db: {
+      // see https://node-postgres.com/features/connecting
+      user: '',
+      host: '',
+      database: '',
+      password: '',
+      port: 5432,
+    },
     port: 3000,
     logger,
     uploads: 'uploads',
@@ -58,5 +65,7 @@ module.exports = {
   fileUpload: {
     maxSizeMB: 100,
   },
+  // these keys are included in the webpack build for use on the client
+  // make sure not to expose any secrets
   publicKeys: ['pubsweet-client', 'authsome', 'validations', 'fileUpload'],
 }
