@@ -8,15 +8,15 @@ import DashboardPage from './components/pages/Dashboard'
 
 const Routes = () => (
   <Switch>
-    <Route component={LoginPage} path="/login" />
-    <AuthenticatedComponent>
-      <Layout>
+    <Layout>
+      <Route component={LoginPage} path="/login" />
+      <AuthenticatedComponent>
         <Switch>
           <Route component={SubmissionWizard} path="/submit" />
           <Route component={DashboardPage} />
         </Switch>
-      </Layout>
-    </AuthenticatedComponent>
+      </AuthenticatedComponent>
+    </Layout>
   </Switch>
 )
 
