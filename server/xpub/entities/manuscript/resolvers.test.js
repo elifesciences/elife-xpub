@@ -189,6 +189,9 @@ describe('Submission', () => {
         Manuscript.statuses.MECA_EXPORT_PENDING,
       )
 
+      // Put in a delay to reduce risk of race condition
+      await new Promise(resolve => setTimeout(resolve, 100))
+
       const storedManuscript = await Manuscript.find(id, userId)
       expect(storedManuscript).toMatchObject({
         ...expectedManuscript,
