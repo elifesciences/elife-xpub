@@ -70,7 +70,7 @@ describe('Submission', () => {
       await Manuscript.save({
         createdBy: 'bcd735c6-9b62-441a-a085-7d1e8a7834c6',
         meta: { title: 'title 2' },
-        status: 'QA',
+        status: Manuscript.statuses.MECA_EXPORT_PENDING,
       })
 
       const manuscript = await Query.currentSubmission({}, {}, { user: userId })
@@ -90,7 +90,7 @@ describe('Submission', () => {
         meta: {
           title: 'title 2',
         },
-        status: 'QA',
+        status: Manuscript.statuses.MECA_EXPORT_PENDING,
       })
       await Manuscript.save({
         createdBy: userId,
@@ -178,19 +178,22 @@ describe('Submission', () => {
       id = manuscript.id
     })
 
-    it('stores data with a new status of QA', async () => {
+    it('stores data with new status', async () => {
       const returnedManuscript = await Mutation.finishSubmission(
         {},
         { data: { ...manuscriptInput, id } },
         { user: userId },
       )
 
-      expect(returnedManuscript.status).toBe('QA')
+      expect(returnedManuscript.status).toBe(
+        Manuscript.statuses.MECA_EXPORT_PENDING,
+      )
 
       const storedManuscript = await Manuscript.find(id, userId)
       expect(storedManuscript).toMatchObject({
         ...expectedManuscript,
-        status: 'QA',
+        // TODO this might cause a race condition
+        status: Manuscript.statuses.MECA_EXPORT_SUCCEEDED,
       })
     })
 
@@ -296,7 +299,9 @@ describe('Submission', () => {
       ])
       expect(logger.error).toHaveBeenCalled()
       const updatedManuscript = await Manuscript.find(manuscript.id, userId)
-      expect(updatedManuscript.status).toBe('FAILED_MECA_EXPORT')
+      expect(updatedManuscript.status).toBe(
+        Manuscript.statuses.MECA_EXPORT_FAILED,
+      )
     })
   })
 

@@ -50,10 +50,6 @@ input ManuscriptMetaInput {
   articleType: String
   subjects: [String]
 }
-enum SubmissionStage {
-  INITIAL
-  QA
-}
 
 # temporary solution awaiting more clarity on team member metadata in shared data model
 union Assignee = EditorAlias | ReviewerAlias | AuthorAlias

@@ -37,7 +37,10 @@ const darManifest = `<dar>
 const resolvers = {
   Query: {
     async currentSubmission(_, vars, { user }) {
-      const manuscripts = await Manuscript.findByStatus('INITIAL', user)
+      const manuscripts = await Manuscript.findByStatus(
+        Manuscript.statuses.INITIAL,
+        user,
+      )
       if (!manuscripts.length) {
         return null
       }
@@ -96,18 +99,22 @@ const resolvers = {
         manuscriptInput,
       )
 
-      manuscript.status = 'QA'
+      manuscript.status = Manuscript.statuses.MECA_EXPORT_PENDING
       await Manuscript.save(manuscript)
 
       mecaExport(manuscript.id, user, ip)
-        .then(() =>
-          logger.info(`Manuscript ${manuscript.id} successfully exported`),
-        )
+        .then(() => {
+          logger.info(`Manuscript ${manuscript.id} successfully exported`)
+          return Manuscript.save({
+            id: manuscript.id,
+            status: Manuscript.statuses.MECA_EXPORT_SUCCEEDED,
+          })
+        })
         .catch(async err => {
           logger.error('MECA export failed', err)
           await Manuscript.save({
             id: manuscript.id,
-            status: 'FAILED_MECA_EXPORT',
+            status: Manuscript.statuses.MECA_EXPORT_FAILED,
           })
           return mailer.send({
             to: config.get('meca.notificationEmail'),
