@@ -190,10 +190,10 @@ describe('Submission', () => {
       )
 
       const storedManuscript = await Manuscript.find(id, userId)
+
       expect(storedManuscript).toMatchObject({
         ...expectedManuscript,
-        // TODO this might cause a race condition
-        status: Manuscript.statuses.MECA_EXPORT_SUCCEEDED,
+        status: expect.stringMatching(/^MECA_EXPORT_(SUCCEEDED|PENDING)/),
       })
     })
 
