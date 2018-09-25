@@ -191,18 +191,10 @@ describe('Submission', () => {
 
       const storedManuscript = await Manuscript.find(id, userId)
 
-      // check the object returned is what is expected, less the status
-      const expected = lodash.cloneDeep(expectedManuscript)
-      delete expected.status
-
       expect(storedManuscript).toMatchObject({
-        ...expected,
+        ...expectedManuscript,
+        status: expect.stringMatching(/^MECA_EXPORT_(SUCCEEDED|PENDING)/),
       })
-
-      // Now check status. Becaue of the race condition, check either valid value
-      expect(storedManuscript.status).toEqual(
-        expect.stringMatching(/^MECA_EXPORT_SUCCEEDED|^MECA_EXPORT_PENDING/),
-      )
     })
 
     it('removes blank optional reviewer rows', async () => {
