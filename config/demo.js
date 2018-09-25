@@ -1,5 +1,5 @@
 module.exports = {
-  auth-orcid: {
+  'auth-orcid': {
     sandbox: true
   },
   meca: {
