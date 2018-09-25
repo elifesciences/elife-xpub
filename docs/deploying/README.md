@@ -4,6 +4,10 @@
 
 The following [sequence-diagram](https://mermaidjs.github.io/sequenceDiagram.html) shows how the building of this project is triggered from `xpub-elife` to the deployment on the [demo website](https://demo--xpub.elifesciences.org/login)
 
+![Deployment pipeline](./deployment-pipeline.svg)
+
+Diagram source:
+
 ```mermaid
 sequenceDiagram
     participant GL as elife-xpub
@@ -29,5 +33,4 @@ sequenceDiagram
     Note over JK: test-elife-xpub
     JK ->> WEB: deploy
     deactivate JK
-
 ```
