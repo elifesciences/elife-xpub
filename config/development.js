@@ -17,18 +17,10 @@ module.exports = {
       ':method :url :status :graphql[operation] :res[content-length] :response-time ms',
   },
 
-  dbManager: {
-    username: 'admin',
-    password: 'password',
-    email: 'admin@example.com',
-    admin: true,
-  },
-  'auth-orcid': {
-    // get the oauth credentials from another developer or
-    // create new ones at https://orcid.org/content/register-client-application-sandbox
-    clientID: '',
-    clientSecret: '',
-    sandbox: true,
+  login: {
+    // in development bypass login and use this user
+    url: '/mock-token-exchage/ewwboc7m',
+    enableMock: true,
   },
 
   forever: {
