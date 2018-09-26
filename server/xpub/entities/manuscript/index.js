@@ -38,7 +38,7 @@ const Manuscript = {
     await dataAccess.delete(id)
   },
 
-  new: () => lodash.cloneDeep(emptyManuscript),
+  new: (params = {}) => lodash.merge({}, emptyManuscript, params),
 
   save: async manuscript => {
     // TODO wrap these queries in a transaction

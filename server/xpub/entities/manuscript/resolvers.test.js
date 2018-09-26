@@ -23,8 +23,9 @@ const {
 const replaySetup = require('../../../../test/helpers/replay-setup')
 
 describe('Submission', () => {
+  const profileId = userData.identities[0].identifier
+  const badProfileId = badUserData.identities[0].identifier
   let userId
-  let badUserId
 
   beforeEach(async () => {
     replaySetup('success')
@@ -32,12 +33,11 @@ describe('Submission', () => {
       fs.remove(config.get('pubsweet-server.uploads')),
       createTables(true),
     ])
-    const [user, badUser] = await Promise.all([
+    const [user] = await Promise.all([
       User.save(userData),
       User.save(badUserData),
     ])
     userId = user.id
-    badUserId = badUser.id
     mailer.clearMails()
   })
 
@@ -52,12 +52,20 @@ describe('Submission', () => {
       }
       await Manuscript.save(manuscriptData)
 
-      const manuscript = await Query.currentSubmission({}, {}, { user: userId })
+      const manuscript = await Query.currentSubmission(
+        {},
+        {},
+        { user: profileId },
+      )
       expect(manuscript).toMatchObject(manuscriptData)
     })
 
     it('Returns null when there are no manuscripts in the db', async () => {
-      const manuscript = await Query.currentSubmission({}, {}, { user: userId })
+      const manuscript = await Query.currentSubmission(
+        {},
+        {},
+        { user: profileId },
+      )
       expect(manuscript).toBe(null)
     })
 
@@ -73,7 +81,11 @@ describe('Submission', () => {
         status: Manuscript.statuses.MECA_EXPORT_PENDING,
       })
 
-      const manuscript = await Query.currentSubmission({}, {}, { user: userId })
+      const manuscript = await Query.currentSubmission(
+        {},
+        {},
+        { user: profileId },
+      )
       expect(manuscript).toBeNull()
     })
 
@@ -100,7 +112,11 @@ describe('Submission', () => {
         status: 'INITIAL',
       })
 
-      const manuscript = await Query.currentSubmission({}, {}, { user: userId })
+      const manuscript = await Query.currentSubmission(
+        {},
+        {},
+        { user: profileId },
+      )
       expect(manuscript).not.toBeNull()
       expect(manuscript.meta.title).toBe('mine')
     })
@@ -117,7 +133,7 @@ describe('Submission', () => {
       const manuscript = await Mutation.createSubmission(
         {},
         {},
-        { user: userId },
+        { user: profileId },
       )
 
       const manuscripts = await Manuscript.findByStatus('INITIAL', userId)
@@ -128,20 +144,19 @@ describe('Submission', () => {
 
   describe('updateSubmission', () => {
     it("fails if manuscript doesn't belong to user", async () => {
-      const blankManuscript = Manuscript.new()
+      const blankManuscript = Manuscript.new({ createdBy: userId })
       const manuscript = await Manuscript.save(blankManuscript)
       await expect(
         Mutation.updateSubmission(
           {},
           { data: { id: manuscript.id } },
-          { user: badUserId },
+          { user: badProfileId },
         ),
       ).rejects.toThrow('Manuscript not found')
     })
 
     it('updates the current submission for user with data', async () => {
-      const blankManuscript = Manuscript.new()
-      blankManuscript.createdBy = userId
+      const blankManuscript = Manuscript.new({ createdBy: userId })
       const manuscript = await Manuscript.save(blankManuscript)
 
       await Mutation.updateSubmission(
@@ -150,7 +165,7 @@ describe('Submission', () => {
           data: { id: manuscript.id, ...manuscriptInput },
           isAutoSave: true,
         },
-        { user: userId },
+        { user: profileId },
       )
 
       const actualManuscript = await Manuscript.find(manuscript.id, userId)
@@ -164,8 +179,7 @@ describe('Submission', () => {
     beforeEach(async () => {
       jest.clearAllMocks()
 
-      initialManuscript = Manuscript.new()
-      initialManuscript.createdBy = userId
+      initialManuscript = Manuscript.new({ createdBy: userId })
       initialManuscript.files = [
         {
           url: 'fake-path.pdf',
@@ -182,7 +196,7 @@ describe('Submission', () => {
       const returnedManuscript = await Mutation.finishSubmission(
         {},
         { data: { ...manuscriptInput, id } },
-        { user: userId },
+        { user: profileId },
       )
 
       expect(returnedManuscript.status).toBe(
@@ -211,7 +225,7 @@ describe('Submission', () => {
       await Mutation.finishSubmission(
         {},
         { data: manuscript },
-        { user: userId },
+        { user: profileId },
       )
 
       const storedManuscript = await Manuscript.find(id, userId)
@@ -227,13 +241,13 @@ describe('Submission', () => {
     })
 
     it("fails if manuscript doesn't belong to user", async () => {
-      const blankManuscript = Manuscript.new()
+      const blankManuscript = Manuscript.new({ createdBy: userId })
       const manuscript = await Manuscript.save(blankManuscript)
       await expect(
         Mutation.finishSubmission(
           {},
           { data: { id: manuscript.id } },
-          { user: badUserId },
+          { user: badProfileId },
         ),
       ).rejects.toThrow('Manuscript not found')
     })
@@ -248,7 +262,7 @@ describe('Submission', () => {
         Mutation.finishSubmission(
           {},
           { data: badManuscript },
-          { user: userId },
+          { user: profileId },
         ),
       ).rejects.toThrow()
     })
@@ -264,7 +278,7 @@ describe('Submission', () => {
         Mutation.finishSubmission(
           {},
           { data: badManuscript },
-          { user: userId },
+          { user: profileId },
         ),
       ).rejects.toThrow(
         '"title" is not allowed. "manuscriptType" is not allowed',
@@ -282,7 +296,7 @@ describe('Submission', () => {
       await Mutation.finishSubmission(
         {},
         { data: manuscript },
-        { user: userId },
+        { user: profileId },
       )
 
       // resolver doesn't wait for export to complete so just keep retrying for a second
@@ -315,7 +329,7 @@ describe('Submission', () => {
         Mutation.uploadManuscript(
           {},
           { id: manuscript.id },
-          { user: badUserId },
+          { user: badProfileId },
         ),
       ).rejects.toThrow('Manuscript not found')
     })
@@ -336,7 +350,7 @@ describe('Submission', () => {
       const manuscript = await Mutation.uploadManuscript(
         {},
         { id, file, fileSize: 73947 },
-        { user: userId },
+        { user: profileId },
       )
       expect(manuscript).toMatchObject({
         id,
@@ -360,7 +374,7 @@ describe('Submission', () => {
       const manuscript = await Mutation.uploadManuscript(
         {},
         { id, file, fileSize: 73947 },
-        { user: userId },
+        { user: profileId },
       )
       expect(manuscript).toMatchObject({
         id,
@@ -389,7 +403,11 @@ describe('Submission', () => {
         mimetype: 'application/pdf',
       }
       await expect(
-        Mutation.uploadManuscript({}, { id, file, fileSize }, { user: userId }),
+        Mutation.uploadManuscript(
+          {},
+          { id, file, fileSize },
+          { user: profileId },
+        ),
       ).rejects.toThrow(`File size shouldn't exceed ${maxFileSize}MB`)
     })
   })
@@ -404,7 +422,7 @@ describe('Submission', () => {
         Mutation.deleteManuscript(
           {},
           { id: manuscript.id },
-          { user: badUserId },
+          { user: badProfileId },
         ),
       ).rejects.toThrow('Manuscript not found')
     })
@@ -416,7 +434,7 @@ describe('Submission', () => {
       await Mutation.deleteManuscript(
         {},
         { id: manuscript.id },
-        { user: userId },
+        { user: profileId },
       )
 
       const manuscripts = await Manuscript.all(userId)

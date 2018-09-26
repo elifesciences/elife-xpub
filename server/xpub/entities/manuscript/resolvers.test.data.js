@@ -1,15 +1,27 @@
 exports.userData = {
-  username: 'testuser',
-  email: 'test@example.com',
-  orcid: '0000-0003-3146-0256',
-  oauth: { accessToken: 'f7617529-f46a-40b1-99f4-4181859783ca' },
+  identities: [
+    {
+      type: 'elife',
+      identifier: 'ewwboc7m',
+      email: 'test@example.com',
+      meta: {
+        orcid: '0000-0003-3146-0256',
+      },
+    },
+  ],
 }
 
 exports.badUserData = {
-  username: 'baduser',
-  email: 'bad@example.com',
-  orcid: '0000-0001-0000-0000',
-  oauth: { accessToken: 'badbadbad-f46a-40b1-99f4-4181859783ca' },
+  identities: [
+    {
+      type: 'elife',
+      identifier: 'badbadnotgood',
+      email: 'bad@example.com',
+      meta: {
+        orcid: '0000-0001-0000-0000',
+      },
+    },
+  ],
 }
 
 exports.manuscriptInput = {

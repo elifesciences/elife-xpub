@@ -23,7 +23,7 @@ const emptyManuscript = {
 <p></p>
 `,
   status: 'INITIAL',
-  createdBy: 'me',
+  createdBy: '',
   previouslyDiscussed: null,
   previouslySubmitted: [],
   cosubmission: [],

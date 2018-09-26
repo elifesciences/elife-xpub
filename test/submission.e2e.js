@@ -66,16 +66,13 @@ test('Happy path', async t => {
   await t
     .click(author.orcidPrefill)
     .expect(author.firstNameField.value)
-    .eql('Test', 'First name is populated by query to the Orcid API')
+    .eql('Tamlyn')
     .expect(author.secondNameField.value)
-    .eql('User', 'Last name is populated by query to the Orcid API')
+    .eql('Rhodes')
     .expect(author.emailField.value)
-    .eql('elife@mailinator.com', 'Email is populated by query to the Orcid API')
+    .eql('example@example.org')
     .expect(author.institutionField.value)
-    .eql(
-      'University of eLife',
-      'Institution is populated by query to the Orchid API',
-    )
+    .eql('Tech team, University of eLife')
     .click(wizardStep.next)
 
   // uploading files - manuscript and cover letter

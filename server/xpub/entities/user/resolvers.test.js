@@ -1,5 +1,4 @@
 const { createTables } = require('@pubsweet/db-manager')
-const uuid = require('uuid')
 const { Query } = require('./resolvers')
 
 const replaySetup = require('../../../../test/helpers/replay-setup')
@@ -13,7 +12,7 @@ describe('User', () => {
   describe('orcidDetails', () => {
     it('fails if user not found', async () => {
       await expect(
-        Query.orcidDetails({}, {}, { user: uuid.v4() }),
+        Query.orcidDetails({}, {}, { user: 'badprofileid' }),
       ).rejects.toThrow('User not found')
     })
   })
