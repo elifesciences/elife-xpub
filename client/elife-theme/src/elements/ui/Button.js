@@ -38,6 +38,7 @@ export default css`
   min-width: calc(${th('gridUnit')} * 16);
   padding: calc(${th('gridUnit')} * 2);
   font-size: 14px;
+  font-weight: 500;
   text-transform: uppercase;
 
   ${props => props.small && small};
