@@ -163,6 +163,13 @@ describe('Submission', () => {
   describe('finishSubmission', () => {
     let id, initialManuscript
 
+    beforeAll(() =>
+      jest
+        .spyOn(FileManager, 'getContent')
+        .mockImplementation(() => 'A real PDF'))
+
+    afterAll(() => FileManager.getContent.mockRestore())
+
     beforeEach(async () => {
       jest.clearAllMocks()
 
@@ -197,6 +204,25 @@ describe('Submission', () => {
         ...expectedManuscript,
         status: expect.stringMatching(/^MECA_EXPORT_(SUCCEEDED|PENDING)/),
       })
+    })
+
+    it('calls meca export with correct arguments', async () => {
+      const ip = '1.2.3.4'
+      await Mutation.finishSubmission(
+        {},
+        { data: { ...manuscriptInput, id } },
+        { user: userId, ip },
+      )
+
+      expect(mecaExport).toHaveBeenCalled()
+      const [
+        actualManuscript,
+        actualContent,
+        actualIp,
+      ] = mecaExport.mock.calls[0]
+      expect(actualManuscript.id).toBe(id)
+      expect(actualContent).toBe('A real PDF')
+      expect(actualIp).toBe(ip)
     })
 
     it('removes blank optional reviewer rows', async () => {
