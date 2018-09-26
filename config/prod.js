@@ -1,10 +1,10 @@
 module.exports = {
   'auth-orcid': {
-    sandbox: false
+    sandbox: false,
   },
   meca: {
     sftp: {
-      disableUpload: true
-    }
-  }
+      disableUpload: true,
+    },
+  },
 }
