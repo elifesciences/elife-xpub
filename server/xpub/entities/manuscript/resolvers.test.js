@@ -178,6 +178,13 @@ describe('Submission', () => {
   describe('finishSubmission', () => {
     let id, initialManuscript
 
+    beforeAll(() =>
+      jest
+        .spyOn(FileManager, 'getContent')
+        .mockImplementation(() => 'A real PDF'))
+
+    afterAll(() => FileManager.getContent.mockRestore())
+
     beforeEach(async () => {
       jest.clearAllMocks()
 

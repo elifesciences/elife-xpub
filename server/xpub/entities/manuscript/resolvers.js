@@ -99,7 +99,8 @@ const resolvers = {
       manuscript.status = ManuscriptManager.statuses.MECA_EXPORT_PENDING
       await ManuscriptManager.save(manuscript)
 
-      const content = 'dummy content'
+      const sourceFile = ManuscriptManager.getSource(manuscript)
+      const content = await FileManager.getContent(sourceFile)
       mecaExport(manuscript, content, ip)
         .then(() => {
           logger.info(`Manuscript ${manuscript.id} successfully exported`)
