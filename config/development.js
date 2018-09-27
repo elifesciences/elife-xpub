@@ -19,7 +19,7 @@ module.exports = {
 
   login: {
     // in development bypass login and use this user
-    url: '/mock-token-exchage/ewwboc7m',
+    url: '/mock-token-exchange/ewwboc7m',
     enableMock: true,
   },
 
