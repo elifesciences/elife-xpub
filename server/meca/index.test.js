@@ -16,12 +16,13 @@ const getFilenames = zip =>
     .sort()
 
 const getFileSizes = zip =>
-  zip
-    .file(/./)
-    .reduce((accum, file) => {
-      accum[file.name] = file['_data'].uncompressedSize
-      return accum
-    }, {})
+  zip.file(/./).reduce(
+    (accum, file) => ({
+      ...accum,
+      [file.name]: file._data.uncompressedSize,
+    }),
+    {},
+  )
 
 describe('MECA integration test', () => {
   let sftp, s3Server, s3
@@ -50,7 +51,7 @@ describe('MECA integration test', () => {
 
     it('should contain the correct files', async () => {
       global.Date = class extends RealDate {
-        constructor () {
+        constructor() {
           super()
           return new RealDate(1538059378578)
         }
@@ -64,12 +65,12 @@ describe('MECA integration test', () => {
       )
 
       expect(getFileSizes(zip)).toEqual({
-       "article.xml": 6109,
-       "cover_letter.html": 743,
-       "disclosure.pdf": 3458,
-       "manifest.xml": 919,
-       "manuscript.pdf": 14,
-       "transfer.xml": 1958,
+        'article.xml': 6109,
+        'cover_letter.html': 743,
+        'disclosure.pdf': 3458,
+        'manifest.xml': 919,
+        'manuscript.pdf': 14,
+        'transfer.xml': 1958,
       })
 
       expect(getFilenames(zip)).toEqual([
@@ -81,7 +82,6 @@ describe('MECA integration test', () => {
         'transfer.xml',
       ])
     })
-
   })
 
   it('uploads archive to SFTP', async () => {
