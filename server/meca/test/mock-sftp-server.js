@@ -16,6 +16,11 @@ function startServer(port) {
     }
 
     auth.accept(session => {
+      session.on('rename', (oldPath, newPath, context) => {
+        mockFs.writeFileSync(newPath, mockFs.readFileSync(oldPath))
+        mockFs.unlinkSync(oldPath)
+        context.ok()
+      })
       session.on('writefile', (path, readstream) => {
         const stream = mockFs.createWriteStream(path)
         readstream.pipe(stream)
