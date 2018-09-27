@@ -28,7 +28,10 @@ async function uploadToSFTP(file, id) {
   const sftp = await SFTP()
   const remotePath = config.get('meca.sftp.remotePath')
   await sftp.mkdir(remotePath, true)
-  await sftp.put(file, `${remotePath}/${id}`)
+  const transferName = `${remotePath}/${id}.transfer`
+  const finalName = `${remotePath}/${id}.zip`
+  await sftp.put(file, transferName)
+  await sftp.rename(transferName, finalName)
   await sftp.end()
 }
 

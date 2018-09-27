@@ -41,10 +41,11 @@ describe('MECA integration test', () => {
     await mecaExport(sampleManuscript, '')
 
     expect(sftp.mockFs.readdirSync('/')).toEqual(['test'])
-    expect(sftp.mockFs.readdirSync('/test')).toEqual([sampleManuscript.id])
+    const finalName = `${sampleManuscript.id}.zip`
+    expect(sftp.mockFs.readdirSync('/test')).toEqual([finalName])
 
     const zip = await JsZip.loadAsync(
-      sftp.mockFs.readFileSync(`/test/${sampleManuscript.id}`),
+      sftp.mockFs.readFileSync(`/test/${finalName}`),
     )
 
     expect(getFilenames(zip)).toEqual([
