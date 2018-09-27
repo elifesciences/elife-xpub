@@ -1,49 +1,67 @@
 const uuid = require('uuid')
-const db = require('pubsweet-server/src/db')
+const { rowToEntity, entityToRow, buildQuery, runQuery } = require('../util')
 
-const mapRow = row => ({ ...row.data, id: row.id, type: undefined })
+const columnNames = ['default_identity']
+
+const joinQuery = buildQuery
+  .select(
+    'user.*',
+    buildQuery.raw(
+      "COALESCE(jsonb_agg(DISTINCT identity.*) FILTER (WHERE identity.id IS NOT NULL), '[]') AS identities",
+    ),
+  )
+  .from('user')
+  .join('identity', 'user.id', 'identity.user_id')
+  .groupBy('user.id')
 
 const dataAccess = {
   async selectById(id) {
-    const { rows } = await db.query(
-      `SELECT id, data FROM entities WHERE id = $1`,
-      [id],
+    const { rows } = await runQuery(joinQuery.clone().where('user.id', id))
+    if (!rows.length) {
+      throw new Error('User not found')
+    }
+    return rowToEntity(rows[0])
+  },
+
+  async selectByProfileId(profileId) {
+    const { rows } = await runQuery(
+      joinQuery.clone().where('identity.identifier', profileId),
     )
     if (!rows.length) {
       throw new Error('User not found')
     }
-    return mapRow(rows[0])
+    return rowToEntity(rows[0])
   },
 
   async selectAll() {
-    const { rows } = await db.query(
-      `SELECT id, data FROM entities WHERE data->>'type' = 'user'`,
-    )
-    return rows.map(mapRow)
+    const { rows } = await runQuery(joinQuery)
+    return rows.map(rowToEntity)
   },
 
   async insert(user) {
-    const id = uuid.v4()
-    await db.query('INSERT INTO entities (id, data) VALUES ($1, $2)', [
-      id,
-      { ...user, type: 'user' },
-    ])
-    return id
+    const row = entityToRow(user, columnNames)
+    row.id = uuid.v4()
+    const query = buildQuery.insert(row).into('user')
+    await runQuery(query)
+    return row.id
   },
 
   update(user) {
-    return db.query('UPDATE entities SET data = $2 WHERE id = $1', [
-      user.id,
-      { ...user, type: 'user' },
-    ])
+    const row = entityToRow(user, columnNames)
+    const query = buildQuery
+      .update(row)
+      .table('user')
+      .where('id', user.id)
+    return runQuery(query)
   },
 
   delete(id) {
-    return db.query(
-      `DELETE FROM entities WHERE id = $1 AND data->>'type' = 'user'`,
-      [id],
+    return runQuery(
+      buildQuery
+        .delete()
+        .from('user')
+        .where({ id }),
     )
   },
 }
-
 module.exports = dataAccess

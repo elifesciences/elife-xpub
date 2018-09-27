@@ -1,6 +1,7 @@
 import React from 'react'
 import { Flex, Box } from 'grid-styled'
 import { Redirect } from 'react-router-dom'
+import config from 'config'
 import { H2 } from '@pubsweet/ui'
 import OrcidButton from '../../ui/atoms/OrcidButton'
 import Paragraph from '../../ui/atoms/Paragraph'
@@ -18,16 +19,17 @@ class LoginPage extends React.Component {
 
   // parse JWT from the URL hash
   getToken() {
-    const { location } = this.props
-    if (location && location.hash) {
-      return location.hash.substring(1)
+    const { history } = this.props
+    if (history && history.location && history.location.hash) {
+      return history.location.hash.substring(1)
     }
     return null
   }
 
   // show login button and redirect on sign in
   render() {
-    const { redirectTo = '/', loginUrl = '/auth/orcid' } = this.props
+    const redirectTo = '/'
+    const loginUrl = config.login.url
 
     if (this.getToken()) {
       return <Redirect to={redirectTo} />
@@ -53,7 +55,7 @@ class LoginPage extends React.Component {
           </Box>
           <Box mb={5}>
             <a href={loginUrl}>
-              <OrcidButton>Login with Orcid</OrcidButton>
+              <OrcidButton data-test-id="login">Login with Orcid</OrcidButton>
             </a>
           </Box>
           <Paragraph>

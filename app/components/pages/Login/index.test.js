@@ -12,7 +12,7 @@ describe('LoginPage component', () => {
 
   it('redirects when a token is given', () => {
     const wrapper = makeWrapper({
-      location: { hash: '#123abc' },
+      history: { location: { hash: '#123abc' } },
     })
     expect(wrapper.name()).toBe('Redirect')
     expect(localStorage.getItem('token')).toBe('123abc')

@@ -1,0 +1,23 @@
+GET /profiles/ewwboc7m
+accept-encoding: gzip, deflate
+
+HTTP/1.1 200 OK
+server: nginx
+content-type: application/vnd.elife.profile+json;version=1
+cache-control: max-age=300, public, stale-if-error=86400,stale-while-revalidate=300
+etag: "744e02fd7e21d5d5d36b9669da605cee"
+access-control-allow-origin: *
+x-kong-upstream-latency: 21
+x-kong-proxy-latency: 0
+via: kong/0.9.5, 1.1 varnish, 1.1 varnish
+accept-ranges: bytes
+date: Wed, 26 Sep 2018 10:57:52 GMT
+age: 108
+connection: close
+x-served-by: cache-dca17739-DCA, cache-lcy19250-LCY
+x-cache: MISS, HIT
+x-cache-hits: 0, 1
+x-timer: S1537959472.137268,VS0,VE3
+vary: Accept, Authorization, Accept-Encoding
+
+{"id": "ewwboc7m", "name": {"preferred": "Tamlyn Rhodes", "index": "Rhodes, Tamlyn"}, "orcid": "0000-0002-6277-0372", "emailAddresses": [{ "value": "example@example.org", "access": "public" }], "affiliations": [{ "value": { "name": ["Tech team", "University of eLife"], "address": {"formatted": [ ], "components": {"locality": [], "area": [], "country": "United Kingdom" }}}, "access": "public" }]}

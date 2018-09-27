@@ -43,8 +43,14 @@ const person = async id => {
 
 const peopleById = ids => Promise.all(ids.map(person))
 
+const profile = async id => {
+  logger.debug('Fetching profile with ID', id, 'from public API')
+  return request(`profiles/${id}`)
+}
+
 module.exports = {
   people,
   person,
   peopleById,
+  profile,
 }

@@ -22,6 +22,7 @@ const randomBytes = promisify(crypto.randomBytes)
 const uploadsPath = config.get('pubsweet-server').uploads
 
 const Manuscript = require('.')
+const UserManager = require('../user')
 const manuscriptInputSchema = require('./helpers/manuscriptInputValidationSchema')
 const elifeApi = require('../user/helpers/elife-api')
 
@@ -37,9 +38,10 @@ const darManifest = `<dar>
 const resolvers = {
   Query: {
     async currentSubmission(_, vars, { user }) {
+      const userUuid = await UserManager.getUuidForProfile(user)
       const manuscripts = await Manuscript.findByStatus(
         Manuscript.statuses.INITIAL,
-        user,
+        userUuid,
       )
       if (!manuscripts.length) {
         return null
@@ -48,10 +50,12 @@ const resolvers = {
       return manuscripts[0]
     },
     async manuscript(_, { id }, { user }) {
-      return Manuscript.find(id, user)
+      const userUuid = await UserManager.getUuidForProfile(user)
+      return Manuscript.find(id, userUuid)
     },
     async manuscripts(_, vars, { user }) {
-      return Manuscript.all(user)
+      const userUuid = await UserManager.getUuidForProfile(user)
+      return Manuscript.all(userUuid)
     },
   },
 
@@ -60,29 +64,33 @@ const resolvers = {
       if (!user) {
         throw new Error('Not logged in')
       }
+      const userUuid = await UserManager.getUuidForProfile(user)
       const manuscript = Manuscript.new()
-      manuscript.createdBy = user
+      manuscript.createdBy = userUuid
       return Manuscript.save(manuscript)
     },
 
     // TODO restrict this in production
     async deleteManuscript(_, { id }, { user }) {
-      await Manuscript.delete(id, user)
+      const userUuid = await UserManager.getUuidForProfile(user)
+      await Manuscript.delete(id, userUuid)
       return id
     },
 
     async updateSubmission(_, { data }, { user }) {
-      const originalManuscript = await Manuscript.find(data.id, user)
+      const userUuid = await UserManager.getUuidForProfile(user)
+      const originalManuscript = await Manuscript.find(data.id, userUuid)
       const manuscript = Manuscript.applyInput(originalManuscript, data)
 
       await Manuscript.save(manuscript)
-      logger.debug(`Updated Submission ${data.id} by user ${user}`)
+      logger.debug(`Updated Submission ${data.id} by user ${userUuid}`)
 
       return manuscript
     },
 
     async finishSubmission(_, { data }, { user, ip }) {
-      const originalManuscript = await Manuscript.find(data.id, user)
+      const userUuid = await UserManager.getUuidForProfile(user)
+      const originalManuscript = await Manuscript.find(data.id, userUuid)
 
       const manuscriptInput = Manuscript.removeOptionalBlankReviewers(data)
       const { error: errorManuscript } = Joi.validate(
@@ -102,7 +110,7 @@ const resolvers = {
       manuscript.status = Manuscript.statuses.MECA_EXPORT_PENDING
       await Manuscript.save(manuscript)
 
-      mecaExport(manuscript.id, user, ip)
+      mecaExport(manuscript.id, userUuid, ip)
         .then(() => {
           logger.info(`Manuscript ${manuscript.id} successfully exported`)
           return Manuscript.save({
@@ -151,7 +159,8 @@ ${err}`,
         )
       }
 
-      const manuscript = await Manuscript.find(id, user)
+      const userUuid = await UserManager.getUuidForProfile(user)
+      const manuscript = await Manuscript.find(id, userUuid)
 
       const { stream, filename, mimetype } = await file
 

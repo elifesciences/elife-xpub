@@ -9,6 +9,7 @@ import {
   disclosure,
   editors,
   files,
+  login,
   submission,
   wizardStep,
 } from './pageObjects'
@@ -48,8 +49,10 @@ test('Happy path', async t => {
   )
   replaySetup('success')
 
-  await dashboard.login()
-  await t.navigateTo(dashboard.url).click('[data-test-id=submit]')
+  await t
+    .navigateTo(login.url)
+    .click(login.button)
+    .click(dashboard.submitManuscript)
 
   // author details initially empty
   await t
@@ -66,16 +69,13 @@ test('Happy path', async t => {
   await t
     .click(author.orcidPrefill)
     .expect(author.firstNameField.value)
-    .eql('Test', 'First name is populated by query to the Orcid API')
+    .eql('Tamlyn')
     .expect(author.secondNameField.value)
-    .eql('User', 'Last name is populated by query to the Orcid API')
+    .eql('Rhodes')
     .expect(author.emailField.value)
-    .eql('elife@mailinator.com', 'Email is populated by query to the Orcid API')
+    .eql('example@example.org')
     .expect(author.institutionField.value)
-    .eql(
-      'University of eLife',
-      'Institution is populated by query to the Orchid API',
-    )
+    .eql('Tech team, University of eLife')
     .click(wizardStep.next)
 
   // uploading files - manuscript and cover letter
@@ -164,8 +164,10 @@ test('Happy path', async t => {
 
 test('Ability to progress through the wizard is tied to validation', async t => {
   replaySetup('success')
-  await dashboard.login()
-  await t.navigateTo(author.url)
+  await t
+    .navigateTo(login.url)
+    .click(login.button)
+    .click(dashboard.submitManuscript)
 
   // set author details
   await t
@@ -190,8 +192,10 @@ test('Ability to progress through the wizard is tied to validation', async t => 
 })
 
 test('Form entries are saved when a user navigates to the next page of the wizard', async t => {
-  await dashboard.login()
-  await t.navigateTo(author.url)
+  await t
+    .navigateTo(login.url)
+    .click(login.button)
+    .click(dashboard.submitManuscript)
 
   await t
     .typeText(author.firstNameField, 'Meghan')

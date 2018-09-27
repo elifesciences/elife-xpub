@@ -14,14 +14,9 @@ module.exports = {
     uploads: 'test/temp/uploads',
     secret: 'test',
   },
-  'auth-orcid': {
-    clientID: '123',
-    clientSecret: 'abc',
-    authorizationURL: 'http://localhost:8080/oauth/authorize',
-    tokenURL: 'http://localhost:8080/oauth/token',
-  },
-  'orcid-server': {
-    port: 8080,
+  login: {
+    url: '/mock-token-exchange/ewwboc7m',
+    enableMock: true,
   },
   meca: {
     s3: {

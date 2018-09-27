@@ -2,10 +2,8 @@ const dataAccess = require('./data-access')
 const emptyManuscript = require('./helpers/empty')
 const lodash = require('lodash')
 
-const createSingleManuscript = async () => {
-  const testId = await dataAccess.insert(emptyManuscript)
-  return testId
-}
+const createSingleManuscript = async () =>
+  dataAccess.insert(lodash.merge({}, emptyManuscript, { createdBy: 'me' }))
 
 const addManuscripts = async count => {
   const range = Array.from(Array(count).keys())

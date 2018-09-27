@@ -30,6 +30,11 @@ module.exports = {
     API_ENDPOINT: '/api',
     'login-redirect': '/',
   },
+  login: {
+    // TODO swap this mock for the Journal endpoint when available
+    url: '/mock-token-exchage/ewwboc7m',
+    enableMock: true,
+  },
   mailer: {
     from: 'dev@example.com',
     path: `${__dirname}/mailer`,
@@ -67,5 +72,11 @@ module.exports = {
   },
   // these keys are included in the webpack build for use on the client
   // make sure not to expose any secrets
-  publicKeys: ['pubsweet-client', 'authsome', 'validations', 'fileUpload'],
+  publicKeys: [
+    'pubsweet-client',
+    'authsome',
+    'validations',
+    'fileUpload',
+    'login',
+  ],
 }

@@ -1,5 +1,1 @@
-[
-  "@pubsweet-pending/auth-orcid",
-  "@elifesciences/xpub-server",
-  "@pubsweet/component-send-email"
-]
+["@elifesciences/xpub-server", "@pubsweet/component-send-email"]
