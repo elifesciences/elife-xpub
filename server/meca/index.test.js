@@ -15,6 +15,14 @@ const getFilenames = zip =>
     .map(file => file.name)
     .sort()
 
+const getFileSizes = zip =>
+  zip
+    .file(/./)
+    .reduce((accum, file) => {
+      accum[file.name] = file['_data'].uncompressedSize
+      return accum
+    }, {})
+
 describe('MECA integration test', () => {
   let sftp, s3Server, s3
 
@@ -37,8 +45,47 @@ describe('MECA integration test', () => {
     })
   })
 
-  it('generates and uploads archive to SFTP', async () => {
-    await mecaExport(sampleManuscript, '')
+  describe('when generating an archive', () => {
+    const RealDate = global.Date
+
+    it('should contain the correct files', async () => {
+      global.Date = class extends RealDate {
+        constructor () {
+          super()
+          return new RealDate(1538059378578)
+        }
+      }
+      await mecaExport(sampleManuscript, 'This is a test')
+      global.Date = RealDate
+
+      const finalName = `${sampleManuscript.id}.zip`
+      const zip = await JsZip.loadAsync(
+        sftp.mockFs.readFileSync(`/test/${finalName}`),
+      )
+
+      expect(getFileSizes(zip)).toEqual({
+       "article.xml": 6109,
+       "cover_letter.html": 743,
+       "disclosure.pdf": 3458,
+       "manifest.xml": 919,
+       "manuscript.pdf": 14,
+       "transfer.xml": 1958,
+      })
+
+      expect(getFilenames(zip)).toEqual([
+        'article.xml',
+        'cover_letter.html',
+        'disclosure.pdf',
+        'manifest.xml',
+        'manuscript.pdf',
+        'transfer.xml',
+      ])
+    })
+
+  })
+
+  it('uploads archive to SFTP', async () => {
+    await mecaExport(sampleManuscript, 'This is a test')
 
     expect(sftp.mockFs.readdirSync('/')).toEqual(['test'])
     const finalName = `${sampleManuscript.id}.zip`
@@ -48,17 +95,10 @@ describe('MECA integration test', () => {
       sftp.mockFs.readFileSync(`/test/${finalName}`),
     )
 
-    expect(getFilenames(zip)).toEqual([
-      'article.xml',
-      'cover_letter.html',
-      'disclosure.pdf',
-      'manifest.xml',
-      'manuscript.pdf',
-      'transfer.xml',
-    ])
+    expect(zip).toBeTruthy()
   })
 
-  it('generates and uploads archive to S3', async () => {
+  it('uploads archive to S3', async () => {
     await mecaExport(sampleManuscript, '')
 
     const objectKey = `${config.get('meca.s3.remotePath')}/${
@@ -67,13 +107,6 @@ describe('MECA integration test', () => {
     const responseData = await s3.getObject({ Key: objectKey }).promise()
     const zip = await JsZip.loadAsync(responseData.Body)
 
-    expect(getFilenames(zip)).toEqual([
-      'article.xml',
-      'cover_letter.html',
-      'disclosure.pdf',
-      'manifest.xml',
-      'manuscript.pdf',
-      'transfer.xml',
-    ])
+    expect(zip).toBeTruthy()
   })
 })
