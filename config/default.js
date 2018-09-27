@@ -32,7 +32,7 @@ module.exports = {
   },
   login: {
     // TODO swap this mock for the Journal endpoint when available
-    url: '/mock-token-exchage/ewwboc7m',
+    url: '/mock-token-exchange/ewwboc7m',
     enableMock: true,
   },
   mailer: {
