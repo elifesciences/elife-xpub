@@ -27,8 +27,7 @@ describe('ManuscriptAccessLayer', () => {
 
   it('deletes a manuscript', async () => {
     const result = await dataAccess.delete(testId)
-    expect(result.command).toBe('DELETE')
-    expect(result.rowCount).toBe(1)
+    expect(result).toBe(1)
 
     const error = new Error('Manuscript not found')
     expect(callSelectManuscript()).rejects.toEqual(error)
@@ -51,8 +50,7 @@ describe('ManuscriptAccessLayer', () => {
     manu.meta.title = 'changed'
 
     let result = await dataAccess.update(manu)
-    expect(result.command).toBe('UPDATE')
-    expect(result.rowCount).toBe(1)
+    expect(result).toBe(1)
 
     result = await dataAccess.selectById(testId, 'me')
     expect(result.meta.title).toBe('changed')
@@ -64,11 +62,11 @@ describe('ManuscriptAccessLayer', () => {
 
     added.push(testId)
     expect(added).toHaveLength(MAX + 1)
-    const returned = await dataAccess.selectAll('me')
-    expect(returned).toHaveLength(MAX + 1)
-    expect(returned).toHaveLength(added.length)
+    const manuscripts = await dataAccess.selectAll('me')
+    expect(manuscripts).toHaveLength(MAX + 1)
+    expect(manuscripts).toHaveLength(added.length)
 
-    const selected = new Set(returned.map(manu => manu.id))
+    const selected = new Set(manuscripts.map(manu => manu.id))
 
     const difference = added.filter(member => !selected.has(member))
     expect(difference).toHaveLength(0)
@@ -83,12 +81,12 @@ describe('ManuscriptAccessLayer', () => {
     // mark as Test
     await Promise.all(
       markedTest.map(async id => {
-        const result = await dataAccess.selectById(id, 'me')
-        expect(result.id).toBe(id)
+        const manuscript = await dataAccess.selectById(id, 'me')
+        expect(manuscript.id).toBe(id)
 
-        result.status = 'TEST'
-        const ret = await dataAccess.update(result)
-        expect(ret.rowCount).toBe(1)
+        manuscript.status = 'TEST'
+        const result = await dataAccess.update(manuscript)
+        expect(result).toBe(1)
       }),
     )
     // Now get all TEST statuses from the database

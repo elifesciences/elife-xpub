@@ -5,7 +5,7 @@ const columnNames = ['team_members', 'role', 'object_id', 'object_type']
 
 const dataAccess = {
   async selectById(id) {
-    const { rows } = await runQuery(
+    const rows = await runQuery(
       buildQuery
         .select()
         .from('team')
@@ -18,7 +18,7 @@ const dataAccess = {
   },
 
   async selectAll() {
-    const { rows } = await runQuery(buildQuery.select().from('team'))
+    const rows = await runQuery(buildQuery.select().from('team'))
     return rows.map(rowToEntity)
   },
 
