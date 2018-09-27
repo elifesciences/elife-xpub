@@ -28,7 +28,10 @@ module.exports = {
       params: {
         Bucket: 'test',
       },
-      endpoint: new AWS.Endpoint('http://localhost:4578'),
+      endpoint: new AWS.Endpoint(
+        // randomise port to avoid conflicts in parallel test runs
+        `http://localhost:${Math.floor(Math.random() * 50000) + 15000}`,
+      ),
     },
   },
   meca: {
