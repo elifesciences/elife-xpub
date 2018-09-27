@@ -221,8 +221,12 @@ ${err}`,
           const titleArray = firstTitleGroup['article-title']
           title = titleArray[0]
         }
-      } catch (err) {
-        logger.warn('Manuscript conversion failed', err)
+      } catch (error) {
+        logger.warn('Manuscript conversion failed', {
+          error,
+          manuscriptId: id,
+          filename,
+        })
       }
 
       manuscript.meta.title = title

@@ -6,9 +6,12 @@ const runQuery = async query => {
   const sql = query.toString()
   try {
     return await query
-  } catch (err) {
-    logger.warn('Error running query', sql)
-    throw err
+  } catch (error) {
+    logger.warn('Error running database query', {
+      query: sql,
+      error: { message: error.message, ...error },
+    })
+    throw error
   }
 }
 
