@@ -194,7 +194,7 @@ ${err}`,
       })
 
       const saveFileStream = stream.pipe(progressReport)
-      const saveFilePromise = FileManager.putContent(
+      await FileManager.putContent(
         fileEntity,
         saveFileStream,
         { size: fileSize },
@@ -210,10 +210,7 @@ ${err}`,
       let title = ''
       try {
         const xmlBuffer = await convertFileRequest
-        const [xmlData] = await Promise.all([
-          parseString(xmlBuffer.toString('utf8')),
-          saveFilePromise,
-        ])
+        const xmlData = await parseString(xmlBuffer.toString('utf8'))
 
         if (xmlData.article) {
           const firstArticle = xmlData.article.front[0]
