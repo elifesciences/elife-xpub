@@ -193,7 +193,6 @@ ${err}`,
         }
       })
 
-      // save source file locally
       const saveFileStream = stream.pipe(progressReport)
       const saveFilePromise = FileManager.putContent(
         fileEntity,
