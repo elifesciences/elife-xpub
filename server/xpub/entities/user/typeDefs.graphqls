@@ -2,3 +2,7 @@ extend type Query {
   orcidDetails: AuthorAlias
   editors(role: String!): [EditorAlias]
 }
+
+extend type Mutation {
+  exchangeJournalToken(token: String): String
+}

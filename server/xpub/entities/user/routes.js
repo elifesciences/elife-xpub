@@ -9,9 +9,11 @@ module.exports = app => {
     app.get('/mock-token-exchange/:id', async (req, res) => {
       const mockProfileId = req.params.id
       logger.info('Signing mock JWT for profile ID', mockProfileId)
-      const xpubToken = await jwt.sign({ id: mockProfileId }, secret, {
-        expiresIn: '1y',
-      })
+      const xpubToken = await jwt.sign(
+        { id: mockProfileId, iss: 'journal' },
+        secret,
+        { expiresIn: '1m' },
+      )
 
       res.redirect(`/login#${xpubToken}`)
     })
