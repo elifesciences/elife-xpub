@@ -45,7 +45,7 @@ const dataAccess = {
     const query = joinSelect
       .clone()
       .where({ 'manuscript.id': id, 'manuscript.created_by': user })
-    const { rows } = await runQuery(query)
+    const rows = await runQuery(query)
 
     if (!rows.length) {
       throw new Error('Manuscript not found')
@@ -57,13 +57,13 @@ const dataAccess = {
     const query = joinSelect
       .clone()
       .where({ 'manuscript.status': status, 'manuscript.created_by': user })
-    const { rows } = await runQuery(query)
+    const rows = await runQuery(query)
     return rows.map(rowToEntity)
   },
 
   async selectAll(user) {
     const query = joinSelect.clone().where({ 'manuscript.created_by': user })
-    const { rows } = await runQuery(query)
+    const rows = await runQuery(query)
     return rows.map(rowToEntity)
   },
 

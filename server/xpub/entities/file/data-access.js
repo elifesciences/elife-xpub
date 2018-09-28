@@ -13,7 +13,7 @@ const columnNames = [
 
 const dataAccess = {
   async selectById(id) {
-    const { rows } = await runQuery(
+    const rows = await runQuery(
       buildQuery
         .select()
         .from('file')
@@ -26,7 +26,7 @@ const dataAccess = {
   },
 
   async selectAll() {
-    const { rows } = await runQuery(buildQuery.select().from('file'))
+    const rows = await runQuery(buildQuery.select().from('file'))
     return rows.map(rowToEntity)
   },
 

@@ -16,7 +16,7 @@ const joinQuery = buildQuery
 
 const dataAccess = {
   async selectById(id) {
-    const { rows } = await runQuery(joinQuery.clone().where('user.id', id))
+    const rows = await runQuery(joinQuery.clone().where('user.id', id))
     if (!rows.length) {
       throw new Error('User not found')
     }
@@ -24,7 +24,7 @@ const dataAccess = {
   },
 
   async selectByProfileId(profileId) {
-    const { rows } = await runQuery(
+    const rows = await runQuery(
       joinQuery.clone().where('identity.identifier', profileId),
     )
     if (!rows.length) {
@@ -34,7 +34,7 @@ const dataAccess = {
   },
 
   async selectAll() {
-    const { rows } = await runQuery(joinQuery)
+    const rows = await runQuery(joinQuery)
     return rows.map(rowToEntity)
   },
 

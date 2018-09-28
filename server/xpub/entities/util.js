@@ -1,14 +1,11 @@
 const lodash = require('lodash')
-const knex = require('knex')
 const logger = require('@pubsweet/logger')
-const db = require('pubsweet-server/src/db')
-
-const buildQuery = knex({ client: 'pg' })
+const { db: buildQuery } = require('pubsweet-server')
 
 const runQuery = async query => {
   const sql = query.toString()
   try {
-    return await db.query(sql)
+    return await query
   } catch (err) {
     logger.warn('Error running query', sql)
     throw err

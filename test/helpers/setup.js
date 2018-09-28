@@ -7,7 +7,7 @@ import startS3Server from '@elifesciences/xpub-server/test/mock-s3-server'
 
 import start from 'pubsweet/src/startup/start'
 // while writing tests, using the following to start the server avoids having to recompile the app
-// import start from 'pubsweet-server'
+// import {startServer: start} from 'pubsweet-server'
 
 let server
 let s3rver
