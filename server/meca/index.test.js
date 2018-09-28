@@ -1,10 +1,8 @@
 const JsZip = require('jszip')
 const config = require('config')
 const Replay = require('replay')
-const { createTables } = require('@pubsweet/db-manager')
-const ManuscriptManager = require('@elifesciences/xpub-server/entities/manuscript')
+const startS3Server = require('@elifesciences/xpub-server/test/mock-s3-server')
 const startSftpServer = require('./test/mock-sftp-server')
-const startS3Server = require('./test/mock-s3-server')
 const sampleManuscript = require('./index.test.data')
 const mecaExport = require('.')
 
@@ -12,12 +10,21 @@ Replay.fixtures = `${__dirname}/test/http-mocks`
 
 const getFilenames = zip =>
   zip
-    .filter(() => true)
+    // get all files from zip
+    .file(/./)
     .map(file => file.name)
     .sort()
 
+const getFileSizes = zip =>
+  zip.file(/./).reduce(
+    (accum, file) => ({
+      ...accum,
+      [file.name]: file._data.uncompressedSize,
+    }),
+    {},
+  )
+
 describe('MECA integration test', () => {
-  let manuscriptId
   let sftp, s3Server, s3
 
   beforeEach(async () => {
@@ -25,17 +32,12 @@ describe('MECA integration test', () => {
     sftp = startSftpServer(config.get('meca.sftp.connectionOptions.port'))
 
     // setup mock S3 server
-    const server = await startS3Server(
-      config.get('meca.s3.connectionOptions'),
-      config.get('meca.s3.params'),
-    )
+    const server = await startS3Server({
+      ...config.get('aws.credentials'),
+      ...config.get('aws.s3'),
+    })
     s3Server = server.instance
     s3 = server.s3
-
-    // setup stub data in test database
-    await createTables(true)
-    const { id } = await ManuscriptManager.save(sampleManuscript)
-    manuscriptId = id
   })
 
   afterEach(done => {
@@ -44,51 +46,67 @@ describe('MECA integration test', () => {
     })
   })
 
-  it('generates an archive and uploads it', async () => {
-    await mecaExport(manuscriptId, sampleManuscript.createdBy)
+  describe('when generating an archive', () => {
+    const RealDate = global.Date
 
-    expect(sftp.mockFs.readdirSync('/')).toEqual(['test'])
-    expect(sftp.mockFs.readdirSync('/test')).toEqual([manuscriptId])
+    it('should contain the correct files', async () => {
+      global.Date = class extends RealDate {
+        constructor() {
+          super()
+          return new RealDate(1538059378578)
+        }
+      }
+      await mecaExport(sampleManuscript, 'This is a test')
+      global.Date = RealDate
 
-    const zip = await JsZip.loadAsync(
-      sftp.mockFs.readFileSync(`/test/${manuscriptId}`),
-    )
+      const finalName = `${sampleManuscript.id}.zip`
+      const zip = await JsZip.loadAsync(
+        sftp.mockFs.readFileSync(`/test/${finalName}`),
+      )
 
-    expect(getFilenames(zip)).toEqual([
-      'article.xml',
-      'cover_letter.html',
-      'disclosure.pdf',
-      'manifest.xml',
-      'manuscript.pdf',
-      'transfer.xml',
-    ])
+      expect(getFileSizes(zip)).toEqual({
+        'article.xml': 6109,
+        'cover_letter.html': 743,
+        'disclosure.pdf': expect.any(Number),
+        'manifest.xml': 919,
+        'manuscript.pdf': 14,
+        'transfer.xml': 1958,
+      })
+
+      expect(getFilenames(zip)).toEqual([
+        'article.xml',
+        'cover_letter.html',
+        'disclosure.pdf',
+        'manifest.xml',
+        'manuscript.pdf',
+        'transfer.xml',
+      ])
+    })
   })
 
-  it('generates an archive and uploads it to S3', async () => {
-    await mecaExport(manuscriptId, sampleManuscript.createdBy)
+  it('uploads archive to SFTP', async () => {
+    await mecaExport(sampleManuscript, 'This is a test')
+
+    expect(sftp.mockFs.readdirSync('/')).toEqual(['test'])
+    const finalName = `${sampleManuscript.id}.zip`
+    expect(sftp.mockFs.readdirSync('/test')).toEqual([finalName])
 
     const zip = await JsZip.loadAsync(
-      new Promise((resolve, reject) => {
-        s3.getObject(
-          {
-            ...config.get('meca.s3.params'),
-            Key: manuscriptId,
-          },
-          (err, data) => {
-            if (err) reject(err)
-            resolve(data.Body)
-          },
-        )
-      }),
+      sftp.mockFs.readFileSync(`/test/${finalName}`),
     )
 
-    expect(getFilenames(zip)).toEqual([
-      'article.xml',
-      'cover_letter.html',
-      'disclosure.pdf',
-      'manifest.xml',
-      'manuscript.pdf',
-      'transfer.xml',
-    ])
+    expect(zip).toBeTruthy()
+  })
+
+  it('uploads archive to S3', async () => {
+    await mecaExport(sampleManuscript, '')
+
+    const objectKey = `${config.get('meca.s3.remotePath')}/${
+      sampleManuscript.id
+    }.zip`
+    const responseData = await s3.getObject({ Key: objectKey }).promise()
+    const zip = await JsZip.loadAsync(responseData.Body)
+
+    expect(zip).toBeTruthy()
   })
 })

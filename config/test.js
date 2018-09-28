@@ -18,20 +18,23 @@ module.exports = {
     url: '/mock-token-exchange/ewwboc7m',
     enableMock: true,
   },
-  meca: {
+  aws: {
+    credentials: {
+      region: 'eu-west-1',
+      accessKeyId: 'test',
+      secretAccessKey: 'test',
+    },
     s3: {
       params: {
         Bucket: 'test',
       },
-      connectionOptions: {
-        endpoint: new AWS.Endpoint('http://localhost:4578'),
-        s3ForcePathStyle: true,
-        region: 'eu-west-1',
-        accessKeyId: 'test',
-        secretAccessKey: 'test',
-      },
-      disableUpload: false,
+      endpoint: new AWS.Endpoint(
+        // randomise port to avoid conflicts in parallel test runs
+        `http://localhost:${Math.floor(Math.random() * 50000) + 15000}`,
+      ),
     },
+  },
+  meca: {
     sftp: {
       connectionOptions: {
         host: 'localhost',
@@ -40,7 +43,6 @@ module.exports = {
         password: 'tset',
       },
       remotePath: '/test',
-      disableUpload: false,
     },
     notificationEmail: 'test@example.com',
   },
