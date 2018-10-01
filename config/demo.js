@@ -1,10 +1,12 @@
+const logger = require('./logger')
+
 module.exports = {
-  'auth-orcid': {
-    sandbox: true
+  'pubsweet-server': {
+    logger,
   },
   meca: {
     sftp: {
-      disableUpload: true
-    }
-  }
+      disableUpload: true,
+    },
+  },
 }

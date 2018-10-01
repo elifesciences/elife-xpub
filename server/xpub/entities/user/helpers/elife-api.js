@@ -16,7 +16,7 @@ const convertPerson = apiPerson => ({
 })
 
 const people = async role => {
-  logger.debug('Fetching people with role', role, 'from public API')
+  logger.debug('Fetching editors from /people', { role })
   let items = []
   let response
   let page = 1
@@ -36,7 +36,7 @@ const people = async role => {
 }
 
 const person = async id => {
-  logger.debug('Fetching person with ID', id, 'from public API')
+  logger.debug('Fetching editor from /people', { id })
   const response = await request(`people/${id}`)
   return convertPerson(response.body)
 }
