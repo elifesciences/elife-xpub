@@ -11,7 +11,7 @@ module.exports = [
     target: 'web',
     context: path.join(__dirname, '..', 'app'),
     entry: {
-      app: ['./index'],
+      app: ['babel-polyfill', './index'],
     },
     output: {
       path: path.join(__dirname, '..', '_build', 'assets'),
