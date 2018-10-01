@@ -192,20 +192,19 @@ ${err}`,
           )
         }
       })
-
-      const saveFileStream = stream.pipe(progressReport)
-      await FileManager.putContent(
-        fileEntity,
-        saveFileStream,
-        { size: fileSize },
-      )
-
       // also send source file to conversion service
       const convertFileRequest = request.post(config.get('scienceBeam.url'), {
         qs: { filename },
         headers: { 'content-type': mimetype },
       })
+
+      // note: if a stream is piped to multiple destinations, ensure the
+      // pipes are set up in the same tick, or else chunks can be lost
+      const saveFileStream = stream.pipe(progressReport)
       stream.pipe(convertFileRequest)
+      await FileManager.putContent(fileEntity, saveFileStream, {
+        size: fileSize,
+      })
 
       let title = ''
       try {
