@@ -65,7 +65,7 @@ describe('MECA integration test', () => {
       )
 
       expect(getFileSizes(zip)).toEqual({
-        'article.xml': 6109,
+        'article.xml': 6145,
         'cover_letter.html': 743,
         'disclosure.pdf': expect.any(Number),
         'manifest.xml': 919,

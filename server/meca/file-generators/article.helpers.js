@@ -40,14 +40,17 @@ const contribStructure = {
   },
   'potential-reviewers': {
     keys: ['suggestedReviewer', 'opposedReviewer'],
-    formatter: member => ({
-      name: {
-        // TODO split name?
-        surname: member.meta.name,
-        'given-names': '',
-      },
-      email: member.meta.email,
-    }),
+    formatter: (member, affiliations, editorsById, reviewerMap) => {
+      const { name } = member.meta
+      const surname = reviewerMap[name.toLowerCase()]
+      return {
+        name: {
+          surname,
+          'given-names': name.substring(0, name.length - surname.length - 1),
+        },
+        email: member.meta.email,
+      }
+    },
   },
 }
 
