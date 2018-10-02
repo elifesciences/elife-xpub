@@ -9,7 +9,7 @@ const request = require('request-promise-native')
 const { promisify } = require('util')
 const xml2js = require('xml2js')
 const Joi = require('joi')
-const { Transform } = require('stream')
+const lodash = require('lodash')
 const mecaExport = require('@elifesciences/xpub-meca-export')
 
 const { ON_UPLOAD_PROGRESS } = asyncIterators
@@ -164,52 +164,43 @@ ${err}`,
       )
 
       const pubsub = await getPubsub()
-      let uploadedSize = 0
-      let startTime = process.hrtime()
-      const progressReport = new Transform({
-        transform(chunk, encoding, done) {
+      const reportProgress = lodash.throttle(progress => {
+        pubsub.publish(`${ON_UPLOAD_PROGRESS}.${user}`, {
+          uploadProgress: Math.floor(progress * 100),
+        })
+      }, 200)
+      const fileContents = await new Promise((resolve, reject) => {
+        let uploadedSize = 0
+        const chunks = []
+        reportProgress(0)
+        stream.on('data', chunk => {
           uploadedSize += chunk.length
-          const uploadProgress = Math.floor((uploadedSize * 100) / fileSize)
-          if (uploadProgress < 100) {
-            const elapsedTime = process.hrtime(startTime)
-            // MS_IN_S = 1e3, NS_IN_MS = 1e6
-            const elapsedTimeMs = elapsedTime[0] * 1e3 + elapsedTime[1] / 1e6
-            if (elapsedTimeMs < 500) {
-              return done(null, chunk)
-            }
-            startTime = process.hrtime()
+          reportProgress(uploadedSize / fileSize)
+          chunks.push(chunk)
+        })
+        stream.on('error', reject)
+        stream.on('end', () => {
+          resolve(Buffer.concat(chunks))
+          if (uploadedSize !== fileSize) {
+            logger.warn(
+              'Reported file size for manuscript is different than the actual file size',
+            )
           }
-          pubsub.publish(`${ON_UPLOAD_PROGRESS}.${user}`, {
-            uploadProgress,
-          })
-          return done(null, chunk)
-        },
-      })
-      progressReport.on('end', () => {
-        if (uploadedSize !== fileSize) {
-          logger.warn(
-            'Reported file size for manuscript is different than the actual file size',
-          )
-        }
+        })
       })
 
-      const saveFileStream = stream.pipe(progressReport)
-      await FileManager.putContent(
-        fileEntity,
-        saveFileStream,
-        { size: fileSize },
-      )
+      await FileManager.putContent(fileEntity, fileContents, {
+        size: fileSize,
+      })
 
       // also send source file to conversion service
-      const convertFileRequest = request.post(config.get('scienceBeam.url'), {
-        qs: { filename },
-        headers: { 'content-type': mimetype },
-      })
-      stream.pipe(convertFileRequest)
-
       let title = ''
       try {
-        const xmlBuffer = await convertFileRequest
+        const xmlBuffer = await request.post(config.get('scienceBeam.url'), {
+          body: fileContents,
+          qs: { filename },
+          headers: { 'content-type': mimetype },
+        })
         const xmlData = await parseString(xmlBuffer.toString('utf8'))
 
         if (xmlData.article) {
