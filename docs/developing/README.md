@@ -6,6 +6,8 @@ Follow these instructions to run the app locally:
 
 Visit the web interface at [http://localhost:3000].
 
+> **TODO** Documentation for styleguide
+
 ### Dependencies
 
 The application depends on S3. You can run a fake S3 server locally:
