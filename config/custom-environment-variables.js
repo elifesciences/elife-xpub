@@ -5,6 +5,7 @@ module.exports = {
       host: 'PGHOST',
       database: 'PGDATABASE',
       password: 'PGPASSWORD',
+      port: 'PGPORT'
     },
     hostname: 'PUBSWEET_HOSTNAME',
     baseUrl: 'PUBSWEET_BASEURL',
