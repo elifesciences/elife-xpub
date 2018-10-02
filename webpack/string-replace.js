@@ -1,6 +1,7 @@
 // replace "PUBSWEET_COMPONENTS" string in pubsweet-client
+const config = require('config');
 
-const components = require('../config/components.json')
+const components = config.get('pubsweet.components')
 
 const requireComponentsString = components
   // resolve relative to working dir so that relative paths work
