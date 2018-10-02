@@ -14,7 +14,7 @@ The configuration methods for `node-config`, and their precedence, are as follow
 
 Other config methods are used for specific functionality, including:
 
-- [pubsweet-components](https://gitlab.coko.foundation/pubsweet/pubsweet/tree/master/packages/components) - used for loading server-side components
+- [pubsweet-components](https://coko.foundation/wp-content/uploads/2018/07/Coko_Pubsweet-screen.pdf)
 - [authsome](https://www.npmjs.com/package/authsome)
 - [mailer](https://gitlab.coko.foundation/pubsweet/pubsweet/tree/master/packages/components/SendEmail-server)
 
