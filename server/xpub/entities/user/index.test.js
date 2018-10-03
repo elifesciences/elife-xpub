@@ -40,4 +40,14 @@ describe('User manager', () => {
       })
     })
   })
+
+  describe('save()', () => {
+    it('fails to update non-existent user', () =>
+      expect(
+        UserManager.save({
+          id: 'f05bbbf9-ddf4-494f-a8da-84957e2708ee',
+          defaultIdentity: 'foo',
+        }),
+      ).rejects.toThrow('User not found'))
+  })
 })

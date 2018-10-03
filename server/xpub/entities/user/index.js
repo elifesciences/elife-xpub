@@ -57,12 +57,15 @@ const UserManager = {
     }
   },
   save: async user => {
+    let id = { user }
     if (user.id) {
-      await dataAccess.update(user)
-      return user
+      const updated = await dataAccess.update(user)
+      if (!updated) {
+        throw new Error('User not found')
+      }
+    } else {
+      id = await dataAccess.insert(user)
     }
-
-    const id = await dataAccess.insert(user)
 
     if (user.identities) {
       await Promise.all(

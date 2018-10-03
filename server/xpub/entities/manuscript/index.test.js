@@ -1,6 +1,9 @@
+const { createTables } = require('@pubsweet/db-manager')
 const Manuscript = require('.')
 
 describe('Manuscript', () => {
+  beforeEach(() => createTables(true))
+
   describe('applyInput', () => {
     it('picks only whitelisted properties', () => {
       const originalManuscript = {
@@ -101,5 +104,15 @@ describe('Manuscript', () => {
         { id: 2, role: 'seniorEditor' },
       ])
     })
+  })
+
+  describe('save()', () => {
+    it('fails to update non-existent manuscript', () =>
+      expect(
+        Manuscript.save({
+          id: 'f05bbbf9-ddf4-494f-a8da-84957e2708ee',
+          status: 'INITIAL',
+        }),
+      ).rejects.toThrow('Manuscript not found'))
   })
 })

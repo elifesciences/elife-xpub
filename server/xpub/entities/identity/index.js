@@ -8,12 +8,16 @@ const IdentityManager = {
   delete: dataAccess.delete,
   new: () => lodash.cloneDeep(empty),
   save: async identity => {
+    let id = { identity }
     if (identity.id) {
-      await dataAccess.update(identity)
-      return identity
+      const updated = await dataAccess.update(identity)
+      if (!updated) {
+        throw new Error('Identity not found')
+      }
+    } else {
+      id = await dataAccess.insert(identity)
     }
 
-    const id = await dataAccess.insert(identity)
     return { ...identity, id }
   },
 }

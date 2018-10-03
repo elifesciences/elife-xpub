@@ -8,12 +8,16 @@ const Team = {
   delete: dataAccess.delete,
   new: () => lodash.cloneDeep(empty),
   save: async team => {
+    let id = { team }
     if (team.id) {
-      await dataAccess.update(team)
-      return team
+      const updated = await dataAccess.update(team)
+      if (!updated) {
+        throw new Error('Team not found')
+      }
+    } else {
+      id = await dataAccess.insert(team)
     }
 
-    const id = await dataAccess.insert(team)
     return { ...team, id }
   },
 }

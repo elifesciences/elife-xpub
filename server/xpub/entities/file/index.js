@@ -23,12 +23,16 @@ const FileManager = {
   delete: dataAccess.delete,
   new: (props = {}) => lodash.merge({}, empty, props),
   save: async file => {
+    let id = { file }
     if (file.id) {
-      await dataAccess.update(file)
-      return file
+      const updated = await dataAccess.update(file)
+      if (!updated) {
+        throw new Error('File not found')
+      }
+    } else {
+      id = await dataAccess.insert(file)
     }
 
-    const id = await dataAccess.insert(file)
     return { ...file, id }
   },
   putContent: async (file, content, { size } = {}) => {
