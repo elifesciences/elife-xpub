@@ -1,13 +1,28 @@
 # Local setup
 
-Run these commands:
+Follow these instructions to run the app locally:
 
-```
-docker-compose up -d postgres
-docker-compose run app /bin/bash -c "npx pubsweet setupdb --username=foo --password=password --email=foo@example.com --clobber"
-docker-compose up
-```
+[PubSweet development setup](https://gitlab.coko.foundation/pubsweet/pubsweet/wikis/Development:-setup)
 
 Visit the web interface at [http://localhost:3000].
 
 > **TODO** Documentation for styleguide
+
+### Dependencies
+
+The application depends on S3. You can run a fake S3 server locally:
+
+- Run `docker run -p 4569:4569 --rm lphoward/fake-s3`
+- Add the following to `config/local-development.js`
+
+```
+const AWS = require('aws-sdk')
+
+...
+
+  aws: {
+    s3: {
+      endpoint: new AWS.Endpoint(`http://localhost:4569`),
+    },
+  },
+```
