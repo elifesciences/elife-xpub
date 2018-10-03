@@ -1,25 +1,22 @@
-# eLife xPub documentation
+# eLife xPub Documentation
 
-## Requirements
+> [Take me to the quick start guide](developing/quick-start.md)
 
-- Node >= 8.0
-- Yarn
-- PostgreSQL >= 9.6
+## Document Map
 
-## Initial setup
+The documentation for this project is contained in several places for a variety of reasons. This file should serve you as a map of all the documentation for this project. Not all of it will be accessible to you, feel free to ask should you think you need to see it.
 
-- Clone this repo
-- Run `yarn` to install dependencies
-  - Note this project is a monorepo using [Yarn Workspaces](https://yarnpkg.com/lang/en/docs/workspaces/)
-- Configure the app
-  - Create a `config/local-development.js` file
-    - This should export an empty (for now) object
-    - Use it to hold any configuration that should not be checked into source control
-    - Refer to `config/default.js` for a list of possible config keys
-  - Add database configuration if necessary
-    - In most cases the defaults should work without additional configuration
-  - Add ORCID OAuth client ID and secret
-    - Either get these from another team member or [apply for new ones](https://orcid.org/content/register-client-application-sandbox)
-- Start the app with `npm run server`
-  - Visit <http://localhost:3000>
-  - Follow the links to sign up for an account on the Orcid sandbox server
+- [The PubSweet Book](https://coko.foundation/books/) - `elife-xpub` is a PubSweet application, so understanding PubSweet is a key part of understanding xPub.
+- [This repository](https://github.com/elifesciences/elife-xpub/tree/develop/docs) - The documentation contained here is largely for developers and maintainers. This is split into the following areas:
+  - [configuration](configuration/README.md)
+  - [contributing](contributing/README.md)
+  - [deploying](deploying/README.md)
+  - [developing](developing/README.md)
+  - [testing](testing/README.md)
+- [The Google Team Drive](https://drive.google.com/drive/u/1/folders/0AEm6kMnhR8w1Uk9PVA) - (private) Contains eLife specific documentation for elife-xpub. Examples are meeting minutes, designs, etc.
+- [The eLife Playbook](https://github.com/elifesciences/continuum-playbook) - (private) Contains instructions on how eLife's infrastructure is deployed and managed.
+
+## Other useful places to find information
+
+- [Slack](https://elifesciences.slack.com/messages/C6LKMFK5Z/convo/C025LBBR4-1535450830.000100/) - eLife's channel for xPub tech talk.
+- [Mattermost](https://mattermost.coko.foundation/coko/channels/pubsweet) - Coko Foundations channel on PubSweet.
