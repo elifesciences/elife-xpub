@@ -44,7 +44,10 @@ const Manuscript = {
     // TODO wrap these queries in a transaction
     let { id } = manuscript
     if (id) {
-      await dataAccess.update(manuscript)
+      const updated = await dataAccess.update(manuscript)
+      if (!updated) {
+        throw new Error('Manuscript not found')
+      }
     } else {
       id = await dataAccess.insert(manuscript)
     }
