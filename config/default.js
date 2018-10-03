@@ -1,14 +1,17 @@
 const path = require('path')
-const components = require('./components.json')
 const logger = require('winston')
 
 module.exports = {
   authsome: {
-    mode: path.resolve(__dirname, 'authsome.js'),
+    mode: path.resolve(__dirname, 'non-serializable/authsome.js'),
   },
-  validations: path.resolve(__dirname, 'validations.js'),
+  validations: path.resolve(__dirname, 'non-serializable/validations.js'),
   pubsweet: {
-    components,
+    components: [
+      "@elifesciences/xpub-meca-export",
+      "@elifesciences/xpub-server",
+      "@pubsweet/component-send-email"
+    ],
   },
   'pubsweet-server': {
     db: {
@@ -37,7 +40,7 @@ module.exports = {
   },
   mailer: {
     from: 'dev@example.com',
-    path: `${__dirname}/mailer`,
+    path: `${__dirname}/non-serializable/mailer`,
   },
   aws: {
     credentials: {
