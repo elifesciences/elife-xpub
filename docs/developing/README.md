@@ -11,12 +11,18 @@ Visit the web interface at [http://localhost:3000].
 ### Dependencies
 
 The application depends on S3. You can run a fake S3 server locally:
-- Run `docker run -p 4569:4569 --rm lphoward/fake-s`
-- Add the following to `config/local.js`
+
+- Run `docker run -p 4569:4569 --rm lphoward/fake-s3`
+- Add the following to `config/local-development.js`
+
 ```
+const AWS = require('aws-sdk')
+
+...
+
   aws: {
     s3: {
       endpoint: new AWS.Endpoint(`http://localhost:4569`),
     },
-  }, 
+  },
 ```
