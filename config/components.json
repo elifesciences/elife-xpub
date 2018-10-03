@@ -1,1 +1,5 @@
-["@elifesciences/xpub-server", "@pubsweet/component-send-email"]
+[
+  "@elifesciences/xpub-meca-export",
+  "@elifesciences/xpub-server",
+  "@pubsweet/component-send-email"
+]

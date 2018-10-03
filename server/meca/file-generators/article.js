@@ -6,8 +6,9 @@ const {
   contribStructure,
   journalMeta,
 } = require('./article.helpers')
+const nameSplitter = require('../nameSplitter')
 
-function createXmlObject(manuscript, editorsById, affiliations) {
+function createXmlObject(manuscript, editorsById, affiliations, reviewerMap) {
   return {
     'journal-meta': journalMeta,
 
@@ -44,7 +45,12 @@ function createXmlObject(manuscript, editorsById, affiliations) {
               return contribs.concat(
                 team.teamMembers.map(member => ({
                   '@contrib-type': lodash.kebabCase(role),
-                  ...groupInfo.formatter(member, affiliations, editorsById),
+                  ...groupInfo.formatter(
+                    member,
+                    affiliations,
+                    editorsById,
+                    reviewerMap,
+                  ),
                 })),
               )
             }
@@ -109,7 +115,29 @@ async function generateArticleXml(manuscript) {
     affiliations.push(authors.teamMembers[0].alias.aff)
   }
 
-  const front = createXmlObject(manuscript, editorsById, affiliations)
+  const reviewers = manuscript.teams
+    .filter(t => ['suggestedReviewer', 'opposedReviewer'].includes(t.role))
+    .reduce((acc, team) => [...acc, ...team.teamMembers], [])
+
+  const reviewerNames = await Promise.all(
+    reviewers.map(async member => {
+      const { name } = member.meta
+      const surname = await nameSplitter(name)
+      return [name, surname]
+    }),
+  )
+
+  const reviewerMap = reviewerNames.reduce(
+    (acc, [name, surname]) => ({ ...acc, [name.toLowerCase()]: surname }),
+    {},
+  )
+
+  const front = createXmlObject(
+    manuscript,
+    editorsById,
+    affiliations,
+    reviewerMap,
+  )
   return xmlbuilder
     .create(
       { article: { front } },
