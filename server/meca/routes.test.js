@@ -34,6 +34,17 @@ describe('MECA HTTP callback handler', () => {
     expect(logger.warn).toHaveBeenCalled()
   })
 
+  it('rejects wrong request body', async () => {
+    jest.spyOn(logger, 'warn').mockImplementationOnce(() => {})
+    const request = makeApp()
+    await request
+      .post(`/meca-result/f05bbbf9-ddf4-494f-a8da-84957e2708ee`)
+      .set('Authorization', `Bearer ${apiKey}`)
+      .send({ result: 'foobar' })
+      .expect(400, { error: 'Invalid request body' })
+    expect(logger.warn).toHaveBeenCalled()
+  })
+
   it('updates manuscript status on success', async () => {
     const manuscript = await ManuscriptManager.save(
       ManuscriptManager.new({ createdBy: userId }),

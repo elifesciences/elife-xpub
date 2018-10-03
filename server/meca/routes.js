@@ -20,6 +20,15 @@ module.exports = app => {
     }
 
     const { body } = req
+    if (!body || !['success', 'failure'].includes(body.result)) {
+      logger.warn('MECA callback received with invalid request body', {
+        manuscriptId,
+        body,
+      })
+      res.status(400).send({ error: 'Invalid request body' })
+      return
+    }
+
     logger.info('MECA callback received', { manuscriptId, body })
     const status =
       body.result === 'success'
