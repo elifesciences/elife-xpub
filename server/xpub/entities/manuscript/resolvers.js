@@ -10,7 +10,7 @@ const { promisify } = require('util')
 const xml2js = require('xml2js')
 const Joi = require('joi')
 const lodash = require('lodash')
-const mecaExport = require('@elifesciences/xpub-meca-export')
+const { mecaExport } = require('@elifesciences/xpub-meca-export')
 
 const { ON_UPLOAD_PROGRESS } = asyncIterators
 

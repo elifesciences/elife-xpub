@@ -17,9 +17,16 @@
     "xmlbuilder": "^10.0.0"
   },
   "devDependencies": {
+    "@pubsweet/db-manager": "^2.0.0",
+    "body-parser": "^1.18.3",
+    "express": "^4.16.3",
     "memory-fs": "^0.4.1",
     "node-sftp-server": "^0.3.0",
     "replay": "^2.3.0",
-    "s3rver": "^2.2.6"
+    "s3rver": "^2.2.6",
+    "supertest": "^3.2.0"
+  },
+  "peerDependencies": {
+    "pubsweet-server": "^9.0.0"
   }
 }

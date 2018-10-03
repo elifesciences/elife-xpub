@@ -8,7 +8,7 @@ async function startServer(options) {
     const server = new S3rver({
       directory: `/tmp/s3rver_test.${Math.random()
         .toString(36)
-        .sub(2, 5)}`,
+        .substring(2, 5)}`,
       removeBucketsOnClose: true,
       port: endpoint.port,
     }).run(() => {

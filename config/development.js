@@ -43,5 +43,6 @@ module.exports = {
     sftp: {
       disableUpload: true,
     },
+    apiKey: 'abcd1234',
   },
 }

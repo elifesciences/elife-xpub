@@ -70,6 +70,7 @@ module.exports = {
       remotePath: '',
       disableUpload: false,
     },
+    apiKey: '',
     notificationEmail: '',
   },
   scienceBeam: {
