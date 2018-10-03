@@ -43,3 +43,23 @@ If writing or modifying tests that hit external APIs you will need to change the
 [Replay mode](https://github.com/assaf/node-replay#settings). For example:
 
     REPLAY=record npm run test:e2e
+
+## Debugging issues with CI
+
+To run the tests locally as they run on CI do
+
+    docker run --rm -it \
+        -e PGHOST=host.docker.internal \
+        -e PGUSER=$USER
+        -e NODE_ENV=test \
+        xpub/xpub-elife:$(git rev-parse HEAD) \
+        npm run test
+
+This assumes you have the commit that you are debugging checked out locally. If not, replace
+`$(git rev-parse HEAD)` with the full commit SHA that you want to test.
+
+If you want to test changes which haven't yet been committed and pushed, you can build an
+image locally by running `docker build -t $USER/elife-xpub .` in the root of the project.
+
+Using `host.docker.internal` allows the integration tests connect to the database on the host.
+This avoids having to set up a Docker network just for this container to speak to a database.
