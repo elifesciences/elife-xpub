@@ -399,6 +399,33 @@ describe('Submission', () => {
       expect(pdfBinary.toString().substr(0, 6)).toEqual('%PDF-1')
     })
 
+    it('fails if S3 upload fails', async () => {
+      jest
+        .spyOn(FileManager, 'putContent')
+        .mockImplementationOnce(() =>
+          Promise.reject(new Error('Failed to persist file')),
+        )
+      const blankManuscript = Manuscript.new({ createdBy: userId })
+      const { id } = await Manuscript.save(blankManuscript)
+      const file = {
+        filename: 'manuscript.pdf',
+        stream: fs.createReadStream(
+          `${__dirname}/../../../../test/fixtures/dummy-manuscript-2.pdf`,
+        ),
+        mimetype: 'application/pdf',
+      }
+      await expect(
+        Mutation.uploadManuscript(
+          {},
+          { id, file, fileSize: 73947 },
+          { user: profileId },
+        ),
+      ).rejects.toThrow('Failed to persist file')
+
+      const manuscript = await Manuscript.find(id, userId)
+      expect(manuscript.files).toHaveLength(0)
+    })
+
     it('sets empty title if ScienceBeam fails', async () => {
       jest.spyOn(logger, 'warn').mockImplementationOnce(() => {})
       replaySetup('error')
