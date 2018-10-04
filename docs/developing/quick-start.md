@@ -40,19 +40,5 @@ However, you can run the docker containers for sciencebeam locally. This is done
 
 ### Fake an AWS S3 Server
 
-The application depends on S3. You can run a fake S3 server locally:
-
-- Run `docker run -p 4569:4569 --rm lphoward/fake-s3`
-- Add the following to `config/local-development.js`
-
-```
-const AWS = require('aws-sdk')
-
-...
-
-  aws: {
-    s3: {
-      endpoint: new AWS.Endpoint(`http://localhost:4569`),
-    },
-  },
-```
+The application depends on S3, so a fake S3 server is run locally using the configuration in the `docker-compose.yml` file.
+However, this can be disabled and you can update your `config/local-development.js` to disable S3 altogether by setting `meca.s3.disableUpload` to `true`.
