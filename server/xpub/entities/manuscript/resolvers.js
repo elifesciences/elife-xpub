@@ -214,7 +214,7 @@ ${err}`,
         }
       } catch (error) {
         logger.warn('Manuscript conversion failed', {
-          error,
+          error: error.message,
           manuscriptId: id,
           filename,
         })
