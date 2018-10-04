@@ -30,7 +30,7 @@
     "server": "pubsweet server",
     "setupdb": "pubsweet setupdb",
     "start": "docker-compose up",
-    "start:services": "docker-compose up postgres",
+    "start:services": "docker-compose up postgres fakes3",
     "start:styleguide": "docker-compose run --no-deps -p 6060:6060 app yarn run styleguide",
     "stop:services": "docker-compose down -v",
     "styleguide": "styleguidist server",
