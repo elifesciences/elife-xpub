@@ -2,7 +2,7 @@ version: '3'
 
 services:
   app:
-    build: 
+    build:
       context: .
       dockerfile: ./Dockerfile-development
     command: sh -c "yarn install --frozen-lockfile && ./scripts/wait-for-it.sh postgres:5432 -s -t 40 -- npx pubsweet server"
@@ -26,6 +26,11 @@ services:
     volumes:
       - postgres-volume:/var/lib/postgresql/data
       - ./scripts/test.sql:/docker-entrypoint-initdb.d/test.sql
+
+  fakes3:
+    image: lphoward/fake-s3
+    ports:
+      - 4569:4569
 
 volumes:
   postgres-volume:
