@@ -37,8 +37,3 @@ Otherwise the instructions below should be sufficient to get started quickly.
 The application should work fine with the defaults for sciencebeam - refering to the online service at sciencebeam-texture.elifesciences.org
 
 However, you can run the docker containers for sciencebeam locally. This is done by cloning the repo at https://github.com/elifesciences/sciencebeam and running: `docker-compose up`
-
-### Fake an AWS S3 Server
-
-The application depends on S3, so a fake S3 server is run locally using the configuration in the `docker-compose.yml` file.
-However, this can be disabled and you can update your `config/local-development.js` to disable S3 altogether by setting `meca.s3.disableUpload` to `true`.
