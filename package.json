@@ -35,7 +35,7 @@
     "stop:services": "docker-compose down -v",
     "styleguide": "styleguidist server",
     "test": "jest --runInBand",
-    "test:dependencies": "duplicate-module-test react react-dom styled-components pubsweet-server",
+    "test:dependencies": "check-yarn-dupes react react-dom styled-components pubsweet-server",
     "test:e2e": "NODE_ENV=test NODE_APP_INSTANCE=e2e testcafe \"${BROWSER:-chrome}\" 'test/**/*.e2e.js'",
     "update": "yarn upgrade-interactive --latest"
   },
@@ -113,7 +113,6 @@
     "yup": "^0.26.2"
   },
   "devDependencies": {
-    "@mapbox/duplicate-module-test": "^0.1.0",
     "babel-core": "^6.26.0",
     "babel-eslint": "^8.0.2",
     "babel-loader": "^7.1.2",
