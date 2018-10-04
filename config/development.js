@@ -1,6 +1,7 @@
 const { deferConfig } = require('config/defer')
 const winston = require('winston')
 const path = require('path')
+const AWS = require('aws-sdk')
 
 winston.level = 'debug'
 
@@ -36,9 +37,24 @@ module.exports = {
     watchDirectory: path.resolve(__dirname, '..', 'server'),
   },
 
+  aws: {
+    credentials: {
+      region: 'eu-west-1',
+      accessKeyId: 'test',
+      secretAccessKey: 'dev',
+    },
+    s3: {
+      params: {
+        Bucket: 'test-bucket',
+      },
+      endpoint: new AWS.Endpoint('http://localhost:4569'),
+    },
+  },
+
   meca: {
     s3: {
-      disableUpload: true,
+      remotePath: 'localhost',
+      disableUpload: false,
     },
     sftp: {
       disableUpload: true,
