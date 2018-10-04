@@ -8,6 +8,7 @@
   "scripts": {},
   "keywords": [],
   "dependencies": {
+    "@elifesciences/xpub-server": "1.0.0",
     "@pubsweet/component-send-email": "^0.2.3",
     "apollo-boost": "^0.1.13",
     "config": "^2.0.1",

@@ -44,6 +44,7 @@ module.exports = {
       },
       remotePath: '/test',
     },
+    apiKey: 'abcd1234',
     notificationEmail: 'test@example.com',
   },
   mailer: {

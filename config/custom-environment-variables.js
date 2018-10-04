@@ -5,7 +5,7 @@ module.exports = {
       host: 'PGHOST',
       database: 'PGDATABASE',
       password: 'PGPASSWORD',
-      port: 'PGPORT'
+      port: 'PGPORT',
     },
     hostname: 'PUBSWEET_HOSTNAME',
     baseUrl: 'PUBSWEET_BASEURL',
@@ -13,5 +13,8 @@ module.exports = {
   },
   'pubsweet-client': {
     sha: 'CI_COMMIT_SHA',
+  },
+  meca: {
+    apiKey: 'MECA_API_KEY',
   },
 }

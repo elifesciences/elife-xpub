@@ -3,8 +3,8 @@ const config = require('config')
 const Replay = require('replay')
 const startS3Server = require('@elifesciences/xpub-server/test/mock-s3-server')
 const startSftpServer = require('./test/mock-sftp-server')
-const sampleManuscript = require('./index.test.data')
-const mecaExport = require('.')
+const sampleManuscript = require('./export.test.data')
+const mecaExport = require('./export')
 
 Replay.fixtures = `${__dirname}/test/http-mocks`
 

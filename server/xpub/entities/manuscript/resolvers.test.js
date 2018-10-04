@@ -1,6 +1,6 @@
-jest.mock('@elifesciences/xpub-meca-export', () =>
-  jest.fn(() => Promise.resolve()),
-)
+jest.mock('@elifesciences/xpub-meca-export', () => ({
+  mecaExport: jest.fn(() => Promise.resolve()),
+}))
 
 const lodash = require('lodash')
 const config = require('config')
@@ -9,7 +9,7 @@ const stream = require('stream')
 const logger = require('@pubsweet/logger')
 const { createTables } = require('@pubsweet/db-manager')
 const mailer = require('@pubsweet/component-send-email')
-const mecaExport = require('@elifesciences/xpub-meca-export')
+const { mecaExport } = require('@elifesciences/xpub-meca-export')
 const startS3rver = require('../../test/mock-s3-server')
 const User = require('../user')
 const FileManager = require('../file')

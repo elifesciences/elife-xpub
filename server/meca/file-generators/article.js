@@ -6,7 +6,7 @@ const {
   contribStructure,
   journalMeta,
 } = require('./article.helpers')
-const nameSplitter = require('../nameSplitter')
+const nameSplitter = require('../services/nameSplitter')
 
 function createXmlObject(manuscript, editorsById, affiliations, reviewerMap) {
   return {
