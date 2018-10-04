@@ -18,5 +18,5 @@ The documentation for this project is contained in several places for a variety 
 
 ## Other useful places to find information
 
-- [Slack](https://elifesciences.slack.com/messages/C6LKMFK5Z/convo/C025LBBR4-1535450830.000100/) - eLife's channel for xPub tech talk.
+- [Slack](https://elifesciences.slack.com/messages/C6LKMFK5Z/) - eLife's channel for xPub tech talk.
 - [Mattermost](https://mattermost.coko.foundation/coko/channels/pubsweet) - Coko Foundations channel on PubSweet.

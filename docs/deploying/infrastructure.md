@@ -15,9 +15,9 @@ This is managed using [builder](https://github.com/elifesciences/builder) using 
 | Stack Name          | Description                                         |
 | ------------------- | --------------------------------------------------- |
 | elife-xpub--ci      | Runs tests as part of CI/CD                         |
+| elife-xpub--end2end | TODO                                                |
 | elife-xpub--staging | [Staging](https://staging--xpub.elifesciences.org/) |
 | elife-xpub--prod    | [Production](https://xpub.elifesciences.org/)       |
-| elife-xpub--end2end | TODO                                                |
 
 This project has 3 active environments, and a fourth that will be configured closer to the time of actually going live. The end2end environment This env will be as close as possible to the prod env. (e.g. RDS)
 
@@ -30,7 +30,7 @@ In this example we created a new environment for "prod"
   - Done using ./bldr launch:elife-xpub,prod (then picks the saltstack up from the formula)
   - For "prod" this still deploys a local postgres
 
-- Create New Jenkins pipeline: "prod-elife-xpub"
+- Create New Jenkins pipeline: "prod-elife-xpub". But any new environment needs to get added to one of the two existing Jenkins pipelines.
 
 - This new pipeline needs to point to a new approved branch "approved", and is triggered manually.
 
