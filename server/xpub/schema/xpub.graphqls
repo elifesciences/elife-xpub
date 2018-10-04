@@ -146,7 +146,8 @@ extend type User {
     defaultIdentity: String
 }
 
-union Identity = Local | External
+# Todo move ElifeIdentity to elife.graphqls
+union Identity = Local | External | ElifeIdentity
 
 type Local {
     name: Name
