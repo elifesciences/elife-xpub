@@ -189,9 +189,14 @@ ${err}`,
         })
       })
 
-      await FileManager.putContent(fileEntity, fileContents, {
-        size: fileSize,
-      })
+      try {
+        await FileManager.putContent(fileEntity, fileContents, {
+          size: fileSize,
+        })
+      } catch (err) {
+        await FileManager.delete(fileEntity.id)
+        throw err
+      }
 
       // also send source file to conversion service
       let title = ''
