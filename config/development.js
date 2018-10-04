@@ -45,7 +45,7 @@ module.exports = {
     },
     s3: {
       params: {
-        Bucket: 'localhost',
+        Bucket: 'test-bucket',
       },
       endpoint: new AWS.Endpoint('http://localhost:4569'),
     },
