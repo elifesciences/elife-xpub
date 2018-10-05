@@ -205,6 +205,7 @@ ${err}`,
           body: fileContents,
           qs: { filename },
           headers: { 'content-type': mimetype },
+          timeout: config.get('scienceBeam.timeoutMs'),
         })
         const xmlData = await parseString(xmlBuffer.toString('utf8'))
 
@@ -218,8 +219,14 @@ ${err}`,
           title = titleArray[0]
         }
       } catch (error) {
+        let errorMessage = ''
+        if (error.error.code === 'ETIMEDOUT' || error.error.connect === false) {
+          errorMessage = 'Request to science beam timed out'
+        } else {
+          errorMessage = error.message
+        }
         logger.warn('Manuscript conversion failed', {
-          error: error.message,
+          error: errorMessage,
           manuscriptId: id,
           filename,
         })
