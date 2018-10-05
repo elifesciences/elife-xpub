@@ -8,9 +8,9 @@ module.exports = {
   validations: path.resolve(__dirname, 'non-serializable/validations.js'),
   pubsweet: {
     components: [
-      "@elifesciences/xpub-meca-export",
-      "@elifesciences/xpub-server",
-      "@pubsweet/component-send-email"
+      '@elifesciences/xpub-meca-export',
+      '@elifesciences/xpub-server',
+      '@pubsweet/component-send-email',
     ],
   },
   'pubsweet-server': {
@@ -75,6 +75,7 @@ module.exports = {
   },
   scienceBeam: {
     url: 'https://sciencebeam-texture.elifesciences.org/api/convert',
+    timeoutMs: 3000,
   },
   fileUpload: {
     maxSizeMB: 100,
