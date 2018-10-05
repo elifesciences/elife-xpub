@@ -29,10 +29,10 @@ describe('User manager', () => {
       const actualUser = await UserManager.findOrCreate(profileId)
       const identity = actualUser.identities[0]
       expect(identity).toMatchObject({
-        displayName: 'Tamlyn Rhodes',
+        name: 'Tamlyn Rhodes',
         email: 'example@example.org',
+        aff: 'Tech team, University of eLife',
         meta: {
-          affiliation: 'Tech team, University of eLife',
           firstName: 'Tamlyn',
           lastName: 'Rhodes',
           orcid: '0000-0002-6277-0372',

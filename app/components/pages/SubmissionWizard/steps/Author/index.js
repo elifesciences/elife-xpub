@@ -1,53 +1,23 @@
 import React from 'react'
-import gql from 'graphql-tag'
-import { withApollo } from 'react-apollo'
+import { Query } from 'react-apollo'
 import AuthorPage from './AuthorPage'
+import { CURRENT_USER } from '../../../../global/queries'
 
-const ORCID_DETAILS_QUERY = gql`
-  query GetOrcidDetails {
-    orcidDetails {
-      firstName
-      lastName
-      email
-      aff
-    }
-  }
-`
-
-class AuthorPageContainer extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {}
-  }
-
-  sanitizeAuthor = author => {
-    const cleanedAuthor = JSON.parse(
-      JSON.stringify(author, (key, value) => (value == null ? '' : value)),
-    )
-
-    return cleanedAuthor
-  }
-
-  runQuery = () => {
-    this.setState({ loading: true, error: false })
-    this.props.client
-      .query({ query: ORCID_DETAILS_QUERY })
-      .then(({ data }) => {
-        const author = this.sanitizeAuthor(data.orcidDetails)
-        this.setState({ loading: false })
-        this.props.setFieldValue('author', author)
-      })
-      .catch(error => this.setState({ loading: false, error: error.message }))
-  }
-  render() {
-    return (
+const AuthorPageContainer = ({ handleSubmit, setFieldValue }) => (
+  <Query query={CURRENT_USER}>
+    {({ data }) => (
       <AuthorPage
-        fetchOrcid={this.runQuery}
-        handleSubmit={this.props.handleSubmit}
-        {...this.state}
+        handleSubmit={handleSubmit}
+        prefill={() => {
+          const identity = data.currentUser.identities[0]
+          setFieldValue('author.firstName', identity.meta.firstName)
+          setFieldValue('author.lastName', identity.meta.lastName)
+          setFieldValue('author.email', identity.email)
+          setFieldValue('author.aff', identity.aff)
+        }}
       />
-    )
-  }
-}
+    )}
+  </Query>
+)
 
-export default withApollo(AuthorPageContainer)
+export default AuthorPageContainer

@@ -5,16 +5,6 @@ const elifeApi = require('./helpers/elife-api')
 
 const resolvers = {
   Query: {
-    async orcidDetails(_, vars, ctx) {
-      const user = await UserManager.findByProfileId(ctx.user)
-      const identity = user.identities[0]
-      return {
-        firstName: identity.meta.firstName,
-        lastName: identity.meta.lastName,
-        email: identity.email,
-        aff: identity.meta.affiliation,
-      }
-    },
     async currentUser(_, vars, ctx) {
       if (!ctx.user) return null
       return UserManager.findOrCreate(ctx.user)
@@ -35,6 +25,16 @@ const resolvers = {
       return jwt.sign({ id: tokenContents.id, iss: 'xpub' }, secret, {
         expiresIn: '1d',
       })
+    },
+  },
+  Identity: {
+    __resolveType(identity) {
+      switch (identity.type) {
+        case 'elife':
+          return 'ElifeIdentity'
+        default:
+          return null
+      }
     },
   },
 }

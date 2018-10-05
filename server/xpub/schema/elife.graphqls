@@ -11,14 +11,22 @@ extend type Manuscript {
 }
 
 # syntax supported in graphql-js >v14.0.0-rc.1
-extend union Identity = OrcidIdentity
+#extend union Identity = ElifeIdentity
 
-type OrcidIdentity {
-  orcidId: String!
+type ElifeIdentity {
+  id: ID!
+  type: String
+  identifier: String
   name: String
   email: String
-  accessToken: String
-  refreshToken: String
+  aff: String
+  meta: ElifeIdentityMeta
+}
+
+type ElifeIdentityMeta {
+  firstName: String
+  lastName: String
+  orcid: String
 }
 
 extend type TeamMember {

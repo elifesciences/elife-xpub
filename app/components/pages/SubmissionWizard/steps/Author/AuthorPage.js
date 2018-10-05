@@ -1,20 +1,16 @@
 import React from 'react'
-import { Action, ErrorText } from '@pubsweet/ui'
+import { Action } from '@pubsweet/ui'
 import ValidatedField from '../../../../ui/atoms/ValidatedField'
 import TwoColumnLayout from '../../../../global/layout/TwoColumnLayout'
 
-const AuthorPage = ({ fetchOrcid, loading, error }) => (
+const AuthorPage = ({ prefill }) => (
   <React.Fragment>
     <p>
-      <Action data-test-id="orcid-prefill" onClick={fetchOrcid}>
+      <Action data-test-id="orcid-prefill" onClick={prefill}>
         Pre-fill my details
       </Action>{' '}
-      using ORCiD
-      {loading && ' Loading...'}
+      using ORCID
     </p>
-    <ErrorText data-test-id="orcid-error" role="status">
-      {error}
-    </ErrorText>
 
     <TwoColumnLayout bottomSpacing={false}>
       <ValidatedField label="First name" name="author.firstName" />
