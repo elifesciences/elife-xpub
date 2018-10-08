@@ -9,4 +9,8 @@ module.exports = {
       url: 'https://continuumtest--gateway.elifesciences.org/',
     },
   },
+  login: {
+    url: 'https://continuumtest--journal.elifesciences.org/submit',
+    enableMock: false,
+  },
 }
