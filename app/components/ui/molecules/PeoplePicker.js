@@ -163,21 +163,30 @@ class PeoplePicker extends React.Component {
 
   filterPeopleSingle = (people, inputValue, field) => {
     let maxWords = 0
+    const addedPerson = {}
     people.forEach(person => {
       const numWords = person[field].match(/[^ ]+/g).length
       if (numWords > maxWords) {
         maxWords = numWords
       }
+      addedPerson[person.id] = false
     })
 
     let matches = []
     const re = new RegExp(`^${escapeRegExp(inputValue)}`)
     const filterNthMatches = (person, n) => {
+      if (addedPerson[person.id]) {
+        return false
+      }
       const words = person[field].match(/[^ ]+/g)
       if (words.length <= n) {
         return false
       }
-      return re.test(words[n].toLowerCase())
+      const matched = re.test(words[n].toLowerCase())
+      if (matched) {
+        addedPerson[person.id] = true
+      }
+      return matched
     }
 
     for (let i = 0; i < maxWords; i += 1) {
@@ -197,13 +206,24 @@ class PeoplePicker extends React.Component {
 
   render() {
     const { people, ...otherProps } = this.props
-    const sortedPeople = [...people].sort((a, b) =>
+    let extendedPeople = [...people].sort((a, b) =>
       a.name.localeCompare(b.name),
     )
-    const searchOptions = sortedPeople.map(person => ({ value: person.name }))
+    extendedPeople = extendedPeople.map(person => ({
+      ...person,
+      searchValue: `${person.name  } ${  person.subjectAreas.join(' ')}`,
+    }))
+    const searchOptions = extendedPeople.map(person => ({
+      id: person.id,
+      value: person.name,
+    }))
     return this.props.children({
       ...otherProps,
-      people: this.filterPeople(sortedPeople, this.state.searchValue, 'name'),
+      people: this.filterPeople(
+        extendedPeople,
+        this.state.searchValue,
+        'searchValue',
+      ),
       searchSubmit: this.searchSubmit,
       searchOptions,
       filterFunction: this.filterPeople,
