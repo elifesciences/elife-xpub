@@ -1,8 +1,9 @@
 /* eslint-disable no-await-in-loop */
 const superagent = require('superagent')
+const config = require('config')
 const logger = require('@pubsweet/logger')
 
-const apiRoot = 'https://api.elifesciences.org/'
+const apiRoot = config.get('elife.api.url')
 
 // request data from orcid API
 const request = (endpoint, query = {}) =>
