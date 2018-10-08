@@ -67,9 +67,9 @@ const manuscriptFragment = gql`
   ${reviewerFragment}
 `
 
-export const GET_CURRENT_SUBMISSION = gql`
-  query CurrentSubmission {
-    currentSubmission {
+export const GET_MANUSCRIPT = gql`
+  query GetManuscript($id: ID!) {
+    manuscript(id: $id) {
       ...WholeManuscript
     }
   }

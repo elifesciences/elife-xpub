@@ -5,8 +5,7 @@ import omitDeep from 'omit-deep-lodash'
 import ErrorPage from '../Error'
 import { MANUSCRIPTS_QUERY } from '../Dashboard'
 import {
-  GET_CURRENT_SUBMISSION,
-  CREATE_SUBMISSION,
+  GET_MANUSCRIPT,
   UPDATE_SUBMISSION,
   FINISH_SUBMISSION,
 } from './operations'
@@ -18,21 +17,12 @@ class WithCurrentSubmission extends React.Component {
 
   componentDidMount() {
     this.querySubscription = this.props.client
-      .watchQuery({ query: GET_CURRENT_SUBMISSION })
+      .watchQuery({
+        query: GET_MANUSCRIPT,
+        variables: { id: this.props.manuscriptId },
+      })
       .subscribe(
-        ({ data }) => {
-          if (data.currentSubmission) {
-            this.setData(data)
-          } else {
-            this.props.client
-              .mutate({
-                mutation: CREATE_SUBMISSION,
-                refetchQueries: [{ query: GET_CURRENT_SUBMISSION }],
-              })
-              .then(result => this.setData(result.data))
-              .catch(error => this.setError(error))
-          }
-        },
+        ({ data }) => this.setData(data),
         error => this.setError(error),
       )
   }
@@ -47,7 +37,7 @@ class WithCurrentSubmission extends React.Component {
   dataModifiers = [new CosubmissionModifier(), new EditorSuggestionsModifier()]
 
   setData(data) {
-    const values = cloneDeep(data.currentSubmission || data.createSubmission)
+    const values = cloneDeep(data.manuscript)
     this.dataModifiers.forEach(modifier => {
       modifier.toForm(values)
     })
@@ -101,10 +91,7 @@ class WithCurrentSubmission extends React.Component {
         this.mutate(newValues, UPDATE_SUBMISSION),
       finishSubmission: newValues =>
         this.mutate(newValues, FINISH_SUBMISSION, {
-          refetchQueries: [
-            { query: GET_CURRENT_SUBMISSION },
-            { query: MANUSCRIPTS_QUERY },
-          ],
+          refetchQueries: [{ query: MANUSCRIPTS_QUERY }],
         }),
     })
   }

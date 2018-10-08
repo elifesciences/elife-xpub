@@ -2,7 +2,9 @@ import config from 'config'
 import { Selector } from 'testcafe'
 
 const editors = {
-  url: `${config.get('pubsweet-server.baseUrl')}/submit/editors`,
+  url: new RegExp(
+    `${config.get('pubsweet-server.baseUrl')}/submit/[a-f0-9-]{36}/editors`,
+  ),
   suggestedSeniorEditorSelection: Selector(
     '[data-test-id="suggested-senior-editors"] [data-test-id="person-pod-button"]',
   ),
