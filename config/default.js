@@ -33,6 +33,11 @@ module.exports = {
     API_ENDPOINT: '/api',
     'login-redirect': '/',
   },
+  elife: {
+    api: {
+      url: 'https://api.elifesciences.org/',
+    },
+  },
   login: {
     // TODO swap this mock for the Journal endpoint when available
     url: '/mock-token-exchange/ewwboc7m',
