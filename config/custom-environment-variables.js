@@ -22,7 +22,7 @@ module.exports = {
         username: 'MECA_SFTP_USERNAME',
         password: 'MECA_SFTP_PASSWORD',
       },
-      remotePath: 'MECA_SFTP_PATH',
+      remotePath: 'MECA_SFTP_REMOTEPATH',
     },
     apiKey: 'MECA_API_KEY',
   },
