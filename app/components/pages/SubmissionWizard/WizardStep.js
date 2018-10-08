@@ -10,7 +10,6 @@ import ProgressBar from './ProgressBar'
 const WizardStep = ({
   component: FormComponent,
   handleSubmit,
-  handleUpdate,
   history,
   nextUrl,
   previousUrl,
@@ -29,7 +28,7 @@ const WizardStep = ({
       <Flex>
         <Box flex="1 1 auto" mx={[0, 0, 0, '16.666%']}>
           <form noValidate onSubmit={handleFormSubmit}>
-            <AutoSave onSave={handleUpdate} values={values} />
+            <AutoSave onSave={handleSubmit} values={values} />
             <Box my={5}>
               <ProgressBar currentStep={step} />
             </Box>

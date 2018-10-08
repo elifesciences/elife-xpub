@@ -4,7 +4,7 @@
  *    CosubmissionModifier
  *
  * These classes provide a common interface for the main class
- * 'WithCurrentSubmission' to delgate transforming the data model to the
+ * 'SubmissionOperations' to delegate transforming the data model to the
  * view model.
  */
 export default class CosubmissionModifier {

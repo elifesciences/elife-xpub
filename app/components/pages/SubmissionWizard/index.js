@@ -1,6 +1,6 @@
 import React from 'react'
 import { Route, Switch } from 'react-router-dom'
-import WithCurrentSubmission from './WithCurrentSubmission'
+import SubmissionOperations from './SubmissionOperations'
 import AuthorPageContainer from './steps/Author'
 import FilesPageContainer from './steps/Files'
 import SubmissionPage from './steps/Submission'
@@ -14,13 +14,8 @@ import { schema as disclosurePageSchema } from './steps/Disclosure/schema'
 import WizardStep from './WizardStep'
 
 const SubmissionWizard = ({ match, history }) => (
-  <WithCurrentSubmission manuscriptId={match.params.id}>
-    {({
-      initialValues,
-      updateSubmission,
-      progressSubmission,
-      finishSubmission,
-    }) => (
+  <SubmissionOperations manuscriptId={match.params.id}>
+    {({ initialValues, updateManuscript, submitManuscript }) => (
       <Switch>
         <Route
           exact
@@ -28,8 +23,7 @@ const SubmissionWizard = ({ match, history }) => (
           render={() => (
             <WizardStep
               component={FilesPageContainer}
-              handleSubmit={progressSubmission}
-              handleUpdate={updateSubmission}
+              handleSubmit={updateManuscript}
               history={history}
               initialValues={initialValues}
               nextUrl={`${match.url}/submission`}
@@ -45,8 +39,7 @@ const SubmissionWizard = ({ match, history }) => (
           render={() => (
             <WizardStep
               component={SubmissionPage}
-              handleSubmit={progressSubmission}
-              handleUpdate={updateSubmission}
+              handleSubmit={updateManuscript}
               history={history}
               initialValues={initialValues}
               nextUrl={`${match.url}/editors`}
@@ -62,8 +55,7 @@ const SubmissionWizard = ({ match, history }) => (
           render={() => (
             <WizardStep
               component={EditorsPageContainer}
-              handleSubmit={progressSubmission}
-              handleUpdate={updateSubmission}
+              handleSubmit={updateManuscript}
               history={history}
               initialValues={initialValues}
               nextUrl={`${match.url}/disclosure`}
@@ -79,8 +71,7 @@ const SubmissionWizard = ({ match, history }) => (
           render={() => (
             <WizardStep
               component={DisclosurePage}
-              handleSubmit={finishSubmission}
-              handleUpdate={updateSubmission}
+              handleSubmit={submitManuscript}
               history={history}
               initialValues={initialValues}
               nextUrl="/"
@@ -96,8 +87,7 @@ const SubmissionWizard = ({ match, history }) => (
           render={() => (
             <WizardStep
               component={AuthorPageContainer}
-              handleSubmit={progressSubmission}
-              handleUpdate={updateSubmission}
+              handleSubmit={updateManuscript}
               history={history}
               initialValues={initialValues}
               nextUrl={`${match.url}/files`}
@@ -109,7 +99,7 @@ const SubmissionWizard = ({ match, history }) => (
         />
       </Switch>
     )}
-  </WithCurrentSubmission>
+  </SubmissionOperations>
 )
 
 export default SubmissionWizard

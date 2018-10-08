@@ -24,7 +24,7 @@ const {
 
 const replaySetup = require('../../../../test/helpers/replay-setup')
 
-describe('Submission', () => {
+describe('Manuscripts', () => {
   const profileId = userData.identities[0].identifier
   const badProfileId = badUserData.identities[0].identifier
   let userId
@@ -57,15 +57,15 @@ describe('Submission', () => {
     })
   })
 
-  describe('createSubmission', () => {
+  describe('createManuscript', () => {
     it('fails if no authenticated user', async () => {
-      await expect(Mutation.createSubmission({}, {}, {})).rejects.toThrow(
+      await expect(Mutation.createManuscript({}, {}, {})).rejects.toThrow(
         'Not logged in',
       )
     })
 
     it('adds new manuscript to the db for current user with status INITIAL', async () => {
-      const manuscript = await Mutation.createSubmission(
+      const manuscript = await Mutation.createManuscript(
         {},
         {},
         { user: profileId },
@@ -77,12 +77,12 @@ describe('Submission', () => {
     })
   })
 
-  describe('updateSubmission', () => {
+  describe('updateManuscript', () => {
     it("fails if manuscript doesn't belong to user", async () => {
       const blankManuscript = Manuscript.new({ createdBy: userId })
       const manuscript = await Manuscript.save(blankManuscript)
       await expect(
-        Mutation.updateSubmission(
+        Mutation.updateManuscript(
           {},
           { data: { id: manuscript.id } },
           { user: badProfileId },
@@ -94,12 +94,9 @@ describe('Submission', () => {
       const blankManuscript = Manuscript.new({ createdBy: userId })
       const manuscript = await Manuscript.save(blankManuscript)
 
-      await Mutation.updateSubmission(
+      await Mutation.updateManuscript(
         {},
-        {
-          data: { id: manuscript.id, ...manuscriptInput },
-          isAutoSave: true,
-        },
+        { data: { id: manuscript.id, ...manuscriptInput } },
         { user: profileId },
       )
 
@@ -108,7 +105,7 @@ describe('Submission', () => {
     })
   })
 
-  describe('finishSubmission', () => {
+  describe('submitManuscript', () => {
     let id, initialManuscript
 
     beforeAll(() =>
@@ -135,7 +132,7 @@ describe('Submission', () => {
     })
 
     it('stores data with new status', async () => {
-      const returnedManuscript = await Mutation.finishSubmission(
+      const returnedManuscript = await Mutation.submitManuscript(
         {},
         { data: { ...manuscriptInput, id } },
         { user: profileId },
@@ -155,7 +152,7 @@ describe('Submission', () => {
 
     it('calls meca export with correct arguments', async () => {
       const ip = '1.2.3.4'
-      await Mutation.finishSubmission(
+      await Mutation.submitManuscript(
         {},
         { data: { ...manuscriptInput, id } },
         { user: profileId, ip },
@@ -183,7 +180,7 @@ describe('Submission', () => {
         { name: 'Reviewer 4', email: 'reviewer4@mail.com' },
         { name: '', email: '' },
       ]
-      await Mutation.finishSubmission(
+      await Mutation.submitManuscript(
         {},
         { data: manuscript },
         { user: profileId },
@@ -205,7 +202,7 @@ describe('Submission', () => {
       const blankManuscript = Manuscript.new({ createdBy: userId })
       const manuscript = await Manuscript.save(blankManuscript)
       await expect(
-        Mutation.finishSubmission(
+        Mutation.submitManuscript(
           {},
           { data: { id: manuscript.id } },
           { user: badProfileId },
@@ -220,7 +217,7 @@ describe('Submission', () => {
         title: 'Some Title',
       }
       await expect(
-        Mutation.finishSubmission(
+        Mutation.submitManuscript(
           {},
           { data: badManuscript },
           { user: profileId },
@@ -236,7 +233,7 @@ describe('Submission', () => {
         manuscriptType: {},
       })
       await expect(
-        Mutation.finishSubmission(
+        Mutation.submitManuscript(
           {},
           { data: badManuscript },
           { user: profileId },
@@ -254,7 +251,7 @@ describe('Submission', () => {
 
       const manuscript = lodash.cloneDeep(manuscriptInput)
       manuscript.id = id
-      await Mutation.finishSubmission(
+      await Mutation.submitManuscript(
         {},
         { data: manuscript },
         { user: profileId },

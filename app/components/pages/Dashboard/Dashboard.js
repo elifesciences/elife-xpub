@@ -19,12 +19,12 @@ const Cell = styled.td`
   padding: 3px 6px;
 `
 
-const Dashboard = ({ manuscripts, deleteManuscript, createSubmission }) => (
+const Dashboard = ({ manuscripts, deleteManuscript, createManuscript }) => (
   <React.Fragment>
     <FormH2>Dashboard Dummy Page</FormH2>
 
     <Box mb={4}>
-      <Button data-test-id="submit" onClick={createSubmission} primary>
+      <Button data-test-id="submit" onClick={createManuscript} primary>
         Submit a manuscript
       </Button>
     </Box>
