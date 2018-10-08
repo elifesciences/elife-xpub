@@ -19,7 +19,7 @@ module.exports = {
       connectionOptions: {
         host: 'MECA_SFTP_HOST',
         port: 'MECA_SFTP_PORT',
-        username: 'MECA_SFTP_USER',
+        username: 'MECA_SFTP_USERNAME',
         password: 'MECA_SFTP_PASSWORD',
       },
       remotePath: 'MECA_SFTP_PATH',
