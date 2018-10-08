@@ -2,7 +2,9 @@ import config from 'config'
 import { Selector } from 'testcafe'
 
 const submission = {
-  url: `${config.get('pubsweet-server.baseUrl')}/submit/submission`,
+  url: new RegExp(
+    `${config.get('pubsweet-server.baseUrl')}/submit/[a-f0-9-]{36}/submission`,
+  ),
   title: Selector('[name="meta.title"]'),
   articleType: Selector('[role=listbox] button'),
   articleTypes: Selector('[role=option]'),

@@ -43,84 +43,17 @@ describe('Submission', () => {
     mailer.clearMails()
   })
 
-  describe('currentSubmission', () => {
+  describe('manuscript', () => {
     it('Gets form data', async () => {
       const manuscriptData = {
         createdBy: userId,
-        meta: {
-          title: 'title',
-        },
-        status: 'INITIAL',
-      }
-      await Manuscript.save(manuscriptData)
-
-      const manuscript = await Query.currentSubmission(
-        {},
-        {},
-        { user: profileId },
-      )
-      expect(manuscript).toMatchObject(manuscriptData)
-    })
-
-    it('Returns null when there are no manuscripts in the db', async () => {
-      const manuscript = await Query.currentSubmission(
-        {},
-        {},
-        { user: profileId },
-      )
-      expect(manuscript).toBe(null)
-    })
-
-    it('Returns null when user has no manuscripts in the db (db not empty)', async () => {
-      await Manuscript.save({
-        createdBy: '9f72f2b8-bb4a-43fa-8b80-c7ac505c8c5f',
         meta: { title: 'title' },
         status: 'INITIAL',
-      })
-      await Manuscript.save({
-        createdBy: 'bcd735c6-9b62-441a-a085-7d1e8a7834c6',
-        meta: { title: 'title 2' },
-        status: Manuscript.statuses.MECA_EXPORT_PENDING,
-      })
+      }
+      const { id } = await Manuscript.save(manuscriptData)
 
-      const manuscript = await Query.currentSubmission(
-        {},
-        {},
-        { user: profileId },
-      )
-      expect(manuscript).toBeNull()
-    })
-
-    it('Returns manuscript object when user has one manuscripts in the db (db not empty)', async () => {
-      await Manuscript.save({
-        createdBy: '9f72f2b8-bb4a-43fa-8b80-c7ac505c8c5f',
-        meta: {
-          title: 'title',
-        },
-        status: 'INITIAL',
-      })
-      await Manuscript.save({
-        createdBy: 'bcd735c6-9b62-441a-a085-7d1e8a7834c6',
-        meta: {
-          title: 'title 2',
-        },
-        status: Manuscript.statuses.MECA_EXPORT_PENDING,
-      })
-      await Manuscript.save({
-        createdBy: userId,
-        meta: {
-          title: 'mine',
-        },
-        status: 'INITIAL',
-      })
-
-      const manuscript = await Query.currentSubmission(
-        {},
-        {},
-        { user: profileId },
-      )
-      expect(manuscript).not.toBeNull()
-      expect(manuscript.meta.title).toBe('mine')
+      const manuscript = await Query.manuscript({}, { id }, { user: profileId })
+      expect(manuscript).toMatchObject(manuscriptData)
     })
   })
 

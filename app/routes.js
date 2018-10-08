@@ -12,7 +12,7 @@ const Routes = () => (
       <Route component={LoginPage} path="/login" />
       <AuthenticatedComponent>
         <Switch>
-          <Route component={SubmissionWizard} path="/submit" />
+          <Route component={SubmissionWizard} path="/submit/:id" />
           <Route component={DashboardPage} />
         </Switch>
       </AuthenticatedComponent>

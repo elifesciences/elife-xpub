@@ -24,18 +24,6 @@ const elifeApi = require('../user/helpers/elife-api')
 
 const resolvers = {
   Query: {
-    async currentSubmission(_, vars, { user }) {
-      const userUuid = await UserManager.getUuidForProfile(user)
-      const manuscripts = await ManuscriptManager.findByStatus(
-        ManuscriptManager.statuses.INITIAL,
-        userUuid,
-      )
-      if (!manuscripts.length) {
-        return null
-      }
-
-      return manuscripts[0]
-    },
     async manuscript(_, { id }, { user }) {
       const userUuid = await UserManager.getUuidForProfile(user)
       return ManuscriptManager.find(id, userUuid)

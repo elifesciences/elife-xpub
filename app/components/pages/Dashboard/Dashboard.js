@@ -1,10 +1,10 @@
 import React from 'react'
 import styled from 'styled-components'
+import { Link } from 'react-router-dom'
 import { Box } from 'grid-styled'
 import { Button } from '@pubsweet/ui'
 
 import { FormH2, FormH3 } from '../../ui/atoms/FormHeadings'
-import ButtonLink from '../../ui/atoms/ButtonLink'
 import Paragraph from '../../ui/atoms/Paragraph'
 
 /* Temporary dashboard view pending receipt of designs */
@@ -19,14 +19,14 @@ const Cell = styled.td`
   padding: 3px 6px;
 `
 
-const Dashboard = ({ manuscripts, deleteManuscript }) => (
+const Dashboard = ({ manuscripts, deleteManuscript, createSubmission }) => (
   <React.Fragment>
     <FormH2>Dashboard Dummy Page</FormH2>
 
     <Box mb={4}>
-      <ButtonLink data-test-id="submit" primary to="/submit">
+      <Button data-test-id="submit" onClick={createSubmission} primary>
         Submit a manuscript
-      </ButtonLink>
+      </Button>
     </Box>
 
     <FormH3>All manuscripts</FormH3>
@@ -47,7 +47,9 @@ const Dashboard = ({ manuscripts, deleteManuscript }) => (
             <tr key={manuscript.id}>
               <Cell data-test-id="title">
                 <Paragraph data-test-id="title">
-                  {manuscript.meta.title || '(Untitled manuscript)'}
+                  <Link to={`/submit/${manuscript.id}`}>
+                    {manuscript.meta.title || '(Untitled)'}
+                  </Link>
                 </Paragraph>
               </Cell>
               <Cell data-test-id="stage">{manuscript.status}</Cell>

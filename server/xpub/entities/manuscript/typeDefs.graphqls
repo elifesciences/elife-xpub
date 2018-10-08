@@ -1,5 +1,4 @@
 extend type Query {
-  currentSubmission: Manuscript
   manuscript(id: ID!): Manuscript!
   manuscripts: [Manuscript]!
 }

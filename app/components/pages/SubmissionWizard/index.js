@@ -14,7 +14,7 @@ import { schema as disclosurePageSchema } from './steps/Disclosure/schema'
 import WizardStep from './WizardStep'
 
 const SubmissionWizard = ({ match, history }) => (
-  <WithCurrentSubmission>
+  <WithCurrentSubmission manuscriptId={match.params.id}>
     {({
       initialValues,
       updateSubmission,
@@ -32,8 +32,8 @@ const SubmissionWizard = ({ match, history }) => (
               handleUpdate={updateSubmission}
               history={history}
               initialValues={initialValues}
-              nextUrl={`${match.path}/submission`}
-              previousUrl={`${match.path}`}
+              nextUrl={`${match.url}/submission`}
+              previousUrl={`${match.url}`}
               step={1}
               title="Write your cover letter and upload your manuscript"
               validationSchema={filesPageSchema}
@@ -49,8 +49,8 @@ const SubmissionWizard = ({ match, history }) => (
               handleUpdate={updateSubmission}
               history={history}
               initialValues={initialValues}
-              nextUrl={`${match.path}/editors`}
-              previousUrl={`${match.path}/files`}
+              nextUrl={`${match.url}/editors`}
+              previousUrl={`${match.url}/files`}
               step={2}
               title="Help us get your work seen by the right people"
               validationSchema={submissionPageSchema}
@@ -66,8 +66,8 @@ const SubmissionWizard = ({ match, history }) => (
               handleUpdate={updateSubmission}
               history={history}
               initialValues={initialValues}
-              nextUrl={`${match.path}/disclosure`}
-              previousUrl={`${match.path}/submission`}
+              nextUrl={`${match.url}/disclosure`}
+              previousUrl={`${match.url}/submission`}
               step={3}
               title="Who should review your work?"
               validationSchema={editorsPageSchema}
@@ -84,7 +84,7 @@ const SubmissionWizard = ({ match, history }) => (
               history={history}
               initialValues={initialValues}
               nextUrl="/"
-              previousUrl={`${match.path}/editors`}
+              previousUrl={`${match.url}/editors`}
               step={4}
               submitButtonText="Submit"
               title="Disclosure of data to editors"
@@ -100,7 +100,7 @@ const SubmissionWizard = ({ match, history }) => (
               handleUpdate={updateSubmission}
               history={history}
               initialValues={initialValues}
-              nextUrl={`${match.path}/files`}
+              nextUrl={`${match.url}/files`}
               step={0}
               title="Your details"
               validationSchema={authorPageSchema}

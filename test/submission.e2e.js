@@ -184,11 +184,11 @@ test('Ability to progress through the wizard is tied to validation', async t => 
     // without this wait the tests sometimes fail on CI ¯\_(ツ)_/¯
     .wait(1000)
     .expect(getPageUrl())
-    .eql(author.url, 'Validation errors prevent progress to the next page')
+    .match(author.url, 'Validation errors prevent progress to the next page')
     .typeText(author.emailField, '.ac.uk')
     .click(wizardStep.next)
     .expect(getPageUrl())
-    .eql(files.url, 'Entering valid inputs enables progress to the next page')
+    .match(files.url, 'Entering valid inputs enables progress to the next page')
 })
 
 test('Form entries are saved when a user navigates to the next page of the wizard', async t => {
