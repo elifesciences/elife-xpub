@@ -4,9 +4,4 @@ module.exports = {
   'pubsweet-server': {
     logger,
   },
-  meca: {
-    sftp: {
-      disableUpload: true,
-    },
-  },
 }
