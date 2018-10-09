@@ -24,11 +24,12 @@ Otherwise the instructions below should be sufficient to get started quickly.
     - This should export an empty (for now) object
     - Use it to hold any configuration that should not be checked into source control
     - Refer to `config/default.js` for a list of possible config keys
-  - Add database configuration if necessary
-    - In most cases the defaults should work without additional configuration
-    - To run postgres within a docker container use the command `docker-compose up -d postgres`
-    - To setup the database, run `npx pubsweet setupdb --clobber`, and `npx pubsweet migrate`
-- Start the app with `npm run server`
+    - In most cases the default settings should work without additional configuration
+- Start any dependencies
+  - All necessary dependencies can be started by running `yarn start:services`
+  - To run dependencies within the background use the command `docker-compose up -d postgres fakes3`
+  - To setup the database, run `npx pubsweet setupdb --clobber`, and `npx pubsweet migrate`
+- Start the app with `yarn server`
   - Visit <http://localhost:3000>
 
 ## Other Dependencies
