@@ -10,7 +10,7 @@ module.exports = app => {
       const mockProfileId = req.params.id
       logger.info('Signing mock JWT for profile ID', mockProfileId)
       const xpubToken = jwt.sign(
-        { id: mockProfileId, iss: 'journal' },
+        { id: mockProfileId, iss: 'journal', 'new-session': true },
         secret,
         { expiresIn: '1m' },
       )

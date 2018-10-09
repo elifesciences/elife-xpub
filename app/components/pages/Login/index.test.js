@@ -7,28 +7,47 @@ const clientMock = {
     Promise.resolve({ data: { exchangeJournalToken: '345cba' } }),
   ),
 }
-const historyMock = { location: { hash: '#123abc' }, push: jest.fn() }
+const newSessionToken =
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuZXctc2Vzc2lvbiI6dHJ1ZX0.hg60dL9UcboJ96XWUGne1V-e8rK_WmU0_fyxbEsNsCw'
+const existingSessionToken =
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuZXctc2Vzc2lvbiI6ZmFsc2V9.7h-6rCSKNPAFgzftRsyn96R_rP5kAG84e0DU2GKcsvI'
+const historyMock = {
+  location: { hash: `#${newSessionToken}` },
+  push: jest.fn(),
+}
 
 const makeWrapper = props => shallow(<LoginPage.WrappedComponent {...props} />)
 
 describe('LoginPage component', () => {
   beforeEach(() => jest.clearAllMocks())
 
-  it('does not redirect if no token', () => {
+  it('shows login page if no token', () => {
     const wrapper = makeWrapper()
-    expect(wrapper.name()).not.toBe('Redirect')
+    expect(wrapper.find('[data-test-id="login"]')).toHaveLength(1)
   })
 
-  it('redirects when a token is given', () => {
+  it('shows interstitial when token indicates an existing session', () => {
+    const wrapper = makeWrapper({
+      client: clientMock,
+      history: {
+        ...historyMock,
+        location: { hash: `#${existingSessionToken}` },
+      },
+    })
+    expect(wrapper.find('[data-test-id="continue"]')).toHaveLength(1)
+    expect(localStorage.getItem('token')).toBe(existingSessionToken)
+  })
+
+  it('redirects when token indicates a new session', () => {
     const wrapper = makeWrapper({ client: clientMock, history: historyMock })
     expect(wrapper.name()).toBe('Redirect')
-    expect(localStorage.getItem('token')).toBe('123abc')
+    expect(localStorage.getItem('token')).toBe(newSessionToken)
   })
 
   it('saves exchanged token to storage', async () => {
     makeWrapper({ client: clientMock, history: historyMock })
 
-    expect(localStorage.getItem('token')).toBe('123abc')
+    expect(localStorage.getItem('token')).toBe(newSessionToken)
     await new Promise(resolve => setTimeout(resolve, 0))
     expect(localStorage.getItem('token')).toBe('345cba')
     expect(historyMock.push).not.toHaveBeenCalled()
