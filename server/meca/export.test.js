@@ -68,7 +68,7 @@ describe('MECA integration test', () => {
         'article.xml': 6145,
         'cover_letter.html': 743,
         'disclosure.pdf': expect.any(Number),
-        'manifest.xml': 919,
+        'manifest.xml': 1510,
         'manuscript.pdf': 14,
         'transfer.xml': 1958,
       })
