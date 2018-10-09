@@ -153,48 +153,9 @@ class PeoplePicker extends React.Component {
     const inputValue = searchValue.trim().toLowerCase()
     if (!inputValue) return people
 
-    if (inputValue.split(' ').length > 1) {
-      return people.filter(person =>
-        person[field].toLowerCase().includes(inputValue),
-      )
-    }
-    return this.filterPeopleSingle(people, inputValue, field)
-  }
-
-  filterPeopleSingle = (people, inputValue, field) => {
-    let maxWords = 0
-    const addedPerson = {}
-    people.forEach(person => {
-      const numWords = person[field].match(/[^ ]+/g).length
-      if (numWords > maxWords) {
-        maxWords = numWords
-      }
-      addedPerson[person.id] = false
-    })
-
-    let matches = []
-    const re = new RegExp(`^${escapeRegExp(inputValue)}`)
-    const filterNthMatches = (person, n) => {
-      if (addedPerson[person.id]) {
-        return false
-      }
-      const words = person[field].match(/[^ ]+/g)
-      if (words.length <= n) {
-        return false
-      }
-      const matched = re.test(words[n].toLowerCase())
-      if (matched) {
-        addedPerson[person.id] = true
-      }
-      return matched
-    }
-
-    for (let i = 0; i < maxWords; i += 1) {
-      /* matches for ith word, starting at 0 */
-      const ithMatches = people.filter(person => filterNthMatches(person, i))
-      matches = matches.concat(ithMatches)
-    }
-    return matches
+    return people.filter(person =>
+      person[field].toLowerCase().includes(inputValue),
+    )
   }
 
   getMatchIndex = (inputValue, option) => {
@@ -209,13 +170,14 @@ class PeoplePicker extends React.Component {
     let extendedPeople = [...people].sort((a, b) =>
       a.name.localeCompare(b.name),
     )
-    // TODO add person.aff once we have that info
+
     extendedPeople = extendedPeople.map(person => ({
       ...person,
-      searchValue: `${person.name} ${person.subjectAreas.join(' ')}`,
+      searchValue: `${person.name} ${person.subjectAreas.join(' ')} ${
+        person.aff ? person.aff : ''
+      }`,
     }))
     const searchOptions = extendedPeople.map(person => ({
-      id: person.id,
       value: person.name,
     }))
     return this.props.children({

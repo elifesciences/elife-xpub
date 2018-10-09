@@ -179,9 +179,9 @@ describe('PeoplePicker', () => {
       ).toEqual('Chastity Bob')
     })
 
-    it("doesn't match characters in the middle of the word", () => {
+    it('does match characters in the middle of the word', () => {
       searchFor('y')
-      expect(searchWrapper.find('PersonPod')).toHaveLength(0)
+      expect(searchWrapper.find('PersonPod')).toHaveLength(3)
     })
 
     it('filters the people pods when you click on the search icon', () => {
@@ -207,7 +207,7 @@ describe('PeoplePicker', () => {
           .find('p')
           .at(0)
           .text(),
-      ).toEqual('Bobby Aaron')
+      ).toEqual('Annie Nadine')
       expect(
         searchWrapper
           .find('PersonPod')
@@ -215,7 +215,7 @@ describe('PeoplePicker', () => {
           .find('p')
           .at(0)
           .text(),
-      ).toEqual('Annie Nadine')
+      ).toEqual('Bobby Aaron')
       expect(
         searchWrapper
           .find('PersonPod')
