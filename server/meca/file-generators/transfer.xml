@@ -32,18 +32,19 @@
                 </name>
                 <email>plotkin@ejournalpress.com</email>
             </contact>
-            <publication type="journal">
-                <title>eLife</title>
-                <contact role="Executive Editor">
-                    <name>
-                        <surname>Collings</surname>
-                        <given-names>Andy</given-names>
-                    </name>
-                    <email>a.collings@elifesciences.org</email>
-                    <phone>01223 855340</phone>
-                </contact>
-            </publication>
         </service-provider>
+        <publication type="journal">
+            <acronym>elife</acronym>
+            <title>eLife</title>
+            <contact role="Executive Editor">
+                <name>
+                    <surname>Collings</surname>
+                    <given-names>Andy</given-names>
+                </name>
+                <email>a.collings@elifesciences.org</email>
+                <phone>01223 855340</phone>
+            </contact>
+        </publication>
         <security>
             <authentication-code>{code}</authentication-code>
         </security>
