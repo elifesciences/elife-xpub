@@ -54,10 +54,13 @@ describe('SearchBox component tests', () => {
     expect(wrapper.find('[data-test-id="search-icon"]')).toHaveLength(1)
   })
 
-  it.each([[1, 'option'], [2, 'f'], [3, 'xyz'], [4, '']])(
+  it.skip.each([[1, 'option'], [2, 'f'], [3, 'xyz'], [4, '']])(
     'typing something will show suggestions based on filtering function, test %i',
     (index, searchValue) => {
       /**
+       * TODO these should be re-enabled once we know the
+       * dropdown/autosuggest behaviour
+       *
        * these tests make the assumption that suggestions will
        * be correctly rendered from the state of the component
        *
