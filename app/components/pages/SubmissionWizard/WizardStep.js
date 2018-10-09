@@ -1,4 +1,5 @@
 import React from 'react'
+import styled from 'styled-components'
 import { Formik } from 'formik'
 import { Box, Flex } from 'grid-styled'
 import { Button } from '@pubsweet/ui'
@@ -6,6 +7,10 @@ import ButtonLink from '../../ui/atoms/ButtonLink'
 import { FormH2 } from '../../ui/atoms/FormHeadings'
 import AutoSave from './AutoSave'
 import ProgressBar from './ProgressBar'
+
+const BoxNoMinWidth = styled(Box)`
+  min-width: 0;
+`
 
 const WizardStep = ({
   component: FormComponent,
@@ -26,7 +31,7 @@ const WizardStep = ({
     onSubmit={values => handleSubmit(values).then(() => history.push(nextUrl))}
     render={({ values, handleSubmit: handleFormSubmit, ...formProps }) => (
       <Flex>
-        <Box flex="1 1 auto" mx={[0, 0, 0, '16.666%']}>
+        <BoxNoMinWidth flex="1 1 auto" mx={[0, 0, 0, '16.666%']}>
           <form noValidate onSubmit={handleFormSubmit}>
             <AutoSave onSave={handleSubmit} values={values} />
             <Box my={5}>
@@ -52,7 +57,7 @@ const WizardStep = ({
               </Box>
             </Flex>
           </form>
-        </Box>
+        </BoxNoMinWidth>
       </Flex>
     )}
     validationSchema={validationSchema}
