@@ -6,10 +6,20 @@ import PeoplePicker from './PeoplePicker'
 import SearchBox from './SearchBox'
 
 const people = [
-  { id: 1, name: 'Annie Nadine', institution: 'eLife' },
-  { id: 2, name: 'Bobby Aaron', institution: 'eLife' },
-  { id: 3, name: 'Chastity Andy', institution: 'eLife' },
-  { id: 4, name: 'Dave Paul', institution: 'eLife' },
+  {
+    id: 1,
+    name: 'Annie Nadine',
+    aff: 'eLife',
+    subjectAreas: ['Biophysics and Structural Biology', 'Immunology'],
+  },
+  { id: 2, name: 'Bobby Aaron', aff: 'eLife', subjectAreas: ['Cell Biology'] },
+  {
+    id: 3,
+    name: 'Chastity Bob',
+    aff: 'eLife',
+    subjectAreas: ['Computational and Systems Biology'],
+  },
+  { id: 4, name: 'Dave Paul', aff: 'eLife', subjectAreas: ['Neuroscience'] },
 ]
 
 const makeWrapper = props =>
@@ -139,28 +149,38 @@ describe('PeoplePicker', () => {
     it('filters the people pods based on search input, single match', () => {
       searchFor('annie')
       expect(searchWrapper.find('PersonPod')).toHaveLength(1)
-      expect(searchWrapper.find('PersonPod').text()).toEqual('Annie Nadine')
+      expect(
+        searchWrapper
+          .find('PersonPod')
+          .find('p')
+          .at(0)
+          .text(),
+      ).toEqual('Annie Nadine')
     })
 
     it('filters the people pods based on search input, multiple matches', () => {
-      searchFor('an')
+      searchFor('bob')
       expect(searchWrapper.find('PersonPod')).toHaveLength(2)
       expect(
         searchWrapper
           .find('PersonPod')
           .at(0)
+          .find('p')
+          .at(0)
           .text(),
-      ).toEqual('Annie Nadine')
+      ).toEqual('Bobby Aaron')
       expect(
         searchWrapper
           .find('PersonPod')
           .at(1)
+          .find('p')
+          .at(0)
           .text(),
-      ).toEqual('Chastity Andy')
+      ).toEqual('Chastity Bob')
     })
 
     it("doesn't match characters in the middle of the word", () => {
-      searchFor('s')
+      searchFor('y')
       expect(searchWrapper.find('PersonPod')).toHaveLength(0)
     })
 
@@ -175,6 +195,35 @@ describe('PeoplePicker', () => {
       searchFor('annie')
       searchWrapper.find('[data-test-id="cross-icon"]').simulate('click')
       expect(searchWrapper.find('PersonPod')).toHaveLength(people.length)
+    })
+
+    it('filters the people pods after keywords', () => {
+      searchFor('biology')
+      expect(searchWrapper.find('PersonPod')).toHaveLength(3)
+      expect(
+        searchWrapper
+          .find('PersonPod')
+          .at(0)
+          .find('p')
+          .at(0)
+          .text(),
+      ).toEqual('Bobby Aaron')
+      expect(
+        searchWrapper
+          .find('PersonPod')
+          .at(1)
+          .find('p')
+          .at(0)
+          .text(),
+      ).toEqual('Annie Nadine')
+      expect(
+        searchWrapper
+          .find('PersonPod')
+          .at(2)
+          .find('p')
+          .at(0)
+          .text(),
+      ).toEqual('Chastity Bob')
     })
   })
 })

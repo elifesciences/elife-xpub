@@ -209,9 +209,10 @@ class PeoplePicker extends React.Component {
     let extendedPeople = [...people].sort((a, b) =>
       a.name.localeCompare(b.name),
     )
+    // TODO add person.aff once we have that info
     extendedPeople = extendedPeople.map(person => ({
       ...person,
-      searchValue: `${person.name  } ${  person.subjectAreas.join(' ')}`,
+      searchValue: `${person.name} ${person.subjectAreas.join(' ')}`,
     }))
     const searchOptions = extendedPeople.map(person => ({
       id: person.id,
