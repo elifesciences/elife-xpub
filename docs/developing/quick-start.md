@@ -27,6 +27,7 @@ Otherwise the instructions below should be sufficient to get started quickly.
   - Add database configuration if necessary
     - In most cases the defaults should work without additional configuration
     - To run postgres within a docker container use the command `docker-compose up -d postgres`
+    - To setup the database, run `npx pubsweet setupdb --clobber`, and `npx pubsweet migrate`
 - Start the app with `npm run server`
   - Visit <http://localhost:3000>
 
