@@ -7,6 +7,7 @@ const sampleManuscript = require('./export.test.data')
 const mecaExport = require('./export')
 
 Replay.fixtures = `${__dirname}/test/http-mocks`
+const mecaPostfix = '-meca.zip'
 
 const getFilenames = zip =>
   zip
@@ -59,7 +60,7 @@ describe('MECA integration test', () => {
       await mecaExport(sampleManuscript, 'This is a test')
       global.Date = RealDate
 
-      const finalName = `${sampleManuscript.id}.zip`
+      const finalName = `${sampleManuscript.id}${mecaPostfix}`
       const zip = await JsZip.loadAsync(
         sftp.mockFs.readFileSync(`/test/${finalName}`),
       )
@@ -88,7 +89,7 @@ describe('MECA integration test', () => {
     await mecaExport(sampleManuscript, 'This is a test')
 
     expect(sftp.mockFs.readdirSync('/')).toEqual(['test'])
-    const finalName = `${sampleManuscript.id}.zip`
+    const finalName = `${sampleManuscript.id}${mecaPostfix}`
     expect(sftp.mockFs.readdirSync('/test')).toEqual([finalName])
 
     const zip = await JsZip.loadAsync(
@@ -103,7 +104,7 @@ describe('MECA integration test', () => {
 
     const objectKey = `${config.get('meca.s3.remotePath')}/${
       sampleManuscript.id
-    }.zip`
+    }${mecaPostfix}`
     const responseData = await s3.getObject({ Key: objectKey }).promise()
     const zip = await JsZip.loadAsync(responseData.Body)
 
