@@ -153,39 +153,9 @@ class PeoplePicker extends React.Component {
     const inputValue = searchValue.trim().toLowerCase()
     if (!inputValue) return people
 
-    if (inputValue.split(' ').length > 1) {
-      return people.filter(person =>
-        person[field].toLowerCase().includes(inputValue),
-      )
-    }
-    return this.filterPeopleSingle(people, inputValue, field)
-  }
-
-  filterPeopleSingle = (people, inputValue, field) => {
-    let maxWords = 0
-    people.forEach(person => {
-      const numWords = person[field].match(/[^ ]+/g).length
-      if (numWords > maxWords) {
-        maxWords = numWords
-      }
-    })
-
-    let matches = []
-    const re = new RegExp(`^${escapeRegExp(inputValue)}`)
-    const filterNthMatches = (person, n) => {
-      const words = person[field].match(/[^ ]+/g)
-      if (words.length <= n) {
-        return false
-      }
-      return re.test(words[n].toLowerCase())
-    }
-
-    for (let i = 0; i < maxWords; i += 1) {
-      /* matches for ith word, starting at 0 */
-      const ithMatches = people.filter(person => filterNthMatches(person, i))
-      matches = matches.concat(ithMatches)
-    }
-    return matches
+    return people.filter(person =>
+      person[field].toLowerCase().includes(inputValue),
+    )
   }
 
   getMatchIndex = (inputValue, option) => {
@@ -197,13 +167,26 @@ class PeoplePicker extends React.Component {
 
   render() {
     const { people, ...otherProps } = this.props
-    const sortedPeople = [...people].sort((a, b) =>
+    let extendedPeople = [...people].sort((a, b) =>
       a.name.localeCompare(b.name),
     )
-    const searchOptions = sortedPeople.map(person => ({ value: person.name }))
+
+    extendedPeople = extendedPeople.map(person => ({
+      ...person,
+      searchValue: `${person.name} ${person.subjectAreas.join(' ')} ${
+        person.aff ? person.aff : ''
+      }`,
+    }))
+    const searchOptions = extendedPeople.map(person => ({
+      value: person.name,
+    }))
     return this.props.children({
       ...otherProps,
-      people: this.filterPeople(sortedPeople, this.state.searchValue, 'name'),
+      people: this.filterPeople(
+        extendedPeople,
+        this.state.searchValue,
+        'searchValue',
+      ),
       searchSubmit: this.searchSubmit,
       searchOptions,
       filterFunction: this.filterPeople,
