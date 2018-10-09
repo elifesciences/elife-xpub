@@ -6,8 +6,11 @@ import gql from 'graphql-tag'
 import config from 'config'
 import { H2 } from '@pubsweet/ui'
 import OrcidButton from '../../ui/atoms/OrcidButton'
+import ButtonLink from '../../ui/atoms/ButtonLink'
 import Paragraph from '../../ui/atoms/Paragraph'
 import ExternalLink from '../../ui/atoms/ExternalLink'
+
+const { url: loginUrl, signupUrl, legacySubmissionUrl } = config.login
 
 const EXCHANGE_TOKEN_MUTATION = gql`
   mutation($token: String) {
@@ -45,6 +48,11 @@ class LoginPage extends React.Component {
     window.localStorage.setItem('token', token)
   }
 
+  static decodeToken(token) {
+    const [, payload] = token.split('.')
+    return JSON.parse(atob(payload))
+  }
+
   // parse JWT from the URL hash
   getToken() {
     const { history } = this.props
@@ -57,43 +65,64 @@ class LoginPage extends React.Component {
   // show login button and redirect on sign in
   render() {
     const redirectTo = '/'
-    const loginUrl = config.login.url
 
-    if (this.getToken()) {
-      return <Redirect to={redirectTo} />
+    const token = this.getToken()
+    if (token) {
+      const data = LoginPage.decodeToken(token)
+      if (data['new-session']) {
+        return <Redirect to={redirectTo} />
+      }
     }
 
     return (
-      <Flex>
+      <Box mt="calc(50vh - 300px)" mx="auto" width={[1, 410]}>
         {/* roughly centre the box vertically */}
-        <Box mt="calc(50vh - 300px)" mx="auto" width={[1, 2 / 3, 1 / 2, 1 / 3]}>
-          <Box mb={4}>
-            <H2>
-              eLife is changing the way work is reviewed and selected for
-              publication
-            </H2>
-          </Box>
-          <Box mb={5}>
-            <Paragraph>
-              The leading scientists behind eLife are committed to rapid, fair,
-              and constructive review. Before you submit your work, please note
-              that eLife is a very selective journal that aims to publish work
-              of the highest scientific standards and importance.
-            </Paragraph>
-          </Box>
-          <Box mb={5}>
-            <a href={loginUrl}>
-              <OrcidButton data-test-id="login">Login with Orcid</OrcidButton>
-            </a>
-          </Box>
+        <Box mb={4}>
+          <H2>
+            eLife is changing the way work is reviewed and selected for
+            publication
+          </H2>
+        </Box>
+        <Box mb={5}>
           <Paragraph>
-            Are you a reviewer?{' '}
-            <ExternalLink href="https://submit.elifesciences.org">
-              Go to our reviewer portal.
-            </ExternalLink>
+            The leading scientists behind eLife are committed to rapid, fair,
+            and constructive review. Before you submit your work, please note
+            that eLife is a very selective journal that aims to publish work of
+            the highest scientific standards and importance.
+          </Paragraph>
+          <Paragraph>
+            Our new manuscript submission system will guide you through the
+            process of submitting your research.
+            {!token && ' Log in with your ORCID identifier to get started.'}
           </Paragraph>
         </Box>
-      </Flex>
+        {token ? (
+          <Box mb={5}>
+            <ButtonLink data-test-id="continue" primary to="/">
+              Continue
+            </ButtonLink>
+          </Box>
+        ) : (
+          <Flex alignItems="center" mb={5}>
+            <Box mr={3}>
+              <a href={loginUrl}>
+                <OrcidButton data-test-id="login">Login with ORCID</OrcidButton>
+              </a>
+            </Box>
+            <Box>
+              No ORCID? <ExternalLink href={signupUrl}>Sign up</ExternalLink>{' '}
+              now.
+            </Box>
+          </Flex>
+        )}
+        <Paragraph>
+          For{' '}
+          <ExternalLink href={legacySubmissionUrl}>
+            existing manuscripts
+          </ExternalLink>{' '}
+          go to our full submission and peer review system.
+        </Paragraph>
+      </Box>
     )
   }
 }

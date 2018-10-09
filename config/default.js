@@ -42,6 +42,8 @@ module.exports = {
     // TODO swap this mock for the Journal endpoint when available
     url: '/mock-token-exchange/ewwboc7m',
     enableMock: true,
+    signupUrl: 'https://orcid.org/register',
+    legacySubmissionUrl: 'https://submit.elifesciences.org',
   },
   mailer: {
     from: 'dev@example.com',
