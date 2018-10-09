@@ -4,19 +4,13 @@ A people picker in a modal
 
 Upon opening the People Picker Modal, the search box is empty.
 
-Currently the user can only search by name.
+The user can search by name, affiliation or subject areas.
 
-Input generates a dropdown list of suggested matches by first letter of either first, middle or last name.
-
-The suggestion list is further refined with additional user input.
-
-Selecting a match from the dropdown populates the search box and updates the people pods returned.
-
-Alternatively, the user can elect to search for any full or partial name already entered without choosing from the dropdown list. This returns all matching person pods.
-
-The dropdown list is keyboard-navigable.
+To update the list of peron pods the user has to press enter or click on the search icon after typing something.
 
 Searching for an empty string returns all person pods.
+
+Currently the input won't generate a dropdown list of suggestions (but will at some point in the future).
 
 ```js
 initialState = { open: false }
