@@ -186,6 +186,11 @@ class SearchBox extends React.Component {
       onChange: this.onChange,
       onKeyDown: this.onKeyDown,
     }
+    /**
+     * TODO
+     * onSuggestionsFetchRequested should be reimplemented
+     * once we know how the dropdown should behave
+     */
     return (
       <Flex>
         <AutosuggestWrapper>
@@ -194,7 +199,8 @@ class SearchBox extends React.Component {
             inputProps={inputProps}
             onSuggestionsClearRequested={this.onSuggestionsClearRequested}
             onSuggestionSelected={this.onSuggestionSelected}
-            onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
+            onSuggestionsFetchRequested={() => {}}
+            // onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
             renderSuggestion={this.renderSuggestion}
             suggestions={suggestions}
           />
