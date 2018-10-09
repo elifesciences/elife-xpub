@@ -20,7 +20,16 @@ RUN yarn install --frozen-lockfile \
     && yarn cache clean \
     && rm -rf /npm-packages-offline-cache
 
-COPY app.js .babelrc .eslintignore .eslintrc .prettierrc .stylelintignore .stylelintrc ./
+COPY \
+    app.js \
+    newrelic.js \
+    .babelrc \
+    .eslintignore \
+    .eslintrc \
+    .prettierrc \
+    .stylelintignore \
+    .stylelintrc \
+    ./
 
 COPY app app
 COPY config config
