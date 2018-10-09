@@ -3,6 +3,8 @@ const SFTP = require('./client/sftp')
 const s3 = require('./client/s3')
 const logger = require('@pubsweet/logger')
 
+const mecaPostfix = '-meca.zip'
+
 async function uploadToS3(file, manuscriptId) {
   if (config.get('meca.s3.disableUpload')) {
     logger.warn('MECA S3 upload is disabled')
@@ -10,7 +12,7 @@ async function uploadToS3(file, manuscriptId) {
   }
   const params = {
     Body: file,
-    Key: `${config.get('meca.s3.remotePath')}/${manuscriptId}.zip`,
+    Key: `${config.get('meca.s3.remotePath')}/${manuscriptId}${mecaPostfix}`,
     ACL: 'private',
     ContentType: 'application/zip',
   }
@@ -29,7 +31,7 @@ async function uploadToSFTP(file, manuscriptId) {
   const remotePath = config.get('meca.sftp.remotePath')
   await sftp.mkdir(remotePath, true)
   const transferName = `${remotePath}/${manuscriptId}.transfer`
-  const finalName = `${remotePath}/${manuscriptId}.zip`
+  const finalName = `${remotePath}/${manuscriptId}${mecaPostfix}`
   await sftp.put(file, transferName)
   await sftp.rename(transferName, finalName)
   await sftp.end()
