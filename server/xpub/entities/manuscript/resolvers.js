@@ -35,7 +35,7 @@ const resolvers = {
   },
 
   Mutation: {
-    async createSubmission(_, vars, { user }) {
+    async createManuscript(_, vars, { user }) {
       if (!user) {
         throw new Error('Not logged in')
       }
@@ -52,18 +52,21 @@ const resolvers = {
       return id
     },
 
-    async updateSubmission(_, { data }, { user }) {
+    async updateManuscript(_, { data }, { user }) {
       const userUuid = await UserManager.getUuidForProfile(user)
       const originalManuscript = await ManuscriptManager.find(data.id, userUuid)
       const manuscript = ManuscriptManager.applyInput(originalManuscript, data)
 
       await ManuscriptManager.save(manuscript)
-      logger.debug(`Updated Submission ${data.id} by user ${userUuid}`)
+      logger.debug(`Updated manuscript`, {
+        manuscriptId: data.id,
+        userId: userUuid,
+      })
 
       return manuscript
     },
 
-    async finishSubmission(_, { data }, { user, ip }) {
+    async submitManuscript(_, { data }, { user, ip }) {
       const userUuid = await UserManager.getUuidForProfile(user)
       const originalManuscript = await ManuscriptManager.find(data.id, userUuid)
 

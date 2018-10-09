@@ -4,11 +4,11 @@ extend type Query {
 }
 
 extend type Mutation {
-  createSubmission: Manuscript!
+  createManuscript: Manuscript!
   deleteManuscript(id: ID!): ID!
-  updateSubmission(data: ManuscriptInput!, isAutoSave: Boolean): Manuscript!
+  updateManuscript(data: ManuscriptInput!): Manuscript!
   uploadManuscript(id: ID!, file: Upload!, fileSize: Int!): Manuscript!
-  finishSubmission(data: ManuscriptInput!): Manuscript!
+  submitManuscript(data: ManuscriptInput!): Manuscript!
 }
 
 extend type Manuscript {

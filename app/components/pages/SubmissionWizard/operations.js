@@ -76,27 +76,27 @@ export const GET_MANUSCRIPT = gql`
   ${manuscriptFragment}
 `
 
-export const CREATE_SUBMISSION = gql`
-  mutation CreateSubmission {
-    createSubmission {
+export const CREATE_MANUSCRIPT = gql`
+  mutation CreateManuscript {
+    createManuscript {
       ...WholeManuscript
     }
   }
   ${manuscriptFragment}
 `
 
-export const UPDATE_SUBMISSION = gql`
-  mutation UpdateSubmission($data: ManuscriptInput!, $isAutoSave: Boolean) {
-    updateSubmission(data: $data, isAutoSave: $isAutoSave) {
+export const UPDATE_MANUSCRIPT = gql`
+  mutation UpdateManuscript($data: ManuscriptInput!) {
+    updateManuscript(data: $data) {
       ...WholeManuscript
     }
   }
   ${manuscriptFragment}
 `
 
-export const FINISH_SUBMISSION = gql`
-  mutation FinishSubmission($data: ManuscriptInput!) {
-    finishSubmission(data: $data) {
+export const SUBMIT_MANUSCRIPT = gql`
+  mutation SubmitManuscript($data: ManuscriptInput!) {
+    submitManuscript(data: $data) {
       ...WholeManuscript
     }
   }
