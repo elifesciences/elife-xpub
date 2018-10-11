@@ -14,7 +14,10 @@ const Container = styled.div`
   width: 100vw;
   height: 100vh;
   z-index: 1500;
-  background: ${th('colorBackground')};
+  background: ${props =>
+    props.transparentBackground
+      ? `rgba(0, 0, 0, 0.8)`
+      : props.theme.colorBackground};
   transition: opacity ${th('transitionDuration')}
     ${th('transitionTimingFunction')};
   overflow-y: auto;
@@ -43,7 +46,7 @@ function cssTimeToMilliseconds(timeString) {
   }
 }
 
-const ModalOverlay = ({ children, open, theme }) => (
+const ModalOverlay = ({ children, open, theme, transparentBackground }) => (
   <Root aria-live="assertive">
     <CSSTransition
       classNames="modal"
@@ -52,7 +55,7 @@ const ModalOverlay = ({ children, open, theme }) => (
       timeout={cssTimeToMilliseconds(theme.transitionDuration)}
       unmountOnExit
     >
-      <Container>
+      <Container transparentBackground={transparentBackground}>
         {children}
         <ScrollLock />
       </Container>
@@ -63,6 +66,7 @@ const ModalOverlay = ({ children, open, theme }) => (
 ModalOverlay.propTypes = {
   open: PropTypes.bool.isRequired,
   children: PropTypes.node.isRequired,
+  transparentBackground: PropTypes.bool.isRequired,
 }
 
 export default withTheme(ModalOverlay)
