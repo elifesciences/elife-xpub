@@ -1,5 +1,6 @@
 const xmlbuilder = require('xmlbuilder')
 const lodash = require('lodash')
+const config = require('config')
 const elifeApi = require('@elifesciences/xpub-server/entities/user/helpers/elife-api')
 const {
   articleTypeMap,
@@ -7,6 +8,8 @@ const {
   journalMeta,
 } = require('./article.helpers')
 const nameSplitter = require('../services/nameSplitter')
+
+const subjectAreas = config.get('elife.majorSubjectAreas')
 
 function createXmlObject(manuscript, editorsById, affiliations, reviewerMap) {
   return {
@@ -20,15 +23,14 @@ function createXmlObject(manuscript, editorsById, affiliations, reviewerMap) {
       'article-categories': {
         'subj-group': [].concat(
           {
-            '@subj-group-type': 'article-type',
-            subject: manuscript.meta.articleType,
-          },
-          {
-            '@subj-group-type': 'article-type-id',
+            '@subj-group-type': 'article_type',
             subject: articleTypeMap[manuscript.meta.articleType],
           },
           manuscript.meta.subjects.map(subject => ({
-            'subj-group': { '@subj-group-type': 'keywords', subject },
+            'subj-group': {
+              '@subj-group-type': 'subject_areas',
+              subject: subjectAreas[subject],
+            },
           })),
         ),
       },
@@ -44,7 +46,7 @@ function createXmlObject(manuscript, editorsById, affiliations, reviewerMap) {
             if (team) {
               return contribs.concat(
                 team.teamMembers.map(member => ({
-                  '@contrib-type': lodash.kebabCase(role),
+                  '@contrib-type': lodash.snakeCase(role),
                   ...groupInfo.formatter(
                     member,
                     affiliations,

@@ -30,15 +30,15 @@ const contribStructure = {
       },
     }),
   },
-  'potential-senior-editors': {
+  potential_senior_editors: {
     keys: ['suggestedSeniorEditor', 'opposedSeniorEditor'],
     formatter: editorFormatter,
   },
-  'potential-reviewing-editors': {
+  potential_reviewing_editors: {
     keys: ['suggestedReviewingEditor', 'opposedReviewingEditor'],
     formatter: editorFormatter,
   },
-  'potential-reviewers': {
+  potential_reviewers: {
     keys: ['suggestedReviewer', 'opposedReviewer'],
     formatter: (member, affiliations, editorsById, reviewerMap) => {
       const { name } = member.meta
