@@ -48,30 +48,16 @@ describe('MECA integration test', () => {
   })
 
   describe('when generating an archive', () => {
-    const RealDate = global.Date
-
     it('should contain the correct files', async () => {
-      global.Date = class extends RealDate {
-        constructor() {
-          super()
-          return new RealDate(1538059378578)
-        }
-      }
       await mecaExport(sampleManuscript, 'This is a test')
-      global.Date = RealDate
 
       const finalName = `${sampleManuscript.id}${mecaPostfix}`
       const zip = await JsZip.loadAsync(
         sftp.mockFs.readFileSync(`/test/${finalName}`),
       )
 
-      expect(getFileSizes(zip)).toEqual({
-        'article.xml': 6145,
-        'cover_letter.html': 743,
+      expect(getFileSizes(zip)).toMatchSnapshot({
         'disclosure.pdf': expect.any(Number),
-        'manifest.xml': 1510,
-        'manuscript.pdf': 14,
-        'transfer.xml': 1951,
       })
 
       expect(getFilenames(zip)).toEqual([

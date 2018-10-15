@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import styled, { withTheme } from 'styled-components'
 import { th } from '@pubsweet/ui-toolkit'
 import Select, { createFilter, components } from 'react-select'
+import config from 'config'
 
 import Icon from '../../../../ui/atoms/Icon'
 
@@ -24,52 +25,11 @@ const SelectLimitMessage = styled.p`
   color: ${th('colorSuccess')};
 `
 
-const eLifeOptions = [
-  {
-    value: 'biochemistry-chemical-biology',
-    label: 'Biochemistry and Chemical Biology',
-  },
-  { value: 'cancer-biology', label: 'Cancer Biology' },
-  { value: 'cell-biology', label: 'Cell Biology' },
-  {
-    value: 'chromosomes-gene-expression',
-    label: 'Chromosomes and Gene Expression',
-  },
-  {
-    value: 'computational-systems-biology',
-    label: 'Computational and Systems Biology',
-  },
-  {
-    value: 'developmental-biology-stem-cells',
-    label: 'Developmental Biology and Stem Cells',
-  },
-  { value: 'ecology', label: 'Ecology' },
-  {
-    value: 'epidemiology-global-health',
-    label: 'Epidemiology and Global Health',
-  },
-  { value: 'evolutionary-biology', label: 'Evolutionary Biology' },
-  { value: 'genetics-genomics', label: 'Genetics and Genomics' },
-  {
-    value: 'human-biology-medicine',
-    label: 'Human Biology and Medicine',
-  },
-  {
-    value: 'immunology-inflammation',
-    label: 'Immunology and Inflammation',
-  },
-  {
-    value: 'microbiology-infectious-disease',
-    label: 'Microbiology and Infectious Disease',
-  },
-  { value: 'neuroscience', label: 'Neuroscience' },
-  { value: 'physics-living-systems', label: 'Physics of Living Systems' },
-  { value: 'plant-biology', label: 'Plant Biology' },
-  {
-    value: 'structural-biology-molecular-biophysics',
-    label: 'Structural Biology and Molecular Biophysics',
-  },
-]
+const subjectAreas = config.elife.majorSubjectAreas
+const eLifeOptions = Object.keys(subjectAreas).reduce(
+  (options, code) => options.concat({ value: code, label: subjectAreas[code] }),
+  [],
+)
 
 class SubjectAreaDropdown extends React.Component {
   constructor(props) {
