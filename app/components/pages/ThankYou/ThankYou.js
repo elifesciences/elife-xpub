@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { Box } from 'grid-styled'
+import PropTypes from 'prop-types'
 import { H1 } from '@pubsweet/ui'
 import { th } from '@pubsweet/ui-toolkit'
 import ExternalLink from '../../ui/atoms/ExternalLink'
@@ -34,4 +35,13 @@ const ThankYou = ({ title }) => (
     </ButtonLink>
   </CenteredContent>
 )
+
+ThankYou.propTypes = {
+  title: PropTypes.string,
+}
+
+ThankYou.defaultProps = {
+  title: 'Untitled manuscript',
+}
+
 export default ThankYou
