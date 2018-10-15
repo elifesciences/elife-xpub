@@ -1,26 +1,29 @@
 import React from 'react'
 import styled from 'styled-components'
 import { Box } from 'grid-styled'
+import { H1 } from '@pubsweet/ui'
 import { th } from '@pubsweet/ui-toolkit'
 import ExternalLink from '../../ui/atoms/ExternalLink'
 import ButtonLink from '../../ui/atoms/ButtonLink'
+import Paragraph from '../../ui/atoms/Paragraph'
+import SmallParagraph from '../../ui/atoms/SmallParagraph'
 
 const CenteredContent = styled(Box)`
   text-align: center;
 `
-const SubText = styled.p`
+const SubText = styled(SmallParagraph)`
   color: ${th('colorTextSecondary')};
-  font-size: ${th('fontSizeBaseSmall')};
 `
+
 const BookmarkLink = styled(ExternalLink)`
   display: inline-block;
 `
 
 const ThankYou = ({ title }) => (
   <CenteredContent mx="auto" width={[1, 600]}>
-    <h1>Thank you</h1>
-    <p>{`Your submission, "${title}" has been received.`}</p>
-    <p>You will be informed of a decision soon.</p>
+    <H1>Thank you</H1>
+    <Paragraph>{`Your submission, "${title}" has been received.`}</Paragraph>
+    <Paragraph>You will be informed of a decision soon.</Paragraph>
     <SubText>
       You may want to bookmark the link below to check the progress of your
       submission.
