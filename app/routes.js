@@ -14,7 +14,7 @@ const Routes = () => (
       <Route component={LoginPage} exact path="/login" />
       <AuthenticatedComponent>
         <Switch>
-          <Route component={ThankYouPage} path="/thankyou" />
+          <Route component={ThankYouPage} path="/thankyou/:id" />
           <Route component={SubmissionWizard} path="/submit/:id" />
           <Route component={DashboardPage} exact path="/" />
           <ErrorPage error="404: page not found" />
