@@ -36,12 +36,7 @@ const data = {
 }
 ;<Formik
   render={formProps => (
-    <EditorsPage
-      history={{ location: {} }}
-      seniorEditors={[]}
-      reviewingEditors={[]}
-      {...formProps}
-    />
+    <EditorsPage seniorEditors={[]} reviewingEditors={[]} {...formProps} />
   )}
   initialValues={data}
   onSubmit={values => console.log(values)}

@@ -85,7 +85,7 @@ module.exports = {
   },
   meca: {
     s3: {
-      remotePath: 'meca-archive/',
+      remotePath: 'meca-archive',
       disableUpload: false,
     },
     sftp: {

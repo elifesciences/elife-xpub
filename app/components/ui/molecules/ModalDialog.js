@@ -12,9 +12,21 @@ const MiddleAligner = styled(Flex)`
 `
 
 const WhiteBox = styled(Box)`
+  width: calc(${th('gridUnit')} * ${props => sizeToMultiple(props.size)});
   background-color: ${th('colorBackground')};
   text-align: center;
 `
+
+function sizeToMultiple(size) {
+  switch (size) {
+    case 'l':
+      return 140
+    case 'm':
+      return 100
+    default:
+      return 68
+  }
+}
 
 const ModalDialog = ({
   acceptText,
@@ -22,24 +34,26 @@ const ModalDialog = ({
   children,
   onAccept,
   onCancel,
-  open,
-  transparentBackground,
+  size,
   ...props
 }) => (
-  <ModalOverlay
-    open={open}
-    transparentBackground={transparentBackground}
-    {...props}
-  >
+  <ModalOverlay transparentBackground {...props}>
     <MiddleAligner alignItems="center" justifyContent="center">
-      <WhiteBox p={3}>
+      <WhiteBox p={3} size={size}>
         {children}
-        <Flex>
+        <Flex justifyContent="center" mt={3}>
           <Box mr={3}>
-            <Button onClick={onCancel}>{cancelText}</Button>
+            <Button onClick={onCancel} type="button">
+              {cancelText}
+            </Button>
           </Box>
           <Box>
-            <Button onClick={onAccept} primary>
+            <Button
+              data-test-id="accept"
+              onClick={onAccept}
+              primary
+              type="button"
+            >
               {acceptText}
             </Button>
           </Box>
@@ -50,13 +64,19 @@ const ModalDialog = ({
 )
 
 ModalDialog.propTypes = {
-  acceptText: PropTypes.string.isRequired,
-  cancelText: PropTypes.string.isRequired,
+  acceptText: PropTypes.string,
+  cancelText: PropTypes.string,
   children: PropTypes.node.isRequired,
   onAccept: PropTypes.func.isRequired,
   onCancel: PropTypes.func.isRequired,
   open: PropTypes.bool.isRequired,
-  transparentBackground: PropTypes.bool.isRequired,
+  size: PropTypes.oneOf(['s', 'm', 'l']),
+}
+
+ModalDialog.defaultProps = {
+  acceptText: 'OK',
+  cancelText: 'Cancel',
+  size: 's',
 }
 
 export default ModalDialog
