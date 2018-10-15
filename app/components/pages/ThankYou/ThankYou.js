@@ -18,6 +18,7 @@ const SubText = styled(SmallParagraph)`
 
 const BookmarkLink = styled(ExternalLink)`
   display: inline-block;
+  clear: both;
 `
 
 const ThankYou = ({ title }) => (
@@ -37,11 +38,7 @@ const ThankYou = ({ title }) => (
 )
 
 ThankYou.propTypes = {
-  title: PropTypes.string,
-}
-
-ThankYou.defaultProps = {
-  title: 'Untitled manuscript',
+  title: PropTypes.string.isRequired,
 }
 
 export default ThankYou

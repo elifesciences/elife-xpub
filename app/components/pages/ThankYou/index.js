@@ -2,6 +2,7 @@ import React from 'react'
 import gql from 'graphql-tag'
 import { Query } from 'react-apollo'
 import ThankYou from './ThankYou'
+import ErrorPage from '../Error'
 
 const MANUSCRIPT_TITLE = gql`
   query GetManuscript($id: ID!) {
@@ -20,7 +21,7 @@ const ThankYouPage = ({ match }) => (
       }
 
       if (error) {
-        return <div>{error.message}</div>
+        return <ErrorPage error={error.message} />
       }
 
       return <ThankYou title={data.manuscript.meta.title} />
