@@ -21,7 +21,7 @@ const BookmarkLink = styled(ExternalLink)`
 `
 
 const ThankYou = ({ title }) => (
-  <CenteredContent mx="auto" width={[1, 600]}>
+  <CenteredContent mx="auto" width={[1, 1, 1, 600]}>
     <H1>Thank you</H1>
     <Paragraph>{`Your submission, "${title}" has been received.`}</Paragraph>
     <Paragraph>You will be informed of a decision soon.</Paragraph>
