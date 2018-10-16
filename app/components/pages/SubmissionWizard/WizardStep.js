@@ -36,6 +36,7 @@ const WizardStep = ({
     render={({
       values,
       handleSubmit,
+      isSubmitting,
       setTouched,
       submitForm,
       validateForm,
@@ -44,7 +45,11 @@ const WizardStep = ({
       <Flex>
         <BoxNoMinWidth flex="1 1 auto" mx={[0, 0, 0, '16.666%']}>
           <form noValidate onSubmit={handleSubmit}>
-            <AutoSave onSave={handleAutoSave} values={values} />
+            <AutoSave
+              disabled={isSubmitting}
+              onSave={handleAutoSave}
+              values={values}
+            />
             <Box my={5}>
               <ProgressBar currentStep={step} />
             </Box>
