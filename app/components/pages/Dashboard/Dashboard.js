@@ -8,6 +8,10 @@ import { FormH2, FormH3 } from '../../ui/atoms/FormHeadings'
 import Paragraph from '../../ui/atoms/Paragraph'
 import ManuscriptStatus from '../../ui/atoms/ManuscriptStatus'
 import StickyFooter from '../../ui/atoms/StickyFooter'
+import {
+  HideOnMobile,
+  ShowOnMobile,
+} from '../../global/layout/DisplayBasedOnScreenSize'
 
 /* Temporary dashboard view pending receipt of designs */
 
@@ -25,11 +29,17 @@ const Dashboard = ({ manuscripts, deleteManuscript, createManuscript }) => (
   <React.Fragment>
     <FormH2>Dashboard Dummy Page</FormH2>
 
-    <Box mb={4}>
-      <Button data-test-id="submit" onClick={createManuscript} primary>
-        New Submission
-      </Button>
-    </Box>
+    <HideOnMobile>
+      <Box mb={4}>
+        <Button
+          data-test-id="desktop-new-submission"
+          onClick={createManuscript}
+          primary
+        >
+          New Submission
+        </Button>
+      </Box>
+    </HideOnMobile>
 
     <FormH3>All manuscripts</FormH3>
 
@@ -67,11 +77,17 @@ const Dashboard = ({ manuscripts, deleteManuscript, createManuscript }) => (
         </tbody>
       </table>
     )}
-    <StickyFooter>
-      <Button data-test-id="mobile-submit" onClick={createManuscript} primary>
-        New Submission
-      </Button>
-    </StickyFooter>
+    <ShowOnMobile>
+      <StickyFooter>
+        <Button
+          data-test-id="mobile-new-submission"
+          onClick={createManuscript}
+          primary
+        >
+          New Submission
+        </Button>
+      </StickyFooter>
+    </ShowOnMobile>
   </React.Fragment>
 )
 

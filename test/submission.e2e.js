@@ -50,7 +50,7 @@ test('Happy path', async t => {
   await t
     .navigateTo(login.url)
     .click(login.button)
-    .click(dashboard.submitManuscript)
+    .click(dashboard.desktopNewSubmission)
 
   // author details initially empty
   await t
@@ -166,7 +166,7 @@ test('Ability to progress through the wizard is tied to validation', async t => 
   await t
     .navigateTo(login.url)
     .click(login.button)
-    .click(dashboard.submitManuscript)
+    .click(dashboard.desktopNewSubmission)
 
   // set author details
   await t
@@ -194,7 +194,7 @@ test('Form entries are saved when a user navigates to the next page of the wizar
   await t
     .navigateTo(login.url)
     .click(login.button)
-    .click(dashboard.submitManuscript)
+    .click(dashboard.desktopNewSubmission)
 
   await t
     .typeText(author.firstNameField, 'Meghan')
