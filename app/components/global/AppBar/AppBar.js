@@ -55,6 +55,15 @@ const AppBar = ({ user }) => (
           Dashboard
         </AppBarLink>
       )}
+      <AppBarLink exact to="/author-guide">
+        Author Guide
+      </AppBarLink>
+      <AppBarLink exact to="/reviewer-guide">
+        Reviewer Guide
+      </AppBarLink>
+      <AppBarLink exact to="/contact-us">
+        Contact Us
+      </AppBarLink>
     </Box>
     <ProfileMenu user={user} />
   </AppBarContainer>
