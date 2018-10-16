@@ -2,7 +2,7 @@ List item in the dashboard that links to manuscript. It shows status (e.g. accep
 
 ```js
 ;<DashboardListItem
-  status={1}
+  statusCode={'CONTINUE_SUBMISION'}
   title={
     'Shearing in flow environment promotes evolution of social behaviour in microbial populations'
   }
