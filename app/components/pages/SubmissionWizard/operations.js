@@ -18,7 +18,6 @@ const reviewerFragment = gql`
 const manuscriptFragment = gql`
   fragment WholeManuscript on Manuscript {
     id
-    status
     clientStatus
     meta {
       title

@@ -5,7 +5,7 @@ import PropTypes from 'prop-types'
 
 const StatusBox = styled(Box)`
   color: ${props => props.theme[props.color]};
-  font-size: 13px;
+  font-size: 16px;
 `
 
 const mapColor = statusCode =>
