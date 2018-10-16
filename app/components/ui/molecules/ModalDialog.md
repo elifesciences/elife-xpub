@@ -12,13 +12,26 @@ const FormH2 = require('../atoms/FormHeadings.js').FormH2
     }}
     onCancel={() => setState({ open: false })}
     open={state.open}
-    transparentBackground={true}
+    size={state.size}
   >
     <FormH2>Title</FormH2>
     <p>This is a dialog box</p>
-    <p>This is a dialog box</p>
-    <p>This is a dialog box</p>
-    <p>This is a dialog box</p>
+    <p>
+      In this work, we prove the understanding of lambda calculus, which
+      embodies the practical principles of cryptography.
+    </p>
+    <p>
+      Set modal <code>size</code>{' '}
+      <select
+        onChange={e => {
+          setState({ size: e.target.value })
+        }}
+      >
+        <option>s</option>
+        <option>m</option>
+        <option>l</option>
+      </select>
+    </p>
   </ModalDialog>
 </div>
 ```

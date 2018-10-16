@@ -23,7 +23,8 @@ const SubmissionWizard = ({ match, history }) => (
           render={() => (
             <WizardStep
               component={FilesPageContainer}
-              handleSubmit={updateManuscript}
+              handleAutoSave={updateManuscript}
+              handleButtonClick={updateManuscript}
               history={history}
               initialValues={initialValues}
               nextUrl={`${match.url}/submission`}
@@ -39,7 +40,8 @@ const SubmissionWizard = ({ match, history }) => (
           render={() => (
             <WizardStep
               component={SubmissionPage}
-              handleSubmit={updateManuscript}
+              handleAutoSave={updateManuscript}
+              handleButtonClick={updateManuscript}
               history={history}
               initialValues={initialValues}
               nextUrl={`${match.url}/editors`}
@@ -55,7 +57,8 @@ const SubmissionWizard = ({ match, history }) => (
           render={() => (
             <WizardStep
               component={EditorsPageContainer}
-              handleSubmit={updateManuscript}
+              handleAutoSave={updateManuscript}
+              handleButtonClick={updateManuscript}
               history={history}
               initialValues={initialValues}
               nextUrl={`${match.url}/disclosure`}
@@ -71,13 +74,14 @@ const SubmissionWizard = ({ match, history }) => (
           render={() => (
             <WizardStep
               component={DisclosurePage}
-              handleSubmit={submitManuscript}
+              finalStep
+              handleAutoSave={updateManuscript}
+              handleButtonClick={submitManuscript}
               history={history}
               initialValues={initialValues}
               nextUrl="/"
               previousUrl={`${match.url}/editors`}
               step={4}
-              submitButtonText="Submit"
               title="Disclosure of data to editors"
               validationSchema={disclosurePageSchema}
             />
@@ -87,7 +91,8 @@ const SubmissionWizard = ({ match, history }) => (
           render={() => (
             <WizardStep
               component={AuthorPageContainer}
-              handleSubmit={updateManuscript}
+              handleAutoSave={updateManuscript}
+              handleButtonClick={updateManuscript}
               history={history}
               initialValues={initialValues}
               nextUrl={`${match.url}/files`}

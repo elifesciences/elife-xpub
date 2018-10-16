@@ -2,6 +2,7 @@ import React from 'react'
 import { mount } from 'enzyme'
 import { Formik } from 'formik'
 import { ThemeProvider } from 'styled-components'
+import { MemoryRouter } from 'react-router-dom'
 
 import theme from '@elifesciences/elife-theme'
 import EditorsPage from './EditorsPage'
@@ -33,20 +34,21 @@ const formValues = {
 function makeWrapper(props) {
   return mount(
     <ThemeProvider theme={theme}>
-      <Formik
-        initialValues={formValues}
-        onSubmit={jest.fn()}
-        render={formProps => (
-          <EditorsPage
-            history={{ location: {} }}
-            reviewingEditors={[]}
-            seniorEditors={[]}
-            {...formProps}
-          />
-        )}
-        validationSchema={schema}
-        {...props}
-      />
+      <MemoryRouter>
+        <Formik
+          initialValues={formValues}
+          onSubmit={jest.fn()}
+          render={formProps => (
+            <EditorsPage
+              reviewingEditors={[]}
+              seniorEditors={[]}
+              {...formProps}
+            />
+          )}
+          validationSchema={schema}
+          {...props}
+        />
+      </MemoryRouter>
     </ThemeProvider>,
   )
 }

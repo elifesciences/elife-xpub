@@ -1,19 +1,23 @@
 const config = require('config')
 const S3rver = require('s3rver')
 const AWS = require('aws-sdk')
+const logger = require('@pubsweet/logger')
 
 async function startServer(options) {
   const endpoint = config.get('aws.s3.endpoint')
   const instance = await new Promise(resolve => {
-    const server = new S3rver({
-      directory: `/tmp/s3rver_test.${Math.random()
-        .toString(36)
-        .substring(2, 5)}`,
+    const directory = `/tmp/s3rver_test.${Math.random()
+      .toString(36)
+      .substring(2, 7)}`
+    const serverOptions = {
+      directory,
       removeBucketsOnClose: true,
       port: endpoint.port,
-    }).run(() => {
+    }
+    const server = new S3rver(serverOptions).run(() => {
       resolve(server)
     })
+    logger.info('Starting mock S3 server', serverOptions)
   })
 
   const s3 = new AWS.S3({ ...options })
