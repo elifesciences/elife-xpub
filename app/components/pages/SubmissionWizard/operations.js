@@ -19,6 +19,7 @@ const manuscriptFragment = gql`
   fragment WholeManuscript on Manuscript {
     id
     status
+    clientStatus
     meta {
       title
       articleType

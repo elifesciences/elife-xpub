@@ -12,6 +12,7 @@ export const MANUSCRIPTS = gql`
         title
       }
       status
+      clientStatus
     }
   }
 `

@@ -237,6 +237,22 @@ ${err}`,
       return team.teamMembers[0].alias
     },
 
+    async clientStatus(manuscript) {
+      let clientStatus = 'REJECTED'
+      if (manuscript.status === 'INITIAL') {
+        clientStatus = 'CONTINUE_SUBMISION'
+      } else if (
+        manuscript.status === 'MECA_EXPORT_PENDING' ||
+        manuscript.status === 'MECA_EXPORT_FAILED' ||
+        manuscript.status === 'MECA_EXPORT_SUCCEEDED' ||
+        manuscript.status === 'MECA_IMPORT_FAILED' ||
+        manuscript.status === 'MECA_IMPORT_SUCCEEDED'
+      ) {
+        clientStatus = 'WAITING_FOR_DECISION'
+      }
+      return clientStatus
+    },
+
     async assignees(manuscript, { role }) {
       const team = manuscript.teams.find(t => t.role === role)
       if (!team) return []
