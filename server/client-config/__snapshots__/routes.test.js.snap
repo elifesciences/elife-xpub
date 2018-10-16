@@ -2,6 +2,6 @@
 
 exports[`Client config handler returns a response containing public config 1`] = `
 "
-  window.config = {\\"publicConfig\\":{\\"key\\":\\"value\\"}}
+  window.config = {\\"publicConfig\\":{\\"isPublic\\":true,\\"key\\":\\"value\\"}}
 "
 `;

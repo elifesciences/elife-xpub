@@ -13,14 +13,12 @@ describe('Client config handler', () => {
   beforeEach(() => {
     jest.mock('config', () => ({
       publicConfig: {
+        isPublic: true,
         key: 'value'
       },
       privateConfig: {
         secret: 'password'
       },
-      publicKeys: [
-        'publicConfig'
-      ]
     }))
     routes = require('./routes')
   })

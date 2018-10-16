@@ -1,5 +1,5 @@
 const config = require('config')
-const { pick } = require('lodash')
+const { pickBy } = require('lodash')
 
 const template = clientConfig => `
   window.config = ${JSON.stringify(clientConfig)}
@@ -7,7 +7,7 @@ const template = clientConfig => `
 
 module.exports = app => {
   app.get('/config.js', (req, res) => {
-    const clientConfig = pick(config, config.publicKeys)
+    const clientConfig = pickBy(config, value => value.isPublic )
     const response = template(clientConfig)
     res.type('js')
     res.send(response)
