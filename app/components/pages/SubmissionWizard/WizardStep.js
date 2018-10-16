@@ -7,6 +7,7 @@ import ButtonLink from '../../ui/atoms/ButtonLink'
 import { FormH2 } from '../../ui/atoms/FormHeadings'
 import AutoSave from './AutoSave'
 import ProgressBar from './ProgressBar'
+import WizardSubmit from './WizardSubmit'
 
 const BoxNoMinWidth = styled(Box)`
   min-width: 0;
@@ -14,33 +15,48 @@ const BoxNoMinWidth = styled(Box)`
 
 const WizardStep = ({
   component: FormComponent,
-  handleSubmit,
+  finalStep,
+  handleAutoSave,
+  handleButtonClick,
   history,
   nextUrl,
   previousUrl,
   initialValues,
   title,
   step,
-  submitButtonText = 'Next',
   validationSchema,
 }) => (
   <Formik
     initialValues={initialValues}
     // ensure each page gets a new form instance otherwise all fields are touched
     key={FormComponent.name}
-    onSubmit={values => handleSubmit(values).then(() => history.push(nextUrl))}
-    render={({ values, handleSubmit: handleFormSubmit, ...formProps }) => (
+    onSubmit={values => {
+      handleButtonClick(values).then(() => history.push(nextUrl))
+    }}
+    render={({
+      values,
+      handleSubmit,
+      isSubmitting,
+      setTouched,
+      submitForm,
+      validateForm,
+      ...formProps
+    }) => (
       <Flex>
         <BoxNoMinWidth flex="1 1 auto" mx={[0, 0, 0, '16.666%']}>
-          <form noValidate onSubmit={handleFormSubmit}>
-            <AutoSave onSave={handleSubmit} values={values} />
+          <form noValidate onSubmit={handleSubmit}>
+            <AutoSave
+              disabled={isSubmitting}
+              onSave={handleAutoSave}
+              values={values}
+            />
             <Box my={5}>
               <ProgressBar currentStep={step} />
             </Box>
 
             <FormH2>{title}</FormH2>
 
-            <FormComponent history={history} values={values} {...formProps} />
+            <FormComponent values={values} {...formProps} />
 
             <Flex mt={6}>
               {previousUrl && (
@@ -51,9 +67,17 @@ const WizardStep = ({
                 </Box>
               )}
               <Box>
-                <Button data-test-id="next" primary type="submit">
-                  {submitButtonText}
-                </Button>
+                {finalStep ? (
+                  <WizardSubmit
+                    setTouched={setTouched}
+                    submitForm={submitForm}
+                    validateForm={validateForm}
+                  />
+                ) : (
+                  <Button data-test-id="next" primary type="submit">
+                    Next
+                  </Button>
+                )}
               </Box>
             </Flex>
           </form>

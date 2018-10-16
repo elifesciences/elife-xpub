@@ -18,7 +18,7 @@ const StyledSmallParagraph = styled(SmallParagraph)`
 const localDate = parse(new Date())
 const formattedLocalDate = format(localDate, 'MMM D, YYYY')
 
-const DisclosurePage = ({ values, setFieldValue, setFieldTouched }) => {
+const DisclosurePage = ({ values }) => {
   const formattedArticleType = values.meta.articleType
     .toUpperCase()
     .replace(/-+/g, ' ')

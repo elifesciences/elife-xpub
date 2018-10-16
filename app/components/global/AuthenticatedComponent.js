@@ -14,10 +14,6 @@ const AuthenticatedComponent = ({ children }) => (
       if (loading) return 'Loading...'
 
       if (error) {
-        if (error.message.includes('Object not found:')) {
-          window.localStorage.removeItem('token')
-        }
-
         return <ErrorPage error={error} />
       }
 

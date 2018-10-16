@@ -11,7 +11,7 @@ export const MANUSCRIPTS = gql`
       meta {
         title
       }
-      status
+      clientStatus
     }
   }
 `

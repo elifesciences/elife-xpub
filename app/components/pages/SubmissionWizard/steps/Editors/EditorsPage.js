@@ -72,22 +72,9 @@ class EditorsPage extends React.Component {
     this.props.setFieldValue(name, [])
   }
 
-  showModal = name => {
-    this.props.history.push(this.props.history.location, { showModal: name })
-  }
-
-  hideModal = () => {
-    this.props.history.goBack()
-  }
-
   isBoxVisible = name => this.state.boxVisibility[name]
 
-  isModalVisible = name =>
-    !!this.props.history.location.state &&
-    this.props.history.location.state.showModal === name
-
   setSelection = (name, selection) => {
-    this.hideModal(name)
     this.props.setFieldValue(name, selection)
     this.props.setFieldTouched(name, true)
   }
@@ -163,9 +150,6 @@ class EditorsPage extends React.Component {
               initialSelection={values.suggestedSeniorEditors}
               maxSelection={limits.suggestedSeniorEditors.max}
               minSelection={limits.suggestedSeniorEditors.min}
-              modalOpen={this.isModalVisible('suggestedSeniorEditors')}
-              onCancel={() => this.hideModal('suggestedSeniorEditors')}
-              onRequestModal={() => this.showModal('suggestedSeniorEditors')}
               onRequestRemove={person =>
                 this.removeSelection('suggestedSeniorEditors', person)
               }
@@ -195,9 +179,6 @@ class EditorsPage extends React.Component {
               initialSelection={values.opposedSeniorEditors}
               maxSelection={limits.opposedSeniorEditors.max}
               minSelection={limits.opposedSeniorEditors.min}
-              modalOpen={this.isModalVisible('opposedSeniorEditors')}
-              onCancel={() => this.hideModal('opposedSeniorEditors')}
-              onRequestModal={() => this.showModal('opposedSeniorEditors')}
               onRequestRemove={person =>
                 this.removeSelection('opposedSeniorEditors', person)
               }
@@ -230,9 +211,6 @@ class EditorsPage extends React.Component {
               initialSelection={values.suggestedReviewingEditors}
               maxSelection={limits.suggestedReviewingEditors.max}
               minSelection={limits.suggestedReviewingEditors.min}
-              modalOpen={this.isModalVisible('suggestedReviewingEditors')}
-              onCancel={() => this.hideModal('suggestedReviewingEditors')}
-              onRequestModal={() => this.showModal('suggestedReviewingEditors')}
               onRequestRemove={person =>
                 this.removeSelection('suggestedReviewingEditors', person)
               }
@@ -264,9 +242,6 @@ class EditorsPage extends React.Component {
               initialSelection={values.opposedReviewingEditors}
               maxSelection={limits.opposedReviewingEditors.max}
               minSelection={limits.opposedReviewingEditors.min}
-              modalOpen={this.isModalVisible('opposedReviewingEditors')}
-              onCancel={() => this.hideModal('opposedReviewingEditors')}
-              onRequestModal={() => this.showModal('opposedReviewingEditors')}
               onRequestRemove={person =>
                 this.removeSelection('opposedReviewingEditors', person)
               }

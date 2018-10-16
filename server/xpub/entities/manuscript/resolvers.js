@@ -55,6 +55,13 @@ const resolvers = {
     async updateManuscript(_, { data }, { user }) {
       const userUuid = await UserManager.getUuidForProfile(user)
       const originalManuscript = await ManuscriptManager.find(data.id, userUuid)
+      if (originalManuscript.status !== ManuscriptManager.statuses.INITIAL) {
+        throw new Error(
+          `Cannot update manuscript with status of ${
+            originalManuscript.status
+          }`,
+        )
+      }
       const manuscript = ManuscriptManager.applyInput(originalManuscript, data)
 
       await ManuscriptManager.save(manuscript)
@@ -69,6 +76,13 @@ const resolvers = {
     async submitManuscript(_, { data }, { user, ip }) {
       const userUuid = await UserManager.getUuidForProfile(user)
       const originalManuscript = await ManuscriptManager.find(data.id, userUuid)
+      if (originalManuscript.status !== ManuscriptManager.statuses.INITIAL) {
+        throw new Error(
+          `Cannot submit manuscript with status of ${
+            originalManuscript.status
+          }`,
+        )
+      }
 
       const manuscriptInput = ManuscriptManager.removeOptionalBlankReviewers(
         data,
@@ -235,6 +249,27 @@ ${err}`,
       const team = manuscript.teams.find(t => t.role === 'author')
       if (!team) return { firstName: '', lastName: '', email: '', aff: '' }
       return team.teamMembers[0].alias
+    },
+
+    async clientStatus(manuscript) {
+      let clientStatus = ''
+
+      switch (manuscript.status) {
+        case 'INITIAL':
+          clientStatus = 'CONTINUE_SUBMISION'
+          break
+        case 'MECA_EXPORT_PENDING':
+        case 'MECA_EXPORT_FAILED':
+        case 'MECA_EXPORT_SUCCEEDED':
+        case 'MECA_IMPORT_FAILED':
+        case 'MECA_IMPORT_SUCCEEDED':
+          clientStatus = 'WAITING_FOR_DECISION'
+          break
+        default:
+          throw new Error(`Unhandled manuscript status ${manuscript.status}`)
+      }
+
+      return clientStatus
     },
 
     async assignees(manuscript, { role }) {

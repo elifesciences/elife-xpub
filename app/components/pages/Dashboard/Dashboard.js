@@ -6,6 +6,7 @@ import { Button } from '@pubsweet/ui'
 
 import { FormH2, FormH3 } from '../../ui/atoms/FormHeadings'
 import Paragraph from '../../ui/atoms/Paragraph'
+import ManuscriptStatus from '../../ui/atoms/ManuscriptStatus'
 
 /* Temporary dashboard view pending receipt of designs */
 
@@ -52,7 +53,9 @@ const Dashboard = ({ manuscripts, deleteManuscript, createManuscript }) => (
                   </Link>
                 </Paragraph>
               </Cell>
-              <Cell data-test-id="stage">{manuscript.status}</Cell>
+              <Cell data-test-id="stage">
+                <ManuscriptStatus statusCode={manuscript.clientStatus} />
+              </Cell>
               <Cell>
                 <Button onClick={() => deleteManuscript(manuscript.id)} small>
                   Delete

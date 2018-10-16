@@ -1,7 +1,6 @@
 import { ClientFunction, Selector } from 'testcafe'
 import config from 'config'
 import startSshServer from '@elifesciences/xpub-meca-export/test/mock-sftp-server'
-import ManuscriptManager from '@elifesciences/xpub-server/entities/manuscript'
 import replaySetup from './helpers/replay-setup'
 import {
   author,
@@ -15,8 +14,6 @@ import {
 } from './pageObjects'
 import setFixtureHooks from './helpers/set-fixture-hooks'
 
-/* eslint no-unused-vars: ["error", { "varsIgnorePattern": "^_" }] */
-
 const f = fixture('Submission')
 setFixtureHooks(f)
 
@@ -26,7 +23,7 @@ const manuscript = {
 }
 
 const getPageUrl = ClientFunction(() => window.location.href)
-const _autoRetry = async (fn, timeout = 5000) => {
+const autoRetry = async (fn, timeout = 5000) => {
   const delay = 100
   const start = Date.now()
   while (true) {
@@ -37,6 +34,7 @@ const _autoRetry = async (fn, timeout = 5000) => {
       if (Date.now() > start + timeout) {
         throw err
       }
+      console.log(`Auto retrying failed assertion`, err.message)
     }
     // eslint-disable-next-line no-await-in-loop
     await new Promise(resolve => setTimeout(resolve, delay))
@@ -44,7 +42,7 @@ const _autoRetry = async (fn, timeout = 5000) => {
 }
 
 test('Happy path', async t => {
-  const { _mockFs, server } = await startSshServer(
+  const { mockFs, server } = await startSshServer(
     config.get('meca.sftp.connectionOptions.port'),
   )
   replaySetup('success')
@@ -145,7 +143,8 @@ test('Happy path', async t => {
   await t
     .typeText(disclosure.submitterName, 'Joe Bloggs')
     .click(disclosure.consentCheckbox)
-    .click(wizardStep.next)
+    .click(wizardStep.submit)
+    .click(wizardStep.accept)
 
   // dashboard
   await t
@@ -153,13 +152,13 @@ test('Happy path', async t => {
     .eql(manuscript.title)
     .expect(dashboard.stages.textContent)
     // TODO this might cause a race condition
-    .eql(ManuscriptManager.statuses.MECA_EXPORT_PENDING)
+    .eql('Waiting for decision')
 
   // SFTP server
-  // Disabled: see #659
-  // await autoRetry(() => t.expect(mockFs.readdirSync('/test').length).eql(1))
-
-  server.close()
+  await autoRetry(() => t.expect(mockFs.readdirSync('/test').length).eql(1))
+  await new Promise((resolve, reject) =>
+    server.close(err => (err ? reject(err) : resolve())),
+  )
 })
 
 test('Ability to progress through the wizard is tied to validation', async t => {

@@ -14,6 +14,7 @@ extend type Mutation {
 extend type Manuscript {
   # todo: these should be handled through teams
   author: Alias
+  clientStatus: String!
 
   # todo: these should be handled through notes
   opposedSeniorEditorsReason: String

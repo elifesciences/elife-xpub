@@ -24,7 +24,7 @@ const MainColumn = styled(Box).attrs({ mx: [0, 0, 0, '16.666%'] })`
 `
 
 const PeoplePickerModal = ({ open, title, ...props }) => (
-  <ModalOverlay open={open}>
+  <ModalOverlay open={open} transparentBackground={false}>
     <PeoplePicker {...props}>
       {innerProps => (
         <React.Fragment>

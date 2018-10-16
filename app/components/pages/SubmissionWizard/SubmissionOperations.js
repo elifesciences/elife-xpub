@@ -18,7 +18,7 @@ const dataModifiers = [
 ]
 
 function runMutation(formValues, mutation, { refetchQueries = [] } = {}) {
-  const omitList = ['__typename', 'files', 'teams', 'status']
+  const omitList = ['__typename', 'files', 'teams', 'status', 'clientStatus']
 
   dataModifiers.forEach(modifier => {
     omitList.push(...modifier.omitList())
