@@ -7,6 +7,7 @@ import LoginPage from './components/pages/Login'
 import LogoutPage from './components/pages/Logout/index'
 import SubmissionWizard from './components/pages/SubmissionWizard'
 import DashboardPage from './components/pages/Dashboard'
+import ThankYouPage from './components/pages/ThankYou'
 
 const Routes = () => (
   <Layout>
@@ -15,6 +16,7 @@ const Routes = () => (
       <Route component={LogoutPage} exact path="/logout" />
       <AuthenticatedComponent>
         <Switch>
+          <Route component={ThankYouPage} path="/thankyou/:id" />
           <Route component={SubmissionWizard} path="/submit/:id" />
           <Route component={DashboardPage} exact path="/" />
           <ErrorPage error="404: page not found" />

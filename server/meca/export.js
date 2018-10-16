@@ -21,7 +21,7 @@ async function generate(manuscript, content, clientIp) {
 }
 
 async function mecaExport(manuscript, content, clientIp) {
-  logger.info(`Starting meca export for manuscript ${manuscript}`)
+  logger.info(`Starting MECA export`, { manuscriptId: manuscript.id })
   const archive = await generate(manuscript, content, clientIp)
   await upload(archive, manuscript.id)
 }

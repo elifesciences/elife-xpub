@@ -11,6 +11,7 @@ const AppBarContainer = styled.div`
   height: ${th('space.6')};
   border-bottom: 1px solid ${th('colorBorder')};
   margin-bottom: ${th('space.3')};
+  padding-right: ${th('space.3')};
 `
 
 const AppBarLink = styled(NavLink)`

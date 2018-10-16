@@ -13,18 +13,15 @@ const ProfileMenuButton = styled(Link)`
   display: flex;
   align-items: center;
   cursor: pointer;
-  padding: ${th('space.3')};
 `
 
-const ProfileIcon = styled(Icon).attrs({
-  iconName: 'User',
-  overrideName: '@pubsweet-pending.AppBar.Profile',
-})`
-  display: block;
-  fill: ${th('colorTextReverse')};
-  background-color: ${th('colorText')};
-  border-radius: ${th('borderRadius')};
-`
+const ProfileIcon = props => (
+  <Icon
+    iconName="User"
+    overrideName="@pubsweet-pending.AppBar.Profile"
+    {...props}
+  />
+)
 
 const IconArrow = styled.div`
   border: 4px solid transparent;
