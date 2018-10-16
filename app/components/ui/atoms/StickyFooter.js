@@ -4,7 +4,7 @@ import { th } from '@pubsweet/ui-toolkit'
 
 import Centerer from '../../global/layout/Centerer'
 
-const ButtonBarContainer = styled.div`
+const Root = styled.div`
   position: fixed;
   bottom: 0;
   left: 0;
@@ -14,11 +14,11 @@ const ButtonBarContainer = styled.div`
 `
 
 const StickyFooter = ({ children, ...props }) => (
-  <ButtonBarContainer {...props}>
+  <Root {...props}>
     <Centerer pb={[18, 5, 5, 5]} pt={[18, 3, 3, 3]}>
       {children}
     </Centerer>
-  </ButtonBarContainer>
+  </Root>
 )
 
 export default StickyFooter
