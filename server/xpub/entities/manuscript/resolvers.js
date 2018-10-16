@@ -55,6 +55,13 @@ const resolvers = {
     async updateManuscript(_, { data }, { user }) {
       const userUuid = await UserManager.getUuidForProfile(user)
       const originalManuscript = await ManuscriptManager.find(data.id, userUuid)
+      if (originalManuscript.status !== ManuscriptManager.statuses.INITIAL) {
+        throw new Error(
+          `Cannot update manuscript with status of ${
+            originalManuscript.status
+          }`,
+        )
+      }
       const manuscript = ManuscriptManager.applyInput(originalManuscript, data)
 
       await ManuscriptManager.save(manuscript)
@@ -69,6 +76,13 @@ const resolvers = {
     async submitManuscript(_, { data }, { user, ip }) {
       const userUuid = await UserManager.getUuidForProfile(user)
       const originalManuscript = await ManuscriptManager.find(data.id, userUuid)
+      if (originalManuscript.status !== ManuscriptManager.statuses.INITIAL) {
+        throw new Error(
+          `Cannot submit manuscript with status of ${
+            originalManuscript.status
+          }`,
+        )
+      }
 
       const manuscriptInput = ManuscriptManager.removeOptionalBlankReviewers(
         data,

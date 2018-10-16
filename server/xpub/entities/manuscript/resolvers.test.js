@@ -90,6 +90,23 @@ describe('Manuscripts', () => {
       ).rejects.toThrow('Manuscript not found')
     })
 
+    it('fails if manuscript has already been submitted', async () => {
+      const blankManuscript = Manuscript.new({
+        createdBy: userId,
+        status: Manuscript.statuses.MECA_EXPORT_PENDING,
+      })
+      const manuscript = await Manuscript.save(blankManuscript)
+      await expect(
+        Mutation.updateManuscript(
+          {},
+          { data: { id: manuscript.id } },
+          { user: profileId },
+        ),
+      ).rejects.toThrow(
+        'Cannot update manuscript with status of MECA_EXPORT_PENDING',
+      )
+    })
+
     it('updates the current submission for user with data', async () => {
       const blankManuscript = Manuscript.new({ createdBy: userId })
       const manuscript = await Manuscript.save(blankManuscript)
@@ -208,6 +225,23 @@ describe('Manuscripts', () => {
           { user: badProfileId },
         ),
       ).rejects.toThrow('Manuscript not found')
+    })
+
+    it('fails if manuscript has already been submitted', async () => {
+      const blankManuscript = Manuscript.new({
+        createdBy: userId,
+        status: Manuscript.statuses.MECA_EXPORT_PENDING,
+      })
+      const manuscript = await Manuscript.save(blankManuscript)
+      await expect(
+        Mutation.submitManuscript(
+          {},
+          { data: { id: manuscript.id } },
+          { user: profileId },
+        ),
+      ).rejects.toThrow(
+        'Cannot submit manuscript with status of MECA_EXPORT_PENDING',
+      )
     })
 
     // TODO more tests needed here
