@@ -3,6 +3,7 @@ import styled, { withTheme } from 'styled-components'
 import { Flex, Box } from 'grid-styled'
 import { differenceInCalendarDays, format } from 'date-fns'
 import { th } from '@pubsweet/ui-toolkit'
+import PropTypes from 'prop-types'
 
 const dashboardStatusColor = (status, theme) =>
   ({
@@ -36,37 +37,53 @@ const Root = styled(Flex)`
   height: ${th('space.5')}
   align-items: center;
 `
-const StatusText = styled(Box)`
-  color: ${props => dashboardStatusColor(props.status, props.theme)};
+const StatusBox = styled(Box)`
+  color: ${props => props.color};
   font-size: small;
 `
-const TitleText = styled(Box)`
+const TitleBox = styled(Box)`
   font-weight: bold;
   font-size: small;
 `
-const DateText = styled(Box)`
-  color: ${props => props.theme.colorTextSecondary};
+const DateBox = styled(Box)`
+  color: ${th('colorTextSecondary')}
   text-align: right;
 `
 const RelativeDate = styled.p`
   margin-bottom: 0;
   font-size: small;
 `
-const SmallDate = styled.p`
+const AbsoluteDate = styled.p`
   font-size: x-small;
   margin-top: 0;
 `
-const DashboardListItem = props => (
-  <Root {...props}>
-    <StatusText {...props} width={1 / 6}>
-      {dashboardStatusText(props.status)}
-    </StatusText>
-    <TitleText width={4 / 6}>{props.title}</TitleText>
-    <DateText width={1 / 6}>
-      <RelativeDate>{dashboardDateText(props.date)}</RelativeDate>
-      <SmallDate>{format(props.date, 'ddd D MMM YYYY')}</SmallDate>
-    </DateText>
-  </Root>
-)
+const DashboardListItem = ({ status, title, date, theme }) => {
+  const statusText = dashboardStatusText(status)
+  const statusColor = statusText
+    ? dashboardStatusColor(status, theme)
+    : theme.colorError
+  return (
+    <Root theme={theme}>
+      <StatusBox color={statusColor} status={status} width={1 / 6}>
+        {statusText || 'Invalid status'}
+      </StatusBox>
+      <TitleBox width={4 / 6}>{title}</TitleBox>
+      <DateBox theme={theme} width={1 / 6}>
+        <RelativeDate>{dashboardDateText(date)}</RelativeDate>
+        <AbsoluteDate>{format(date, 'ddd D MMM YYYY')}</AbsoluteDate>
+      </DateBox>
+    </Root>
+  )
+}
+
+DashboardListItem.propTypes = {
+  status: PropTypes.number.isRequired,
+  title: PropTypes.string,
+  date: PropTypes.instanceOf(Date).isRequired,
+}
+
+DashboardListItem.defaultProps = {
+  title: 'Untitled manuscript',
+}
 
 export default withTheme(DashboardListItem)
