@@ -3,14 +3,13 @@ import { Flex, Box } from 'grid-styled'
 import { Redirect } from 'react-router-dom'
 import { withApollo } from 'react-apollo'
 import gql from 'graphql-tag'
-import config from 'config'
 import { H2 } from '@pubsweet/ui'
 import OrcidButton from '../../ui/atoms/OrcidButton'
 import ButtonLink from '../../ui/atoms/ButtonLink'
 import Paragraph from '../../ui/atoms/Paragraph'
 import ExternalLink from '../../ui/atoms/ExternalLink'
 
-const { url: loginUrl, signupUrl, legacySubmissionUrl } = config.login
+const { url: loginUrl, signupUrl, legacySubmissionUrl } = window.config.login
 
 const EXCHANGE_TOKEN_MUTATION = gql`
   mutation($token: String) {

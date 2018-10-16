@@ -10,6 +10,7 @@ module.exports = {
     components: [
       '@elifesciences/xpub-meca-export',
       '@elifesciences/xpub-server',
+      '@elifesciences/xpub-client-config',
       '@pubsweet/component-send-email',
     ],
   },
