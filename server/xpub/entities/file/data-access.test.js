@@ -17,7 +17,6 @@ const initializeDatabase = async () => {
   await createTables(true)
   manuscriptId = await manuscriptTestData.createSingleManuscript()
   testId = await createAFile(manuscriptId, 'testFile')
-  console.log('Created testId', testId)
 }
 
 describe('FileAccessLayer', () => {

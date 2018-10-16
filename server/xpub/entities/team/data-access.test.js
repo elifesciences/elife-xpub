@@ -23,7 +23,6 @@ async function createATeam(roleName) {
 const initializeDatabase = async () => {
   await createTables(true)
   testId = await createATeam('testTeam')
-  console.log('Created testId', testId)
 }
 
 describe('TeamAccessLayer', () => {
