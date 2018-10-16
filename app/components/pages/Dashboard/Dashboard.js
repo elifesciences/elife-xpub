@@ -7,6 +7,7 @@ import { Button } from '@pubsweet/ui'
 import { FormH2, FormH3 } from '../../ui/atoms/FormHeadings'
 import Paragraph from '../../ui/atoms/Paragraph'
 import ManuscriptStatus from '../../ui/atoms/ManuscriptStatus'
+import StickyFooter from '../../ui/atoms/StickyFooter'
 
 /* Temporary dashboard view pending receipt of designs */
 
@@ -26,7 +27,7 @@ const Dashboard = ({ manuscripts, deleteManuscript, createManuscript }) => (
 
     <Box mb={4}>
       <Button data-test-id="submit" onClick={createManuscript} primary>
-        Submit a manuscript
+        New Submission
       </Button>
     </Box>
 
@@ -66,6 +67,11 @@ const Dashboard = ({ manuscripts, deleteManuscript, createManuscript }) => (
         </tbody>
       </table>
     )}
+    <StickyFooter>
+      <Button data-test-id="mobile-submit" onClick={createManuscript} primary>
+        New Submission
+      </Button>
+    </StickyFooter>
   </React.Fragment>
 )
 
