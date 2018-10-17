@@ -1,5 +1,7 @@
 import { ClientFunction, Selector } from 'testcafe'
 import config from 'config'
+import assert from 'assert'
+import logger from '@pubsweet/logger'
 import startSshServer from '@elifesciences/xpub-meca-export/test/mock-sftp-server'
 import replaySetup from './helpers/replay-setup'
 import {
@@ -34,7 +36,7 @@ const autoRetry = async (fn, timeout = 5000) => {
       if (Date.now() > start + timeout) {
         throw err
       }
-      console.log(`Auto retrying failed assertion`, err.message)
+      logger.debug(`Auto retrying failed assertion:`, err.message || err.errMsg)
     }
     // eslint-disable-next-line no-await-in-loop
     await new Promise(resolve => setTimeout(resolve, delay))
@@ -155,7 +157,10 @@ test('Happy path', async t => {
     .eql('Waiting for decision')
 
   // SFTP server
-  await autoRetry(() => t.expect(mockFs.readdirSync('/test').length).eql(1))
+  await autoRetry(() => {
+    const dir = mockFs.readdirSync('/test')
+    assert.strictEqual(dir[0].substring(36), '-meca.zip')
+  })
   await new Promise((resolve, reject) =>
     server.close(err => (err ? reject(err) : resolve())),
   )

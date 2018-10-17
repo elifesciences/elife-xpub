@@ -19,6 +19,7 @@ async function uploadToS3(file, manuscriptId) {
 
   logger.info(`Uploading MECA archive to S3`, { manuscriptId })
   await s3.putObject(params).promise()
+  logger.debug('Finished MECA S3 upload')
 }
 
 async function uploadToSFTP(file, manuscriptId) {
@@ -35,6 +36,7 @@ async function uploadToSFTP(file, manuscriptId) {
   await sftp.put(file, transferName)
   await sftp.rename(transferName, finalName)
   await sftp.end()
+  logger.debug('Finished MECA SFTP upload')
 }
 
 async function upload(file, id) {
