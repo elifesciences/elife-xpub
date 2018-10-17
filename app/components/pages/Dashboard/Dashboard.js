@@ -1,19 +1,41 @@
 import React from 'react'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 import { Link } from 'react-router-dom'
 import { Box } from 'grid-styled'
 import { Button } from '@pubsweet/ui'
+import theme from '@elifesciences/elife-theme'
 
 import { FormH2, FormH3 } from '../../ui/atoms/FormHeadings'
 import Paragraph from '../../ui/atoms/Paragraph'
 import ManuscriptStatus from '../../ui/atoms/ManuscriptStatus'
 import StickyFooter from '../../ui/atoms/StickyFooter'
-import {
-  HideOnMobile,
-  ShowOnMobile,
-} from '../../global/layout/DisplayBasedOnScreenSize'
 
 /* Temporary dashboard view pending receipt of designs */
+
+const sizes = {
+  mobile: theme.breakpoints[0],
+  tabletPortrait: theme.breakpoints[1],
+  tabletLandscape: theme.breakpoints[2],
+  desktop: theme.breakpoints[3],
+}
+
+const media = Object.keys(sizes).reduce((acc, label) => {
+  acc[label] = (...args) => css`
+    @media (min-width: ${sizes[label]}px) {
+      ${css(...args)};
+    }
+  `
+  return acc
+}, {})
+
+const HideOnMobile = styled.div`
+  display: none;
+  ${media.mobile`display:block;`};
+`
+
+const ShowOnMobile = styled.div`
+  ${media.mobile`display: none;`};
+`
 
 const Header = styled.th`
   text-align: left;
