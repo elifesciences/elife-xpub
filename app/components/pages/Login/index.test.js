@@ -1,15 +1,6 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-
-global.config = {
-  login: {
-    url: 'test',
-    signupUrl: 'test',
-    legacySubmissionUrl: 'test'
-  }
-}
-
-const LoginPage = require('.').default
+import LoginPage from '.'
 
 const clientMock = {
   mutate: jest.fn(() =>
