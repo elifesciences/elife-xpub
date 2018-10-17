@@ -32,6 +32,10 @@ const Root = styled(Flex)`
   height: ${th('space.5')}
   align-items: center;
   padding: 0;
+  border-bottom: ${th('colorFurniture')};
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+  height: 107px;
 `
 
 const TitleBox = styled(Box)`
