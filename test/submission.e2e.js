@@ -10,6 +10,7 @@ import {
   files,
   login,
   submission,
+  thankyou,
   wizardStep,
 } from './pageObjects'
 import setFixtureHooks from './helpers/set-fixture-hooks'
@@ -145,6 +146,9 @@ test('Happy path', async t => {
     .click(disclosure.consentCheckbox)
     .click(wizardStep.submit)
     .click(wizardStep.accept)
+
+  // thank you page
+  await t.click(thankyou.finish)
 
   // dashboard
   await t
