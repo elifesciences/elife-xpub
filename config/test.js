@@ -1,5 +1,6 @@
 const { deferConfig } = require('config/defer')
 const AWS = require('aws-sdk')
+const logger = require('./non-serializable/mock-logger')
 
 module.exports = {
   'pubsweet-server': {
@@ -13,6 +14,7 @@ module.exports = {
     ),
     uploads: 'test/temp/uploads',
     secret: 'test',
+    logger
   },
   login: {
     url: '/mock-token-exchange/ewwboc7m',
