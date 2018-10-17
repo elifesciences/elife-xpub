@@ -36,6 +36,9 @@ const Root = styled(Flex)`
   border-bottom-style: solid;
   border-bottom-width: 1px;
   height: 107px;
+  :hover {
+    color: ${th('colorPrimary')}
+  }
 `
 
 const TitleBox = styled(Box)`
