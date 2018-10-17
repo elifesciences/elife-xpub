@@ -21,3 +21,5 @@ test/screenshots/
 .yarnrc
 .pki
 .vscode
+.node-gyp
+

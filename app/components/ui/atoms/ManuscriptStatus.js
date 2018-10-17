@@ -6,12 +6,14 @@ import PropTypes from 'prop-types'
 const StatusBox = styled(Box)`
   color: ${props => props.theme[props.color]};
   font-size: 16px;
+  padding-left: 24px;
+  flex: 0 0 120px;
 `
 
 const mapColor = statusCode =>
   ({
-    CONTINUE_SUBMISION: 'colorText',
-    WAITING_FOR_DECISION: 'colorTextSecondary',
+    CONTINUE_SUBMISION: 'colorPrimary',
+    WAITING_FOR_DECISION: 'colorPrimary',
     REJECTED: 'colorError',
   }[statusCode])
 
