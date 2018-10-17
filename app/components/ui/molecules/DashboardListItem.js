@@ -45,6 +45,7 @@ const TitleBox = styled(Box)`
   font-weight: bold;
   text-align: left;
   font-size: 16px;
+  flex-grow: 1;
 `
 const DateBox = styled(Box)`
   color: ${th('colorTextSecondary')}

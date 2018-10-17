@@ -3,11 +3,13 @@ import gql from 'graphql-tag'
 import { Query, Mutation } from 'react-apollo'
 import { CREATE_MANUSCRIPT } from '../SubmissionWizard/operations'
 import Dashboard from './Dashboard'
+import ErrorPage from '../Error'
 
 export const MANUSCRIPTS = gql`
   query DashboardManuscripts {
     manuscripts {
       id
+      created
       meta {
         title
       }
@@ -30,7 +32,7 @@ const DashboardPage = ({ history }) => (
       }
 
       if (error) {
-        return <div>{error.message}</div>
+        return <ErrorPage error={error.message} />
       }
 
       return (

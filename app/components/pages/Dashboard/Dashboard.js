@@ -1,72 +1,109 @@
 import React from 'react'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
-import { Box } from 'grid-styled'
+import { Box, Flex } from 'grid-styled'
 import { Button } from '@pubsweet/ui'
+import { th } from '@pubsweet/ui-toolkit'
+import SmallParagraph from '../../ui/atoms/SmallParagraph'
+import ExternalLink from '../../ui/atoms/ExternalLink'
+import Tabs from '../../ui/molecules/Tabs'
+import DashboardListItem from '../../ui/molecules/DashboardListItem'
 
-import { FormH2, FormH3 } from '../../ui/atoms/FormHeadings'
-import Paragraph from '../../ui/atoms/Paragraph'
-import ManuscriptStatus from '../../ui/atoms/ManuscriptStatus'
-
-/* Temporary dashboard view pending receipt of designs */
-
-const Header = styled.th`
-  text-align: left;
-  padding: 3px 6px;
+const RightAlignedButton = styled(Box)`
+  margin: ${th('space.3')} 0;
+  text-align: right;
+`
+const BoxNoMinWidth = styled(Box)`
+  min-width: 0;
 `
 
-const Cell = styled.td`
-  border-top: 1px solid grey;
-  padding: 3px 6px;
+const DashboardList = styled.div`
+  min-height: 300px;
+`
+
+const DashboardLink = styled(Link)`
+  text-decoration: none;
+  color: ${th('colorText')};
+`
+
+const EmptyListMessage = styled.div`
+  margin-top: ${th('space.7')};
+  text-align: center;
+  color: ${th('colorTextSecondary')};
+`
+
+const CenterdSmallParagraph = styled(SmallParagraph)`
+  color: ${th('colorTextSecondary')};
+  text-align: center;
 `
 
 const Dashboard = ({ manuscripts, deleteManuscript, createManuscript }) => (
-  <React.Fragment>
-    <FormH2>Dashboard Dummy Page</FormH2>
-
-    <Box mb={4}>
-      <Button data-test-id="submit" onClick={createManuscript} primary>
-        Submit a manuscript
-      </Button>
-    </Box>
-
-    <FormH3>All manuscripts</FormH3>
-
-    {!manuscripts.length && <p>No manuscripts to display</p>}
-
-    {!!manuscripts.length && (
-      <table data-test-id="manuscripts">
-        <thead>
-          <tr>
-            <Header>Title</Header>
-            <Header>Stage</Header>
-            <Header />
-          </tr>
-        </thead>
-        <tbody>
-          {manuscripts.map(manuscript => (
-            <tr key={manuscript.id}>
-              <Cell data-test-id="title">
-                <Paragraph data-test-id="title">
-                  <Link to={`/submit/${manuscript.id}`}>
-                    {manuscript.meta.title || '(Untitled)'}
-                  </Link>
-                </Paragraph>
-              </Cell>
-              <Cell data-test-id="stage">
-                <ManuscriptStatus statusCode={manuscript.clientStatus} />
-              </Cell>
-              <Cell>
-                <Button onClick={() => deleteManuscript(manuscript.id)} small>
-                  Delete
+  <Flex>
+    <BoxNoMinWidth flex="1 1 auto" mx={[0, 0, 0, '16.666%']}>
+      <RightAlignedButton>
+        <Button data-test-id="submit" onClick={createManuscript} primary>
+          Submit a manuscript
+        </Button>
+      </RightAlignedButton>
+      <Tabs>
+        <Tabs.List>
+          <Tabs.Tab>Submissions</Tabs.Tab>
+          <Tabs.Tab>Archive</Tabs.Tab>
+        </Tabs.List>
+        <Tabs.Panel>
+          <DashboardList data-test-id="manuscripts">
+            {!manuscripts.length && (
+              <EmptyListMessage>
+                You currently have no active submissions
+                <SmallParagraph>
+                  You may want to bookmark this page to easily retrieve your in
+                  progress submissions.
+                </SmallParagraph>
+              </EmptyListMessage>
+            )}
+            {!!manuscripts.length && (
+              <React.Fragment>
+                {manuscripts.map(manuscript => (
+                  <DashboardLink
+                    key={manuscript.id}
+                    to={`/submit/${manuscript.id}`}
+                  >
+                    <DashboardListItem
+                      date={new Date(manuscript.created)}
+                      statusCode={manuscript.clientStatus}
+                      title={manuscript.meta.title || '(Untitled)'}
+                    />
+                  </DashboardLink>
+                ))}
+                <Button
+                  onClick={() =>
+                    manuscripts.forEach(manuscript =>
+                      deleteManuscript(manuscript.id),
+                    )
+                  }
+                  small
+                >
+                  Delete All
                 </Button>
-              </Cell>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    )}
-  </React.Fragment>
+              </React.Fragment>
+            )}
+          </DashboardList>
+        </Tabs.Panel>
+        <Tabs.Panel>
+          <DashboardList>
+            <EmptyListMessage>Archived placeholder view.</EmptyListMessage>
+          </DashboardList>
+        </Tabs.Panel>
+      </Tabs>
+      <CenterdSmallParagraph>
+        Can&#39;t find a submission? You might find it in our full{' '}
+        <ExternalLink href="https://submit.elifesciences.org">
+          peer review and submissions
+        </ExternalLink>{' '}
+        system
+      </CenterdSmallParagraph>
+    </BoxNoMinWidth>
+  </Flex>
 )
 
 export default Dashboard
