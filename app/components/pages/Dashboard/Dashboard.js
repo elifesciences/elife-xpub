@@ -28,12 +28,12 @@ const media = Object.keys(sizes).reduce((acc, label) => {
   return acc
 }, {})
 
-const HideOnMobile = styled.div`
+const StyledBox = styled(Box)`
   display: none;
   ${media.mobile`display:block;`};
 `
 
-const ShowOnMobile = styled.div`
+const StyledStickyFooter = styled(StickyFooter)`
   ${media.mobile`display: none;`};
 `
 
@@ -51,17 +51,15 @@ const Dashboard = ({ manuscripts, deleteManuscript, createManuscript }) => (
   <React.Fragment>
     <FormH2>Dashboard Dummy Page</FormH2>
 
-    <HideOnMobile>
-      <Box mb={4}>
-        <Button
-          data-test-id="desktop-new-submission"
-          onClick={createManuscript}
-          primary
-        >
-          New Submission
-        </Button>
-      </Box>
-    </HideOnMobile>
+    <StyledBox mb={4}>
+      <Button
+        data-test-id="desktop-new-submission"
+        onClick={createManuscript}
+        primary
+      >
+        New Submission
+      </Button>
+    </StyledBox>
 
     <FormH3>All manuscripts</FormH3>
 
@@ -99,17 +97,15 @@ const Dashboard = ({ manuscripts, deleteManuscript, createManuscript }) => (
         </tbody>
       </table>
     )}
-    <ShowOnMobile>
-      <StickyFooter>
-        <Button
-          data-test-id="mobile-new-submission"
-          onClick={createManuscript}
-          primary
-        >
-          New Submission
-        </Button>
-      </StickyFooter>
-    </ShowOnMobile>
+    <StyledStickyFooter>
+      <Button
+        data-test-id="mobile-new-submission"
+        onClick={createManuscript}
+        primary
+      >
+        New Submission
+      </Button>
+    </StyledStickyFooter>
   </React.Fragment>
 )
 
