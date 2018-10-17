@@ -1,11 +1,11 @@
-import { css } from 'styled-components'
-import theme from '@elifesciences/elife-theme'
+import { css, withTheme } from 'styled-components'
+import { th } from '@pubsweet/ui-toolkit'
 
 const sizes = {
-  mobile: theme.breakpoints[0],
-  tabletPortrait: theme.breakpoints[1],
-  tabletLandscape: theme.breakpoints[2],
-  desktop: theme.breakpoints[3],
+  mobileUp: th('breakpoints.0'),
+  tabletPortraitUp: th('breakpoints.1'),
+  tabletLandscapeUp: th('breakpoints.2'),
+  desktopUp: th('breakpoints.3'),
 }
 
 const media = Object.keys(sizes).reduce((acc, label) => {
@@ -17,4 +17,4 @@ const media = Object.keys(sizes).reduce((acc, label) => {
   return acc
 }, {})
 
-export default media
+export default withTheme(media)

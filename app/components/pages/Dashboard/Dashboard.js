@@ -12,13 +12,14 @@ import StickyFooter from '../../ui/atoms/StickyFooter'
 
 /* Temporary dashboard view pending receipt of designs */
 
-const StyledBox = styled(Box)`
+const BoxHiddenFromMobile = styled(Box)`
   display: none;
-  ${media.mobile`display:block;`};
+  ${media.mobileUp`display: block`};
 `
 
-const StyledStickyFooter = styled(StickyFooter)`
-  ${media.mobile`display: none;`};
+const MobileOnlyStickyFooter = styled(StickyFooter)`
+  display: block;
+  ${media.mobileUp`display: none;`};
 `
 
 const Header = styled.th`
@@ -35,7 +36,7 @@ const Dashboard = ({ manuscripts, deleteManuscript, createManuscript }) => (
   <React.Fragment>
     <FormH2>Dashboard Dummy Page</FormH2>
 
-    <StyledBox mb={4}>
+    <BoxHiddenFromMobile mb={4}>
       <Button
         data-test-id="desktop-new-submission"
         onClick={createManuscript}
@@ -43,7 +44,7 @@ const Dashboard = ({ manuscripts, deleteManuscript, createManuscript }) => (
       >
         New Submission
       </Button>
-    </StyledBox>
+    </BoxHiddenFromMobile>
 
     <FormH3>All manuscripts</FormH3>
 
@@ -81,7 +82,7 @@ const Dashboard = ({ manuscripts, deleteManuscript, createManuscript }) => (
         </tbody>
       </table>
     )}
-    <StyledStickyFooter>
+    <MobileOnlyStickyFooter>
       <Button
         data-test-id="mobile-new-submission"
         onClick={createManuscript}
@@ -89,7 +90,7 @@ const Dashboard = ({ manuscripts, deleteManuscript, createManuscript }) => (
       >
         New Submission
       </Button>
-    </StyledStickyFooter>
+    </MobileOnlyStickyFooter>
   </React.Fragment>
 )
 
