@@ -3,6 +3,7 @@ const logger = require('winston')
 
 module.exports = {
   authsome: {
+    isPublic: true,
     mode: path.resolve(__dirname, 'non-serializable/authsome.js'),
   },
   validations: path.resolve(__dirname, 'non-serializable/validations.js'),
@@ -10,6 +11,7 @@ module.exports = {
     components: [
       '@elifesciences/xpub-meca-export',
       '@elifesciences/xpub-server',
+      '@elifesciences/xpub-client-config',
       '@pubsweet/component-send-email',
     ],
   },
@@ -30,10 +32,12 @@ module.exports = {
       ':remote-addr [:date[clf]] :method :url :status :graphql[operation] :res[content-length] :response-time ms',
   },
   'pubsweet-client': {
+    isPublic: true,
     API_ENDPOINT: '/api',
     'login-redirect': '/',
   },
   elife: {
+    isPublic: true,
     api: {
       url: 'https://api.elifesciences.org/',
     },
@@ -61,6 +65,7 @@ module.exports = {
   },
   login: {
     // TODO swap this mock for the Journal endpoint when available
+    isPublic: true,
     url: '/mock-token-exchange/ewwboc7m',
     enableMock: true,
     signupUrl: 'https://orcid.org/register',
@@ -106,16 +111,7 @@ module.exports = {
     timeoutMs: 3000,
   },
   fileUpload: {
+    isPublic: true,
     maxSizeMB: 100,
   },
-  // these keys are included in the webpack build for use on the client
-  // make sure not to expose any secrets
-  publicKeys: [
-    'pubsweet-client',
-    'authsome',
-    'validations',
-    'fileUpload',
-    'login',
-    'elife.majorSubjectAreas',
-  ],
 }
