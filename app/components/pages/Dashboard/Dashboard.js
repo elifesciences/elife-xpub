@@ -1,32 +1,16 @@
 import React from 'react'
-import styled, { css } from 'styled-components'
+import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 import { Box } from 'grid-styled'
 import { Button } from '@pubsweet/ui'
-import theme from '@elifesciences/elife-theme'
 
+import media from '../../global/layout/media'
 import { FormH2, FormH3 } from '../../ui/atoms/FormHeadings'
 import Paragraph from '../../ui/atoms/Paragraph'
 import ManuscriptStatus from '../../ui/atoms/ManuscriptStatus'
 import StickyFooter from '../../ui/atoms/StickyFooter'
 
 /* Temporary dashboard view pending receipt of designs */
-
-const sizes = {
-  mobile: theme.breakpoints[0],
-  tabletPortrait: theme.breakpoints[1],
-  tabletLandscape: theme.breakpoints[2],
-  desktop: theme.breakpoints[3],
-}
-
-const media = Object.keys(sizes).reduce((acc, label) => {
-  acc[label] = (...args) => css`
-    @media (min-width: ${sizes[label]}px) {
-      ${css(...args)};
-    }
-  `
-  return acc
-}, {})
 
 const StyledBox = styled(Box)`
   display: none;
