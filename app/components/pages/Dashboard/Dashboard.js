@@ -1,14 +1,13 @@
 import React from 'react'
 import styled from 'styled-components'
 import { Box, Flex } from 'grid-styled'
-import { Mutation } from 'react-apollo'
 import { Button } from '@pubsweet/ui'
 import { th } from '@pubsweet/ui-toolkit'
 import SmallParagraph from '../../ui/atoms/SmallParagraph'
 import ExternalLink from '../../ui/atoms/ExternalLink'
 import Tabs from '../../ui/molecules/Tabs'
 import DashboardList from '../../ui/molecules/DashboardList'
-import { MANUSCRIPTS, DELETE_MANUSCRIPT } from './oporations'
+import { ALL_MANUSCRIPTS } from './oporations'
 import ManuscriptsQuery from './ManuscriptsQuery'
 
 const RightAlignedButton = styled(Box)`
@@ -45,20 +44,9 @@ const Dashboard = ({ createManuscript }) => (
           <Tabs.Tab>Archive</Tabs.Tab>
         </Tabs.List>
         <DashboardPanel>
-          <Mutation
-            mutation={DELETE_MANUSCRIPT}
-            refetchQueries={[{ query: MANUSCRIPTS }]}
-          >
-            {deleteManuscript => (
-              <ManuscriptsQuery query={MANUSCRIPTS}>
-                <DashboardList
-                  deleteManuscript={id =>
-                    deleteManuscript({ variables: { id } })
-                  }
-                />
-              </ManuscriptsQuery>
-            )}
-          </Mutation>
+          <ManuscriptsQuery query={ALL_MANUSCRIPTS}>
+            <DashboardList />
+          </ManuscriptsQuery>
         </DashboardPanel>
         <DashboardPanel>
           <EmptyListMessage>Archived placeholder view.</EmptyListMessage>

@@ -1,7 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
-import { Button } from '@pubsweet/ui'
 import { th } from '@pubsweet/ui-toolkit'
 import DashboardListItem from '../../ui/molecules/DashboardListItem'
 import SmallParagraph from '../../ui/atoms/SmallParagraph'
@@ -16,7 +15,7 @@ const EmptyListMessage = styled.div`
   color: ${th('colorTextSecondary')};
 `
 
-const DashboardList = ({ manuscripts, deleteManuscript }) => {
+const DashboardList = ({ manuscripts }) => {
   if (!manuscripts.length) {
     return (
       <EmptyListMessage>
@@ -40,14 +39,6 @@ const DashboardList = ({ manuscripts, deleteManuscript }) => {
           />
         </DashboardLink>
       ))}
-      <Button
-        onClick={() =>
-          manuscripts.forEach(manuscript => deleteManuscript(manuscript.id))
-        }
-        small
-      >
-        Delete All
-      </Button>
     </React.Fragment>
   )
 }

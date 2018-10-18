@@ -1,6 +1,6 @@
 import gql from 'graphql-tag'
 
-export const MANUSCRIPTS = gql`
+export const ALL_MANUSCRIPTS = gql`
   query DashboardManuscripts {
     manuscripts {
       id
@@ -10,11 +10,5 @@ export const MANUSCRIPTS = gql`
       }
       clientStatus
     }
-  }
-`
-
-export const DELETE_MANUSCRIPT = gql`
-  mutation DeleteManuscript($id: ID!) {
-    deleteManuscript(id: $id)
   }
 `

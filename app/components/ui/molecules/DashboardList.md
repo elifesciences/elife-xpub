@@ -19,6 +19,5 @@ Dashboard list of submissions
       id: '2',
     },
   ]}
-  deleteManuscript={() => alert('Manuscript deleted')}
 />
 ```
