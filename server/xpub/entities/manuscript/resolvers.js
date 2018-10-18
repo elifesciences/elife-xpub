@@ -242,6 +242,20 @@ ${err}`,
 
       return ManuscriptManager.find(id, userUuid)
     },
+    async savePage(_, vars, { user }) {
+      const userUuid = await UserManager.getUuidForProfile(user)
+      const originalManuscript = await ManuscriptManager.find(vars.id, userUuid)
+
+      originalManuscript.formState = vars.url
+      await ManuscriptManager.save(originalManuscript)
+      logger.debug(`Updated manuscript`, {
+        manuscriptId: vars.id,
+        userId: userUuid,
+        formState: vars.url,
+      })
+
+      return originalManuscript
+    },
   },
 
   Manuscript: {
