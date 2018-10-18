@@ -23,6 +23,7 @@ const columnNames = [
   'disclosure_consent',
   'qc_issues',
   'created_by',
+  'formState',
 ]
 
 const joinSelect = buildQuery

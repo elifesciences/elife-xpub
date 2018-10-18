@@ -28,7 +28,7 @@ const SubmissionWizard = ({ match, history }) => (
               history={history}
               initialValues={initialValues}
               nextUrl={`${match.url}/submission`}
-              previousUrl={`${match.url}`}
+              previousUrl={`${match.url}/author`}
               step={1}
               title="Write your cover letter and upload your manuscript"
               validationSchema={filesPageSchema}
@@ -88,6 +88,7 @@ const SubmissionWizard = ({ match, history }) => (
           )}
         />
         <Route
+          path={`${match.path}/author`}
           render={() => (
             <WizardStep
               component={AuthorPageContainer}

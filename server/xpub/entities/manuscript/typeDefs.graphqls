@@ -9,6 +9,7 @@ extend type Mutation {
   updateManuscript(data: ManuscriptInput!): Manuscript!
   uploadManuscript(id: ID!, file: Upload!, fileSize: Int!): Manuscript!
   submitManuscript(data: ManuscriptInput!): Manuscript!
+  savePage(url:String!, id:String!):Manuscript!
 }
 
 extend type Manuscript {
@@ -87,3 +88,4 @@ input OpposedReviewerInput {
   name: String
   email: String
 }
+

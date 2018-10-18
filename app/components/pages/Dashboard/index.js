@@ -12,6 +12,7 @@ export const MANUSCRIPTS = gql`
         title
       }
       clientStatus
+      formState
     }
   }
 `
@@ -45,7 +46,7 @@ const DashboardPage = ({ history }) => (
                   createManuscript={() =>
                     createManuscript().then(result =>
                       history.push(
-                        `/submit/${result.data.createManuscript.id}`,
+                        `/submit/${result.data.createManuscript.id}/author`,
                       ),
                     )
                   }

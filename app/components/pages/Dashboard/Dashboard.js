@@ -48,7 +48,10 @@ const Dashboard = ({ manuscripts, deleteManuscript, createManuscript }) => (
             <tr key={manuscript.id}>
               <Cell data-test-id="title">
                 <Paragraph data-test-id="title">
-                  <Link to={`/submit/${manuscript.id}`}>
+                  <Link
+                    to={`${manuscript.formState ||
+                      `/submit/${manuscript.id}/author`}`}
+                  >
                     {manuscript.meta.title || '(Untitled)'}
                   </Link>
                 </Paragraph>
