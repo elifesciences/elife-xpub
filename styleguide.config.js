@@ -1,5 +1,4 @@
 const path = require('path')
-const resolve = require('./webpack/common-resolve')
 
 module.exports = {
   sections: [
@@ -16,7 +15,11 @@ module.exports = {
     module: {
       rules: require('./webpack/rules.js'),
     },
-    resolve,
+    resolve: {
+      alias: {
+        config: path.join(__dirname, 'styleguide/config.json'),
+      },
+    },
   },
   context: {
     formik: 'formik',
