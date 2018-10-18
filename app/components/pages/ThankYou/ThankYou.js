@@ -35,7 +35,7 @@ const ThankYou = ({ title }) => (
       submission.
       <BookmarkLink href="/">elifesciences.org/submissions</BookmarkLink>
     </SubText>
-    <ButtonLink primary to="/">
+    <ButtonLink data-test-id="finish" primary to="/">
       Finish
     </ButtonLink>
   </CenteredContent>

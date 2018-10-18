@@ -79,7 +79,7 @@ const SubmissionWizard = ({ match, history }) => (
               handleButtonClick={submitManuscript}
               history={history}
               initialValues={initialValues}
-              nextUrl="/"
+              nextUrl={`/thankyou/${match.params.id}`}
               previousUrl={`${match.url}/editors`}
               step={4}
               title="Disclosure of data to editors"

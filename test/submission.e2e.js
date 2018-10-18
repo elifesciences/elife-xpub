@@ -1,5 +1,7 @@
 import { ClientFunction, Selector } from 'testcafe'
 import config from 'config'
+import assert from 'assert'
+import logger from '@pubsweet/logger'
 import startSshServer from '@elifesciences/xpub-meca-export/test/mock-sftp-server'
 import replaySetup from './helpers/replay-setup'
 import {
@@ -10,6 +12,7 @@ import {
   files,
   login,
   submission,
+  thankyou,
   wizardStep,
 } from './pageObjects'
 import setFixtureHooks from './helpers/set-fixture-hooks'
@@ -34,7 +37,7 @@ const autoRetry = async (fn, timeout = 5000) => {
       if (Date.now() > start + timeout) {
         throw err
       }
-      console.log(`Auto retrying failed assertion`, err.message)
+      logger.debug(`Auto retrying failed assertion:`, err.message || err.errMsg)
     }
     // eslint-disable-next-line no-await-in-loop
     await new Promise(resolve => setTimeout(resolve, delay))
@@ -50,7 +53,7 @@ test('Happy path', async t => {
   await t
     .navigateTo(login.url)
     .click(login.button)
-    .click(dashboard.submitManuscript)
+    .click(dashboard.desktopNewSubmission)
 
   // author details initially empty
   await t
@@ -146,6 +149,9 @@ test('Happy path', async t => {
     .click(wizardStep.submit)
     .click(wizardStep.accept)
 
+  // thank you page
+  await t.click(thankyou.finish)
+
   // dashboard
   await t
     .expect(dashboard.titles.textContent)
@@ -155,7 +161,10 @@ test('Happy path', async t => {
     .eql('Waiting for decision')
 
   // SFTP server
-  await autoRetry(() => t.expect(mockFs.readdirSync('/test').length).eql(1))
+  await autoRetry(() => {
+    const dir = mockFs.readdirSync('/test')
+    assert.strictEqual(dir[0].substring(36), '-meca.zip')
+  })
   await new Promise((resolve, reject) =>
     server.close(err => (err ? reject(err) : resolve())),
   )
@@ -166,7 +175,7 @@ test('Ability to progress through the wizard is tied to validation', async t => 
   await t
     .navigateTo(login.url)
     .click(login.button)
-    .click(dashboard.submitManuscript)
+    .click(dashboard.desktopNewSubmission)
 
   // set author details
   await t
@@ -194,7 +203,7 @@ test('Form entries are saved when a user navigates to the next page of the wizar
   await t
     .navigateTo(login.url)
     .click(login.button)
-    .click(dashboard.submitManuscript)
+    .click(dashboard.desktopNewSubmission)
 
   await t
     .typeText(author.firstNameField, 'Meghan')

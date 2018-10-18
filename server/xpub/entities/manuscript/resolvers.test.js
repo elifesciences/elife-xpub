@@ -1,3 +1,4 @@
+jest.mock('@pubsweet/logger')
 jest.mock('@elifesciences/xpub-meca-export', () => ({
   mecaExport: jest.fn(() => Promise.resolve()),
 }))

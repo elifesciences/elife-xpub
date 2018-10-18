@@ -66,7 +66,7 @@ export default {
   borderStyle: 'solid',
 
   /* Shadow (for tooltip) */
-  boxShadow: '0 2px 4px 0 rgba(0, 0, 0, 0.30)',
+  boxShadow: '0 2px 4px 0 rgba(0, 0, 0, 0.5)',
 
   /* Transition */
   transitionDuration: '0.2s',

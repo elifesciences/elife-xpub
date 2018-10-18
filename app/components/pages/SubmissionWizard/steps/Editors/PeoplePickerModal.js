@@ -1,6 +1,5 @@
 import React from 'react'
 import styled from 'styled-components'
-import { th } from '@pubsweet/ui-toolkit'
 import { Box, Flex } from 'grid-styled'
 
 import Centerer from '../../../../global/layout/Centerer'
@@ -8,15 +7,7 @@ import ModalOverlay from '../../../../ui/molecules/ModalOverlay'
 import PeoplePicker from '../../../../ui/molecules/PeoplePicker'
 import SearchBox from '../../../../ui/molecules/SearchBox'
 import { FormH2 } from '../../../../ui/atoms/FormHeadings'
-
-const ButtonBarContainer = styled.div`
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100vw;
-  border-top: ${th('borderWidth')} ${th('borderStyle')} ${th('colorBorder')};
-  background-color: ${th('colorBackground')};
-`
+import StickyFooter from '../../../../ui/atoms/StickyFooter'
 
 const MainColumn = styled(Box).attrs({ mx: [0, 0, 0, '16.666%'] })`
   flex: 1 1 auto;
@@ -58,15 +49,11 @@ const PeoplePickerModal = ({ open, title, ...props }) => (
               </MainColumn>
             </Flex>
           </Centerer>
-          <ButtonBarContainer>
-            <Centerer py={[3, 3, 3, 4]}>
-              <Flex>
-                <MainColumn>
-                  <PeoplePicker.Buttons {...innerProps} />
-                </MainColumn>
-              </Flex>
-            </Centerer>
-          </ButtonBarContainer>
+          <StickyFooter>
+            <MainColumn>
+              <PeoplePicker.Buttons {...innerProps} />
+            </MainColumn>
+          </StickyFooter>
         </React.Fragment>
       )}
     </PeoplePicker>

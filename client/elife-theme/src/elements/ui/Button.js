@@ -3,12 +3,12 @@ import { th, darken } from '@pubsweet/ui-toolkit'
 
 const extraSmall = css`
   font-size: 11px;
-  line-height: calc(${th('gridUnit')} * 2);
-  padding: ${th('gridUnit')};
+  line-height: 12px;
+  padding: ${th('space.1')};
 `
 
 const small = css`
-  padding: ${th('gridUnit')};
+  padding: ${th('space.1')};
 `
 
 const primary = css`
@@ -33,11 +33,10 @@ const primary = css`
 `
 
 export default css`
-  line-height: calc(${th('gridUnit')} * 4);
+  font-size: ${th('fontSizeBaseSmall')}
+  line-height: ${th('lineHeightBaseSmall')};
+  padding: ${th('space.2')};
   min-width: calc(${th('gridUnit')} * 28);
-  padding: calc(${th('gridUnit')} * 2);
-  font-size: 14px;
-  font-weight: 500;
   text-transform: uppercase;
 
   ${props => props.small && small};
