@@ -4,11 +4,23 @@ import { Link } from 'react-router-dom'
 import { Box } from 'grid-styled'
 import { Button } from '@pubsweet/ui'
 
+import media from '../../global/layout/media'
 import { FormH2, FormH3 } from '../../ui/atoms/FormHeadings'
 import Paragraph from '../../ui/atoms/Paragraph'
 import ManuscriptStatus from '../../ui/atoms/ManuscriptStatus'
+import StickyFooter from '../../ui/atoms/StickyFooter'
 
 /* Temporary dashboard view pending receipt of designs */
+
+const BoxHiddenFromMobile = styled(Box)`
+  display: none;
+  ${media.mobileUp`display: block`};
+`
+
+const MobileOnlyStickyFooter = styled(StickyFooter)`
+  display: block;
+  ${media.mobileUp`display: none;`};
+`
 
 const Header = styled.th`
   text-align: left;
@@ -24,11 +36,15 @@ const Dashboard = ({ manuscripts, deleteManuscript, createManuscript }) => (
   <React.Fragment>
     <FormH2>Dashboard Dummy Page</FormH2>
 
-    <Box mb={4}>
-      <Button data-test-id="submit" onClick={createManuscript} primary>
-        Submit a manuscript
+    <BoxHiddenFromMobile mb={4}>
+      <Button
+        data-test-id="desktop-new-submission"
+        onClick={createManuscript}
+        primary
+      >
+        New Submission
       </Button>
-    </Box>
+    </BoxHiddenFromMobile>
 
     <FormH3>All manuscripts</FormH3>
 
@@ -66,6 +82,15 @@ const Dashboard = ({ manuscripts, deleteManuscript, createManuscript }) => (
         </tbody>
       </table>
     )}
+    <MobileOnlyStickyFooter>
+      <Button
+        data-test-id="mobile-new-submission"
+        onClick={createManuscript}
+        primary
+      >
+        New Submission
+      </Button>
+    </MobileOnlyStickyFooter>
   </React.Fragment>
 )
 
