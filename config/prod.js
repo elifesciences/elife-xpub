@@ -9,4 +9,11 @@ module.exports = {
       disableUpload: true,
     },
   },
+  aws: {
+    s3: {
+      params: {
+        Bucket: 'prod-elife-xpub',
+      },
+    },
+  },
 }
