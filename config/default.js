@@ -84,7 +84,7 @@ module.exports = {
     s3: {
       s3ForcePathStyle: true,
       params: {
-        Bucket: 'demo-elife-xpub',
+        Bucket: 'staging-elife-xpub',
       },
     },
   },
