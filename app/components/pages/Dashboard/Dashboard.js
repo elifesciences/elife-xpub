@@ -43,7 +43,7 @@ const Dashboard = ({ createManuscript }) => (
           <Tabs.Tab>Submissions</Tabs.Tab>
           <Tabs.Tab>Archive</Tabs.Tab>
         </Tabs.List>
-        <DashboardPanel>
+        <DashboardPanel data-test-id="manuscripts">
           <ManuscriptsQuery query={ALL_MANUSCRIPTS}>
             <DashboardList />
           </ManuscriptsQuery>

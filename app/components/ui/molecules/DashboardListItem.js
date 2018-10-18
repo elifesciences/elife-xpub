@@ -64,7 +64,7 @@ const AbsoluteDate = styled.p`
 
 const DashboardListItem = ({ statusCode, title, date }) => (
   <Root>
-    <TitleBox>{title}</TitleBox>
+    <TitleBox data-test-id="title">{title}</TitleBox>
     <ManuscriptStatus statusCode={statusCode} />
     <DateBox>
       <RelativeDate>{dashboardDateText(date)}</RelativeDate>
