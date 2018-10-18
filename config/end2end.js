@@ -19,4 +19,11 @@ module.exports = {
     url: 'https://end2end--journal.elifesciences.org/submit',
     enableMock: false,
   },
+  aws: {
+    s3: {
+      params: {
+        Bucket: 'end2end-elife-xpub',
+      },
+    },
+  },
 }
