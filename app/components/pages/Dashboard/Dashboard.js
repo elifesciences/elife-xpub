@@ -1,29 +1,23 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Link } from 'react-router-dom'
 import { Box, Flex } from 'grid-styled'
+import { Mutation } from 'react-apollo'
 import { Button } from '@pubsweet/ui'
 import { th } from '@pubsweet/ui-toolkit'
 import SmallParagraph from '../../ui/atoms/SmallParagraph'
 import ExternalLink from '../../ui/atoms/ExternalLink'
 import Tabs from '../../ui/molecules/Tabs'
-import DashboardListItem from '../../ui/molecules/DashboardListItem'
+import DashboardList from '../../ui/molecules/DashboardList'
+import { MANUSCRIPTS, DELETE_MANUSCRIPT } from './oporations'
+import ManuscriptsQuery from './ManuscriptsQuery'
 
 const RightAlignedButton = styled(Box)`
-  margin: ${th('space.3')} 0;
+  margin: ${th('space.3')} 0 ${th('space.1')};
   text-align: right;
 `
-const BoxNoMinWidth = styled(Box)`
-  min-width: 0;
-`
 
-const DashboardList = styled.div`
+const DashboardPanel = styled(Tabs.Panel)`
   min-height: 300px;
-`
-
-const DashboardLink = styled(Link)`
-  text-decoration: none;
-  color: ${th('colorText')};
 `
 
 const EmptyListMessage = styled.div`
@@ -37,9 +31,9 @@ const CenterdSmallParagraph = styled(SmallParagraph)`
   text-align: center;
 `
 
-const Dashboard = ({ manuscripts, deleteManuscript, createManuscript }) => (
+const Dashboard = ({ createManuscript }) => (
   <Flex>
-    <BoxNoMinWidth flex="1 1 auto" mx={[0, 0, 0, '16.666%']}>
+    <Box flex="1 1 auto" mx={[0, 0, 0, '16.666%']}>
       <RightAlignedButton>
         <Button data-test-id="submit" onClick={createManuscript} primary>
           Submit a manuscript
@@ -50,50 +44,25 @@ const Dashboard = ({ manuscripts, deleteManuscript, createManuscript }) => (
           <Tabs.Tab>Submissions</Tabs.Tab>
           <Tabs.Tab>Archive</Tabs.Tab>
         </Tabs.List>
-        <Tabs.Panel>
-          <DashboardList data-test-id="manuscripts">
-            {!manuscripts.length && (
-              <EmptyListMessage>
-                You currently have no active submissions
-                <SmallParagraph>
-                  You may want to bookmark this page to easily retrieve your in
-                  progress submissions.
-                </SmallParagraph>
-              </EmptyListMessage>
-            )}
-            {!!manuscripts.length && (
-              <React.Fragment>
-                {manuscripts.map(manuscript => (
-                  <DashboardLink
-                    key={manuscript.id}
-                    to={`/submit/${manuscript.id}`}
-                  >
-                    <DashboardListItem
-                      date={new Date(manuscript.created)}
-                      statusCode={manuscript.clientStatus}
-                      title={manuscript.meta.title || '(Untitled)'}
-                    />
-                  </DashboardLink>
-                ))}
-                <Button
-                  onClick={() =>
-                    manuscripts.forEach(manuscript =>
-                      deleteManuscript(manuscript.id),
-                    )
+        <DashboardPanel>
+          <Mutation
+            mutation={DELETE_MANUSCRIPT}
+            refetchQueries={[{ query: MANUSCRIPTS }]}
+          >
+            {deleteManuscript => (
+              <ManuscriptsQuery query={MANUSCRIPTS}>
+                <DashboardList
+                  deleteManuscript={id =>
+                    deleteManuscript({ variables: { id } })
                   }
-                  small
-                >
-                  Delete All
-                </Button>
-              </React.Fragment>
+                />
+              </ManuscriptsQuery>
             )}
-          </DashboardList>
-        </Tabs.Panel>
-        <Tabs.Panel>
-          <DashboardList>
-            <EmptyListMessage>Archived placeholder view.</EmptyListMessage>
-          </DashboardList>
-        </Tabs.Panel>
+          </Mutation>
+        </DashboardPanel>
+        <DashboardPanel>
+          <EmptyListMessage>Archived placeholder view.</EmptyListMessage>
+        </DashboardPanel>
       </Tabs>
       <CenterdSmallParagraph>
         Can&#39;t find a submission? You might find it in our full{' '}
@@ -102,7 +71,7 @@ const Dashboard = ({ manuscripts, deleteManuscript, createManuscript }) => (
         </ExternalLink>{' '}
         system
       </CenterdSmallParagraph>
-    </BoxNoMinWidth>
+    </Box>
   </Flex>
 )
 
