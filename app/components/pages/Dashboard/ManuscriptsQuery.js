@@ -2,9 +2,9 @@ import React from 'react'
 import { Query } from 'react-apollo'
 
 const ManuscriptsQuery = ({ query, children }) => (
-  <Query query={query}>
+  <Query fetchPolicy="cache-and-network" query={query}>
     {({ data, loading, error }) => {
-      if (loading) {
+      if (loading && !data.manuscripts) {
         return <div>Loading...</div>
       }
 
