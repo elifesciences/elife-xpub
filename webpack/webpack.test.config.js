@@ -38,5 +38,8 @@ module.exports = [
       fs: 'empty',
       __dirname: true,
     },
+    externals: {
+      config: 'config',
+    },
   },
 ]

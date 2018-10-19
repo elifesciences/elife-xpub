@@ -3,8 +3,10 @@ import styled from 'styled-components'
 import { Box, Flex } from 'grid-styled'
 import { Button } from '@pubsweet/ui'
 import { th } from '@pubsweet/ui-toolkit'
+import media from '../../global/layout/media'
 import SmallParagraph from '../../ui/atoms/SmallParagraph'
 import ExternalLink from '../../ui/atoms/ExternalLink'
+import StickyFooter from '../../ui/atoms/StickyFooter'
 import Tabs from '../../ui/molecules/Tabs'
 import DashboardList from '../../ui/molecules/DashboardList'
 import { ALL_MANUSCRIPTS } from './oporations'
@@ -13,10 +15,17 @@ import ManuscriptsQuery from './ManuscriptsQuery'
 const RightAlignedButton = styled(Box)`
   margin: ${th('space.3')} 0 ${th('space.1')};
   text-align: right;
+  display: none;
+  ${media.mobileUp`display: block`};
 `
 
 const DashboardPanel = styled(Tabs.Panel)`
   min-height: 300px;
+`
+
+const MobileOnlyStickyFooter = styled(StickyFooter)`
+  display: block;
+  ${media.mobileUp`display: none;`};
 `
 
 const EmptyListMessage = styled.div`
@@ -34,8 +43,12 @@ const Dashboard = ({ createManuscript }) => (
   <Flex>
     <Box flex="1 1 auto" mx={[0, 0, 0, '16.666%']}>
       <RightAlignedButton>
-        <Button data-test-id="submit" onClick={createManuscript} primary>
-          Submit a manuscript
+        <Button
+          data-test-id="desktop-new-submission"
+          onClick={createManuscript}
+          primary
+        >
+          New Submission
         </Button>
       </RightAlignedButton>
       <Tabs>
@@ -60,6 +73,15 @@ const Dashboard = ({ createManuscript }) => (
         system
       </CenterdSmallParagraph>
     </Box>
+    <MobileOnlyStickyFooter>
+      <Button
+        data-test-id="mobile-new-submission"
+        onClick={createManuscript}
+        primary
+      >
+        New Submission
+      </Button>
+    </MobileOnlyStickyFooter>
   </Flex>
 )
 

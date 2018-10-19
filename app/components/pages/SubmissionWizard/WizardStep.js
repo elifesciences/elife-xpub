@@ -8,6 +8,7 @@ import { FormH2 } from '../../ui/atoms/FormHeadings'
 import AutoSave from './AutoSave'
 import ProgressBar from './ProgressBar'
 import WizardSubmit from './WizardSubmit'
+import SavePageStatus from './SavePageStatus'
 
 const BoxNoMinWidth = styled(Box)`
   min-width: 0;
@@ -50,6 +51,7 @@ const WizardStep = ({
               onSave={handleAutoSave}
               values={values}
             />
+            <SavePageStatus id={values.id} url={history.location.pathname} />
             <Box my={5}>
               <ProgressBar currentStep={step} />
             </Box>

@@ -9,4 +9,15 @@ module.exports = {
       url: 'https://continuumtest--gateway.elifesciences.org/',
     },
   },
+  login: {
+    url: 'https://continuumtest--journal.elifesciences.org/submit',
+    enableMock: false,
+  },
+  aws: {
+    s3: {
+      params: {
+        Bucket: 'staging-elife-xpub',
+      },
+    },
+  },
 }
