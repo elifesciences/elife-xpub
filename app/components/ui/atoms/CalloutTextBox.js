@@ -5,6 +5,7 @@ import { th } from '@pubsweet/ui-toolkit'
 
 const Frame = styled(Box)`
   border: ${th('borderWidth')} ${th('borderStyle')} ${th('colorPrimary')};
+  // 8-character hex code - applying opacity value on top of 6-character hex code from theme
   background-color: ${th('colorPrimary')}20;
 `
 
