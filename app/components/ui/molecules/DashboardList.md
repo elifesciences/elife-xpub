@@ -21,3 +21,9 @@ Dashboard list of submissions
   ]}
 />
 ```
+
+Empty Dashboard List
+
+```js
+;<DashboardList manuscripts={[]} />
+```
