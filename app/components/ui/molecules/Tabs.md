@@ -15,5 +15,6 @@ console.log(`Tabs.name`, Tabs.name)
   <Tabs.Panel>
     <h2>Any content 2</h2>
   </Tabs.Panel>
+  <Tabs.Panel />
 </Tabs>
 ```

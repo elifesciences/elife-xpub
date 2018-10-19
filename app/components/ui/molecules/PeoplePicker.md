@@ -8,25 +8,25 @@ const people = [
     id: 1,
     name: 'Annie Badger',
     institution: 'A University',
-    keywords: 'cell biology',
+    subjectAreas: ['Cell biology'],
   },
   {
     id: 2,
     name: 'Bobby Badger',
     institution: 'B College',
-    keywords: 'biochemistry and chemical biology',
+    subjectAreas: ['Biochemistry and chemical biology'],
   },
   {
     id: 3,
     name: 'Chastity Badger',
     institution: 'C Institute',
-    keywords: 'ecology',
+    subjectAreas: ['Ecology'],
   },
   {
     id: 4,
     name: 'Dave Badger',
     institution: 'D Research Lab',
-    keywords: 'neuroscience',
+    subjectAreas: ['Neuroscience', 'Pumpkins', 'Chaffinches'],
   },
 ]
 ;<PeoplePicker

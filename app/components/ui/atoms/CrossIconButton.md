@@ -4,7 +4,7 @@ A transparent HTML button (as opposed to our own Button component), whose size i
 
 ```js
 const { X } = require('react-feather')
-;<ButtonAsIconWrapper onClick={() => console.log('clicked')}>
+;<CrossIconButton onClick={() => console.log('clicked')}>
   <X />
-</ButtonAsIconWrapper>
+</CrossIconButton>
 ```
