@@ -3,7 +3,7 @@ import { graphql, compose } from 'react-apollo'
 import React from 'react'
 import omitDeep from 'omit-deep-lodash'
 import ErrorPage from '../Error'
-import { ALL_MANUSCRIPTS } from '../Dashboard/oporations'
+import { ALL_MANUSCRIPTS } from '../Dashboard/operations'
 import {
   GET_MANUSCRIPT,
   UPDATE_MANUSCRIPT,
