@@ -28,6 +28,7 @@ module.exports = {
     logger,
     uploads: 'uploads',
     enableExperimentalGraphql: true,
+    secret: 'some-secret',
     morganLogFormat:
       ':remote-addr [:date[clf]] :method :url :status :graphql[operation] :res[content-length] :response-time ms',
   },
@@ -113,5 +114,10 @@ module.exports = {
   fileUpload: {
     isPublic: true,
     maxSizeMB: 100,
+  },
+  newrelic: {
+    isPublic: true,
+    licenseKey: '',
+    applicationID: '',
   },
 }
