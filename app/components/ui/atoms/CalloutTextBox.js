@@ -8,7 +8,7 @@ const Frame = styled(Box)`
   background-color: ${th('colorPrimary')}20;
 `
 
-const CalloutTextBox = ({ onClose, children, ...props }) => (
+const CalloutTextBox = ({ children, ...props }) => (
   <Frame mb={2} p={3} {...props}>
     {children}{' '}
   </Frame>
