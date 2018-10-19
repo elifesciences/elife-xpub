@@ -40,7 +40,13 @@ const DashboardPage = ({ history }) => (
           <BoxHiddenFromMobile mb={1} mt={3}>
             <Button
               data-test-id="desktop-new-submission"
-              onClick={createManuscript}
+              onClick={() =>
+                createManuscript().then(result =>
+                  history.push(
+                    `/submit/${result.data.createManuscript.id}/author`,
+                  ),
+                )
+              }
               primary
             >
               New Submission
