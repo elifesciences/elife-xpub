@@ -5,7 +5,7 @@ import { List } from 'react-feather'
 const sharedListStyling = css`
   /* remove default margin & padding */
   margin-left: 0;
-  padding-left: 0;
+  padding-left: ${th('space.3')};
 
   > li:before {
     /* Position and style the box around the bullet */
@@ -14,13 +14,11 @@ const sharedListStyling = css`
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
-    width: ${th('space.3')};
 
     /* font of number or bullet */
-    color: ${th('colorText')};
+    color: inherit;
     font-family: inherit;
     font-size: inherit;
-    text-align: center;
   }
 
   > li {
@@ -31,9 +29,6 @@ const sharedListStyling = css`
 
     /* Give each list item a left margin to make room for the bullets */
     margin-left: ${th('space.3')};
-
-    /* Moves text slightly further away from the number, bringing the total space closer to 12px  */
-    padding-left: ${th('space.1')};
   }
 
   > li:last-child {
