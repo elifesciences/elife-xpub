@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 import { Flex, Box } from 'grid-styled'
@@ -32,5 +33,18 @@ const SideNavLayout = ({ children, navList }) => (
     <Box width={4 / 5}>{children}</Box>
   </Flex>
 )
+
+SideNavLayout.propTypes = {
+  navList: PropTypes.arrayOf(
+    PropTypes.shape({
+      label: PropTypes.string.isRequired,
+      link: PropTypes.string.isRequired,
+    }),
+  ),
+}
+
+SideNavLayout.defaultProps = {
+  navList: [],
+}
 
 export default SideNavLayout
