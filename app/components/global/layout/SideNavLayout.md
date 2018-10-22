@@ -2,7 +2,7 @@
 const H1 = require('@pubsweet/ui').H1;
 ;<SideNavLayout
   navList={[
-    {label: 'Contact eLife', link: '/', active: true},
+    {label: 'Contact eLife', link: '/'},
     {label: 'Editorial staff', link: '/#editorial'},
     {label: 'Production staff', link: '/#production'},
   ]}

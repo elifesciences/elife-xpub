@@ -1,11 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
-import { Link } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 import { Flex, Box } from 'grid-styled'
 import { th } from '@pubsweet/ui-toolkit'
 
-const SideNavLink = styled(Link)`
+const SideNavLink = styled(NavLink)`
   display: block;
   color: ${th('colorTextSecondary')};
   text-decoration: none;
@@ -22,7 +22,6 @@ const SideNavLayout = ({ children, navList }) => (
       {navList &&
         navList.map(navItem => (
           <SideNavLink
-            className={navItem.active && 'active'}
             data-test-id="side-nav-link"
             key={navItem.link}
             to={navItem.link}
