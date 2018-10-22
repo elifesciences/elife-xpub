@@ -229,7 +229,7 @@ const Full = props => (
             these instructions
           </ExternalLink>{' '}
           (courtesy of PLOS). Please also refer to our{' '}
-          <ExternalLink href="/author-guide/policies">
+          <ExternalLink href="/author-guide/journal-policies">
             Software sharing policy
           </ExternalLink>
           .

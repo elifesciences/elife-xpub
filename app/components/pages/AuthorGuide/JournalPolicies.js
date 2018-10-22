@@ -6,7 +6,7 @@ import CalloutTextBox from '../../ui/atoms/CalloutTextBox'
 import ExternalLink from '../../ui/atoms/ExternalLink'
 import List from '../../ui/atoms/List'
 
-const Policies = props => (
+const JournalPolicies = props => (
   <React.Fragment>
     <H1>Journal Policies</H1>
 
@@ -975,4 +975,4 @@ const Policies = props => (
   </React.Fragment>
 )
 
-export default Policies
+export default JournalPolicies

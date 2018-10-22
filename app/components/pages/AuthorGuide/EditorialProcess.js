@@ -115,11 +115,11 @@ const EditorialProcess = props => (
     <Paragraph>
       The eLife editorial process broadly occurs in three phases. Authors
       submitting to eLife should be familiar with our journal{' '}
-      <Link to="/author-guide/policies">policies</Link>. If you have received an
-      encouraging response to your initial submission, please review the
-      guidelines relating to full submissions. If your full submission has been
-      peer reviewed and you have been asked to make revisions, please review our
-      guidelines for revised submissions.
+      <Link to="/author-guide/journal-policies">policies</Link>. If you have
+      received an encouraging response to your initial submission, please review
+      the guidelines relating to full submissions. If your full submission has
+      been peer reviewed and you have been asked to make revisions, please
+      review our guidelines for revised submissions.
     </Paragraph>
 
     <H2>Initial Submissions</H2>
