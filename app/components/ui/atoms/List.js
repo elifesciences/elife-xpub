@@ -14,8 +14,9 @@ const sharedListStyling = css`
 
     /* font of number or bullet */
     color: inherit;
-    font-family: inherit;
-    font-size: inherit;
+    font-family: ${th('fontReading')};
+    font-size: ${th('fontSizeBase')};
+    line-height: ${th(`lineHeightBase`)};
   }
 
   > li {
