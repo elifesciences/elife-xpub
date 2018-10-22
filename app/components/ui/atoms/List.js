@@ -27,6 +27,11 @@ const sharedListStyling = css`
 
     /* Give each list item a left margin to make room for the bullets */
     margin-left: ${th('space.3')};
+
+    /* font of li items */
+    font-family: ${th('fontReading')};
+    font-size: ${th('fontSizeBase')};
+    line-height: ${th(`lineHeightBase`)};
   }
 
   > li:last-child {
