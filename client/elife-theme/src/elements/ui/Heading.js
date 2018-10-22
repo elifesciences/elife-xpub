@@ -2,11 +2,9 @@ import { css } from 'styled-components'
 import { th } from '@pubsweet/ui-toolkit'
 
 export default css`
-  /* clear browser-added margin */
+  /* clear browser-added margin and font-size */
   margin-top: 0px;
-
   color: ${th('colorText')};
-  margin-bottom: ${th('space.3')};
 `
 
 export const H1 = css`
