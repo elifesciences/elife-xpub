@@ -23,6 +23,7 @@ const SideNavLayout = ({ children, navList }) => (
         navList.map(navItem => (
           <SideNavLink
             className={navItem.active && 'active'}
+            data-test-id="side-nav-link"
             key={navItem.link}
             to={navItem.link}
           >
