@@ -2,12 +2,15 @@ import React from 'react'
 import styled from 'styled-components'
 import { Box } from 'grid-styled'
 import PropTypes from 'prop-types'
+import media from '../../global/layout/media'
 
 const StatusBox = styled(Box)`
   color: ${props => props.theme[props.color]};
   font-size: 16px;
-  padding-left: 24px;
-  flex: 0 0 120px;
+  ${media.mobileUp`
+    flex: 0 0 120px;
+    padding-left: 24px;
+`};
 `
 
 const mapColor = statusCode =>

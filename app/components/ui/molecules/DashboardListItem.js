@@ -9,6 +9,7 @@ import {
 import { th } from '@pubsweet/ui-toolkit'
 import PropTypes from 'prop-types'
 import ManuscriptStatus from '../atoms/ManuscriptStatus'
+import media from '../../global/layout/media'
 
 const dashboardDateText = date => {
   const diffDays = differenceInCalendarDays(new Date(), date)
@@ -29,13 +30,19 @@ const dashboardDateText = date => {
 }
 
 const Root = styled(Flex)`
-  height: ${th('space.5')}
-  align-items: center;
-  padding: 0;
+  flex-direction: column
+  height: 150px;
   border-bottom: ${th('colorFurniture')};
   border-bottom-style: solid;
   border-bottom-width: 1px;
-  height: 107px;
+  justify-content: space-between;
+
+  ${media.mobileUp`
+    flex-direction: row
+    height: ${th('space.5')}
+    height: 107px;
+    align-items: center;
+  `};
   :hover {
     color: ${th('colorPrimary')}
   }
@@ -47,17 +54,21 @@ const TitleBox = styled(Box)`
   font-size: 16px;
   flex-grow: 1;
 `
-const DateBox = styled(Box)`
+const DateBox = styled(Flex)`
   color: ${th('colorTextSecondary')}
-  text-align: right;
-  padding-left: 24px;
-  flex: 0 0 120px;
+  justify-content: space-between;
+
+  ${media.mobileUp`
+    flex-direction: column
+    text-align: right;
+    flex: 0 0 120px;
+  `};
 `
-const RelativeDate = styled.p`
+const RelativeDate = styled(Box)`
   margin-bottom: 0;
   font-size: 16px;
 `
-const AbsoluteDate = styled.p`
+const AbsoluteDate = styled(Box)`
   font-size: 12px;
   margin-top: 0;
 `
