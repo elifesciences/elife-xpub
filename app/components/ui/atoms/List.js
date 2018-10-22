@@ -11,9 +11,6 @@ const sharedListStyling = css`
     /* Position and style the box around the bullet */
     position: absolute;
     left: -${th('space.3')};
-    -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;
 
     /* font of number or bullet */
     color: inherit;
