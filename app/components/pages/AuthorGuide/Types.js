@@ -247,11 +247,13 @@ const Types = props => (
     </Paragraph>
 
     <CalloutTextBox>
-      Authors submitting a Research Article, Short Report, Tools and Resources
-      Article, or Scientific Correspondence are encouraged to read about the{' '}
-      <Link to="/author-guide/initial">Initial Submission</Link> process.
-      Authors of Research Advances can proceed to the{' '}
-      <Link to="/author-guide/full">Full Submission</Link> section.
+      <Paragraph>
+        Authors submitting a Research Article, Short Report, Tools and Resources
+        Article, or Scientific Correspondence are encouraged to read about the{' '}
+        <Link to="/author-guide/initial">Initial Submission</Link> process.
+        Authors of Research Advances can proceed to the{' '}
+        <Link to="/author-guide/full">Full Submission</Link> section.
+      </Paragraph>
     </CalloutTextBox>
   </React.Fragment>
 )
