@@ -2,7 +2,7 @@ const express = require('express')
 const supertest = require('supertest')
 
 describe('Client config handler', () => {
-  let routes;
+  let routes
 
   const makeApp = () => {
     const app = express()
@@ -14,10 +14,10 @@ describe('Client config handler', () => {
     jest.mock('config', () => ({
       publicConfig: {
         isPublic: true,
-        key: 'value'
+        key: 'value',
       },
       privateConfig: {
-        secret: 'password'
+        secret: 'password',
       },
     }))
     routes = require('./routes')
@@ -25,20 +25,15 @@ describe('Client config handler', () => {
 
   it('returns javascript', async () => {
     const request = makeApp()
-    const response = await request
-      .get('/config.js')
-      .expect(200)
+    const response = await request.get('/config.js').expect(200)
     expect(response.headers['content-type']).toEqual(
-      expect.stringContaining('javascript')
+      expect.stringContaining('javascript'),
     )
   })
 
   it('returns a response containing public config', async () => {
     const request = makeApp()
-    const response = await request
-      .get('/config.js')
-      .expect(200)
+    const response = await request.get('/config.js').expect(200)
     expect(response.text).toMatchSnapshot()
   })
-
 })

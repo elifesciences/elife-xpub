@@ -13,7 +13,7 @@ async function startServer(options) {
       directory,
       removeBucketsOnClose: true,
       port: endpoint.port,
-      silent: true
+      silent: true,
     }
     const server = new S3rver(serverOptions).run(() => {
       resolve(server)

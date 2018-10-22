@@ -45,6 +45,7 @@ const TitleBox = styled(Box)`
   font-weight: bold;
   text-align: left;
   font-size: 16px;
+  flex-grow: 1;
 `
 const DateBox = styled(Box)`
   color: ${th('colorTextSecondary')}
@@ -63,7 +64,7 @@ const AbsoluteDate = styled.p`
 
 const DashboardListItem = ({ statusCode, title, date }) => (
   <Root>
-    <TitleBox>{title}</TitleBox>
+    <TitleBox data-test-id="title">{title}</TitleBox>
     <ManuscriptStatus statusCode={statusCode} />
     <DateBox>
       <RelativeDate>{dashboardDateText(date)}</RelativeDate>

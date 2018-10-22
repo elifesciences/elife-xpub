@@ -63,7 +63,10 @@ const dataAccess = {
   },
 
   async selectAll(user) {
-    const query = joinSelect.clone().where({ 'manuscript.created_by': user })
+    const query = joinSelect
+      .clone()
+      .where({ 'manuscript.created_by': user })
+      .orderBy('manuscript.created', 'desc')
     const rows = await runQuery(query)
     return rows.map(rowToEntity)
   },

@@ -14,7 +14,7 @@ module.exports = {
     ),
     uploads: 'test/temp/uploads',
     secret: 'test',
-    logger
+    logger,
   },
   login: {
     url: '/mock-token-exchange/ewwboc7m',

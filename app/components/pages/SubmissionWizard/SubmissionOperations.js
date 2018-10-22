@@ -3,7 +3,7 @@ import { graphql, compose } from 'react-apollo'
 import React from 'react'
 import omitDeep from 'omit-deep-lodash'
 import ErrorPage from '../Error'
-import { MANUSCRIPTS } from '../Dashboard'
+import { ALL_MANUSCRIPTS } from '../Dashboard/operations'
 import {
   GET_MANUSCRIPT,
   UPDATE_MANUSCRIPT,
@@ -67,7 +67,7 @@ const SubmissionOperations = ({
     updateManuscript: newValues => runMutation(newValues, updateManuscript),
     submitManuscript: newValues =>
       runMutation(newValues, submitManuscript, {
-        refetchQueries: [{ query: MANUSCRIPTS }],
+        refetchQueries: [{ query: ALL_MANUSCRIPTS }],
       }),
   })
 }

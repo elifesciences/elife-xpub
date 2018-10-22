@@ -46,7 +46,7 @@ module.exports = [
       __dirname: true,
     },
     externals: {
-      config: 'config'
+      config: 'config',
     },
   },
 ]

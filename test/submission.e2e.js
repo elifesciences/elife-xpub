@@ -156,7 +156,7 @@ test('Happy path', async t => {
   await t
     .expect(dashboard.titles.textContent)
     .eql(manuscript.title)
-    .expect(dashboard.stages.textContent)
+    .expect(dashboard.statuses.textContent)
     // TODO this might cause a race condition
     .eql('Waiting for decision')
 

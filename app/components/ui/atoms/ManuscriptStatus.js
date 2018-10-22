@@ -25,7 +25,9 @@ const getText = statusCode =>
   }[statusCode])
 
 const ManuscriptStatus = ({ statusCode }) => (
-  <StatusBox color={mapColor(statusCode)}>{getText(statusCode)}</StatusBox>
+  <StatusBox color={mapColor(statusCode)} data-test-id="status">
+    {getText(statusCode)}
+  </StatusBox>
 )
 
 ManuscriptStatus.propTypes = {
