@@ -20,4 +20,8 @@ module.exports = {
       },
     },
   },
+  newrelic: {
+    licenseKey: 'c7fdeadcfa',
+    applicationID: '162979288',
+  },
 }
