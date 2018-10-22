@@ -6,7 +6,7 @@ import CalloutTextBox from '../../ui/atoms/CalloutTextBox'
 import ExternalLink from '../../ui/atoms/ExternalLink'
 import List from '../../ui/atoms/List'
 
-const Process = props => (
+const EditorialProcess = props => (
   <React.Fragment>
     <H1>The Editorial Process</H1>
 
@@ -310,4 +310,4 @@ const Process = props => (
   </React.Fragment>
 )
 
-export default Process
+export default EditorialProcess
