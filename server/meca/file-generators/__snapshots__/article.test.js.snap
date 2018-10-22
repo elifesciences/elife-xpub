@@ -171,6 +171,18 @@ exports[`Article XML generator generates expected XML 1`] = `
       </related-article>
       <custom-meta-group>
         <custom-meta>
+          <meta-name>opposed-senior-editor-comment</meta-name>
+          <meta-value>From another galaxy</meta-value>
+        </custom-meta>
+        <custom-meta>
+          <meta-name>opposed-reviewing-editor-comment</meta-name>
+          <meta-value>Not any more</meta-value>
+        </custom-meta>
+        <custom-meta>
+          <meta-name>opposed-reviewer-comment</meta-name>
+          <meta-value>Wandering days are over</meta-value>
+        </custom-meta>
+        <custom-meta>
           <meta-name>suggestions-conflict</meta-name>
           <meta-value>true</meta-value>
         </custom-meta>
