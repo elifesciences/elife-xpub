@@ -69,7 +69,7 @@ test:
     # specify host here else it confuses the linked postgres image
     - PGHOSTADDR=127.0.0.1 npm test
 
-test:e2e:
+test:browser:
   image: $IMAGE_ORG/$IMAGE_NAME:$CI_COMMIT_SHA
   stage: test
   tags:
@@ -85,14 +85,15 @@ test:e2e:
     # connection details for tests
     PGUSER: test
     PGPASSWORD: pw
-    NODE_ENV: test
+    NODE_ENV: production
+    NODE_CONFIG_ENV: test
   services:
     - postgres
   script:
     - cd ${HOME}
     # specify host here else it confuses the linked postgres image
     - export PGHOSTADDR=127.0.0.1
-    - npm run test:e2e -- --screenshots test/screenshots --screenshots-on-fails
+    - npm run test:browser -- --screenshots test/screenshots --screenshots-on-fails
   artifacts:
     paths:
       - test/screenshots

@@ -19,20 +19,20 @@ Run tests in watch mode and/or scoped to a path for faster feedback:
 ### Running
 
     # in local Chrome
-    npm run test:e2e
+    npm run test:browser
 
     # in local Firefox (or Safari, Edge, Opera, Chromium...)
-    BROWSER=firefox npm run test:e2e
+    BROWSER=firefox npm run test:browser
 
     # in a VM or mobile (copy the URL it gives you or scan the QR code)
-    BROWSER=remote npm run test:e2e --qr-code
+    BROWSER=remote npm run test:browser --qr-code
 
     # in a BrowserStack VM (install and run BrowserStack local first)
     BROWSERSTACK_USERNAME=xxx \
     BROWSERSTACK_ACCESS_KEY=yyy \
     BROWSER=browserstack:'google pixel 2' \
     REPLAY=cheat \
-    npm run test:e2e
+    npm run test:browser
 
 ## Mocking external services
 
@@ -42,7 +42,7 @@ and playback responses from external HTTP services.
 If writing or modifying tests that hit external APIs you will need to change the
 [Replay mode](https://github.com/assaf/node-replay#settings). For example:
 
-    REPLAY=record npm run test:e2e
+    REPLAY=record npm run test:browser
 
 ## Debugging issues with CI
 

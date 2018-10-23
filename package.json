@@ -35,8 +35,8 @@
     "stop:services": "docker-compose down -v",
     "styleguide": "styleguidist server",
     "test": "jest --runInBand",
+    "test:browser": "NODE_ENV=test testcafe \"${BROWSER:-chrome}\" 'test/**/*.browser.js'",
     "test:dependencies": "check-yarn-dupes react react-dom styled-components pubsweet-server",
-    "test:e2e": "NODE_ENV=test NODE_APP_INSTANCE=e2e testcafe \"${BROWSER:-chrome}\" 'test/**/*.e2e.js'",
     "update": "yarn upgrade-interactive --latest"
   },
   "lint-staged": {
