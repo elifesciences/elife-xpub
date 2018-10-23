@@ -8,7 +8,7 @@ const TopNavContainer = styled.div`
 `
 const SideNavContainer = styled(Box)`
   display: none;
-  color: green ${media.tabletPortraitUp`display: block;`};
+  ${media.tabletPortraitUp`display: block;`};
 `
 const MainContainer = styled(Box)``
 
