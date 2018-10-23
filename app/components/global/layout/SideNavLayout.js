@@ -1,19 +1,13 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
-import { NavLink } from 'react-router-dom'
 import { Flex, Box } from 'grid-styled'
 import { th } from '@pubsweet/ui-toolkit'
+import NavLink from '../../ui/atoms/NavLink'
 
 const SideNavLink = styled(NavLink)`
   display: block;
-  color: ${th('colorTextSecondary')};
-  text-decoration: none;
   padding: ${th('space.1')};
-  &.active,
-  &:hover {
-    color: ${th('colorText')};
-  }
 `
 
 const SideNavLayout = ({ children, navList }) => (
