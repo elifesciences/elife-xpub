@@ -1,9 +1,9 @@
 import React from 'react'
 import styled from 'styled-components'
 import { Box } from 'grid-styled'
-import { NavLink } from 'react-router-dom'
 import { th } from '@pubsweet/ui-toolkit'
 import ProfileMenu from './ProfileMenu'
+import NavLink from '../../ui/atoms/NavLink'
 
 const AppBarContainer = styled.div`
   display: flex;
@@ -17,14 +17,6 @@ const AppBarContainer = styled.div`
 const AppBarLink = styled(NavLink)`
   display: inline-block;
   padding: ${th('space.3')} ${th('space.2')};
-  line-height: ${th('fontLineHeightBase')};
-  color: ${th('colorTextSecondary')};
-  text-decoration: none;
-
-  &.active,
-  &:hover {
-    color: ${th('colorText')};
-  }
 `
 
 const LogoLink = styled.a`
