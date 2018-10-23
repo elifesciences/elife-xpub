@@ -77,6 +77,11 @@ function createXmlObject(manuscript, editorsById, affiliations, reviewerMap) {
 
       'custom-meta-group': {
         'custom-meta': Object.entries({
+          'opposed-senior-editor-comment':
+            manuscript.opposedSeniorEditorsReason,
+          'opposed-reviewing-editor-comment':
+            manuscript.opposedReviewingEditorsReason,
+          'opposed-reviewer-comment': manuscript.opposedReviewersReason,
           'suggestions-conflict': manuscript.suggestionsConflict,
           'previously-discussed': manuscript.previouslyDiscussed,
           'previously-submitted': manuscript.previouslySubmitted[0],

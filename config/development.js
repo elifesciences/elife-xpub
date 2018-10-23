@@ -1,7 +1,6 @@
 const { deferConfig } = require('config/defer')
 const winston = require('winston')
 const path = require('path')
-const AWS = require('aws-sdk')
 
 winston.level = 'debug'
 
@@ -47,7 +46,6 @@ module.exports = {
       params: {
         Bucket: 'test-bucket',
       },
-      endpoint: new AWS.Endpoint('http://localhost:4569'),
     },
   },
 
