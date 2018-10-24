@@ -9,6 +9,10 @@ import DashboardListItem from '../../ui/molecules/DashboardListItem'
 const DashboardLink = styled(Link)`
   text-decoration: none;
   color: ${th('colorText')};
+
+  :hover {
+    color: ${th('colorPrimary')};
+  }
 `
 const EmptyListMessage = styled(Box)`
   text-align: center;
@@ -17,6 +21,25 @@ const EmptyListMessage = styled(Box)`
 const EmptyListSmallParagraph = styled(SmallParagraph)`
   font-family: ${th('fontInterface')};
 `
+const renderListItem = manuscript => {
+  const dashboardListItem = (
+    <DashboardListItem
+      date={new Date(manuscript.created)}
+      key={manuscript.id}
+      statusCode={manuscript.clientStatus}
+      title={manuscript.meta.title || '(Untitled)'}
+    />
+  )
+
+  if (manuscript.clientStatus === 'WAITING_FOR_DECISION') {
+    return dashboardListItem
+  }
+  return (
+    <DashboardLink key={manuscript.id} to={`/submit/${manuscript.id}`}>
+      {dashboardListItem}
+    </DashboardLink>
+  )
+}
 
 const DashboardList = ({ manuscripts }) => {
   if (!manuscripts.length) {
@@ -31,19 +54,7 @@ const DashboardList = ({ manuscripts }) => {
     )
   }
 
-  return (
-    <React.Fragment>
-      {manuscripts.map(manuscript => (
-        <DashboardLink key={manuscript.id} to={`/submit/${manuscript.id}`}>
-          <DashboardListItem
-            date={new Date(manuscript.created)}
-            statusCode={manuscript.clientStatus}
-            title={manuscript.meta.title || '(Untitled)'}
-          />
-        </DashboardLink>
-      ))}
-    </React.Fragment>
-  )
+  return manuscripts.map(manuscript => renderListItem(manuscript))
 }
 
 export default DashboardList

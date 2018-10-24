@@ -94,6 +94,7 @@
     "react-autosuggest": "^9.3.4",
     "react-dom": "^16.4.2",
     "react-dropzone": "^4.3.0",
+    "react-google-charts": "^3.0.8",
     "react-hot-loader": "^4.3.4",
     "react-router-dom": "^4.3.1",
     "react-scrolllock": "^3.0.1",
