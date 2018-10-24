@@ -428,6 +428,12 @@ const Full = props => (
         </Paragraph>
       </li>
     </List.Ordered>
+
+    <Paragraph>
+      If your Full Submission has been peer reviewed and you have been asked to
+      make revisions, please review our guidelines for{' '}
+      <Link to="author-guide/revised">Revised Submissions</Link>.
+    </Paragraph>
   </React.Fragment>
 )
 
