@@ -2,12 +2,16 @@ import React from 'react'
 import PropType from 'prop-types'
 import styled from 'styled-components'
 import { th } from '@pubsweet/ui-toolkit'
+import media from '../../global/layout/media'
 
 const StaffImg = styled.img`
-  height: 280px;
-  max-width: 100%;
+  
   border: ${th('borderWidth')} ${th('borderStyle')} ${th('colorFurniture')}
   margin-bottom: ${th('space.1')};
+  max-width: 100%;
+  ${media.mobileUp`
+    height: 280px;
+  `}
 `
 
 const StaffName = styled.div`
