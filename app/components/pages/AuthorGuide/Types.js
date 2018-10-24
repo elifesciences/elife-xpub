@@ -9,7 +9,7 @@ const Types = props => (
   <React.Fragment>
     <H1>Article Types</H1>
 
-    <Paragraph>eLife publishes the following article types</Paragraph>
+    <Paragraph>eLife publishes the following article types.</Paragraph>
 
     <H2>Editorials, Insights, and Feature articles</H2>
 
