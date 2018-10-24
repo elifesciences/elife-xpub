@@ -162,11 +162,17 @@ const EditorialProcess = props => (
       for example names of co-authors, details of major datasets, and ethics
       statements. Authors are asked to agree to publish their work under the
       terms of the Creative Commons Attribution license (
-      <ExternalLink href="/html/CCBY_4.0.pdf" target="_blank">
+      <ExternalLink
+        href="https://submit.elifesciences.org/html/CCBY_4.0.pdf"
+        target="_blank"
+      >
         PDF of the agreement
       </ExternalLink>
       ), or the Creative Commons CC0 public domain dedication (
-      <ExternalLink href="/html/CC0_1.0.pdf" target="_blank">
+      <ExternalLink
+        href="https://submit.elifesciences.org/html/CC0_1.0.pdf"
+        target="_blank"
+      >
         PDF of the agreement
       </ExternalLink>
       ) if one or more authors are US-government employees.

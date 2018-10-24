@@ -907,7 +907,10 @@ const JournalPolicies = props => (
     <Paragraph>
       To facilitate the interpretation and replication of experiments, authors
       are required to complete eLife&apos;s{' '}
-      <ExternalLink href="/html/transparent_reporting.pdf" target="_blank">
+      <ExternalLink
+        href="https://submit.elifesciences.org/html/transparent_reporting.pdf"
+        target="_blank"
+      >
         Transparent Reporting Form
       </ExternalLink>{' '}
       before peer review. Authors are also required to adhere to
