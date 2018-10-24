@@ -39,3 +39,18 @@ Otherwise the instructions below should be sufficient to get started quickly.
 The application should work fine with the defaults for sciencebeam - refering to the online service at sciencebeam-texture.elifesciences.org
 
 However, you can run the docker containers for sciencebeam locally. This is done by cloning the repo at https://github.com/elifesciences/sciencebeam and running: `docker-compose up`
+
+### AWS S3
+
+If you do not wish to connect to AWS for access to S3. You can run a fake S3 server locally:
+
+- Run `docker run -p 4569:4569 --rm lphoward/fake-s`
+- Add the following to `config/local.js`
+
+```
+  aws: {
+    s3: {
+      endpoint: new AWS.Endpoint(`http://localhost:4569`),
+    },
+  },
+```

@@ -4,7 +4,7 @@ import { Flex, Box } from 'grid-styled'
 
 const TwoColumnLayout = ({ children, bottomSpacing, ...props }) => (
   <Flex flexWrap="wrap" mx={-2} {...props}>
-    {children.map((item, index) => (
+    {React.Children.map(children, (item, index) => (
       <Box
         // try to use the key property of the React element
         key={item.key || index}
