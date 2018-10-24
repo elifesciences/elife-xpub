@@ -4,6 +4,7 @@ import styled from 'styled-components'
 import { th } from '@pubsweet/ui-toolkit'
 
 const StaffImg = styled.img`
+  height: 280px;
   max-width: 100%;
   outline: 1px solid #e0e0e0;
   margin-bottom: ${th('space.1')};
