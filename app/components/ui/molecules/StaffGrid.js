@@ -1,30 +1,20 @@
 import React from 'react'
 import styled from 'styled-components'
-import StaffCard from './StaffCard'
+import { Flex, Box } from 'grid-styled'
+import { th } from '@pubsweet/ui-toolkit'
 
-const { Flex, Box } = require('grid-styled')
-
-const Grid = styled(Flex)`
-  flex-flow: row wrap;
-  justify-content: space-between;
-`
 const Card = styled(Box)`
-  padding-top: 20px;
+  padding-top: ${th('space.3')};
 `
 
-const StaffGrid = ({ staff }) => (
-  <Grid>
-    {staff.map(person => (
-      <Card px={2} width={[1 / 2, 1 / 2, 1 / 3]}>
-        <StaffCard
-          jobTitle={person.jobTitle}
-          name={person.name}
-          photoURL={person.photoURL}
-          telephone={person.telephone}
-        />
+const StaffGrid = ({ children, ...props }) => (
+  <Flex flexWrap="wrap" mx={-2} {...props}>
+    {children.map((item, index) => (
+      <Card key={item.key || index} px={2} width={[1 / 2, 1 / 2, 1 / 3]}>
+        {item}
       </Card>
     ))}
-  </Grid>
+  </Flex>
 )
 
 export default StaffGrid
