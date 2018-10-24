@@ -1,0 +1,261 @@
+import React from 'react'
+import { H1, H2, Link } from '@pubsweet/ui'
+
+import Paragraph from '../../ui/atoms/Paragraph'
+import CalloutTextBox from '../../ui/atoms/CalloutTextBox'
+import ExternalLink from '../../ui/atoms/ExternalLink'
+
+const Types = props => (
+  <React.Fragment>
+    <H1>Article Types</H1>
+
+    <Paragraph>eLife publishes the following article types.</Paragraph>
+
+    <H2>Editorials, Insights, and Feature articles</H2>
+
+    <Paragraph>
+      <ExternalLink
+        href="https://elifesciences.org/articles/editorial"
+        target="_blank"
+      >
+        Editorials
+      </ExternalLink>{' '}
+      in eLife are written by eLife editors or staff.
+    </Paragraph>
+
+    <Paragraph>
+      <ExternalLink
+        href="https://elifesciences.org/articles/insight"
+        target="_blank"
+      >
+        Insights
+      </ExternalLink>{' '}
+      are commissioned by eLife staff and are always related to a Research
+      Article published in the journal. Insights are written by experts in the
+      field of the Research Article: they explain why the results reported are
+      significant and outline some of the challenges that remain in the field.
+    </Paragraph>
+
+    <Paragraph>
+      <ExternalLink
+        href="https://elifesciences.org/articles/feature"
+        target="_blank"
+      >
+        Feature Articles
+      </ExternalLink>{' '}
+      should offer fresh insights into topics of broad interest to readers
+      working in the life and biomedical sciences. There are no strict limits on
+      length, but authors are advised to stay below 2000 words, two display
+      items (figures, tables etc) and 20 references if possible, and to write in
+      an active/engaging style. Feature Articles are peer reviewed at the
+      discretion of the eLife editors and staff. Queries should be sent to the
+      Features Editor at features [at] elifesciences [dot] org.
+    </Paragraph>
+
+    <H2>Research Articles</H2>
+
+    <Paragraph>
+      There is no maximum length for Research Articles, but we suggest that
+      authors try not to exceed 5,000 words in the main text, excluding the
+      Materials and methods, References, and Figure legends. There are no limits
+      on the number of display items. The main text of the article should
+      usually be structured and ordered as follows: Introduction; Results;
+      Discussion; Materials and Methods (or Methods); Acknowledgements;
+      References; Figures with the corresponding legend below each one; and
+      Tables. A Methods or Model section can appear after the Introduction where
+      it makes sense to do so.
+    </Paragraph>
+
+    <H2>Short Reports</H2>
+
+    <Paragraph>
+      We welcome the submission of Short Reports, for example reporting the
+      results of a single set of experiments, provided the conclusion is clear
+      and justified, and the findings are novel and judged to be of high
+      importance. Short Reports should not usually exceed 1,500 words in the
+      main text, excluding the Materials and Methods, References, and Figure
+      legends, with no more than three or four main display items (figures,
+      tables, videos). Authors have more flexibility in the format, for example
+      with a combined Results and Discussion section.
+    </Paragraph>
+
+    <H2>Tools and Resources</H2>
+
+    <Paragraph>
+      This category highlights tools or resources that are especially important
+      for their respective fields and have the potential to accelerate
+      discovery. For example, we welcome the submission of significant
+      technological or methodological advances, genomic or other datasets,
+      collections of biological resources, software tools, and so on. The
+      article should fully describe the tool or resource so that prospective
+      users have all the information needed to deploy it within their own work.
+      Therefore, major datasets must be publicly deposited (unless there are
+      strong ethical or legal reasons to restrict access); relevant code must
+      conform to the{' '}
+      <ExternalLink href="https://opensource.org/docs/osd" target="_blank">
+        Open Source Definition
+      </ExternalLink>{' '}
+      and be deposited in an appropriate public repository; and methodological
+      advances need to be comprehensively described, along with details of the
+      reagents and equipment, and their sources. Authors should follow the
+      format for Research Articles or Short Reports, as appropriate.
+    </Paragraph>
+
+    <Paragraph>
+      Tools and Resources articles do not have to report major new biological
+      insights or mechanisms, but it must be clear that they will enable such
+      advances to take place. Specifically, submissions will be assessed in
+      terms of their potential to facilitate experiments that address problems
+      that to date have been challenging or even intractable. Some Tools and
+      Resources papers will be the first report of an entirely novel technology.
+      In many other cases, authors will wish to report substantial improvements
+      and extensions of existing technologies. In those cases, the new method
+      should be properly compared and benchmarked against existing methods used
+      in the field. Minor improvements on existing methodologies are unlikely to
+      fare well in review.
+    </Paragraph>
+
+    <H2>Research Advances</H2>
+
+    <Paragraph>
+      This format is for substantial developments that directly build upon a
+      Research Article, Short Report or Tools and Resources article published
+      previously by eLife. A Research Advance can be submitted by some or all of
+      the authors of the original paper and/or researchers who were not involved
+      in the original paper. A Research Advance might use a new technique or a
+      different experimental design to generate results that build upon the
+      conclusions of the original research by, for example, providing new
+      mechanistic insights or extend the pathway under investigation. Research
+      Advances can also report significant improvements to experimental tools
+      and techniques.
+    </Paragraph>
+
+    <Paragraph>
+      Research Advances can be of any length, and any number of main display
+      items, but there may only need to be minimal introductory material.
+      Authors have flexibility in the format, for example with a combined
+      Results and Discussion section, and there is no need for a detailed
+      Materials and Methods section when the methods are the same as the
+      original paper. Authors should upload a completed version of the
+      Transparent Reporting Form (
+      <ExternalLink
+        href="https://submit.elifesciences.org/html/transparent_reporting.pdf"
+        target="_blank"
+      >
+        PDF
+      </ExternalLink>
+      ;{' '}
+      <ExternalLink
+        href="https://submit.elifesciences.org/html/transparent_reporting.docx"
+        target="_blank"
+      >
+        Word
+      </ExternalLink>
+      ) to accompany their submission.
+    </Paragraph>
+
+    <Paragraph>
+      When published, Research Advances are linked to the original article, and
+      they are indexed and citable in their own right. When the authors of the
+      original article are not involved in the Research Advance, the
+      corresponding author of the original study will be asked for comments
+      during the review process. Where appropriate, the Research Advance will be
+      considered by the same editors and reviewers who were involved in the
+      assessment of the original paper.{' '}
+    </Paragraph>
+
+    <H2>Scientific Correspondence</H2>
+
+    <Paragraph>
+      This format should be used for a manuscript that challenges the central
+      findings of a paper published in eLife, and for the formal response to
+      such a manuscript. In the first instance, the author must contact the
+      corresponding author of the original eLife paper in an effort to resolve
+      matters (and include evidence of these efforts in their initial
+      submission). Scientific Correspondence must also be submitted within a
+      year of the original eLife paper being published.
+    </Paragraph>
+
+    <Paragraph>
+      The title of the manuscript should be &apos;Comment on &quot;Title of
+      original article&quot;&apos;, and it should be written in a measured tone;
+      manuscripts not written in measured tone will be sent back to the authors
+      for revision: please read{' '}
+      <ExternalLink
+        href="https://elifesciences.org/inside-elife/08093bce/elife-latest-introducing-scientific-correspondence-at-elife?_ga=2.134784754.2069272108.1540132848-2034406101.1537543708"
+        target="_blank"
+      >
+        this blogpost
+      </ExternalLink>{' '}
+      for more information.
+    </Paragraph>
+
+    <Paragraph>
+      Where possible, the initial submission is considered by the Senior Editor
+      and the Reviewing Editor who handled the original paper (and by others if
+      necessary). In the first instance the Editors will decide if any of the
+      issues raised in the initial submission require a formal Correction to the
+      original article: if a correction is required, the corresponding author of
+      the original paper will be contacted and the Scientific Correspondence
+      will be put on hold until the Correction has been finalized. If a
+      Correction is published, the authors of the Scientific Correspondence will
+      be asked to revise their submission accordingly.
+    </Paragraph>
+
+    <Paragraph>
+      If the Editors agree that the initial submission represents a credible
+      challenge to the central findings of the original paper, a full submission
+      is invited; the initial submission is also sent to the authors of the
+      original paper and they are given 14 days to submit a formal response. If
+      the initial submission does not represent a credible challenge to the
+      original paper, it is declined.
+    </Paragraph>
+
+    <Paragraph>
+      Once any response has been received, the Editors discuss the challenge and
+      the response, and then decide between the following options: accept both
+      for publication; accept the challenge but reject the response; reject
+      both; proceed with peer review of one or both manuscripts; take another
+      course of action.
+    </Paragraph>
+
+    <Paragraph>
+      If the Editors opt for peer review, the following outcomes are possible:
+      the challenge and the response are both accepted; the challenge is
+      accepted but the response is rejected; the challenge is rejected (which
+      means there is no need to publish the response). Please note the
+      manuscripts will typically be accepted or rejected at this stage of the
+      process; revised manuscripts will not usually be requested.
+    </Paragraph>
+
+    <Paragraph>
+      Full submissions and formal responses should not usually exceed 1,500
+      words in the main text, excluding the Materials and methods, References,
+      and Figure legends, and should have no more than four main display items
+      (figures, tables, videos). Both the challenge and the response can contain
+      original data.
+    </Paragraph>
+
+    <Paragraph>
+      While priority is given to manuscripts that challenge eLife papers, we
+      will also consider important submissions that challenge papers published
+      elsewhere. As described above, the author must contact the corresponding
+      author of the original paper in an effort to resolve matters (and include
+      evidence of these efforts in their initial submission), and the Scientific
+      Correspondence must be submitted within a year of the original paper being
+      published.
+    </Paragraph>
+
+    <CalloutTextBox>
+      <Paragraph>
+        Authors submitting a Research Article, Short Report, Tools and Resources
+        Article, or Scientific Correspondence are encouraged to read about the{' '}
+        <Link to="/author-guide/initial">Initial Submission</Link> process.
+        Authors of Research Advances can proceed to the{' '}
+        <Link to="/author-guide/full">Full Submission</Link> section.
+      </Paragraph>
+    </CalloutTextBox>
+  </React.Fragment>
+)
+
+export default Types
