@@ -15,7 +15,7 @@ const Fees = props => (
     </Paragraph>
 
     <Paragraph>
-      The publication fee (also referred to as an “open-access” or
+      The publication fee (also referred to as an &quot;open-access&quot; or
       &quot;article-processing&quot; fee) is a charge collected by many
       open-access publishers to help recover the costs of publication while
       providing free and open access for the reader to use and re-use results.
