@@ -114,4 +114,9 @@ module.exports = {
     isPublic: true,
     maxSizeMB: 100,
   },
+  newrelic: {
+    isPublic: true,
+    licenseKey: '',
+    applicationID: '',
+  },
 }
