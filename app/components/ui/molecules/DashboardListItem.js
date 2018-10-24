@@ -30,33 +30,32 @@ const dashboardDateText = date => {
 }
 
 const Root = styled(Flex)`
-  flex-direction: column
-  height: 150px;
+  flex-direction: column;
   border-bottom: ${th('colorFurniture')};
   border-bottom-style: solid;
   border-bottom-width: 1px;
   justify-content: space-between;
 
   ${media.mobileUp`
-    flex-direction: row
-    height: ${th('space.5')}
-    height: 107px;
-    align-items: center;
+    flex-direction: row;
+    align-items: flex-start;
   `};
   :hover {
-    color: ${th('colorPrimary')}
+    color: ${th('colorPrimary')};
   }
 `
 
 const TitleBox = styled(Box)`
   font-weight: bold;
   text-align: left;
-  font-size: 16px;
+  font-size: ${th('size.7')};
   flex-grow: 1;
+  padding: 0px ${th('space.3')} ${th('space.3')} 0px;
 `
 const DateBox = styled(Flex)`
   color: ${th('colorTextSecondary')}
   justify-content: space-between;
+  padding: 0px 0px ${th('space.3')} 0px;
 
   ${media.mobileUp`
     flex-direction: column
@@ -66,7 +65,7 @@ const DateBox = styled(Flex)`
 `
 const RelativeDate = styled(Box)`
   margin-bottom: 0;
-  font-size: 16px;
+  font-size: ${th('size.7')};
 `
 const AbsoluteDate = styled(Box)`
   font-size: 12px;
