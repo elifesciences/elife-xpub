@@ -93,10 +93,10 @@ test:browser:
     - cd ${HOME}
     # specify host here else it confuses the linked postgres image
     - export PGHOSTADDR=127.0.0.1
-    - npm run test:browser -- --screenshots test/screenshots --screenshots-on-fails
+    - npm run test:browser -- --screenshots $CI_PROJECT_DIR/screenshots --screenshots-on-fails
   artifacts:
     paths:
-      - test/screenshots
+      - screenshots
     when: on_failure
     expire_in: 1 week
 
@@ -129,7 +129,26 @@ push:latest:
     - docker build --cache-from $IMAGE_ORG/$IMAGE_NAME:$CI_COMMIT_SHA --build-arg CI_COMMIT_SHA -t $IMAGE_ORG/$IMAGE_NAME:latest --label COMMIT_SHA=$CI_COMMIT_SHA .
     - docker push $IMAGE_ORG/$IMAGE_NAME:latest
   only:
-  - develop
+    - develop
+
+pages:
+  image: $IMAGE_ORG/$IMAGE_NAME:$CI_COMMIT_SHA
+  stage: review
+  tags:
+    - elife-kubernetes-runner
+  except:
+    - schedules
+  variables:
+    GIT_STRATEGY: none
+  script:
+    - cd ${HOME}
+    - npm run build:styleguide
+    - cp -r _build_styleguide $CI_PROJECT_DIR/public
+  artifacts:
+    paths:
+    - public
+  only:
+    - develop
 
 review:
   image: pubsweet/deployer:latest
