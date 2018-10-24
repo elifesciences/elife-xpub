@@ -58,7 +58,7 @@ const DateBox = styled(Flex)`
   padding: 0px 0px ${th('space.3')} 0px;
 
   ${media.mobileUp`
-    flex-direction: column
+    flex-direction: column;
     text-align: right;
     flex: 0 0 120px;
   `};
