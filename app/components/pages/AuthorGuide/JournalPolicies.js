@@ -907,7 +907,7 @@ const JournalPolicies = props => (
     <Paragraph>
       To facilitate the interpretation and replication of experiments, authors
       are required to complete eLife&apos;s{' '}
-      <ExternalLink href="/html/transparent_reporting.pdf">
+      <ExternalLink href="/html/transparent_reporting.pdf" target="_blank">
         Transparent Reporting Form
       </ExternalLink>{' '}
       before peer review. Authors are also required to adhere to
@@ -929,7 +929,10 @@ const JournalPolicies = props => (
         BioSharing Information Resource
       </ExternalLink>
       ), or the{' '}
-      <ExternalLink href="http://www.plosbiology.org/article/info:doi/10.1371/journal.pbio.1000412">
+      <ExternalLink
+        href="http://www.plosbiology.org/article/info:doi/10.1371/journal.pbio.1000412"
+        target="_blank"
+      >
         ARRIVE guidelines
       </ExternalLink>{' '}
       for reporting work involving animal research.

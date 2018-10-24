@@ -1,5 +1,5 @@
 import React from 'react'
-import { H1, H2 } from '@pubsweet/ui'
+import { H1, H2, Link } from '@pubsweet/ui'
 
 import Paragraph from '../../ui/atoms/Paragraph'
 import ExternalLink from '../../ui/atoms/ExternalLink'
@@ -229,9 +229,9 @@ const Full = props => (
             these instructions
           </ExternalLink>{' '}
           (courtesy of PLOS). Please also refer to our{' '}
-          <ExternalLink href="/author-guide/journal-policies">
+          <Link to="/author-guide/journal-policies">
             Software sharing policy
-          </ExternalLink>
+          </Link>
           .
         </Paragraph>
       </li>

@@ -37,7 +37,10 @@ const DisclosurePage = ({ values }) => {
       <Box mb={4}>
         <Paragraph>
           Our{' '}
-          <ExternalLink href="https://elifesciences.org/privacy-notice">
+          <ExternalLink
+            href="https://elifesciences.org/privacy-notice"
+            target="_blank"
+          >
             privacy policy
           </ExternalLink>{' '}
           explains that we share your personal information with various third

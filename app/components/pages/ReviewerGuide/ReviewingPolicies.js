@@ -11,7 +11,7 @@ const ReviewingPolicies = props => (
 
     <Paragraph>
       We encourage our reviewers to familiarise themselves with{' '}
-      <Link href="reviewer-guide/reviewing-policies" target="_blank">
+      <Link to="/reviewer-guide/reviewing-policies">
         eLife&apos;s journal policies
       </Link>{' '}
       before the review process commences.

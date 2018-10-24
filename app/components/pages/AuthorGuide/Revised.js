@@ -59,10 +59,7 @@ const Revised = props => (
       Please also make sure to include information in your manuscript related to
       the use of cell lines, animal or human experimentation and data and
       software availability, as indicated in our{' '}
-      <ExternalLink href="/author-guide/journal-policies">
-        Journal Policies
-      </ExternalLink>
-      .
+      <Link to="/author-guide/journal-policies">Journal Policies</Link>.
     </Paragraph>
 
     <H3>Key Resources Table</H3>

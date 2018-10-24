@@ -1,5 +1,5 @@
 import React from 'react'
-import { H1, H2 } from '@pubsweet/ui'
+import { H1, H2, Link } from '@pubsweet/ui'
 
 import Paragraph from '../../ui/atoms/Paragraph'
 import ExternalLink from '../../ui/atoms/ExternalLink'
@@ -80,10 +80,8 @@ const WritingTheReview = props => (
       eLife is a member of the Committee on Publication Ethics (COPE), supports
       their principles, and follows their flowcharts for dealing with potential
       breaches of{' '}
-      <ExternalLink href="author-guide/journal-policies" target="_blank">
-        publishing ethics
-      </ExternalLink>
-      . Reviewers are asked not make allegations of misconduct within the review
+      <Link to="/author-guide/journal-policies">publishing ethics</Link>.
+      Reviewers are asked not make allegations of misconduct within the review
       itself or within the online consultation, but in the event of concerns
       about potential plagiarism, inappropriate image manipulation, or other
       forms of misconduct, reviewers should alert the journal’s editorial staff
