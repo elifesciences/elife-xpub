@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { Box } from 'grid-styled'
 import { th } from '@pubsweet/ui-toolkit'
@@ -42,7 +43,7 @@ class BurgerMenu extends React.Component {
             </MenuItem>
             {menuItems &&
               menuItems.map(item => (
-                <MenuItem p={3}>
+                <MenuItem key={item.link} p={3}>
                   <NavLink exact to={item.link}>
                     {item.label}
                   </NavLink>
@@ -55,4 +56,16 @@ class BurgerMenu extends React.Component {
   }
 }
 
+BurgerMenu.propTypes = {
+  menuItems: PropTypes.arrayOf(
+    PropTypes.shape({
+      label: PropTypes.string.isRequired,
+      link: PropTypes.string.isRequired,
+    }),
+  ),
+}
+
+BurgerMenu.defaultProps = {
+  menuItems: [],
+}
 export default BurgerMenu
