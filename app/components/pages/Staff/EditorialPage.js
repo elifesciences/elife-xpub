@@ -17,13 +17,13 @@ const EditorialPage = () => (
         telephone="+44 [0]1223 855379"
       />
       <StaffCard
-        jobTitle="Senior Editorial Assistant"
+        jobTitle="Journal Development Editor"
         name="Maria Guerreiro"
         photoURL="https://submit.elifesciences.org/images/Maria.png"
         telephone="+44 [0]1223 855376"
       />
       <StaffCard
-        jobTitle="Editorial Assistant"
+        jobTitle="Senior Editorial Assistant"
         name="Susanna Richmond"
         photoURL="https://submit.elifesciences.org/images/Susanna.png"
         telephone="+44 [0]1223 855377"
