@@ -29,12 +29,14 @@ COPY \
     .prettierrc \
     .stylelintignore \
     .stylelintrc \
+    styleguide.config.js \
     ./
 
 COPY app app
 COPY config config
 COPY scripts scripts
 COPY static static
+COPY styleguide styleguide
 COPY test test
 COPY webpack webpack
 
