@@ -163,14 +163,14 @@ const EditorialProcess = props => (
       statements. Authors are asked to agree to publish their work under the
       terms of the Creative Commons Attribution license (
       <ExternalLink
-        href="https://submit.elifesciences.org/html/CCBY_4.0.pdf"
+        href="https://cdn.elifesciences.org/xpub/guides/CCBY_4.0.pdf"
         target="_blank"
       >
         PDF of the agreement
       </ExternalLink>
       ), or the Creative Commons CC0 public domain dedication (
       <ExternalLink
-        href="https://submit.elifesciences.org/html/CC0_1.0.pdf"
+        href="https://cdn.elifesciences.org/xpub/guides/CC0_1.0.pdf"
         target="_blank"
       >
         PDF of the agreement

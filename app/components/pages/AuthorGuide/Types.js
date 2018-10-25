@@ -139,14 +139,14 @@ const Types = props => (
       original paper. Authors should upload a completed version of the
       Transparent Reporting Form (
       <ExternalLink
-        href="https://submit.elifesciences.org/html/transparent_reporting.pdf"
+        href="https://cdn.elifesciences.org/xpub/guides/transparent_reporting.pdf"
         target="_blank"
       >
         PDF
       </ExternalLink>
       ;{' '}
       <ExternalLink
-        href="https://submit.elifesciences.org/html/transparent_reporting.docx"
+        href="https://cdn.elifesciences.org/xpub/guides/transparent_reporting.docx"
         target="_blank"
       >
         Word

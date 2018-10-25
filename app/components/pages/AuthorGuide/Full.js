@@ -60,14 +60,14 @@ const Full = props => (
           reporting. At the Full Submission step, authors should be ready to
           upload a completed version of this form (
           <ExternalLink
-            href="https://submit.elifesciences.org/html/transparent_reporting.pdf"
+            href="https://cdn.elifesciences.org/xpub/guides/transparent_reporting.pdf"
             target="_blank"
           >
             PDF
           </ExternalLink>
           ;{' '}
           <ExternalLink
-            href="https://submit.elifesciences.org/html/transparent_reporting.docx"
+            href="https://cdn.elifesciences.org/xpub/guides/transparent_reporting.docx"
             target="_blank"
           >
             Word
