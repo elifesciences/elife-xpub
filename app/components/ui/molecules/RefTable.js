@@ -15,6 +15,7 @@ const Table = styled.table`
 `
 
 export const Tr = styled.tr`
+  text-align: center;
   &:hover {
     background-color: aliceblue;
   }
