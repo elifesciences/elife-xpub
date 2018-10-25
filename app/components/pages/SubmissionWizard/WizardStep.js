@@ -30,7 +30,7 @@ const WizardStep = ({
   <Formik
     initialValues={initialValues}
     // ensure each page gets a new form instance otherwise all fields are touched
-    key={FormComponent.name}
+    key={title}
     onSubmit={values => {
       handleButtonClick(values).then(() => history.push(nextUrl))
     }}
