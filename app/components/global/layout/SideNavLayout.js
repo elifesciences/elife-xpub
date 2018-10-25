@@ -8,14 +8,17 @@ import SectionalLayout from './SectionalLayout'
 
 const SideNavLink = styled(NavLink)`
   display: block;
-  padding: ${th('space.1')};
+  padding: ${th('space.1')} 0 ${th('space.1')} 0;
+  &:first-child {
+    padding-top: 0;
+  }
 `
 
 const SideNavLayout = ({ children, navList }) => (
   <SectionalLayout
     main={children}
     side={
-      <Box is="nav" pr={3} pt={3}>
+      <Box is="nav">
         {navList &&
           navList.map(navItem => (
             <SideNavLink
@@ -37,11 +40,7 @@ SideNavLayout.propTypes = {
       label: PropTypes.string.isRequired,
       link: PropTypes.string.isRequired,
     }),
-  ),
-}
-
-SideNavLayout.defaultProps = {
-  navList: [],
+  ).isRequired,
 }
 
 export default SideNavLayout
