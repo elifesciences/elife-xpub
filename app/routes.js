@@ -3,11 +3,16 @@ import { Route, Switch } from 'react-router-dom'
 
 import { AuthenticatedComponent, Layout } from './components/global'
 import ErrorBoundary from './components/global/ErrorBoundary'
-import ErrorPage from './components/pages/Error'
+
 import LoginPage from './components/pages/Login'
 import LogoutPage from './components/pages/Logout/index'
-import SubmissionWizard from './components/pages/SubmissionWizard'
 import DashboardPage from './components/pages/Dashboard'
+import AuthorGuide from './components/pages/AuthorGuide'
+import ReviewerGuide from './components/pages/ReviewerGuide'
+import ContactUs from './components/pages/ContactUs'
+
+import SubmissionWizard from './components/pages/SubmissionWizard'
+import ErrorPage from './components/pages/Error'
 import ThankYouPage from './components/pages/ThankYou'
 
 const Routes = () => (
@@ -16,6 +21,9 @@ const Routes = () => (
       <Switch>
         <Route component={LoginPage} exact path="/login" />
         <Route component={LogoutPage} exact path="/logout" />
+        <Route component={AuthorGuide} path="/author-guide" />
+        <Route component={ReviewerGuide} path="/reviewer-guide" />
+        <Route component={ContactUs} path="/contact-us" />
         <AuthenticatedComponent>
           <Switch>
             <Route component={ThankYouPage} path="/thankyou/:id" />
