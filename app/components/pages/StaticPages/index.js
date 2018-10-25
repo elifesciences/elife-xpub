@@ -1,10 +1,12 @@
 import React from 'react'
+import { Route, Switch, Redirect } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { Box } from 'grid-styled'
 import { th } from '@pubsweet/ui-toolkit'
+
 import NavLink from '../../ui/atoms/NavLink'
-import SectionalLayout from './SectionalLayout'
+import SectionalLayout from '../../global/layout/SectionalLayout'
 
 const SideNavLink = styled(NavLink)`
   display: block;
@@ -14,9 +16,24 @@ const SideNavLink = styled(NavLink)`
   }
 `
 
-const SideNavLayout = ({ children, navList }) => (
+const StaticPage = ({ children, navList }) => (
   <SectionalLayout
-    main={children}
+    main={
+      <Box>
+        <Switch>
+          {navList &&
+            navList.map(navItem => (
+              <Route
+                component={navItem.component}
+                exact
+                key={navItem.link}
+                path={navItem.link}
+              />
+            ))}
+          <Redirect to={navList[0].link} />
+        </Switch>
+      </Box>
+    }
     side={
       <Box is="nav">
         {navList &&
@@ -34,7 +51,7 @@ const SideNavLayout = ({ children, navList }) => (
   />
 )
 
-SideNavLayout.propTypes = {
+StaticPage.propTypes = {
   navList: PropTypes.arrayOf(
     PropTypes.shape({
       label: PropTypes.string.isRequired,
@@ -43,4 +60,4 @@ SideNavLayout.propTypes = {
   ).isRequired,
 }
 
-export default SideNavLayout
+export default StaticPage

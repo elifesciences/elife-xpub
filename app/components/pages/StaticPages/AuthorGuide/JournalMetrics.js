@@ -1,7 +1,7 @@
 import React from 'react'
 import { H1, H2 } from '@pubsweet/ui'
-import Paragraph from '../../ui/atoms/Paragraph'
-import ExternalLink from '../../ui/atoms/ExternalLink'
+import Paragraph from '../../../ui/atoms/Paragraph'
+import ExternalLink from '../../../ui/atoms/ExternalLink'
 import { BoxChart, ColumnChart } from './JournalCharts'
 import * as data from './JournalCharts.data'
 

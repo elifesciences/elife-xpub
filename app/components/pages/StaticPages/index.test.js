@@ -1,12 +1,12 @@
 import React from 'react'
 import { mount } from 'enzyme'
 import { NavLink, MemoryRouter } from 'react-router-dom'
-import SideNavLayout from './SideNavLayout'
+import StaticPage from '.'
 
 const makeWrapper = props =>
   mount(
     <MemoryRouter initialEntries={['/']}>
-      <SideNavLayout {...props} />
+      <StaticPage {...props} />
     </MemoryRouter>,
   )
 

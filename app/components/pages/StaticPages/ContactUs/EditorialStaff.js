@@ -1,7 +1,7 @@
 import React from 'react'
 
-import StaffGrid from '../../ui/molecules/StaffGrid'
-import StaffCard from '../../ui/molecules/StaffCard'
+import StaffGrid from '../../../ui/molecules/StaffGrid'
+import StaffCard from '../../../ui/molecules/StaffCard'
 
 const EditorialStaff = () => (
   <React.Fragment>
