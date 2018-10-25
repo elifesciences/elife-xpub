@@ -8,9 +8,9 @@ import media from '../../global/layout/media'
 const StatusBox = styled(Box)`
   color: ${props => props.theme[props.color]};
   font-size: ${th('size.7')};
-  padding: 0px ${th('space.3')} ${th('space.3')} 0px;
   ${media.mobileUp`
     flex: 0 0 120px;
+    margin-bottom: 0;
   `};
 `
 
@@ -29,7 +29,7 @@ const getText = statusCode =>
   }[statusCode])
 
 const ManuscriptStatus = ({ statusCode }) => (
-  <StatusBox color={mapColor(statusCode)} data-test-id="status">
+  <StatusBox color={mapColor(statusCode)} data-test-id="status" mb={3}>
     {getText(statusCode)}
   </StatusBox>
 )

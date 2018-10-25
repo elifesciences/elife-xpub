@@ -31,14 +31,13 @@ const dashboardDateText = date => {
 
 const Root = styled(Flex)`
   flex-direction: column;
-  border-bottom: ${th('colorFurniture')};
-  border-bottom-style: solid;
-  border-bottom-width: 1px;
+  border-bottom: ${th('borderWidth')} ${th('borderStyle')} ${th('colorBorder')};
   justify-content: space-between;
 
   ${media.mobileUp`
     flex-direction: row;
     align-items: flex-start;
+    padding: calc(${th('gridUnit')} * 5) 0;
   `};
   :hover {
     color: ${th('colorPrimary')};
@@ -48,14 +47,15 @@ const Root = styled(Flex)`
 const TitleBox = styled(Box)`
   font-weight: bold;
   text-align: left;
-  font-size: ${th('size.7')};
   flex-grow: 1;
-  padding: 0px ${th('space.3')} ${th('space.3')} 0px;
+  ${media.mobileUp`
+    margin-bottom: 0;
+    margin-right: ${th('space.3')};
+  `};
 `
 const DateBox = styled(Flex)`
   color: ${th('colorTextSecondary')}
   justify-content: space-between;
-  padding: 0px 0px ${th('space.3')} 0px;
 
   ${media.mobileUp`
     flex-direction: column;
@@ -63,21 +63,21 @@ const DateBox = styled(Flex)`
     flex: 0 0 120px;
   `};
 `
-const RelativeDate = styled(Box)`
-  margin-bottom: 0;
-  font-size: ${th('size.7')};
-`
-const AbsoluteDate = styled(Box)`
-  font-size: 12px;
-  margin-top: 0;
+
+const AbsoluteDate = styled.time`
+  ${media.mobileUp`
+    font-size: ${th('fontSizeHeading6')};
+  `};
 `
 
 const DashboardListItem = ({ statusCode, title, date }) => (
-  <Root>
-    <TitleBox data-test-id="title">{title}</TitleBox>
+  <Root py={3}>
+    <TitleBox data-test-id="title" mb={3}>
+      {title}
+    </TitleBox>
     <ManuscriptStatus statusCode={statusCode} />
     <DateBox>
-      <RelativeDate>{dashboardDateText(date)}</RelativeDate>
+      <time>{dashboardDateText(date)}</time>
       <AbsoluteDate>{format(date, 'ddd D MMM YYYY')}</AbsoluteDate>
     </DateBox>
   </Root>
