@@ -31,13 +31,17 @@ class BurgerMenu extends React.Component {
     const { menuItems } = this.props
     return (
       <React.Fragment>
-        <ButtonAsIconWrapper onClick={() => this.setState({ menuOpen: true })}>
+        <ButtonAsIconWrapper
+          data-test-id="burger-menu-expand"
+          onClick={() => this.setState({ menuOpen: true })}
+        >
           <Icon iconName="Menu" overrideName="@pubsweet-pending.AppBar.Menu" />
         </ButtonAsIconWrapper>
         <ModalOverlay open={this.state.menuOpen} transparentBackground>
           <MenuPanel>
             <MenuItem p={3}>
               <CrossIconButton
+                data-test-id="burger-menu-collapse"
                 onClick={() => this.setState({ menuOpen: false })}
               />
             </MenuItem>
