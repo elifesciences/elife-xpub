@@ -8,7 +8,6 @@
   "scripts": {},
   "keywords": [],
   "dependencies": {
-    "@elifesciences/xpub-server": "1.0.0",
     "@pubsweet/component-send-email": "^0.2.3",
     "apollo-boost": "^0.1.13",
     "config": "^2.0.1",
@@ -25,10 +24,5 @@
   },
   "peerDependencies": {
     "pubsweet-server": ">=2.0.0"
-  },
-  "devDependencies": {
-    "json-to-graphql-query": "^1.3.0",
-    "superagent": "^3.8.2",
-    "supertest": "^3.0.0"
   }
 }
