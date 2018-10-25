@@ -2,12 +2,10 @@ import React from 'react'
 import styled from 'styled-components'
 import { Box } from 'grid-styled'
 import PropTypes from 'prop-types'
-import { th } from '@pubsweet/ui-toolkit'
 import media from '../../global/layout/media'
 
 const StatusBox = styled(Box)`
   color: ${props => props.theme[props.color]};
-  font-size: ${th('size.7')};
   ${media.mobileUp`
     flex: 0 0 120px;
     margin-bottom: 0;
