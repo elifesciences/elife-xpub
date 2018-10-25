@@ -15,7 +15,7 @@ const MenuPanel = styled.div`
     height: 100%;
 `
 
-const MenuItem = styled(Box)`
+const MenuItem = styled(Box).attrs({ p: 3 })`
   border-top: ${th('borderWidth')} ${th('borderStyle')} ${th('colorBorder')};
   height: ${th('space.6')};
   &:first-child {
@@ -39,7 +39,7 @@ class BurgerMenu extends React.Component {
         </ButtonAsIconWrapper>
         <ModalOverlay open={this.state.menuOpen} transparentBackground>
           <MenuPanel>
-            <MenuItem p={3}>
+            <MenuItem>
               <CrossIconButton
                 data-test-id="burger-menu-collapse"
                 onClick={() => this.setState({ menuOpen: false })}
@@ -47,7 +47,7 @@ class BurgerMenu extends React.Component {
             </MenuItem>
             {menuItems &&
               menuItems.map(item => (
-                <MenuItem key={item.link} p={3}>
+                <MenuItem key={item.link}>
                   <NavLink exact to={item.link}>
                     {item.label}
                   </NavLink>
@@ -66,10 +66,6 @@ BurgerMenu.propTypes = {
       label: PropTypes.string.isRequired,
       link: PropTypes.string.isRequired,
     }),
-  ),
-}
-
-BurgerMenu.defaultProps = {
-  menuItems: [],
+  ).isRequired,
 }
 export default BurgerMenu
