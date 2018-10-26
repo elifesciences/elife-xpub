@@ -43,4 +43,16 @@ describe('SideNavComponent', () => {
   it('shows the correct number of nav links when passed navigation config', () => {
     expect(wrapper.find(NavLink)).toHaveLength(navList.length)
   })
+
+  it('navigating to the overall static page renders (only) the first sub-content component in the nav list', () => {
+    expect(
+      wrapper.find('[data-test-id="first-sub-content-component"]').exists(),
+    ).toBe(true)
+    expect(
+      wrapper.find('[data-test-id="second-sub-content-component"]').exists(),
+    ).toBe(false)
+    expect(
+      wrapper.find('[data-test-id="third-sub-content-component"]').exists(),
+    ).toBe(false)
+  })
 })
