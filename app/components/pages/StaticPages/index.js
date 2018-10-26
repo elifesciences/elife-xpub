@@ -16,23 +16,21 @@ const SideNavLink = styled(NavLink)`
   }
 `
 
-const StaticPage = ({ children, navList }) => (
+const StaticPage = ({ navList }) => (
   <SectionalLayout
     main={
-      <Box>
-        <Switch>
-          {navList &&
-            navList.map(navItem => (
-              <Route
-                component={navItem.component}
-                exact
-                key={navItem.link}
-                path={navItem.link}
-              />
-            ))}
-          <Redirect to={navList[0].link} />
-        </Switch>
-      </Box>
+      <Switch>
+        {navList &&
+          navList.map(navItem => (
+            <Route
+              component={navItem.component}
+              exact
+              key={navItem.link}
+              path={navItem.link}
+            />
+          ))}
+        <Redirect to={navList[0].link} />
+      </Switch>
     }
     side={
       <Box is="nav">

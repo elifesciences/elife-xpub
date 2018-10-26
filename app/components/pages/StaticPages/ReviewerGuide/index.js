@@ -5,7 +5,7 @@ import ReviewProcess from './ReviewProcess'
 import ReviewingPolicies from './ReviewingPolicies'
 import WritingTheReview from './WritingTheReview'
 
-const ReviewerGuide = ({ match, ...props }) => (
+const ReviewerGuide = props => (
   <StaticPage
     navList={[
       {

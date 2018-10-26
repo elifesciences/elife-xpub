@@ -11,7 +11,7 @@ import JournalPolicies from './JournalPolicies'
 import Fees from './Fees'
 import JournalMetrics from './JournalMetrics'
 
-const AuthorGuide = ({ match, ...props }) => (
+const AuthorGuide = props => (
   <StaticPage
     navList={[
       {

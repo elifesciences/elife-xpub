@@ -5,7 +5,7 @@ import ContactELife from './ContactELife'
 import EditorialStaff from './EditorialStaff'
 import ProductionStaff from './ProductionStaff'
 
-const ContactUs = ({ match, ...props }) => (
+const ContactUs = props => (
   <StaticPage
     navList={[
       {
