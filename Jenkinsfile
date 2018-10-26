@@ -18,13 +18,19 @@ elifePipeline {
         stage 'Project tests', {
             def actions = [
                 'lint': {
-                    sh "docker run --rm ${image} npm run lint"
+                    withCommitStatus({
+                        sh "docker run --rm ${image} npm run lint"
+                    }, 'lint', commit)
                 },
                 'test': {
-                    sh "IMAGE_TAG=${commit} docker-compose -f docker-compose.ci.yml run --rm app npm test"
+                    withCommitStatus({
+                        sh "IMAGE_TAG=${commit} docker-compose -f docker-compose.ci.yml run --rm app npm test"
+                    }, 'test', commit)
                 },
                 'test:dependencies': {
-                    sh "IMAGE_TAG=${commit} docker-compose -f docker-compose.ci.yml run --rm app npm run test:dependencies"
+                    withCommitStatus({
+                        sh "IMAGE_TAG=${commit} docker-compose -f docker-compose.ci.yml run --rm app npm run test:dependencies"
+                    }, 'test:dependencies', commit)
                 },
             ]
             parallel actions
