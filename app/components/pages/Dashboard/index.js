@@ -29,6 +29,7 @@ const MobileOnlyStickyFooter = styled(StickyFooter)`
 `
 
 const CenterdSmallParagraph = styled(SmallParagraph)`
+  margin-top: 12px;
   color: ${th('colorTextSecondary')};
   text-align: center;
 `
