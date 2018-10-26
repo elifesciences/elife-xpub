@@ -15,7 +15,7 @@ const StatusBox = styled(Box)`
 const mapColor = statusCode =>
   ({
     CONTINUE_SUBMISION: 'colorPrimary',
-    SUBMITTED: 'colorPrimary',
+    SUBMITTED: 'colorTextSecondary',
     REJECTED: 'colorError',
   }[statusCode])
 
