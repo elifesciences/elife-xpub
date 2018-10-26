@@ -16,7 +16,7 @@ const MenuPanel = styled.div`
     height: 100%;
 `
 
-const MenuItem = styled(Box)`
+const MenuItem = styled(Box).attrs({ p: 3 })`
   border-top: ${th('borderWidth')} ${th('borderStyle')} ${th('colorBorder')};
   height: ${th('space.6')};
   &:first-child {
@@ -34,6 +34,21 @@ class BurgerMenu extends React.Component {
   state = {
     menuOpen: false,
   }
+
+  componentDidMount() {
+    document.addEventListener('mousedown', this.handleClickOutside)
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener('mousedown', this.handleClickOutside)
+  }
+
+  handleClickOutside = event => {
+    if (this.menuRef && !this.menuRef.contains(event.target)) {
+      this.setState({ menuOpen: false })
+    }
+  }
+
   render() {
     const { menuItems } = this.props
     return (
@@ -45,8 +60,12 @@ class BurgerMenu extends React.Component {
           <Icon iconName="Menu" overrideName="@pubsweet-pending.AppBar.Menu" />
         </ButtonAsIconWrapper>
         <ModalOverlay open={this.state.menuOpen} transparentBackground>
-          <MenuPanel>
-            <MenuItem p={3}>
+          <MenuPanel
+            innerRef={node => {
+              this.menuRef = node
+            }}
+          >
+            <MenuItem>
               <CrossIconButton
                 data-test-id="burger-menu-collapse"
                 onClick={() => this.setState({ menuOpen: false })}
@@ -54,8 +73,12 @@ class BurgerMenu extends React.Component {
             </MenuItem>
             {menuItems &&
               menuItems.map(item => (
-                <MenuItem key={item.link} p={3}>
-                  <NavLink exact to={item.link}>
+                <MenuItem key={item.link}>
+                  <NavLink
+                    exact
+                    onClick={() => this.setState({ menuOpen: false })}
+                    to={item.link}
+                  >
                     {item.label}
                   </NavLink>
                 </MenuItem>
@@ -73,10 +96,6 @@ BurgerMenu.propTypes = {
       label: PropTypes.string.isRequired,
       link: PropTypes.string.isRequired,
     }),
-  ),
-}
-
-BurgerMenu.defaultProps = {
-  menuItems: [],
+  ).isRequired,
 }
 export default BurgerMenu
