@@ -1,10 +1,10 @@
 import React from 'react'
 import { H1, H2, H3, Link } from '@pubsweet/ui'
 
-import Paragraph from '../../ui/atoms/Paragraph'
-import CalloutTextBox from '../../ui/atoms/CalloutTextBox'
-import ExternalLink from '../../ui/atoms/ExternalLink'
-import List from '../../ui/atoms/List'
+import Paragraph from '../../../ui/atoms/Paragraph'
+import CalloutTextBox from '../../../ui/atoms/CalloutTextBox'
+import ExternalLink from '../../../ui/atoms/ExternalLink'
+import List from '../../../ui/atoms/List'
 
 const EditorialProcess = props => (
   <React.Fragment>

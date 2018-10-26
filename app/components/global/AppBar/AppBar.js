@@ -12,9 +12,13 @@ const AppBarContainer = styled.div`
   align-items: center;
   height: ${th('space.6')};
   border-bottom: 1px solid ${th('colorBorder')};
-  margin-bottom: ${th('space.3')};
+  margin-bottom: 0;
   padding-right: ${th('space.3')};
   justify-content: space-between;
+
+  ${media.tabletPortraitUp`
+    margin-bottom: ${th('space.6')};
+  `};
 `
 
 const AppBarLink = styled(NavLink)`

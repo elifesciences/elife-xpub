@@ -1,9 +1,9 @@
 import React from 'react'
 import { H1, H2, Link } from '@pubsweet/ui'
 
-import Paragraph from '../../ui/atoms/Paragraph'
-import CalloutTextBox from '../../ui/atoms/CalloutTextBox'
-import ExternalLink from '../../ui/atoms/ExternalLink'
+import Paragraph from '../../../ui/atoms/Paragraph'
+import CalloutTextBox from '../../../ui/atoms/CalloutTextBox'
+import ExternalLink from '../../../ui/atoms/ExternalLink'
 
 const Types = props => (
   <React.Fragment>

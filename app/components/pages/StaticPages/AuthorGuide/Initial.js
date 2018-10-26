@@ -1,9 +1,9 @@
 import React from 'react'
 import { H1, H2, Link } from '@pubsweet/ui'
 
-import Paragraph from '../../ui/atoms/Paragraph'
-import ExternalLink from '../../ui/atoms/ExternalLink'
-import List from '../../ui/atoms/List'
+import Paragraph from '../../../ui/atoms/Paragraph'
+import ExternalLink from '../../../ui/atoms/ExternalLink'
+import List from '../../../ui/atoms/List'
 import RequiredInfoTable from './RequiredInfoTable'
 
 const Initial = props => (

@@ -1,8 +1,9 @@
 import React from 'react'
-import StaffGrid from '../../ui/molecules/StaffGrid'
-import StaffCard from '../../ui/molecules/StaffCard'
 
-const EditorialPage = () => (
+import StaffGrid from '../../../ui/molecules/StaffGrid'
+import StaffCard from '../../../ui/molecules/StaffCard'
+
+const EditorialStaff = () => (
   <React.Fragment>
     <h1>Editorial Staff</h1>
     <p>
@@ -44,4 +45,4 @@ const EditorialPage = () => (
   </React.Fragment>
 )
 
-export default EditorialPage
+export default EditorialStaff
