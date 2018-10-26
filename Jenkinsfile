@@ -11,7 +11,7 @@ elifePipeline {
 
         stage 'Build image', {
             // TODO: pull existing docker image if caching is not already effective
-            sh "IMAGE_TAG=${commit} docker-compose build"
+            sh "IMAGE_TAG=${commit} docker-compose -f docker-compose.ci.yml build"
             //sh "docker push elifesciences/elife-xpub:$commit}"
         }
 
