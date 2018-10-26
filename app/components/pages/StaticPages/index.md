@@ -1,7 +1,7 @@
 ```js
-const ContactELife = require('./ContactUs/ContactELife')
-const EditorialStaff = require('./ContactUs/EditorialStaff')
-const ProductionStaff = require('./ContactUs/ProductionStaff')
+const ContactELife = require('./ContactUs/ContactELife').default
+const EditorialStaff = require('./ContactUs/EditorialStaff').default
+const ProductionStaff = require('./ContactUs/ProductionStaff').default
 ;<StaticPage
   navList={[
     {
