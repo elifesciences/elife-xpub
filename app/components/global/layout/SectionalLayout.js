@@ -5,7 +5,8 @@ import { th } from '@pubsweet/ui-toolkit'
 import media from './media'
 
 const TopNavContainer = styled.div`
-  margin-bottom: ${th('space.3')} ${media.tabletPortraitUp`display: none;`};
+  margin-bottom: ${th('space.3')};
+  ${media.tabletPortraitUp`display: none;`};
 `
 const SideNavContainer = styled(Box)`
   display: none;
