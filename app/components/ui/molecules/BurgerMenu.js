@@ -8,6 +8,7 @@ import ButtonAsIconWrapper from '../atoms/ButtonAsIconWrapper'
 import CrossIconButton from '../atoms/CrossIconButton'
 import NavLink from '../../ui/atoms/NavLink'
 import ModalOverlay from '../molecules/ModalOverlay'
+import media from '../../global/layout/media'
 
 const MenuPanel = styled.div`
     max-width: 240px;
@@ -22,6 +23,13 @@ const MenuItem = styled(Box)`
     border: none;
   }
 `
+const BurgerWrapper = styled(Box)`
+  margin-left: ${th('space.3')};
+  display: inline;
+  ${media.mobileUp`
+    display: none;
+  `};
+`
 
 class BurgerMenu extends React.Component {
   state = {
@@ -30,7 +38,7 @@ class BurgerMenu extends React.Component {
   render() {
     const { menuItems } = this.props
     return (
-      <React.Fragment>
+      <BurgerWrapper>
         <ButtonAsIconWrapper
           data-test-id="burger-menu-expand"
           onClick={() => this.setState({ menuOpen: true })}
@@ -55,7 +63,7 @@ class BurgerMenu extends React.Component {
               ))}
           </MenuPanel>
         </ModalOverlay>
-      </React.Fragment>
+      </BurgerWrapper>
     )
   }
 }
