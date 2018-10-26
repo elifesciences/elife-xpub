@@ -15,11 +15,12 @@ elifePipeline {
         }
 
         stage 'Project tests', {
-            parallel [
+            def actions = [
                 'lint': {
                     sh "docker run ${image} npm run lint"
                 },
             ]
+            parallel actions
         }
     }
 }
