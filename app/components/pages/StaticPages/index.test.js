@@ -11,10 +11,6 @@ const makeWrapper = props =>
   )
 
 describe('SideNavComponent', () => {
-  it('shows no navigation links when no navList is passed', () => {
-    const wrapper = makeWrapper()
-    expect(wrapper.find(NavLink)).toHaveLength(0)
-  })
   const wrapper = makeWrapper({
     navList: [
       { label: 'Contact eLife', link: '/' },
