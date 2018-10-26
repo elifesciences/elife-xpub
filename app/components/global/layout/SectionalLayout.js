@@ -25,7 +25,9 @@ const SectionalLayout = ({ top, side, main }) => (
       >
         {side}
       </SideNavContainer>
-      <MainContainer width={[1, 7 / 12, 7 / 12, 8 / 12]}>{main}</MainContainer>
+      <MainContainer width={[1, 1, 7 / 12, 7 / 12, 8 / 12]}>
+        {main}
+      </MainContainer>
     </Flex>
   </div>
 )
