@@ -16,7 +16,7 @@ module.exports = {
         {
           name: 'Other',
           components: 'app/**/*.js',
-          ignore: ['app/components/{global,pages,ui}/**/*.js'],
+          ignore: ['**/app/components/{global,pages,ui}/**/*.js'],
         },
       ],
     },
