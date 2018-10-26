@@ -21,6 +21,7 @@ const BoxHiddenFromMobile = styled(Box)`
 
 const DashboardPanel = styled(Tabs.Panel)`
   min-height: 300px;
+  margin-bottom: 12px;
 `
 
 const MobileOnlyStickyFooter = styled(StickyFooter)`
@@ -29,7 +30,6 @@ const MobileOnlyStickyFooter = styled(StickyFooter)`
 `
 
 const CenterdSmallParagraph = styled(SmallParagraph)`
-  margin-top: 12px;
   color: ${th('colorTextSecondary')};
   text-align: center;
 `
