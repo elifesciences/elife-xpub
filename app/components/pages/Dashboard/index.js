@@ -19,8 +19,8 @@ const BoxHiddenFromMobile = styled(Box)`
   ${media.mobileUp`display: block`};
 `
 
-const DashboardPanel = styled(Tabs.Panel)`
-  min-height: 300px;
+const TabbedSubmissions = styled(Tabs)`
+  margin-bottom: ${th('space.2')};
 `
 
 const MobileOnlyStickyFooter = styled(StickyFooter)`
@@ -52,18 +52,20 @@ const DashboardPage = ({ history }) => (
               New Submission
             </Button>
           </BoxHiddenFromMobile>
-          <Tabs>
+
+          <TabbedSubmissions>
             <Tabs.List>
               <Tabs.Tab>Submissions</Tabs.Tab>
               <Tabs.Tab>Archive</Tabs.Tab>
             </Tabs.List>
-            <DashboardPanel data-test-id="manuscripts">
+            <Tabs.Panel data-test-id="manuscripts">
               <Submissions />
-            </DashboardPanel>
-            <DashboardPanel>
+            </Tabs.Panel>
+            <Tabs.Panel>
               <Archived />
-            </DashboardPanel>
-          </Tabs>
+            </Tabs.Panel>
+          </TabbedSubmissions>
+
           <CenterdSmallParagraph>
             Can&#39;t find a submission? You might find it in our full{' '}
             <ExternalLink href="https://submit.elifesciences.org">
@@ -72,6 +74,7 @@ const DashboardPage = ({ history }) => (
             system
           </CenterdSmallParagraph>
         </Box>
+
         <MobileOnlyStickyFooter>
           <Button
             data-test-id="mobile-new-submission"
