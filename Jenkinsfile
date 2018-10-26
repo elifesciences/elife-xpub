@@ -11,7 +11,7 @@ elifePipeline {
 
         stage 'Build image', {
             // TODO: pull existing docker image if caching is not already effective
-            sh "docker build --build-arg CI_COMMIT_SHA=${commit} -t ${image} ."
+            sh "IMAGE_TAG=${commit} docker-compose build"
             //sh "docker push elifesciences/elife-xpub:$commit}"
         }
 
@@ -19,7 +19,7 @@ elifePipeline {
             def actions = [
                 'lint': {
                     withCommitStatus({
-                        sh "docker run --rm ${image} npm run lint"
+                        sh "IMAGE_TAG=${commit} docker-compose -f docker-compose.ci.yml run --rm --name elife-xpub_app_lint app npm run lint"
                     }, 'lint', commit)
                 },
                 'test': {

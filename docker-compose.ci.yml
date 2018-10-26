@@ -2,10 +2,11 @@ version: '3'
 
 services:
   app:
-      # TODO: uncomment when image is built through docker-compose
-      #build:
-      #  context: .
-      #  dockerfile: ./Dockerfile
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+      args:
+        CI_COMMIT_SHA: ${IMAGE_TAG}
     image: elifesciences/elife-xpub:${IMAGE_TAG}
     # no need to start the up in any scenario, yet
     command: sh
