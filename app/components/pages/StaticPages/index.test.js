@@ -5,20 +5,42 @@ import StaticPage from '.'
 
 const makeWrapper = props =>
   mount(
-    <MemoryRouter initialEntries={['/']}>
+    <MemoryRouter initialEntries={['./static-page-name']}>
       <StaticPage {...props} />
     </MemoryRouter>,
   )
 
+const MockContentComponent = ({ dataTestId }) => (
+  <div data-test-id={dataTestId} />
+)
+
 describe('SideNavComponent', () => {
-  const wrapper = makeWrapper({
-    navList: [
-      { label: 'Contact eLife', link: '/' },
-      { label: 'Editorial staff', link: '/editorial' },
-      { label: 'Production staff', link: '/production' },
-    ],
-  })
+  const navList = [
+    {
+      label: 'First label',
+      link: '/static-page-name/first-sub-content-name',
+      component: () => (
+        <MockContentComponent data-test-id="first-sub-content-component" />
+      ),
+    },
+    {
+      label: 'Second label',
+      link: '/static-page-name/second-sub-content-name',
+      component: () => (
+        <MockContentComponent data-test-id="second-sub-content-component" />
+      ),
+    },
+    {
+      label: 'Third label',
+      link: '/static-page-name/third-sub-content-name',
+      component: () => (
+        <MockContentComponent data-test-id="third-sub-content-component" />
+      ),
+    },
+  ]
+  const wrapper = makeWrapper({ navList })
+
   it('shows the correct number of nav links when passed navigation config', () => {
-    expect(wrapper.find(NavLink)).toHaveLength(3)
+    expect(wrapper.find(NavLink)).toHaveLength(navList.length)
   })
 })

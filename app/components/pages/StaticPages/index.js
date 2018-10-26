@@ -43,7 +43,7 @@ const StaticPage = ({ navList }) => (
             {navList &&
               navList.map(navItem => (
                 <SideNavLink
-                  data-test-id="side-nav-link"
+                  data-test-id={navItem.link}
                   key={navItem.link}
                   to={navItem.link}
                 >
