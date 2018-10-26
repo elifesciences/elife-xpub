@@ -27,6 +27,21 @@ class BurgerMenu extends React.Component {
   state = {
     menuOpen: false,
   }
+
+  componentDidMount() {
+    document.addEventListener('mousedown', this.handleClickOutside)
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener('mousedown', this.handleClickOutside)
+  }
+
+  handleClickOutside = event => {
+    if (this.menuRef && !this.menuRef.contains(event.target)) {
+      this.setState({ menuOpen: false })
+    }
+  }
+
   render() {
     const { menuItems } = this.props
     return (
@@ -38,7 +53,11 @@ class BurgerMenu extends React.Component {
           <Icon iconName="Menu" overrideName="@pubsweet-pending.AppBar.Menu" />
         </ButtonAsIconWrapper>
         <ModalOverlay open={this.state.menuOpen} transparentBackground>
-          <MenuPanel>
+          <MenuPanel
+            innerRef={node => {
+              this.menuRef = node
+            }}
+          >
             <MenuItem>
               <CrossIconButton
                 data-test-id="burger-menu-collapse"
