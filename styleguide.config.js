@@ -14,22 +14,17 @@ module.exports = {
           components: 'app/components/pages/**/*.js',
         },
         {
-          name: 'Other',
-          components: 'app/**/*.js',
-          ignore: ['app/components/{global,pages,ui}/**/*.js'],
-        },
-      ],
-    },
-    {
-      name: 'eLife UI',
-      sections: [
-        {
-          name: 'Atoms',
-          components: 'app/components/ui/atoms/**/*.js',
-        },
-        {
-          name: 'Molecules',
-          components: 'app/components/ui/atoms/**/*.js',
+          name: 'UI',
+          sections: [
+            {
+              name: 'Atoms',
+              components: 'app/components/ui/atoms/**/*.js',
+            },
+            {
+              name: 'Molecules',
+              components: 'app/components/ui/atoms/**/*.js',
+            },
+          ],
         },
       ],
     },
@@ -39,6 +34,7 @@ module.exports = {
     },
     {
       name: 'PubSweet UI (external)',
+      external: true,
       href: 'https://ui-staging-zpqsip.gateway.ps.elifesciences.yld.io/',
     },
   ],
