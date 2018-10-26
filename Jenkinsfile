@@ -6,7 +6,7 @@ elifePipeline {
             checkout scm
             commit = elifeGitRevision()
             image = "elifesciences/elife-xpub:$commit"
-            sh "ln -s .env.ci .env"
+            sh "ln -sf .env.ci .env"
         }
 
         stage 'Build image', {
@@ -17,6 +17,7 @@ elifePipeline {
 
         stage 'Project tests', {
             sh "IMAGE_TAG=${commit} docker-compose -f docker-compose.ci.yml up -d postgres"
+            // TODO: wait for postgres
             def actions = [
                 'lint': {
                     withCommitStatus({
