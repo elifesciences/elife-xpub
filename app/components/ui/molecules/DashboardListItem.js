@@ -9,6 +9,7 @@ import {
 import { th } from '@pubsweet/ui-toolkit'
 import PropTypes from 'prop-types'
 import ManuscriptStatus from '../atoms/ManuscriptStatus'
+import media from '../../global/layout/media'
 
 const dashboardDateText = date => {
   const diffDays = differenceInCalendarDays(new Date(), date)
@@ -29,42 +30,54 @@ const dashboardDateText = date => {
 }
 
 const Root = styled(Flex)`
-  height: ${th('space.5')}
-  align-items: center;
-  padding: 0;
-  border-bottom: ${th('colorFurniture')};
-  border-bottom-style: solid;
-  border-bottom-width: 1px;
-  height: 107px;
+  flex-direction: column;
+  border-bottom: ${th('borderWidth')} ${th('borderStyle')} ${th('colorBorder')};
+  justify-content: space-between;
+
+  ${media.mobileUp`
+    flex-direction: row;
+    align-items: flex-start;
+    padding: calc(${th('gridUnit')} * 5) 0;
+  `};
+  :hover {
+    color: ${th('colorPrimary')};
+  }
 `
 
 const TitleBox = styled(Box)`
   font-weight: bold;
   text-align: left;
-  font-size: 16px;
   flex-grow: 1;
+  ${media.mobileUp`
+    margin-bottom: 0;
+    margin-right: ${th('space.3')};
+  `};
 `
-const DateBox = styled(Box)`
+const DateBox = styled(Flex)`
   color: ${th('colorTextSecondary')}
-  text-align: right;
-  padding-left: 24px;
-  flex: 0 0 120px;
+  justify-content: space-between;
+
+  ${media.mobileUp`
+    flex-direction: column;
+    text-align: right;
+    flex: 0 0 120px;
+  `};
 `
-const RelativeDate = styled.p`
-  margin-bottom: 0;
-  font-size: 16px;
-`
-const AbsoluteDate = styled.p`
-  font-size: 12px;
-  margin-top: 0;
+
+const AbsoluteDate = styled.time`
+  ${media.mobileUp`
+    font-size: ${th('fontSizeHeading6')};
+  `};
 `
 
 const DashboardListItem = ({ statusCode, title, date }) => (
-  <Root>
-    <TitleBox data-test-id="title">{title}</TitleBox>
+  <Root py={3}>
+    <TitleBox data-test-id="title" mb={3}>
+      {title}
+    </TitleBox>
     <ManuscriptStatus statusCode={statusCode} />
     <DateBox>
-      <RelativeDate>{dashboardDateText(date)}</RelativeDate>
+      <time>{dashboardDateText(date)}</time>
       <AbsoluteDate>{format(date, 'ddd D MMM YYYY')}</AbsoluteDate>
     </DateBox>
   </Root>
