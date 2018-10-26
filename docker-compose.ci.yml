@@ -14,8 +14,7 @@ services:
       - postgres
     environment:
       NODE_ENV:
-      # TODO: confusing, should just be PGHOST?
-      PGHOSTADDR:  127.0.0.1
+      PGHOSTADDR:
       PGHOST:
       PGUSER:
       PGPASSWORD:
