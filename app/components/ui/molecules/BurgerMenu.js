@@ -67,7 +67,11 @@ class BurgerMenu extends React.Component {
             {menuItems &&
               menuItems.map(item => (
                 <MenuItem key={item.link}>
-                  <NavLink exact to={item.link}>
+                  <NavLink
+                    exact
+                    onClick={() => this.setState({ menuOpen: false })}
+                    to={item.link}
+                  >
                     {item.label}
                   </NavLink>
                 </MenuItem>
