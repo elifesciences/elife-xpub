@@ -12,4 +12,8 @@ module.exports = app => {
     res.type('js')
     res.send(response)
   })
+
+  app.get('/ping', (req, res) => {
+    res.send('pong')
+  })
 }
