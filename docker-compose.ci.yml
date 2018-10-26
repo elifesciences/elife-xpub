@@ -14,6 +14,7 @@ services:
       - postgres
     environment:
       NODE_ENV:
+      NODE_CONFIG_ENV:
       PGHOSTADDR:
       PGHOST:
       PGUSER:
