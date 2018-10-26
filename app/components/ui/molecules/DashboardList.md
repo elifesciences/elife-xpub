@@ -9,7 +9,7 @@ Dashboard list of submissions
           'Shearing in flow environment promotes evolution of social behaviour in microbial populations',
       },
       created: '2018-10-09T16:10:00.000Z',
-      clientStatus: 'WAITING_FOR_DECISION',
+      clientStatus: 'SUBMITTED',
       id: '1',
     },
     {
