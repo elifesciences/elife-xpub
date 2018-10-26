@@ -46,28 +46,25 @@ const DesktopView = styled(Flex)`
   `};
 `
 
-const AppBar = ({ user, userMenuItems, defaultMenuItems }) => {
-  const menuItems = [...(user ? userMenuItems : []), ...defaultMenuItems]
-  return (
-    <AppBarContainer>
-      <BurgerMenu menuItems={menuItems} />
-      <LogoLink href="https://elifesciences.org">
-        <img alt="eLife" src="/assets/elife-logo.png" />
-      </LogoLink>
-      <DesktopView>
-        <Separator />
-        <Box flex="1 1 auto">
-          {menuItems &&
-            menuItems.map(item => (
-              <AppBarLink key={item.link} to={item.link}>
-                {item.label}
-              </AppBarLink>
-            ))}
-        </Box>
-      </DesktopView>
-      <ProfileMenu user={user} />
-    </AppBarContainer>
-  )
-}
+const AppBar = ({ user, menuItems }) => (
+  <AppBarContainer>
+    <BurgerMenu menuItems={menuItems} />
+    <LogoLink href="https://elifesciences.org">
+      <img alt="eLife" src="/assets/elife-logo.png" />
+    </LogoLink>
+    <DesktopView>
+      <Separator />
+      <Box flex="1 1 auto">
+        {menuItems &&
+          menuItems.map(item => (
+            <AppBarLink key={item.link} to={item.link}>
+              {item.label}
+            </AppBarLink>
+          ))}
+      </Box>
+    </DesktopView>
+    <ProfileMenu user={user} />
+  </AppBarContainer>
+)
 
 export default AppBar
