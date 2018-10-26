@@ -24,7 +24,6 @@ const MenuItem = styled(Box)`
   }
 `
 const BurgerWrapper = styled(Box)`
-  margin-left: ${th('space.3')};
   display: inline;
   ${media.mobileUp`
     display: none;
@@ -38,7 +37,7 @@ class BurgerMenu extends React.Component {
   render() {
     const { menuItems } = this.props
     return (
-      <BurgerWrapper>
+      <BurgerWrapper ml={3}>
         <ButtonAsIconWrapper
           data-test-id="burger-menu-expand"
           onClick={() => this.setState({ menuOpen: true })}

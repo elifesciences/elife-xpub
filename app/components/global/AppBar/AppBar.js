@@ -48,7 +48,7 @@ const DesktopView = styled(Flex)`
 
 const AppBar = ({ user }) => (
   <AppBarContainer>
-    <BurgerMenu />
+    <BurgerMenu menuItems={user && [{ label: 'Dashboard', link: '/' }]} />
     <LogoLink href="https://elifesciences.org">
       <img alt="eLife" src="/assets/elife-logo.png" />
     </LogoLink>
