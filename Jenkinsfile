@@ -20,10 +20,10 @@ elifePipeline {
                     sh "docker run --rm ${image} npm run lint"
                 },
                 'test': {
-                    sh "docker-compose -f docker-compose.ci.yml run --rm app npm test"
+                    sh "IMAGE_TAG=${commit} docker-compose -f docker-compose.ci.yml run --rm app npm test"
                 },
                 'test:dependencies': {
-                    sh "docker-compose -f docker-compose.ci.yml run --rm app npm run test:dependencies"
+                    sh "IMAGE_TAG=${commit} docker-compose -f docker-compose.ci.yml run --rm app npm run test:dependencies"
                 },
             ]
             parallel actions
