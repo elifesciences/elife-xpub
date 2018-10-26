@@ -46,20 +46,21 @@ const DesktopView = styled(Flex)`
   `};
 `
 
-const AppBar = ({ user }) => (
+const AppBar = ({ user, menuItems }) => (
   <AppBarContainer>
-    <BurgerMenu menuItems={user && [{ label: 'Dashboard', link: '/' }]} />
+    <BurgerMenu menuItems={menuItems} />
     <LogoLink href="https://elifesciences.org">
       <img alt="eLife" src="/assets/elife-logo.png" />
     </LogoLink>
     <DesktopView>
       <Separator />
       <Box flex="1 1 auto">
-        {user && (
-          <AppBarLink exact to="/">
-            Dashboard
-          </AppBarLink>
-        )}
+        {menuItems &&
+          menuItems.map(item => (
+            <AppBarLink key={item.link} to={item.link}>
+              {item.label}
+            </AppBarLink>
+          ))}
       </Box>
     </DesktopView>
     <ProfileMenu user={user} />
