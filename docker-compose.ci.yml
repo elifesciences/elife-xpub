@@ -22,6 +22,8 @@ services:
       PGHOST:
       PGUSER:
       PGPASSWORD:
+    volumes:
+      - ./build/screenshots:/tmp/screenshots
 
   postgres:
     image: postgres:10.4
