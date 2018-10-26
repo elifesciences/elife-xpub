@@ -1,13 +1,9 @@
-```
-const H1 = require('@pubsweet/ui').H1;
+```js
 ;<NavigationDropdown
-  navList={[
-    {label: 'Contact eLife', link: '/'},
-    {label: 'Editorial staff', link: '/#editorial'},
-    {label: 'Production staff', link: '/#production'},
+  options={[
+    { label: 'Contact eLife', value: '/contact-us' },
+    { label: 'Editorial staff', value: '/contact-us/editorial-staff' },
+    { label: 'Production staff', value: '/contact-us/production-staff' },
   ]}
->
-  <H1>Contact eLife</H1>
-  <p>You can use the "Check Status" link under Manuscript Tasks to find information about your article and how long different parts of the editorial and review process can take. You can also read about the system's requirements regarding browsers, emails, and PDFs if you are having difficulties. If you have any further questions about submitting, submitted, or accepted articles, please contact our editorial or production teams:</p>
-</NavigationDropdown>
+/>
 ```
