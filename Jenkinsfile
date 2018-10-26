@@ -17,7 +17,10 @@ elifePipeline {
         stage 'Project tests', {
             def actions = [
                 'lint': {
-                    sh "docker run ${image} npm run lint"
+                    sh "docker run --rm ${image} npm run lint"
+                },
+                'test': {
+                    sh "docker-compose -f docker-compose.ci.yml run --rm app npm test"
                 },
             ]
             parallel actions

@@ -1,0 +1,36 @@
+version: '3'
+
+services:
+  app:
+      # TODO: uncomment when image is built through docker-compose
+      #build:
+      #  context: .
+      #  dockerfile: ./Dockerfile
+    image: elifesciences/elife-xpub:${IMAGE_TAG}
+    command: sh
+    ports:
+      - ${PORT}:3000
+    depends_on:
+      - postgres
+    environment:
+      NODE_ENV:
+      # TODO: confusing, should just be PGHOST?
+      PGHOSTADDR:  127.0.0.1
+      PGHOST:
+      PGUSER:
+      PGPASSWORD:
+
+  postgres:
+    image: postgres:10.4
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER:
+      POSTGRES_PASSWORD:
+    volumes:
+      - ./scripts/test.sql:/docker-entrypoint-initdb.d/test.sql
+
+  fakes3:
+    image: lphoward/fake-s3
+    ports:
+      - 4569:4569
