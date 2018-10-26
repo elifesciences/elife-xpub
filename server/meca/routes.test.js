@@ -4,7 +4,7 @@ const logger = require('@pubsweet/logger')
 const express = require('express')
 const bodyParser = require('body-parser')
 const supertest = require('supertest')
-const ManuscriptManager = require('@elifesciences/xpub-server/entities/manuscript')
+const { ManuscriptManager } = require('@elifesciences/xpub-model')
 const routes = require('./routes')
 
 const makeApp = () => {

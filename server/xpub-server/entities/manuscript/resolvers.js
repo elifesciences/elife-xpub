@@ -16,11 +16,12 @@ const { ON_UPLOAD_PROGRESS } = asyncIterators
 
 const parseString = promisify(xml2js.parseString)
 
-const ManuscriptManager = require('.')
-const FileManager = require('../file')
-const UserManager = require('../user')
+const {
+  ManuscriptManager,
+  FileManager,
+  UserManager,
+} = require('@elifesciences/xpub-model')
 const manuscriptInputSchema = require('./helpers/manuscriptInputValidationSchema')
-const elifeApi = require('../user/helpers/elife-api')
 
 const resolvers = {
   Query: {
@@ -298,7 +299,7 @@ ${err}`,
           const assigneeIds = team.teamMembers.map(
             member => member.meta.elifePersonId,
           )
-          return elifeApi.peopleById(assigneeIds)
+          return UserManager.getEditorsByPersonId(assigneeIds)
         }
         case 'suggestedReviewer':
         case 'opposedReviewer':

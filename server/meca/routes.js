@@ -1,7 +1,6 @@
 const logger = require('@pubsweet/logger')
 const config = require('config')
-// TODO avoid this recursive dependency
-const ManuscriptManager = require('@elifesciences/xpub-server/entities/manuscript')
+const { ManuscriptManager } = require('@elifesciences/xpub-model')
 
 module.exports = app => {
   const apiKey = config.get('meca.apiKey')

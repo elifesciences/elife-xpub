@@ -54,6 +54,7 @@ const UserManager = {
       ],
     }
   },
+  getEditorsByPersonId: api.peopleById,
   save: async user => {
     let id = { user }
     if (user.id) {

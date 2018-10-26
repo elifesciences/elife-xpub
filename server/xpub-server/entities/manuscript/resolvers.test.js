@@ -12,10 +12,12 @@ const { createTables } = require('@pubsweet/db-manager')
 const mailer = require('@pubsweet/component-send-email')
 const { mecaExport } = require('@elifesciences/xpub-meca-export')
 const startS3rver = require('../../test/mock-s3-server')
-const User = require('../user')
-const FileManager = require('../file')
+const {
+  UserManager: User,
+  FileManager,
+  ManuscriptManager: Manuscript,
+} = require('@elifesciences/xpub-model')
 const { Mutation, Query } = require('./resolvers')
-const Manuscript = require('.')
 const {
   userData,
   badUserData,
