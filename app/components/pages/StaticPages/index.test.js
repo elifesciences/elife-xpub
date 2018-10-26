@@ -3,10 +3,34 @@ import { mount } from 'enzyme'
 import { NavLink, MemoryRouter } from 'react-router-dom'
 import StaticPage from '.'
 
-const makeWrapper = props =>
+const navList = [
+  {
+    label: 'First label',
+    link: `/static-page-name/first-sub-content-name`,
+    component: () => (
+      <MockContentComponent data-test-id="first-sub-content-component" />
+    ),
+  },
+  {
+    label: 'Second label',
+    link: `/static-page-name/second-sub-content-name`,
+    component: () => (
+      <MockContentComponent data-test-id="second-sub-content-component" />
+    ),
+  },
+  {
+    label: 'Third label',
+    link: `/static-page-name/third-sub-content-name`,
+    component: () => (
+      <MockContentComponent data-test-id="third-sub-content-component" />
+    ),
+  },
+]
+
+const makeWrapper = ({ path }) =>
   mount(
-    <MemoryRouter initialEntries={['./static-page-name']}>
-      <StaticPage {...props} />
+    <MemoryRouter initialEntries={[`${path}`]}>
+      <StaticPage navList={navList} />
     </MemoryRouter>,
   )
 
@@ -15,44 +39,39 @@ const MockContentComponent = ({ dataTestId }) => (
 )
 
 describe('SideNavComponent', () => {
-  const navList = [
-    {
-      label: 'First label',
-      link: '/static-page-name/first-sub-content-name',
-      component: () => (
-        <MockContentComponent data-test-id="first-sub-content-component" />
-      ),
-    },
-    {
-      label: 'Second label',
-      link: '/static-page-name/second-sub-content-name',
-      component: () => (
-        <MockContentComponent data-test-id="second-sub-content-component" />
-      ),
-    },
-    {
-      label: 'Third label',
-      link: '/static-page-name/third-sub-content-name',
-      component: () => (
-        <MockContentComponent data-test-id="third-sub-content-component" />
-      ),
-    },
-  ]
-  const wrapper = makeWrapper({ navList })
+  describe('Initial page', () => {
+    const wrapper = makeWrapper({ path: '/static-page-name' })
 
-  it('shows the correct number of nav links when passed navigation config', () => {
-    expect(wrapper.find(NavLink)).toHaveLength(navList.length)
+    it('shows the correct number of nav links when passed navigation config', () => {
+      expect(wrapper.find(NavLink)).toHaveLength(navList.length)
+    })
+
+    it('navigating to the overall static page renders (only) the first sub-content component in the nav list', () => {
+      expect(
+        wrapper.find('[data-test-id="first-sub-content-component"]').exists(),
+      ).toBe(true)
+      expect(
+        wrapper.find('[data-test-id="second-sub-content-component"]').exists(),
+      ).toBe(false)
+      expect(
+        wrapper.find('[data-test-id="third-sub-content-component"]').exists(),
+      ).toBe(false)
+    })
   })
 
-  it('navigating to the overall static page renders (only) the first sub-content component in the nav list', () => {
-    expect(
-      wrapper.find('[data-test-id="first-sub-content-component"]').exists(),
-    ).toBe(true)
-    expect(
-      wrapper.find('[data-test-id="second-sub-content-component"]').exists(),
-    ).toBe(false)
-    expect(
-      wrapper.find('[data-test-id="third-sub-content-component"]').exists(),
-    ).toBe(false)
+  describe('Sub-routes', () => {
+    const wrapper = makeWrapper({ path: navList[1].link })
+
+    it('renders (only) the second sub-content component when the second link is clicked', () => {
+      expect(
+        wrapper.find('[data-test-id="first-sub-content-component"]').exists(),
+      ).toBe(false)
+      expect(
+        wrapper.find('[data-test-id="second-sub-content-component"]').exists(),
+      ).toBe(true)
+      expect(
+        wrapper.find('[data-test-id="third-sub-content-component"]').exists(),
+      ).toBe(false)
+    })
   })
 })
