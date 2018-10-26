@@ -26,7 +26,7 @@ elifePipeline {
                 },
                 'test': {
                     withCommitStatus({
-                        sh "IMAGE_TAG=${commit} docker-compose -f docker-compose.ci.yml run --rm app npm test"
+                        sh "IMAGE_TAG=${commit} docker-compose -f docker-compose.ci.yml run --rm --name elife-xpub_app_test app npm test"
                     }, 'test', commit)
                 },
                 // TODO: not sure this can run in parallel with `test`?
@@ -39,7 +39,7 @@ elifePipeline {
                 },
                 'test:dependencies': {
                     withCommitStatus({
-                        sh "IMAGE_TAG=${commit} docker-compose -f docker-compose.ci.yml run --rm app npm run test:dependencies"
+                        sh "IMAGE_TAG=${commit} docker-compose -f docker-compose.ci.yml run --rm --name elife-xpub_app_test_dependencies app npm run test:dependencies"
                     }, 'test:dependencies', commit)
                 },
             ]
