@@ -15,7 +15,10 @@ const AppBarContainer = styled.div`
   margin-bottom: 0;
   padding-right: ${th('space.3')};
   justify-content: space-between;
-  ${media.tabletPortraitUp`margin-bottom: ${th('space.6')};`};
+
+  ${media.tabletPortraitUp`
+    margin-bottom: ${th('space.6')};
+  `};
 `
 
 const AppBarLink = styled(NavLink)`
