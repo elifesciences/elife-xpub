@@ -16,8 +16,6 @@ elifePipeline {
         }
 
         stage 'Project tests', {
-            sh "IMAGE_TAG=${commit} docker-compose -f docker-compose.ci.yml up -d postgres"
-            sh "IMAGE_TAG=${commit} docker-compose -f docker-compose.ci.yml run --rm app bash -c 'until echo > /dev/tcp/postgres/5432; do sleep 1; done'"
             def actions = [
                 'lint': {
                     withCommitStatus({
@@ -30,13 +28,12 @@ elifePipeline {
                     }, 'test', commit)
                 },
                 // TODO: not sure this can run in parallel with `test`?
-                //'test:browser': {
-                //    withCommitStatus({
-                //        sh "IMAGE_TAG=${commit} NODE_ENV=production NODE_CONFIG_ENV=test docker-compose -f docker-compose.ci.yml up -d"
-                //        sh "IMAGE_TAG=${commit} NODE_ENV=production NODE_CONFIG_ENV=test docker-compose -f docker-compose.ci.yml exec app npm run test:browser -- --screenshots /tmp/screenshots --screenshots-on-fails"
+                'test:browser': {
+                    withCommitStatus({
+                        sh "IMAGE_TAG=${commit} NODE_ENV=production NODE_CONFIG_ENV=test docker-compose -f docker-compose.ci.yml run --rm --name elife-xpub_app_test_browser app npm run test:browser -- --screenshots /tmp/screenshots --screenshots-on-fails"
                 //        // TODO: archive screenshots
-                //    }, 'test:browser', commit)
-                //},
+                    }, 'test:browser', commit)
+                },
                 'test:dependencies': {
                     withCommitStatus({
                         sh "IMAGE_TAG=${commit} docker-compose -f docker-compose.ci.yml run --rm --name elife-xpub_app_test_dependencies app npm run test:dependencies"
