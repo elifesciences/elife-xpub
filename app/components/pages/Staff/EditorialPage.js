@@ -13,19 +13,19 @@ const EditorialPage = () => (
       <StaffCard
         jobTitle="Editorial Manager"
         name="Wei Mun Chan"
-        photoURL="https://submit.elifesciences.org/images/WeiMun.png"
+        photoURL="https://prod--journal-cms.elifesciences.org/sites/default/files/iiif/person/2017-07/weimun.jpg"
         telephone="+44 [0]1223 855379"
       />
       <StaffCard
         jobTitle="Journal Development Editor"
         name="Maria Guerreiro"
-        photoURL="https://submit.elifesciences.org/images/Maria.png"
+        photoURL="https://prod--journal-cms.elifesciences.org/sites/default/files/iiif/person/2017-07/maria.jpg"
         telephone="+44 [0]1223 855376"
       />
       <StaffCard
         jobTitle="Senior Editorial Assistant"
         name="Susanna Richmond"
-        photoURL="https://submit.elifesciences.org/images/Susanna.png"
+        photoURL="https://prod--journal-cms.elifesciences.org/sites/default/files/iiif/person/2017-07/susanna.jpg"
         telephone="+44 [0]1223 855377"
       />
       <StaffCard
