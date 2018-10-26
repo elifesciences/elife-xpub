@@ -30,13 +30,13 @@ elifePipeline {
                     }, 'test', commit)
                 },
                 // TODO: not sure this can run in parallel with `test`?
-                'test:browser': {
-                    withCommitStatus({
-                        sh "IMAGE_TAG=${commit} NODE_ENV=production NODE_CONFIG_ENV=test docker-compose -f docker-compose.ci.yml up -d"
-                        sh "IMAGE_TAG=${commit} NODE_ENV=production NODE_CONFIG_ENV=test docker-compose -f docker-compose.ci.yml exec app npm run test:browser -- --screenshots /tmp/screenshots --screenshots-on-fails"
-                        // TODO: archive screenshots
-                    }, 'test:browser', commit)
-                },
+                //'test:browser': {
+                //    withCommitStatus({
+                //        sh "IMAGE_TAG=${commit} NODE_ENV=production NODE_CONFIG_ENV=test docker-compose -f docker-compose.ci.yml up -d"
+                //        sh "IMAGE_TAG=${commit} NODE_ENV=production NODE_CONFIG_ENV=test docker-compose -f docker-compose.ci.yml exec app npm run test:browser -- --screenshots /tmp/screenshots --screenshots-on-fails"
+                //        // TODO: archive screenshots
+                //    }, 'test:browser', commit)
+                //},
                 'test:dependencies': {
                     withCommitStatus({
                         sh "IMAGE_TAG=${commit} docker-compose -f docker-compose.ci.yml run --rm --name elife-xpub_app_test_dependencies app npm run test:dependencies"
