@@ -17,7 +17,7 @@ elifePipeline {
 
         stage 'Project tests', {
             sh "IMAGE_TAG=${commit} docker-compose -f docker-compose.ci.yml up -d postgres"
-            sh "IMAGE_TAG=${commit} docker-compose -f docker-compose.ci.yml run --rm app bash -c "until echo > /dev/tcp/postgres/5432; do sleep 1; done"
+            sh "IMAGE_TAG=${commit} docker-compose -f docker-compose.ci.yml run --rm app bash -c 'until echo > /dev/tcp/postgres/5432; do sleep 1; done'"
             def actions = [
                 'lint': {
                     withCommitStatus({
