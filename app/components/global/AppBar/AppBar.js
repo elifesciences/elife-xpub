@@ -1,9 +1,11 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Box } from 'grid-styled'
+import { Flex, Box } from 'grid-styled'
 import { th } from '@pubsweet/ui-toolkit'
 import ProfileMenu from './ProfileMenu'
 import NavLink from '../../ui/atoms/NavLink'
+import media from '../../global/layout/media'
+import BurgerMenu from '../../ui/molecules/BurgerMenu'
 
 const AppBarContainer = styled.div`
   display: flex;
@@ -12,6 +14,7 @@ const AppBarContainer = styled.div`
   border-bottom: 1px solid ${th('colorBorder')};
   margin-bottom: ${th('space.3')};
   padding-right: ${th('space.3')};
+  justify-content: space-between;
 `
 
 const AppBarLink = styled(NavLink)`
@@ -34,20 +37,31 @@ const Separator = styled.div`
   border-left: 1px solid ${th('colorBorder')};
   margin-right: ${th('space.2')};
 `
+const DesktopView = styled(Flex)`
+  width:80%
+  align-items: center;
+  display: none;
+  ${media.mobileUp`
+    display: flex;
+  `};
+`
 
 const AppBar = ({ user }) => (
   <AppBarContainer>
+    <BurgerMenu menuItems={user && [{ label: 'Dashboard', link: '/' }]} />
     <LogoLink href="https://elifesciences.org">
       <img alt="eLife" src="/assets/elife-logo.png" />
     </LogoLink>
-    <Separator />
-    <Box flex="1 1 auto">
-      {user && (
-        <AppBarLink exact to="/">
-          Dashboard
-        </AppBarLink>
-      )}
-    </Box>
+    <DesktopView>
+      <Separator />
+      <Box flex="1 1 auto">
+        {user && (
+          <AppBarLink exact to="/">
+            Dashboard
+          </AppBarLink>
+        )}
+      </Box>
+    </DesktopView>
     <ProfileMenu user={user} />
   </AppBarContainer>
 )
