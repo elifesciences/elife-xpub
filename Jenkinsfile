@@ -22,6 +22,9 @@ elifePipeline {
                 'test': {
                     sh "docker-compose -f docker-compose.ci.yml run --rm app npm test"
                 },
+                'test:dependencies': {
+                    sh "docker-compose -f docker-compose.ci.yml run --rm app npm run test:dependencies"
+                },
             ]
             parallel actions
         }
