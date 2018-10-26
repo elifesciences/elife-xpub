@@ -77,7 +77,7 @@ StaticPage.propTypes = {
     PropTypes.shape({
       label: PropTypes.string.isRequired,
       link: PropTypes.string.isRequired,
-      component: PropTypes.object.isRequired,
+      component: PropTypes.func.isRequired,
     }),
   ).isRequired,
 }
