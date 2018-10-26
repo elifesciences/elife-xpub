@@ -85,12 +85,8 @@ const DashboardListItem = ({ statusCode, title, date }) => (
 
 DashboardListItem.propTypes = {
   statusCode: PropTypes.string.isRequired,
-  title: PropTypes.string,
+  title: PropTypes.string.isRequired,
   date: PropTypes.instanceOf(Date).isRequired,
-}
-
-DashboardListItem.defaultProps = {
-  title: 'Untitled manuscript',
 }
 
 export default DashboardListItem
