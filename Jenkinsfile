@@ -6,6 +6,7 @@ elifePipeline {
             checkout scm
             commit = elifeGitRevision()
             image = "elifesciences/elife-xpub:$commit"
+            sh "ln -s .env.ci .env"
         }
 
         stage 'Build image', {
