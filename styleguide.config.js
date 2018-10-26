@@ -29,7 +29,7 @@ module.exports = {
         },
         {
           name: 'Molecules',
-          components: 'app/components/ui/atoms/**/*.js',
+          components: 'app/components/ui/molecules/**/*.js',
         },
       ],
     },
