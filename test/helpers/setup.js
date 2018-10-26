@@ -1,7 +1,5 @@
-import { ClientFunction } from 'testcafe'
 import DestinationRequest from 'testcafe-hammerhead/lib/request-pipeline/destination-request'
 import { createTables } from '@pubsweet/db-manager'
-import authentication from 'pubsweet-server/src/authentication'
 import config from 'config'
 import startS3Server from '@elifesciences/xpub-server/test/mock-s3-server'
 
@@ -11,10 +9,6 @@ import start from 'pubsweet/src/startup/start'
 
 let server
 let s3rver
-
-const tokenContent = {
-  id: 'ewwboc7m',
-}
 
 export async function startServer() {
   if (!server) {
@@ -26,10 +20,6 @@ export async function startServer() {
 
 export async function setup(t) {
   await createTables(true)
-  t.ctx.token = authentication.token.create(tokenContent)
-  t.ctx.localStorageSet = ClientFunction(token =>
-    localStorage.setItem('token', token),
-  )
 
   // setup mock S3 server
   s3rver = await startS3Server({

@@ -58,6 +58,10 @@
     ]
   },
   "jest": {
+    "collectCoverageFrom": [
+      "<rootDir>/{client,app,server}/**/*.js",
+      "!**/*.{config,test}.js"
+    ],
     "projects": [
       "<rootDir>/client",
       "<rootDir>/app",

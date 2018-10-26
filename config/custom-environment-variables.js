@@ -26,4 +26,14 @@ module.exports = {
     },
     apiKey: 'MECA_API_KEY',
   },
+  aws: {
+    s3: {
+      params: {
+        Bucket: 'S3_BUCKET',
+      },
+    },
+  },
+  scienceBeam: {
+    url: 'SCIENCEBEAM_URL',
+  },
 }
