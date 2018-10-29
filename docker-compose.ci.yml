@@ -21,6 +21,7 @@ services:
       PGHOST:
       PGUSER:
       PGPASSWORD:
+      PGDATABASE:
     volumes:
       - ./build/screenshots:/tmp/screenshots
 

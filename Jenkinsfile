@@ -31,7 +31,7 @@ elifePipeline {
                 'test:browser': {
                     try {
                         withCommitStatus({
-                            sh "IMAGE_TAG=${commit} NODE_ENV=production NODE_CONFIG_ENV=test docker-compose -f docker-compose.ci.yml run --rm --name elife-xpub_app_test_browser app npm run test:browser -- --screenshots /tmp/screenshots --screenshots-on-fails"
+                            sh "IMAGE_TAG=${commit} NODE_ENV=production NODE_CONFIG_ENV=test PGDATABASE=test_browser docker-compose -f docker-compose.ci.yml run --rm --name elife-xpub_app_test_browser app npm run test:browser -- --screenshots /tmp/screenshots --screenshots-on-fails"
                         }, 'test:browser', commit)
                     } finally {
                         archiveArtifacts artifacts: "build/screenshots/*", allowEmptyArchive: true
