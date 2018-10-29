@@ -3,7 +3,6 @@ import config from 'config'
 import assert from 'assert'
 import logger from '@pubsweet/logger'
 import startSshServer from '@elifesciences/xpub-meca-export/test/mock-sftp-server'
-import replaySetup from './helpers/replay-setup'
 import {
   author,
   dashboard,
@@ -48,7 +47,6 @@ test('Happy path', async t => {
   const { mockFs, server } = await startSshServer(
     config.get('meca.sftp.connectionOptions.port'),
   )
-  replaySetup('success')
 
   await t
     .navigateTo(login.url)
@@ -171,7 +169,6 @@ test('Happy path', async t => {
 })
 
 test('Ability to progress through the wizard is tied to validation', async t => {
-  replaySetup('success')
   await t
     .navigateTo(login.url)
     .click(login.button)

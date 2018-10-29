@@ -1,13 +1,13 @@
-const FileManager = require('./entities/file')
-const IdentityManager = require('./entities/identity')
-const ManuscriptManager = require('./entities/manuscript')
-const TeamManager = require('./entities/team')
-const UserManager = require('./entities/user')
+const File = require('./entities/file')
+const Identity = require('./entities/identity')
+const Manuscript = require('./entities/manuscript')
+const Team = require('./entities/team')
+const User = require('./entities/user')
 
 module.exports = {
-  FileManager,
-  IdentityManager,
-  ManuscriptManager,
-  TeamManager,
-  UserManager,
+  File,
+  Identity,
+  Manuscript,
+  Team,
+  User,
 }

@@ -7,6 +7,8 @@ import start from 'pubsweet/src/startup/start'
 // while writing tests, using the following to start the server avoids having to recompile the app
 // import {startServer: start} from 'pubsweet-server'
 
+import replaySetup from './replay-setup'
+
 let server
 let s3rver
 
@@ -20,6 +22,8 @@ export async function startServer() {
 
 export async function setup(t) {
   await createTables(true)
+
+  replaySetup('success')
 
   // setup mock S3 server
   s3rver = await startS3Server({

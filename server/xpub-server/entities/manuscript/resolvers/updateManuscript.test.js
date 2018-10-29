@@ -1,10 +1,7 @@
 jest.mock('@pubsweet/logger')
 
 const { createTables } = require('@pubsweet/db-manager')
-const {
-  UserManager: User,
-  ManuscriptManager: Manuscript,
-} = require('@elifesciences/xpub-model')
+const { User, Manuscript } = require('@elifesciences/xpub-model')
 const mailer = require('@pubsweet/component-send-email')
 const { Mutation } = require('.')
 const {
@@ -32,16 +29,15 @@ describe('Manuscript resolvers', () => {
     replaySetup('success')
     await createTables(true)
     const [user] = await Promise.all([
-      User.save(userData),
-      User.save(badUserData),
+      new User(userData).save(),
+      new User(badUserData).save(),
     ])
     userId = user.id
   })
 
   describe('updateManuscript', () => {
     it("fails if manuscript doesn't belong to user", async () => {
-      const blankManuscript = Manuscript.new({ createdBy: userId })
-      const manuscript = await Manuscript.save(blankManuscript)
+      const manuscript = await new Manuscript({ createdBy: userId }).save()
       await expect(
         Mutation.updateManuscript(
           {},
@@ -52,11 +48,10 @@ describe('Manuscript resolvers', () => {
     })
 
     it('fails if manuscript has already been submitted', async () => {
-      const blankManuscript = Manuscript.new({
+      const manuscript = await new Manuscript({
         createdBy: userId,
         status: Manuscript.statuses.MECA_EXPORT_PENDING,
-      })
-      const manuscript = await Manuscript.save(blankManuscript)
+      }).save()
       await expect(
         Mutation.updateManuscript(
           {},
@@ -68,17 +63,15 @@ describe('Manuscript resolvers', () => {
       )
     })
 
-    it('updates the current submission for user with data', async () => {
+    it('updates the current submission for user with data and emails', async () => {
       const NUM_EMAILS = 1
-      const blankManuscript = Manuscript.new({ createdBy: userId })
-      const manuscript = await Manuscript.save(blankManuscript)
+      const manuscript = await new Manuscript({ createdBy: userId }).save()
 
       await Mutation.updateManuscript(
         {},
         { data: { id: manuscript.id, ...manuscriptInput } },
         { user: profileId },
       )
-
       await waitforEmails(NUM_EMAILS)
 
       const allEmails = mailer.getMails()

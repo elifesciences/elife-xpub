@@ -1,5 +1,5 @@
 const logger = require('@pubsweet/logger')
-const { ManuscriptManager, UserManager } = require('@elifesciences/xpub-model')
+const { Manuscript, User } = require('@elifesciences/xpub-model')
 const submitManuscript = require('./submitManuscript')
 const updateManuscript = require('./updateManuscript')
 const uploadManuscript = require('./uploadManuscript')
@@ -7,12 +7,12 @@ const uploadManuscript = require('./uploadManuscript')
 const resolvers = {
   Query: {
     async manuscript(_, { id }, { user }) {
-      const userUuid = await UserManager.getUuidForProfile(user)
-      return ManuscriptManager.find(id, userUuid)
+      const userUuid = await User.getUuidForProfile(user)
+      return Manuscript.find(id, userUuid)
     },
     async manuscripts(_, vars, { user }) {
-      const userUuid = await UserManager.getUuidForProfile(user)
-      return ManuscriptManager.all(userUuid)
+      const userUuid = await User.getUuidForProfile(user)
+      return Manuscript.all(userUuid)
     },
   },
 
@@ -21,16 +21,17 @@ const resolvers = {
       if (!user) {
         throw new Error('Not logged in')
       }
-      const userUuid = await UserManager.getUuidForProfile(user)
-      const manuscript = ManuscriptManager.new()
-      manuscript.createdBy = userUuid
-      return ManuscriptManager.save(manuscript)
+      const userUuid = await User.getUuidForProfile(user)
+      const manuscript = new Manuscript({ createdBy: userUuid })
+      manuscript.setDefaults()
+      return manuscript.save()
     },
 
     // TODO restrict this in production
     async deleteManuscript(_, { id }, { user }) {
-      const userUuid = await UserManager.getUuidForProfile(user)
-      await ManuscriptManager.delete(id, userUuid)
+      const userUuid = await User.getUuidForProfile(user)
+      const manuscript = await Manuscript.find(id, userUuid)
+      await manuscript.delete()
       return id
     },
 
@@ -41,18 +42,18 @@ const resolvers = {
     uploadManuscript,
 
     async savePage(_, vars, { user }) {
-      const userUuid = await UserManager.getUuidForProfile(user)
-      const originalManuscript = await ManuscriptManager.find(vars.id, userUuid)
+      const userUuid = await User.getUuidForProfile(user)
+      const manuscript = await Manuscript.find(vars.id, userUuid)
 
-      originalManuscript.formState = vars.url
-      await ManuscriptManager.save(originalManuscript)
+      manuscript.formState = vars.url
+      await manuscript.save()
       logger.debug(`Updated manuscript`, {
         manuscriptId: vars.id,
         userId: userUuid,
         formState: vars.url,
       })
 
-      return originalManuscript
+      return manuscript
     },
   },
 
@@ -96,7 +97,7 @@ const resolvers = {
           const assigneeIds = team.teamMembers.map(
             member => member.meta.elifePersonId,
           )
-          return UserManager.getEditorsByPersonId(assigneeIds)
+          return User.getEditorsByPersonId(assigneeIds)
         }
         case 'suggestedReviewer':
         case 'opposedReviewer':

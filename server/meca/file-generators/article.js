@@ -1,7 +1,7 @@
 const xmlbuilder = require('xmlbuilder')
 const lodash = require('lodash')
 const config = require('config')
-const { UserManager } = require('@elifesciences/xpub-model')
+const { User } = require('@elifesciences/xpub-model')
 const {
   articleTypeMap,
   contribStructure,
@@ -110,7 +110,7 @@ async function generateArticleXml(manuscript) {
     return ids
   }, [])
 
-  const editors = await UserManager.getEditorsByPersonId(editorIds)
+  const editors = await User.getEditorsByPersonId(editorIds)
   const editorsById = editors.reduce(
     (accumulator, editor) => ({ ...accumulator, [editor.id]: editor }),
     {},

@@ -66,11 +66,7 @@ exports.expectedManuscript = {
   formState: null,
   journalId: null,
   meta: {
-    abstract: null,
-    articleIds: null,
     articleType: 'research-article',
-    notes: null,
-    publicationDates: null,
     subjects: ['cancer-biology'],
     title: 'My manuscript',
   },
@@ -85,5 +81,4 @@ exports.expectedManuscript = {
   status: 'INITIAL',
   submitterSignature: 'Sneha Berry',
   suggestionsConflict: false,
-  updated: null,
 }

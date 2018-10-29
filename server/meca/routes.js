@@ -1,6 +1,6 @@
 const logger = require('@pubsweet/logger')
 const config = require('config')
-const { ManuscriptManager } = require('@elifesciences/xpub-model')
+const { Manuscript } = require('@elifesciences/xpub-model')
 
 module.exports = app => {
   const apiKey = config.get('meca.apiKey')
@@ -31,10 +31,10 @@ module.exports = app => {
     logger.info('MECA callback received', { manuscriptId, body })
     const status =
       body.result === 'success'
-        ? ManuscriptManager.statuses.MECA_IMPORT_SUCCEEDED
-        : ManuscriptManager.statuses.MECA_IMPORT_FAILED
+        ? Manuscript.statuses.MECA_IMPORT_SUCCEEDED
+        : Manuscript.statuses.MECA_IMPORT_FAILED
 
-    ManuscriptManager.save({ id: manuscriptId, status })
+    Manuscript.updateStatus(manuscriptId, status)
       .then(() => res.sendStatus(204))
       .catch(err => {
         logger.error('Failed to process MECA callback', {

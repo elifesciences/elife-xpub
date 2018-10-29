@@ -1,7 +1,6 @@
 const config = require('config')
-const lodash = require('lodash')
 const AWS = require('aws-sdk')
-const dataAccess = require('./data-access')
+const BaseModel = require('@pubsweet/base-model')
 
 const s3 = new AWS.S3({
   ...config.get('aws.credentials'),
@@ -9,53 +8,47 @@ const s3 = new AWS.S3({
   apiVersion: '2006-03-01',
 })
 
-const empty = {
-  filename: '',
-  label: '',
-  type: 0,
-  mime_type: '',
-  size: 0,
-  url: '',
-}
+class File extends BaseModel {
+  static get tableName() {
+    return 'file'
+  }
 
-const FileManager = {
-  find: dataAccess.selectById,
-  delete: dataAccess.delete,
-  new: (props = {}) => lodash.merge({}, empty, props),
-  save: async file => {
-    let id = { file }
-    if (file.id) {
-      const updated = await dataAccess.update(file)
-      if (!updated) {
-        throw new Error('File not found')
-      }
-    } else {
-      id = await dataAccess.insert(file)
+  static get schema() {
+    return {
+      properties: {
+        manuscriptId: { type: 'uuid' },
+        filename: { type: 'string' },
+        label: { type: ['string', 'null'] },
+        type: { type: ['string', 'null'] },
+        mimeType: { type: ['string', 'null'] },
+        size: { type: ['string', 'null'] },
+        url: { type: 'string' },
+      },
     }
+  }
 
-    return { ...file, id }
-  },
-  putContent: async (file, content, { size } = {}) => {
-    if (!file.id) {
+  async putContent(content, { size } = {}) {
+    if (!this.id) {
       throw new Error('File has no ID, must be saved first')
     }
 
     return s3
       .putObject({
         Body: content,
-        Key: `${file.url}/${file.id}`,
-        ContentType: file.mimetype,
+        Key: `${this.url}/${this.id}`,
+        ContentType: this.mimetype,
         ContentLength: size,
         ACL: 'private',
       })
       .promise()
-  },
-  getContent: async file => {
+  }
+
+  async getContent() {
     const { Body } = await s3
-      .getObject({ Key: `${file.url}/${file.id}` })
+      .getObject({ Key: `${this.url}/${this.id}` })
       .promise()
     return Body
-  },
+  }
 }
 
-module.exports = FileManager
+module.exports = File

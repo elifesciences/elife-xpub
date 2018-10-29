@@ -23,22 +23,12 @@ const emptyManuscript = {
 <p></p>
 `,
   status: 'INITIAL',
-  createdBy: '',
   previouslyDiscussed: null,
   previouslySubmitted: [],
   cosubmission: [],
   submitterSignature: '',
   disclosureConsent: false,
-  teams: [
-    {
-      role: 'suggestedReviewer',
-      teamMembers: [
-        { meta: { name: '', email: '' } },
-        { meta: { name: '', email: '' } },
-        { meta: { name: '', email: '' } },
-      ],
-    },
-  ],
+  teams: [],
 }
 
 module.exports = emptyManuscript

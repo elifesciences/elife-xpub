@@ -11,11 +11,7 @@ const logger = require('@pubsweet/logger')
 const { createTables } = require('@pubsweet/db-manager')
 const mailer = require('@pubsweet/component-send-email')
 const startS3rver = require('../../../test/mock-s3-server')
-const {
-  UserManager: User,
-  FileManager,
-  ManuscriptManager: Manuscript,
-} = require('@elifesciences/xpub-model')
+const { User, File, Manuscript } = require('@elifesciences/xpub-model')
 const { Mutation } = require('.')
 const { userData, badUserData } = require('./index.test.data')
 
@@ -30,8 +26,8 @@ describe('Manuscripts', () => {
     replaySetup('success')
     await createTables(true)
     const [user] = await Promise.all([
-      User.save(userData),
-      User.save(badUserData),
+      new User(userData).save(),
+      new User(badUserData).save(),
     ])
     userId = user.id
     mailer.clearMails()
@@ -53,9 +49,9 @@ describe('Manuscripts', () => {
     })
 
     it("fails if manuscript doesn't belong to user", async () => {
-      const blankManuscript = Manuscript.new()
+      const blankManuscript = new Manuscript()
       blankManuscript.createdBy = userId
-      const manuscript = await Manuscript.save(blankManuscript)
+      const manuscript = await blankManuscript.save()
 
       await expect(
         Mutation.uploadManuscript(
@@ -67,36 +63,34 @@ describe('Manuscripts', () => {
     })
 
     it('saves manuscript to S3', async () => {
-      const blankManuscript = Manuscript.new()
-      blankManuscript.createdBy = userId
-      const { id } = await Manuscript.save(blankManuscript)
-      const file = {
+      const blankManuscript = new Manuscript({ createdBy: userId })
+      const { id } = await blankManuscript.save()
+      const fileUpload = {
         filename: 'manuscript.pdf',
         stream: fs.createReadStream(
           `${__dirname}/../../../../../test/fixtures/dummy-manuscript-2.pdf`,
         ),
         mimetype: 'application/pdf',
       }
-      const manuscript = await Mutation.uploadManuscript(
+      await Mutation.uploadManuscript(
         {},
-        { id, file, fileSize: 73947 },
+        { id, file: fileUpload, fileSize: 73947 },
         { user: profileId },
       )
 
-      const pdfBinary = await FileManager.getContent(
-        Manuscript.getSource(manuscript),
-      )
+      const loadedManuscript = await Manuscript.find(id, userId)
+      const pdfBinary = await loadedManuscript.getSource().getContent()
       expect(pdfBinary.toString().substr(0, 6)).toEqual('%PDF-1')
     })
 
     it('fails if S3 upload fails', async () => {
       jest
-        .spyOn(FileManager, 'putContent')
+        .spyOn(File.prototype, 'putContent')
         .mockImplementationOnce(() =>
           Promise.reject(new Error('Failed to persist file')),
         )
-      const blankManuscript = Manuscript.new({ createdBy: userId })
-      const { id } = await Manuscript.save(blankManuscript)
+      const blankManuscript = new Manuscript({ createdBy: userId })
+      const { id } = await blankManuscript.save()
       const file = {
         filename: 'manuscript.pdf',
         stream: fs.createReadStream(
@@ -119,9 +113,8 @@ describe('Manuscripts', () => {
     it('sets empty title if ScienceBeam fails', async () => {
       jest.spyOn(logger, 'warn').mockImplementationOnce(() => {})
       replaySetup('error')
-      const blankManuscript = Manuscript.new()
-      blankManuscript.createdBy = userId
-      const { id } = await Manuscript.save(blankManuscript)
+      const blankManuscript = new Manuscript({ createdBy: userId })
+      const { id } = await blankManuscript.save()
       const file = {
         filename: 'manuscript.pdf',
         stream: fs.createReadStream(
@@ -143,9 +136,8 @@ describe('Manuscripts', () => {
     })
 
     it('extracts title from PDF', async () => {
-      const blankManuscript = Manuscript.new()
-      blankManuscript.createdBy = userId
-      const { id } = await Manuscript.save(blankManuscript)
+      const blankManuscript = new Manuscript({ createdBy: userId })
+      const { id } = await blankManuscript.save()
       const file = {
         filename: 'manuscript.pdf',
         stream: fs.createReadStream(
@@ -171,9 +163,8 @@ describe('Manuscripts', () => {
     it(`fails if manuscript size is bigger than ${config.get(
       'fileUpload.maxSizeMB',
     )}MB`, async () => {
-      const blankManuscript = Manuscript.new()
-      blankManuscript.createdBy = userId
-      const { id } = await Manuscript.save(blankManuscript)
+      const blankManuscript = new Manuscript({ createdBy: userId })
+      const { id } = await blankManuscript.save()
 
       const maxFileSize = config.get('fileUpload.maxSizeMB')
       const fileSize = maxFileSize * 1e6 + 1

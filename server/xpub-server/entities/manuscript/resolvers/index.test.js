@@ -4,10 +4,7 @@ const config = require('config')
 const fs = require('fs-extra')
 const { createTables } = require('@pubsweet/db-manager')
 const mailer = require('@pubsweet/component-send-email')
-const {
-  UserManager: User,
-  ManuscriptManager: Manuscript,
-} = require('@elifesciences/xpub-model')
+const { User, Manuscript } = require('@elifesciences/xpub-model')
 const { Mutation, Query } = require('.')
 const { userData, badUserData } = require('./index.test.data')
 
@@ -25,8 +22,8 @@ describe('Manuscripts', () => {
       createTables(true),
     ])
     const [user] = await Promise.all([
-      User.save(userData),
-      User.save(badUserData),
+      new User(userData).save(),
+      new User(badUserData).save(),
     ])
     userId = user.id
     mailer.clearMails()
@@ -39,7 +36,7 @@ describe('Manuscripts', () => {
         meta: { title: 'title' },
         status: 'INITIAL',
       }
-      const { id } = await Manuscript.save(manuscriptData)
+      const { id } = await new Manuscript(manuscriptData).save()
 
       const manuscript = await Query.manuscript({}, { id }, { user: profileId })
       expect(manuscript).toMatchObject(manuscriptData)
@@ -68,9 +65,8 @@ describe('Manuscripts', () => {
 
   describe('deleteManuscript', () => {
     it("fails if manuscript doesn't belong to user", async () => {
-      const blankManuscript = Manuscript.new()
-      blankManuscript.createdBy = userId
-      const manuscript = await Manuscript.save(blankManuscript)
+      const blankManuscript = new Manuscript({ createdBy: userId })
+      const manuscript = await blankManuscript.save()
 
       await expect(
         Mutation.deleteManuscript(
@@ -82,9 +78,8 @@ describe('Manuscripts', () => {
     })
 
     it('removes manuscript from database', async () => {
-      const blankManuscript = Manuscript.new()
-      blankManuscript.createdBy = userId
-      const manuscript = await Manuscript.save(blankManuscript)
+      const blankManuscript = new Manuscript({ createdBy: userId })
+      const manuscript = await blankManuscript.save()
       await Mutation.deleteManuscript(
         {},
         { id: manuscript.id },

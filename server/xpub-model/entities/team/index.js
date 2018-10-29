@@ -1,25 +1,29 @@
-const lodash = require('lodash')
-const dataAccess = require('./data-access')
+const BaseModel = require('@pubsweet/base-model')
 
-const empty = { teamMembers: [] }
+class Team extends BaseModel {
+  static get tableName() {
+    return 'team'
+  }
 
-const Team = {
-  find: dataAccess.selectById,
-  delete: dataAccess.delete,
-  new: () => lodash.cloneDeep(empty),
-  save: async team => {
-    let id = { team }
-    if (team.id) {
-      const updated = await dataAccess.update(team)
-      if (!updated) {
-        throw new Error('Team not found')
-      }
-    } else {
-      id = await dataAccess.insert(team)
+  static get schema() {
+    return {
+      required: ['teamMembers', 'role', 'objectId', 'objectType'],
+      properties: {
+        teamMembers: {
+          type: 'array',
+          items: { name: { type: 'string' }, email: { type: 'string' } },
+        },
+        role: { type: 'string' },
+        objectId: { type: 'uuid' },
+        objectType: { type: 'string' },
+      },
     }
+  }
 
-    return { ...team, id }
-  },
+  static get jsonAttributes() {
+    // tell objection to serialise teamMembers as a postgres array rather than JSON
+    return []
+  }
 }
 
 module.exports = Team

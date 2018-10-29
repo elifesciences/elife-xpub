@@ -1,9 +1,9 @@
+jest.mock('@pubsweet/db-manager')
+
 const express = require('express')
 const supertest = require('supertest')
 const AWS = require('aws-sdk')
 const dbManager = require('@pubsweet/db-manager')
-
-jest.mock('@pubsweet/db-manager')
 
 describe('ping route test', () => {
   let routes

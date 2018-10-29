@@ -1,81 +1,87 @@
-const IdentityManager = require('../identity')
-const dataAccess = require('./data-access')
+const BaseModel = require('@pubsweet/base-model')
 const api = require('./helpers/elife-api')
 
-const UserManager = {
-  find: async uuid => {
-    const dbUser = await dataAccess.selectById(uuid)
-    return UserManager.extendWithApiData(dbUser)
-  },
-  findByProfileId: async profileId => {
-    const dbUser = await dataAccess.selectByProfileId(profileId)
-    return UserManager.extendWithApiData(dbUser)
-  },
-  findOrCreate: async profileId => {
-    let dbUser
-    try {
-      dbUser = await dataAccess.selectByProfileId(profileId)
-    } catch (err) {
-      if (err.message !== 'User not found') {
-        throw err
-      }
+class User extends BaseModel {
+  static get tableName() {
+    return 'user'
+  }
 
-      dbUser = await UserManager.save({
+  static get schema() {
+    return {
+      required: [],
+      properties: {
+        defaultIdentity: { type: 'string' },
+      },
+    }
+  }
+
+  static get relationMappings() {
+    return {
+      identities: {
+        relation: BaseModel.HasManyRelation,
+        modelClass: `${__dirname}/../identity`,
+        join: {
+          from: 'user.id',
+          to: 'identity.userId',
+        },
+      },
+    }
+  }
+
+  static async findOrCreate(profileId) {
+    let [user] = await User.query()
+      // todo why does joinEager sometimes throw an error
+      .joinRelation('identities')
+      .where('identities.identifier', profileId)
+
+    if (!user) {
+      user = await new User({
         defaultIdentity: 'elife',
         identities: [{ type: 'elife', identifier: profileId }],
-      })
+      }).save()
     }
-    return UserManager.extendWithApiData(dbUser)
-  },
-  getUuidForProfile: async profileId => {
-    const dbUser = await dataAccess.selectByProfileId(profileId)
-    return dbUser.id
-  },
-  extendWithApiData: async user => {
-    const { body } = await api.profile(user.identities[0].identifier)
+
+    await user.extendWithApiData()
+    return user
+  }
+
+  static async getUuidForProfile(profileId) {
+    const [user] = await User.query()
+      .joinRelation('identities')
+      .where('identities.identifier', profileId)
+    return user.id
+  }
+
+  async extendWithApiData() {
+    await this.$loadRelated('identities')
+
+    const { body } = await api.profile(this.identities[0].identifier)
     // TODO is splitting on the comma good enough?
     const [lastName, firstName] = body.name.index.split(', ', 2)
-    return {
-      ...user,
-      identities: [
-        {
-          ...user.identities[0],
-          email: body.emailAddresses.length ? body.emailAddresses[0].value : '',
-          name: body.name.preferred,
-          aff: body.affiliations.length
-            ? body.affiliations[0].value.name.join(', ')
-            : '',
-          meta: {
-            firstName,
-            lastName,
-            orcid: body.orcid,
-          },
-        },
-      ],
-    }
-  },
-  getEditorsByPersonId: api.peopleById,
-  save: async user => {
-    let id = { user }
-    if (user.id) {
-      const updated = await dataAccess.update(user)
-      if (!updated) {
-        throw new Error('User not found')
-      }
-    } else {
-      id = await dataAccess.insert(user)
-    }
 
-    if (user.identities) {
-      await Promise.all(
-        user.identities.map(identity =>
-          IdentityManager.save({ ...identity, userId: id }),
-        ),
-      )
-    }
+    Object.assign(this.identities[0], {
+      email: body.emailAddresses.length ? body.emailAddresses[0].value : '',
+      name: body.name.preferred,
+      aff: body.affiliations.length
+        ? body.affiliations[0].value.name.join(', ')
+        : '',
+      meta: {
+        firstName,
+        lastName,
+        orcid: body.orcid,
+      },
+    })
 
-    return { ...user, id }
-  },
+    return this
+  }
+
+  async save() {
+    return this.$query().upsertGraphAndFetch(this)
+  }
+
+  static getEditorsByPersonId(...args) {
+    return api.peopleById(...args)
+  }
 }
 
-module.exports = UserManager
+module.exports = User
