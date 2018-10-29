@@ -1,3 +1,4 @@
+const logger = require('@pubsweet/logger')
 const config = require('config')
 const { pickBy } = require('lodash')
 const DBExists = require('@pubsweet/db-manager/src/helpers/db-exists.js')
@@ -19,6 +20,13 @@ const s3 = new AWS.S3({
   apiVersion: '2006-03-01',
 })
 
+const sendResult = (res, statusCode, body) => {
+  if (statusCode !== 200) {
+    logger.error(`HealthCheckError: ${body}`)
+  }
+  res.send(statusCode, body)
+}
+
 module.exports = app => {
   app.get('/config.js', (req, res) => {
     const clientConfig = pickBy(config, value => value.isPublic)
@@ -31,15 +39,15 @@ module.exports = app => {
     try {
       const exists = await DBExists()
       if (!exists) {
-        res.send(404, 'database error')
+        sendResult(404, 'database error')
       }
       const { Body } = await s3.getObject({ Key: 'test-file' }).promise()
       if (!Body) {
-        res.send(404, 's3 connection error')
+        sendResult(404, 's3 connection error')
       }
-      res.send('pong')
+      sendResult(200, 'pong')
     } catch (error) {
-      res.send(500, 'ko')
+      sendResult(500, error)
     }
   })
 }
