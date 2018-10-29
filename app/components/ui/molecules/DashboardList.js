@@ -23,12 +23,7 @@ const EmptyListSmallParagraph = styled(SmallParagraph)`
 `
 const renderListItem = manuscript => {
   const dashboardListItem = (
-    <DashboardListItem
-      date={new Date(manuscript.created)}
-      key={manuscript.id}
-      statusCode={manuscript.clientStatus}
-      title={manuscript.meta.title || '(Untitled)'}
-    />
+    <DashboardListItem key={manuscript.id} manuscript={manuscript} />
   )
 
   if (manuscript.clientStatus === 'SUBMITTED') {
