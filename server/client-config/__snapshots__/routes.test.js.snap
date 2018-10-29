@@ -5,3 +5,5 @@ exports[`Client config handler returns a response containing public config 1`] =
   window.config = {\\"publicConfig\\":{\\"isPublic\\":true,\\"key\\":\\"value\\"}}
 "
 `;
+
+exports[`Client config handler returns something pointing ping 1`] = `"pong"`;

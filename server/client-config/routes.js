@@ -14,8 +14,8 @@ const nocache = (req, res, next) => {
 }
 
 const s3 = new AWS.S3({
-  ...config.get('aws.credentials'),
-  ...config.get('aws.s3'),
+  ...config.aws.credentials,
+  ...config.aws.s3,
   apiVersion: '2006-03-01',
 })
 
