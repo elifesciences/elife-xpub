@@ -1,13 +1,16 @@
 #!/bin/bash
 
 ###
-# ./mirror TARGET MIRROR [DELAY] [SSH_KEY]
+# ./mirror [DELAY] [SSH_KEY]
 ###
 
-TARGET=$1
-MIRROR=$2
-DELAY=${3:-60}
-SSH_KEY=${4:-/root/.ssh/gitlab-mirror}
+DELAY=${1:-60}
+SSH_KEY=${2:-/root/.ssh/gitlab-mirror}
+
+if ! ( [ -n "$TARGET" ] && [ -n "$MIRROR" ] ) ; then
+  echo "TARGET and/or MIRROR missing"
+  exit 1
+fi
 
 # Set up ssh and add a valid key
 eval `ssh-agent -s`
@@ -23,5 +26,11 @@ git push --mirror $MIRROR
 while true
 do
 git remote update --prune
+
+# Start Gitlab's pull mirroring process
+if [ -n "$GITLAB_PROJECT_ID" ] && [ -n "$GITLAB_PERSONAL_ACCESS_TOKEN" ] ; then
+  curl --header "Private-Token: $GITLAB_PERSONAL_ACCESS_TOKEN" -X POST  "https://gitlab.com/api/v4/projects/$GITLAB_PROJECT_ID/mirror/pull/" && echo ""
+fi
+
 sleep $DELAY
 done
