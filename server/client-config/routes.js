@@ -39,18 +39,18 @@ module.exports = app => {
     try {
       const exists = await DBExists()
       if (!exists) {
-        sendResult(404, 'database error')
+        sendResult(res, 404, 'database error')
         return
       }
       const { Body } = await s3.getObject({ Key: 'test-file' }).promise()
       if (!Body) {
-        sendResult(404, 's3 connection error')
+        sendResult(res, 404, 's3 connection error')
         return
       }
 
-      sendResult(200, 'pong')
+      sendResult(res, 200, 'pong')
     } catch (error) {
-      sendResult(500, error)
+      sendResult(res, 500, error)
     }
   })
 }
