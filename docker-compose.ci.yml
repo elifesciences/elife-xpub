@@ -32,4 +32,4 @@ services:
       POSTGRES_USER:
       POSTGRES_PASSWORD:
     volumes:
-      - ./scripts/test.sql:/docker-entrypoint-initdb.d/test.sql
+      - ./scripts/test-ci.sql:/docker-entrypoint-initdb.d/test-ci.sql
