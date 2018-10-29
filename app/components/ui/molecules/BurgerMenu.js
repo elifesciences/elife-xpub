@@ -30,6 +30,13 @@ const BurgerWrapper = styled(Box)`
   `};
 `
 
+const MenuNavLink = styled(NavLink)`
+  color: ${th('colorText')};
+  ${media.mobileUp`
+    color: ${th('colorTextSecondary')};
+  `};
+`
+
 class BurgerMenu extends React.Component {
   state = {
     menuOpen: false,
@@ -74,13 +81,13 @@ class BurgerMenu extends React.Component {
             {menuItems &&
               menuItems.map(item => (
                 <MenuItem key={item.link}>
-                  <NavLink
+                  <MenuNavLink
                     exact
                     onClick={() => this.setState({ menuOpen: false })}
                     to={item.link}
                   >
                     {item.label}
-                  </NavLink>
+                  </MenuNavLink>
                 </MenuItem>
               ))}
           </MenuPanel>
