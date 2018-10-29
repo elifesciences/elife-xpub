@@ -44,6 +44,7 @@ elifePipeline {
                 },
             ]
             try {
+                sh "docker-compose -f docker-compose.ci.yml up -d postgres"
                 parallel actions
             } finally {
                 sh "docker-compose -f docker-compose.ci.yml down -v"
