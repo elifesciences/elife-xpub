@@ -23,5 +23,12 @@ git push --mirror $MIRROR
 while true
 do
 git remote update --prune
+
+# Start Gitlab's pull mirroring process
+if [ -n "$GITLAB_PROJECT_ID" ]
+then
+  curl --header "Private-Token: $GITLAB_PERSONAL_ACCESS_TOKEN" -X POST  "https://gitlab.com/api/v4/projects/$GITLAB_PROJECT_ID/mirror/pull/" && echo ""
+fi
+
 sleep $DELAY
 done

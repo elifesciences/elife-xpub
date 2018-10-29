@@ -13,6 +13,8 @@ function docker-run() {
   ssh_dir=$HOME/Projects/elife/.ssh
   docker run \
   --name mirror \
+  -e GITLAB_PERSONAL_ACCESS_TOKEN \
+  -e GITLAB_PROJECT_ID \
   -v $ssh_dir:/root/.ssh \
   -d xpub/git-mirror:latest \
   https://github.com/elifesciences/elife-xpub.git \
