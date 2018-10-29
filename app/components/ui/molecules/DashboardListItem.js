@@ -86,7 +86,7 @@ const DashboardListItem = ({ manuscript }) => {
 DashboardListItem.propTypes = {
   manuscript: PropTypes.shape({
     meta: PropTypes.shape({
-      title: PropTypes.string.isRequired,
+      title: PropTypes.string,
     }).isRequired,
     clientStatus: PropTypes.string.isRequired,
     created: PropTypes.string.isRequired,
