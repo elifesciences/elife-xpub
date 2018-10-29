@@ -15,14 +15,14 @@ const StatusBox = styled(Box)`
 const mapColor = statusCode =>
   ({
     CONTINUE_SUBMISION: 'colorPrimary',
-    WAITING_FOR_DECISION: 'colorPrimary',
+    SUBMITTED: 'colorTextSecondary',
     REJECTED: 'colorError',
   }[statusCode])
 
 const getText = statusCode =>
   ({
     CONTINUE_SUBMISION: 'Continue Submision',
-    WAITING_FOR_DECISION: 'Waiting for decision',
+    SUBMITTED: 'Submitted',
     REJECTED: 'Rejected',
   }[statusCode])
 

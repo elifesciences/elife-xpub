@@ -31,7 +31,7 @@ const renderListItem = manuscript => {
     />
   )
 
-  if (manuscript.clientStatus === 'WAITING_FOR_DECISION') {
+  if (manuscript.clientStatus === 'SUBMITTED') {
     return dashboardListItem
   }
   return (

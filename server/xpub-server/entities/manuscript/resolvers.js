@@ -278,7 +278,7 @@ ${err}`,
         case 'MECA_EXPORT_SUCCEEDED':
         case 'MECA_IMPORT_FAILED':
         case 'MECA_IMPORT_SUCCEEDED':
-          clientStatus = 'WAITING_FOR_DECISION'
+          clientStatus = 'SUBMITTED'
           break
         default:
           throw new Error(`Unhandled manuscript status ${manuscript.status}`)

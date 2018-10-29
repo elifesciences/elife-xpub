@@ -158,7 +158,7 @@ test('Happy path', async t => {
     .eql(manuscript.title)
     .expect(dashboard.statuses.textContent)
     // TODO this might cause a race condition
-    .eql('Waiting for decision')
+    .eql('Submitted')
 
   // SFTP server
   await autoRetry(() => {
