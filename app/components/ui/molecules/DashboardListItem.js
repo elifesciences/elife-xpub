@@ -70,23 +70,30 @@ const AbsoluteDate = styled.time`
   `};
 `
 
-const DashboardListItem = ({ statusCode, title, date }) => (
-  <Root py={3}>
-    <TitleBox data-test-id="title" mb={3}>
-      {title}
-    </TitleBox>
-    <ManuscriptStatus statusCode={statusCode} />
-    <DateBox>
-      <time>{dashboardDateText(date)}</time>
-      <AbsoluteDate>{format(date, 'ddd D MMM YYYY')}</AbsoluteDate>
-    </DateBox>
-  </Root>
-)
+const DashboardListItem = ({ manuscript }) => {
+  const date = new Date(manuscript.created)
+  return (
+    <Root py={3}>
+      <TitleBox data-test-id="title" mb={3}>
+        {manuscript.meta.title || '(Untitled)'}
+      </TitleBox>
+      <ManuscriptStatus statusCode={manuscript.clientStatus} />
+      <DateBox>
+        <time>{dashboardDateText(date)}</time>
+        <AbsoluteDate>{format(date, 'ddd D MMM YYYY')}</AbsoluteDate>
+      </DateBox>
+    </Root>
+  )
+}
 
 DashboardListItem.propTypes = {
-  statusCode: PropTypes.string.isRequired,
-  title: PropTypes.string.isRequired,
-  date: PropTypes.instanceOf(Date).isRequired,
+  manuscript: PropTypes.shape({
+    meta: PropTypes.shape({
+      title: PropTypes.string.isRequired,
+    }).isRequired,
+    clientStatus: PropTypes.string.isRequired,
+    created: PropTypes.string.isRequired,
+  }).isRequired,
 }
 
 export default DashboardListItem
