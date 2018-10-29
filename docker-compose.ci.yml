@@ -18,7 +18,6 @@ services:
       BROWSER:
       NODE_ENV:
       NODE_CONFIG_ENV:
-      PGHOSTADDR:
       PGHOST:
       PGUSER:
       PGPASSWORD:
