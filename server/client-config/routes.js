@@ -33,14 +33,12 @@ module.exports = app => {
       if (!exists) {
         res.send(404, 'database error')
       }
-      // TODO: cretate a function to check S3 connection
-      const { Body } = await s3
-        .getObject({ Key: `s3://${config.aws.s3.params.Bucket}/abcd` })
-        .promise()
-      console.log(Body)
+      const { Body } = await s3.getObject({ Key: 'test-file' }).promise()
+      if (!Body) {
+        res.send(404, 's3 connection error')
+      }
       res.send('pong')
     } catch (error) {
-      console.log(error)
       res.send(500, 'ko')
     }
   })
