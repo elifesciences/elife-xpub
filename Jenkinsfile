@@ -43,7 +43,11 @@ elifePipeline {
                     }, 'test:dependencies', commit)
                 },
             ]
-            parallel actions
+            try {
+                parallel actions
+            } finally {
+                sh "docker-compose -f docker-compose.ci.yml down -v"
+            }
         }
     }
 }
