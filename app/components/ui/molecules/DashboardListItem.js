@@ -39,9 +39,6 @@ const Root = styled(Flex)`
     align-items: flex-start;
     padding: calc(${th('gridUnit')} * 5) 0;
   `};
-  :hover {
-    color: ${th('colorPrimary')};
-  }
 `
 
 const TitleBox = styled(Box)`
