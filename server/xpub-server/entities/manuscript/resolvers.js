@@ -102,6 +102,22 @@ const resolvers = {
         manuscriptInput,
       )
 
+      const authors = ManuscriptManager.getAuthor(manuscript)
+      const authorEmails = authors.map(author => author.alias.email).join(',')
+
+      mailer
+        .send({
+          to: authorEmails,
+          subject: 'Congratulations! You submitted your manuscript!',
+          text: 'Your manuscript has been submitted',
+          html: '<p>Your manuscript has been submitted</p>',
+        })
+        .catch(err => {
+          logger.error(
+            `Error sending corresponding author confirmation email: ${err}`,
+          )
+        })
+
       manuscript.status = ManuscriptManager.statuses.MECA_EXPORT_PENDING
       await ManuscriptManager.save(manuscript)
 

@@ -157,6 +157,14 @@ const Manuscript = {
     }
   },
 
+  getAuthor: manuscript => {
+    const index = manuscript.teams.findIndex(t => t.role === 'author')
+    if (index >= 0) {
+      return manuscript.teams[index].teamMembers
+    }
+    return null
+  },
+
   getSource: manuscript =>
     manuscript.files.find(file => file.type === 'MANUSCRIPT_SOURCE'),
 }
