@@ -61,7 +61,7 @@ class BurgerMenu extends React.Component {
   render() {
     const { menuItems } = this.props
     return (
-      <BurgerWrapper ml={3}>
+      <BurgerWrapper>
         <ButtonAsIconWrapper
           data-test-id="burger-menu-expand"
           onClick={() => this.setState({ menuOpen: true })}

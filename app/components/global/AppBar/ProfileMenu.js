@@ -7,12 +7,16 @@ import { th } from '@pubsweet/ui-toolkit'
 import ExternalLink from '../../ui/atoms/ExternalLink'
 import Icon from '../../ui/atoms/Icon'
 import PopOverPanel from '../../ui/atoms/PopOverPanel'
+import media from '../../global/layout/media'
 
 const loginUrl = config.login.url
 
 const PositionRelative = styled.div`
   position: relative;
   display: inline-block;
+  ${media.mobileUp`
+    margin-left: auto;
+  `};
 `
 
 const ProfileMenuButton = styled.button`
@@ -80,6 +84,12 @@ const MenuItemLink = styled(Link)`
   }
 `
 
+const LoginWrapper = styled(Box)`
+  ${media.mobileUp`
+    margin-left: auto;
+  `};
+`
+
 class ProfileMenu extends React.Component {
   state = { menuOpen: false }
 
@@ -101,9 +111,9 @@ class ProfileMenu extends React.Component {
     const { user } = this.props
     if (!user) {
       return (
-        <Box mx={3}>
+        <LoginWrapper>
           <ExternalLink href={loginUrl}>Login</ExternalLink>
-        </Box>
+        </LoginWrapper>
       )
     }
 

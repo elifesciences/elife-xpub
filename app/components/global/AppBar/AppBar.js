@@ -7,17 +7,20 @@ import NavLink from '../../ui/atoms/NavLink'
 import media from '../../global/layout/media'
 import BurgerMenu from '../../ui/molecules/BurgerMenu'
 
-const AppBarContainer = styled.div`
+const AppBarContainer = styled(Flex)`
   display: flex;
   align-items: center;
   height: ${th('space.6')};
   border-bottom: 1px solid ${th('colorBorder')};
   margin-bottom: 0;
-  padding-right: ${th('space.3')};
   justify-content: space-between;
 
   ${media.tabletPortraitUp`
     margin-bottom: ${th('space.6')};
+  `};
+
+  ${media.mobileUp`
+    justify-content: left;
   `};
 `
 
@@ -42,7 +45,6 @@ const Separator = styled.div`
   margin-right: ${th('space.2')};
 `
 const DesktopView = styled(Flex)`
-  width:80%
   align-items: center;
   display: none;
   ${media.mobileUp`
@@ -51,7 +53,7 @@ const DesktopView = styled(Flex)`
 `
 
 const AppBar = ({ user, menuItems }) => (
-  <AppBarContainer>
+  <AppBarContainer px={3}>
     <BurgerMenu menuItems={menuItems} />
     <LogoLink href="https://elifesciences.org">
       <img alt="eLife" src="/assets/elife-logo.png" />
