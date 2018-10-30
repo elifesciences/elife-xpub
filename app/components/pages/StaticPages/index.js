@@ -8,8 +8,10 @@ import { th } from '@pubsweet/ui-toolkit'
 import ErrorBoundary from '../../global/ErrorBoundary'
 import media from '../../global/layout/media'
 import NavLink from '../../ui/atoms/NavLink'
+import NavigationDropdown from '../../ui/atoms/NavigationDropdown'
 
-const TopNavContainer = styled.div`
+const TopNavContainer = styled(Box).attrs({ mx: -3 })`
+  border-bottom: ${th('borderWidth')} ${th('borderStyle')} ${th('colorBorder')};
   margin-bottom: ${th('space.3')};
   ${media.tabletPortraitUp`display: none;`};
 `
@@ -27,10 +29,19 @@ const SideNavLink = styled(NavLink)`
   }
 `
 
-const StaticPage = ({ navList }) => (
+const StaticPage = ({ history, navList }) => (
   <div>
     <ErrorBoundary>
-      <TopNavContainer>{/* TODO: dropdown goes here */}</TopNavContainer>
+      <TopNavContainer>
+        <NavigationDropdown
+          onSelection={item => history.push(item.value)}
+          options={navList.map(navItem => ({
+            label: navItem.label,
+            value: navItem.link,
+          }))}
+          selectedValue={history.location.pathname}
+        />
+      </TopNavContainer>
 
       <Flex>
         <SideNavContainer
