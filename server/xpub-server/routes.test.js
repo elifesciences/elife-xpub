@@ -59,14 +59,27 @@ describe('ping route test', () => {
   it('returns failure once no connectivity to database', async () => {
     dbManager.dbExists.mockResolvedValue(null)
     const request = makeApp()
-    await request.get('/ping').expect(410)
+    const response = await request.get('/ping').expect(410)
+    expect(response.body).toHaveLength(1)
+    expect(response.body[0]).toEqual('Database Error')
   })
 
   it('returns failure once no connectivity to S3', async () => {
     mockS3Value = null
-
     dbManager.dbExists.mockResolvedValue(17)
     const request = makeApp()
-    await request.get('/ping').expect(410)
+    const response = await request.get('/ping').expect(410)
+    expect(response.body).toHaveLength(1)
+    expect(response.body[0]).toEqual('S3 Connection Error')
+  })
+
+  it('returns more than one failure', async () => {
+    mockS3Value = null
+    dbManager.dbExists.mockResolvedValue(0)
+    const request = makeApp()
+    const response = await request.get('/ping').expect(410)
+    expect(response.body).toHaveLength(2)
+    expect(response.body[0]).toEqual('Database Error')
+    expect(response.body[1]).toEqual('S3 Connection Error')
   })
 })
