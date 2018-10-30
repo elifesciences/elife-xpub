@@ -9,7 +9,6 @@ import media from '../../global/layout/media'
 import BurgerMenu from '../../ui/molecules/BurgerMenu'
 
 const AppBarContainer = styled(Flex)`
-  display: flex;
   align-items: center;
   height: ${th('space.6')};
   border-bottom: 1px solid ${th('colorBorder')};
