@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
-import { Box } from 'grid-styled'
+import { Box, Flex } from 'grid-styled'
 import { th } from '@pubsweet/ui-toolkit'
 import Icon from '../atoms/Icon'
 import ButtonAsIconWrapper from '../atoms/ButtonAsIconWrapper'
@@ -23,8 +23,7 @@ const MenuItem = styled(Box).attrs({ p: 3 })`
     border: none;
   }
 `
-const BurgerWrapper = styled(Box)`
-  display: flex;
+const BurgerWrapper = styled(Flex)`
   align-items: center;
   justify-content: center;
   ${media.mobileUp`
