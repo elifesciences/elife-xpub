@@ -4,6 +4,13 @@ const { pickBy } = require('lodash')
 const DBExists = require('@pubsweet/db-manager/src/helpers/db-exists.js')
 const AWS = require('aws-sdk')
 
+const FILE_HEALTH_CHECK = 'healtcheck-file'
+const DATABASE_ERROR = 'Database Error'
+const S3_CONNECTION_ERROR = 'S3 Connection Error'
+const DEFAULT_ERROR = 'Internal Server Error'
+const SUCCESFULL_RESPONSE = 'pong'
+const S3_API_VERSION = '2006-03-01'
+
 const template = clientConfig => `
   window.config = ${JSON.stringify(clientConfig)}
 `
@@ -17,7 +24,7 @@ const nocache = (req, res, next) => {
 const s3 = new AWS.S3({
   ...config.aws.credentials,
   ...config.aws.s3,
-  apiVersion: '2006-03-01',
+  apiVersion: S3_API_VERSION,
 })
 
 const sendResult = (res, statusCode, body) => {
@@ -39,18 +46,19 @@ module.exports = app => {
     try {
       const exists = await DBExists()
       if (!exists) {
-        sendResult(res, 404, 'database error')
+        sendResult(res, 404, DATABASE_ERROR)
         return
       }
-      const { Body } = await s3.getObject({ Key: 'healtcheck-file' }).promise()
+      const { Body } = await s3.getObject({ Key: FILE_HEALTH_CHECK }).promise()
       if (!Body) {
-        sendResult(res, 404, 's3 connection error')
+        sendResult(res, 404, S3_CONNECTION_ERROR)
         return
       }
 
-      sendResult(res, 200, 'pong')
+      sendResult(res, 200, SUCCESFULL_RESPONSE)
     } catch (error) {
-      sendResult(res, 500, error)
+      logger.error(`HealthCheckError: ${error}`)
+      res.send(500, DEFAULT_ERROR)
     }
   })
 }
