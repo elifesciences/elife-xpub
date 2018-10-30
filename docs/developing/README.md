@@ -6,3 +6,7 @@
 - [PubSweet Components](pubsweet.md)
 - [Icons](icons.md)
 - [Login Sequence Diagram](login.md)
+
+---
+
+- :sparkles: [Screencasts: Code Walkthroughs with Tam](screencasts.md) :sparkles:
