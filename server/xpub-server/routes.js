@@ -23,6 +23,8 @@ const s3 = new AWS.S3({
   apiVersion: S3_API_VERSION,
 })
 
+let lastHealthStatus = null
+
 module.exports = app => {
   app.get('/ping', nocache, async (req, res) => {
     const errors = []
@@ -44,8 +46,16 @@ module.exports = app => {
     if (!response[1] || !response[1].Body) {
       errors.push(S3_CONNECTION_ERROR)
     }
+
+    const thisHealthStatus = errors.length === 0
+
+    if (lastHealthStatus !== thisHealthStatus) {
+      // only log changes in state to not flood the logs
+      logger.error(`HealthStats: ${thisHealthStatus}, Errors: ${errors}`)
+      lastHealthStatus = thisHealthStatus
+    }
+
     if (errors.length > 0) {
-      logger.error(`HealthCheckError: ${errors}`)
       body = errors
       if (statusCode === 200) {
         // this is http gone
