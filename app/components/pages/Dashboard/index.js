@@ -75,7 +75,13 @@ const DashboardPage = ({ history }) => (
         <MobileOnlyStickyFooter>
           <Button
             data-test-id="mobile-new-submission"
-            onClick={createManuscript}
+            onClick={() =>
+              createManuscript().then(result =>
+                history.push(
+                  `/submit/${result.data.createManuscript.id}/author`,
+                ),
+              )
+            }
             primary
           >
             New Submission
