@@ -42,7 +42,7 @@ module.exports = app => {
         sendResult(res, 404, 'database error')
         return
       }
-      const { Body } = await s3.getObject({ Key: 'test-file' }).promise()
+      const { Body } = await s3.getObject({ Key: 'healtcheck-file' }).promise()
       if (!Body) {
         sendResult(res, 404, 's3 connection error')
         return
