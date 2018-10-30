@@ -7,6 +7,7 @@ const path = require('path')
 const { promisify } = require('util')
 
 const readdir = promisify(fs.readdir)
+const stat = promisify(fs.stat)
 const dirPath = path.join(__basedir, '_build_styleguide/')
 
 const S3 = new AWS.S3({
@@ -15,8 +16,26 @@ const S3 = new AWS.S3({
   apiVersion: '2006-03-01',
 })
 
+async function read(dir) {
+  const files = await readdir(dir)
+  return await Promise.all(files.map(
+    async (fileName) => {
+      const filePath = path.join(dir, fileName)
+      const pathStat = await stat(filePath)
+      if(pathStat.isFile())
+        return filePath
+      else if (pathStat.isDirectory())
+        return await read(filePath)
+    }
+  ))
+}
+
 async function upload() {
-  const files = await readdir(dirPath)
+  const files = await read(dirPath)
+  await uploadToS3(files)
+}
+
+async function uploadToS3(files){
   if(!files || files.length === 0) {
     throw new Error(`Directory '${dirPath}' is empty or does not exist.`)
   }
