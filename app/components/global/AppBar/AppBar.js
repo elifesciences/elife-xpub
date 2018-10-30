@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import PropTypes from 'prop-types'
 import { Flex, Box } from 'grid-styled'
 import { th } from '@pubsweet/ui-toolkit'
 import ProfileMenu from './ProfileMenu'
@@ -72,5 +73,19 @@ const AppBar = ({ user, menuItems }) => (
     <ProfileMenu user={user} />
   </AppBarContainer>
 )
+
+AppBar.propTypes = {
+  menuItems: PropTypes.arrayOf(
+    PropTypes.shape({
+      label: PropTypes.string.isRequired,
+      link: PropTypes.string.isRequired,
+    }),
+  ).isRequired,
+  user: PropTypes.shape({}),
+}
+
+AppBar.defaultProps = {
+  user: null,
+}
 
 export default AppBar
