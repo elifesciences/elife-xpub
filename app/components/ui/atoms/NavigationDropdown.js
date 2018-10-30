@@ -18,6 +18,7 @@ class NavigationDropdown extends React.Component {
       <Select
         getOptionLabel={({ label }) => label}
         getOptionValue={({ value }) => value}
+        isSearchable={false}
         onChange={({ value }) => this.setState({ value })}
         options={options.filter(({ value }) => value !== this.state.value)}
         placeholder=""
