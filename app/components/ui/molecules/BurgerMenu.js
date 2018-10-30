@@ -24,7 +24,9 @@ const MenuItem = styled(Box).attrs({ p: 3 })`
   }
 `
 const BurgerWrapper = styled(Box)`
-  display: inline;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   ${media.mobileUp`
     display: none;
   `};
