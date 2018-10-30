@@ -1,7 +1,6 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import BurgerMenu from './BurgerMenu'
-import NavLink from '../atoms/NavLink'
+import BurgerMenu, { MenuNavLink } from './BurgerMenu'
 
 const menuConfig = [
   { label: 'Dashboard', link: '/' },
@@ -32,13 +31,13 @@ describe('BurgerMenu Component', () => {
     menuConfig.forEach((config, index) => {
       expect(
         wrapper
-          .find(NavLink)
+          .find(MenuNavLink)
           .at(index)
           .props().to,
       ).toEqual(config.link)
       expect(
         wrapper
-          .find(NavLink)
+          .find(MenuNavLink)
           .at(index)
           .props().children,
       ).toEqual(config.label)

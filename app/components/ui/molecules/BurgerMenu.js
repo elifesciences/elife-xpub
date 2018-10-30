@@ -30,7 +30,7 @@ const BurgerWrapper = styled(Box)`
   `};
 `
 
-const MenuNavLink = styled(NavLink)`
+export const MenuNavLink = styled(NavLink)`
   color: ${th('colorText')};
   ${media.mobileUp`
     color: ${th('colorTextSecondary')};
