@@ -14,7 +14,7 @@ class NavigationDropdown extends React.Component {
     super(props)
 
     this.state = {
-      selectedValue: this.props.selectedValue,
+      selectedValue: this.props.initialValue,
     }
 
     this.customReactSelectStyles = {
@@ -90,7 +90,7 @@ NavigationDropdown.propTypes = {
       value: PropTypes.string.isRequired,
     }),
   ).isRequired,
-  selectedValue: PropTypes.string.isRequired,
+  initialValue: PropTypes.string.isRequired,
   onSelection: PropTypes.func.isRequired,
 }
 
