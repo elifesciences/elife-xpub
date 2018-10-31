@@ -48,6 +48,11 @@ class NavigationDropdown extends React.Component {
         boxShadow: 'none',
         minHeight: this.props.theme.space[6],
       }),
+      dropdownIndicator: (base, state) => ({
+        ...base,
+        transition: 'all .2s ease',
+        transform: state.selectProps.menuIsOpen ? 'rotate(180deg)' : null,
+      }),
     }
   }
 
