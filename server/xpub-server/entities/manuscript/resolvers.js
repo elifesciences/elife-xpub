@@ -65,11 +65,9 @@ const resolvers = {
         )
       }
 
-      const originalAuthorEmails = ManuscriptManager.getAuthor(
-        originalManuscript,
-      )
-        .map(author => author.alias.email)
-        .join(',')
+      const originalAuthorEmails = originalManuscript
+        ? ManuscriptManager.getAuthor(originalManuscript)
+        : [].map(author => author.alias.email).join(',')
 
       const manuscript = ManuscriptManager.applyInput(originalManuscript, data)
 

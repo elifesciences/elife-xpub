@@ -110,7 +110,8 @@ describe('Manuscripts', () => {
       )
     })
 
-    it('updates the current submission for user with data', async () => {
+    it('updates the current submission for user with data and emails', async () => {
+      const NUM_EMAILS = 1
       const blankManuscript = Manuscript.new({ createdBy: userId })
       const manuscript = await Manuscript.save(blankManuscript)
 
@@ -119,6 +120,16 @@ describe('Manuscripts', () => {
         { data: { id: manuscript.id, ...manuscriptInput } },
         { user: profileId },
       )
+      await waitforEmails(NUM_EMAILS)
+
+      const allEmails = mailer.getMails()
+      expect(allEmails).toHaveLength(NUM_EMAILS)
+
+      // Check the dashboard email
+      expect(allEmails[0]).toMatchObject({
+        to: 'mymail@mail.com',
+        subject: 'Libero Submission System: New Submission',
+      })
 
       const actualManuscript = await Manuscript.find(manuscript.id, userId)
       expect(actualManuscript).toMatchObject(expectedManuscript)
@@ -151,23 +162,12 @@ describe('Manuscripts', () => {
       id = manuscript.id
     })
 
-    it('stores data with new status and sends email', async () => {
-      const NUM_EMAILS = 1
+    it('stores data with new status', async () => {
       const returnedManuscript = await Mutation.submitManuscript(
         {},
         { data: { ...manuscriptInput, id } },
         { user: profileId },
       )
-
-      await waitforEmails(NUM_EMAILS)
-      const allEmails = mailer.getMails()
-      expect(allEmails).toHaveLength(NUM_EMAILS)
-
-      // Check the Submission email
-      expect(allEmails[0]).toMatchObject({
-        to: 'mymail@mail.com',
-        subject: 'Congratulations! You submitted your manuscript!',
-      })
 
       expect(returnedManuscript.status).toBe(
         Manuscript.statuses.MECA_EXPORT_PENDING,
@@ -292,7 +292,7 @@ describe('Manuscripts', () => {
     })
 
     it('sends email and updates status when export fails', async () => {
-      const NUM_EMAILS = 2
+      const NUM_EMAILS = 1
       jest.spyOn(logger, 'error').mockImplementationOnce(() => {})
       mecaExport.mockImplementationOnce(() =>
         Promise.reject(new Error('Broked')),
@@ -306,19 +306,13 @@ describe('Manuscripts', () => {
         { user: profileId },
       )
 
-      // resolver doesn't wait for export to complete so just keep retrying for a second
       await waitforEmails(NUM_EMAILS)
 
       const allEmails = mailer.getMails()
       expect(allEmails).toHaveLength(NUM_EMAILS)
 
-      // Check the Submission email
-      expect(allEmails[0]).toMatchObject({
-        to: 'mymail@mail.com',
-        subject: 'Congratulations! You submitted your manuscript!',
-      })
       // Check the MECA fail email
-      expect(allEmails[1]).toMatchObject({
+      expect(allEmails[0]).toMatchObject({
         to: 'test@example.com',
         subject: 'MECA export failed',
       })
