@@ -32,6 +32,9 @@ class NavigationDropdown extends React.Component {
       option: (base, { isSelected, isFocused }) => ({
         ...base,
         backgroundColor: this.props.theme.colorBackground,
+        ':active': {
+          backgroundColor: this.props.theme.colorBackground,
+        },
         color: isSelected
           ? this.props.theme.colorText
           : this.props.theme.colorTextSecondary,
