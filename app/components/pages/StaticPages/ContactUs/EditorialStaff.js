@@ -1,11 +1,12 @@
 import React from 'react'
+import { H1 } from '@pubsweet/ui'
 
 import StaffGrid from '../../../ui/molecules/StaffGrid'
 import StaffCard from '../../../ui/molecules/StaffCard'
 
 const EditorialStaff = () => (
   <React.Fragment>
-    <h1>Editorial Staff</h1>
+    <H1>Editorial Staff</H1>
     <p>
       Our Editorial Staff are happy to help with any enquiries arising before
       acceptance.
