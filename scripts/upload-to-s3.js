@@ -1,3 +1,5 @@
+/* eslint no-console: 0 */
+
 /*
  * Uploads a folder from your local volume to AWS S3
  *
@@ -29,7 +31,7 @@ const [
   toDir='build'
 ] = process.argv.slice(2,4)
 
-const dirPath = path.join(__basedir, fromDir)
+const dirPath = path.join(global.__basedir, fromDir)
 
 const S3 = new AWS.S3({
   ...config.get('aws.credentials'),
@@ -46,7 +48,8 @@ async function getFiles(dir, { prefix='' }={}) {
       if(pathStat.isFile())
         return { fileName: `${prefix}${fileName}`, filePath }
       else if (pathStat.isDirectory())
-        return await getFiles(filePath, { prefix: `${prefix}${fileName}/` })
+        return getFiles(filePath, { prefix: `${prefix}${fileName}/` })
+      return null
     }
   ))
   return _.flattenDeep(filePaths)
