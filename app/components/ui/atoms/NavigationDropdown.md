@@ -9,6 +9,6 @@ const handleSelection = selectedItem => (selectedOption = selectedItem)
 ;<NavigationDropdown
   options={options}
   selectedValue={selectedOption.value}
-  onChange={handleSelection}
+  onSelection={handleSelection}
 />
 ```
