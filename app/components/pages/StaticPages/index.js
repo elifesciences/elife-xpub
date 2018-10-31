@@ -34,10 +34,10 @@ const StaticPage = ({ navList }) => (
 
       <Flex>
         <SideNavContainer
-          ml={[0, 0, '8.33%']} // 1 column's worth of spacing (in a 12 column grid)
-          pr={3}
+          ml={[0, 0, `8.33vw`, `8.33vw`, `8.33vw`]} // 8.33% of viewport width = 1/12 (i.e. 1 column of spacing in a 12 column grid)
+          mr={3}
           pt={18} // To match the top padding on the H1 in the 'main' component
-          width={[0, 3 / 12, 3 / 12, 2 / 12]}
+          width={[0, 0, 3 / 12, 2 / 12, 2 / 12]}
         >
           <Box is="nav">
             {navList &&
@@ -53,7 +53,10 @@ const StaticPage = ({ navList }) => (
           </Box>
         </SideNavContainer>
 
-        <MainContainer width={[1, 1, 7 / 12, 7 / 12, 8 / 12]}>
+        <MainContainer
+          mr={[0, 0, `8.33vw`, `16.67vw`, `25vw`]} // [0, 0, 1, 2, 3] columns out of a 12 column grid
+          width={[1, 1, 7 / 12, 7 / 12, 6 / 12]}
+        >
           <Switch>
             {navList &&
               navList.map(navItem => (
