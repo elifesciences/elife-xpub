@@ -48,7 +48,7 @@ class NavigationDropdown extends React.Component {
   }
 
   handleSelection = selectedOption => {
-    this.setState({})
+    this.setState({ selectedValue: selectedOption.value })
     this.props.onSelection(selectedOption)
   }
 
