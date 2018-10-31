@@ -1,10 +1,12 @@
 import React from 'react'
+import { H1 } from '@pubsweet/ui'
+
 import StaffGrid from '../../../ui/molecules/StaffGrid'
 import StaffCard from '../../../ui/molecules/StaffCard'
 
-const ProductionPage = () => (
+const ProductionStaff = () => (
   <React.Fragment>
-    <h1>Production Staff</h1>
+    <H1>Production Staff</H1>
     <p>
       Our Editorial Staff are happy to help with any enquiries arising
       post-acceptance.
@@ -26,4 +28,4 @@ const ProductionPage = () => (
   </React.Fragment>
 )
 
-export default ProductionPage
+export default ProductionStaff
