@@ -45,6 +45,7 @@ class NavigationDropdown extends React.Component {
         ...base,
         borderRadius: 0,
         border: 'none',
+        boxShadow: 'none',
         minHeight: this.props.theme.space[6],
       }),
     }
