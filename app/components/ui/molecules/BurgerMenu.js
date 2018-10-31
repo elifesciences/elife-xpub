@@ -26,14 +26,14 @@ const MenuItem = styled(Box).attrs({ p: 3 })`
 const BurgerWrapper = styled(Flex)`
   align-items: center;
   justify-content: center;
-  ${media.mobileUp`
+  ${media.tabletPortraitUp`
     display: none;
   `};
 `
 
 export const MenuNavLink = styled(NavLink)`
   color: ${th('colorText')};
-  ${media.mobileUp`
+  ${media.tabletPortraitUp`
     color: ${th('colorTextSecondary')};
   `};
 `

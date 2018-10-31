@@ -14,7 +14,7 @@ const loginUrl = config.login.url
 const PositionRelative = styled.div`
   position: relative;
   display: inline-block;
-  ${media.mobileUp`
+  ${media.tabletPortraitUp`
     margin-left: auto;
   `};
 `
@@ -85,7 +85,7 @@ const MenuItemLink = styled(Link)`
 `
 
 const LoginWrapper = styled(Box)`
-  ${media.mobileUp`
+  ${media.tabletPortraitUp`
     margin-left: auto;
   `};
 `

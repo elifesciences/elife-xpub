@@ -17,9 +17,6 @@ const AppBarContainer = styled(Flex)`
 
   ${media.tabletPortraitUp`
     margin-bottom: ${th('space.6')};
-  `};
-
-  ${media.mobileUp`
     justify-content: left;
   `};
 `
@@ -47,7 +44,7 @@ const Separator = styled.div`
 const DesktopView = styled(Flex)`
   align-items: center;
   display: none;
-  ${media.mobileUp`
+  ${media.tabletPortraitUp`
     display: flex;
   `};
 `
