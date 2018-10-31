@@ -1,4 +1,5 @@
 const config = require('config')
+const pug = require('pug')
 const {
   getPubsub,
   asyncIterators,
@@ -63,7 +64,51 @@ const resolvers = {
           }`,
         )
       }
+
+      const originalAuthorEmails = ManuscriptManager.getAuthor(
+        originalManuscript,
+      )
+        .map(author => author.alias.email)
+        .join(',')
+
       const manuscript = ManuscriptManager.applyInput(originalManuscript, data)
+
+      const newAuthors = ManuscriptManager.getAuthor(manuscript)
+      const newAuthorEmails = newAuthors
+        .map(author => author.alias.email)
+        .join(',')
+
+      // Send email here only when author changes...
+      if (newAuthorEmails !== originalAuthorEmails) {
+        const textCompile = pug.compileFile(
+          'templates/dashboard-email-text.pug',
+        )
+        const htmlCompile = pug.compileFile(
+          'templates/dashboard-email-html.pug',
+        )
+        const text = textCompile({
+          authorName: newAuthors[0].alias.firstName,
+          linkDashboard: config.pubsweet.base_url,
+        })
+        const html = htmlCompile({
+          authorName: newAuthors[0].alias.firstName,
+          linkDashboard: config.pubsweet.base_url,
+        })
+
+        mailer
+          .send({
+            to: newAuthorEmails,
+            subject: 'Libero Submission System: New Submission',
+            from: 'editorial@elifesciences.org',
+            text,
+            html,
+          })
+          .catch(err => {
+            logger.error(
+              `Error sending corresponding author confirmation email: ${err}`,
+            )
+          })
+      }
 
       await ManuscriptManager.save(manuscript)
       logger.debug(`Updated manuscript`, {
@@ -101,22 +146,6 @@ const resolvers = {
         originalManuscript,
         manuscriptInput,
       )
-
-      const authors = ManuscriptManager.getAuthor(manuscript)
-      const authorEmails = authors.map(author => author.alias.email).join(',')
-
-      mailer
-        .send({
-          to: authorEmails,
-          subject: 'Congratulations! You submitted your manuscript!',
-          text: 'Your manuscript has been submitted',
-          html: '<p>Your manuscript has been submitted</p>',
-        })
-        .catch(err => {
-          logger.error(
-            `Error sending corresponding author confirmation email: ${err}`,
-          )
-        })
 
       manuscript.status = ManuscriptManager.statuses.MECA_EXPORT_PENDING
       await ManuscriptManager.save(manuscript)
