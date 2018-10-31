@@ -15,13 +15,13 @@ const ProductionStaff = () => (
       <StaffCard
         jobTitle="Senior Production Assistant"
         name="James Gilbert"
-        photoURL="https://prod--journal-cms.elifesciences.org/sites/default/files/iiif/person/2017-07/james.jpg"
+        photoURL="https://iiif.elifesciences.org/journal-cms/person%2F2017-07%2Fjames.jpg/0,81,1000,566/502,284/0/default.webp"
         telephone="+44 [0]1223 855346"
       />
       <StaffCard
         jobTitle="Production Assistant"
         name="Molly Shrimpton"
-        photoURL="https://prod--journal-cms.elifesciences.org/sites/default/files/iiif/person/2018-04/molly_copy.jpeg"
+        photoURL="https://iiif.elifesciences.org/journal-cms/person%2F2018-04%2Fmolly_copy.jpeg/0,103,1577,893/502,284/0/default.webp"
         telephone="+44 [0]1223 855370"
       />
     </StaffGrid>
