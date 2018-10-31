@@ -4,5 +4,11 @@ const options = [
   { label: 'Editorial staff', value: '/contact-us/editorial-staff' },
   { label: 'Production staff', value: '/contact-us/production-staff' },
 ]
-;<NavigationDropdown options={options} defaultValue={options[2].value} />
+let selectedOption = options[0]
+const handleChange = selectedItem => (selectedOption = selectedItem)
+;<NavigationDropdown
+  options={options}
+  selectedValue={selectedOption.value}
+  onChange={handleChange}
+/>
 ```

@@ -13,10 +13,6 @@ class NavigationDropdown extends React.Component {
   constructor(props) {
     super(props)
 
-    this.state = {
-      value: this.props.defaultValue,
-    }
-
     this.customReactSelectStyles = {
       menuList: (base, state) => ({
         ...base,
@@ -46,7 +42,7 @@ class NavigationDropdown extends React.Component {
   }
 
   render() {
-    const { options } = this.props
+    const { onSelection, options, selectedValue } = this.props
 
     const CustomDropdownIndicator = props => (
       <components.DropdownIndicator {...props}>
@@ -64,11 +60,11 @@ class NavigationDropdown extends React.Component {
         getOptionValue={({ value }) => value}
         isSearchable={false}
         maxMenuHeight={1200} // longer than any phone screen
-        onChange={({ value }) => this.setState({ value })}
-        options={options.filter(({ value }) => value !== this.state.value)}
+        onChange={onSelection}
+        options={options.filter(({ value }) => value !== selectedValue)}
         placeholder=""
         styles={this.customReactSelectStyles}
-        value={options.filter(({ value }) => value === this.state.value)}
+        value={options.filter(({ value }) => value === selectedValue)}
       />
     )
   }
@@ -81,7 +77,8 @@ NavigationDropdown.propTypes = {
       value: PropTypes.string.isRequired,
     }),
   ).isRequired,
-  defaultValue: PropTypes.string.isRequired,
+  selectedValue: PropTypes.string.isRequired,
+  onSelection: PropTypes.func.isRequired,
 }
 
 export default withTheme(NavigationDropdown)
