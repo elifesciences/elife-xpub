@@ -34,7 +34,7 @@ const Root = styled(Flex)`
   border-bottom: ${th('borderWidth')} ${th('borderStyle')} ${th('colorBorder')};
   justify-content: space-between;
 
-  ${media.mobileUp`
+  ${media.tabletPortraitUp`
     flex-direction: row;
     align-items: flex-start;
     padding: calc(${th('gridUnit')} * 5) 0;
@@ -45,7 +45,7 @@ const TitleBox = styled(Box)`
   font-weight: bold;
   text-align: left;
   flex-grow: 1;
-  ${media.mobileUp`
+  ${media.tabletPortraitUp`
     margin-bottom: 0;
     margin-right: ${th('space.3')};
   `};
@@ -54,7 +54,7 @@ const DateBox = styled(Flex)`
   color: ${th('colorTextSecondary')}
   justify-content: space-between;
 
-  ${media.mobileUp`
+  ${media.tabletPortraitUp`
     flex-direction: column;
     text-align: right;
     flex: 0 0 120px;
