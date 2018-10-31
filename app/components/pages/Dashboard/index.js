@@ -20,6 +20,7 @@ const BoxHiddenFromMobile = styled(Box)`
 `
 
 const TabbedSubmissions = styled(Tabs)`
+  min-height: 300px;
   margin-bottom: ${th('space.2')};
 `
 
@@ -29,7 +30,6 @@ const MobileOnlyStickyFooter = styled(StickyFooter)`
 `
 
 const CenterdSmallParagraph = styled(SmallParagraph)`
-  margin-top: ${th('space.7')};
   color: ${th('colorTextSecondary')};
   text-align: center;
 `
