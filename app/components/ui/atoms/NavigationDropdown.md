@@ -5,10 +5,10 @@ const options = [
   { label: 'Production staff', value: '/contact-us/production-staff' },
 ]
 let selectedOption = options[0]
-const handleChange = selectedItem => (selectedOption = selectedItem)
+const handleSelection = selectedItem => (selectedOption = selectedItem)
 ;<NavigationDropdown
   options={options}
   selectedValue={selectedOption.value}
-  onChange={handleChange}
+  onChange={handleSelection}
 />
 ```

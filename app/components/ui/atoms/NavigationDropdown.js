@@ -61,7 +61,7 @@ class NavigationDropdown extends React.Component {
         isSearchable={false}
         maxMenuHeight={1200} // longer than any phone screen
         onChange={onSelection}
-        options={options.filter(({ value }) => value !== selectedValue)}
+        options={options}
         placeholder=""
         styles={this.customReactSelectStyles}
         value={options.filter(({ value }) => value === selectedValue)}
