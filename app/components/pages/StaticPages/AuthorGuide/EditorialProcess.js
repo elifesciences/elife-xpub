@@ -97,8 +97,8 @@ const EditorialProcess = props => (
       >
         this editorial
       </ExternalLink>{' '}
-      and <a href="#scoop_protection">the FAQ</a> below for more details on our
-      policies on preprints and scoop protection.
+      and <ExternalLink href="#scoop_protection">the FAQ</ExternalLink> below
+      for more details on our policies on preprints and scoop protection.
     </Paragraph>
 
     <CalloutTextBox>
