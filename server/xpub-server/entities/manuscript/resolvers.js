@@ -271,7 +271,7 @@ ${err}`,
 
       switch (manuscript.status) {
         case 'INITIAL':
-          clientStatus = 'CONTINUE_SUBMISION'
+          clientStatus = 'CONTINUE_SUBMISSION'
           break
         case 'MECA_EXPORT_PENDING':
         case 'MECA_EXPORT_FAILED':
