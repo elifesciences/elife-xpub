@@ -1,13 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { withTheme } from 'styled-components'
-import Select, { components } from 'react-select'
-
-import Icon from '../atoms/Icon'
-
-const DropdownArrow = props => (
-  <Icon iconName="ChevronDown" overrideName="dropdownArrow" {...props} />
-)
+import Select from 'react-select'
 
 class NavigationDropdown extends React.Component {
   constructor(props) {
@@ -48,10 +42,21 @@ class NavigationDropdown extends React.Component {
         boxShadow: 'none',
         minHeight: this.props.theme.space[6],
       }),
-      dropdownIndicator: (base, state) => ({
+      singleValue: (base, state) => ({
         ...base,
-        transition: 'all .2s ease',
-        transform: state.selectProps.menuIsOpen ? 'rotate(180deg)' : null,
+        '::after': {
+          content: `''`,
+          display: `inline-block`,
+          verticalAlign: state.selectProps.menuIsOpen ? `text-top` : `middle`,
+          border: `4px solid transparent`,
+          borderTopColor: state.selectProps.menuIsOpen
+            ? 'none'
+            : this.props.theme.colorText,
+          borderBottomColor: state.selectProps.menuIsOpen
+            ? this.props.theme.colorText
+            : 'none',
+          marginLeft: this.props.theme.space[2],
+        },
       }),
     }
   }
@@ -64,17 +69,11 @@ class NavigationDropdown extends React.Component {
   render() {
     const { options } = this.props
 
-    const CustomDropdownIndicator = props => (
-      <components.DropdownIndicator {...props}>
-        <DropdownArrow />
-      </components.DropdownIndicator>
-    )
-
     return (
       <Select
         components={{
           IndicatorSeparator: null,
-          DropdownIndicator: CustomDropdownIndicator,
+          DropdownIndicator: null,
         }}
         getOptionLabel={({ label }) => label}
         getOptionValue={({ value }) => value}

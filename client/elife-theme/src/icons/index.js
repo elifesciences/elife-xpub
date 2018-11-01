@@ -3,7 +3,6 @@
 // Material icons
 export { default as Add } from './material/Add'
 export { default as Cross } from './material/Cross'
-export { default as DropdownArrow } from './material/DropdownArrow'
 export { default as FormatBold } from './material/FormatBold'
 export { default as FormatItalic } from './material/FormatItalic'
 export { default as FormatUnderlined } from './material/FormatUnderlined'
