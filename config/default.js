@@ -37,6 +37,10 @@ module.exports = {
     API_ENDPOINT: '/api',
     'login-redirect': '/',
   },
+  git: {
+    sha: '',
+    ref: '',
+  },
   elife: {
     isPublic: true,
     api: {

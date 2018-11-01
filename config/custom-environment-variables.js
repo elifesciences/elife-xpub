@@ -11,8 +11,9 @@ module.exports = {
     baseUrl: 'PUBSWEET_BASEURL',
     secret: 'PUBSWEET_SECRET',
   },
-  'pubsweet-client': {
+  git: {
     sha: 'CI_COMMIT_SHA',
+    ref: 'CI_COMMIT_REF_NAME',
   },
   meca: {
     sftp: {
