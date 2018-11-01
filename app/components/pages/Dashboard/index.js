@@ -21,7 +21,7 @@ const BoxHiddenFromMobile = styled(Box)`
 
 const TabbedSubmissions = styled(Tabs)`
   min-height: 300px;
-  margin-bottom: ${th('space.2')};
+  margin-bottom: ${th('space.3')};
 `
 
 const MobileOnlyStickyFooter = styled(StickyFooter)`
