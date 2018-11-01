@@ -8,9 +8,12 @@ import NavLink from '../../ui/atoms/NavLink'
 
 const SideNavLink = styled(NavLink)`
   display: block;
-  padding: ${th('space.1')} 0 ${th('space.1')} 0;
+  padding: ${th('space.2')} 0 ${th('space.2')} 0;
   &:first-child {
     padding-top: 0;
+  }
+  &:last-child {
+    padding-bottom: 0;
   }
   font-size: ${th('fontSizeBaseSmall')};
   line-height: ${th('lineHeightBaseSmall')};
