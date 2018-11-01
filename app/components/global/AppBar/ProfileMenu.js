@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import { Box } from 'grid-styled'
 import { Link } from 'react-router-dom'
 import { th } from '@pubsweet/ui-toolkit'
-import ExternalLink from '../../ui/atoms/ExternalLink'
+import NativeLink from '../../ui/atoms/NativeLink'
 import Icon from '../../ui/atoms/Icon'
 import PopOverPanel from '../../ui/atoms/PopOverPanel'
 
@@ -102,7 +102,7 @@ class ProfileMenu extends React.Component {
     if (!user) {
       return (
         <Box mx={3}>
-          <ExternalLink href={loginUrl}>Login</ExternalLink>
+          <NativeLink href={loginUrl}>Login</NativeLink>
         </Box>
       )
     }

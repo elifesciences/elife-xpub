@@ -4,7 +4,7 @@ import { Box } from 'grid-styled'
 import PropTypes from 'prop-types'
 import { H1 } from '@pubsweet/ui'
 import { th } from '@pubsweet/ui-toolkit'
-import ExternalLink from '../../ui/atoms/ExternalLink'
+import NativeLink from '../../ui/atoms/NativeLink'
 import ButtonLink from '../../ui/atoms/ButtonLink'
 import Paragraph from '../../ui/atoms/Paragraph'
 import SmallParagraph from '../../ui/atoms/SmallParagraph'
@@ -16,7 +16,7 @@ const SubText = styled(SmallParagraph)`
   color: ${th('colorTextSecondary')};
 `
 
-const BookmarkLink = styled(ExternalLink)`
+const BookmarkLink = styled(NativeLink)`
   display: inline-block;
   clear: both;
 `

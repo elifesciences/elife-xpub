@@ -2,7 +2,7 @@ import React from 'react'
 import { H1, H2, Link } from '@pubsweet/ui'
 
 import Paragraph from '../../../ui/atoms/Paragraph'
-import ExternalLink from '../../../ui/atoms/ExternalLink'
+import NativeLink from '../../../ui/atoms/NativeLink'
 import List from '../../../ui/atoms/List'
 import RequiredInfoTable from './RequiredInfoTable'
 
@@ -114,12 +114,12 @@ const Initial = props => (
           step-by-step protocols in addition to the methods described in the
           article, we would encourage authors to also consider submitting a
           detailed protocol to{' '}
-          <ExternalLink
+          <NativeLink
             href="https://bio-protocol.org/login.aspx?in=2"
             target="_blank"
           >
             Bio-protocol
-          </ExternalLink>
+          </NativeLink>
           .
         </Paragraph>
         <Paragraph>
@@ -202,9 +202,9 @@ const Initial = props => (
 
     <Paragraph>
       When preparing figures, we recommend that authors follow the principles of{' '}
-      <ExternalLink href="http://jfly.iam.u-tokyo.ac.jp/color/" target="_blank">
+      <NativeLink href="http://jfly.iam.u-tokyo.ac.jp/color/" target="_blank">
         Colour Universal Design
-      </ExternalLink>{' '}
+      </NativeLink>{' '}
       (Masataka Okabe and Kei Ito, J*FLY), whereby colour schemes are chosen to
       ensure maximum accessibility for all types of colour vision.
     </Paragraph>
@@ -212,12 +212,12 @@ const Initial = props => (
     <Paragraph>
       When preparing coloured tables, authors should note that we can only
       accomodate schemes as outlined in{' '}
-      <ExternalLink
+      <NativeLink
         href="https://cdn.elifesciences.org/author-guide/tables-colour.pdf?_ga=2.122882312.2069272108.1540132848-2034406101.1537543708"
         target="_blank"
       >
         this guide
-      </ExternalLink>
+      </NativeLink>
       .
     </Paragraph>
 
@@ -246,110 +246,110 @@ const Initial = props => (
         <Paragraph>
           A list of major subject areas is provided from which authors should
           select one or two (choosing from:{' '}
-          <ExternalLink
+          <NativeLink
             href="https://elifesciences.org/about/people/biochemistry-chemical-biology"
             target="_blank"
           >
             Biochemistry
-          </ExternalLink>
+          </NativeLink>
           ,{' '}
-          <ExternalLink
+          <NativeLink
             href="https://elifesciences.org/about/people/structural-biology-molecular-biophysics"
             target="_blank"
           >
             Biophysics & Structural biology
-          </ExternalLink>
+          </NativeLink>
           ,{' '}
-          <ExternalLink
+          <NativeLink
             href="https://elifesciences.org/about/people/cancer-biology"
             target="_blank"
           >
             Cancer Biology
-          </ExternalLink>
+          </NativeLink>
           ,{' '}
-          <ExternalLink
+          <NativeLink
             href="http://elifesciences.org/about/people/cell-biology"
             target="_blank"
           >
             Cell Biology
-          </ExternalLink>
+          </NativeLink>
           ,{' '}
-          <ExternalLink
+          <NativeLink
             href="https://elifesciences.org/about/people/developmental-biology-stem-cells"
             target="_blank"
           >
             Developmental Biology & Stem Cells
-          </ExternalLink>
+          </NativeLink>
           ,{' '}
-          <ExternalLink
+          <NativeLink
             href="https://elifesciences.org/about/people/computational-systems-biology"
             target="_blank"
           >
             Computational & Systems Biology
-          </ExternalLink>
+          </NativeLink>
           ,{' '}
-          <ExternalLink
+          <NativeLink
             href="http://elifesciences.org/about/people/ecology"
             target="_blank"
           >
             Ecology
-          </ExternalLink>
+          </NativeLink>
           ,{' '}
-          <ExternalLink
+          <NativeLink
             href="https://elifesciences.org/about/people/epidemiology-global-health"
             target="_blank"
           >
             Epidemiology & Global Health
-          </ExternalLink>
+          </NativeLink>
           ,{' '}
-          <ExternalLink
+          <NativeLink
             href="https://elifesciences.org/about/people/genes-chromosomes"
             target="_blank"
           >
             Genes & Chromosomes
-          </ExternalLink>
+          </NativeLink>
           ,{' '}
-          <ExternalLink
+          <NativeLink
             href="https://elifesciences.org/about/people/genomics-evolutionary-biology"
             target="_blank"
           >
             Genomics & Evolutionary Biology
-          </ExternalLink>
+          </NativeLink>
           ,{' '}
-          <ExternalLink
+          <NativeLink
             href="https://elifesciences.org/about/people/human-biology-medicine"
             target="_blank"
           >
             Human Biology & Medicine
-          </ExternalLink>
+          </NativeLink>
           ,{' '}
-          <ExternalLink
+          <NativeLink
             href="https://elifesciences.org/about/people/immunology"
             target="_blank"
           >
             Immunology
-          </ExternalLink>
+          </NativeLink>
           ,{' '}
-          <ExternalLink
+          <NativeLink
             href="https://elifesciences.org/about/people/microbiology-infectious-disease"
             target="_blank"
           >
             Microbiology & Infectious Disease
-          </ExternalLink>
+          </NativeLink>
           ,{' '}
-          <ExternalLink
+          <NativeLink
             href="https://elifesciences.org/about/people/neuroscience"
             target="_blank"
           >
             Neuroscience
-          </ExternalLink>
+          </NativeLink>
           ,{' '}
-          <ExternalLink
+          <NativeLink
             href="http://elifesciences.org/about/people/plant-biology"
             target="_blank"
           >
             Plant Biology
-          </ExternalLink>
+          </NativeLink>
           ).
         </Paragraph>
       </li>

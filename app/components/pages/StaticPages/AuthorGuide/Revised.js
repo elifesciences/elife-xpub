@@ -2,7 +2,7 @@ import React from 'react'
 import { H1, H2, H3, Link } from '@pubsweet/ui'
 
 import Paragraph from '../../../ui/atoms/Paragraph'
-import ExternalLink from '../../../ui/atoms/ExternalLink'
+import NativeLink from '../../../ui/atoms/NativeLink'
 
 const Revised = props => (
   <React.Fragment>
@@ -28,12 +28,12 @@ const Revised = props => (
     <Paragraph>
       The text file, with any main tables at the end, should be uploaded as a
       DOCX (or DOC or RTF) file, or as a LaTeX file (ideally using our{' '}
-      <ExternalLink
+      <NativeLink
         href="https://cdn.elifesciences.org/author-guide/elife-latex-template.zip"
         target="_blank"
       >
         LaTeX template
-      </ExternalLink>
+      </NativeLink>
       ). The uploaded Article File should include tracked changes indicating the
       revisions made, ideally using the tracked changes function in Word. (If
       you prefer to indicate textual changes in another way, for example with
@@ -70,23 +70,23 @@ const Revised = props => (
       resubmission. This is designed to highlight genetically modified organisms
       and strains, cell lines, reagents, and software that are essential to
       reproduce the results presented. Please download and complete{' '}
-      <ExternalLink
+      <NativeLink
         href="https://cdn.elifesciences.org/author-guide/key_resources_table.xlsx"
         target="_blank"
       >
         this template
-      </ExternalLink>{' '}
+      </NativeLink>{' '}
       for the Key Resources Table to ensure consistency. The template is a
       resource developed by FlyBase with input from other model organism
       databases, and it includes notes on completion and an example table. The
       completed Key Resources Table should be incorporated within your article
       file at the very beginning of the Materials and Methods section (
-      <ExternalLink
+      <NativeLink
         href="https://elifesciences.org/articles/32586#s4"
         target="_blank"
       >
         example in published article available here
-      </ExternalLink>
+      </NativeLink>
       ).
     </Paragraph>
 

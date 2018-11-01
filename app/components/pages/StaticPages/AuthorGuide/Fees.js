@@ -2,7 +2,7 @@ import React from 'react'
 import { H1, H2, H3, Link } from '@pubsweet/ui'
 
 import Paragraph from '../../../ui/atoms/Paragraph'
-import ExternalLink from '../../../ui/atoms/ExternalLink'
+import NativeLink from '../../../ui/atoms/NativeLink'
 import List from '../../../ui/atoms/List'
 
 const Fees = props => (
@@ -38,28 +38,28 @@ const Fees = props => (
 
     <List.Unordered>
       <li>
-        <ExternalLink
+        <NativeLink
           href="https://elifesciences.org/elife-news/inside-elife-setting-fee-publication"
           target="_blank"
         >
           Inside eLife: Setting a fee for publication
-        </ExternalLink>
+        </NativeLink>
       </li>
       <li>
-        <ExternalLink
+        <NativeLink
           href="https://elifesciences.org/content/5/e21230"
           target="_blank"
         >
           Editorial: Building a sustainable future for eLife
-        </ExternalLink>
+        </NativeLink>
       </li>
       <li>
-        <ExternalLink
+        <NativeLink
           href="https://elifesciences.org/elife-news/inside-elife-what-it-costs-publish"
           target="_blank"
         >
           Inside eLife: What it costs to publish
-        </ExternalLink>
+        </NativeLink>
       </li>
     </List.Unordered>
 
@@ -77,12 +77,12 @@ const Fees = props => (
 
     <Paragraph>
       A detailed overview of how we arrived at the fee is available at:{' '}
-      <ExternalLink
+      <NativeLink
         href="https://elifesciences.org/elife-news/inside-elife-setting-fee-publication"
         target="_blank"
       >
         Inside eLife: Setting a fee for publication
-      </ExternalLink>
+      </NativeLink>
       .
     </Paragraph>
 
@@ -211,9 +211,9 @@ const Fees = props => (
 
     <Paragraph>
       Any questions not addressed here may be sent to eLife via{' '}
-      <ExternalLink href="mailto:fees@elifesciences.org" target="_blank">
+      <NativeLink href="mailto:fees@elifesciences.org" target="_blank">
         fees [at] elifesciences [dot] org
-      </ExternalLink>
+      </NativeLink>
     </Paragraph>
 
     <H2 id="waiver">eLife publication fee waiver policy (December 2016)</H2>
