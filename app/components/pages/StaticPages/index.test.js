@@ -1,6 +1,9 @@
 import React from 'react'
 import { mount } from 'enzyme'
-import { NavLink, MemoryRouter } from 'react-router-dom'
+import { MemoryRouter, NavLink, Route } from 'react-router-dom'
+import { ThemeProvider } from 'styled-components'
+import theme from '@elifesciences/elife-theme'
+
 import StaticPage from '.'
 
 const navList = [
@@ -29,9 +32,13 @@ const navList = [
 
 const makeWrapper = ({ path }) =>
   mount(
-    <MemoryRouter initialEntries={[`${path}`]}>
-      <StaticPage navList={navList} />
-    </MemoryRouter>,
+    <ThemeProvider theme={theme}>
+      <MemoryRouter initialEntries={[`${path}`]}>
+        <Route
+          render={history => <StaticPage history={history} navList={navList} />}
+        />
+      </MemoryRouter>
+    </ThemeProvider>,
   )
 
 const MockContentComponent = ({ dataTestId }) => (
