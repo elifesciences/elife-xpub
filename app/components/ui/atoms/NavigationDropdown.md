@@ -8,7 +8,7 @@ let selectedOption = options[0]
 const handleSelection = selectedItem => (selectedOption = selectedItem)
 ;<NavigationDropdown
   options={options}
-  initialValue={selectedOption.value}
+  value={selectedOption.value}
   onSelection={handleSelection}
 />
 ```

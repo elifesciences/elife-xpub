@@ -26,12 +26,12 @@ const StaticPage = ({ history, navList }) => (
     <ErrorBoundary>
       <TopNavContainer>
         <NavigationDropdown
-          initialValue={history.location.pathname}
           onSelection={item => history.push(item.value)}
           options={navList.map(navItem => ({
             label: navItem.label,
             value: navItem.link,
           }))}
+          value={history.location.pathname}
         />
       </TopNavContainer>
 
