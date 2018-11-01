@@ -18,7 +18,7 @@ const defaultProps = {
   userMenuItems: [{ label: 'Dashboard', link: '/' }],
 }
 
-const mockUserrData = {
+const mockUserData = {
   data: {
     currentUser: {
       id: '111',
@@ -71,7 +71,7 @@ describe('AppBar', () => {
   })
 
   it('Receives both default and user menu items when user object passed', async () => {
-    const wrapper = makeWrapper(defaultProps, currentUserMock(mockUserrData))
+    const wrapper = makeWrapper(defaultProps, currentUserMock(mockUserData))
 
     await new Promise(resolve => {
       setTimeout(resolve, 0)

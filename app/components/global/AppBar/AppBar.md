@@ -21,6 +21,17 @@ When a user is logged in:
     { label: 'Reviewer guide', link: '/reviewer-guide' },
     { label: 'Contact us', link: '/contact-us' },
   ]}
-  user="anyone"
+  user={{
+    id: '111',
+    identities: [
+      {
+        name: 'Joe Bloggs',
+        meta: {
+          firstName: 'Joe',
+          lastName: 'Bloggs',
+        },
+      },
+    ],
+  }}
 />
 ```
