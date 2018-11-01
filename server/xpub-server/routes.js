@@ -7,7 +7,7 @@ const FILE_HEALTH_CHECK = 'healthcheck-file'
 const DATABASE_ERROR = 'Database Error'
 const S3_CONNECTION_ERROR = 'S3 Connection Error'
 const DEFAULT_ERROR = 'Internal Server Error'
-const SUCCESFULL_RESPONSE = 'pong'
+const SUCCESFUL_RESPONSE = 'pong'
 const S3_API_VERSION = '2006-03-01'
 
 const nocache = (req, res, next) => {
@@ -29,7 +29,7 @@ module.exports = app => {
   app.get('/ping', nocache, async (req, res) => {
     const errors = []
     let statusCode = 200
-    let body = SUCCESFULL_RESPONSE
+    let body = SUCCESFUL_RESPONSE
     let response
     try {
       response = await Promise.all([
