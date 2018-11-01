@@ -12,6 +12,8 @@ const SideNavLink = styled(NavLink)`
   &:first-child {
     padding-top: 0;
   }
+  font-size: ${th('fontSizeBaseSmall')};
+  line-height: ${th('lineHeightBaseSmall')};
 `
 
 const SideNav = ({ navList }) => (
