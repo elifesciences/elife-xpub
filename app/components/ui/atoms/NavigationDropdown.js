@@ -32,8 +32,7 @@ class NavigationDropdown extends React.Component {
         color: isSelected
           ? this.props.theme.colorText
           : this.props.theme.colorTextSecondary,
-        paddingTop: this.props.theme.space[3],
-        paddingBottom: this.props.theme.space[3],
+        padding: this.props.theme.space[3],
       }),
       control: (base, { isFocused }) => ({
         ...base,
@@ -58,6 +57,9 @@ class NavigationDropdown extends React.Component {
           marginLeft: this.props.theme.space[2],
         },
       }),
+      valueContainer: (base, state) => ({
+        paddingLeft: this.props.theme.space[3],
+      }),
     }
   }
 
@@ -79,6 +81,7 @@ class NavigationDropdown extends React.Component {
         getOptionValue={({ value }) => value}
         isSearchable={false}
         maxMenuHeight={1200} // longer than any phone screen
+        menuShouldScrollIntoView={false}
         onChange={this.handleSelection}
         options={options}
         placeholder=""
