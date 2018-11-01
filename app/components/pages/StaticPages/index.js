@@ -7,7 +7,7 @@ import { th } from '@pubsweet/ui-toolkit'
 
 import ErrorBoundary from '../../global/ErrorBoundary'
 import media from '../../global/layout/media'
-import NavLink from '../../ui/atoms/NavLink'
+import SideNav from './SideNav'
 
 const TopNavContainer = styled.div`
   margin-bottom: ${th('space.3')};
@@ -18,14 +18,6 @@ const SideNavContainer = styled(Box)`
   ${media.tabletPortraitUp`display: block;`};
 `
 const MainContainer = styled(Box)``
-
-const SideNavLink = styled(NavLink)`
-  display: block;
-  padding: ${th('space.1')} 0 ${th('space.1')} 0;
-  &:first-child {
-    padding-top: 0;
-  }
-`
 
 const StaticPage = ({ navList }) => (
   <div>
@@ -39,18 +31,7 @@ const StaticPage = ({ navList }) => (
           pt={18} // To match the top padding on the H1 in the 'main' component
           width={[0, 0, 3 / 12, 2 / 12, 2 / 12]}
         >
-          <Box is="nav">
-            {navList &&
-              navList.map(navItem => (
-                <SideNavLink
-                  data-test-id={navItem.link}
-                  key={navItem.link}
-                  to={navItem.link}
-                >
-                  {navItem.label}
-                </SideNavLink>
-              ))}
-          </Box>
+          <SideNav navList={navList} />
         </SideNavContainer>
 
         <MainContainer
