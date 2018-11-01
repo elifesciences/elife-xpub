@@ -29,6 +29,13 @@ const dashboardDateText = date => {
   return `${diffDays} ${diffDays === 1 ? 'day' : 'days'} ago`
 }
 
+const mapColor = statusCode =>
+  ({
+    CONTINUE_SUBMISSION: 'colorText',
+    SUBMITTED: 'colorTextSecondary',
+    REJECTED: 'colorError',
+  }[statusCode])
+
 const Root = styled(Flex)`
   flex-direction: column;
   border-bottom: ${th('borderWidth')} ${th('borderStyle')} ${th('colorBorder')};
@@ -42,6 +49,7 @@ const Root = styled(Flex)`
 `
 
 const TitleBox = styled(Box)`
+  color: ${props => props.theme[props.color]};
   font-weight: bold;
   text-align: left;
   flex-grow: 1;
@@ -71,7 +79,11 @@ const DashboardListItem = ({ manuscript }) => {
   const date = new Date(manuscript.created)
   return (
     <Root py={3}>
-      <TitleBox data-test-id="title" mb={3}>
+      <TitleBox
+        color={mapColor(manuscript.clientStatus)}
+        data-test-id="title"
+        mb={3}
+      >
         {manuscript.meta.title || '(Untitled)'}
       </TitleBox>
       <ManuscriptStatus statusCode={manuscript.clientStatus} />
