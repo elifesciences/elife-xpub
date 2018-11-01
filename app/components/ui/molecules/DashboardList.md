@@ -15,7 +15,7 @@ Dashboard list of submissions
     {
       meta: {},
       created: '2018-10-09T16:10:00.000Z',
-      clientStatus: 'CONTINUE_SUBMISION',
+      clientStatus: 'CONTINUE_SUBMISSION',
       id: '2',
     },
   ]}

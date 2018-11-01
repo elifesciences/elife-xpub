@@ -3,7 +3,7 @@ List item in the dashboard. It shows the manuscript title, submission status & t
 ```js
 const manuscript = {
   created: '2018-10-25T14:53:29.857Z',
-  clientStatus: 'CONTINUE_SUBMISION',
+  clientStatus: 'CONTINUE_SUBMISSION',
   meta: {
     title:
       'Shearing in flow environment promotes evolution of social behaviour in microbial populations',
