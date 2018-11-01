@@ -142,10 +142,12 @@ styleguide:
     GIT_STRATEGY: none
     NODE_ENV: production
     NODE_CONFIG_ENV: styleguide
+    S3_BUCKET: ci-elife-xpub-styleguide
   script:
     - cd ${HOME}
     - npm run build:styleguide
     - node scripts/upload-to-s3.js _build_styleguide $CI_COMMIT_REF_NAME
+    - printf "\nStyleguide: https://s3.amazonaws.com/$S3_BUCKET/$CI_COMMIT_REF_NAME/index.html\n"
 
 review:
   image: pubsweet/deployer:latest
