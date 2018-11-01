@@ -3,9 +3,8 @@ const config = require('config')
 const { dbExists } = require('@pubsweet/db-manager')
 const AWS = require('aws-sdk')
 
-const FILE_HEALTH_CHECK = 'healthcheck-file'
 const DATABASE_ERROR = 'Database Error'
-const S3_CONNECTION_ERROR = 'S3 Connection Error'
+const S3_ERROR = 'S3 Error'
 const DEFAULT_ERROR = 'Internal Server Error'
 const SUCCESFUL_RESPONSE = 'pong'
 const S3_API_VERSION = '2006-03-01'
@@ -25,26 +24,50 @@ const s3 = new AWS.S3({
 
 let lastHealthStatus = null
 
+const checkS3 = () =>
+  new Promise(resolve => {
+    s3.listObjects({}, (err, response) => {
+      if (err) {
+        resolve(err)
+      } else {
+        resolve(response)
+      }
+    })
+  })
+
+const checkDataBase = () =>
+  new Promise(resolve => {
+    dbExists()
+      .then(response => resolve(response))
+      .catch(error => resolve(error))
+  })
+
 module.exports = app => {
   app.get('/ping', nocache, async (req, res) => {
     const errors = []
     let statusCode = 200
     let body = SUCCESFUL_RESPONSE
-    let response
+    let dbResponse
+    let s3Response
     try {
-      response = await Promise.all([
-        dbExists(),
-        s3.getObject({ Key: FILE_HEALTH_CHECK }).promise(),
+      ;[dbResponse, s3Response] = await Promise.all([
+        checkDataBase(),
+        checkS3(),
       ])
     } catch (error) {
       logger.error(`HealthCheckError: ${error}`)
       res.status(500).send(DEFAULT_ERROR)
     }
-    if (!response[0] || response[0] <= 0) {
+    if (!dbResponse || dbResponse <= 0 || dbResponse instanceof Error) {
       errors.push(DATABASE_ERROR)
     }
-    if (!response[1] || !response[1].Body) {
-      errors.push(S3_CONNECTION_ERROR)
+    if (
+      !s3Response ||
+      !s3Response.Contents ||
+      s3Response.Contents === 0 ||
+      s3Response instanceof Error
+    ) {
+      errors.push(S3_ERROR)
     }
 
     const thisHealthStatus = errors.length === 0
