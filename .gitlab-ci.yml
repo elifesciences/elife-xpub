@@ -131,20 +131,6 @@ push:latest:
   only:
     - develop
 
-pages-s3:
-  image: $IMAGE_ORG/$IMAGE_NAME:$CI_COMMIT_SHA
-  stage: review
-  tags:
-    - elife-kubernetes-runner
-  except:
-    - schedules
-  variables:
-    GIT_STRATEGY: none
-  script:
-    - cd ${HOME}
-    - npm run build:styleguide
-    - node scripts/upload-to-s3.js _build_styleguide $CI_COMMIT_REF_NAME
-
 pages:
   image: $IMAGE_ORG/$IMAGE_NAME:$CI_COMMIT_SHA
   stage: review
@@ -154,15 +140,12 @@ pages:
     - schedules
   variables:
     GIT_STRATEGY: none
+    NODE_ENV: production
+    NODE_CONFIG_ENV: styleguide
   script:
     - cd ${HOME}
     - npm run build:styleguide
-    - cp -r _build_styleguide $CI_PROJECT_DIR/public
-  artifacts:
-    paths:
-    - public
-  only:
-    - develop
+    - node scripts/upload-to-s3.js _build_styleguide $CI_COMMIT_REF_NAME
 
 review:
   image: pubsweet/deployer:latest
