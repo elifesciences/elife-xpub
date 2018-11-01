@@ -42,7 +42,7 @@ class NavigationDropdown extends React.Component {
         '::after': {
           content: `''`,
           display: `inline-block`,
-          verticalAlign: state.selectProps.menuIsOpen ? `text-top` : `middle`,
+          verticalAlign: state.selectProps.menuIsOpen ? `super` : `middle`,
           border: `4px solid transparent`,
           borderTopColor: state.selectProps.menuIsOpen
             ? 'none'
