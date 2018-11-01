@@ -131,7 +131,7 @@ push:latest:
   only:
     - develop
 
-pages:
+styleguide:
   image: $IMAGE_ORG/$IMAGE_NAME:$CI_COMMIT_SHA
   stage: review
   tags:
