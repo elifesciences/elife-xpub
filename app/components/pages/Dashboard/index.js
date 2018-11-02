@@ -7,7 +7,7 @@ import { th } from '@pubsweet/ui-toolkit'
 import { CREATE_MANUSCRIPT } from '../SubmissionWizard/operations'
 import media from '../../global/layout/media'
 import SmallParagraph from '../../ui/atoms/SmallParagraph'
-import ExternalLink from '../../ui/atoms/ExternalLink'
+import NativeLink from '../../ui/atoms/NativeLink'
 import StickyFooter from '../../ui/atoms/StickyFooter'
 import Tabs from '../../ui/molecules/Tabs'
 import Submissions from './panels/Submissions'
@@ -69,9 +69,9 @@ const DashboardPage = ({ history }) => (
 
           <CenterdSmallParagraph>
             Can&#39;t find a submission? You might find it in our full{' '}
-            <ExternalLink href="https://submit.elifesciences.org">
+            <NativeLink href="https://submit.elifesciences.org">
               peer review and submissions
-            </ExternalLink>{' '}
+            </NativeLink>{' '}
             system
           </CenterdSmallParagraph>
         </Box>

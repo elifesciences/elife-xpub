@@ -3,7 +3,7 @@ import { H1, H2, H3, Link } from '@pubsweet/ui'
 
 import Paragraph from '../../../ui/atoms/Paragraph'
 import CalloutTextBox from '../../../ui/atoms/CalloutTextBox'
-import ExternalLink from '../../../ui/atoms/ExternalLink'
+import NativeLink from '../../../ui/atoms/NativeLink'
 import List from '../../../ui/atoms/List'
 
 const EditorialProcess = props => (
@@ -12,12 +12,12 @@ const EditorialProcess = props => (
 
     <Paragraph>
       eLife publishes{' '}
-      <ExternalLink
+      <NativeLink
         href="https://elifesciences.org/elife-news/what-are-elife-papers-made-of"
         target="_blank"
       >
         promising research
-      </ExternalLink>{' '}
+      </NativeLink>{' '}
       across the life sciences and biomedicine. Before you submit your work,
       please note that eLife is a very selective journal that aims to publish
       work of the highest scientific standards and importance. Leading academic
@@ -30,59 +30,59 @@ const EditorialProcess = props => (
       To help increase the accessibility of research and ensure that it is
       communicated as rapidly as possible, authors are encouraged to make use of
       preprint servers, such as{' '}
-      <ExternalLink href="http://biorxiv.org/" target="_blank">
+      <NativeLink href="http://biorxiv.org/" target="_blank">
         bioRxiv
-      </ExternalLink>{' '}
+      </NativeLink>{' '}
       or
-      <ExternalLink href="https://www.authorea.com/" target="_blank">
+      <NativeLink href="https://www.authorea.com/" target="_blank">
         Authorea
-      </ExternalLink>
+      </NativeLink>
       , while their paper is under consideration by eLife. The advantages of
       depositing early versions of an article are summarised on the{' '}
-      <ExternalLink
+      <NativeLink
         href="https://elifesciences.org/elife-news/what-are-elife-papers-made-of"
         target="_blank"
       >
         ASAPbio
-      </ExternalLink>{' '}
+      </NativeLink>{' '}
       website. Authors can upload a preprint to{' '}
-      <ExternalLink href="http://biorxiv.org/" target="_blank">
+      <NativeLink href="http://biorxiv.org/" target="_blank">
         bioRxiv
-      </ExternalLink>{' '}
+      </NativeLink>{' '}
       or
-      <ExternalLink href="https://www.authorea.com/" target="_blank">
+      <NativeLink href="https://www.authorea.com/" target="_blank">
         Authorea
-      </ExternalLink>{' '}
+      </NativeLink>{' '}
       and then transfer their files for consideration by eLife.
     </Paragraph>
 
     <Paragraph>
       Alternatively, authors can submit to eLife directly, or they can submit
       using the{' '}
-      <ExternalLink
+      <NativeLink
         href="https://www.overleaf.com/latex/templates/elife-latex-template/csqxykvsnyxm#.WIs5NLaLRGw"
         target="_blank"
       >
         Overleaf
-      </ExternalLink>{' '}
+      </NativeLink>{' '}
       or{' '}
-      <ExternalLink href="https://www.authorea.com/" target="_blank">
+      <NativeLink href="https://www.authorea.com/" target="_blank">
         Authorea
-      </ExternalLink>{' '}
+      </NativeLink>{' '}
       authorship tools. Authors working in LaTeX can download and use our{' '}
-      <ExternalLink
+      <NativeLink
         href="https://elife-cdn.s3.amazonaws.com/author-guide/elife-latex-template.zip"
         target="_blank"
       >
         template
-      </ExternalLink>{' '}
+      </NativeLink>{' '}
       or{' '}
-      <ExternalLink
+      <NativeLink
         href="https://www.overleaf.com/latex/templates/elife-latex-template/csqxykvsnyxm"
         target="_blank"
       >
         open it directly in Overleaf
-      </ExternalLink>{' '}
+      </NativeLink>{' '}
       .
     </Paragraph>
 
@@ -91,14 +91,14 @@ const EditorialProcess = props => (
       possible, and we offer &quot;scoop protection&quot; in the sense that, if
       other researchers publish similar findings after submission, this will not
       be a reason for rejection. Please see{' '}
-      <ExternalLink
+      <NativeLink
         href="https://elifesciences.org/articles/30076"
         target="_blank"
       >
         this editorial
-      </ExternalLink>{' '}
-      and <Link to="#scoop_protection">the FAQ</Link> below for more details on
-      our policies on preprints and scoop protection.
+      </NativeLink>{' '}
+      and <NativeLink href="#scoop_protection">the FAQ</NativeLink> below for
+      more details on our policies on preprints and scoop protection.
     </Paragraph>
 
     <CalloutTextBox>
@@ -129,12 +129,12 @@ const EditorialProcess = props => (
       guidelines relating to{' '}
       <Link to="/author-guide/initial">Initial Submissions</Link>. During the
       initial submission phase, members of eLife’s{' '}
-      <ExternalLink
+      <NativeLink
         href="https://elifesciences.org/about/people?_ga=2.223585432.2069272108.1540132848-2034406101.1537543708"
         target="_blank"
       >
         senior editorial team
-      </ExternalLink>{' '}
+      </NativeLink>{' '}
       rapidly assess new submissions, often in consultation with members of the
       Board of Reviewing Editors or with external guest editors where necessary,
       to identify the ones that are appropriate for in-depth peer review.
@@ -162,19 +162,19 @@ const EditorialProcess = props => (
       for example names of co-authors, details of major datasets, and ethics
       statements. Authors are asked to agree to publish their work under the
       terms of the Creative Commons Attribution license (
-      <ExternalLink
+      <NativeLink
         href="https://cdn.elifesciences.org/xpub/guides/CCBY_4.0.pdf"
         target="_blank"
       >
         PDF of the agreement
-      </ExternalLink>
+      </NativeLink>
       ), or the Creative Commons CC0 public domain dedication (
-      <ExternalLink
+      <NativeLink
         href="https://cdn.elifesciences.org/xpub/guides/CC0_1.0.pdf"
         target="_blank"
       >
         PDF of the agreement
-      </ExternalLink>
+      </NativeLink>
       ) if one or more authors are US-government employees.
     </Paragraph>
 
@@ -184,12 +184,12 @@ const EditorialProcess = props => (
       in the decision letter. A response to minor comments is optional. In the
       event of acceptance, the substantive revision requests and the authors’
       response will be published, under the terms of the{' '}
-      <ExternalLink
+      <NativeLink
         href="http://creativecommons.org/licenses/by/4.0/"
         target="_blank"
       >
         Creative Commons Attribution license
-      </ExternalLink>
+      </NativeLink>
       .
     </Paragraph>
 
@@ -217,19 +217,19 @@ const EditorialProcess = props => (
       case-by-case basis. However, eLife does not subscribe to a
       &apos;winner-takes-all&apos; philosophy, and does not automatically reject
       papers because they are not &apos;first&apos; (please see{' '}
-      <ExternalLink
+      <NativeLink
         href="https://elifesciences.org/articles/05770?_ga=2.156477752.2069272108.1540132848-2034406101.1537543708"
         target="_blank"
       >
         Malhotra and Marder, 2015
-      </ExternalLink>{' '}
+      </NativeLink>{' '}
       and{' '}
-      <ExternalLink
+      <NativeLink
         href="https://elifesciences.org/articles/30076"
         target="_blank"
       >
         Marder, 2017
-      </ExternalLink>
+      </NativeLink>
       ).
     </Paragraph>
 
