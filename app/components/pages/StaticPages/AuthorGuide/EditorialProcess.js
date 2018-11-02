@@ -107,7 +107,7 @@ const EditorialProcess = props => (
         $2,500* is collected for all published papers submitted on or after this
         date; however, authors with insufficient funding to pay the fee are
         eligible for a fee waiver (
-        <Link to="/author-guide/fees">read more</Link>
+        <NativeLink href="/author-guide/fees#">read more</NativeLink>
         ).
       </Paragraph>
     </CalloutTextBox>
