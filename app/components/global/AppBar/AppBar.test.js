@@ -34,17 +34,17 @@ describe('AppBar', () => {
   })
 
   it('correctly creates AppBarLinks from menuItems prop', () => {
-    const menuConfig = [
+    const menuItems = [
       { label: 'a', link: '/a' },
       { label: 'b', link: '/b' },
       { label: 'c', link: '/c' },
     ]
-    const wrapper = makeWrapper({ user: {}, menuItems: menuConfig })
+    const wrapper = makeWrapper({ user: {}, menuItems })
 
-    menuConfig.forEach((config, index) => {
+    menuItems.forEach((item, index) => {
       const link = wrapper.find(AppBarLink).at(index)
-      expect(link.props().to).toEqual(config.link)
-      expect(link.props().children).toEqual(config.label)
+      expect(link.props().to).toEqual(item.link)
+      expect(link.props().children).toEqual(item.label)
     })
   })
 })

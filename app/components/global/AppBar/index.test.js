@@ -67,7 +67,9 @@ describe('AppBarWrapper', () => {
       setTimeout(resolve, 0)
     })
     wrapper.update()
-    expect(wrapper.find(AppBar).props().menuItems).toHaveLength(3)
+    expect(wrapper.find(AppBar).props().menuItems).toHaveLength(
+      defaultProps.defaultMenuItems.length,
+    )
   })
 
   it('Receives both default and user menu items when user object passed', async () => {
@@ -77,6 +79,8 @@ describe('AppBarWrapper', () => {
       setTimeout(resolve, 0)
     })
     wrapper.update()
-    expect(wrapper.find(AppBar).props().menuItems).toHaveLength(4)
+    expect(wrapper.find(AppBar).props().menuItems).toHaveLength(
+      defaultProps.defaultMenuItems.length + defaultProps.userMenuItems.length,
+    )
   })
 })
