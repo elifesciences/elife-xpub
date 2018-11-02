@@ -38,7 +38,7 @@ export default css`
   padding: ${th('space.2')};
   min-width: calc(${th('gridUnit')} * 28);
   text-transform: uppercase;
-  font-family: ${th('fontHeading')};
+  font-family: ${props => (props.to ? th('fontHeading') : th('fontInterface'))};
   font-weight: 400;
 
   ${props => props.small && small};
