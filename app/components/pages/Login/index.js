@@ -75,7 +75,7 @@ class LoginPage extends React.Component {
     }
 
     return (
-      <Box mt="calc(100px + 50vh - 300px)" mx="auto" width={[1, 410]}>
+      <Box mx="auto" width={[1, 410]}>
         {/* roughly centre the box vertically */}
         <Box mb={4}>
           <H2>
