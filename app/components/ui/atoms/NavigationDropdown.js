@@ -7,10 +7,6 @@ class NavigationDropdown extends React.Component {
   constructor(props) {
     super(props)
 
-    this.state = {
-      selectedValue: this.props.initialValue,
-    }
-
     this.customReactSelectStyles = {
       menuList: (base, state) => ({
         ...base,
@@ -32,8 +28,7 @@ class NavigationDropdown extends React.Component {
         color: isSelected
           ? this.props.theme.colorText
           : this.props.theme.colorTextSecondary,
-        paddingTop: this.props.theme.space[3],
-        paddingBottom: this.props.theme.space[3],
+        padding: this.props.theme.space[3],
       }),
       control: (base, { isFocused }) => ({
         ...base,
@@ -47,7 +42,7 @@ class NavigationDropdown extends React.Component {
         '::after': {
           content: `''`,
           display: `inline-block`,
-          verticalAlign: state.selectProps.menuIsOpen ? `text-top` : `middle`,
+          verticalAlign: state.selectProps.menuIsOpen ? `super` : `middle`,
           border: `4px solid transparent`,
           borderTopColor: state.selectProps.menuIsOpen
             ? 'none'
@@ -58,16 +53,14 @@ class NavigationDropdown extends React.Component {
           marginLeft: this.props.theme.space[2],
         },
       }),
+      valueContainer: (base, state) => ({
+        paddingLeft: this.props.theme.space[3],
+      }),
     }
   }
 
-  handleSelection = selectedOption => {
-    this.setState({ selectedValue: selectedOption.value })
-    this.props.onSelection(selectedOption)
-  }
-
   render() {
-    const { options } = this.props
+    const { options, onSelection, value } = this.props
 
     return (
       <Select
@@ -75,17 +68,16 @@ class NavigationDropdown extends React.Component {
           IndicatorSeparator: null,
           DropdownIndicator: null,
         }}
-        getOptionLabel={({ label }) => label}
-        getOptionValue={({ value }) => value}
+        getOptionLabel={option => option.label}
+        getOptionValue={option => option.value}
         isSearchable={false}
         maxMenuHeight={1200} // longer than any phone screen
-        onChange={this.handleSelection}
+        menuShouldScrollIntoView={false}
+        onChange={onSelection}
         options={options}
         placeholder=""
         styles={this.customReactSelectStyles}
-        value={options.filter(
-          ({ value }) => value === this.state.selectedValue,
-        )}
+        value={options.filter(option => option.value === value)}
       />
     )
   }
@@ -98,7 +90,7 @@ NavigationDropdown.propTypes = {
       value: PropTypes.string.isRequired,
     }),
   ).isRequired,
-  initialValue: PropTypes.string.isRequired,
+  value: PropTypes.string.isRequired,
   onSelection: PropTypes.func.isRequired,
 }
 
