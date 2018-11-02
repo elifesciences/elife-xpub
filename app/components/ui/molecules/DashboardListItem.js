@@ -1,32 +1,41 @@
 import React from 'react'
 import styled from 'styled-components'
 import { Flex, Box } from 'grid-styled'
-import {
-  differenceInCalendarDays,
-  differenceInCalendarMonths,
-  format,
-} from 'date-fns'
+import { differenceInCalendarDays, format } from 'date-fns'
 import { th } from '@pubsweet/ui-toolkit'
 import PropTypes from 'prop-types'
 import ManuscriptStatus from '../atoms/ManuscriptStatus'
 import media from '../../global/layout/media'
 
-const dashboardDateText = date => {
+export const dashboardDateText = date => {
   const diffDays = differenceInCalendarDays(new Date(), date)
-  const diffMonths = differenceInCalendarMonths(new Date(), date)
-  if (diffDays < 0) {
+  if (diffDays < 0 || Number.isNaN(diffDays)) {
     return 'Invalid date'
   }
+
   if (diffDays === 0) {
     return 'Today'
   }
+
   if (diffDays === 1) {
     return 'Yesterday'
   }
-  if (diffMonths > 0) {
+
+  if (diffDays < 14) {
+    return `${diffDays} ${diffDays === 1 ? 'day' : 'days'} ago`
+  }
+
+  if (diffDays < 30) {
+    const diffWeeks = Math.round(diffDays / 7)
+    return `${diffWeeks} ${diffWeeks === 1 ? 'week' : 'weeks'} ago`
+  }
+
+  if (diffDays < 730) {
+    const diffMonths = Math.round(diffDays / 30)
     return `${diffMonths} ${diffMonths === 1 ? 'month' : 'months'} ago`
   }
-  return `${diffDays} ${diffDays === 1 ? 'day' : 'days'} ago`
+  const diffYears = Math.round(diffDays / 365)
+  return `${diffYears} ${diffYears === 1 ? 'year' : 'years'} ago`
 }
 
 const mapColor = statusCode =>
