@@ -1,5 +1,5 @@
 import React from 'react'
-import { H1, H2, H3, Link } from '@pubsweet/ui'
+import { H1, H2, H3 } from '@pubsweet/ui'
 
 import Paragraph from '../../../ui/atoms/Paragraph'
 import CalloutTextBox from '../../../ui/atoms/CalloutTextBox'
@@ -115,11 +115,11 @@ const EditorialProcess = props => (
     <Paragraph>
       The eLife editorial process broadly occurs in three phases. Authors
       submitting to eLife should be familiar with our journal{' '}
-      <Link to="/author-guide/journal-policies">policies</Link>. If you have
-      received an encouraging response to your initial submission, please review
-      the guidelines relating to full submissions. If your full submission has
-      been peer reviewed and you have been asked to make revisions, please
-      review our guidelines for revised submissions.
+      <NativeLink href="/author-guide/journal-policies#">policies</NativeLink>.
+      If you have received an encouraging response to your initial submission,
+      please review the guidelines relating to full submissions. If your full
+      submission has been peer reviewed and you have been asked to make
+      revisions, please review our guidelines for revised submissions.
     </Paragraph>
 
     <H2>Initial Submissions</H2>
@@ -127,8 +127,8 @@ const EditorialProcess = props => (
     <Paragraph>
       If you are interested in submitting your work to eLife, please review the
       guidelines relating to{' '}
-      <Link to="/author-guide/initial">Initial Submissions</Link>. During the
-      initial submission phase, members of eLife’s{' '}
+      <NativeLink href="/author-guide/initial#">Initial Submissions</NativeLink>
+      . During the initial submission phase, members of eLife’s{' '}
       <NativeLink
         href="https://elifesciences.org/about/people?_ga=2.223585432.2069272108.1540132848-2034406101.1537543708"
         target="_blank"
@@ -311,7 +311,7 @@ const EditorialProcess = props => (
 
     <CalloutTextBox>
       Authors can submit their research as one of several{' '}
-      <Link to="/author-guide/types">article types</Link>.
+      <NativeLink href="/author-guide/types#">article types</NativeLink>.
     </CalloutTextBox>
   </React.Fragment>
 )
