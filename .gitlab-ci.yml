@@ -13,9 +13,7 @@ stages:
   - build
   - test
   - review
-  - staging
-  - production
-  - demo
+  - deploy
 
 build:
   image: docker:latest
@@ -116,7 +114,7 @@ test:dependencies:
 
 push:latest:
   image: docker:latest
-  stage: staging
+  stage: deploy
   tags:
     - elife-kubernetes-runner
   except:
@@ -133,7 +131,7 @@ push:latest:
 
 styleguide:
   image: $IMAGE_ORG/$IMAGE_NAME:$CI_COMMIT_SHA
-  stage: review
+  stage: deploy
   tags:
     - elife-kubernetes-runner
   except:
@@ -192,43 +190,6 @@ stop_review:
     - source deploy.sh
     - delete_deployment
     - delete_objects_in_environment pvc
-
-staging:
-  image: pubsweet/deployer:latest
-  stage: staging
-  tags:
-    - elife-kubernetes-runner
-  except:
-    - schedules
-  variables:
-    PACKAGE_NAME: xpub-elife
-    REQUIRES_PROVISIONING: "yes"
-  environment:
-    name: xpub-elife-staging
-    url: "https://${CI_ENVIRONMENT_SLUG}.${BASE_DOMAIN}"
-  only:
-  - develop
-  script:
-    - source deploy.sh
-    - create_deployment
-
-demo:
-  image: pubsweet/deployer:latest
-  stage: demo
-  tags:
-    - elife-kubernetes-runner
-  except:
-    - schedules
-  variables:
-    PACKAGE_NAME: xpub-elife
-    REQUIRES_PROVISIONING: "yes"
-  environment:
-    name: xpub-elife-demo
-    url: "https://${CI_ENVIRONMENT_SLUG}.${BASE_DOMAIN}"
-  when: manual
-  script:
-    - source deploy.sh
-    - create_deployment
 
 scale-cluster:
   image: pubsweet/kubernetes:latest
