@@ -77,11 +77,6 @@ AppBar.propTypes = {
       link: PropTypes.string.isRequired,
     }),
   ).isRequired,
-  user: PropTypes.shape({}),
-}
-
-AppBar.defaultProps = {
-  user: null,
 }
 
 export default AppBar
