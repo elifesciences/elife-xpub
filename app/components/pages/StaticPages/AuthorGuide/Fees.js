@@ -1,5 +1,5 @@
 import React from 'react'
-import { H1, H2, H3, Link } from '@pubsweet/ui'
+import { H1, H2, H3 } from '@pubsweet/ui'
 
 import Paragraph from '../../../ui/atoms/Paragraph'
 import NativeLink from '../../../ui/atoms/NativeLink'
@@ -91,9 +91,10 @@ const Fees = props => (
     <Paragraph>
       It is very important that our introduction of a publication fee does not
       inhibit the submission of excellent work from labs with insufficient
-      access to funds. We will make <Link to="#waiver">a waiver</Link> available
-      for labs under financial pressure – whether because of local economy,
-      career stage, or state of funding.
+      access to funds. We will make{' '}
+      <NativeLink href="#waiver">a waiver</NativeLink> available for labs under
+      financial pressure – whether because of local economy, career stage, or
+      state of funding.
     </Paragraph>
 
     <H3>3. Will my ability to pay influence consideration of my paper?</H3>
