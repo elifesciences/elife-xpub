@@ -18,6 +18,10 @@ module.exports = {
       disableUpload: true,
     },
   },
+  mailer: {
+    from: 'editorial@elifesciences.org',
+    path: `${__dirname}/non-serializable/mailer`,
+  },
   aws: {
     s3: {
       params: {

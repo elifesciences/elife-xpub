@@ -15,6 +15,7 @@ module.exports = {
       '@elifesciences/xpub-client-config',
       '@pubsweet/component-send-email',
     ],
+    base_url: 'http://localhost:3000',
   },
   'pubsweet-server': {
     db: {
@@ -78,7 +79,7 @@ module.exports = {
   },
   mailer: {
     from: 'dev@example.com',
-    path: `${__dirname}/non-serializable/mailer`,
+    path: `${__dirname}/non-serializable/fake-mailer`,
   },
   aws: {
     credentials: {

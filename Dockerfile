@@ -39,6 +39,7 @@ COPY static static
 COPY styleguide styleguide
 COPY test test
 COPY webpack webpack
+COPY templates templates
 
 ENV NODE_ENV "production"
 ARG CI_COMMIT_SHA
