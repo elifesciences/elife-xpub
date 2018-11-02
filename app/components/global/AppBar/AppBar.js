@@ -21,7 +21,7 @@ const AppBarContainer = styled(Flex)`
   `};
 `
 
-const AppBarLink = styled(NavLink)`
+export const AppBarLink = styled(NavLink)`
   display: inline-block;
   padding: ${th('space.3')} ${th('space.2')};
 `
@@ -55,7 +55,7 @@ const AppBar = ({ user, menuItems }) => (
     <LogoLink href="https://elifesciences.org">
       <img alt="eLife" src="/assets/elife-logo.png" />
     </LogoLink>
-    <DesktopView>
+    <DesktopView data-test-id="app-bar-menu">
       <Separator />
       <Box flex="1 1 auto">
         {menuItems &&
