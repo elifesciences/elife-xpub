@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
-import { Box } from 'grid-styled'
+import { Box, Flex } from 'grid-styled'
 import { th } from '@pubsweet/ui-toolkit'
 import Icon from '../atoms/Icon'
 import ButtonAsIconWrapper from '../atoms/ButtonAsIconWrapper'
@@ -23,16 +23,17 @@ const MenuItem = styled(Box).attrs({ p: 3 })`
     border: none;
   }
 `
-const BurgerWrapper = styled(Box)`
-  display: inline;
-  ${media.mobileUp`
+const BurgerWrapper = styled(Flex)`
+  align-items: center;
+  justify-content: center;
+  ${media.tabletPortraitUp`
     display: none;
   `};
 `
 
 export const MenuNavLink = styled(NavLink)`
   color: ${th('colorText')};
-  ${media.mobileUp`
+  ${media.tabletPortraitUp`
     color: ${th('colorTextSecondary')};
   `};
 `
@@ -59,7 +60,7 @@ class BurgerMenu extends React.Component {
   render() {
     const { menuItems } = this.props
     return (
-      <BurgerWrapper ml={3}>
+      <BurgerWrapper>
         <ButtonAsIconWrapper
           data-test-id="burger-menu-expand"
           onClick={() => this.setState({ menuOpen: true })}

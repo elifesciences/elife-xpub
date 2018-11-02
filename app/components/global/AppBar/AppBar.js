@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import PropTypes from 'prop-types'
 import { Flex, Box } from 'grid-styled'
 import { th } from '@pubsweet/ui-toolkit'
 import ProfileMenu from './ProfileMenu'
@@ -7,21 +8,20 @@ import NavLink from '../../ui/atoms/NavLink'
 import media from '../../global/layout/media'
 import BurgerMenu from '../../ui/molecules/BurgerMenu'
 
-const AppBarContainer = styled.div`
-  display: flex;
+const AppBarContainer = styled(Flex)`
   align-items: center;
   height: ${th('space.6')};
   border-bottom: 1px solid ${th('colorBorder')};
   margin-bottom: 0;
-  padding-right: ${th('space.3')};
   justify-content: space-between;
 
   ${media.tabletPortraitUp`
     margin-bottom: ${th('space.6')};
+    justify-content: left;
   `};
 `
 
-const AppBarLink = styled(NavLink)`
+export const AppBarLink = styled(NavLink)`
   display: inline-block;
   padding: ${th('space.3')} ${th('space.2')};
 `
@@ -42,21 +42,20 @@ const Separator = styled.div`
   margin-right: ${th('space.2')};
 `
 const DesktopView = styled(Flex)`
-  width:80%
   align-items: center;
   display: none;
-  ${media.mobileUp`
+  ${media.tabletPortraitUp`
     display: flex;
   `};
 `
 
 const AppBar = ({ user, menuItems }) => (
-  <AppBarContainer>
+  <AppBarContainer px={3}>
     <BurgerMenu menuItems={menuItems} />
     <LogoLink href="https://elifesciences.org">
       <img alt="eLife" src="/assets/elife-logo.png" />
     </LogoLink>
-    <DesktopView>
+    <DesktopView data-test-id="app-bar-menu">
       <Separator />
       <Box flex="1 1 auto">
         {menuItems &&
@@ -70,5 +69,14 @@ const AppBar = ({ user, menuItems }) => (
     <ProfileMenu user={user} />
   </AppBarContainer>
 )
+
+AppBar.propTypes = {
+  menuItems: PropTypes.arrayOf(
+    PropTypes.shape({
+      label: PropTypes.string.isRequired,
+      link: PropTypes.string.isRequired,
+    }),
+  ).isRequired,
+}
 
 export default AppBar

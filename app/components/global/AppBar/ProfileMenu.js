@@ -7,12 +7,16 @@ import { th } from '@pubsweet/ui-toolkit'
 import NativeLink from '../../ui/atoms/NativeLink'
 import Icon from '../../ui/atoms/Icon'
 import PopOverPanel from '../../ui/atoms/PopOverPanel'
+import media from '../../global/layout/media'
 
 const loginUrl = config.login.url
 
 const PositionRelative = styled.div`
   position: relative;
   display: inline-block;
+  ${media.tabletPortraitUp`
+    margin-left: auto;
+  `};
 `
 
 const ProfileMenuButton = styled.button`
@@ -80,6 +84,12 @@ const MenuItemLink = styled(Link)`
   }
 `
 
+const LoginWrapper = styled(Box)`
+  ${media.tabletPortraitUp`
+    margin-left: auto;
+  `};
+`
+
 class ProfileMenu extends React.Component {
   state = { menuOpen: false }
 
@@ -101,9 +111,9 @@ class ProfileMenu extends React.Component {
     const { user } = this.props
     if (!user) {
       return (
-        <Box mx={3}>
+        <LoginWrapper>
           <NativeLink href={loginUrl}>Login</NativeLink>
-        </Box>
+        </LoginWrapper>
       )
     }
 
