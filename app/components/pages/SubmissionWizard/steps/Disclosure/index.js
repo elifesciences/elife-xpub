@@ -6,7 +6,7 @@ import { format, parse } from 'date-fns'
 
 import Paragraph from '../../../../ui/atoms/Paragraph'
 import SmallParagraph from '../../../../ui/atoms/SmallParagraph'
-import ExternalLink from '../../../../ui/atoms/ExternalLink'
+import NativeLink from '../../../../ui/atoms/NativeLink'
 import { FormH3 } from '../../../../ui/atoms/FormHeadings'
 import ValidatedField from '../../../../ui/atoms/ValidatedField'
 import ControlledCheckbox from '../../../../ui/atoms/ControlledCheckbox'
@@ -37,12 +37,12 @@ const DisclosurePage = ({ values }) => {
       <Box mb={4}>
         <Paragraph>
           Our{' '}
-          <ExternalLink
+          <NativeLink
             href="https://elifesciences.org/privacy-notice"
             target="_blank"
           >
             privacy policy
-          </ExternalLink>{' '}
+          </NativeLink>{' '}
           explains that we share your personal information with various third
           parties to enable us to review and publish your manuscript, and that
           we protect your data with detailed contractual arrangements with those
@@ -56,9 +56,9 @@ const DisclosurePage = ({ values }) => {
           in the UK. Because of this risk, we ask for your explicit consent to
           share your personal data with them, which you can withdraw at any time
           (by emailing{' '}
-          <ExternalLink href="mailto:data@elifesciences.org">
+          <NativeLink href="mailto:data@elifesciences.org">
             data@elifesciences.org
-          </ExternalLink>
+          </NativeLink>
           ). Please enter your name and check the box below to give this
           consent. Without this consent we will not be able to evaluate your
           submission.

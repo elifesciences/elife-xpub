@@ -1,9 +1,9 @@
 import styled from 'styled-components'
 import { th } from '@pubsweet/ui-toolkit'
 
-const ExternalLink = styled.a`
+const NativeLink = styled.a`
   color: ${th('colorPrimary')};
   text-decoration: none;
 `
 
-export default ExternalLink
+export default NativeLink

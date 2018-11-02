@@ -3,7 +3,7 @@ import { H1, H2, H3 } from '@pubsweet/ui'
 
 import Paragraph from '../../../ui/atoms/Paragraph'
 import CalloutTextBox from '../../../ui/atoms/CalloutTextBox'
-import ExternalLink from '../../../ui/atoms/ExternalLink'
+import NativeLink from '../../../ui/atoms/NativeLink'
 import List from '../../../ui/atoms/List'
 
 const JournalPolicies = props => (
@@ -12,24 +12,21 @@ const JournalPolicies = props => (
 
     <Paragraph>
       eLife is a member of the{' '}
-      <ExternalLink href="http://publicationethics.org/" target="_blank">
+      <NativeLink href="http://publicationethics.org/" target="_blank">
         Committee on Publication Ethics
-      </ExternalLink>{' '}
+      </NativeLink>{' '}
       (COPE), supports their principles, and follows their{' '}
-      <ExternalLink
+      <NativeLink
         href="https://publicationethics.org/resources/flowcharts"
         target="_blank"
       >
         flowcharts
-      </ExternalLink>{' '}
+      </NativeLink>{' '}
       for dealing with potential breaches of publication ethics. eLife also
       follows, as far as possible, the recommendations outlined in the{' '}
-      <ExternalLink
-        href="http://www.icmje.org/recommendations/"
-        target="_blank"
-      >
+      <NativeLink href="http://www.icmje.org/recommendations/" target="_blank">
         Uniform Requirements for Manuscripts Submitted to Biomedical Journals
-      </ExternalLink>
+      </NativeLink>
       , guidelines established by the ICMJE.
     </Paragraph>
 
@@ -42,16 +39,13 @@ const JournalPolicies = props => (
 
     <Paragraph>
       eLife is a signatory of the{' '}
-      <ExternalLink
-        href="https://centerforopenscience.org/top/"
-        target="_blank"
-      >
+      <NativeLink href="https://centerforopenscience.org/top/" target="_blank">
         Transparency and Openness Promotion (TOP) Guidelines
-      </ExternalLink>
+      </NativeLink>
       , which is an initiative by the{' '}
-      <ExternalLink href="https://centerforopenscience.org" target="_blank">
+      <NativeLink href="https://centerforopenscience.org" target="_blank">
         Center for Open Science
-      </ExternalLink>{' '}
+      </NativeLink>{' '}
       that promotes shared standards for increasing openness, transparency, and
       reproducibility.
     </Paragraph>
@@ -67,9 +61,9 @@ const JournalPolicies = props => (
       regulatory body to investigate. If someone has concerns about potential
       misconduct in a paper published by or under consideration by eLife, s/he
       should contact the journal office,{' '}
-      <ExternalLink href="mailto:editorial@elifesciences.org" target="_blank">
+      <NativeLink href="mailto:editorial@elifesciences.org" target="_blank">
         editorial@elifesciences.org
-      </ExternalLink>
+      </NativeLink>
       , with their message addressed to the Editor-in-Chief, Randy Schekman.
     </Paragraph>
 
@@ -79,49 +73,49 @@ const JournalPolicies = props => (
       Work involving human subjects or animal experimentation is expected to be
       conducted to the highest ethical standards, for example in accordance with
       the{' '}
-      <ExternalLink
+      <NativeLink
         href="https://www.wma.net/policies-post/wma-declaration-of-helsinki-ethical-principles-for-medical-research-involving-human-subjects/"
         target="_blank"
       >
         World Medical Association Declaration of Helsinki
-      </ExternalLink>{' '}
+      </NativeLink>{' '}
       for medical research, and with the relevant legislation and guidance for
       animal research listed by{' '}
-      <ExternalLink href="http://www.nc3rs.org.uk/" target="_blank">
+      <NativeLink href="http://www.nc3rs.org.uk/" target="_blank">
         NC3Rs
-      </ExternalLink>
+      </NativeLink>
       .
     </Paragraph>
 
     <Paragraph>
       For clinical trials, eLife follows the{' '}
-      <ExternalLink
+      <NativeLink
         href="http://www.icmje.org/about-icmje/faqs/clinical-trials-registration/"
         target="_blank"
       >
         recommendations of the ICMJE
-      </ExternalLink>{' '}
+      </NativeLink>{' '}
       that all trials must be prospectively registered to be considered for
       publication, and the clinical trial registration number will be requested
       during submission. When reporting randomised clinical trials, authors
       should follow the{' '}
-      <ExternalLink href="http://www.consort-statement.org/" target="_blank">
+      <NativeLink href="http://www.consort-statement.org/" target="_blank">
         CONSORT
-      </ExternalLink>{' '}
+      </NativeLink>{' '}
       guidelines and upload a CONSORT{' '}
-      <ExternalLink
+      <NativeLink
         href="http://www.consort-statement.org/consort-statement/checklist"
         target="_blank"
       >
         checklist
-      </ExternalLink>{' '}
+      </NativeLink>{' '}
       and{' '}
-      <ExternalLink
+      <NativeLink
         href="http://www.consort-statement.org/consort-statement/flow-diagram"
         target="_blank"
       >
         flow diagram
-      </ExternalLink>{' '}
+      </NativeLink>{' '}
       with their submission.
     </Paragraph>
 
@@ -130,20 +124,20 @@ const JournalPolicies = props => (
       the reason for lack of consent explained). When this work includes
       identifying, or potentially identifying, information, authors must also
       download the{' '}
-      <ExternalLink
+      <NativeLink
         href="https://elife-cdn.s3.amazonaws.com/author-guide/elife_Consent_to_Publish_Form.pdf"
         target="_blank"
       >
         Consent Form for Publication in eLife
-      </ExternalLink>{' '}
+      </NativeLink>{' '}
       (PDF), which the individual, parent, or guardian must sign once they have
       read the article and been informed about the terms of the{' '}
-      <ExternalLink
+      <NativeLink
         href="https://creativecommons.org/licenses/by/4.0/"
         target="_blank"
       >
         Creative Commons Attribution license
-      </ExternalLink>{' '}
+      </NativeLink>{' '}
       (form and guidance based on those developed by PLOS). The signed consent
       form should not be submitted alongside the article, but authors should
       file it with the individual&apos;s case notes and the ethics statement
@@ -155,19 +149,19 @@ const JournalPolicies = props => (
     <Paragraph>
       eLife follows the guidelines of the International Committee of Medical
       Journal Editors (ICMJE) for{' '}
-      <ExternalLink
+      <NativeLink
         href="http://www.icmje.org/recommendations/browse/roles-and-responsibilities/defining-the-role-of-authors-and-contributors.html"
         target="_blank"
       >
         authorship and contributorship
-      </ExternalLink>{' '}
+      </NativeLink>{' '}
       and the{' '}
-      <ExternalLink
+      <NativeLink
         href="https://docs.google.com/document/d/1aJxrQXYHW5U6By3KEAHrx1Iho6ioeh3ohNsRMwsoGPM/edit"
         target="_target"
       >
         Contributor Role Taxonomy
-      </ExternalLink>{' '}
+      </NativeLink>{' '}
       (CRediT) is used to indicate each author’s contributions.
     </Paragraph>
 
@@ -179,12 +173,12 @@ const JournalPolicies = props => (
 
     <Paragraph>
       Following the recommendations of the ICMJE regarding{' '}
-      <ExternalLink
+      <NativeLink
         href="http://www.icmje.org/recommendations/browse/roles-and-responsibilities/defining-the-role-of-authors-and-contributors.html"
         target="_blank"
       >
         authorship and contributorship
-      </ExternalLink>
+      </NativeLink>
       , individuals who have contributed materially to the work, but do not
       satisfy the authorship criteria should be listed in the acknowledgements
       section. Authors should seek permission to mention any individuals listed
@@ -201,31 +195,31 @@ const JournalPolicies = props => (
       per year, and when starting new work or new cell lines confirm that the
       cell lines are free from mycoplasma and other microorganisms. Authors
       should check the list of{' '}
-      <ExternalLink
+      <NativeLink
         href="http://iclac.org/databases/cross-contaminations/"
         target="_blank"
       >
         commonly misidentified cell lines
-      </ExternalLink>{' '}
+      </NativeLink>{' '}
       maintained by the{' '}
-      <ExternalLink href="http://iclac.org/" target="_blank">
+      <NativeLink href="http://iclac.org/" target="_blank">
         International Cell Line Authentication Committee
-      </ExternalLink>{' '}
+      </NativeLink>{' '}
       before submission and justify the use of any cell lines contained therein.
       Cell line authentication services are offered by{' '}
-      <ExternalLink
+      <NativeLink
         href="http://www.lgcstandards-atcc.org/Services/Testing%20Services.aspx"
         target="_blank"
       >
         ATCC
-      </ExternalLink>
+      </NativeLink>
       ,{' '}
-      <ExternalLink
+      <NativeLink
         href="https://www.scienceexchange.com/services/cell-line-authentication"
         target="_blank"
       >
         Science Exchange
-      </ExternalLink>
+      </NativeLink>
       , and others.
     </Paragraph>
 
@@ -236,19 +230,19 @@ const JournalPolicies = props => (
       interests that might be perceived to interfere with the objectivity of the
       presentation or handling of the work. For further information on competing
       interests, see the{' '}
-      <ExternalLink
+      <NativeLink
         href="http://www.icmje.org/recommendations/browse/roles-and-responsibilities/author-responsibilities--conflicts-of-interest.html"
         target="_blank"
       >
         recommendations of the ICMJE
-      </ExternalLink>{' '}
+      </NativeLink>{' '}
       and the guidance provided by{' '}
-      <ExternalLink
+      <NativeLink
         href="http://journals.plos.org/plosmedicine/s/competing-interests"
         target="_blank"
       >
         PLOS
-      </ExternalLink>
+      </NativeLink>
       .
     </Paragraph>
 
@@ -258,24 +252,24 @@ const JournalPolicies = props => (
       Copyrighted material (in full or in part) should not be included in a
       submission to eLife, unless you have explicit permission from the
       copyright holder that it can be reproduced under the terms of a{' '}
-      <ExternalLink
+      <NativeLink
         href="http://creativecommons.org/licenses/by/4.0/"
         target="_blank"
       >
         Creative Commons Attribution license
-      </ExternalLink>
+      </NativeLink>
       .
     </Paragraph>
 
     <Paragraph>
       Occasionally we have published figures or parts of figures which cannot be
       re-published under a{' '}
-      <ExternalLink
+      <NativeLink
         href="http://creativecommons.org/licenses/by/4.0/"
         target="_blank"
       >
         Creative Commons Attribution license
-      </ExternalLink>
+      </NativeLink>
       . In those instances we ensure the correct attribution is provided within
       the human readable text (HTML and PDF versions of the article) and the
       underlying XML, for machine readability.
@@ -340,34 +334,34 @@ const JournalPolicies = props => (
     <Paragraph>
       Wherever possible, authors should make major datasets available using
       domain-specific public archives (for example,{' '}
-      <ExternalLink href="http://www.ncbi.nlm.nih.gov/genbank/" target="_blank">
+      <NativeLink href="http://www.ncbi.nlm.nih.gov/genbank/" target="_blank">
         GenBank
-      </ExternalLink>
+      </NativeLink>
       ,{' '}
-      <ExternalLink href="http://www.rcsb.org/pdb/home/home.do" target="_blank">
+      <NativeLink href="http://www.rcsb.org/pdb/home/home.do" target="_blank">
         Protein Data Bank
-      </ExternalLink>
+      </NativeLink>
       , and{' '}
-      <ExternalLink href="http://clinicaltrials.gov/" target="_blank">
+      <NativeLink href="http://clinicaltrials.gov/" target="_blank">
         ClinicalTrials.gov
-      </ExternalLink>
+      </NativeLink>
       ), or generic databases (for example,{' '}
-      <ExternalLink href="http://datadryad.org/" target="_blank">
+      <NativeLink href="http://datadryad.org/" target="_blank">
         Dryad
-      </ExternalLink>
+      </NativeLink>
       ,{' '}
-      <ExternalLink href="http://dataverse.org/" target="_blank">
+      <NativeLink href="http://dataverse.org/" target="_blank">
         Dataverse
-      </ExternalLink>{' '}
+      </NativeLink>{' '}
       or{' '}
-      <ExternalLink href="http://osf.io/" target="_blank">
+      <NativeLink href="http://osf.io/" target="_blank">
         the Open Science Framework
-      </ExternalLink>
+      </NativeLink>
       ) where a domain specific archive does not exist. A comprehensive
       catalogue of databases has been compiled by the{' '}
-      <ExternalLink href="https://fairsharing.org/" target="_blank">
+      <NativeLink href="https://fairsharing.org/" target="_blank">
         FAIRsharing information resource
-      </ExternalLink>
+      </NativeLink>
       .
     </Paragraph>
 
@@ -405,19 +399,19 @@ const JournalPolicies = props => (
       Authors using unpublished datasets must abide by the relevant community
       guidelines for the use and acknowledgment of those data resources
       (including the{' '}
-      <ExternalLink
+      <NativeLink
         href="http://www.genome.gov/pages/research/wellcomereport0303.pdf"
         target="_blank"
       >
         Fort Lauderdale
-      </ExternalLink>{' '}
+      </NativeLink>{' '}
       and{' '}
-      <ExternalLink
+      <NativeLink
         href="http://www.nature.com/nature/journal/v461/n7261/full/461168a.html"
         target="_blank"
       >
         Toronto
-      </ExternalLink>{' '}
+      </NativeLink>{' '}
       agreements in the case of genomic datasets), obtaining permission where
       required (which should be stated in the cover letter), and citing the
       appropriate laboratory, website, and accession numbers.
@@ -427,36 +421,36 @@ const JournalPolicies = props => (
 
     <Paragraph>
       Authors are required to follow the guidelines developed by{' '}
-      <ExternalLink
+      <NativeLink
         href="http://journals.plos.org/ploscompbiol/s/materials-and-software-sharing"
         target="_blank"
       >
         PLOS
-      </ExternalLink>{' '}
+      </NativeLink>{' '}
       if new software or a new algorithm is central to the submission; for
       example, authors must confirm that software conforms to the{' '}
-      <ExternalLink href="http://opensource.org/docs/osd" target="_blank">
+      <NativeLink href="http://opensource.org/docs/osd" target="_blank">
         Open Source Definition
-      </ExternalLink>{' '}
+      </NativeLink>{' '}
       and is deposited in an appropriate public repository. To ensure that
       software can be reproduced without restrictions and that authors are
       properly acknowledged for their work, authors should license their code
       using an{' '}
-      <ExternalLink href="https://opensource.org/licenses" target="_blank">
+      <NativeLink href="https://opensource.org/licenses" target="_blank">
         open source license
-      </ExternalLink>
+      </NativeLink>
       .
     </Paragraph>
 
     <Paragraph>
       Authors are encouraged to use version control services such as GitHub,
       GitLab, and SourceForge. eLife maintains a{' '}
-      <ExternalLink
+      <NativeLink
         href="http://github.com/elifesciences-publications/"
         target="_blank"
       >
         GitHub account
-      </ExternalLink>{' '}
+      </NativeLink>{' '}
       to archive code accompanying eLife publications that has been deposited on
       GitHub or another version control service. Binary files (&quot;non-text
       files&quot;, such as images, zip files, or program data) should be kept to
@@ -468,12 +462,12 @@ const JournalPolicies = props => (
 
     <Paragraph>
       In accordance with the principles established in{' '}
-      <ExternalLink
+      <NativeLink
         href="http://www.plantphysiol.org/content/132/1/19"
         target="_blank"
       >
         ‘Sharing Publication-Related Data and Materials’
-      </ExternalLink>{' '}
+      </NativeLink>{' '}
       (doi:10.1104/pp.900068), a condition of publication is that authors must
       make the materials and resources described in their article promptly
       available upon reasonable request from academic researchers.
@@ -483,59 +477,56 @@ const JournalPolicies = props => (
       All biological reagents must be made available to qualified investigators
       upon reasonable request. We strongly encourage authors to deposit copies
       of their plasmids as DNA or bacterial stocks with repositories such as{' '}
-      <ExternalLink href="http://www.addgene.org/" target="_blank">
+      <NativeLink href="http://www.addgene.org/" target="_blank">
         Addgene
-      </ExternalLink>{' '}
+      </NativeLink>{' '}
       or{' '}
-      <ExternalLink
+      <NativeLink
         href="http://plasmid.med.harvard.edu/PLASMID/"
         target="_blank"
       >
         PlasmID
-      </ExternalLink>
+      </NativeLink>
       . Other established repositories for biological materials include the{' '}
-      <ExternalLink href="http://www.atcc.org/" target="_blank">
+      <NativeLink href="http://www.atcc.org/" target="_blank">
         American Type Culture Collection
-      </ExternalLink>
+      </NativeLink>
       ,{' '}
-      <ExternalLink href="https://abrc.osu.edu/" target="_blank">
+      <NativeLink href="https://abrc.osu.edu/" target="_blank">
         Arabidopsis Biological Resource Center
-      </ExternalLink>
+      </NativeLink>
       ,{' '}
-      <ExternalLink href="http://flystocks.bio.indiana.edu/" target="_blank">
+      <NativeLink href="http://flystocks.bio.indiana.edu/" target="_blank">
         Bloomington Drosophila Stock Center
-      </ExternalLink>
+      </NativeLink>
       ,{' '}
-      <ExternalLink href="https://cgc.umn.edu/" target="_blank">
+      <NativeLink href="https://cgc.umn.edu/" target="_blank">
         Caenorhabditis Genetics Center
-      </ExternalLink>
+      </NativeLink>
       , the{' '}
-      <ExternalLink href="http://www.eucomm.org/" target="_blank">
+      <NativeLink href="http://www.eucomm.org/" target="_blank">
         European Conditional Mouse Mutagenesis Program
-      </ExternalLink>
+      </NativeLink>
       , the{' '}
-      <ExternalLink href="https://www.infrafrontier.eu/" target="_blank">
+      <NativeLink href="https://www.infrafrontier.eu/" target="_blank">
         European Mouse Mutant Archive
-      </ExternalLink>
+      </NativeLink>
       , the{' '}
-      <ExternalLink href="http://www.komp.org/" target="_blank">
+      <NativeLink href="http://www.komp.org/" target="_blank">
         Knockout Mouse Project
-      </ExternalLink>
+      </NativeLink>
       , the{' '}
-      <ExternalLink href="http://www.jax.org/" target="_blank">
+      <NativeLink href="http://www.jax.org/" target="_blank">
         Jackson Laboratory
-      </ExternalLink>
+      </NativeLink>
       , the{' '}
-      <ExternalLink href="http://www.mmrrc.org/" target="_blank">
+      <NativeLink href="http://www.mmrrc.org/" target="_blank">
         Mutant Mouse Regional Resource Centers
-      </ExternalLink>
+      </NativeLink>
       , and{' '}
-      <ExternalLink
-        href="http://www.brc.riken.go.jp/inf/en/DB/"
-        target="_blank"
-      >
+      <NativeLink href="http://www.brc.riken.go.jp/inf/en/DB/" target="_blank">
         RIKEN Bioresource Centre
-      </ExternalLink>
+      </NativeLink>
       .
     </Paragraph>
 
@@ -552,37 +543,37 @@ const JournalPolicies = props => (
       (RRIDs) within the Materials and Methods section to identify the model
       organisms, cells lines, antibodies, and tools (such as software or
       databases) you have used (e.g.{' '}
-      <ExternalLink
+      <NativeLink
         href="https://scicrunch.org/resolver/RRID:AB_2178887"
         target="_blank"
       >
         RRID:AB_2178887
-      </ExternalLink>{' '}
+      </NativeLink>{' '}
       for an antibody,{' '}
-      <ExternalLink
+      <NativeLink
         href="https://scicrunch.org/resolver/RRID:MGI:3840442"
         target="_blank"
       >
         RRID:MGI:3840442
-      </ExternalLink>{' '}
+      </NativeLink>{' '}
       for an organism,{' '}
-      <ExternalLink
+      <NativeLink
         href="https://scicrunch.org/resolver/RRID:CVCL_1H60"
         target="_blank"
       >
         RRID:CVCL_1H60
-      </ExternalLink>{' '}
+      </NativeLink>{' '}
       for a cell line, and{' '}
-      <ExternalLink
+      <NativeLink
         href="https://scicrunch.org/resolver/RRID:SCR_007358"
         target="_blank"
       >
         RRID:SCR_007358
-      </ExternalLink>{' '}
+      </NativeLink>{' '}
       for a tool). The{' '}
-      <ExternalLink href="https://scicrunch.org/resources" target="_blank">
+      <NativeLink href="https://scicrunch.org/resources" target="_blank">
         RRID Portal
-      </ExternalLink>{' '}
+      </NativeLink>{' '}
       lists existing RRIDs, and instructions for creating a new one if an RRID
       matching the resource does not already exist.
     </Paragraph>
@@ -592,12 +583,12 @@ const JournalPolicies = props => (
     <Paragraph>
       Regarding the oversight of dual use life-sciences research, we follow the
       recommendations formulated by the{' '}
-      <ExternalLink
+      <NativeLink
         href="https://osp.od.nih.gov/biotechnology/dual-use-research-of-concern/"
         target="_blank"
       >
         National Science Advisory Board for Biosecurity
-      </ExternalLink>{' '}
+      </NativeLink>{' '}
       (NSABB). If there are any concerns about dual use life-sciences research
       during submission or review, please bring them to the attention of the
       journal’s editors.
@@ -607,27 +598,24 @@ const JournalPolicies = props => (
 
     <Paragraph>
       eLife follows the guidance of the{' '}
-      <ExternalLink
+      <NativeLink
         href="http://www.wame.org/policy-statements#Relationship between Editors and Owners"
         target="_blank"
       >
         World Association of Medical Editors
-      </ExternalLink>{' '}
+      </NativeLink>{' '}
       and the{' '}
-      <ExternalLink
-        href="https://www.councilscienceeditors.org/"
-        target="_blank"
-      >
+      <NativeLink href="https://www.councilscienceeditors.org/" target="_blank">
         Council of Science Editors
-      </ExternalLink>{' '}
+      </NativeLink>{' '}
       regarding editorial independence. The editors of <em>eLife,</em> under the
       leadership of the{' '}
-      <ExternalLink
+      <NativeLink
         href="http://elifesciences.org/about#leadership"
         target="_blank"
       >
         Editor-in-Chief
-      </ExternalLink>
+      </NativeLink>
       , have sole responsibility, authority, and accountability for the
       editorial content of the journal. Submissions are judged on their own
       merits, regardless of funding, author affiliations, or author
@@ -652,21 +640,21 @@ const JournalPolicies = props => (
     <Paragraph>
       Image files must not be manipulated or adjusted in any way that could lead
       to misinterpretation of the information present in the original image. See{' '}
-      <ExternalLink
+      <NativeLink
         href="http://jcb.rupress.org/content/166/1/11.full"
         target="_blank"
       >
         &apos;What&apos;s in a picture? The temptation of image
         manipulation&apos;
-      </ExternalLink>{' '}
+      </NativeLink>{' '}
       (Rossner and Yamada 2004, Journal of Cell Biology, 166:11) and also{' '}
-      <ExternalLink
+      <NativeLink
         href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4114110/"
         target="_blank"
       >
         &apos;Avoiding Twisted Pixels: Ethical Guidelines for the Appropriate
         Use and Manipulation of Scientific Digital Images&apos;
-      </ExternalLink>{' '}
+      </NativeLink>{' '}
       (Cromey 2010, Sci Eng Ethics, 16-639-667) for valuable guidance on
       acceptable practice and examples of inappropriate manipulation. Please
       take note of the following guidance in particular:
@@ -713,12 +701,12 @@ const JournalPolicies = props => (
 
     <Paragraph>
       Because articles published by eLife are licensed under a{' '}
-      <ExternalLink
+      <NativeLink
         href="https://creativecommons.org/licenses/by/4.0/"
         target="_blank"
       >
         Creative Commons Attribution license
-      </ExternalLink>
+      </NativeLink>
       , others are free to copy, distribute, and reuse them (in part or in
       full), without needing to seek permission, as long as the author and
       original source are properly cited.
@@ -787,12 +775,12 @@ const JournalPolicies = props => (
     <Paragraph>
       More information for institutional press officers and journalists is
       available at{' '}
-      <ExternalLink
+      <NativeLink
         href="https://elifesciences.org/for-the-press"
         target="_blank"
       >
         https://elifesciences.org/for-the-press
-      </ExternalLink>
+      </NativeLink>
       .
     </Paragraph>
 
@@ -804,71 +792,71 @@ const JournalPolicies = props => (
       appropriate nomenclature databases for correct gene names and symbols
       should be consulted. Helpful reference points for approved nomenclature
       include{' '}
-      <ExternalLink href="http://flybase.org/" target="_blank">
+      <NativeLink href="http://flybase.org/" target="_blank">
         Genetic nomenclature for <em>Drosophila melanogaster</em>
-      </ExternalLink>
+      </NativeLink>
       ;{' '}
-      <ExternalLink
+      <NativeLink
         href="http://www.wormbase.org/about/userguide/nomenclature"
         target="_blank"
       >
         Genetic Nomenclature for <em>Caenorhabditis elegans</em>
-      </ExternalLink>
+      </NativeLink>
       ;{' '}
-      <ExternalLink
+      <NativeLink
         href="http://www.maizegdb.org/maize_nomenclature.php"
         target="_blank"
       >
         A Standard For Maize Genetics Nomenclature
-      </ExternalLink>
+      </NativeLink>
       ;{' '}
-      <ExternalLink
+      <NativeLink
         href="http://www.arabidopsis.org/portals/nomenclature/guidelines.jsp"
         target="_blank"
       >
         Arabidopsis Nomenclature
-      </ExternalLink>
+      </NativeLink>
       ;{' '}
-      <ExternalLink
+      <NativeLink
         href="http://www.genenames.org/about/guidelines"
         target="_blank"
       >
         Guidelines for Human Gene Nomenclature
-      </ExternalLink>
+      </NativeLink>
       ;{' '}
-      <ExternalLink
+      <NativeLink
         href="http://www.informatics.jax.org/mgihome/nomen/gene.shtml"
         target="_blank"
       >
         Rules for Nomenclature of Genes, Genetic Markers, Alleles, and Mutations
         in Mouse and Rat
-      </ExternalLink>
+      </NativeLink>
       ; the{' '}
-      <ExternalLink
+      <NativeLink
         href="http://www.xenbase.org/gene/static/geneNomenclature.jsp"
         target="_blank"
       >
         Xenopus Gene Nomenclature Guidelines
-      </ExternalLink>
+      </NativeLink>
       ; and the{' '}
-      <ExternalLink
+      <NativeLink
         href="https://wiki.zfin.org/display/general/ZFIN+Zebrafish+Nomenclature+Guidelines"
         target="_blank"
       >
         Zebrafish Nomenclature Guidelines
-      </ExternalLink>
+      </NativeLink>
       .
     </Paragraph>
 
     <Paragraph>
       Note that in the specific case of a study that reports a new taxon name,
       authors are required to follow the guidelines developed by PLOS for{' '}
-      <ExternalLink
+      <NativeLink
         href="http://journals.plos.org/plosone/s/submission-guidelines"
         target="_blank"
       >
         zoological and botanical names
-      </ExternalLink>
+      </NativeLink>
       .
     </Paragraph>
 
@@ -878,12 +866,12 @@ const JournalPolicies = props => (
       Preregistration of studies involves registering the study design,
       variables, and treatment conditions prior to conducting the research. For
       clinical trials, eLife follows the{' '}
-      <ExternalLink
+      <NativeLink
         href="http://www.icmje.org/about-icmje/faqs/clinical-trials-registration/"
         target="_blank"
       >
         recommendations of the ICMJE
-      </ExternalLink>{' '}
+      </NativeLink>{' '}
       that all trials must be prospectively registered to be considered for
       publication, and the clinical trial registration number will be requested
       during submission.
@@ -891,12 +879,12 @@ const JournalPolicies = props => (
 
     <Paragraph>
       eLife is using the Registered Reports approach as part of the{' '}
-      <ExternalLink
+      <NativeLink
         href="https://elifesciences.org/collections/reproducibility-project-cancer-biology"
         target="_blank"
       >
         Reproducibility Project: Cancer Biology
-      </ExternalLink>
+      </NativeLink>
       . For other submissions, authors are encouraged to consider whether
       preregistration would be appropriate, noting if they have done so within
       their cover letter.
@@ -907,12 +895,12 @@ const JournalPolicies = props => (
     <Paragraph>
       To facilitate the interpretation and replication of experiments, authors
       are required to complete eLife&apos;s{' '}
-      <ExternalLink
+      <NativeLink
         href="https://cdn.elifesciences.org/xpub/guides/transparent_reporting.pdf"
         target="_blank"
       >
         Transparent Reporting Form
-      </ExternalLink>{' '}
+      </NativeLink>{' '}
       before peer review. Authors are also required to adhere to
       well-established reporting standards, such as for microarray experiments,
       clinical trials, and so on.
@@ -924,41 +912,41 @@ const JournalPolicies = props => (
       upload any relevant reporting checklists or documents as a Reporting
       Standards Document to indicate the use of appropriate reporting guidelines
       for health-related research (see{' '}
-      <ExternalLink href="http://www.equator-network.org/" target="_blank">
+      <NativeLink href="http://www.equator-network.org/" target="_blank">
         EQUATOR Network
-      </ExternalLink>
+      </NativeLink>
       ), life science research (see the{' '}
-      <ExternalLink href="https://biosharing.org/" target="_blank">
+      <NativeLink href="https://biosharing.org/" target="_blank">
         BioSharing Information Resource
-      </ExternalLink>
+      </NativeLink>
       ), or the{' '}
-      <ExternalLink
+      <NativeLink
         href="http://www.plosbiology.org/article/info:doi/10.1371/journal.pbio.1000412"
         target="_blank"
       >
         ARRIVE guidelines
-      </ExternalLink>{' '}
+      </NativeLink>{' '}
       for reporting work involving animal research.
     </Paragraph>
 
     <Paragraph>
       In the specific case of a study containing an X-ray crystal structure,
       authors are required to upload a validation summary report from one of the{' '}
-      <ExternalLink href="http://www.wwpdb.org/" target="_blank">
+      <NativeLink href="http://www.wwpdb.org/" target="_blank">
         Worldwide Protein Data Bank
-      </ExternalLink>{' '}
+      </NativeLink>{' '}
       organisations as a Related Manuscript File.
     </Paragraph>
 
     <Paragraph>
       In the specific case of a study containing functional enzyme data, we
       encourage authors to deposit data to{' '}
-      <ExternalLink
+      <NativeLink
         href="https://www.beilstein-strenda-db.org/strenda/"
         target="_blank"
       >
         STRENDA DB
-      </ExternalLink>{' '}
+      </NativeLink>{' '}
       and to upload the “Experimental data fact sheet” that accompanies the
       deposition as a Reporting Standards Document in the submission to eLife.
     </Paragraph>
@@ -972,9 +960,9 @@ const JournalPolicies = props => (
         affect the decision on manuscripts under consideration, or our policies
         relating to the confidentiality of the review process. If you would like
         to opt out of eLife&apos;s research and/or surveys, please{' '}
-        <ExternalLink href="mailto:editorial@elifesciences.org" target="_blank">
+        <NativeLink href="mailto:editorial@elifesciences.org" target="_blank">
           contact the journal office
-        </ExternalLink>
+        </NativeLink>
         .
       </Paragraph>
     </CalloutTextBox>

@@ -39,6 +39,8 @@ const registerRoutes = app => {
   entities
     .filter(filterFileName('routes.js'))
     .forEach(name => require(`./entities/${name}/routes.js`)(app))
+
+  require('./routes')(app)
 }
 
 module.exports = {

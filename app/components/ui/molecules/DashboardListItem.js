@@ -29,12 +29,19 @@ const dashboardDateText = date => {
   return `${diffDays} ${diffDays === 1 ? 'day' : 'days'} ago`
 }
 
+const mapColor = statusCode =>
+  ({
+    CONTINUE_SUBMISSION: 'colorText',
+    SUBMITTED: 'colorTextSecondary',
+    REJECTED: 'colorError',
+  }[statusCode])
+
 const Root = styled(Flex)`
   flex-direction: column;
   border-bottom: ${th('borderWidth')} ${th('borderStyle')} ${th('colorBorder')};
   justify-content: space-between;
 
-  ${media.mobileUp`
+  ${media.tabletPortraitUp`
     flex-direction: row;
     align-items: flex-start;
     padding: calc(${th('gridUnit')} * 5) 0;
@@ -42,10 +49,11 @@ const Root = styled(Flex)`
 `
 
 const TitleBox = styled(Box)`
+  color: ${props => props.theme[props.color]};
   font-weight: bold;
   text-align: left;
   flex-grow: 1;
-  ${media.mobileUp`
+  ${media.tabletPortraitUp`
     margin-bottom: 0;
     margin-right: ${th('space.3')};
   `};
@@ -54,7 +62,7 @@ const DateBox = styled(Flex)`
   color: ${th('colorTextSecondary')}
   justify-content: space-between;
 
-  ${media.mobileUp`
+  ${media.tabletPortraitUp`
     flex-direction: column;
     text-align: right;
     flex: 0 0 120px;
@@ -71,7 +79,11 @@ const DashboardListItem = ({ manuscript }) => {
   const date = new Date(manuscript.created)
   return (
     <Root py={3}>
-      <TitleBox data-test-id="title" mb={3}>
+      <TitleBox
+        color={mapColor(manuscript.clientStatus)}
+        data-test-id="title"
+        mb={3}
+      >
         {manuscript.meta.title || '(Untitled)'}
       </TitleBox>
       <ManuscriptStatus statusCode={manuscript.clientStatus} />

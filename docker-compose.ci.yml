@@ -1,0 +1,36 @@
+version: '3'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+      args:
+        CI_COMMIT_SHA: ${IMAGE_TAG}
+    image: elifesciences/elife-xpub:${IMAGE_TAG}
+    # no need to start the up in any scenario, yet
+    command: sh
+    ports:
+      - ${PORT}:3000
+    depends_on:
+      - postgres
+    environment:
+      BROWSER:
+      NODE_ENV:
+      NODE_CONFIG_ENV:
+      PGHOST:
+      PGUSER:
+      PGPASSWORD:
+      PGDATABASE:
+    volumes:
+      - ./build/screenshots:/tmp/screenshots
+
+  postgres:
+    image: postgres:10.4
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER:
+      POSTGRES_PASSWORD:
+    volumes:
+      - ./scripts/test-ci.sql:/docker-entrypoint-initdb.d/test-ci.sql

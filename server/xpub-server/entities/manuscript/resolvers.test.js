@@ -110,7 +110,8 @@ describe('Manuscripts', () => {
       )
     })
 
-    it('updates the current submission for user with data', async () => {
+    it('updates the current submission for user with data and emails', async () => {
+      const NUM_EMAILS = 1
       const blankManuscript = Manuscript.new({ createdBy: userId })
       const manuscript = await Manuscript.save(blankManuscript)
 
@@ -119,6 +120,16 @@ describe('Manuscripts', () => {
         { data: { id: manuscript.id, ...manuscriptInput } },
         { user: profileId },
       )
+      await waitforEmails(NUM_EMAILS)
+
+      const allEmails = mailer.getMails()
+      expect(allEmails).toHaveLength(NUM_EMAILS)
+
+      // Check the dashboard email
+      expect(allEmails[0]).toMatchObject({
+        to: 'mymail@mail.com',
+        subject: 'Libero Submission System: New Submission',
+      })
 
       const actualManuscript = await Manuscript.find(manuscript.id, userId)
       expect(actualManuscript).toMatchObject(expectedManuscript)
@@ -281,6 +292,7 @@ describe('Manuscripts', () => {
     })
 
     it('sends email and updates status when export fails', async () => {
+      const NUM_EMAILS = 1
       jest.spyOn(logger, 'error').mockImplementationOnce(() => {})
       mecaExport.mockImplementationOnce(() =>
         Promise.reject(new Error('Broked')),
@@ -294,18 +306,17 @@ describe('Manuscripts', () => {
         { user: profileId },
       )
 
-      // resolver doesn't wait for export to complete so just keep retrying for a second
-      for (let i = 0; i < 100 && mailer.getMails().length === 0; i += 1) {
-        // eslint-disable-next-line no-await-in-loop
-        await new Promise(resolve => setTimeout(resolve, 10))
-      }
+      await waitforEmails(NUM_EMAILS)
 
-      expect(mailer.getMails()).toMatchObject([
-        {
-          to: 'test@example.com',
-          subject: 'MECA export failed',
-        },
-      ])
+      const allEmails = mailer.getMails()
+      expect(allEmails).toHaveLength(NUM_EMAILS)
+
+      // Check the MECA fail email
+      expect(allEmails[0]).toMatchObject({
+        to: 'test@example.com',
+        subject: 'MECA export failed',
+      })
+
       expect(logger.error).toHaveBeenCalled()
       const updatedManuscript = await Manuscript.find(manuscript.id, userId)
       expect(updatedManuscript.status).toBe(
@@ -501,3 +512,9 @@ describe('Manuscripts', () => {
     })
   })
 })
+async function waitforEmails(NUM_EMAILS) {
+  for (let i = 0; i < 100 && mailer.getMails().length < NUM_EMAILS; i += 1) {
+    // eslint-disable-next-line no-await-in-loop
+    await new Promise(resolve => setTimeout(resolve, 10))
+  }
+}

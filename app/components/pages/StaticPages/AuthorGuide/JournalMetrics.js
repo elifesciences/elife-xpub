@@ -1,7 +1,7 @@
 import React from 'react'
 import { H1, H2 } from '@pubsweet/ui'
 import Paragraph from '../../../ui/atoms/Paragraph'
-import ExternalLink from '../../../ui/atoms/ExternalLink'
+import NativeLink from '../../../ui/atoms/NativeLink'
 import { BoxChart, ColumnChart } from './JournalCharts'
 import * as data from './JournalCharts.data'
 
@@ -20,9 +20,9 @@ const JournalMetrics = () => (
       This shows the number of initial submissions received each quarter. Please
       note that publication fees were introduced on January 1, 2017 (summary
       table{' '}
-      <ExternalLink href="https://elife-cdn.s3.amazonaws.com/elifechart1.xlsx">
+      <NativeLink href="https://elife-cdn.s3.amazonaws.com/elifechart1.xlsx">
         Excel
-      </ExternalLink>
+      </NativeLink>
       ).
     </Paragraph>
     <ColumnChart color="#2369CB" data={data.chart1} />
@@ -30,9 +30,9 @@ const JournalMetrics = () => (
     <H2>2. Number of research publications</H2>
     <Paragraph>
       This shows the number of research publications each quarter (summary table{' '}
-      <ExternalLink href="https://elife-cdn.s3.amazonaws.com/elifechart2.xlsx">
+      <NativeLink href="https://elife-cdn.s3.amazonaws.com/elifechart2.xlsx">
         Excel
-      </ExternalLink>
+      </NativeLink>
       ).
     </Paragraph>
     <ColumnChart color="#71AC33" data={data.chart2} />
@@ -42,9 +42,9 @@ const JournalMetrics = () => (
       This shows the number of days between receiving the initial submission and
       making a decision on the initial submission (25th, 50th, and 75th
       percentiles; summary table{' '}
-      <ExternalLink href="https://elife-cdn.s3.amazonaws.com/elifechart3.xlsx">
+      <NativeLink href="https://elife-cdn.s3.amazonaws.com/elifechart3.xlsx">
         Excel
-      </ExternalLink>
+      </NativeLink>
       ).
     </Paragraph>
     <BoxChart data={data.chart3} />
@@ -54,9 +54,9 @@ const JournalMetrics = () => (
       This shows the number of days between receiving the full submission and
       making a decision on the full submission, after peer review (25th, 50th,
       and 75th percentiles; summary table{' '}
-      <ExternalLink href="https://elife-cdn.s3.amazonaws.com/elifechart4.xlsx">
+      <NativeLink href="https://elife-cdn.s3.amazonaws.com/elifechart4.xlsx">
         Excel
-      </ExternalLink>
+      </NativeLink>
       ).
     </Paragraph>
     <BoxChart data={data.chart4} />
@@ -65,9 +65,9 @@ const JournalMetrics = () => (
     <Paragraph>
       This shows the number of days between receiving the initial submission and
       publication (25th, 50th, and 75th percentiles; summary table{' '}
-      <ExternalLink href="https://elife-cdn.s3.amazonaws.com/elifechart5.xlsx">
+      <NativeLink href="https://elife-cdn.s3.amazonaws.com/elifechart5.xlsx">
         Excel
-      </ExternalLink>
+      </NativeLink>
       ). Publish on accept was introduced in April 2014, which allows authors to
       have their accepted manuscript PDF published within a few days. About 60%
       of authors opt for this, with the remaining authors preferring to wait for
@@ -77,9 +77,9 @@ const JournalMetrics = () => (
 
     <Paragraph>
       In addition to the summary tables, we have made the{' '}
-      <ExternalLink href="https://elife-cdn.s3.amazonaws.com/eliferawdata.csv">
+      <NativeLink href="https://elife-cdn.s3.amazonaws.com/eliferawdata.csv">
         raw data
-      </ExternalLink>{' '}
+      </NativeLink>{' '}
       available to download.
     </Paragraph>
   </React.Fragment>

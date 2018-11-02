@@ -2,7 +2,7 @@ import React from 'react'
 import { H1, H2, Link } from '@pubsweet/ui'
 
 import Paragraph from '../../../ui/atoms/Paragraph'
-import ExternalLink from '../../../ui/atoms/ExternalLink'
+import NativeLink from '../../../ui/atoms/NativeLink'
 import List from '../../../ui/atoms/List'
 
 const ReviewingPolicies = props => (
@@ -66,19 +66,19 @@ const ReviewingPolicies = props => (
       We ask reviewers to recognise potential competing interests that could
       lead them to be positively or negatively disposed towards an article. We
       follow the recommendations of the{' '}
-      <ExternalLink
+      <NativeLink
         href="http://www.icmje.org/recommendations/browse/roles-and-responsibilities/author-responsibilities--conflicts-of-interest.html"
         target="_blank"
       >
         ICMJE
-      </ExternalLink>{' '}
+      </NativeLink>{' '}
       and the guidance provided by{' '}
-      <ExternalLink
+      <NativeLink
         href="http://journals.plos.org/plosmedicine/s/competing-interests"
         target="_blank"
       >
         PLOS
-      </ExternalLink>
+      </NativeLink>
       . Reviewers should inform the editors or journal staff if they are close
       competitors or collaborators of the authors. Reviewers must recuse
       themselves if they feel that they are unable to offer an impartial review.
@@ -119,9 +119,9 @@ const ReviewingPolicies = props => (
       relating to the confidentiality of the review process. If you would like
       to opt out of eLife&apos;s research and/or surveys, please contact the
       journal office (
-      <ExternalLink href="mailto:editorial@elifesciences.org" target="_blank">
+      <NativeLink href="mailto:editorial@elifesciences.org" target="_blank">
         here
-      </ExternalLink>
+      </NativeLink>
       ).
     </Paragraph>
   </React.Fragment>

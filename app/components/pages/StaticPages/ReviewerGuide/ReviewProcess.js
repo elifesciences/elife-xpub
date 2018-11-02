@@ -2,7 +2,7 @@ import React from 'react'
 import { H1, Link } from '@pubsweet/ui'
 
 import Paragraph from '../../../ui/atoms/Paragraph'
-import ExternalLink from '../../../ui/atoms/ExternalLink'
+import NativeLink from '../../../ui/atoms/NativeLink'
 
 const ReviewProcess = props => (
   <React.Fragment>
@@ -25,12 +25,12 @@ const ReviewProcess = props => (
       An online consultation session is opened with the reviewer(s) once all the
       reviews have been received. The Reviewing Editor will draft a decision
       letter, with input welcome from the other reviewer(s). A{' '}
-      <ExternalLink
+      <NativeLink
         href="http://elifesciences.org/about#leadership"
         target="_blank"
       >
         Senior Editor
-      </ExternalLink>{' '}
+      </NativeLink>{' '}
       is available at each stage to provide guidance and oversight of the
       process as a whole. Our aim is to provide clear and decisive instructions
       to authors, so that they know what they need to do to get the article
@@ -50,9 +50,9 @@ const ReviewProcess = props => (
     <Paragraph>
       We very much appreciate the efforts of our peer reviewers, and we are
       pleased to work with{' '}
-      <ExternalLink href="https://publons.com/in/elife/" target="_blank">
+      <NativeLink href="https://publons.com/in/elife/" target="_blank">
         Publons
-      </ExternalLink>{' '}
+      </NativeLink>{' '}
       to give researchers the opportunity to be recognised for providing reviews
       for eLife.
     </Paragraph>

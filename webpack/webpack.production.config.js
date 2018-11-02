@@ -39,7 +39,7 @@ module.exports = [
         template: '../app/index-production.html',
         inject: 'body',
         packageVersion: require('../package.json').version,
-        gitHash: require('config')['pubsweet-client'].sha,
+        gitHash: config.git.sha,
         buildTime: new Date().toString(),
       }),
       new webpack.DefinePlugin({
