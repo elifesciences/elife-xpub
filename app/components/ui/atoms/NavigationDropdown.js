@@ -36,6 +36,7 @@ class NavigationDropdown extends React.Component {
         border: 'none',
         boxShadow: 'none',
         minHeight: this.props.theme.space[6],
+        backgroundColor: this.props.theme.colorBackground,
       }),
       singleValue: (base, state) => ({
         ...base,
