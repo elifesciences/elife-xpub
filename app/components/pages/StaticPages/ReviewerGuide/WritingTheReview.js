@@ -2,7 +2,7 @@ import React from 'react'
 import { H1, H2, Link } from '@pubsweet/ui'
 
 import Paragraph from '../../../ui/atoms/Paragraph'
-import ExternalLink from '../../../ui/atoms/ExternalLink'
+import NativeLink from '../../../ui/atoms/NativeLink'
 import List from '../../../ui/atoms/List'
 
 const WritingTheReview = props => (
@@ -13,12 +13,12 @@ const WritingTheReview = props => (
 
     <Paragraph>
       eLife’s{' '}
-      <ExternalLink
+      <NativeLink
         href="http://elifesciences.org/about#aims-and-scope"
         target="_blank"
       >
         scope
-      </ExternalLink>{' '}
+      </NativeLink>{' '}
       is broad and inclusive, covering the full range of biomedical and life
       science research, from the most basic and theoretical work through to
       translational, applied and clinical research. We seek to publish all

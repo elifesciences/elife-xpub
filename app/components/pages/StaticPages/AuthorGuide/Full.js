@@ -2,7 +2,7 @@ import React from 'react'
 import { H1, H2, Link } from '@pubsweet/ui'
 
 import Paragraph from '../../../ui/atoms/Paragraph'
-import ExternalLink from '../../../ui/atoms/ExternalLink'
+import NativeLink from '../../../ui/atoms/NativeLink'
 import List from '../../../ui/atoms/List'
 
 const Full = props => (
@@ -39,12 +39,12 @@ const Full = props => (
 
     <Paragraph>
       Regarding the use of supplementary data, our vision is presented in{' '}
-      <ExternalLink
+      <NativeLink
         href="https://elifesciences.org/inside-elife/6f32c567/supplementary-data"
         target="_blank"
       >
         this blog post
-      </ExternalLink>
+      </NativeLink>
       . In short, we strive to make supplementary data, if applicable, easily
       searchable, discoverable, and citable, and made available in the most
       useful format for reuse.
@@ -59,19 +59,19 @@ const Full = props => (
           areas relating to sample-size estimation, replicates, and statistical
           reporting. At the Full Submission step, authors should be ready to
           upload a completed version of this form (
-          <ExternalLink
+          <NativeLink
             href="https://cdn.elifesciences.org/xpub/guides/transparent_reporting.pdf"
             target="_blank"
           >
             PDF
-          </ExternalLink>
+          </NativeLink>
           ;{' '}
-          <ExternalLink
+          <NativeLink
             href="https://cdn.elifesciences.org/xpub/guides/transparent_reporting.docx"
             target="_blank"
           >
             Word
-          </ExternalLink>
+          </NativeLink>
           ), which should describe the places within the submission where this
           information has been included.
         </Paragraph>
@@ -93,12 +93,12 @@ const Full = props => (
           also recognise that some figures are more central to the narrative of
           the paper than others, and so we therefore support ‘child’ figures
           (examples of which can be found in{' '}
-          <ExternalLink
+          <NativeLink
             href="http://elifesciences.org/content/1/e00181#F3"
             traget="_blank"
           >
             eLife 2012;1:e00181
-          </ExternalLink>
+          </NativeLink>
           ). These &quot;Figure Supplements&quot; must be linked to one of the
           primary figures: they can, for example, provide additional examples of
           analyses or data shown in a primary figure.
@@ -132,12 +132,12 @@ const Full = props => (
         <Paragraph>
           When preparing figures, we recommend that authors follow the
           principles of{' '}
-          <ExternalLink
+          <NativeLink
             href="http://jfly.iam.u-tokyo.ac.jp/color/"
             target="_blank"
           >
             Colour Universal Design
-          </ExternalLink>{' '}
+          </NativeLink>{' '}
           (Masataka, Okabe and Kei Ito, J*Fly), whereby colour schemes are
           chosen to ensure maximum accessibility for all types of colour vision.
         </Paragraph>
@@ -154,12 +154,12 @@ const Full = props => (
           eLife encourages authors to provide Source Data files, for example,
           for figures such as histograms or tables showing summary data (as
           shown in{' '}
-          <ExternalLink
+          <NativeLink
             href="http://elifesciences.org/content/1/e00109/#DC1"
             target="_blank"
           >
             eLife 2012;1:e00109
-          </ExternalLink>
+          </NativeLink>
           ). Each Source data file should relate directly to a single figure or
           table, whereas major datasets generated in the course of the work
           should be deposited externally, as explained below. Each source data
@@ -193,23 +193,23 @@ const Full = props => (
           is published, videos are embedded within the main body of the article
           (they are not presented as supplementary files) with the same status
           as primary figures (as shown in{' '}
-          <ExternalLink
+          <NativeLink
             href="http://elifesciences.org/content/1/e00007#media-1"
             target="_blank"
           >
             eLife 2012;1:e00007
-          </ExternalLink>
+          </NativeLink>
           ).
         </Paragraph>
         <Paragraph>
           eLife supports JMOL, a Java viewer for three-dimensional chemical
           structures, and we encourage authors to provide{' '}
-          <ExternalLink
+          <NativeLink
             href="http://wiki.jmol.org/index.php/File_formats/Coordinates"
             target="_blank"
           >
             compatible files
-          </ExternalLink>
+          </NativeLink>
           .
         </Paragraph>
       </li>
@@ -222,12 +222,12 @@ const Full = props => (
           files to the submission system (for example, MATLAB, R, Python, C,
           C++, Java). Any code provided should be properly documented, in line
           with{' '}
-          <ExternalLink
+          <NativeLink
             href="http://journals.plos.org/ploscompbiol/s/materials-and-software-sharing#loc-sharing-software"
             target="_blank"
           >
             these instructions
-          </ExternalLink>{' '}
+          </NativeLink>{' '}
           (courtesy of PLOS). Please also refer to our{' '}
           <Link to="/author-guide/journal-policies">
             Software sharing policy
@@ -282,12 +282,12 @@ const Full = props => (
       researchers and reliably connects you with your research contributions and
       affiliations, to help ensure that your work is properly attributed and
       credited (
-      <ExternalLink
+      <NativeLink
         href="https://elifesciences.org/inside-elife/e2bf15ca/publishers-to-require-orcid-identifiers-for-authors"
         target="_blank"
       >
         learn more
-      </ExternalLink>
+      </NativeLink>
       ).
     </Paragraph>
 
@@ -319,12 +319,12 @@ const Full = props => (
           curation; Writing – original draft preparation; Writing – review &amp;
           editing; Visualization; Supervision; Project administration; Funding
           acquisition (
-          <ExternalLink
+          <NativeLink
             href="https://elifesciences.org/inside-elife/f39cfcf5/enabling-the-contributor-roles-taxonomy-for-author-contributions?_ga=2.172472675.1994204094.1499675694-1424042520.1478607646"
             target="_blank"
           >
             read more
-          </ExternalLink>
+          </NativeLink>
           ).
         </Paragraph>
         <Paragraph>
@@ -375,22 +375,22 @@ const Full = props => (
           and/or URL, Database, License and Accessibility Information. This
           information will be used to create a list of the relevant major
           datasets in the published article (such as{' '}
-          <ExternalLink
+          <NativeLink
             href="http://elifesciences.org/content/1/e00070/article-data"
             target="_blank"
           >
             eLife 2012;1:e00070
-          </ExternalLink>
+          </NativeLink>
           ), to indicate their location along with unique identifiers, and
           licensing information – or any other factors – affecting access to or
           reuse of the datasets. For newly generated datasets, we encourage the
           use of the Creative Commons{' '}
-          <ExternalLink
+          <NativeLink
             href="https://creativecommons.org/publicdomain/zero/1.0/"
             target="_blank"
           >
             CC0 public domain dedication
-          </ExternalLink>
+          </NativeLink>
           .
         </Paragraph>
         <Paragraph>

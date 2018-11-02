@@ -3,7 +3,6 @@ const supertest = require('supertest')
 
 describe('Client config handler', () => {
   let routes
-
   const makeApp = () => {
     const app = express()
     routes(app)

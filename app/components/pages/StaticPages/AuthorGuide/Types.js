@@ -3,7 +3,7 @@ import { H1, H2, Link } from '@pubsweet/ui'
 
 import Paragraph from '../../../ui/atoms/Paragraph'
 import CalloutTextBox from '../../../ui/atoms/CalloutTextBox'
-import ExternalLink from '../../../ui/atoms/ExternalLink'
+import NativeLink from '../../../ui/atoms/NativeLink'
 
 const Types = props => (
   <React.Fragment>
@@ -14,22 +14,22 @@ const Types = props => (
     <H2>Editorials, Insights, and Feature articles</H2>
 
     <Paragraph>
-      <ExternalLink
+      <NativeLink
         href="https://elifesciences.org/articles/editorial"
         target="_blank"
       >
         Editorials
-      </ExternalLink>{' '}
+      </NativeLink>{' '}
       in eLife are written by eLife editors or staff.
     </Paragraph>
 
     <Paragraph>
-      <ExternalLink
+      <NativeLink
         href="https://elifesciences.org/articles/insight"
         target="_blank"
       >
         Insights
-      </ExternalLink>{' '}
+      </NativeLink>{' '}
       are commissioned by eLife staff and are always related to a Research
       Article published in the journal. Insights are written by experts in the
       field of the Research Article: they explain why the results reported are
@@ -37,12 +37,12 @@ const Types = props => (
     </Paragraph>
 
     <Paragraph>
-      <ExternalLink
+      <NativeLink
         href="https://elifesciences.org/articles/feature"
         target="_blank"
       >
         Feature Articles
-      </ExternalLink>{' '}
+      </NativeLink>{' '}
       should offer fresh insights into topics of broad interest to readers
       working in the life and biomedical sciences. There are no strict limits on
       length, but authors are advised to stay below 2000 words, two display
@@ -92,9 +92,9 @@ const Types = props => (
       Therefore, major datasets must be publicly deposited (unless there are
       strong ethical or legal reasons to restrict access); relevant code must
       conform to the{' '}
-      <ExternalLink href="https://opensource.org/docs/osd" target="_blank">
+      <NativeLink href="https://opensource.org/docs/osd" target="_blank">
         Open Source Definition
-      </ExternalLink>{' '}
+      </NativeLink>{' '}
       and be deposited in an appropriate public repository; and methodological
       advances need to be comprehensively described, along with details of the
       reagents and equipment, and their sources. Authors should follow the
@@ -138,19 +138,19 @@ const Types = props => (
       Materials and Methods section when the methods are the same as the
       original paper. Authors should upload a completed version of the
       Transparent Reporting Form (
-      <ExternalLink
+      <NativeLink
         href="https://cdn.elifesciences.org/xpub/guides/transparent_reporting.pdf"
         target="_blank"
       >
         PDF
-      </ExternalLink>
+      </NativeLink>
       ;{' '}
-      <ExternalLink
+      <NativeLink
         href="https://cdn.elifesciences.org/xpub/guides/transparent_reporting.docx"
         target="_blank"
       >
         Word
-      </ExternalLink>
+      </NativeLink>
       ) to accompany their submission.
     </Paragraph>
 
@@ -181,12 +181,12 @@ const Types = props => (
       original article&quot;&apos;, and it should be written in a measured tone;
       manuscripts not written in measured tone will be sent back to the authors
       for revision: please read{' '}
-      <ExternalLink
+      <NativeLink
         href="https://elifesciences.org/inside-elife/08093bce/elife-latest-introducing-scientific-correspondence-at-elife?_ga=2.134784754.2069272108.1540132848-2034406101.1537543708"
         target="_blank"
       >
         this blogpost
-      </ExternalLink>{' '}
+      </NativeLink>{' '}
       for more information.
     </Paragraph>
 

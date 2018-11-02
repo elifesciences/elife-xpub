@@ -2,7 +2,7 @@ import React from 'react'
 import { H1, H2, H3 } from '@pubsweet/ui'
 
 import Paragraph from '../../../ui/atoms/Paragraph'
-import ExternalLink from '../../../ui/atoms/ExternalLink'
+import NativeLink from '../../../ui/atoms/NativeLink'
 import List from '../../../ui/atoms/List'
 
 const Post = props => (
@@ -14,21 +14,21 @@ const Post = props => (
     <Paragraph>
       eLife is an open-access journal: articles are distributed under the terms
       of the{' '}
-      <ExternalLink
+      <NativeLink
         href="http://creativecommons.org/licenses/by/4.0/"
         target="_blank"
       >
         Creative Commons Attribution License
-      </ExternalLink>{' '}
+      </NativeLink>{' '}
       (except where otherwise noted), which permits unrestricted use and
       redistribution provided that the original author and source are credited,
       in line with the{' '}
-      <ExternalLink
+      <NativeLink
         href="http://www.budapestopenaccessinitiative.org/read"
         target="_blank"
       >
         BOAI definition of open access
-      </ExternalLink>
+      </NativeLink>
       .
     </Paragraph>
 
@@ -37,17 +37,17 @@ const Post = props => (
     <Paragraph>
       If your paper involves a method that would also benefit from the
       publication of a step-by-step protocol (e.g.,{' '}
-      <ExternalLink href="http://bio-protocol.org/e1067" target="_blank">
+      <NativeLink href="http://bio-protocol.org/e1067" target="_blank">
         http://bio-protocol.org/e1067
-      </ExternalLink>
+      </NativeLink>
       ), we would encourage you to consider{' '}
-      <ExternalLink href="http://www.bio-protocol.org/" target="_blank">
+      <NativeLink href="http://www.bio-protocol.org/" target="_blank">
         Bio-protocol
-      </ExternalLink>
+      </NativeLink>
       , which curates high-quality life science protocols, or{' '}
-      <ExternalLink href="https://www.protocols.io/" target="_blank">
+      <NativeLink href="https://www.protocols.io/" target="_blank">
         protocols.io
-      </ExternalLink>
+      </NativeLink>
       , which is an open-access repository of science methods.
     </Paragraph>
 
@@ -55,26 +55,26 @@ const Post = props => (
       <li>
         For a submission to Bio-protocol (these are subject to peer review),
         please refer to their{' '}
-        <ExternalLink
+        <NativeLink
           href="http://www.bio-protocol.org/Protocol_Preparation_Guidelines.aspx"
           target="_blank"
         >
           guidelines
-        </ExternalLink>{' '}
+        </NativeLink>{' '}
         and then submit the protocol using{' '}
-        <ExternalLink
+        <NativeLink
           href="http://www.bio-protocol.org/login.aspx?in=2%20"
           target="_blank"
         >
           this link
-        </ExternalLink>
+        </NativeLink>
         .
       </li>
       <li>
         For a submission to{' '}
-        <ExternalLink href="https://www.protocols.io/" target="_blank">
+        <NativeLink href="https://www.protocols.io/" target="_blank">
           protocols.io
-        </ExternalLink>
+        </NativeLink>
         , after describing the step-by-step protocol, select “Get DOI” to obtain
         a persistent digital object identifier, which should be included within
         the Materials and Methods section of your manuscript, using this format:
@@ -89,12 +89,12 @@ const Post = props => (
     <Paragraph>
       To ensure that new research is made available as rapidly as possible,
       eLife offers an{' '}
-      <ExternalLink
+      <NativeLink
         href="http://elifesciences.org/elife-news/picking-up-speed"
         target="_blank"
       >
         optional service to authors
-      </ExternalLink>{' '}
+      </NativeLink>{' '}
       whereby a PDF of their accepted manuscript can be published within a few
       days of acceptance.
     </Paragraph>
@@ -124,12 +124,12 @@ const Post = props => (
       The final version of the accepted article will be published, along with
       the decision letter incorporating the review comments and the authors’
       response to those comments (as in{' '}
-      <ExternalLink
+      <NativeLink
         href="http://elifesciences.org/content/1/e00109/#decision-letter"
         target="_blank"
       >
         eLife 2012;1:e00109
-      </ExternalLink>
+      </NativeLink>
       ). If authors have any questions or concerns about the content of the
       decision letter after peer review, or their response to this letter, it is
       important to notify the journal office as soon as possible.
@@ -188,48 +188,48 @@ const Post = props => (
       (where they agree) with another journal of the corresponding author’s
       choice. As an example of what others have done, we have facilitated the
       transfer of review material to a range of journals, including{' '}
-      <ExternalLink
+      <NativeLink
         href="http://www.biologists.com/biology-open/transfer-to-biology-open-from-elife/"
         target="_blank"
       >
         Biology Open
-      </ExternalLink>{' '}
+      </NativeLink>{' '}
       (which offers the option to upload the manuscript files on the
       corresponding author’s behalf),{' '}
-      <ExternalLink href="https://bmcbiol.biomedcentral.com/" target="_blank">
+      <NativeLink href="https://bmcbiol.biomedcentral.com/" target="_blank">
         BMC Biology
-      </ExternalLink>
+      </NativeLink>
       ,{' '}
-      <ExternalLink href="http://embor.embopress.org/" target="_blank">
+      <NativeLink href="http://embor.embopress.org/" target="_blank">
         EMBO Reports
-      </ExternalLink>
+      </NativeLink>
       ,{' '}
-      <ExternalLink href="http://www.eneuro.org/ " target="_blank">
+      <NativeLink href="http://www.eneuro.org/ " target="_blank">
         eNeuro
-      </ExternalLink>
+      </NativeLink>
       , the{' '}
-      <ExternalLink
+      <NativeLink
         href="https://www.plos.org/which-journal-is-right-for-me"
         target="_blank"
       >
         PLOS journals
-      </ExternalLink>
+      </NativeLink>
       , the{' '}
-      <ExternalLink href="http://jcb.rupress.org/" target="_blank">
+      <NativeLink href="http://jcb.rupress.org/" target="_blank">
         Journal of Cell Biology
-      </ExternalLink>
+      </NativeLink>
       , and the{' '}
-      <ExternalLink href="http://jgp.rupress.org/" target="_blank">
+      <NativeLink href="http://jgp.rupress.org/" target="_blank">
         Journal of General Physiology
-      </ExternalLink>
+      </NativeLink>
       . We encourage authors of neuroscience submissions to consider re-using
       reviews with other members of the{' '}
-      <ExternalLink
+      <NativeLink
         href="http://nprc.incf.org/index.php/about/information-for-authors/"
         target="_blank"
       >
         Neuroscience Peer Review Consortium
-      </ExternalLink>
+      </NativeLink>
       .
     </Paragraph>
 

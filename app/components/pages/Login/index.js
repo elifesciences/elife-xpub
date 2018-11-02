@@ -8,7 +8,7 @@ import { H2 } from '@pubsweet/ui'
 import OrcidButton from '../../ui/atoms/OrcidButton'
 import ButtonLink from '../../ui/atoms/ButtonLink'
 import Paragraph from '../../ui/atoms/Paragraph'
-import ExternalLink from '../../ui/atoms/ExternalLink'
+import NativeLink from '../../ui/atoms/NativeLink'
 
 const { url: loginUrl, signupUrl, legacySubmissionUrl } = config.login
 
@@ -110,16 +110,15 @@ class LoginPage extends React.Component {
               </a>
             </Box>
             <Box>
-              No ORCID? <ExternalLink href={signupUrl}>Sign up</ExternalLink>{' '}
-              now.
+              No ORCID? <NativeLink href={signupUrl}>Sign up</NativeLink> now.
             </Box>
           </Flex>
         )}
         <Paragraph>
           For{' '}
-          <ExternalLink href={legacySubmissionUrl}>
+          <NativeLink href={legacySubmissionUrl}>
             existing manuscripts
-          </ExternalLink>{' '}
+          </NativeLink>{' '}
           go to our full submission and peer review system.
         </Paragraph>
       </Box>
