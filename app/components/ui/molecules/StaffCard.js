@@ -11,7 +11,8 @@ const StaffImg = styled.img`
 `
 
 const StaffName = styled.div`
-  font-weight: bold;
+  font-family: ${th('fontHeading')};
+  font-weight: 400;
 `
 const StaffCard = ({ name, telephone, jobTitle, photoURL }) => (
   <React.Fragment>
