@@ -63,7 +63,8 @@ const MenuItem = styled.li`
 `
 
 const MenuHeading = styled.div`
-  font-weight: bold;
+  font-family: ${th('fontHeading')};
+  font-weight: 400;
   border-bottom: ${th('borderWidth')} ${th('borderStyle')} ${th('colorBorder')};
   padding: ${th('space.2')};
   padding-right: ${th('space.3')};

@@ -59,7 +59,8 @@ const Root = styled(Flex)`
 
 const TitleBox = styled(Box)`
   color: ${props => props.theme[props.color]};
-  font-weight: bold;
+  font-family: ${th('fontHeading')};
+  font-weight: 400;
   text-align: left;
   flex-grow: 1;
   ${media.tabletPortraitUp`

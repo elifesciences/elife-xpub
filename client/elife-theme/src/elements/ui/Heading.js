@@ -5,6 +5,7 @@ export default css`
   /* clear browser-added margin and font-size */
   margin-top: 0px;
   color: ${th('colorText')};
+  font-weight: 400;
 `
 
 export const H1 = css`
