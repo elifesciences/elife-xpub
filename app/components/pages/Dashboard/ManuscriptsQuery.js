@@ -1,8 +1,8 @@
 import React from 'react'
 import { Query } from 'react-apollo'
 
-const ManuscriptsQuery = ({ query, children }) => (
-  <Query fetchPolicy="cache-and-network" query={query}>
+const ManuscriptsQuery = ({ query, children, variables }) => (
+  <Query fetchPolicy="cache-and-network" query={query} variables={variables}>
     {({ data, loading, error }) => {
       if (loading && !data.manuscripts) {
         return <div>Loading...</div>

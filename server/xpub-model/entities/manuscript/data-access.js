@@ -62,11 +62,19 @@ const dataAccess = {
     return rows.map(rowToEntity)
   },
 
-  async selectAll(user) {
-    const query = joinSelect
-      .clone()
-      .where({ 'manuscript.created_by': user })
-      .orderBy('manuscript.created', 'desc')
+  async selectAll(user, createdBy) {
+    let belongingTo = user
+    if (typeof createdBy !== 'undefined') {
+      belongingTo = createdBy
+    }
+
+    let query = joinSelect.clone()
+
+    if (belongingTo !== '*') {
+      query = query.where({ 'manuscript.created_by': belongingTo })
+    }
+    query = query.orderBy('manuscript.created', 'desc')
+
     const rows = await runQuery(query)
     return rows.map(rowToEntity)
   },

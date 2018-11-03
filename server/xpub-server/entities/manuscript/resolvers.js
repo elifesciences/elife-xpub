@@ -30,9 +30,14 @@ const resolvers = {
       const userUuid = await UserManager.getUuidForProfile(user)
       return ManuscriptManager.find(id, userUuid)
     },
-    async manuscripts(_, vars, { user }) {
+    async manuscripts(_, { belongingTo }, { user }) {
       const userUuid = await UserManager.getUuidForProfile(user)
-      return ManuscriptManager.all(userUuid)
+      if (typeof belongingTo !== 'undefined') {
+        if (!(await UserManager.isAdmin(userUuid))) {
+          throw new Error('Disallowed: This user is not listed as an admin!')
+        }
+      }
+      return ManuscriptManager.all(userUuid, belongingTo)
     },
   },
 

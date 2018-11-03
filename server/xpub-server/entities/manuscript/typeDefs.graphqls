@@ -1,6 +1,6 @@
 extend type Query {
   manuscript(id: ID!): Manuscript!
-  manuscripts: [Manuscript]!
+  manuscripts(belongingTo: String): [Manuscript]!
 }
 
 extend type Mutation {

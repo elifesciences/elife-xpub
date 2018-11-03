@@ -2,6 +2,9 @@ const IdentityManager = require('../identity')
 const dataAccess = require('./data-access')
 const api = require('./helpers/elife-api')
 
+// TODO: Store these in config?
+const adminUsers = [{ orcid: '0001-0002-0003-0004', lastName: 'Last' }]
+
 const UserManager = {
   find: async uuid => {
     const dbUser = await dataAccess.selectById(uuid)
@@ -26,6 +29,12 @@ const UserManager = {
       })
     }
     return UserManager.extendWithApiData(dbUser)
+  },
+  isAdmin: async uuid => {
+    const userData = await UserManager.find(uuid)
+    const { orcid, lastName } = userData.identities[0].meta
+
+    return adminUsers.find(u => u.lastName === lastName && u.orcid === orcid)
   },
   getUuidForProfile: async profileId => {
     const dbUser = await dataAccess.selectByProfileId(profileId)
