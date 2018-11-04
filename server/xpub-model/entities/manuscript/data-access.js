@@ -62,16 +62,11 @@ const dataAccess = {
     return rows.map(rowToEntity)
   },
 
-  async selectAll(user, createdBy) {
-    let belongingTo = user
-    if (typeof createdBy !== 'undefined') {
-      belongingTo = createdBy
-    }
-
+  async selectAll(createdBy) {
     let query = joinSelect.clone()
 
-    if (belongingTo !== '*') {
-      query = query.where({ 'manuscript.created_by': belongingTo })
+    if (createdBy != null) {
+      query = query.where({ 'manuscript.created_by': createdBy })
     }
     query = query.orderBy('manuscript.created', 'desc')
 

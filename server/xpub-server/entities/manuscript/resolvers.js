@@ -32,12 +32,18 @@ const resolvers = {
     },
     async manuscripts(_, { belongingTo }, { user }) {
       const userUuid = await UserManager.getUuidForProfile(user)
+      let createdBy = userUuid
       if (typeof belongingTo !== 'undefined') {
+        // need to be an admin if you are not getting your own stuff
         if (!(await UserManager.isAdmin(userUuid))) {
           throw new Error('Disallowed: This user is not listed as an admin!')
         }
+
+        if (belongingTo === '*') {
+          createdBy = undefined
+        }
       }
-      return ManuscriptManager.all(userUuid, belongingTo)
+      return ManuscriptManager.all(createdBy)
     },
   },
 
