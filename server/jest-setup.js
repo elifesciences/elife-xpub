@@ -1,5 +1,4 @@
 const { db } = require('pubsweet-server')
-const pubsub = require('pubsweet-server/src/graphql/pubsub')
 
 jest.mock('@pubsweet/component-send-email', () => ({
   mails: [],
@@ -17,7 +16,4 @@ jest.mock('@pubsweet/component-send-email', () => ({
   },
 }))
 
-afterAll(async () => {
-  await pubsub.destroy()
-  await db.destroy()
-})
+afterAll(() => db.destroy())
