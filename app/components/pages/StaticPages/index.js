@@ -9,6 +9,7 @@ import ErrorBoundary from '../../global/ErrorBoundary'
 import media from '../../global/layout/media'
 import SideNav from './SideNav'
 import NavigationDropdown from '../../ui/atoms/NavigationDropdown'
+import ScrollToTop from './ScrollToTop'
 
 const TopNavContainer = styled(Box).attrs({ mx: -3 })`
   border-bottom: ${th('borderWidth')} ${th('borderStyle')} ${th('colorBorder')};
@@ -45,23 +46,25 @@ const StaticPage = ({ history, navList }) => (
           <SideNav navList={navList} />
         </SideNavContainer>
 
-        <MainContainer
-          mr={[0, 0, `8.33vw`, `16.67vw`, `25vw`]} // [0, 0, 1, 2, 3] columns out of a 12 column grid
-          width={[1, 1, 7 / 12, 7 / 12, 6 / 12]}
-        >
-          <Switch>
-            {navList &&
-              navList.map(navItem => (
-                <Route
-                  component={navItem.component}
-                  exact
-                  key={navItem.link}
-                  path={navItem.link}
-                />
-              ))}
-            <Redirect to={navList[0].link} />
-          </Switch>
-        </MainContainer>
+        <ScrollToTop>
+          <MainContainer
+            mr={[0, 0, `8.33vw`, `16.67vw`, `25vw`]} // [0, 0, 1, 2, 3] columns out of a 12 column grid
+            width={[1, 1, 7 / 12, 7 / 12, 6 / 12]}
+          >
+            <Switch>
+              {navList &&
+                navList.map(navItem => (
+                  <Route
+                    component={navItem.component}
+                    exact
+                    key={navItem.link}
+                    path={navItem.link}
+                  />
+                ))}
+              <Redirect to={navList[0].link} />
+            </Switch>
+          </MainContainer>
+        </ScrollToTop>
       </Flex>
     </ErrorBoundary>
   </div>
