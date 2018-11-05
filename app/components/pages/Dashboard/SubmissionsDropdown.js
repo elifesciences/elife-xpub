@@ -43,8 +43,10 @@ class SubmissionsDropdown extends React.Component {
             value={this.state.submissionState}
           />
         </MobileOnlySubmissionsContainer>
-        {this.state.submissionState === 'submissions' && <Submissions />}
-        {this.state.submissionState === 'archive' && <Archived />}
+        <Box mb={3}>
+          {this.state.submissionState === 'submissions' && <Submissions />}
+          {this.state.submissionState === 'archive' && <Archived />}
+        </Box>
         <EjpLink />
       </React.Fragment>
     )

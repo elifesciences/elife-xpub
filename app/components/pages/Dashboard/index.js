@@ -1,7 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
 import { Box, Flex } from 'grid-styled'
-import { th } from '@pubsweet/ui-toolkit'
 
 import media from '../../global/layout/media'
 import StickyFooter from '../../ui/atoms/StickyFooter'
@@ -25,7 +24,6 @@ const MobileOnlyContainer = styled(Box)`
 
 const TabbedSubmissions = styled(Tabs)`
   min-height: 300px;
-  margin-bottom: ${th('space.3')};
 `
 
 const DashboardPage = ({ history }) => (
@@ -34,18 +32,20 @@ const DashboardPage = ({ history }) => (
       <Box mb={1} mt={3}>
         <NewSubmissionButton history={history} />
       </Box>
-      <TabbedSubmissions>
-        <Tabs.List>
-          <Tabs.Tab>Submissions</Tabs.Tab>
-          <Tabs.Tab>Archive</Tabs.Tab>
-        </Tabs.List>
-        <Tabs.Panel data-test-id="manuscripts">
-          <Submissions />
-        </Tabs.Panel>
-        <Tabs.Panel>
-          <Archived />
-        </Tabs.Panel>
-      </TabbedSubmissions>
+      <Box mb={3}>
+        <TabbedSubmissions>
+          <Tabs.List>
+            <Tabs.Tab>Submissions</Tabs.Tab>
+            <Tabs.Tab>Archive</Tabs.Tab>
+          </Tabs.List>
+          <Tabs.Panel data-test-id="manuscripts">
+            <Submissions />
+          </Tabs.Panel>
+          <Tabs.Panel>
+            <Archived />
+          </Tabs.Panel>
+        </TabbedSubmissions>
+      </Box>
       <EjpLink />
     </ContainerHiddenFromMobile>
 
