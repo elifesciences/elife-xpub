@@ -7,6 +7,7 @@ import media from '../../global/layout/media'
 import Submissions from './panels/Submissions'
 import Archived from './panels/Archived'
 import NavigationDropdown from '../../ui/atoms/NavigationDropdown'
+import EjpLink from './EjpLink'
 
 const MobileOnlySubmissionsContainer = styled(Box).attrs({ mx: -3 })`
   border-bottom: ${th('borderWidth')} ${th('borderStyle')} ${th('colorBorder')};
@@ -44,6 +45,7 @@ class SubmissionsDropdown extends React.Component {
         </MobileOnlySubmissionsContainer>
         {this.state.submissionState === 'submissions' && <Submissions />}
         {this.state.submissionState === 'archive' && <Archived />}
+        <EjpLink />
       </React.Fragment>
     )
   }
