@@ -141,11 +141,13 @@ styleguide:
     NODE_ENV: production
     NODE_CONFIG_ENV: styleguide
     S3_BUCKET: ci-elife-xpub-styleguide
+    URL: https://s3.amazonaws.com/$S3_BUCKET/$CI_COMMIT_REF_NAME/index.html
   script:
     - cd ${HOME}
     - npm run build:styleguide
     - node scripts/upload-to-s3.js _build_styleguide $CI_COMMIT_REF_NAME
-    - "printf \"\nStyleguide: https://s3.amazonaws.com/$S3_BUCKET/$CI_COMMIT_REF_NAME/index.html\n\""
+    - ./scripts/github_status.sh success Styleguide $URL "Deployed successfully"
+    - "printf \"\nStyleguide: $URL\n\""
 
 review:
   image: pubsweet/deployer:latest
@@ -156,10 +158,11 @@ review:
     PACKAGE_NAME: xpub-elife
     FORCE_FRESH_DB: "yes"
     REQUIRES_PROVISIONING: "yes"
+    URL: http://${CI_ENVIRONMENT_SLUG}.${BASE_DOMAIN}
   environment:
     name: review/$CI_COMMIT_REF_NAME
     # !! kube-lego will fail if domain > 64 chars
-    url: "http://${CI_ENVIRONMENT_SLUG}.${BASE_DOMAIN}"
+    url: http://${CI_ENVIRONMENT_SLUG}.${BASE_DOMAIN}
     on_stop: stop_review
   except:
   - master
@@ -168,6 +171,8 @@ review:
   script:
     - source deploy.sh
     - create_deployment
+    - ./scripts/github_status.sh success "Review Environment" $URL "Deployed successfully"
+    - "printf \"\nEnvironment: $URL\n\""
 
 stop_review:
   image: pubsweet/deployer:latest
