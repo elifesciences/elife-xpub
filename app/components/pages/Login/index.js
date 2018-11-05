@@ -21,9 +21,9 @@ const EXCHANGE_TOKEN_MUTATION = gql`
   }
 `
 const Container = styled(Box)`
-  padding-top: ${th('space.3')};
+  margin-top: ${th('space.3')};
   ${media.tabletPortraitUp`
-    padding-top:${'calc(50vh - 300px)'};
+    margin-top:${'calc(50vh - 300px)'};
   `};
 `
 
