@@ -5,10 +5,13 @@ import { withApollo } from 'react-apollo'
 import gql from 'graphql-tag'
 import config from 'config'
 import { H2 } from '@pubsweet/ui'
+import styled from 'styled-components'
+import { th } from '@pubsweet/ui-toolkit'
 import OrcidButton from '../../ui/atoms/OrcidButton'
 import ButtonLink from '../../ui/atoms/ButtonLink'
 import Paragraph from '../../ui/atoms/Paragraph'
 import NativeLink from '../../ui/atoms/NativeLink'
+import media from '../../global/layout/media'
 
 const { url: loginUrl, signupUrl, legacySubmissionUrl } = config.login
 
@@ -16,6 +19,12 @@ const EXCHANGE_TOKEN_MUTATION = gql`
   mutation($token: String) {
     exchangeJournalToken(token: $token)
   }
+`
+const Container = styled(Box)`
+  padding-top: ${th('space.3')};
+  ${media.tabletPortraitUp`
+    padding-top:${'calc(50vh - 300px)'};
+  `};
 `
 
 class LoginPage extends React.Component {
@@ -75,7 +84,7 @@ class LoginPage extends React.Component {
     }
 
     return (
-      <Box mx="auto" width={[1, 410]}>
+      <Container mx="auto" width={[1, 410]}>
         {/* roughly centre the box vertically */}
         <Box mb={4}>
           <H2>
@@ -121,7 +130,7 @@ class LoginPage extends React.Component {
           </NativeLink>{' '}
           go to our full submission and peer review system.
         </Paragraph>
-      </Box>
+      </Container>
     )
   }
 }
