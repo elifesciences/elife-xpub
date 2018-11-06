@@ -11,5 +11,5 @@ fi
 release_name="elife-xpub--${1}"
 # TODO: hardcoded ip of a node
 node_ip=35.172.178.78
-node_port=$(kubectl get --namespace default -o jsonpath="{.spec.ports[0].nodePort}" services "$release_name")
+node_port=$(sudo -u elife -H kubectl get --namespace default -o jsonpath="{.spec.ports[0].nodePort}" services "$release_name")
 echo "http://$node_ip:$node_port"
