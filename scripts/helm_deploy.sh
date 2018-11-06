@@ -8,8 +8,8 @@ if [ "$#" -ne 2 ]; then
     exit 1
 fi
 
-release_name="elife-xpub--{$1}"
-image_tag="$2"
+release_name="elife-xpub--${1}"
+image_tag="${2}"
 
 # temporary: should use an S3 chart repository
 if [ ! -d /tmp/elife-xpub-formula ]; then
@@ -21,4 +21,4 @@ else
 fi
 
 cd helm/
-sudo -u elife -H helm upgrade --install $release_name --set image.tag=${image_tag} elife-xpub
+sudo -u elife -H helm upgrade --install "$release_name" --set image.tag="${image_tag}" elife-xpub
