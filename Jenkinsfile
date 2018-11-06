@@ -65,7 +65,7 @@ elifePipeline {
                 commit,
                 'success',
                 'continuous-integration/jenkins/deploy-for-review',
-                'Deploy for review URL',
+                'Deploy for review URL (experimental)',
                 reviewUrl
             )
         }
