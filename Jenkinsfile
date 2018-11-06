@@ -57,6 +57,7 @@ elifePipeline {
 
     elifePullRequestOnly { prNumber ->
         stage 'Deploy for review', {
+            checkout scm
             sh "scripts/helm_deploy.sh pr-${prNumber}"
         }
     }
