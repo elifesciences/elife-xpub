@@ -24,6 +24,11 @@ const ON_UPLOAD_PROGRESS = gql`
   }
 `
 
+function getProgress(loading, data) {
+  if (loading || !data) return 0
+  return data.uploadProgress
+}
+
 const FilesPageContainer = ({
   setFieldValue,
   setFieldError,
@@ -46,7 +51,7 @@ const FilesPageContainer = ({
                 completed: values[fieldName].some(
                   file => file.type === 'MANUSCRIPT_SOURCE',
                 ),
-                progress: uploadLoading ? 0 : uploadData.uploadProgress,
+                progress: getProgress(uploadLoading, uploadData),
                 error: uploadError,
               }}
               formError={touched[fieldName] && errors[fieldName]}
