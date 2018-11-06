@@ -1,6 +1,6 @@
 elifePipeline {
+    def commit
     node('containers-jenkins-plugin') {
-        def commit
         def image
         stage 'Checkout', {
             checkout scm
@@ -12,7 +12,6 @@ elifePipeline {
         stage 'Build image', {
             // TODO: pull existing docker image if caching is not already effective
             sh "IMAGE_TAG=${commit} docker-compose -f docker-compose.ci.yml build"
-            //sh "docker push elifesciences/elife-xpub:$commit}"
         }
 
         stage 'Project tests', {
@@ -49,6 +48,16 @@ elifePipeline {
             } finally {
                 sh "docker-compose -f docker-compose.ci.yml down -v"
             }
+        }
+
+        stage 'Push image', {
+            sh "docker push elifesciences/elife-xpub:${commit}"
+        }
+    }
+
+    elifePullRequestOnly { prNumber ->
+        stage 'Deploy for review', {
+            sh "scripts/helm_deploy.sh pr-${prNumber}"
         }
     }
 }
