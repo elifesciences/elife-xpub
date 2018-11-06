@@ -59,7 +59,7 @@ elifePipeline {
         stage 'Deploy for review', {
             checkout scm
             sh "scripts/helm_deploy.sh pr-${prNumber} ${commit}"
-            def reviewUrl = sh script: "scripts/helm_url.sh pr-${prNumber}", returnStdout: true
+            def reviewUrl = sh(script: "scripts/helm_url.sh pr-${prNumber}", returnStdout: true).trim()
             echo "Review url: $reviewUrl"
             elifeGithubCommitStatus(
                 commit,
