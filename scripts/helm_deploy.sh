@@ -21,4 +21,4 @@ else
 fi
 
 cd helm/
-sudo -u elife helm upgrade --install $release_name --set image.tag=${image_tag} elife-xpub
+sudo -u elife -H helm upgrade --install $release_name --set image.tag=${image_tag} elife-xpub
