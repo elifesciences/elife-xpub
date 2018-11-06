@@ -4,7 +4,7 @@ set -e
 if [ "$#" -ne 2 ]; then
     echo "Usage: $0 INSTANCE_NAME IMAGE_TAG"
     echo "Example: $0 pr-42 latest"
-    echo "Will create a elife-xpub--$INSTANCE_NAME Helm release deploying the given tag"
+    echo "Will create a elife-xpub--\$INSTANCE_NAME Helm release deploying the given tag"
     exit 1
 fi
 
