@@ -60,6 +60,14 @@ elifePipeline {
             checkout scm
             sh "scripts/helm_deploy.sh pr-${prNumber} ${commit}"
             def reviewUrl = sh script: "scripts/helm_url.sh pr-${prNumber}", returnStdout: true
+            echo "Review url: $reviewUrl"
+            elifeGithubCommitStatus(
+                commit,
+                'success',
+                'continuous-integration/jenkins/deploy-for-review',
+                'Deploy for review URL',
+                reviewUrl
+            )
         }
     }
 }
