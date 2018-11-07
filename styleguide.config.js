@@ -69,4 +69,5 @@ module.exports = {
   },
   styleguideDir: '_build_styleguide',
   skipComponentsWithoutExample: true,
+  assetsDir: 'assets',
 }
