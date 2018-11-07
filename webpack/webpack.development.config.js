@@ -39,7 +39,7 @@ module.exports = [
         [config.authsome.mode]: config.authsome.mode,
         [config.validations]: config.validations,
       }),
-      new CopyWebpackPlugin([{ from: '../static' }]),
+      new CopyWebpackPlugin([{ from: '../assets' }]),
     ],
     node: {
       fs: 'empty',
