@@ -31,10 +31,12 @@ const TabsHiddenFromMobile = styled(Tabs.List)`
   display: none;
   ${media.mobileUp`display: flex;`};
 `
+
 const MobileOnlySubmissionsContainer = styled(Box).attrs({ mx: -3 })`
   border-bottom: ${th('borderWidth')} ${th('borderStyle')} ${th('colorBorder')};
   ${media.mobileUp`display: none;`};
 `
+
 const submissionViewStates = [
   {
     label: 'Submissions',
@@ -45,6 +47,7 @@ const submissionViewStates = [
     component: <Archived />,
   },
 ]
+
 class DashboardPage extends React.Component {
   state = {
     selectedIndex: 0,
