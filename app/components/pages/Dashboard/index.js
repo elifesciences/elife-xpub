@@ -35,7 +35,16 @@ const MobileOnlySubmissionsContainer = styled(Box).attrs({ mx: -3 })`
   border-bottom: ${th('borderWidth')} ${th('borderStyle')} ${th('colorBorder')};
   ${media.mobileUp`display: none;`};
 `
-
+const submissionViewStates = [
+  {
+    label: 'Submissions',
+    component: <Submissions />,
+  },
+  {
+    label: 'Archive',
+    component: <Archived />,
+  },
+]
 class DashboardPage extends React.Component {
   state = {
     selectedIndex: 0,
@@ -59,13 +68,10 @@ class DashboardPage extends React.Component {
           <MobileOnlySubmissionsContainer>
             <NavigationDropdown
               onSelection={option => this.onTabSelect(option.value)}
-              options={[
-                {
-                  label: 'Submissions',
-                  value: 0,
-                },
-                { label: 'Archive', value: 1 },
-              ]}
+              options={submissionViewStates.map((view, viewIndex) => ({
+                label: view.label,
+                value: viewIndex,
+              }))}
               value={this.state.selectedIndex}
             />
           </MobileOnlySubmissionsContainer>
@@ -74,15 +80,18 @@ class DashboardPage extends React.Component {
             selectedIndex={this.state.selectedIndex}
           >
             <TabsHiddenFromMobile>
-              <Tabs.Tab>Submissions</Tabs.Tab>
-              <Tabs.Tab>Archive</Tabs.Tab>
+              {submissionViewStates.map(view => (
+                <Tabs.Tab key={view.label}>{view.label}</Tabs.Tab>
+              ))}
             </TabsHiddenFromMobile>
-            <Tabs.Panel data-test-id="manuscripts">
-              <Submissions />
-            </Tabs.Panel>
-            <Tabs.Panel>
-              <Archived />
-            </Tabs.Panel>
+            {submissionViewStates.map(view => (
+              <Tabs.Panel
+                data-test-id={view.label.toLowerCase()}
+                key={view.label}
+              >
+                {view.component}
+              </Tabs.Panel>
+            ))}
           </TabbedSubmissions>
           <EjpLink />
         </Box>
