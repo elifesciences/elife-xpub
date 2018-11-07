@@ -1,4 +1,5 @@
 const path = require('path')
+const CopyWebpackPlugin = require('copy-webpack-plugin')
 
 module.exports = {
   sections: [
@@ -51,6 +52,7 @@ module.exports = {
         config: path.join(__dirname, 'styleguide/config.json'),
       },
     },
+    plugins: [new CopyWebpackPlugin([{ from: './assets', to: 'assets' }])],
   },
   context: {
     formik: 'formik',
@@ -69,5 +71,4 @@ module.exports = {
   },
   styleguideDir: '_build_styleguide',
   skipComponentsWithoutExample: true,
-  assetsDir: 'assets',
 }
