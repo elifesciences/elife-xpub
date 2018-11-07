@@ -19,13 +19,12 @@ injectGlobal`
       url('/assets/fonts/NotoSans-Regular-webfont-custom-2-subsetting.woff') format('woff');
   }
 
-
   /* Serif */
   @font-face {
     font-display: fallback;
     font-family: "Noto Serif";
     src:
       url('/assets/fonts/NotoSerif-Regular-webfont-custom-2-subsetting.woff2') format('woff2'),
-      url('/assets/fonts/NotoSerif-Bold-webfont-basic-latin-subsetting.woff') format('woff');
+      url('/assets/fonts/NotoSerif-Regular-webfont-custom-2-subsetting.woff') format('woff');
   }
 `
