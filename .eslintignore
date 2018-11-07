@@ -1,4 +1,4 @@
 _build
 coverage
 node_modules
-static
+assets
