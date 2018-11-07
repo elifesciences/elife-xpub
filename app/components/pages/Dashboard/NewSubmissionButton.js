@@ -4,11 +4,11 @@ import { Button } from '@pubsweet/ui'
 
 import { CREATE_MANUSCRIPT } from '../SubmissionWizard/operations'
 
-const NewSubmissionButton = ({ history, ...props }) => (
+const NewSubmissionButton = ({ history, dataTestId, ...props }) => (
   <Mutation mutation={CREATE_MANUSCRIPT}>
     {createManuscript => (
       <Button
-        data-test-id="mobile-new-submission"
+        data-test-id={dataTestId}
         onClick={() =>
           createManuscript().then(result =>
             history.push(`/submit/${result.data.createManuscript.id}/author`),
