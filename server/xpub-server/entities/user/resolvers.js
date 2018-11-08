@@ -1,13 +1,13 @@
 const jwt = require('jsonwebtoken')
 const config = require('config')
-const { UserManager } = require('@elifesciences/xpub-model')
+const { User } = require('@elifesciences/xpub-model')
 const elifeApi = require('@elifesciences/xpub-model/entities/user/helpers/elife-api')
 
 const resolvers = {
   Query: {
     async currentUser(_, vars, ctx) {
       if (!ctx.user) return null
-      return UserManager.findOrCreate(ctx.user)
+      return User.findOrCreate(ctx.user)
     },
     async editors(_, { role }) {
       return elifeApi.people(role)

@@ -8,11 +8,7 @@ const logger = require('@pubsweet/logger')
 const { createTables } = require('@pubsweet/db-manager')
 const mailer = require('@pubsweet/component-send-email')
 const { mecaExport } = require('@elifesciences/xpub-meca-export')
-const {
-  UserManager: User,
-  FileManager,
-  ManuscriptManager: Manuscript,
-} = require('@elifesciences/xpub-model')
+const { User, File, Manuscript } = require('@elifesciences/xpub-model')
 const { Mutation } = require('.')
 const {
   userData,
@@ -39,8 +35,8 @@ describe('Manuscripts', () => {
     replaySetup('success')
     await createTables(true)
     const [user] = await Promise.all([
-      User.save(userData),
-      User.save(badUserData),
+      new User(userData).save(),
+      new User(badUserData).save(),
     ])
     userId = user.id
     mailer.clearMails()
@@ -51,15 +47,15 @@ describe('Manuscripts', () => {
 
     beforeAll(() =>
       jest
-        .spyOn(FileManager, 'getContent')
+        .spyOn(File.prototype, 'getContent')
         .mockImplementation(() => 'A real PDF'))
 
-    afterAll(() => FileManager.getContent.mockRestore())
+    afterAll(() => File.prototype.getContent.mockRestore())
 
     beforeEach(async () => {
       jest.clearAllMocks()
 
-      initialManuscript = Manuscript.new({ createdBy: userId })
+      initialManuscript = new Manuscript({ createdBy: userId })
       initialManuscript.files = [
         {
           url: 'fake-path.pdf',
@@ -68,7 +64,7 @@ describe('Manuscripts', () => {
         },
       ]
 
-      const manuscript = await Manuscript.save(initialManuscript)
+      const manuscript = await initialManuscript.save()
       id = manuscript.id
     })
 
@@ -111,9 +107,9 @@ describe('Manuscripts', () => {
     })
 
     it('removes blank optional reviewer rows', async () => {
-      const manuscript = lodash.cloneDeep(manuscriptInput)
-      manuscript.id = id
-      manuscript.suggestedReviewers = [
+      const input = lodash.cloneDeep(manuscriptInput)
+      input.id = id
+      input.suggestedReviewers = [
         { name: 'Reviewer 1', email: 'reviewer1@mail.com' },
         { name: 'Reviewer 2', email: 'reviewer2@mail.com' },
         { name: 'Reviewer 3', email: 'reviewer3@mail.com' },
@@ -121,16 +117,10 @@ describe('Manuscripts', () => {
         { name: 'Reviewer 4', email: 'reviewer4@mail.com' },
         { name: '', email: '' },
       ]
-      await Mutation.submitManuscript(
-        {},
-        { data: manuscript },
-        { user: profileId },
-      )
+      await Mutation.submitManuscript({}, { data: input }, { user: profileId })
 
-      const storedManuscript = await Manuscript.find(id, userId)
-      const team = storedManuscript.teams.find(
-        t => t.role === 'suggestedReviewer',
-      )
+      const manuscript = await Manuscript.find(id, userId)
+      const team = manuscript.teams.find(t => t.role === 'suggestedReviewer')
       expect(team.teamMembers.map(member => member.meta)).toEqual([
         { name: 'Reviewer 1', email: 'reviewer1@mail.com' },
         { name: 'Reviewer 2', email: 'reviewer2@mail.com' },
@@ -140,8 +130,8 @@ describe('Manuscripts', () => {
     })
 
     it("fails if manuscript doesn't belong to user", async () => {
-      const blankManuscript = Manuscript.new({ createdBy: userId })
-      const manuscript = await Manuscript.save(blankManuscript)
+      const blankManuscript = new Manuscript({ createdBy: userId })
+      const manuscript = await blankManuscript.save()
       await expect(
         Mutation.submitManuscript(
           {},
@@ -152,11 +142,11 @@ describe('Manuscripts', () => {
     })
 
     it('fails if manuscript has already been submitted', async () => {
-      const blankManuscript = Manuscript.new({
+      const blankManuscript = new Manuscript({
         createdBy: userId,
         status: Manuscript.statuses.MECA_EXPORT_PENDING,
       })
-      const manuscript = await Manuscript.save(blankManuscript)
+      const manuscript = await blankManuscript.save()
       await expect(
         Mutation.submitManuscript(
           {},
@@ -226,6 +216,7 @@ describe('Manuscripts', () => {
         to: 'test@example.com',
         subject: 'MECA export failed',
       })
+
       expect(logger.error).toHaveBeenCalled()
       const updatedManuscript = await Manuscript.find(manuscript.id, userId)
       expect(updatedManuscript.status).toBe(

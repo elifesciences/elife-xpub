@@ -125,4 +125,5 @@ module.exports = {
     licenseKey: '',
     applicationID: '',
   },
+  schema: {}, // schema extensions for pubsweet-server
 }

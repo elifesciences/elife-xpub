@@ -4,7 +4,7 @@ const logger = require('@pubsweet/logger')
 const express = require('express')
 const bodyParser = require('body-parser')
 const supertest = require('supertest')
-const { ManuscriptManager } = require('@elifesciences/xpub-model')
+const { Manuscript } = require('@elifesciences/xpub-model')
 const routes = require('./routes')
 
 const makeApp = () => {
@@ -46,42 +46,32 @@ describe('MECA HTTP callback handler', () => {
   })
 
   it('updates manuscript status on success', async () => {
-    const manuscript = await ManuscriptManager.save(
-      ManuscriptManager.new({ createdBy: userId }),
-    )
+    const manuscript = await new Manuscript({ createdBy: userId }).save()
     const request = makeApp()
-    expect(manuscript.status).toBe(ManuscriptManager.statuses.INITIAL)
+    expect(manuscript.status).toBe(Manuscript.statuses.INITIAL)
     await request
       .post(`/meca-result/${manuscript.id}`)
       .set('Authorization', `Bearer ${apiKey}`)
       .send({ result: 'success' })
       .expect(204)
-    const updatedManuscript = await ManuscriptManager.find(
-      manuscript.id,
-      userId,
-    )
+    const updatedManuscript = await Manuscript.find(manuscript.id, userId)
     expect(updatedManuscript.status).toBe(
-      ManuscriptManager.statuses.MECA_IMPORT_SUCCEEDED,
+      Manuscript.statuses.MECA_IMPORT_SUCCEEDED,
     )
   })
 
   it('updates manuscript status on failure', async () => {
-    const manuscript = await ManuscriptManager.save(
-      ManuscriptManager.new({ createdBy: userId }),
-    )
+    const manuscript = await new Manuscript({ createdBy: userId }).save()
     const request = makeApp()
-    expect(manuscript.status).toBe(ManuscriptManager.statuses.INITIAL)
+    expect(manuscript.status).toBe(Manuscript.statuses.INITIAL)
     await request
       .post(`/meca-result/${manuscript.id}`)
       .set('Authorization', `Bearer ${apiKey}`)
       .send({ result: 'failure' })
       .expect(204)
-    const updatedManuscript = await ManuscriptManager.find(
-      manuscript.id,
-      userId,
-    )
+    const updatedManuscript = await Manuscript.find(manuscript.id, userId)
     expect(updatedManuscript.status).toBe(
-      ManuscriptManager.statuses.MECA_IMPORT_FAILED,
+      Manuscript.statuses.MECA_IMPORT_FAILED,
     )
   })
 

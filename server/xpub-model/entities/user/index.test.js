@@ -1,5 +1,5 @@
 const { createTables } = require('@pubsweet/db-manager')
-const UserManager = require('.')
+const User = require('.')
 const replaySetup = require('../../../../test/helpers/replay-setup')
 
 replaySetup('success')
@@ -11,22 +11,24 @@ describe('User manager', () => {
 
   describe('findOrCreate()', () => {
     it('creates a new user if it does not exist', async () => {
-      const user = await UserManager.findOrCreate(profileId)
+      const user = await User.findOrCreate(profileId)
       expect(user.id).toBeTruthy()
     })
 
     it('loads existing user if found', async () => {
-      const expectedUser = await UserManager.save({
+      const savedUser = await new User({
         identities: [{ type: 'elife', identifier: profileId }],
+      }).save()
+      const loadedUser = await User.findOrCreate(profileId)
+
+      expect(loadedUser).toMatchObject({
+        id: savedUser.id,
+        identities: [{ type: 'elife', userId: savedUser.id }],
       })
-
-      const actualUser = await UserManager.findOrCreate(profileId)
-
-      expect(actualUser).toMatchObject(expectedUser)
     })
 
     it('extends user identity with API data', async () => {
-      const actualUser = await UserManager.findOrCreate(profileId)
+      const actualUser = await User.findOrCreate(profileId)
       const identity = actualUser.identities[0]
       expect(identity).toMatchObject({
         name: 'Tamlyn Rhodes',
@@ -42,12 +44,19 @@ describe('User manager', () => {
   })
 
   describe('save()', () => {
+    it('saves identities with user', async () => {
+      const identities = [{ type: 'elife', identifier: profileId }]
+      await new User({ identities }).save()
+      const loadedUser = await User.findOrCreate(profileId)
+      expect(loadedUser.identities).toMatchObject(identities)
+    })
+
     it('fails to update non-existent user', () =>
       expect(
-        UserManager.save({
+        new User({
           id: 'f05bbbf9-ddf4-494f-a8da-84957e2708ee',
-          defaultIdentity: 'foo',
-        }),
-      ).rejects.toThrow('User not found'))
+          defaultIdentity: 'elife',
+        }).save(),
+      ).rejects.toThrow())
   })
 })

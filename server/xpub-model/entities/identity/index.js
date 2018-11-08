@@ -1,25 +1,30 @@
-const lodash = require('lodash')
-const dataAccess = require('./data-access')
+const BaseModel = require('@pubsweet/base-model')
 
-const empty = {}
+class Identity extends BaseModel {
+  static get tableName() {
+    return 'identity'
+  }
 
-const IdentityManager = {
-  find: dataAccess.selectById,
-  delete: dataAccess.delete,
-  new: () => lodash.cloneDeep(empty),
-  save: async identity => {
-    let id = { identity }
-    if (identity.id) {
-      const updated = await dataAccess.update(identity)
-      if (!updated) {
-        throw new Error('Identity not found')
-      }
-    } else {
-      id = await dataAccess.insert(identity)
+  static get schema() {
+    return {
+      required: ['userId', 'type', 'identifier'],
+      properties: {
+        type: { type: 'string' },
+        name: { type: 'string' },
+        displayName: { type: 'string' },
+        email: { type: 'string' },
+        aff: { type: 'string' },
+        identifier: { type: 'uuid' },
+        userId: { type: 'uuid' },
+        meta: {
+          properties: {
+            firstName: { type: 'string' },
+            lastName: { type: 'string' },
+          },
+        },
+      },
     }
-
-    return { ...identity, id }
-  },
+  }
 }
 
-module.exports = IdentityManager
+module.exports = Identity

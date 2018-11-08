@@ -1,8 +1,6 @@
 const lodash = require('lodash')
 const emptyManuscript = require('./helpers/empty')
-const dataAccess = require('./data-access')
-const TeamManager = require('../team')
-const FileManager = require('../file')
+const BaseModel = require('@pubsweet/base-model')
 
 const mergeObjects = (...inputs) =>
   lodash.mergeWith(
@@ -16,67 +14,145 @@ const mergeObjects = (...inputs) =>
     },
   )
 
-const Manuscript = {
-  statuses: {
-    INITIAL: 'INITIAL',
-    MECA_EXPORT_PENDING: 'MECA_EXPORT_PENDING',
-    MECA_EXPORT_FAILED: 'MECA_EXPORT_FAILED',
-    MECA_EXPORT_SUCCEEDED: 'MECA_EXPORT_SUCCEEDED',
-    MECA_IMPORT_FAILED: 'MECA_IMPORT_FAILED',
-    MECA_IMPORT_SUCCEEDED: 'MECA_IMPORT_SUCCEEDED',
-  },
+class Manuscript extends BaseModel {
+  static get tableName() {
+    return 'manuscript'
+  }
 
-  MAX_SUGGESTED_REVIEWERS: 6,
-  MIN_SUGGESTED_REVIEWERS: 3,
+  constructor(props) {
+    super(lodash.merge({}, emptyManuscript, props))
+  }
 
-  find: dataAccess.selectById,
-  all: dataAccess.selectAll,
-  findByStatus: dataAccess.selectByStatus,
+  static get schema() {
+    return {
+      required: ['createdBy'],
+      properties: {
+        createdBy: { type: 'uuid' },
+        journalId: { type: 'uuid' },
+        status: { type: 'string' },
+        meta: {
+          title: { type: 'string' },
+          articleType: { type: 'string' },
+          articleIds: { type: 'array' },
+          abstract: { type: 'string' },
+          subjects: { type: 'array' },
+          notes: { type: 'array' },
+        },
+        previouslyDiscussed: { type: ['string', 'null'] },
+        previouslySubmitted: { type: 'array' },
+        cosubmission: { type: 'array' },
+        suggestionsConflict: { type: 'boolean' },
+        coverLetter: { type: 'string' },
+        opposedSeniorEditorsReason: { type: 'string' },
+        opposedReviewingEditorsReason: { type: 'string' },
+        opposedReviewersReason: { type: 'string' },
+        submitterSignature: { type: 'string' },
+        disclosureConsent: { type: 'boolean' },
+        formState: { type: ['string', 'null'] },
 
-  delete: async (id, user) => {
-    const manuscript = await dataAccess.selectById(id, user)
-    await Promise.all(manuscript.files.map(file => FileManager.delete(file.id)))
-    await Promise.all(manuscript.teams.map(team => TeamManager.delete(team.id)))
-    await dataAccess.delete(id)
-  },
-
-  new: (params = {}) => lodash.merge({}, emptyManuscript, params),
-
-  save: async manuscript => {
-    // TODO wrap these queries in a transaction
-    let { id } = manuscript
-    if (id) {
-      const updated = await dataAccess.update(manuscript)
-      if (!updated) {
-        throw new Error('Manuscript not found')
-      }
-    } else {
-      id = await dataAccess.insert(manuscript)
+        relatedManuscripts: { type: ['array', 'null'] },
+        qcIssues: { type: ['array', 'null'] },
+        decision: { type: ['string', 'null'] },
+        previousVersion: { type: 'uuid' },
+      },
     }
+  }
 
-    if (manuscript.teams) {
-      await Promise.all(
-        manuscript.teams.map(team =>
-          TeamManager.save({ ...team, objectId: id, objectType: 'manuscript' }),
-        ),
-      )
+  static get jsonAttributes() {
+    // tell objection to serialise arrays as a postgres array rather than JSON
+    return []
+  }
+
+  static get relationMappings() {
+    return {
+      files: {
+        relation: BaseModel.HasManyRelation,
+        modelClass: `${__dirname}/../file`,
+        join: {
+          from: 'manuscript.id',
+          to: 'file.manuscriptId',
+        },
+      },
+      teams: {
+        relation: BaseModel.HasManyRelation,
+        modelClass: `${__dirname}/../team`,
+        join: {
+          from: 'manuscript.id',
+          to: 'team.objectId',
+        },
+      },
     }
+  }
 
-    if (manuscript.files) {
-      await Promise.all(
-        manuscript.files.map(file =>
-          FileManager.save({ ...file, manuscriptId: id }),
-        ),
-      )
+  static get statuses() {
+    return {
+      INITIAL: 'INITIAL',
+      MECA_EXPORT_PENDING: 'MECA_EXPORT_PENDING',
+      MECA_EXPORT_FAILED: 'MECA_EXPORT_FAILED',
+      MECA_EXPORT_SUCCEEDED: 'MECA_EXPORT_SUCCEEDED',
+      MECA_IMPORT_FAILED: 'MECA_IMPORT_FAILED',
+      MECA_IMPORT_SUCCEEDED: 'MECA_IMPORT_SUCCEEDED',
     }
+  }
 
-    return { ...manuscript, id }
-  },
+  static get MAX_SUGGESTED_REVIEWERS() {
+    return 6
+  }
+  static get MIN_SUGGESTED_REVIEWERS() {
+    return 3
+  }
 
-  applyInput: (originalManuscript, input) => {
-    const manuscript = mergeObjects(
-      {},
-      originalManuscript,
+  static async find(id, user) {
+    const [manuscript] = await this.query().where({
+      'manuscript.id': id,
+      'manuscript.created_by': user,
+    })
+
+    if (!manuscript) {
+      throw new Error(`${this.name} not found`)
+    }
+    // todo why does eager loading sometimes not work?
+    await manuscript.$loadRelated('[teams, files]')
+
+    return manuscript
+  }
+
+  static async findByStatus(status, user) {
+    const manuscripts = await this.query().where({
+      'manuscript.status': status,
+      'manuscript.created_by': user,
+    })
+    // todo why do I need to do this?
+    await Promise.all(
+      manuscripts.map(manuscript => manuscript.$loadRelated('[teams, files]')),
+    )
+    return manuscripts
+  }
+
+  async save() {
+    // save manuscript and all related files and teams
+    // note that this also deletes any related entities that are not present
+    await this.$query().upsertGraphAndFetch(this)
+    // reload related entities
+    await this.$loadRelated('[teams, files]')
+    return this
+  }
+
+  // atomically update the manuscript status
+  static async updateStatus(id, status) {
+    // Can't use objection's patch method as this overwrites existing data with defaults
+    const updates = await this.knex()
+      .table(this.tableName)
+      .where({ id })
+      .update({ status })
+    if (updates === 0) {
+      throw new Error(`${this.name} not found`)
+    }
+  }
+
+  applyInput(input) {
+    mergeObjects(
+      this,
       lodash.pick(input, [
         'meta',
         'coverLetter',
@@ -126,47 +202,58 @@ const Manuscript = {
     editorSuggestionTeams
       .concat(reviewerSuggestionTeams)
       .concat(authorTeam)
-      .forEach(team => Manuscript.addTeam(manuscript, team))
+      .forEach(team => this.addTeam(team))
 
-    return manuscript
-  },
+    return this
+  }
 
-  addTeam: (manuscript, team) => {
-    const index = manuscript.teams.findIndex(t => t.role === team.role)
+  setDefaults() {
+    // add defaults only when a manuscript is first created,
+    // not every time an object is instantiated
+    this.addTeam({
+      role: 'suggestedReviewer',
+      teamMembers: [
+        { meta: { name: '', email: '' } },
+        { meta: { name: '', email: '' } },
+        { meta: { name: '', email: '' } },
+      ],
+    })
+  }
+
+  addTeam(team) {
+    const index = this.teams.findIndex(t => t.role === team.role)
+    // make sure object type is set for teams
     if (index >= 0) {
-      Object.assign(manuscript.teams[index], team)
+      Object.assign(this.teams[index], { objectType: 'manuscript' }, team)
     } else {
-      manuscript.teams.push(team)
+      this.teams.push(Object.assign({ objectType: 'manuscript' }, team))
     }
-  },
+  }
 
-  removeOptionalBlankReviewers: manuscript => {
+  // todo this makes more sense as an instance method but that
+  // would mean applying the input to the manuscript first
+  static removeOptionalBlankReviewers(input) {
     const itemIsBlank = item => item.name + item.email === ''
 
-    const filteredReviewers = manuscript.suggestedReviewers.filter(
+    const filteredReviewers = input.suggestedReviewers.filter(
       (item, index) =>
         index < Manuscript.MIN_SUGGESTED_REVIEWERS || !itemIsBlank(item),
     )
 
-    return { ...manuscript, suggestedReviewers: filteredReviewers }
-  },
+    return { ...input, suggestedReviewers: filteredReviewers }
+  }
 
-  checkPermission: (manuscript, user) => {
-    if (user !== manuscript.createdBy) {
-      throw new Error('Manuscript not owned by user')
+  getAuthor() {
+    const authorTeam = this.teams.find(t => t.role === 'author')
+    if (!authorTeam) {
+      return null
     }
-  },
+    return authorTeam.teamMembers
+  }
 
-  getAuthor: manuscript => {
-    const index = manuscript.teams.findIndex(t => t.role === 'author')
-    if (index >= 0) {
-      return manuscript.teams[index].teamMembers
-    }
-    return null
-  },
-
-  getSource: manuscript =>
-    manuscript.files.find(file => file.type === 'MANUSCRIPT_SOURCE'),
+  getSource() {
+    return this.files.find(file => file.type === 'MANUSCRIPT_SOURCE')
+  }
 }
 
 module.exports = Manuscript

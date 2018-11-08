@@ -10,11 +10,7 @@ const { ON_UPLOAD_PROGRESS } = pubsubManager.asyncIterators
 
 const parseString = promisify(xml2js.parseString)
 
-const {
-  ManuscriptManager,
-  FileManager,
-  UserManager,
-} = require('@elifesciences/xpub-model')
+const { Manuscript, File, User } = require('@elifesciences/xpub-model')
 
 async function uploadManuscript(_, { file, id, fileSize }, { user }) {
   /**
@@ -34,18 +30,16 @@ async function uploadManuscript(_, { file, id, fileSize }, { user }) {
     )
   }
 
-  const userUuid = await UserManager.getUuidForProfile(user)
-  const manuscript = await ManuscriptManager.find(id, userUuid)
+  const userUuid = await User.getUuidForProfile(user)
+  const manuscript = await Manuscript.find(id, userUuid)
 
   const { stream, filename, mimetype } = await file
-  const fileEntity = await FileManager.save(
-    FileManager.new({
-      manuscriptId: manuscript.id,
-      url: `manuscripts/${id}`,
-      filename,
-      type: 'MANUSCRIPT_SOURCE',
-    }),
-  )
+  const fileEntity = await new File({
+    manuscriptId: manuscript.id,
+    url: `manuscripts/${id}`,
+    filename,
+    type: 'MANUSCRIPT_SOURCE',
+  }).save()
 
   const pubsub = await pubsubManager.getPubsub()
   const reportProgress = lodash.throttle(progress => {
@@ -74,11 +68,11 @@ async function uploadManuscript(_, { file, id, fileSize }, { user }) {
   })
 
   try {
-    await FileManager.putContent(fileEntity, fileContents, {
+    await fileEntity.putContent(fileContents, {
       size: fileSize,
     })
   } catch (err) {
-    await FileManager.delete(fileEntity.id)
+    await fileEntity.delete()
     throw err
   }
 
@@ -116,10 +110,11 @@ async function uploadManuscript(_, { file, id, fileSize }, { user }) {
     })
   }
 
+  manuscript.files.push(fileEntity)
   manuscript.meta.title = title
-  await ManuscriptManager.save(manuscript)
+  await manuscript.save()
 
-  return ManuscriptManager.find(id, userUuid)
+  return manuscript
 }
 
 module.exports = uploadManuscript

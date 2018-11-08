@@ -3,24 +3,25 @@ const config = require('config')
 const mailer = require('@pubsweet/component-send-email')
 const logger = require('@pubsweet/logger')
 
-const { ManuscriptManager, UserManager } = require('@elifesciences/xpub-model')
+const { Manuscript, User } = require('@elifesciences/xpub-model')
 
 async function updateManuscript(_, { data }, { user }) {
-  const userUuid = await UserManager.getUuidForProfile(user)
-  const originalManuscript = await ManuscriptManager.find(data.id, userUuid)
-  if (originalManuscript.status !== ManuscriptManager.statuses.INITIAL) {
+  const userUuid = await User.getUuidForProfile(user)
+  const manuscript = await Manuscript.find(data.id, userUuid)
+  if (manuscript.status !== Manuscript.statuses.INITIAL) {
     throw new Error(
-      `Cannot update manuscript with status of ${originalManuscript.status}`,
+      `Cannot update manuscript with status of ${manuscript.status}`,
     )
   }
 
-  const originalAuthorEmails = originalManuscript
-    ? ManuscriptManager.getAuthor(originalManuscript)
+  // TODO is this right?
+  const originalAuthorEmails = manuscript.getAuthor()
+    ? manuscript.getAuthor()
     : [].map(author => author.alias.email).join(',')
 
-  const manuscript = ManuscriptManager.applyInput(originalManuscript, data)
+  manuscript.applyInput(data)
 
-  const newAuthors = ManuscriptManager.getAuthor(manuscript)
+  const newAuthors = manuscript.getAuthor()
   const newAuthorEmails = newAuthors
     .map(author => author.alias.email)
     .join(',')
@@ -57,7 +58,7 @@ async function updateManuscript(_, { data }, { user }) {
       })
   }
 
-  await ManuscriptManager.save(manuscript)
+  await manuscript.save()
   logger.debug(`Updated manuscript`, {
     manuscriptId: data.id,
     userId: userUuid,
