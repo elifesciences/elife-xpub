@@ -1,4 +1,5 @@
 const path = require('path')
+const webpackConfig = require('./webpack/webpack.styleguide.config')
 
 module.exports = {
   sections: [
@@ -42,16 +43,7 @@ module.exports = {
       href: 'https://ui-staging-zpqsip.gateway.ps.elifesciences.yld.io/',
     },
   ],
-  webpackConfig: {
-    module: {
-      rules: require('./webpack/rules.js'),
-    },
-    resolve: {
-      alias: {
-        config: path.join(__dirname, 'styleguide/config.json'),
-      },
-    },
-  },
+  webpackConfig,
   context: {
     formik: 'formik',
   },

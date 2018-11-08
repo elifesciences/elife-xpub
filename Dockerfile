@@ -35,7 +35,7 @@ COPY \
 COPY app app
 COPY config config
 COPY scripts scripts
-COPY static static
+COPY assets assets
 COPY styleguide styleguide
 COPY test test
 COPY webpack webpack
