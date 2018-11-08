@@ -1,5 +1,17 @@
 const path = require('path')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
+const rules = require('./webpack/rules.js')
+
+rules.push({
+  test: /\.js$/,
+  loader: 'string-replace-loader',
+  options: {
+    search: '/assets/',
+    replace: './assets/',
+    flags: 'g',
+  },
+  include: [path.resolve(__dirname, 'app'), path.resolve(__dirname, 'client')],
+})
 
 module.exports = {
   sections: [
@@ -45,7 +57,7 @@ module.exports = {
   ],
   webpackConfig: {
     module: {
-      rules: require('./webpack/rules.js'),
+      rules,
     },
     resolve: {
       alias: {
