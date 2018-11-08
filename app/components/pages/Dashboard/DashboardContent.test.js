@@ -18,11 +18,11 @@ const submissionViewStates = [
   },
 ]
 
-const makeShallowWrapper = () =>
-  shallow(<DashboardContent submissionViewStates={submissionViewStates} />)
-
-const makeMountedWrapper = () =>
-  mount(
+describe('Dashboard page', () => {
+  const shallowWrapper = shallow(
+    <DashboardContent submissionViewStates={submissionViewStates} />,
+  )
+  const mountedWrapper = mount(
     <ThemeProvider theme={theme}>
       <MemoryRouter>
         <MockedProvider>
@@ -32,29 +32,39 @@ const makeMountedWrapper = () =>
     </ThemeProvider>,
   )
 
-describe('Dashboard page', () => {
   it('selected index is updated when tab is selected', () => {
-    const wrapper = makeShallowWrapper()
     const randomInteger = Math.floor(Math.random() * 100)
-    wrapper.instance().onTabSelect(randomInteger)
-    expect(wrapper.state().selectedIndex).toEqual(randomInteger)
+    shallowWrapper.instance().onTabSelect(randomInteger)
+    expect(shallowWrapper.state().selectedIndex).toEqual(randomInteger)
   })
 
-  it('number of options in navigation dropdown are the same as the number of tabs displayed', () => {
-    const wrapper = makeMountedWrapper()
-    const dropdownOptions = wrapper
+  it('Tabs and/or dashboard list items correspond to props passed in', () => {
+    const tabs = mountedWrapper.find('Tab')
+    const dropdownOptions = mountedWrapper
       .find('NavigationDropdown')
       .at(0)
       .props().options
-    const numTabs = wrapper.find('Tab').length
+    expect(tabs).toHaveLength(submissionViewStates.length)
+    expect(dropdownOptions).toHaveLength(submissionViewStates.length)
+
+    tabs.map((tab, tabIndex) =>
+      expect(tab.text()).toEqual(submissionViewStates[tabIndex].label),
+    )
+  })
+
+  it('number of options in navigation dropdown are the same as the number of tabs displayed', () => {
+    const dropdownOptions = mountedWrapper
+      .find('NavigationDropdown')
+      .at(0)
+      .props().options
+    const numTabs = mountedWrapper.find('Tab').length
     expect(dropdownOptions).toHaveLength(numTabs)
   })
 
   it('for each tab, an associated panel is also rendered', () => {
-    const wrapper = makeMountedWrapper()
-    const tabs = wrapper.find('Tab').map(tab => tab.text())
+    const tabs = mountedWrapper.find('Tab').map(tab => tab.text())
     tabs.forEach(tab =>
-      expect(wrapper.find(`[data-test-id="${tab.toLowerCase()}"]`)),
+      expect(mountedWrapper.find(`[data-test-id="${tab.toLowerCase()}"]`)),
     )
   })
 })
