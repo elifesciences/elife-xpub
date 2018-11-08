@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { Mutation } from 'react-apollo'
 import { Button } from '@pubsweet/ui'
 
@@ -22,5 +23,9 @@ const NewSubmissionButton = ({ history, dataTestId, ...props }) => (
     )}
   </Mutation>
 )
+
+NewSubmissionButton.propTypes = {
+  dataTestId: PropTypes.string.isRequired,
+}
 
 export default NewSubmissionButton

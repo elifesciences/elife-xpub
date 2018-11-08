@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { Box } from 'grid-styled'
 import { th } from '@pubsweet/ui-toolkit'
@@ -69,6 +70,15 @@ class DashboardContent extends React.Component {
       </React.Fragment>
     )
   }
+}
+
+DashboardContent.propTypes = {
+  submissionViewStates: PropTypes.arrayOf(
+    PropTypes.shape({
+      label: PropTypes.string.isRequired,
+      component: PropTypes.element.isRequired,
+    }),
+  ).isRequired,
 }
 
 export default DashboardContent
