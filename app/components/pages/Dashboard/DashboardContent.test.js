@@ -5,16 +5,28 @@ import { MemoryRouter } from 'react-router-dom'
 import { MockedProvider } from 'react-apollo/test-utils'
 import theme from '@elifesciences/elife-theme'
 
-import DashboardPage from '.'
+import DashboardContent from './DashboardContent'
 
-const makeShallowWrapper = () => shallow(<DashboardPage />)
+const submissionViewStates = [
+  {
+    label: '1st',
+    component: <div>Oh hey</div>,
+  },
+  {
+    label: '2nd',
+    component: <div>Second Tab</div>,
+  },
+]
+
+const makeShallowWrapper = () =>
+  shallow(<DashboardContent submissionViewStates={submissionViewStates} />)
 
 const makeMountedWrapper = () =>
   mount(
     <ThemeProvider theme={theme}>
       <MemoryRouter>
         <MockedProvider>
-          <DashboardPage history={[]} />
+          <DashboardContent submissionViewStates={submissionViewStates} />
         </MockedProvider>
       </MemoryRouter>
     </ThemeProvider>,
