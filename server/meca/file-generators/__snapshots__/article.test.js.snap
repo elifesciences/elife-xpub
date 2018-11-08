@@ -46,52 +46,52 @@ exports[`Article XML generator generates expected XML 1`] = `
       <contrib-group content-type=\\"potential_senior_editors\\">
         <contrib contrib-type=\\"suggested_senior_editor\\">
           <name>
-            <surname>Andrea Musacchio</surname>
-            <given-names/>
+            <surname>Musacchio</surname>
+            <given-names>Andrea</given-names>
           </name>
-          <email/>
+          <email>person2@email.com</email>
           <xref ref-type=\\"aff\\" rid=\\"aff1\\"/>
         </contrib>
         <contrib contrib-type=\\"suggested_senior_editor\\">
           <name>
-            <surname>Arup K Chakraborty</surname>
-            <given-names/>
+            <surname>Chakraborty</surname>
+            <given-names>Arup K</given-names>
           </name>
-          <email/>
-          <xref ref-type=\\"aff\\" rid=\\"aff1\\"/>
+          <email>person3@email.com</email>
+          <xref ref-type=\\"aff\\" rid=\\"aff2\\"/>
         </contrib>
         <contrib contrib-type=\\"opposed_senior_editor\\">
           <name>
-            <surname>Arup K Chakraborty</surname>
-            <given-names/>
+            <surname>Chakraborty</surname>
+            <given-names>Arup K</given-names>
           </name>
-          <email/>
-          <xref ref-type=\\"aff\\" rid=\\"aff1\\"/>
+          <email>person3@email.com</email>
+          <xref ref-type=\\"aff\\" rid=\\"aff2\\"/>
         </contrib>
       </contrib-group>
       <contrib-group content-type=\\"potential_reviewing_editors\\">
         <contrib contrib-type=\\"suggested_reviewing_editor\\">
           <name>
-            <surname>Alan G Hinnebusch</surname>
-            <given-names/>
+            <surname>Hinnebusch</surname>
+            <given-names>Alan G</given-names>
           </name>
-          <email/>
+          <email>person1@email.com</email>
           <xref ref-type=\\"aff\\" rid=\\"aff4\\"/>
         </contrib>
         <contrib contrib-type=\\"suggested_reviewing_editor\\">
           <name>
-            <surname>Alejandro Sanchez Alvarado</surname>
-            <given-names/>
+            <surname>Sanchez Alvarado</surname>
+            <given-names>Alejandro</given-names>
           </name>
-          <email/>
+          <email>person4@email.com</email>
           <xref ref-type=\\"aff\\" rid=\\"aff5\\"/>
         </contrib>
         <contrib contrib-type=\\"opposed_reviewing_editor\\">
           <name>
-            <surname>Aleksandra Walczak</surname>
-            <given-names/>
+            <surname>Walczak</surname>
+            <given-names>Aleksandra</given-names>
           </name>
-          <email/>
+          <email>person5@email.com</email>
           <xref ref-type=\\"aff\\" rid=\\"aff0\\"/>
         </contrib>
       </contrib-group>
@@ -136,13 +136,13 @@ exports[`Article XML generator generates expected XML 1`] = `
         <institution>Ecole normale superieure</institution>
       </aff>
       <aff id=\\"aff1\\">
-        <institution/>
+        <institution>Max Planck Institute of Molecular Physiology</institution>
       </aff>
       <aff id=\\"aff2\\">
-        <institution/>
+        <institution>Massachusetts Institute of Technology</institution>
       </aff>
       <aff id=\\"aff3\\">
-        <institution/>
+        <institution>Massachusetts Institute of Technology</institution>
       </aff>
       <aff id=\\"aff4\\">
         <institution>National Institute of Child Health and Human Development</institution>

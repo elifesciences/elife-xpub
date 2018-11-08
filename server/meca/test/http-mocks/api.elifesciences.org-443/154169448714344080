@@ -1,0 +1,28 @@
+GET /people/6ce3402a
+accept-encoding: gzip, deflate
+authorization: xpubsecret
+
+HTTP/1.1 200 OK
+server: nginx
+content-type: application/vnd.elife.person+json;version=1
+cache-control: max-age=300, public, stale-if-error=86400, stale-while-revalidate=300
+etag: "329766849915eb53a45406e08d626950"
+x-ua-compatible: IE=edge
+content-language: en
+x-content-type-options: nosniff
+x-frame-options: SAMEORIGIN
+access-control-allow-origin: *
+x-kong-upstream-latency: 165
+x-kong-proxy-latency: 1
+via: kong/0.9.5, 1.1 varnish, 1.1 varnish
+accept-ranges: bytes
+date: Thu, 08 Nov 2018 16:28:07 GMT
+age: 0
+connection: close
+x-served-by: cache-dca17721-DCA, cache-lcy19246-LCY
+x-cache: MISS, HIT
+x-cache-hits: 0, 1
+x-timer: S1541694487.098382,VS0,VE22
+vary: Accept, Authorization, Accept-Encoding
+
+{"id":"6ce3402a","type":{"id":"reviewing-editor","label":"Reviewing Editor"},"name":{"surname":"Sanchez Alvarado","givenNames":"Alejandro","preferred":"Alejandro Sanchez Alvarado","index":"Sanchez Alvarado, Alejandro"},"emailAddresses":[{"value":"person4@email.com","access":"restricted"}],"research":{"focuses":["regeneration"],"organisms":["planaria"],"expertises":[{"id":"cell-biology","name":"Cell Biology"},{"id":"stem-cells-regenerative-medicine","name":"Stem Cells and Regenerative Medicine"}]},"affiliations":[{"name":["Stowers Institute for Medical Research"],"address":{"formatted":["United States"],"components":{"country":"United States"}}}]}

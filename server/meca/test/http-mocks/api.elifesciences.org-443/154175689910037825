@@ -1,0 +1,27 @@
+GET /people/f78f3df1
+accept-encoding: gzip, deflate
+
+HTTP/1.1 200 OK
+server: nginx
+content-type: application/vnd.elife.person+json;version=1
+cache-control: max-age=300, public, stale-if-error=86400, stale-while-revalidate=300
+etag: "74eb21c7eb39155a46e4cb941ba1c817"
+x-ua-compatible: IE=edge
+content-language: en
+x-content-type-options: nosniff
+x-frame-options: SAMEORIGIN
+access-control-allow-origin: *
+x-kong-upstream-latency: 221
+x-kong-proxy-latency: 1
+via: kong/0.9.5, 1.1 varnish, 1.1 varnish
+accept-ranges: bytes
+date: Fri, 09 Nov 2018 09:48:19 GMT
+age: 0
+connection: close
+x-served-by: cache-dca17728-DCA, cache-lcy19234-LCY
+x-cache: MISS, MISS
+x-cache-hits: 0, 0
+x-timer: S1541756899.781607,VS0,VE341
+vary: Accept, Authorization, Accept-Encoding
+
+{"id":"f78f3df1","type":{"id":"reviewing-editor","label":"Reviewing Editor"},"name":{"surname":"Walczak","givenNames":"Aleksandra","preferred":"Aleksandra Walczak","index":"Walczak, Aleksandra"},"research":{"focuses":["systems biology","gene regulatory networks","immune system","population genetics"],"organisms":["zebrafish"],"expertises":[{"id":"computational-systems-biology","name":"Computational and Systems Biology"},{"id":"physics-living-systems","name":"Physics of Living Systems"}]},"affiliations":[{"name":["Ecole normale superieure"],"address":{"formatted":["France"],"components":{"country":"France"}}}]}

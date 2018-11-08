@@ -52,9 +52,10 @@ describe('MECA integration test', () => {
       await mecaExport(sampleManuscript, 'This is a test')
 
       const finalName = `${sampleManuscript.id}${mecaPostfix}`
-      const zip = await JsZip.loadAsync(
-        sftp.mockFs.readFileSync(`/test/${finalName}`),
-      )
+      const filename = `/test/${finalName}`
+
+      expect(sftp.mockFs.existsSync(filename)).toBeTruthy()
+      const zip = await JsZip.loadAsync(sftp.mockFs.readFileSync(filename))
 
       expect(getFileSizes(zip)).toMatchSnapshot({
         'disclosure.pdf': expect.any(Number),

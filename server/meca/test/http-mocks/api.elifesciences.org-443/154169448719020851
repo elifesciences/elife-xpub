@@ -1,0 +1,28 @@
+GET /people/590b9a04
+accept-encoding: gzip, deflate
+authorization: xpubsecret
+
+HTTP/1.1 200 OK
+server: nginx
+content-type: application/vnd.elife.person+json;version=1
+cache-control: max-age=300, public, stale-if-error=86400, stale-while-revalidate=300
+etag: "b1c88530e93385cbd156b5110a966909"
+x-ua-compatible: IE=edge
+content-language: en
+x-content-type-options: nosniff
+x-frame-options: SAMEORIGIN
+access-control-allow-origin: *
+x-kong-upstream-latency: 176
+x-kong-proxy-latency: 1
+via: kong/0.9.5, 1.1 varnish, 1.1 varnish
+accept-ranges: bytes
+date: Thu, 08 Nov 2018 16:28:07 GMT
+age: 0
+connection: close
+x-served-by: cache-dca17720-DCA, cache-lcy19241-LCY
+x-cache: MISS, HIT
+x-cache-hits: 0, 1
+x-timer: S1541694487.876658,VS0,VE300
+vary: Accept, Authorization, Accept-Encoding
+
+{"id":"590b9a04","type":{"id":"senior-editor","label":"Senior Editor"},"name":{"surname":"Musacchio","givenNames":"Andrea","preferred":"Andrea Musacchio","index":"Musacchio, Andrea"},"emailAddresses":[{"value":"person2@email.com","access":"restricted"}],"image":{"uri":"https:\/\/iiif.elifesciences.org\/journal-cms\/person%2F2017-08%2Fandrea_musacchio_cropped.jpg","alt":"","source":{"mediaType":"image\/jpeg","uri":"https:\/\/iiif.elifesciences.org\/journal-cms\/person%2F2017-08%2Fandrea_musacchio_cropped.jpg\/full\/full\/0\/default.jpg","filename":"andrea_musacchio_cropped.jpg"},"size":{"width":759,"height":642},"focalPoint":{"x":50,"y":50}},"profile":[{"text":"Andrea Musacchio is Director of the Department of Mechanistic Cell Biology at the Max Planck Institute of Molecular Physiology in Dortmund (Germany) since 2011, and he is also adjunct professor at the University of Duisburg-Essen. Before this, he worked at the European Institute of Oncology in Milan (Italy), where he established his first laboratory as an independent investigator in 1999. Musacchio completed undergraduate studies at the University of Rome-Tor Vergata and moved for his graduate studies to the EMBL in Heidelberg, working under the guidance of Dr. Matti Saraste on the structural analysis of signalling domains. He later moved to do his postdoctoral training at the Harvard Medical School under the guidance of Prof. Stephen C. Harrison, working on structures of clathrin. Work in the Musacchio laboratory focuses on the biochemical reconstitution, structural analysis, and functional investigation of kinetochores and centromeres, structures required for chromosome segregation during mitosis. Musacchio is EMBO Member since 2009.","type":"paragraph"}],"research":{"focuses":["kinetochore","cell cycle","centromere"],"expertises":[{"id":"cell-biology","name":"Cell Biology"},{"id":"biochemistry-chemical-biology","name":"Biochemistry and Chemical Biology"},{"id":"structural-biology-molecular-biophysics","name":"Structural Biology and Molecular Biophysics"}]},"affiliations":[{"name":["Max Planck Institute of Molecular Physiology"],"address":{"formatted":["Germany"],"components":{"country":"Germany"}}}],"competingInterests":"Andrea Musacchio receives funding from the Max Planck Society, the Deutsche Forschung Gemeinschaft, and the European Commission. He serves on the Editorial Boards of Current Biology, EMBO Reports, Chromosoma, Cell Research, Journal of Cell and Molecular Biology, Biology Open, and Journal of Structural Biology. He is a member of the Scientific Advisory Committee of the Armenise-Harvard Foundation."}

@@ -1,0 +1,27 @@
+GET /people/ca22dd6b
+accept-encoding: gzip, deflate
+
+HTTP/1.1 200 OK
+server: nginx
+content-type: application/vnd.elife.person+json;version=1
+cache-control: max-age=300, public, stale-if-error=86400, stale-while-revalidate=300
+etag: "a1013a9580177e1a37d3e527dcd932bd"
+x-ua-compatible: IE=edge
+content-language: en
+x-content-type-options: nosniff
+x-frame-options: SAMEORIGIN
+access-control-allow-origin: *
+x-kong-upstream-latency: 237
+x-kong-proxy-latency: 3
+via: kong/0.9.5, 1.1 varnish, 1.1 varnish
+accept-ranges: bytes
+date: Fri, 09 Nov 2018 09:48:19 GMT
+age: 0
+connection: close
+x-served-by: cache-dca17727-DCA, cache-lcy19233-LCY
+x-cache: MISS, MISS
+x-cache-hits: 0, 0
+x-timer: S1541756899.783375,VS0,VE321
+vary: Accept, Authorization, Accept-Encoding
+
+{"id":"ca22dd6b","type":{"id":"reviewing-editor","label":"Reviewing Editor"},"name":{"surname":"Hinnebusch","givenNames":"Alan G","preferred":"Alan G Hinnebusch","index":"Hinnebusch, Alan G"},"research":{"focuses":["protein synthesis","translational control"],"expertises":[{"id":"chromosomes-gene-expression","name":"Chromosomes and Gene Expression"}]},"affiliations":[{"name":["National Institute of Child Health and Human Development"],"address":{"formatted":["United States"],"components":{"country":"United States"}}}]}

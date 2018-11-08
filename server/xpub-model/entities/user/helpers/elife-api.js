@@ -5,16 +5,37 @@ const logger = require('@pubsweet/logger')
 
 const apiRoot = config.get('elife.api.url')
 
-// request data from orcid API
-const request = (endpoint, query = {}) =>
-  superagent.get(apiRoot + endpoint).query(query)
+const request = (endpoint, query = {}) => {
+  const req = superagent.get(apiRoot + endpoint)
+  // only had the header if its defined in config
+  if (config.elife.api.secret) {
+    req.header.Authorization = config.elife.api.secret
+  }
+  return req.query(query)
+}
 
-const convertPerson = apiPerson => ({
-  id: apiPerson.id,
-  name: apiPerson.name.preferred,
-  aff: apiPerson.affiliations && apiPerson.affiliations[0].name[0],
-  subjectAreas: apiPerson.research.expertises.map(e => e.name),
-})
+const convertPerson = apiPerson => {
+  let person = {
+    id: apiPerson.id,
+    name: apiPerson.name.preferred,
+    aff: apiPerson.affiliations && apiPerson.affiliations[0].name[0],
+    subjectAreas: apiPerson.research.expertises.map(e => e.name),
+    surname: apiPerson.name.surname,
+    firstname: apiPerson.name.givenNames,
+  }
+  // if we used a secret then pull out the email too
+  if (config.elife.api.secret && apiPerson.emailAddresses) {
+    const email = apiPerson.emailAddresses.length
+      ? apiPerson.emailAddresses[0].value
+      : ''
+
+    person = {
+      ...person,
+      email,
+    }
+  }
+  return person
+}
 
 const people = async role => {
   logger.debug('Fetching editors from /people', { role })
@@ -44,6 +65,11 @@ const person = async id => {
 
 const peopleById = ids => Promise.all(ids.map(person))
 
+const getEditorsByPersonId = async editorIds => {
+  const list = await Promise.all(editorIds.map(id => person(id)))
+  return list
+}
+
 const profile = async id => {
   logger.debug('Fetching profile with ID', id, 'from public API')
   return request(`profiles/${id}`)
@@ -54,4 +80,5 @@ module.exports = {
   person,
   peopleById,
   profile,
+  getEditorsByPersonId,
 }

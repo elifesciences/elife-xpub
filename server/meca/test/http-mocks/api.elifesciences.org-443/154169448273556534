@@ -1,0 +1,28 @@
+GET /people/1968254f
+accept-encoding: gzip, deflate
+authorization: xpubsecret
+
+HTTP/1.1 200 OK
+server: nginx
+content-type: application/vnd.elife.person+json;version=1
+cache-control: max-age=300, public, stale-if-error=86400, stale-while-revalidate=300
+etag: "b0e9570db05197845fa5a2ed154b31d2"
+x-ua-compatible: IE=edge
+content-language: en
+x-content-type-options: nosniff
+x-frame-options: SAMEORIGIN
+access-control-allow-origin: *
+x-kong-upstream-latency: 79
+x-kong-proxy-latency: 1
+via: kong/0.9.5, 1.1 varnish, 1.1 varnish
+accept-ranges: bytes
+date: Thu, 08 Nov 2018 16:28:02 GMT
+age: 146
+connection: close
+x-served-by: cache-dca17751-DCA, cache-lcy19223-LCY
+x-cache: MISS, HIT
+x-cache-hits: 0, 1
+x-timer: S1541694483.707550,VS0,VE0
+vary: Accept, Authorization, Accept-Encoding
+
+{"id":"1968254f","type":{"id":"senior-editor","label":"Senior Editor"},"name":{"surname":"Chakraborty","givenNames":"Arup K","preferred":"Arup K Chakraborty","index":"Chakraborty, Arup K"},"emailAddresses":[{"value":"person3@email.com","access":"restricted"}],"image":{"uri":"https:\/\/iiif.elifesciences.org\/journal-cms\/person%2F2014-04%2Fchakraborty_photo.jpg","alt":"Arup K Chakraborty","source":{"mediaType":"image\/jpeg","uri":"https:\/\/iiif.elifesciences.org\/journal-cms\/person%2F2014-04%2Fchakraborty_photo.jpg\/full\/full\/0\/default.jpg","filename":"chakraborty_photo.jpg"},"size":{"width":1200,"height":1807},"focalPoint":{"x":50,"y":50}},"profile":[{"text":"\u003Cb\u003EArup K Chakraborty\u003C\/b\u003E is the Robert T Haslam Professor of Chemical Engineering, Physics, Chemistry, and Biological Engineering at MIT. He is the founding Director of MIT\u2019s Institute for Medical Engineering and Science. He is also a founding steering committee member of the Ragon Institute of MIT, MGH, and Harvard, and an Associate Member of the Broad Institute of MIT \u0026amp; Harvard. After obtaining his PhD in chemical engineering and postdoctoral studies, he joined the faculty at the University of California at Berkeley in December 1988. He rose through the ranks, and ultimately served as the Warren and Katherine Schlinger Distinguished Professor and Chair of Chemical Engineering, Professor of Chemistry, and Professor of Biophysics at Berkeley. He was also Head of Theoretical and Computational Biology at Lawrence Berkeley National Laboratory. In September 2005, Chakraborty moved to MIT.","type":"paragraph"},{"text":"His entire career has been focused on research at the intersection of disciplines. After an early career in engineering of polymers and catalysts, since 2000 Chakraborty\u2019s work has focused on bringing together immunology and the physical and engineering sciences; more specifically, the intersection of statistical mechanics and immunology. His interests span T-cell signaling, T-cell development and repertoire, and a mechanistic understanding of HIV evolution, antibody evolution, and vaccine design. Chakraborty\u2019s work at the intersection of disciplines has been recognized by numerous honors, including the \u003Ci\u003ENIH Director\u2019s Pioneer Award\u003C\/i\u003E, the \u003Ci\u003EEO Lawrence Medal for Life Sciences\u003C\/i\u003E from the US DOE, the \u003Ci\u003EAllan P Colburn\u003C\/i\u003E and \u003Ci\u003EProfessional Progress\u003C\/i\u003E awards from the \u003Ci\u003EAIChE\u003C\/i\u003E, a \u003Ci\u003EDreyfus Teacher-Scholar award\u003C\/i\u003E, and a \u003Ci\u003ENational Young investigator award\u003C\/i\u003E. Chakraborty was elected a member of the \u003Ci\u003ENational Academy of Sciences\u003C\/i\u003E and the \u003Ci\u003ENational Academy of Engineering\u003C\/i\u003E for completely different bodies of work. He is also a member of the \u003Ci\u003ENational Academy of Medicine\u003C\/i\u003E, making him one of 21 individuals who are members of all three branches of the US National Academies. He is a Fellow of the \u003Ci\u003EAmerican Academy of Arts \u0026amp; Sciences\u003C\/i\u003E and the \u003Ci\u003EAmerican Association for the Advancement of Science\u003C\/i\u003E, and serves on the US Defense Science Board. Chakraborty has received four teaching awards at Berkeley and MIT.","type":"paragraph"}],"research":{"focuses":["computational biology","immunology","statistical mechanics","signaling","virology","protein evolution"],"expertises":[{"id":"computational-systems-biology","name":"Computational and Systems Biology"},{"id":"immunology-inflammation","name":"Immunology and Inflammation"},{"id":"physics-living-systems","name":"Physics of Living Systems"}]},"affiliations":[{"name":["Massachusetts Institute of Technology"],"address":{"formatted":["United Kingdom"],"components":{"country":"United Kingdom"}}}],"competingInterests":"Arup Chakraborty is funded by the NIH and the Ragon Institute of MGH, MIT, and Harvard."}
