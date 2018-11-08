@@ -1,17 +1,5 @@
 const path = require('path')
-const CopyWebpackPlugin = require('copy-webpack-plugin')
-const rules = require('./webpack/rules.js')
-
-rules.push({
-  test: /\.js$/,
-  loader: 'string-replace-loader',
-  options: {
-    search: '/assets/',
-    replace: './assets/',
-    flags: 'g',
-  },
-  include: [path.resolve(__dirname, 'app'), path.resolve(__dirname, 'client')],
-})
+const webpackConfig = require('./webpack/webpack.styleguide.config')
 
 module.exports = {
   sections: [
@@ -55,17 +43,7 @@ module.exports = {
       href: 'https://ui-staging-zpqsip.gateway.ps.elifesciences.yld.io/',
     },
   ],
-  webpackConfig: {
-    module: {
-      rules,
-    },
-    resolve: {
-      alias: {
-        config: path.join(__dirname, 'styleguide/config.json'),
-      },
-    },
-    plugins: [new CopyWebpackPlugin([{ from: './assets', to: 'assets' }])],
-  },
+  webpackConfig,
   context: {
     formik: 'formik',
   },
