@@ -111,6 +111,13 @@ describe('Manuscript', () => {
   })
 
   describe('find()', () => {
+    it('finds by manuscript id', async () => {
+      const manuscript = new Manuscript({ createdBy: userId })
+      await manuscript.save()
+      const loadedManuscript = await Manuscript.find(manuscript.id, userId)
+      expect(loadedManuscript.id).toBe(manuscript.id)
+    })
+
     it('eager loads relations', async () => {
       const manuscript = new Manuscript({ createdBy: userId })
       manuscript.addTeam({ role: 'foo', teamMembers: [] })
@@ -126,12 +133,18 @@ describe('Manuscript', () => {
   })
 
   describe('findByStatus()', () => {
+    it('finds by status', async () => {
+      const manuscript = new Manuscript({ createdBy: userId })
+      await manuscript.save()
+      const loadedManuscripts = await Manuscript.findByStatus('INITIAL', userId)
+      expect(loadedManuscripts).toHaveLength(1)
+    })
+
     it('eager loads relations', async () => {
       const manuscript = new Manuscript({ createdBy: userId })
       manuscript.addTeam({ role: 'foo', teamMembers: [] })
       await manuscript.save()
       const loadedManuscripts = await Manuscript.findByStatus('INITIAL', userId)
-      expect(loadedManuscripts).toHaveLength(1)
       expect(loadedManuscripts[0].teams).toHaveLength(1)
     })
 
