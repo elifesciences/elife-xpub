@@ -15,7 +15,7 @@ This is managed using [builder](https://github.com/elifesciences/builder) using 
 | Stack Name          | Description                                         |
 | ------------------- | --------------------------------------------------- |
 | elife-xpub--ci      | Runs tests as part of CI/CD                         |
-| elife-xpub--end2end | TODO                                                |
+| elife-xpub--end2end | [End2End](https://end2end--xpub.elifesciences.org/) |
 | elife-xpub--staging | [Staging](https://staging--xpub.elifesciences.org/) |
 | elife-xpub--prod    | [Production](https://xpub.elifesciences.org/)       |
 
