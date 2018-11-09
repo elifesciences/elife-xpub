@@ -26,6 +26,7 @@ const WizardStep = ({
   title,
   step,
   validationSchema,
+  ...wizardProps
 }) => (
   <Formik
     initialValues={initialValues}
@@ -58,7 +59,7 @@ const WizardStep = ({
 
             <FormH2>{title}</FormH2>
 
-            <FormComponent values={values} {...formProps} />
+            <FormComponent values={values} {...formProps} {...wizardProps} />
 
             <Flex mt={6}>
               {previousUrl && (
