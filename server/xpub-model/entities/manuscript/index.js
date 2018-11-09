@@ -129,6 +129,17 @@ class Manuscript extends BaseModel {
     return manuscripts
   }
 
+  static async all(user) {
+    const manuscripts = await this.query().where({
+      'manuscript.created_by': user,
+    })
+
+    await Promise.all(
+      manuscripts.map(manuscript => manuscript.$loadRelated('[teams, files]')),
+    )
+    return manuscripts
+  }
+
   async save() {
     // save manuscript and all related files and teams
     // note that this also deletes any related entities that are not present
