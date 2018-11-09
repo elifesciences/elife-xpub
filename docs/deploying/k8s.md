@@ -46,6 +46,8 @@ aws --version
 
 ### Update your local config to use the AWS cluster
 
+This will change, but for an IAM user to be able to assume this role, it needs to be whitelisted at https://github.com/elifesciences/terraform-eks/blob/master/user-roles.tf
+
 ```
 aws eks update-kubeconfig --name kubernetes--demo --role-arn arn:aws:iam::512686554592:role/kubernetes--demo--AmazonEKSUserRole
 ```
