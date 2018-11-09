@@ -43,11 +43,11 @@ elifePipeline {
                 },
             ]
             try {
-                sh "docker-compose -f docker-compose.ci.yml up -d postgres"
-                sh "IMAGE_TAG=${commit} docker-compose -f docker-compose.ci.yml run --rm --name elife-xpub_wait_postgres -c './scripts/wait-for-it.sh postgres:5432'"
+                sh "IMAGE_TAG=${commit} docker-compose -f docker-compose.ci.yml up -d postgres"
+                sh "IMAGE_TAG=${commit} docker-compose -f docker-compose.ci.yml run --rm --name elife-xpub_wait_postgres app -c './scripts/wait-for-it.sh postgres:5432'"
                 parallel actions
             } finally {
-                sh "docker-compose -f docker-compose.ci.yml down -v"
+                sh "IMAGE_TAG=${commit} docker-compose -f docker-compose.ci.yml down -v"
             }
         }
 
