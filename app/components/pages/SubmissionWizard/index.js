@@ -1,7 +1,6 @@
 import React from 'react'
 import { Route, Switch, Redirect } from 'react-router-dom'
 import { Subscription } from 'react-apollo'
-import gql from 'graphql-tag'
 import SubmissionOperations from './SubmissionOperations'
 import AuthorPageContainer from './steps/Author'
 import FilesPageContainer from './steps/Files'
@@ -15,12 +14,7 @@ import { schema as editorsPageSchema } from './steps/Editors/schema'
 import { schema as disclosurePageSchema } from './steps/Disclosure/schema'
 import WizardStep from './WizardStep'
 import ErrorPage from '../../../components/pages/Error'
-
-export const ON_UPLOAD_PROGRESS = gql`
-  subscription {
-    uploadProgress
-  }
-`
+import { ON_UPLOAD_PROGRESS } from './operations'
 
 const SubmissionWizard = ({ match, history }) => (
   <SubmissionOperations manuscriptId={match.params.id}>

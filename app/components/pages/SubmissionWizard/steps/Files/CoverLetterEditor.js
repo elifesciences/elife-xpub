@@ -1,12 +1,6 @@
-/* eslint-disable react/jsx-sort-props */
-
 import React from 'react'
-import { Box } from 'grid-styled'
 import ConfigurableEditor from 'xpub-edit/src/components/configurable/ConfigurableEditor'
-
 import Icon from '../../../../ui/atoms/Icon'
-import FileUpload from '../../../../ui/molecules/FileUpload'
-import ValidatedField from '../../../../ui/atoms/ValidatedField'
 
 const FormatBoldIcon = props => (
   <Icon
@@ -53,37 +47,15 @@ const FormatSuperscriptIcon = props => (
 )
 
 // order of props affects order of menu buttons
-const Editor = ({ validationStatus, ...props }) => (
+const CoverLetterEditor = ({ validationStatus, ...props }) => (
   <ConfigurableEditor
     bold={{ icon: <FormatBoldIcon /> }}
     italic={{ icon: <FormatItalicIcon /> }}
-    underline={{ icon: <FormatUnderlineIcon /> }}
     subscript={{ icon: <FormatSubscriptIcon /> }}
     superscript={{ icon: <FormatSuperscriptIcon /> }}
+    underline={{ icon: <FormatUnderlineIcon /> }}
     {...props}
   />
 )
 
-const FilesPage = ({ setFieldValue, onDrop, conversion, formError }) => (
-  <React.Fragment>
-    <Box mb={3} width={1}>
-      <ValidatedField
-        component={Editor}
-        id="coverLetter"
-        name="coverLetter"
-        onBlur={value => setFieldValue('coverLetter', value)}
-        onChange={value => setFieldValue('coverLetter', value)}
-      />
-    </Box>
-    <Box width={1}>
-      <FileUpload
-        conversion={conversion}
-        data-test-id="upload"
-        formError={formError}
-        onDrop={onDrop}
-      />
-    </Box>
-  </React.Fragment>
-)
-
-export default FilesPage
+export default CoverLetterEditor
