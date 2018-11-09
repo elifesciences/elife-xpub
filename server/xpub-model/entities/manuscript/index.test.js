@@ -1,4 +1,5 @@
 const { createTables } = require('@pubsweet/db-manager')
+const Team = require('../team')
 const Manuscript = require('.')
 
 describe('Manuscript', () => {
@@ -195,15 +196,17 @@ describe('Manuscript', () => {
     it('deletes related entities not on the manuscript', async () => {
       const manuscript = new Manuscript({ createdBy: userId })
       await manuscript.save()
-      manuscript.
-        $query().
-        insert({
-          teams: [ {
-            role: 'foo',
-            teamMembers: [],
-            objectType: manuscript
-          } ]
-        })
+
+      // create a team and make sure it's not on the manuscript
+      const team = new Team({
+        role: 'foo',
+        teamMembers: [],
+        objectType: 'manuscript',
+        objectId: manuscript.id
+      })
+      await team.save()
+      expect(manuscript.teams).toHaveLength(0)
+
       manuscript.addTeam({ role: 'bar', teamMembers: [] })
       await manuscript.save()
       expect(manuscript.teams).toHaveLength(1)
