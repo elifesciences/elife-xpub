@@ -19,9 +19,8 @@ const ContactELife = props => (
     </Paragraph>
 
     <List.Unordered>
-      <li>editorial@elifesciences.org</li>
-      <li>production@elifesciences.org</li>
-      <li>editorial@elifesciences.org</li>
+      <li>editorial [at] elifesciences [dot] org</li>
+      <li>production [at] elifesciences [dot] org</li>
     </List.Unordered>
 
     <Paragraph>
@@ -29,7 +28,7 @@ const ContactELife = props => (
     </Paragraph>
 
     <List.Unordered>
-      <li>press@elifesciences.org</li>
+      <li>press [at] elifesciences [dot] org</li>
     </List.Unordered>
   </React.Fragment>
 )
