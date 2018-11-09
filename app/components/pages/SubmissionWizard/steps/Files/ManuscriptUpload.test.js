@@ -4,13 +4,13 @@ import { MemoryRouter } from 'react-router-dom'
 import { ThemeProvider } from 'styled-components'
 import theme from '@elifesciences/elife-theme'
 
-import FileUpload from './FileUpload'
+import ManuscriptUpload from './ManuscriptUpload'
 
 function makeCheerioWrapper(props) {
   return mount(
     <ThemeProvider theme={theme}>
       <MemoryRouter>
-        <FileUpload onDrop={jest.fn()} {...props} />
+        <ManuscriptUpload onDrop={jest.fn()} {...props} />
       </MemoryRouter>
     </ThemeProvider>,
   )
@@ -57,7 +57,7 @@ it('displays uploading if conversion.converting is set', () => {
     conversion: { converting: true, progress: 10 },
   })
   // 'Manuscript is uploading'
-  expect(dropzoneContentWrapper.text()).toBe(`${manuscriptUploading  } 10%`)
+  expect(dropzoneContentWrapper.text()).toBe(`${manuscriptUploading} 10%`)
 })
 
 // TODO fix these tests to account for upload %
@@ -66,5 +66,5 @@ it('displays uploading even if there are errors', () => {
     conversion: { converting: true, error: new Error('Boo'), progress: 15 },
     formError: noManuscriptError,
   })
-  expect(dropzoneContentWrapper.text()).toBe(`${manuscriptUploading  } 15%`)
+  expect(dropzoneContentWrapper.text()).toBe(`${manuscriptUploading} 15%`)
 })

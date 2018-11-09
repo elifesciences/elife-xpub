@@ -7,7 +7,7 @@ import { ErrorText, Action } from '@pubsweet/ui'
 import { th } from '@pubsweet/ui-toolkit'
 import config from 'config'
 
-import Icon from '../atoms/Icon'
+import Icon from '../../../../ui/atoms/Icon'
 
 const UploadIcon = props => (
   <Icon
@@ -135,7 +135,7 @@ const DropzoneContent = ({ conversion, formError, dropzoneOpen }) => {
   )
 }
 
-const FileUpload = ({ onDrop, conversion, formError, ...props }) => {
+const ManuscriptUpload = ({ onDrop, conversion, formError, ...props }) => {
   let dropzoneRef
   return (
     <StyledDropzone
@@ -162,7 +162,7 @@ const FileUpload = ({ onDrop, conversion, formError, ...props }) => {
   )
 }
 
-FileUpload.propTypes = {
+ManuscriptUpload.propTypes = {
   onDrop: PropTypes.func.isRequired,
   conversion: PropTypes.shape({
     completed: PropTypes.bool,
@@ -173,9 +173,9 @@ FileUpload.propTypes = {
   formError: PropTypes.string,
 }
 
-FileUpload.defaultProps = {
+ManuscriptUpload.defaultProps = {
   conversion: {},
   formError: '',
 }
 
-export default FileUpload
+export default ManuscriptUpload
