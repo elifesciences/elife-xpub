@@ -1,4 +1,4 @@
-# Build
+# Pipeline
 
 > **NOTE** This page uses mermaid to show the sequence diagram.
 
