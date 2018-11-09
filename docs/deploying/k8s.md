@@ -1,5 +1,7 @@
 # Setting up and using Kubernetes
 
+This documentation is to help the developer debugging a particular pod related to a PR.
+
 ## Install `kubectl`
 
 There are [many ways to install kubctl](https://kubernetes.io/docs/tasks/tools/install-kubectl/). You may also wish to refer to the commands in the formula too:
@@ -21,7 +23,7 @@ This should report the client version. But don't worry if there are errors for t
 
 ### Install aws-iam-authenticator
 
-Change the cwd to the place you wish to install and follow the following:
+Change the cwd to the place you wish to install, in this example `~/.local/bin`. This directory must be on your `PATH`. Then download:
 
 ```
 cd ~/.local/bin
@@ -30,7 +32,9 @@ chmod +x aws-iam-authenticator
 aws-iam-authenticator
 ```
 
-### Make sure your `awscli` is the correct version
+[For more information refer to the AWS documentation](https://docs.aws.amazon.com/eks/latest/userguide/configure-kubectl.html)
+
+### Make sure your `awscli` version is supported
 
 The version of `awscli` should be >= 1.16
 
