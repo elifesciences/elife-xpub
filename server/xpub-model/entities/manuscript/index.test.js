@@ -192,6 +192,24 @@ describe('Manuscript', () => {
       expect(manuscript.teams).toHaveLength(1)
     })
 
+    it('deletes related entities not on the manuscript', async () => {
+      const manuscript = new Manuscript({ createdBy: userId })
+      await manuscript.save()
+      manuscript.
+        $query().
+        insert({
+          teams: [ {
+            role: 'foo',
+            teamMembers: [],
+            objectType: manuscript
+          } ]
+        })
+      manuscript.addTeam({ role: 'bar', teamMembers: [] })
+      await manuscript.save()
+      expect(manuscript.teams).toHaveLength(1)
+      expect(manuscript.teams[0].role).toEqual('bar')
+    })
+
     it('fails to update non-existent manuscript', () =>
       expect(
         new Manuscript({
