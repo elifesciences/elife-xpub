@@ -1,10 +1,15 @@
 const { createTables } = require('@pubsweet/db-manager')
+const uuid = require('uuid');
 const Team = require('../team')
 const Manuscript = require('.')
 
 describe('Manuscript', () => {
-  const userId = '2b0bd3d1-4762-4417-abeb-9d458f61cb3c'
-  beforeEach(() => createTables(true))
+  let userId;
+
+  beforeEach(() => {
+    userId = uuid()
+    return createTables(true)
+  })
 
   describe('applyInput', () => {
     it('picks only whitelisted properties', () => {
@@ -221,4 +226,15 @@ describe('Manuscript', () => {
         }).save(),
       ).rejects.toThrow())
   })
+
+  describe('all()', () => {
+    it('returns users\'s manuscripts only', async () => {
+      const secondUserId = uuid();
+      await (new Manuscript({ createdBy: userId })).save()
+      await (new Manuscript({ createdBy: secondUserId })).save()
+      const loadedManuscripts = await Manuscript.all(userId)
+      expect(loadedManuscripts).toHaveLength(1)
+    })
+  })
+
 })

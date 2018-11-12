@@ -6,6 +6,7 @@ import {
   TabPanel as UnstyledTabPanel,
 } from 'react-tabs'
 import { th } from '@pubsweet/ui-toolkit'
+import media from '../../global/layout/media'
 
 const Tabs = styled(UnstyledTabs)``
 
@@ -47,8 +48,9 @@ const TabPanel = styled(UnstyledTabPanel).attrs({
 })`
   display: none;
   &.selected {
-    border-top: 1px solid ${th('colorBorder')};
-    display: block;
+    ${media.mobileUp`
+      border-top: 1px solid ${th('colorBorder')};
+    `} display: block;
   }
 `
 
