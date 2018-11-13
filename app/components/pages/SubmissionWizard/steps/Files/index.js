@@ -23,8 +23,7 @@ const UPLOAD_MUTATION = gql`
 `
 
 function getProgress(loading, data) {
-  if (loading || !data) return 0
-  return data.uploadProgress
+  return loading || !data.uploadProgress ? 0 : data.uploadProgress
 }
 
 const FilesPageContainer = ({
@@ -34,7 +33,7 @@ const FilesPageContainer = ({
   errors,
   touched,
   values,
-  uploadData,
+  uploadData = {},
   uploadLoading,
 }) => (
   <Mutation mutation={UPLOAD_MUTATION}>
@@ -54,7 +53,7 @@ const FilesPageContainer = ({
           <Box width={1}>
             <ManuscriptUpload
               conversion={{
-                converting: loading,
+                converting: loading || uploadData.uploadProgress < 100,
                 // TODO import this constant from somewhere (data model package?)
                 completed: values[fieldName].some(
                   file => file.type === 'MANUSCRIPT_SOURCE',
