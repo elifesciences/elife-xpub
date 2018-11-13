@@ -80,7 +80,7 @@ const CentredFlex = styled(Flex)`
   text-align: center;
 `
 
-const DropzoneContent = ({ conversion, errorMessage, dropzoneOpen }) => {
+const DropzoneContent = ({ conversion, errorKey, dropzoneOpen }) => {
   if (conversion.converting) {
     return (
       <React.Fragment>
@@ -92,12 +92,13 @@ const DropzoneContent = ({ conversion, errorMessage, dropzoneOpen }) => {
     )
   }
 
-  if (errorMessage) {
+  if (errorKey) {
     return (
       <React.Fragment>
         <StyledUploadFailureIcon />
         <UploadInstruction data-test-id="dropzoneMessage">
-          <DropzoneErrorText>Oops!</DropzoneErrorText> {errorMessage} Please{' '}
+          <DropzoneErrorText>Oops!</DropzoneErrorText>{' '}
+          {errorMessageMapping[errorKey]} Please{' '}
           <Action onClick={dropzoneOpen}>try again.</Action>
         </UploadInstruction>
 
@@ -132,23 +133,39 @@ const DropzoneContent = ({ conversion, errorMessage, dropzoneOpen }) => {
   )
 }
 
+const errorMessageMapping = {
+  EMPTY: 'Please upload a manuscript.',
+  MULTIPLE: 'Only one file can be uploaded.',
+  UNSUPPORTED: 'That file is not supported.',
+  UNSUCCESSFUL: 'There was a problem uploading your file.',
+}
+
 class ManuscriptUpload extends React.Component {
   state = {
-    errorMessage: null,
+    errorKey: null,
   }
 
   componentDidUpdate(prevProps) {
-    if (prevProps.formError !== this.props.formError) {
-      this.setErrorMessage(this.props.formError)
+    if (!this.state.errorKey && this.props.formError === 'EMPTY') {
+      this.setErrorKey(this.props.formError)
     }
+
+    if (
+      prevProps.formError !== this.props.formError &&
+      this.props.formError !== 'EMPTY'
+    ) {
+      this.setErrorKey(this.props.formError)
+    }
+
     if (prevProps.conversion.error !== this.props.conversion.error) {
-      this.setErrorMessage(this.props.conversion.error)
+      this.setErrorKey(this.props.conversion.error && 'UNSUCCESSFUL')
     }
   }
 
-  setErrorMessage = errorMessage => {
-    this.setState({ errorMessage })
+  setErrorKey = errorKey => {
+    this.setState({ errorKey })
   }
+
   render() {
     const { onDrop, conversion, formError, ...props } = this.props
     let dropzoneRef
@@ -169,7 +186,7 @@ class ManuscriptUpload extends React.Component {
             <DropzoneContent
               conversion={conversion}
               dropzoneOpen={() => dropzoneRef.open()}
-              errorMessage={this.state.errorMessage}
+              errorKey={this.state.errorKey}
             />
           </Box>
         </CentredFlex>

@@ -68,11 +68,11 @@ const FilesPageContainer = ({
                 setFieldTouched(fieldName, true, false)
 
                 if (files.length > 1) {
-                  setFieldError(fieldName, 'Only one file can be uploaded.')
+                  setFieldError(fieldName, 'MULTIPLE')
                   return
                 }
                 if (files.length === 0) {
-                  setFieldError(fieldName, 'That file is not supported.')
+                  setFieldError(fieldName, 'UNSUPPORTED')
                   return
                 }
 
