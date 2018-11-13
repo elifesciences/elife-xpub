@@ -13,7 +13,9 @@ const convertPerson = apiPerson => ({
   id: apiPerson.id,
   name: apiPerson.name.preferred,
   aff: apiPerson.affiliations && apiPerson.affiliations[0].name[0],
-  subjectAreas: apiPerson.research.expertises.map(e => e.name),
+  subjectAreas: apiPerson.research.expertises
+    .map(e => e.name)
+    .concat(apiPerson.research.focuses),
 })
 
 const people = async role => {
