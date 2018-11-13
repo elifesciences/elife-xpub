@@ -1,5 +1,6 @@
 const { createTables } = require('@pubsweet/db-manager')
 const uuid = require('uuid');
+const Team = require('../team')
 const Manuscript = require('.')
 
 describe('Manuscript', () => {
@@ -195,6 +196,26 @@ describe('Manuscript', () => {
       manuscript.addTeam({ role: 'foo', teamMembers: [] })
       await manuscript.save()
       expect(manuscript.teams).toHaveLength(1)
+    })
+
+    it('deletes related entities not on the manuscript', async () => {
+      const manuscript = new Manuscript({ createdBy: userId })
+      await manuscript.save()
+
+      // create a team and make sure it's not on the manuscript
+      const team = new Team({
+        role: 'foo',
+        teamMembers: [],
+        objectType: 'manuscript',
+        objectId: manuscript.id
+      })
+      await team.save()
+      expect(manuscript.teams).toHaveLength(0)
+
+      manuscript.addTeam({ role: 'bar', teamMembers: [] })
+      await manuscript.save()
+      expect(manuscript.teams).toHaveLength(1)
+      expect(manuscript.teams[0].role).toEqual('bar')
     })
 
     it('fails to update non-existent manuscript', () =>
