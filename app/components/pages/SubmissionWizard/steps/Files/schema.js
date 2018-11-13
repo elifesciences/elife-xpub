@@ -1,4 +1,5 @@
 import * as yup from 'yup'
+import { errorMessageMapping } from './utils'
 
 const MIN_WORDS = 60
 
@@ -16,7 +17,7 @@ const schema = yup.object().shape({
       `Your cover letter should be at least ${MIN_WORDS} words long`,
       value => stripHtml(value).split(/\s+/).length > MIN_WORDS,
     ),
-  files: yup.array().min(1, 'EMPTY'),
+  files: yup.array().min(1, errorMessageMapping.EMPTY),
 })
 
 export { schema }

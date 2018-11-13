@@ -5,6 +5,7 @@ import { Box } from 'grid-styled'
 import CoverLetterEditor from './CoverLetterEditor'
 import ValidatedField from '../../../../ui/atoms/ValidatedField'
 import ManuscriptUpload from './ManuscriptUpload'
+import { errorMessageMapping } from './utils'
 
 const UPLOAD_MUTATION = gql`
   mutation UploadFile($id: ID!, $file: Upload!, $fileSize: Int!) {
@@ -35,7 +36,6 @@ const FilesPageContainer = ({
   values,
   uploadData,
   uploadLoading,
-  ...props
 }) => (
   <Mutation mutation={UPLOAD_MUTATION}>
     {(uploadFile, { loading, error: uploadError }) => {
@@ -68,11 +68,11 @@ const FilesPageContainer = ({
                 setFieldTouched(fieldName, true, false)
 
                 if (files.length > 1) {
-                  setFieldError(fieldName, 'MULTIPLE')
+                  setFieldError(fieldName, errorMessageMapping.MULTIPLE)
                   return
                 }
                 if (files.length === 0) {
-                  setFieldError(fieldName, 'UNSUPPORTED')
+                  setFieldError(fieldName, errorMessageMapping.UNSUPPORTED)
                   return
                 }
 
