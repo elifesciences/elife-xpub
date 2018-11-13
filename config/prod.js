@@ -6,7 +6,7 @@ module.exports = {
   },
   server: {
     api: {
-      url: 'http://prod--gateway.elife.internal',
+      url: 'http://prod--gateway.elife.internal/',
     },
   },
   login: {

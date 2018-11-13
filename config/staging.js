@@ -6,7 +6,7 @@ module.exports = {
   },
   server: {
     api: {
-      url: 'http://continuumtest--gateway.elife.internal',
+      url: 'http://continuumtest--gateway.elife.internal/',
     },
   },
   login: {

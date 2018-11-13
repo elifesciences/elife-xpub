@@ -12,7 +12,7 @@ module.exports = {
   },
   server: {
     api: {
-      url: 'http://end2end--gateway.elife.internal',
+      url: 'http://end2end--gateway.elife.internal/',
     },
   },
   login: {

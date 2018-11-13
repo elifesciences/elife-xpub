@@ -44,7 +44,7 @@ module.exports = {
   },
   server: {
     api: {
-      url: 'https://api.elifesciences.org/',
+      url: 'https://prod--gateway.elifesciences.org/',
     },
   },
   client: {
