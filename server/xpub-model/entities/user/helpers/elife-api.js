@@ -3,7 +3,7 @@ const superagent = require('superagent')
 const config = require('config')
 const logger = require('@pubsweet/logger')
 
-const apiRoot = config.get('elife.api.url')
+const apiRoot = config.get('server.api.url')
 
 // request data from orcid API
 const request = (endpoint, query = {}) =>

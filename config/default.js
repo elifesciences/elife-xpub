@@ -42,11 +42,13 @@ module.exports = {
     sha: '',
     ref: '',
   },
-  elife: {
-    isPublic: true,
+  server: {
     api: {
       url: 'https://api.elifesciences.org/',
     },
+  },
+  client: {
+    isPublic: true,
     majorSubjectAreas: {
       'biochemistry-chemical-biology': 'Biochemistry and Chemical Biology',
       'cancer-biology': 'Cancer Biology',

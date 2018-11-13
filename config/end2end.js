@@ -10,9 +10,9 @@ module.exports = {
       disableUpload: true,
     },
   },
-  elife: {
+  server: {
     api: {
-      url: 'https://end2end--gateway.elifesciences.org/',
+      url: 'http://end2end--gateway.elife.internal',
     },
   },
   login: {

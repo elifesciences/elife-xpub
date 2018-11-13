@@ -25,7 +25,7 @@ const SelectLimitMessage = styled.p`
   color: ${th('colorSuccess')};
 `
 
-const subjectAreas = config.elife.majorSubjectAreas
+const subjectAreas = config.get('client.majorSubjectAreas')
 const eLifeOptions = Object.keys(subjectAreas).reduce(
   (options, code) => options.concat({ value: code, label: subjectAreas[code] }),
   [],
