@@ -184,9 +184,13 @@ class ManuscriptUpload extends React.Component {
       <StyledDropzone
         accept={VALID_FILE_TYPES}
         disableClick
+        disabled={conversion.converting}
         hasError={this.state.errorMessage && !conversion.converting}
         maxSize={config.fileUpload.maxSizeMB * 1e6}
-        onDrop={onDrop}
+        onDrop={files => {
+          this.setErrorMessage(null)
+          onDrop(files)
+        }}
         saveInnerRef={node => {
           dropzoneRef = node
         }}
