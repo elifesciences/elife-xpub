@@ -6,6 +6,7 @@ import { Action } from '@pubsweet/ui'
 import { Flex, Box } from 'grid-styled'
 
 import Icon from './Icon'
+import ButtonAsIconWrapper from './ButtonAsIconWrapper'
 
 const AddIcon = props => (
   <Icon
@@ -45,6 +46,17 @@ const StyledSelectedIcon = styled(CheckCircleIcon)`
   }
   height: ${th('space.4')}
   width: ${th('space.4')}
+`
+
+const InfoIcon = props => (
+  <Icon iconName="Info" overrideName="info" {...props} />
+)
+
+const StyledInfoIcon = styled(InfoIcon)`
+  margin-right: 6px;
+  height: 18px;
+  width: 18px;
+  fill: ${th('colorPrimary')};
 `
 
 const StyledButton = styled.button`
@@ -176,7 +188,12 @@ const PersonText = ({
       <RegularP>{name}</RegularP>
       {institution && <RegularP>{institution}</RegularP>}
       {!institution && <Box mb={3} />}
-      <SmallP>{separatedKeywords}</SmallP>
+      <Flex alignItems="center">
+        <ButtonAsIconWrapper>
+          <StyledInfoIcon />
+        </ButtonAsIconWrapper>
+        <SmallP>{separatedKeywords}</SmallP>
+      </Flex>
       {isStatusShown && <SmallP>{status}</SmallP>}
     </CollapsibleBox>
   )

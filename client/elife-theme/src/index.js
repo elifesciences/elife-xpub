@@ -93,6 +93,7 @@ export default {
     '@pubsweet-pending.FileUpload.UploadSuccess': icons.UploadSuccess,
     '@pubsweet-pending.MultiselectDropdown': icons.Cross,
     '@pubsweet-pending.AppBar.Profile': icons.Profile,
+    info: icons.Info,
     cross: icons.Cross,
   },
 }
