@@ -18,7 +18,6 @@ const WrappedComponent = props => (
 const makeWrapper = props => mount(<WrappedComponent {...props} />)
 
 const manuscriptUpload = 'Upload your manuscript or drag it here.'
-const conversionFailure = 'There was a problem uploading your file.'
 const manuscriptUploadSuccess = 'Success!'
 const manuscriptUploading = 'Manuscript is uploading'
 
@@ -53,7 +52,9 @@ describe('ManuscriptUpload Content', () => {
     expect(wrapper.find('[data-test-conversion="failed"]').exists()).toEqual(
       true,
     )
-    expect(wrapper.find('ManuscriptUpload').text()).toContain(conversionFailure)
+    expect(wrapper.find('ManuscriptUpload').text()).toContain(
+      errorMessageMapping.UNSUCCESSFUL,
+    )
   })
 
   it('displays success if conversion.completed is set', () => {
