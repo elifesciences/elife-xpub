@@ -87,6 +87,7 @@ const RegularP = styled.p`
 const SmallP = styled.p`
   font-size: ${th('fontSizeBaseSmall')};
   line-height: ${th('lineHeightBaseSmall')};
+  color: ${th('colorTextSecondary')}
   // vertical spacing of 6px comes from: 24px grid - lineHeightBaseSmall
   white-space: nowrap;
   overflow: hidden;
