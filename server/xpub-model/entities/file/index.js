@@ -50,8 +50,18 @@ class File extends BaseModel {
     return Body
   }
 
-  async delete() {
-    console.log('deleting a file')
+  // static async delete() {
+  //   console.log('deleting a file', this.id)
+  // }
+
+  static async find(id) {
+    const [file] = await this.query().where({
+      manuscript_id: id,
+    })
+    if (!file) {
+      throw new Error(`file ${id} not found`)
+    }
+    return file
   }
 }
 

@@ -33,11 +33,22 @@ const resolvers = {
       const userUuid = await User.getUuidForProfile(user)
       const manuscript = await Manuscript.find(id, userUuid)
 
-      const file = await File.delete(id)
-      logger.info(file)
-      logger.info(manuscript)
+      const manuscriptFile = manuscript.files[0]
+      if (manuscriptFile) {
+        try {
+          const file = await File.find(manuscriptFile.manuscriptId)
+          console.log('++++++++')
+          console.log(file)
+          console.log('++++++++')
+          await file.delete()
+          console.log('deleted')
+        } catch (error) {
+          console.log('=====')
+          console.log(error)
+        }
+      }
 
-      // await manuscript.delete()
+      await manuscript.delete()
       return id
     },
 
