@@ -85,7 +85,10 @@ const DropzoneContent = ({ conversion, formError, dropzoneOpen }) => {
     return (
       <React.Fragment>
         <StyledUploadIcon percentage={conversion.progress} />
-        <UploadInstruction data-test-id="dropzoneMessage">
+        <UploadInstruction
+          data-test-conversion="converting"
+          data-test-id="dropzoneMessage"
+        >
           Manuscript is uploading {conversion.progress}%
         </UploadInstruction>
       </React.Fragment>
@@ -99,7 +102,10 @@ const DropzoneContent = ({ conversion, formError, dropzoneOpen }) => {
     return (
       <React.Fragment>
         <StyledUploadFailureIcon />
-        <UploadInstruction data-test-id="dropzoneMessage">
+        <UploadInstruction
+          data-test-conversion="failed"
+          data-test-id="dropzoneMessage"
+        >
           <DropzoneErrorText>Oops!</DropzoneErrorText> {displayError} Please{' '}
           <Action onClick={dropzoneOpen}>try again.</Action>
         </UploadInstruction>
@@ -114,7 +120,10 @@ const DropzoneContent = ({ conversion, formError, dropzoneOpen }) => {
     return (
       <React.Fragment>
         <StyledUploadSuccessIcon />
-        <UploadInstruction data-test-id="dropzoneMessage">
+        <UploadInstruction
+          data-test-conversion="completed"
+          data-test-id="dropzoneMessage"
+        >
           Success! <Action onClick={dropzoneOpen}>Replace</Action> your
           manuscript.
         </UploadInstruction>
