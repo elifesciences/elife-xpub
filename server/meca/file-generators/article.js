@@ -10,7 +10,7 @@ const {
 } = require('./article.helpers')
 const nameSplitter = require('../services/nameSplitter')
 
-const subjectAreas = config.get('elife.majorSubjectAreas')
+const subjectAreas = config.get('client.majorSubjectAreas')
 
 function createXmlObject(manuscript, editorsById, affiliations, reviewerMap) {
   return {

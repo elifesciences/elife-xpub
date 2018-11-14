@@ -201,6 +201,9 @@ scale-cluster:
   stage: build
   variables:
     DOCKER_HOST: ""
+    AWS_ACCESS_KEY_ID: $YLD_ACCESS_KEY_ID
+    AWS_DEFAULT_REGION: $YLD_DEFAULT_REGION
+    AWS_SECRET_ACCESS_KEY: $YLD_SECRET_ACCESS_KEY
   only:
     - schedules
   tags:

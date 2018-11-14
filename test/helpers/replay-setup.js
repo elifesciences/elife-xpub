@@ -9,4 +9,5 @@ const Replay = require('replay')
 
 module.exports = subFolder => {
   Replay.fixtures = path.join(__dirname, '..', 'http-mocks', subFolder)
+  Replay.headers = [/^accept/, /^body/, /^content-type/, /^host/, /^if-/, /^x-/]
 }

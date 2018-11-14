@@ -3,7 +3,7 @@ const superagent = require('superagent')
 const config = require('config')
 const logger = require('@pubsweet/logger')
 
-const apiRoot = config.get('elife.api.url')
+const apiRoot = config.get('server.api.url')
 
 const request = (endpoint, query = {}) => {
   const req = superagent.get(apiRoot + endpoint)
@@ -19,7 +19,9 @@ const convertPerson = apiPerson => {
     id: apiPerson.id,
     name: apiPerson.name.preferred,
     aff: apiPerson.affiliations && apiPerson.affiliations[0].name[0],
-    subjectAreas: apiPerson.research.expertises.map(e => e.name),
+    subjectAreas: (apiPerson.research.expertises || [])
+        .map(e => e.name)
+        .concat(apiPerson.research.focuses || []),
     surname: apiPerson.name.surname,
     firstname: apiPerson.name.givenNames,
   }
