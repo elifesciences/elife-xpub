@@ -37,13 +37,8 @@ const resolvers = {
       if (manuscriptFile) {
         try {
           const file = await File.find(manuscriptFile.manuscriptId)
-          console.log('++++++++')
-          console.log(file)
-          console.log('++++++++')
           await file.delete()
-          console.log('deleted')
         } catch (error) {
-          console.log('=====')
           console.log(error)
         }
       }
