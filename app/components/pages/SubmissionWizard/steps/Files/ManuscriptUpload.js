@@ -168,7 +168,7 @@ class ManuscriptUpload extends React.Component {
 
     if (prevProps.conversion.error !== this.props.conversion.error) {
       this.setErrorMessage(
-        this.props.conversion.error && errorMessageMapping.UNSUCCESSFUL,
+        this.props.conversion.error && errorMessageMapping.UPLOAD_FAILURE,
       )
     }
   }

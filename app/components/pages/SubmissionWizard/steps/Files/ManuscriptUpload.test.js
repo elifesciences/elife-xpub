@@ -53,7 +53,7 @@ describe('ManuscriptUpload Content', () => {
       true,
     )
     expect(wrapper.find('ManuscriptUpload').text()).toContain(
-      errorMessageMapping.UNSUCCESSFUL,
+      errorMessageMapping.UPLOAD_FAILURE,
     )
   })
 
