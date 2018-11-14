@@ -1,8 +1,9 @@
 const logger = require('@pubsweet/logger')
-const { Manuscript, User } = require('@elifesciences/xpub-model')
+const { Manuscript, User, File } = require('@elifesciences/xpub-model')
 const submitManuscript = require('./submitManuscript')
 const updateManuscript = require('./updateManuscript')
 const uploadManuscript = require('./uploadManuscript')
+// const deleteManuscript = require('./deleteManuscript')
 
 const resolvers = {
   Query: {
@@ -31,9 +32,16 @@ const resolvers = {
     async deleteManuscript(_, { id }, { user }) {
       const userUuid = await User.getUuidForProfile(user)
       const manuscript = await Manuscript.find(id, userUuid)
-      await manuscript.delete()
+
+      const file = await File.delete(id)
+      logger.info(file)
+      logger.info(manuscript)
+
+      // await manuscript.delete()
       return id
     },
+
+    // deleteManuscript,
 
     updateManuscript,
 

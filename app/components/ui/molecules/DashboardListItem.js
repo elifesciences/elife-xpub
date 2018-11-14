@@ -4,8 +4,12 @@ import { Flex, Box } from 'grid-styled'
 import { differenceInCalendarDays, format } from 'date-fns'
 import { th } from '@pubsweet/ui-toolkit'
 import PropTypes from 'prop-types'
+import { Mutation } from 'react-apollo'
 import ManuscriptStatus from '../atoms/ManuscriptStatus'
 import media from '../../global/layout/media'
+
+import Icon from '../atoms/Icon'
+import { DELETE_MANUSCRIPT } from '../../pages/SubmissionWizard/operations'
 
 export const dashboardDateText = date => {
   const diffDays = differenceInCalendarDays(new Date(), date)
@@ -78,11 +82,23 @@ const DateBox = styled(Flex)`
     flex: 0 0 120px;
   `};
 `
-
 const AbsoluteDate = styled.time`
   ${media.mobileUp`
     font-size: ${th('fontSizeHeading6')};
   `};
+`
+
+const TrashIcon = props => (
+  <Icon
+    iconName="Trash"
+    overrideName="@pubsweet-pending.PeoplePicker.PersonPod.Remove"
+    {...props}
+  />
+)
+
+const StyledRemoveIcon = styled(TrashIcon)`
+  margin-left: 24px;
+  fill: ${th('colorTextSecondary')};
 `
 
 const DashboardListItem = ({ manuscript }) => {
@@ -101,6 +117,23 @@ const DashboardListItem = ({ manuscript }) => {
         <time>{dashboardDateText(date)}</time>
         <AbsoluteDate>{format(date, 'ddd D MMM YYYY')}</AbsoluteDate>
       </DateBox>
+
+      <Mutation mutation={DELETE_MANUSCRIPT}>
+        {deleteManuscript => {
+          console.log(manuscript)
+          return (
+            <StyledRemoveIcon
+              onClick={() =>
+                deleteManuscript({
+                  variables: { id: manuscript.id },
+                })
+                  .then(result => console.log('manuscript deleted'))
+                  .catch(error => console.log(error))
+              }
+            />
+          )
+        }}
+      </Mutation>
     </Root>
   )
 }

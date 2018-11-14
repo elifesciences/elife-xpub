@@ -49,6 +49,10 @@ class File extends BaseModel {
       .promise()
     return Body
   }
+
+  async delete() {
+    console.log('deleting a file')
+  }
 }
 
 module.exports = File
