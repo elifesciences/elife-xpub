@@ -3,7 +3,6 @@ const { Manuscript, User, File } = require('@elifesciences/xpub-model')
 const submitManuscript = require('./submitManuscript')
 const updateManuscript = require('./updateManuscript')
 const uploadManuscript = require('./uploadManuscript')
-// const deleteManuscript = require('./deleteManuscript')
 
 const resolvers = {
   Query: {
@@ -28,7 +27,6 @@ const resolvers = {
       return manuscript.save()
     },
 
-    // TODO restrict this in production
     async deleteManuscript(_, { id }, { user }) {
       const userUuid = await User.getUuidForProfile(user)
       const manuscript = await Manuscript.find(id, userUuid)
@@ -42,12 +40,9 @@ const resolvers = {
           console.log(error)
         }
       }
-
       await manuscript.delete()
       return id
     },
-
-    // deleteManuscript,
 
     updateManuscript,
 
