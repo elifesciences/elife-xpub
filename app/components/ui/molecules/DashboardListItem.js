@@ -50,8 +50,6 @@ const mapColor = statusCode =>
   }[statusCode])
 
 const Root = styled(Flex)`
-  // flex-direction: column;
-  // justify-content: space-between;
   border-bottom: ${th('borderWidth')} ${th('borderStyle')} ${th('colorBorder')};
 
   ${media.tabletPortraitUp`
