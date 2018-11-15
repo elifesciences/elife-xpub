@@ -1,7 +1,11 @@
 import React from 'react'
 import gql from 'graphql-tag'
-import { Mutation, Subscription } from 'react-apollo'
-import FilesPage from './FilesPage'
+import { Mutation } from 'react-apollo'
+import { Box } from 'grid-styled'
+import CoverLetterEditor from './CoverLetterEditor'
+import ValidatedField from '../../../../ui/atoms/ValidatedField'
+import ManuscriptUpload from './ManuscriptUpload'
+import { errorMessageMapping } from './utils'
 
 const UPLOAD_MUTATION = gql`
   mutation UploadFile($id: ID!, $file: Upload!, $fileSize: Int!) {
@@ -18,15 +22,8 @@ const UPLOAD_MUTATION = gql`
   }
 `
 
-const ON_UPLOAD_PROGRESS = gql`
-  subscription {
-    uploadProgress
-  }
-`
-
 function getProgress(loading, data) {
-  if (loading || !data) return 0
-  return data.uploadProgress
+  return loading || !data.uploadProgress ? 0 : data.uploadProgress
 }
 
 const FilesPageContainer = ({
@@ -36,17 +33,27 @@ const FilesPageContainer = ({
   errors,
   touched,
   values,
-  ...props
+  uploadData = {},
+  uploadLoading,
 }) => (
   <Mutation mutation={UPLOAD_MUTATION}>
     {(uploadFile, { loading, error: uploadError }) => {
       const fieldName = 'files'
       return (
-        <Subscription subscription={ON_UPLOAD_PROGRESS}>
-          {({ data: uploadData, loading: uploadLoading }) => (
-            <FilesPage
+        <React.Fragment>
+          <Box mb={3} width={1}>
+            <ValidatedField
+              component={CoverLetterEditor}
+              id="coverLetter"
+              name="coverLetter"
+              onBlur={value => setFieldValue('coverLetter', value)}
+              onChange={value => setFieldValue('coverLetter', value)}
+            />
+          </Box>
+          <Box width={1}>
+            <ManuscriptUpload
               conversion={{
-                converting: loading,
+                converting: loading || uploadData.uploadProgress < 100,
                 // TODO import this constant from somewhere (data model package?)
                 completed: values[fieldName].some(
                   file => file.type === 'MANUSCRIPT_SOURCE',
@@ -54,16 +61,17 @@ const FilesPageContainer = ({
                 progress: getProgress(uploadLoading, uploadData),
                 error: uploadError,
               }}
+              data-test-id="upload"
               formError={touched[fieldName] && errors[fieldName]}
               onDrop={files => {
                 setFieldTouched(fieldName, true, false)
 
                 if (files.length > 1) {
-                  setFieldError(fieldName, 'Only one file can be uploaded.')
+                  setFieldError(fieldName, errorMessageMapping.MULTIPLE)
                   return
                 }
                 if (files.length === 0) {
-                  setFieldError(fieldName, 'That file is not supported.')
+                  setFieldError(fieldName, errorMessageMapping.UNSUPPORTED)
                   return
                 }
 
@@ -75,11 +83,9 @@ const FilesPageContainer = ({
                   setFieldValue(fieldName, data.uploadManuscript.files)
                 })
               }}
-              setFieldValue={setFieldValue}
-              {...props}
             />
-          )}
-        </Subscription>
+          </Box>
+        </React.Fragment>
       )
     }}
   </Mutation>

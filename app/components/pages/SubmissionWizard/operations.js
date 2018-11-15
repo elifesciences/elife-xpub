@@ -103,3 +103,8 @@ export const SUBMIT_MANUSCRIPT = gql`
   }
   ${manuscriptFragment}
 `
+export const ON_UPLOAD_PROGRESS = gql`
+  subscription {
+    uploadProgress
+  }
+`
