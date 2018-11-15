@@ -9,7 +9,7 @@ const elifeApi = require('@elifesciences/xpub-model/entities/user/helpers/elife-
 const existingNames = [{ id: 1, first: 'J. Edward', last: 'Reviewer' }]
 
 Replay.fixtures = `${__dirname}/../test/http-mocks`
-const testHost = config.get('elife.api.url')
+const testHost = config.get('server.api.url')
 
 describe('Article XML generator', () => {
   beforeAll(async () => {

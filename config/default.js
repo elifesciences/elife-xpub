@@ -43,6 +43,7 @@ module.exports = {
     ref: '',
   },
   server: {
+    secret: 'xpubsecret',
     api: {
       url: 'https://prod--gateway.elifesciences.org/',
     },

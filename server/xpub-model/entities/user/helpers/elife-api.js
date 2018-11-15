@@ -8,8 +8,9 @@ const apiRoot = config.get('server.api.url')
 const request = (endpoint, query = {}) => {
   const req = superagent.get(apiRoot + endpoint)
   // only had the header if its defined in config
-  if (config.elife.api.secret) {
-    req.header.Authorization = config.elife.api.secret
+  const secret = config.get('server.api.secret')
+  if (secret) {
+    req.header.Authorization = secret
   }
   return req.query(query)
 }
@@ -20,13 +21,13 @@ const convertPerson = apiPerson => {
     name: apiPerson.name.preferred,
     aff: apiPerson.affiliations && apiPerson.affiliations[0].name[0],
     subjectAreas: (apiPerson.research.expertises || [])
-        .map(e => e.name)
-        .concat(apiPerson.research.focuses || []),
+      .map(e => e.name)
+      .concat(apiPerson.research.focuses || []),
     surname: apiPerson.name.surname,
     firstname: apiPerson.name.givenNames,
   }
   // if we used a secret then pull out the email too
-  if (config.elife.api.secret && apiPerson.emailAddresses) {
+  if (config.get('server.api.secret') && apiPerson.emailAddresses) {
     const email = apiPerson.emailAddresses.length
       ? apiPerson.emailAddresses[0].value
       : ''
