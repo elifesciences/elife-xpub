@@ -35,6 +35,7 @@ const resolvers = {
       if (manuscriptFile) {
         try {
           const file = await File.find(manuscriptFile.manuscriptId)
+          await file.deleteContent()
           await file.delete()
         } catch (error) {
           console.log(error)

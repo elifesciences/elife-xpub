@@ -1,9 +1,13 @@
 import React from 'react'
 import styled from 'styled-components'
+import { Link } from 'react-router-dom'
 import { Flex, Box } from 'grid-styled'
 import { differenceInCalendarDays, format } from 'date-fns'
 import { th } from '@pubsweet/ui-toolkit'
 import PropTypes from 'prop-types'
+import { Mutation } from 'react-apollo'
+import Icon from '../../ui/atoms/Icon'
+import { DELETE_MANUSCRIPT } from '../../pages/SubmissionWizard/operations'
 import ManuscriptStatus from '../atoms/ManuscriptStatus'
 import media from '../../global/layout/media'
 
@@ -46,9 +50,9 @@ const mapColor = statusCode =>
   }[statusCode])
 
 const Root = styled(Flex)`
-  flex-direction: column;
+  // flex-direction: column;
+  // justify-content: space-between;
   border-bottom: ${th('borderWidth')} ${th('borderStyle')} ${th('colorBorder')};
-  justify-content: space-between;
 
   ${media.tabletPortraitUp`
     flex-direction: row;
@@ -84,24 +88,103 @@ const AbsoluteDate = styled.time`
   `};
 `
 
-const DashboardListItem = ({ manuscript }) => {
-  const date = new Date(manuscript.created)
-  return (
-    <Root py={3}>
-      <TitleBox
-        color={mapColor(manuscript.clientStatus)}
-        data-test-id="title"
-        mb={3}
-      >
-        {manuscript.meta.title || '(Untitled)'}
-      </TitleBox>
-      <ManuscriptStatus statusCode={manuscript.clientStatus} />
-      <DateBox>
-        <time>{dashboardDateText(date)}</time>
-        <AbsoluteDate>{format(date, 'ddd D MMM YYYY')}</AbsoluteDate>
-      </DateBox>
-    </Root>
-  )
+const TrashIcon = props => (
+  <Icon
+    iconName="Trash"
+    overrideName="@pubsweet-pending.PeoplePicker.PersonPod.Remove"
+    {...props}
+  />
+)
+
+const StyledRemoveIcon = styled(TrashIcon)`
+  margin-left: 24px;
+  fill: ${th('colorTextSecondary')};
+`
+
+const TrashButton = styled(Box)`
+  width: 5%;
+`
+
+const DashboardLink = styled(Link)`
+  color: ${th('colorText')};
+  text-decoration: none;
+  width: 95%
+  :hover {
+    color: ${th('colorPrimary')};
+  }
+`
+const DashboardLinkFake = styled.div`
+  width: 95%;
+`
+
+const ItemContent = styled(Flex)`
+  flex-direction: row;
+  justify-content: space-between;
+`
+
+class DashboardListItem extends React.Component {
+  state = {
+    isDeleted: false,
+  }
+
+  renderItemContent = () => {
+    const { meta, clientStatus, created } = this.props.manuscript
+    const date = new Date(created)
+    return (
+      <ItemContent>
+        <TitleBox color={mapColor(clientStatus)} data-test-id="title" mb={3}>
+          {meta.title || '(Untitled)'}
+        </TitleBox>
+        <ManuscriptStatus statusCode={clientStatus} />
+        <DateBox>
+          <time>{dashboardDateText(date)}</time>
+          <AbsoluteDate>{format(date, 'ddd D MMM YYYY')}</AbsoluteDate>
+        </DateBox>
+      </ItemContent>
+    )
+  }
+
+  onClickHandler = deleteManuscript => {
+    deleteManuscript({
+      variables: { id: this.props.manuscript.id },
+    }).then(() => {
+      this.setState({ isDeleted: true })
+    })
+  }
+  render() {
+    const { manuscript } = this.props
+
+    return (
+      !this.state.isDeleted && (
+        <Root py={3}>
+          {manuscript.clientStatus === 'SUBMITTED' ? (
+            <React.Fragment>
+              <DashboardLinkFake>{this.renderItemContent()}</DashboardLinkFake>
+              <TrashButton />
+            </React.Fragment>
+          ) : (
+            <React.Fragment>
+              <DashboardLink to={`/submit/${manuscript.id}`}>
+                {this.renderItemContent()}
+              </DashboardLink>
+              <TrashButton>
+                <Mutation mutation={DELETE_MANUSCRIPT}>
+                  {deleteManuscript => {
+                    console.log(manuscript)
+                    return (
+                      <StyledRemoveIcon
+                        onClick={() => this.onClickHandler(deleteManuscript)}
+                      />
+                    )
+                  }}
+                </Mutation>
+              </TrashButton>
+            </React.Fragment>
+          )}
+        </Root>
+      )
+    )
+  }
 }
 
 DashboardListItem.propTypes = {

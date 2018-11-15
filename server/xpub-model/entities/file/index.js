@@ -59,6 +59,18 @@ class File extends BaseModel {
     }
     return file
   }
+
+  async deleteContent() {
+    if (!this.id) {
+      throw new Error('File has no ID, or is invalid')
+    }
+
+    return s3
+      .deleteObject({
+        Key: `${this.url}/${this.id}`,
+      })
+      .promise()
+  }
 }
 
 module.exports = File
