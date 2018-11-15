@@ -12,6 +12,19 @@ const parseString = promisify(xml2js.parseString)
 
 const { Manuscript, File, User } = require('@elifesciences/xpub-model')
 
+function addFileEntityToManuscript(manuscriptEntity, fileEntity) {
+  const manuscript = manuscriptEntity
+  const manuscriptUploadIndex = manuscript.files.findIndex(
+    element => element.type === 'MANUSCRIPT_SOURCE',
+  )
+
+  if (manuscriptUploadIndex < 0) {
+    manuscript.files.push(fileEntity)
+  } else {
+    manuscript.files[manuscriptUploadIndex] = fileEntity
+  }
+}
+
 async function uploadManuscript(_, { file, id, fileSize }, { user }) {
   /**
    * TODO
@@ -110,7 +123,7 @@ async function uploadManuscript(_, { file, id, fileSize }, { user }) {
     })
   }
 
-  manuscript.files.push(fileEntity)
+  addFileEntityToManuscript(manuscript, fileEntity)
   manuscript.meta.title = title
   await manuscript.save()
 
