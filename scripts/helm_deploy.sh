@@ -22,6 +22,7 @@ fi
 
 cd helm/
 cd elife-xpub
+sudo -u elife -H helm init --client-only
 sudo -u elife -H helm dependency update .
 cd -
 sudo -u elife -H helm upgrade --install "$release_name" --set image.tag="${image_tag}" elife-xpub
