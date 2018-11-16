@@ -5,7 +5,7 @@ import { Box } from 'grid-styled'
 import CoverLetterEditor from './CoverLetterEditor'
 import ValidatedField from '../../../../ui/atoms/ValidatedField'
 import ManuscriptUpload from './ManuscriptUpload'
-import { errorMessageMapping } from './utils'
+import { errorMessageMapping, manuscriptFileTypes } from './utils'
 
 const UPLOAD_MUTATION = gql`
   mutation UploadFile($id: ID!, $file: Upload!, $fileSize: Int!) {
@@ -38,6 +38,60 @@ function getProgress(loading, data) {
   return loading || !data.uploadProgress ? 0 : data.uploadProgress
 }
 
+const onUploadValidationError = (
+  fieldName,
+  setFieldError,
+  deleteFile,
+  setFieldValue,
+  manuscriptId,
+  errorMessage,
+) => {
+  setFieldError(fieldName, errorMessage)
+  deleteFile({
+    variables: { id: manuscriptId },
+  }).then(({ data }) => {
+    setFieldValue(fieldName, data.removeUploadedManuscript.files)
+  })
+}
+
+export const onFileDrop = (
+  files,
+  fieldName,
+  setFieldTouched,
+  setFieldError,
+  setFieldValue,
+  deleteFile,
+  uploadFile,
+  manuscriptId,
+) => {
+  const validationError = errorMessage =>
+    onUploadValidationError(
+      fieldName,
+      setFieldError,
+      deleteFile,
+      setFieldValue,
+      manuscriptId,
+      errorMessage,
+    )
+
+  setFieldTouched(fieldName, true, false)
+  if (files.length > 1) {
+    validationError(errorMessageMapping.MULTIPLE)
+    return
+  }
+  if (files.length === 0) {
+    validationError(errorMessageMapping.UNSUPPORTED)
+    return
+  }
+  const [file] = files
+  uploadFile({
+    variables: { file, id: manuscriptId, fileSize: file.size },
+  }).then(({ data }) => {
+    setFieldValue('meta.title', data.uploadManuscript.meta.title)
+    setFieldValue(fieldName, data.uploadManuscript.files)
+  })
+}
+
 const FilesPageContainer = ({
   setFieldValue,
   setFieldError,
@@ -51,6 +105,7 @@ const FilesPageContainer = ({
   <Mutation mutation={UPLOAD_MUTATION}>
     {(uploadFile, { loading, error: uploadError }) => {
       const fieldName = 'files'
+      const { MANUSCRIPT_SOURCE } = manuscriptFileTypes
       return (
         <Mutation mutation={DELETE_MUTATION}>
           {deleteFile => (
@@ -68,54 +123,26 @@ const FilesPageContainer = ({
                 <ManuscriptUpload
                   conversion={{
                     converting: loading || uploadData.uploadProgress < 100,
-                    // TODO import this constant from somewhere (data model package?)
                     completed: values[fieldName].some(
-                      file => file.type === 'MANUSCRIPT_SOURCE',
+                      file => file.type === MANUSCRIPT_SOURCE,
                     ),
                     progress: getProgress(uploadLoading, uploadData),
                     error: uploadError,
                   }}
                   data-test-id="upload"
                   formError={touched[fieldName] && errors[fieldName]}
-                  onDrop={files => {
-                    setFieldTouched(fieldName, true, false)
-
-                    if (files.length > 1) {
-                      setFieldError(fieldName, errorMessageMapping.MULTIPLE)
-                      deleteFile({
-                        variables: { id: values.id },
-                      }).then(({ data }) => {
-                        setFieldValue(
-                          fieldName,
-                          data.removeUploadedManuscript.files,
-                        )
-                      })
-                      return
-                    }
-                    if (files.length === 0) {
-                      setFieldError(fieldName, errorMessageMapping.UNSUPPORTED)
-                      deleteFile({
-                        variables: { id: values.id },
-                      }).then(({ data }) => {
-                        setFieldValue(
-                          fieldName,
-                          data.removeUploadedManuscript.files,
-                        )
-                      })
-                      return
-                    }
-
-                    const [file] = files
-                    uploadFile({
-                      variables: { file, id: values.id, fileSize: file.size },
-                    }).then(({ data }) => {
-                      setFieldValue(
-                        'meta.title',
-                        data.uploadManuscript.meta.title,
-                      )
-                      setFieldValue(fieldName, data.uploadManuscript.files)
-                    })
-                  }}
+                  onDrop={files =>
+                    onFileDrop(
+                      files,
+                      fieldName,
+                      setFieldTouched,
+                      setFieldError,
+                      setFieldValue,
+                      deleteFile,
+                      uploadFile,
+                      values.id,
+                    )
+                  }
                 />
               </Box>
             </React.Fragment>
