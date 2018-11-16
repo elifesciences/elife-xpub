@@ -1,5 +1,7 @@
 const logger = require('./non-serializable/logger')
 
+logger.transports.console.level = 'debug'
+
 module.exports = {
   'pubsweet-server': {
     logger,
