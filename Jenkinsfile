@@ -53,6 +53,10 @@ elifePipeline {
 
         stage 'Push image', {
             sh "docker push elifesciences/elife-xpub:${commit}"
+            elifeMainlineOnly {
+                sh "docker tag elifesciences/elife-xpub:${commit} elifesciences/elife-xpub:latest"
+                sh "docker push elifesciences/elife-xpub:latest"
+            }
         }
     }
 
