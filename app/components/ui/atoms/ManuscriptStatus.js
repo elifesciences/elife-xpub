@@ -6,7 +6,7 @@ import media from '../../global/layout/media'
 
 const StatusBox = styled(Box)`
   color: ${props => props.theme[props.color]};
-  ${media.mobileUp`
+  ${media.tabletPortraitUp`
     flex: 0 0 120px;
     margin-bottom: 0;
   `};
