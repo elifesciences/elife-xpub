@@ -1,7 +1,7 @@
 const fs = require('fs')
 const glob = require('glob')
 const crypto = require('crypto')
-const { replace } = require('lodash')
+const { replace, includes } = require('lodash')
 
 const md5 = s =>
   crypto
@@ -24,7 +24,7 @@ const obsforcateMockFiles = async () => {
     if (fs.lstatSync(file).isFile()) {
       const re = new RegExp('"emailAddresses":\\[\\{"value":"([^,]+)",', 'g')
       const content = fs.readFileSync(file).toString()
-      fs.writeFileSync(`${file}-X`, obsforcate(content, re))
+      fs.writeFileSync(file, obsforcate(content, re))
     }
   })
 }
@@ -51,7 +51,10 @@ const obsforcate = (s, re) => {
   let newStr = s
 
   matches.forEach(item => {
-    newStr = replace(newStr, item.str, md5(item.str))
+    // make sure this is idempotent
+    if (includes(item.str, '.') && includes(item.str, '@')) {
+      newStr = replace(newStr, item.str, md5(item.str))
+    }
   })
   return newStr
 }

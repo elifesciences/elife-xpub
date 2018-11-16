@@ -2,7 +2,7 @@
 
 exports[`MECA integration test when generating an archive should contain the correct files 1`] = `
 Object {
-  "article.xml": 6357,
+  "article.xml": Any<Number>,
   "cover_letter.html": 743,
   "disclosure.pdf": Any<Number>,
   "manifest.xml": 1510,

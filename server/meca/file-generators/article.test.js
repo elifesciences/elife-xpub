@@ -18,9 +18,7 @@ describe('Article XML generator', () => {
     await db.table('ejp_name').insert(existingNames)
   })
 
-  it(`${testHost} has mocks configured with email using ${config.get(
-    'server.api.secret',
-  )}`, async () => {
+  it(`${testHost} has mocks configured with email`, async () => {
     const person = await elifeApi.person('1968254f')
 
     expect(person.name).toBe('Arup K Chakraborty')
@@ -29,7 +27,6 @@ describe('Article XML generator', () => {
     let { email } = person
 
     if (Replay.mode === 'record') {
-      console.log(Replay)
       email = md5(email)
     }
     expect(email).toBe('b6f50a368b8bde0643d6df92a2bafd61')
@@ -42,9 +39,7 @@ describe('Article XML generator', () => {
 
   it('generates expected XML', async () => {
     let xml = await generateXml(sampleManuscript)
-    if (Replay.mode === 'record') {
-      xml = obsfurcateEmail(xml)
-    }
-    expect(xml).toMatchSnapshot()
+    xml = obsfurcateEmail(xml)
+    expect(xml).toMatchSnapshot('all-obsfurcated')
   })
 })

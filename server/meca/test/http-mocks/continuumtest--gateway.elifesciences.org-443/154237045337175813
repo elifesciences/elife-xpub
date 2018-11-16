@@ -1,0 +1,22 @@
+GET /people/6ce3402a
+accept-encoding: gzip, deflate
+
+HTTP/1.1 200 OK
+server: nginx
+date: Fri, 16 Nov 2018 12:14:13 GMT
+content-type: application/vnd.elife.person+json;version=1
+transfer-encoding: chunked
+connection: close
+cache-control: max-age=300, public, stale-if-error=86400, stale-while-revalidate=300
+vary: Accept, Authorization
+etag: "329766849915eb53a45406e08d626950"
+x-ua-compatible: IE=edge
+content-language: en
+x-content-type-options: nosniff
+x-frame-options: SAMEORIGIN
+access-control-allow-origin: *
+x-kong-upstream-latency: 239
+x-kong-proxy-latency: 1
+via: kong/0.9.5
+
+{"id":"6ce3402a","type":{"id":"reviewing-editor","label":"Reviewing Editor"},"name":{"surname":"Sanchez Alvarado","givenNames":"Alejandro","preferred":"Alejandro Sanchez Alvarado","index":"Sanchez Alvarado, Alejandro"},"emailAddresses":[{"value":"3078d573f1a5078c9d472d6cbc8e447f","access":"restricted"}],"research":{"focuses":["regeneration"],"organisms":["planaria"],"expertises":[{"id":"cell-biology","name":"Cell Biology"},{"id":"stem-cells-regenerative-medicine","name":"Stem Cells and Regenerative Medicine"}]},"affiliations":[{"name":["Stowers Institute for Medical Research"],"address":{"formatted":["United States"],"components":{"country":"United States"}}}]}

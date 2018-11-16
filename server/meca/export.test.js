@@ -58,6 +58,7 @@ describe('MECA integration test', () => {
       const zip = await JsZip.loadAsync(sftp.mockFs.readFileSync(filename))
 
       expect(getFileSizes(zip)).toMatchSnapshot({
+        'article.xml': expect.any(Number),
         'disclosure.pdf': expect.any(Number),
       })
 

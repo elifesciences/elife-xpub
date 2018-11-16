@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Article XML generator generates expected XML 1`] = `
+exports[`Article XML generator generates expected XML: all-obsfurcated 1`] = `
 "<?xml version=\\"1.0\\" encoding=\\"UTF-8\\"?>
 <!DOCTYPE article SYSTEM \\"JATS-journalpublishing1.dtd\\">
 <article>
