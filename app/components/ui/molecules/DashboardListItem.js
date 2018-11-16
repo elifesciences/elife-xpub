@@ -171,6 +171,7 @@ class DashboardListItem extends React.Component {
                     console.log(manuscript)
                     return (
                       <StyledRemoveIcon
+                        data-test-id="trash"
                         onClick={() => this.onClickHandler(deleteManuscript)}
                       />
                     )
