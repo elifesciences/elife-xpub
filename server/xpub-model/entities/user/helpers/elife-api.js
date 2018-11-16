@@ -1,6 +1,6 @@
 /* eslint-disable no-await-in-loop */
-const superagent = require('superagent')
 const config = require('config')
+const superagent = require('superagent')
 const logger = require('@pubsweet/logger')
 
 const apiRoot = config.get('server.api.url')
@@ -9,6 +9,7 @@ const request = (endpoint, query = {}) => {
   const req = superagent.get(apiRoot + endpoint)
   // only had the header if its defined in config
   const secret = config.get('server.api.secret')
+
   if (secret) {
     req.header.Authorization = secret
   }

@@ -43,9 +43,9 @@ module.exports = {
     ref: '',
   },
   server: {
-    secret: 'xpubsecret',
     api: {
-      url: 'https://prod--gateway.elifesciences.org/',
+      secret: 'xpubsecret',
+      url: 'https://continuumtest--gateway.elifesciences.org/',
     },
   },
   client: {

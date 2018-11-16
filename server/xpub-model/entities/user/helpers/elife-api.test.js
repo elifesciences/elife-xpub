@@ -1,4 +1,5 @@
 const person = require('./elife-api.test.person')
+const Replay = require('replay')
 
 jest.mock('superagent', () => ({
   header: [],
@@ -30,7 +31,12 @@ describe('eLife API tests', () => {
     const header = request.getHeader()
 
     expect(Object.keys(header)).toContain('Authorization')
-    expect(header.Authorization).toBe('xpubsecret')
+    if (Replay.mode === 'record') {
+      expect(header.Authorization).not.toBe('xpubsecret')
+      expect(header.Authorization).toHaveLength(32)
+    } else {
+      expect(header.Authorization).toBe('xpubsecret')
+    }
   })
 
   it('creates the correct person structure', async () => {
