@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 import { Flex, Box } from 'grid-styled'
@@ -120,13 +120,21 @@ const ItemContent = styled(Flex)`
   justify-content: space-between;
 `
 
-class DashboardListItem extends React.Component {
-  state = {
-    isDeleted: false,
+const DashboardListItem = ({
+  manuscript,
+  deleteManuscriptFromState,
+  index,
+}) => {
+  const onClickHandler = deleteManuscript => {
+    deleteManuscript({
+      variables: { id: manuscript.id },
+    }).then(() => {
+      deleteManuscriptFromState(index)
+    })
   }
 
-  renderItemContent = () => {
-    const { meta, clientStatus, created } = this.props.manuscript
+  const renderItemContent = () => {
+    const { meta, clientStatus, created } = manuscript
     const date = new Date(created)
     return (
       <ItemContent>
@@ -142,48 +150,32 @@ class DashboardListItem extends React.Component {
     )
   }
 
-  onClickHandler = deleteManuscript => {
-    deleteManuscript({
-      variables: { id: this.props.manuscript.id },
-    }).then(() => {
-      this.setState({ isDeleted: true })
-    })
-  }
-  render() {
-    const { manuscript } = this.props
-
-    return (
-      !this.state.isDeleted && (
-        <Root py={3}>
-          {manuscript.clientStatus === 'SUBMITTED' ? (
-            <React.Fragment>
-              <DashboardLinkFake>{this.renderItemContent()}</DashboardLinkFake>
-              <TrashButton />
-            </React.Fragment>
-          ) : (
-            <React.Fragment>
-              <DashboardLink to={`/submit/${manuscript.id}`}>
-                {this.renderItemContent()}
-              </DashboardLink>
-              <TrashButton>
-                <Mutation mutation={DELETE_MANUSCRIPT}>
-                  {deleteManuscript => {
-                    console.log(manuscript)
-                    return (
-                      <StyledRemoveIcon
-                        data-test-id="trash"
-                        onClick={() => this.onClickHandler(deleteManuscript)}
-                      />
-                    )
-                  }}
-                </Mutation>
-              </TrashButton>
-            </React.Fragment>
-          )}
-        </Root>
-      )
-    )
-  }
+  return (
+    <Root py={3}>
+      {manuscript.clientStatus === 'SUBMITTED' ? (
+        <Fragment>
+          <DashboardLinkFake>{renderItemContent()}</DashboardLinkFake>
+          <TrashButton />
+        </Fragment>
+      ) : (
+        <Fragment>
+          <DashboardLink to={`/submit/${manuscript.id}`}>
+            {renderItemContent()}
+          </DashboardLink>
+          <TrashButton>
+            <Mutation mutation={DELETE_MANUSCRIPT}>
+              {deleteManuscript => (
+                <StyledRemoveIcon
+                  data-test-id="trash"
+                  onClick={() => onClickHandler(deleteManuscript)}
+                />
+              )}
+            </Mutation>
+          </TrashButton>
+        </Fragment>
+      )}
+    </Root>
+  )
 }
 
 DashboardListItem.propTypes = {
