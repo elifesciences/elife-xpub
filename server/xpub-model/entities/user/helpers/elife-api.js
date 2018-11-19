@@ -69,10 +69,8 @@ const person = async id => {
 
 const peopleById = ids => Promise.all(ids.map(person))
 
-const getEditorsByPersonId = async editorIds => {
-  const list = await Promise.all(editorIds.map(id => person(id)))
-  return list
-}
+const getEditorsByPersonId = async editorIds =>
+  Promise.all(editorIds.map(id => person(id)))
 
 const profile = async id => {
   logger.debug('Fetching profile with ID', id, 'from public API')
