@@ -183,5 +183,33 @@ describe('Manuscripts', () => {
         ),
       ).rejects.toThrow(`File size shouldn't exceed ${maxFileSize}MB`)
     })
+
+    it('replaces old manuscript file with new manuscript file', async () => {
+      const blankManuscript = new Manuscript({ createdBy: userId })
+      const { id } = await blankManuscript.save()
+      const createFile = fileName => ({
+        filename: fileName,
+        stream: fs.createReadStream(
+          `${__dirname}/../../../../../test/fixtures/dummy-manuscript-2.pdf`,
+        ),
+        mimetype: 'application/pdf',
+      })
+      let manuscript = await Mutation.uploadManuscript(
+        {},
+        { id, file: createFile('manuscript.pdf'), fileSize: 73947 },
+        { user: profileId },
+      )
+
+      expect(manuscript.files).toHaveLength(1)
+      expect(manuscript.files[0].filename).toBe('manuscript.pdf')
+
+      manuscript = await Mutation.uploadManuscript(
+        {},
+        { id, file: createFile('manuscript2.pdf'), fileSize: 73947 },
+        { user: profileId },
+      )
+      expect(manuscript.files).toHaveLength(1)
+      expect(manuscript.files[0].filename).toBe('manuscript2.pdf')
+    })
   })
 })
