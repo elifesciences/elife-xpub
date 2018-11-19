@@ -8,7 +8,8 @@ describe('Manuscripts', () => {
   let userId
   beforeEach(async () => {
     await createTables(true)
-    const [user] = await Promise.all([new User(userData).save()])
+    const user = new User(userData)
+    await user.save()
     userId = user.id
   })
 
