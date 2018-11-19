@@ -1,0 +1,22 @@
+GET /people/87f34696
+accept-encoding: gzip, deflate
+
+HTTP/1.1 200 OK
+server: nginx
+date: Mon, 19 Nov 2018 15:54:59 GMT
+content-type: application/vnd.elife.person+json;version=1
+transfer-encoding: chunked
+connection: close
+cache-control: max-age=300, public, stale-if-error=86400, stale-while-revalidate=300
+vary: Accept, Authorization
+etag: "949d71e28033e668f10bc2f41d10e4db"
+x-ua-compatible: IE=edge
+content-language: en
+x-content-type-options: nosniff
+x-frame-options: SAMEORIGIN
+access-control-allow-origin: *
+x-kong-upstream-latency: 281
+x-kong-proxy-latency: 1
+via: kong/0.9.5
+
+{"id":"87f34696","type":{"id":"reviewing-editor","label":"Reviewing Editor"},"name":{"surname":"Yu","givenNames":"Hao","preferred":"Hao Yu","index":"Yu, Hao"},"emailAddresses":[{"value":"d3fa5c7081fecbc7cfc02be293834b86","access":"restricted"}],"research":{"focuses":["functional genomics","plant reproductive development","phytohormone signalling"],"organisms":["rice","orchid","\u003Ci\u003Earabidopsis thaliana\u003C\/i\u003E"],"expertises":[{"id":"genetics-genomics","name":"Genetics and Genomics"},{"id":"plant-biology","name":"Plant Biology"}]},"affiliations":[{"name":["National University of Singapore \u0026 Temasek Life Sciences Laboratory"],"address":{"formatted":["Singapore"],"components":{"country":"Singapore"}}}]}

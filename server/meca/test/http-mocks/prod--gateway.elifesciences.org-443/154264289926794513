@@ -1,0 +1,22 @@
+GET /people/232d9893
+accept-encoding: gzip, deflate
+
+HTTP/1.1 200 OK
+server: nginx
+date: Mon, 19 Nov 2018 15:54:59 GMT
+content-type: application/vnd.elife.person+json;version=1
+transfer-encoding: chunked
+connection: close
+cache-control: max-age=300, public, stale-if-error=86400, stale-while-revalidate=300
+vary: Accept, Authorization
+etag: "83384d486a0af8e428aca194655d3e9f"
+x-ua-compatible: IE=edge
+content-language: en
+x-content-type-options: nosniff
+x-frame-options: SAMEORIGIN
+access-control-allow-origin: *
+x-kong-upstream-latency: 413
+x-kong-proxy-latency: 1
+via: kong/0.9.5
+
+{"id":"232d9893","type":{"id":"senior-editor","label":"Senior Editor"},"name":{"surname":"Struhl","givenNames":"Kevin","preferred":"Kevin Struhl","index":"Struhl, Kevin"},"emailAddresses":[{"value":"4f5cd09b1742dad17ffe48d0c33def8f","access":"restricted"}],"image":{"uri":"https:\/\/iiif.elifesciences.org\/journal-cms\/person%2F2018-01%2Fa06w3674.jpg","alt":"","source":{"mediaType":"image\/jpeg","uri":"https:\/\/iiif.elifesciences.org\/journal-cms\/person%2F2018-01%2Fa06w3674.jpg\/full\/full\/0\/default.jpg","filename":"a06w3674.jpg"},"size":{"width":3600,"height":2400},"focalPoint":{"x":50,"y":50}},"profile":[{"text":"Kevin Struhl received a BS and MS from MIT, a PhD from Stanford University Medical School, and did postdoctoral work at the MRC Laboratory of Molecular Biology in Cambridge, UK. He has been in the Department of Biological Chemistry and Molecular Pharmacology at Harvard Medical School since 1982, was acting Chair from 1997\u201398, and has been the David Wesley Gaiser Professor since 1991. His research combines genetic, molecular, genomic, and evolutionary approaches to address a wide variety of fundamental questions about transcriptional regulatory mechanisms and chromatin structure in yeast. In addition, he is interested in elucidating transcriptional regulatory circuits that mediate the process of cellular transformation and the formation of cancer stem cells. He has authored or co-authored nearly 300 research articles and reviews, and is an ISI Highly Cited Researcher. He received the Eli Lilly Award in Microbiology and is a Distinguished Researcher at the Institute of Molecular Biology and Biotechnology in Crete. Dr. Struhl is a Fellow of the American Academy of Microbiology, the American Association for the Advancement of Science, the American Academy of Arts and Sciences, the National Academy of Sciences, and the National Academy of Medicine.","type":"paragraph"}],"research":{"focuses":["transcription mechanisms","gene regulation","chromatin","mRNA decay","biological function","cellular transformation","cancer stem cells"],"expertises":[{"id":"chromosomes-gene-expression","name":"Chromosomes and Gene Expression"},{"id":"cell-biology","name":"Cell Biology"}]},"affiliations":[{"name":["Harvard Medical School"],"address":{"formatted":["United States"],"components":{"country":"United States"}}}],"competingInterests":"Kevin Struhl receives funding from the National Institutes of Health. He is on the Scientific Advisory Board of Sangamo, Inc and the Klarman Cell Observatory at the Broad Institute. He is on the editorial boards of Current Protocols in Molecular Biology and Epigenetics and Chromatin."}
