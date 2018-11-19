@@ -13,7 +13,6 @@ const request = (endpoint, query = {}) => {
   if (secret && secret.length === 32) {
     req.header.Authorization = secret
   }
-  console.log(apiRoot, req)
   return req.query(query)
 }
 
