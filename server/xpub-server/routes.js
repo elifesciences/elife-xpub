@@ -1,6 +1,6 @@
 const logger = require('@pubsweet/logger')
 const config = require('config')
-const { dbExists } = require('@pubsweet/db-manager')
+const { db } = require('pubsweet-server')
 const AWS = require('aws-sdk')
 
 const DATABASE_ERROR = 'Database Error'
@@ -37,7 +37,8 @@ const checkS3 = () =>
 
 const checkDataBase = () =>
   new Promise(resolve => {
-    dbExists()
+    db.select('table_name')
+      .from('information_schema.tables')
       .then(response => resolve(response))
       .catch(error => resolve(error))
   })
