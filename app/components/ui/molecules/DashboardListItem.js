@@ -8,6 +8,7 @@ import PropTypes from 'prop-types'
 import { Mutation } from 'react-apollo'
 import Icon from '../../ui/atoms/Icon'
 import { DELETE_MANUSCRIPT } from '../../pages/SubmissionWizard/operations'
+import { ALL_MANUSCRIPTS } from '../../pages/Dashboard/operations'
 import ManuscriptStatus from '../atoms/ManuscriptStatus'
 import media from '../../global/layout/media'
 
@@ -120,16 +121,11 @@ const ItemContent = styled(Flex)`
   justify-content: space-between;
 `
 
-const DashboardListItem = ({
-  manuscript,
-  deleteManuscriptFromState,
-  index,
-}) => {
+const DashboardListItem = ({ manuscript }) => {
   const onClickHandler = deleteManuscript => {
     deleteManuscript({
       variables: { id: manuscript.id },
-    }).then(() => {
-      deleteManuscriptFromState(index)
+      refetchQueries: [{ query: ALL_MANUSCRIPTS }],
     })
   }
 
