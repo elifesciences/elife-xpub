@@ -7,13 +7,13 @@ const apiRoot = config.get('server.api.url')
 
 const request = (endpoint, query = {}) => {
   const req = superagent.get(apiRoot + endpoint)
+
   // only had the header if its defined in config
   const secret = config.get('server.api.secret')
-
-  if (secret && secret.length === 32) {
+  if (secret) {
     req.header.Authorization = secret
   }
-  console.log(apiRoot, req)
+
   return req.query(query)
 }
 
@@ -22,9 +22,9 @@ const convertPerson = apiPerson => {
     id: apiPerson.id,
     name: apiPerson.name.preferred,
     aff: apiPerson.affiliations && apiPerson.affiliations[0].name[0],
-    subjectAreas: (apiPerson.research.expertises || [])
+    subjectAreas: ((apiPerson.research && apiPerson.research.expertises) || [])
       .map(e => e.name)
-      .concat(apiPerson.research.focuses || []),
+      .concat((apiPerson.research && apiPerson.research.focuses) || []),
     surname: apiPerson.name.surname,
     firstname: apiPerson.name.givenNames,
   }
