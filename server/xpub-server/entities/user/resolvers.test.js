@@ -48,6 +48,12 @@ describe('User', () => {
         subjectAreas: [
           'Structural Biology and Molecular Biophysics',
           'Neuroscience',
+          'ion channels',
+          'calcium binding proteins',
+          'membrane transport',
+          'allostery and cooperativity',
+          'cellular neurophysiology',
+          'biochemical neuroscience',
         ],
       })
     })

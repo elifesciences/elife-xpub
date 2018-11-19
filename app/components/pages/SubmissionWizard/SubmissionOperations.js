@@ -48,6 +48,7 @@ const SubmissionOperations = ({
   data,
   updateManuscript,
   submitManuscript,
+  ...props
 }) => {
   if (data.loading) {
     return <div>Loading...</div>

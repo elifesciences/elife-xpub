@@ -109,3 +109,9 @@ export const DELETE_MANUSCRIPT = gql`
     deleteManuscript(id: $id)
   }
 `
+
+export const ON_UPLOAD_PROGRESS = gql`
+  subscription {
+    uploadProgress
+  }
+`

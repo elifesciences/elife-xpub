@@ -6,8 +6,9 @@ import Dropzone from 'react-dropzone'
 import { ErrorText, Action } from '@pubsweet/ui'
 import { th } from '@pubsweet/ui-toolkit'
 import config from 'config'
+import { errorMessageMapping } from './utils'
 
-import Icon from '../atoms/Icon'
+import Icon from '../../../../ui/atoms/Icon'
 
 const UploadIcon = props => (
   <Icon
@@ -80,27 +81,30 @@ const CentredFlex = styled(Flex)`
   text-align: center;
 `
 
-const DropzoneContent = ({ conversion, formError, dropzoneOpen }) => {
+const DropzoneContent = ({ conversion, errorMessage, dropzoneOpen }) => {
   if (conversion.converting) {
     return (
       <React.Fragment>
         <StyledUploadIcon percentage={conversion.progress} />
-        <UploadInstruction data-test-id="dropzoneMessage">
+        <UploadInstruction
+          data-test-conversion="converting"
+          data-test-id="dropzoneMessage"
+        >
           Manuscript is uploading {conversion.progress}%
         </UploadInstruction>
       </React.Fragment>
     )
   }
-  const displayError = conversion.error
-    ? 'Unable to upload manuscript.'
-    : formError
 
-  if (displayError) {
+  if (errorMessage) {
     return (
       <React.Fragment>
         <StyledUploadFailureIcon />
-        <UploadInstruction data-test-id="dropzoneMessage">
-          <DropzoneErrorText>Oops!</DropzoneErrorText> {displayError} Please{' '}
+        <UploadInstruction
+          data-test-conversion="failed"
+          data-test-id="dropzoneMessage"
+        >
+          <DropzoneErrorText>Oops!</DropzoneErrorText> {errorMessage} Please{' '}
           <Action onClick={dropzoneOpen}>try again.</Action>
         </UploadInstruction>
 
@@ -114,7 +118,10 @@ const DropzoneContent = ({ conversion, formError, dropzoneOpen }) => {
     return (
       <React.Fragment>
         <StyledUploadSuccessIcon />
-        <UploadInstruction data-test-id="dropzoneMessage">
+        <UploadInstruction
+          data-test-conversion="completed"
+          data-test-id="dropzoneMessage"
+        >
           Success! <Action onClick={dropzoneOpen}>Replace</Action> your
           manuscript.
         </UploadInstruction>
@@ -135,34 +142,75 @@ const DropzoneContent = ({ conversion, formError, dropzoneOpen }) => {
   )
 }
 
-const FileUpload = ({ onDrop, conversion, formError, ...props }) => {
-  let dropzoneRef
-  return (
-    <StyledDropzone
-      accept={VALID_FILE_TYPES}
-      onDrop={onDrop}
-      {...props}
-      disableClick
-      hasError={!!(formError || conversion.error)}
-      maxSize={config.fileUpload.maxSizeMB * 1e6}
-      saveInnerRef={node => {
-        dropzoneRef = node
-      }}
-    >
-      <CentredFlex>
-        <Box width={1}>
-          <DropzoneContent
-            conversion={conversion}
-            dropzoneOpen={() => dropzoneRef.open()}
-            formError={formError}
-          />
-        </Box>
-      </CentredFlex>
-    </StyledDropzone>
-  )
+class ManuscriptUpload extends React.Component {
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      errorMessage: null,
+    }
+  }
+
+  componentDidUpdate(prevProps) {
+    if (
+      !this.state.errorMessage &&
+      this.props.formError === errorMessageMapping.EMPTY
+    ) {
+      this.setErrorMessage(this.props.formError)
+    }
+
+    if (
+      prevProps.formError !== this.props.formError &&
+      this.props.formError !== errorMessageMapping.EMPTY
+    ) {
+      this.setErrorMessage(this.props.formError)
+    }
+
+    if (prevProps.conversion.error !== this.props.conversion.error) {
+      this.setErrorMessage(
+        this.props.conversion.error && errorMessageMapping.UPLOAD_FAILURE,
+      )
+    }
+  }
+
+  setErrorMessage = errorMessage => {
+    this.setState({ errorMessage })
+  }
+
+  render() {
+    const { onDrop, conversion, formError, ...props } = this.props
+    let dropzoneRef
+    return (
+      <StyledDropzone
+        accept={VALID_FILE_TYPES}
+        disableClick
+        disabled={conversion.converting}
+        hasError={this.state.errorMessage && !conversion.converting}
+        maxSize={config.fileUpload.maxSizeMB * 1e6}
+        onDrop={files => {
+          this.setErrorMessage(null)
+          onDrop(files)
+        }}
+        saveInnerRef={node => {
+          dropzoneRef = node
+        }}
+        {...props}
+      >
+        <CentredFlex>
+          <Box width={1}>
+            <DropzoneContent
+              conversion={conversion}
+              dropzoneOpen={() => dropzoneRef.open()}
+              errorMessage={this.state.errorMessage}
+            />
+          </Box>
+        </CentredFlex>
+      </StyledDropzone>
+    )
+  }
 }
 
-FileUpload.propTypes = {
+ManuscriptUpload.propTypes = {
   onDrop: PropTypes.func.isRequired,
   conversion: PropTypes.shape({
     completed: PropTypes.bool,
@@ -173,9 +221,9 @@ FileUpload.propTypes = {
   formError: PropTypes.string,
 }
 
-FileUpload.defaultProps = {
+ManuscriptUpload.defaultProps = {
   conversion: {},
   formError: '',
 }
 
-export default FileUpload
+export default ManuscriptUpload

@@ -81,7 +81,7 @@ const DateBox = styled(Flex)`
   `};
 `
 const AbsoluteDate = styled.time`
-  ${media.mobileUp`
+  ${media.tabletPortraitUp`
     font-size: ${th('fontSizeHeading6')};
   `};
 `

@@ -4,9 +4,9 @@ module.exports = {
   'pubsweet-server': {
     logger,
   },
-  elife: {
+  server: {
     api: {
-      url: 'https://api.elifesciences.org/',
+      url: 'http://prod--gateway.elife.internal/',
     },
   },
   login: {
