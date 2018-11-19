@@ -13,7 +13,6 @@ const request = (endpoint, query = {}) => {
   if (secret) {
     req.header.Authorization = secret
   }
-
   return req.query(query)
 }
 
