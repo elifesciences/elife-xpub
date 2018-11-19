@@ -1,88 +1,87 @@
 import { onFileDrop } from '.'
 
-const fakeFunction = () => {}
-const fakeResponse = fileName => ({
+const fakeResponse = file => ({
   data: {
-    uploadManuscript: { meta: { tile: '' }, files: [{ filename: fileName }] },
+    uploadManuscript: { meta: { tile: '' }, files: [{ fileName: file.name }] },
   },
 })
 
 describe('FilesPageContainer', () => {
-  it('onFileDrop sets new manuscript file value when there is no validation error and no existing manuscript file', async () => {
-    const values = {
-      files: [],
-    }
-    const setValues = (fieldName, value) => (values[fieldName] = value)
-    const files = [
-      {
-        name: 'document1.docx',
-      },
-    ]
-    await onFileDrop(
-      files,
-      'files',
-      fakeFunction,
-      fakeFunction,
-      setValues,
-      () => new Promise(resolve => resolve({})),
-      data =>
-        new Promise(resolve => resolve(fakeResponse(data.variables.file))),
+  // Mock props that would be passed by formik wrapper
+  let values = {
+    files: [],
+  }
+  const fakeFormFunctions = {
+    setFieldTouched: () => {},
+    setFieldError: () => {},
+    setFieldValue: (fieldName, value) => (values[fieldName] = value),
+  }
+
+  // Mock mutation props
+  const deleteFile = () =>
+    new Promise(resolve =>
+      resolve({ data: { removeUploadedManuscript: { files: [] } } }),
     )
+  const saveFile = data =>
+    new Promise(resolve => resolve(fakeResponse(data.variables.file)))
+
+  // Simulate dropzone callback
+  const dropSingleFile = async files => {
+    await onFileDrop(files, fakeFormFunctions, deleteFile, saveFile)
+  }
+
+  const initialFile = [
+    {
+      name: 'document1.docx',
+    },
+  ]
+
+  beforeEach(() => {
+    values = { files: [] }
+  })
+
+  it('onFileDrop sets new manuscript file value when there is no validation error and no existing manuscript file', async () => {
+    expect(values.files).toHaveLength(0)
+
+    await dropSingleFile(initialFile)
+
     expect(values.files).toHaveLength(1)
+    expect(values.files[0].fileName).toBe(initialFile[0].name)
   })
 
   it('onFileDrop replaces manuscript file value when there is no validation error a file exists', async () => {
-    const setValues = (fieldName, value) => (values[fieldName] = value)
-    const values = {
-      files: [
-        {
-          filename: 'document1.docx',
-        },
-      ],
-    }
-    const files = [
+    expect(values.files).toHaveLength(0)
+
+    await dropSingleFile(initialFile)
+    expect(values.files).toHaveLength(1)
+    expect(values.files[0].fileName).toEqual(initialFile[0].name)
+
+    const replacementFile = [
       {
         name: 'document2.docx',
       },
     ]
-    await onFileDrop(
-      files,
-      'files',
-      fakeFunction,
-      fakeFunction,
-      setValues,
-      () => new Promise(resolve => resolve({})),
-      data =>
-        new Promise(resolve => resolve(fakeResponse(data.variables.file))),
-    )
+
+    await dropSingleFile(replacementFile)
     expect(values.files).toHaveLength(1)
-    expect(values.files[0].name).toEqual(files[0].fileName)
+    expect(values.files[0].fileName).toEqual(replacementFile[0].name)
   })
+
   it('empties files field when passed no files', async () => {
-    const setValues = (fieldName, value) => (values[fieldName] = value)
-    const values = {
-      files: [{ filename: 'document1.docx' }],
-    }
-    await onFileDrop(
-      [],
-      'files',
-      fakeFunction,
-      fakeFunction,
-      setValues,
-      () =>
-        new Promise(resolve =>
-          resolve({ data: { removeUploadedManuscript: { files: [] } } }),
-        ),
-      () => new Promise(resolve => resolve({})),
-    )
+    expect(values.files).toHaveLength(0)
+
+    await dropSingleFile(initialFile)
+    expect(values.files).toHaveLength(1)
+
+    await dropSingleFile([])
     expect(values.files).toHaveLength(0)
   })
+
   it('empties files field when passed multiple files', async () => {
-    const setValues = (fieldName, value) => (values[fieldName] = value)
-    const values = {
-      files: [{ filename: 'document1.docx' }],
-    }
-    const files = [
+    expect(values.files).toHaveLength(0)
+    await dropSingleFile(initialFile)
+    expect(values.files).toHaveLength(1)
+    const multipleFiles = [
       {
         name: 'document2.docx',
       },
@@ -90,18 +89,7 @@ describe('FilesPageContainer', () => {
         name: 'document3.docx',
       },
     ]
-    await onFileDrop(
-      files,
-      'files',
-      fakeFunction,
-      fakeFunction,
-      setValues,
-      () =>
-        new Promise(resolve =>
-          resolve({ data: { removeUploadedManuscript: { files: [] } } }),
-        ),
-      () => new Promise(resolve => resolve({})),
-    )
+    await dropSingleFile(multipleFiles)
     expect(values.files).toHaveLength(0)
   })
 })

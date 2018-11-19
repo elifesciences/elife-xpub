@@ -39,42 +39,35 @@ function getProgress(loading, data) {
 }
 
 const onUploadValidationError = (
-  fieldName,
-  setFieldError,
+  formFunctions,
   deleteFile,
-  setFieldValue,
   manuscriptId,
   errorMessage,
 ) => {
-  setFieldError(fieldName, errorMessage)
+  formFunctions.setFieldError('files', errorMessage)
   deleteFile({
     variables: { id: manuscriptId },
   }).then(({ data }) => {
-    setFieldValue(fieldName, data.removeUploadedManuscript.files)
+    formFunctions.setFieldValue('files', data.removeUploadedManuscript.files)
   })
 }
 
 export const onFileDrop = (
   files,
-  fieldName,
-  setFieldTouched,
-  setFieldError,
-  setFieldValue,
+  formFunctions,
   deleteFile,
   uploadFile,
   manuscriptId,
 ) => {
   const validationError = errorMessage =>
     onUploadValidationError(
-      fieldName,
-      setFieldError,
+      formFunctions,
       deleteFile,
-      setFieldValue,
       manuscriptId,
       errorMessage,
     )
 
-  setFieldTouched(fieldName, true, false)
+  formFunctions.setFieldTouched('files', true, false)
   if (files.length > 1) {
     validationError(errorMessageMapping.MULTIPLE)
     return
@@ -87,8 +80,8 @@ export const onFileDrop = (
   uploadFile({
     variables: { file, id: manuscriptId, fileSize: file.size },
   }).then(({ data }) => {
-    setFieldValue('meta.title', data.uploadManuscript.meta.title)
-    setFieldValue(fieldName, data.uploadManuscript.files)
+    formFunctions.setFieldValue('meta.title', data.uploadManuscript.meta.title)
+    formFunctions.setFieldValue('files', data.uploadManuscript.files)
   })
 }
 
@@ -134,10 +127,11 @@ const FilesPageContainer = ({
                   onDrop={files =>
                     onFileDrop(
                       files,
-                      fieldName,
-                      setFieldTouched,
-                      setFieldError,
-                      setFieldValue,
+                      {
+                        setFieldTouched,
+                        setFieldError,
+                        setFieldValue,
+                      },
                       deleteFile,
                       uploadFile,
                       values.id,
