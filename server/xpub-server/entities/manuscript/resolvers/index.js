@@ -1,5 +1,6 @@
 const logger = require('@pubsweet/logger')
 const { Manuscript, User, File } = require('@elifesciences/xpub-model')
+const removeUploadedManuscript = require('./removeUploadedManuscript')
 const submitManuscript = require('./submitManuscript')
 const updateManuscript = require('./updateManuscript')
 const uploadManuscript = require('./uploadManuscript')
@@ -50,6 +51,8 @@ const resolvers = {
     submitManuscript,
 
     uploadManuscript,
+
+    removeUploadedManuscript,
 
     async savePage(_, vars, { user }) {
       const userUuid = await User.getUuidForProfile(user)
