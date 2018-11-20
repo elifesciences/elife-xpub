@@ -18,19 +18,19 @@ elifePipeline {
             def actions = [
                 'lint': {
                     withCommitStatus({
-                        sh "IMAGE_TAG=${commit} docker-compose -f docker-compose.ci.yml run --rm --name elife-xpub_app_lint app npm run lint"
+                        sh "IMAGE_TAG=${commit} docker-compose -f docker-compose.yml -f docker-compose.ci.yml run --rm --name elife-xpub_app_lint app npm run lint"
                     }, 'lint', commit)
                 },
                 'test': {
                     withCommitStatus({
-                        sh "IMAGE_TAG=${commit} docker-compose -f docker-compose.ci.yml run --rm --name elife-xpub_app_test app npm test"
+                        sh "IMAGE_TAG=${commit} docker-compose -f docker-compose.yml -f docker-compose.ci.yml run --rm --name elife-xpub_app_test app npm test"
                     }, 'test', commit)
                 },
                 // TODO: not sure this can run in parallel with `test`?
                 'test:browser': {
                     try {
                         withCommitStatus({
-                            sh "IMAGE_TAG=${commit} NODE_ENV=production NODE_CONFIG_ENV=test PGDATABASE=test_browser docker-compose -f docker-compose.ci.yml run --rm --name elife-xpub_app_test_browser app bash -c 'npm run test:browser -- --screenshots /tmp/screenshots --screenshots-on-fails'"
+                            sh "IMAGE_TAG=${commit} NODE_ENV=production NODE_CONFIG_ENV=test PGDATABASE=test_browser docker-compose -f docker-compose.yml -f docker-compose.ci.yml run --rm --name elife-xpub_app_test_browser app bash -c 'npm run test:browser -- --screenshots /tmp/screenshots --screenshots-on-fails'"
                         }, 'test:browser', commit)
                     } finally {
                         archiveArtifacts artifacts: "build/screenshots/*", allowEmptyArchive: true
@@ -38,16 +38,16 @@ elifePipeline {
                 },
                 'test:dependencies': {
                     withCommitStatus({
-                        sh "IMAGE_TAG=${commit} docker-compose -f docker-compose.ci.yml run --rm --name elife-xpub_app_test_dependencies app npm run test:dependencies"
+                        sh "IMAGE_TAG=${commit} docker-compose -f docker-compose.yml -f docker-compose.ci.yml run --rm --name elife-xpub_app_test_dependencies app npm run test:dependencies"
                     }, 'test:dependencies', commit)
                 },
             ]
             try {
-                sh "IMAGE_TAG=${commit} docker-compose -f docker-compose.ci.yml up -d postgres"
-                sh "IMAGE_TAG=${commit} docker-compose -f docker-compose.ci.yml run --rm --name elife-xpub_wait_postgres app bash -c './scripts/wait-for-it.sh postgres:5432'"
+                sh "IMAGE_TAG=${commit} docker-compose -f docker-compose.yml -f docker-compose.ci.yml up -d postgres"
+                sh "IMAGE_TAG=${commit} docker-compose -f docker-compose.yml -f docker-compose.ci.yml run --rm --name elife-xpub_wait_postgres app bash -c './scripts/wait-for-it.sh postgres:5432'"
                 parallel actions
             } finally {
-                sh "IMAGE_TAG=${commit} docker-compose -f docker-compose.ci.yml down -v"
+                sh "IMAGE_TAG=${commit} docker-compose -f docker-compose.yml -f docker-compose.ci.yml down -v"
             }
         }
 
