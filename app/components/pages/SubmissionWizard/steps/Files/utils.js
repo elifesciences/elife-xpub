@@ -4,3 +4,7 @@ export const errorMessageMapping = {
   UNSUPPORTED: 'That file is not supported.',
   UPLOAD_FAILURE: 'There was a problem uploading your file.',
 }
+
+export const manuscriptFileTypes = {
+  MANUSCRIPT_SOURCE: 'MANUSCRIPT_SOURCE',
+}
