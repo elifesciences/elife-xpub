@@ -100,7 +100,7 @@ const StyledRemoveIcon = styled(TrashIcon)`
   fill: ${th('colorTextSecondary')};
 `
 
-const TrashButton = styled(Box)`
+const ButtonContainer = styled(Box)`
   width: 5%;
 `
 
@@ -151,14 +151,14 @@ const DashboardListItem = ({ manuscript }) => {
       {manuscript.clientStatus === 'SUBMITTED' ? (
         <Fragment>
           <DashboardLinkFake>{renderItemContent()}</DashboardLinkFake>
-          <TrashButton />
+          <ButtonContainer />
         </Fragment>
       ) : (
         <Fragment>
           <DashboardLink to={`/submit/${manuscript.id}`}>
             {renderItemContent()}
           </DashboardLink>
-          <TrashButton>
+          <ButtonContainer>
             <Mutation mutation={DELETE_MANUSCRIPT}>
               {deleteManuscript => (
                 <StyledRemoveIcon
@@ -167,7 +167,7 @@ const DashboardListItem = ({ manuscript }) => {
                 />
               )}
             </Mutation>
-          </TrashButton>
+          </ButtonContainer>
         </Fragment>
       )}
     </Root>
