@@ -1,4 +1,7 @@
 const { db } = require('pubsweet-server')
+const replaySetup = require('../test/helpers/replay-setup')
+
+replaySetup('success')
 
 jest.mock('@pubsweet/component-send-email', () => ({
   mails: [],
