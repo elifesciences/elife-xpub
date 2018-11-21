@@ -5,6 +5,7 @@ import { Box } from 'grid-styled'
 import CoverLetterEditor from './CoverLetterEditor'
 import ValidatedField from '../../../../ui/atoms/ValidatedField'
 import ManuscriptUpload from './ManuscriptUpload'
+import SupportingUpload from './SupportingUpload'
 import { errorMessageMapping, manuscriptFileTypes } from './utils'
 
 const UPLOAD_MUTATION = gql`
@@ -112,7 +113,7 @@ const FilesPageContainer = ({
                   onChange={value => setFieldValue('coverLetter', value)}
                 />
               </Box>
-              <Box width={1}>
+              <Box mb={3} width={1}>
                 <ManuscriptUpload
                   conversion={{
                     converting: loading || uploadData.uploadProgress < 100,
@@ -138,6 +139,9 @@ const FilesPageContainer = ({
                     )
                   }
                 />
+              </Box>
+              <Box width={1}>
+                <SupportingUpload />
               </Box>
             </React.Fragment>
           )}
