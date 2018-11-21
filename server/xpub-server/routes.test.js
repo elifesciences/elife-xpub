@@ -10,12 +10,6 @@ describe('ping route test', () => {
   let mockS3Value
   let mockError
 
-  AWS.S3 = jest.fn().mockImplementation(() => ({
-    listObjects(params, cb) {
-      cb(mockError, { Contents: mockS3Value })
-    },
-  }))
-
   const makeApp = () => {
     const app = express()
     routes(app)
