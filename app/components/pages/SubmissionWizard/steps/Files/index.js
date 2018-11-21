@@ -100,6 +100,9 @@ const FilesPageContainer = ({
     {(uploadFile, { loading, error: uploadError }) => {
       const fieldName = 'files'
       const { MANUSCRIPT_SOURCE } = manuscriptFileTypes
+      const hasManuscript = values[fieldName].some(
+        file => file.type === MANUSCRIPT_SOURCE,
+      )
       return (
         <Mutation mutation={DELETE_MUTATION}>
           {deleteFile => (
@@ -117,9 +120,7 @@ const FilesPageContainer = ({
                 <ManuscriptUpload
                   conversion={{
                     converting: loading || uploadData.uploadProgress < 100,
-                    completed: values[fieldName].some(
-                      file => file.type === MANUSCRIPT_SOURCE,
-                    ),
+                    completed: hasManuscript,
                     progress: getProgress(uploadLoading, uploadData),
                     error: uploadError,
                   }}
@@ -141,7 +142,7 @@ const FilesPageContainer = ({
                 />
               </Box>
               <Box width={1}>
-                <SupportingUpload />
+                <SupportingUpload hasManuscript={hasManuscript} />
               </Box>
             </React.Fragment>
           )}
