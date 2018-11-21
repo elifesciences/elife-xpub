@@ -39,7 +39,7 @@ const resolvers = {
           await file.deleteContent()
           await file.delete()
         } catch (error) {
-          console.log(error)
+          logger.error(error)
         }
       }
       await manuscript.delete()
