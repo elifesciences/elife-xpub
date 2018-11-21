@@ -11,3 +11,8 @@ Please indicate the need for this change to be tested. If not please justify, if
 - [ ] Unit / Integration tests
 - [ ] Browser tests
 - [ ] End2end tests
+
+#### UI Changes
+
+- [ ] Has been reviewed against Designs
+- [ ] Necessary updates to styleguide
