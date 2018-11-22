@@ -155,7 +155,7 @@ const DashboardListItem = ({ manuscript }) => {
         </Fragment>
       ) : (
         <Fragment>
-          <DashboardLink to={`${manuscript.formState}`}>
+          <DashboardLink to={`${manuscript.lastStepVisited}`}>
             {renderItemContent()}
           </DashboardLink>
           <ButtonContainer>

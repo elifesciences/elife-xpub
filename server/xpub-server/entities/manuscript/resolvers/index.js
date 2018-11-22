@@ -60,12 +60,12 @@ const resolvers = {
       const userUuid = await User.getUuidForProfile(user)
       const manuscript = await Manuscript.find(vars.id, userUuid)
 
-      manuscript.formState = vars.url
+      manuscript.lastStepVisited = vars.url
       await manuscript.save()
       logger.debug(`Updated manuscript`, {
         manuscriptId: vars.id,
         userId: userUuid,
-        formState: vars.url,
+        lastStepVisited: vars.url,
       })
 
       return manuscript
