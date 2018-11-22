@@ -1,5 +1,6 @@
 const { createTables } = require('@pubsweet/db-manager')
 const path = require('path')
+const config = require('config')
 const { db } = require('pubsweet-server')
 const generateXml = require('./article')
 const Replay = require('replay')
@@ -27,6 +28,7 @@ describe('Article XML generator', () => {
   it('generates expected XML', async () => {
     let xml = await generateXml(sampleManuscript)
     xml = obfuscateEmail(xml)
-    expect(xml).toMatchSnapshot()
+    if (config.get('server.api.secret')) expect(xml).toMatchSnapshot()
+    else expect(xml).toMatchSnapshot('no-secret')
   })
 })
