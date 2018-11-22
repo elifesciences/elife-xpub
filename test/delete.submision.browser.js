@@ -29,6 +29,8 @@ test('Create a Submission', async t => {
     .eql('Tamlyn')
     .expect(author.secondNameField.value)
     .eql('Rhodes')
+    .expect(author.emailField.value)
+    .eql('example@example.org')
     .expect(author.institutionField.value)
     .eql('Tech team, University of eLife')
     .click(wizardStep.next)
