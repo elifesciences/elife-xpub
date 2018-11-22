@@ -1,14 +1,19 @@
 White modal dialog in the centre of the viewport, surrounded by greyed-out background
 
+Plain modal:
+
 ```js
 const FormH2 = require('../atoms/FormHeadings.js').FormH2
+initialState = {
+  open: false,
+}
 ;<div>
   <button onClick={() => setState({ open: true })}>Open</button>
   <ModalDialog
     acceptText="Yeeeeah"
     cancelText="woah now"
     onAccept={() => {
-      console.log('accepted')
+      setState({ open: false })
     }}
     onCancel={() => setState({ open: false })}
     open={state.open}
@@ -32,6 +37,43 @@ const FormH2 = require('../atoms/FormHeadings.js').FormH2
         <option>l</option>
       </select>
     </p>
+  </ModalDialog>
+</div>
+```
+
+PersonInfo modal:
+
+```js
+const PersonInfo = require('../atoms/PersonInfo.js').default
+initialState = {
+  open: false,
+  personAdded: false,
+}
+;<div>
+  <button onClick={() => setState({ open: true })}>Open</button>
+  <p> Person added: {state.personAdded ? 'true' : 'false'}</p>
+  <ModalDialog
+    acceptText="Add person"
+    cancelText="Cancel"
+    onAccept={() => {
+      setState({ personAdded: true, open: false })
+    }}
+    onCancel={() => setState({ open: false })}
+    open={state.open}
+    size={state.size}
+  >
+    <PersonInfo
+      person={{
+        id: '1234',
+        name: 'Michael J Frank',
+        aff: 'Max Planck Institute, Germany',
+        subjectAreas: [
+          'genetics of global gene expression',
+          'mouse models of human disease',
+          'haematology',
+        ],
+      }}
+    />
   </ModalDialog>
 </div>
 ```
