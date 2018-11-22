@@ -1,0 +1,22 @@
+GET /people/6fabd619
+accept-encoding: gzip, deflate
+
+HTTP/1.1 200 OK
+server: nginx
+date: Mon, 19 Nov 2018 15:54:58 GMT
+content-type: application/vnd.elife.person+json;version=1
+transfer-encoding: chunked
+connection: close
+cache-control: max-age=300, public, stale-if-error=86400, stale-while-revalidate=300
+vary: Accept, Authorization
+etag: "59f48116ef2605021951c2f8fdea3555"
+x-ua-compatible: IE=edge
+content-language: en
+x-content-type-options: nosniff
+x-frame-options: SAMEORIGIN
+access-control-allow-origin: *
+x-kong-upstream-latency: 122
+x-kong-proxy-latency: 0
+via: kong/0.9.5
+
+{"id":"6fabd619","type":{"id":"reviewing-editor","label":"Reviewing Editor"},"name":{"surname":"Zilberman","givenNames":"Daniel","preferred":"Daniel Zilberman","index":"Zilberman, Daniel"},"emailAddresses":[{"value":"08c6488ad00599649606fbb926a63f12","access":"restricted"}],"research":{"focuses":["chromatin biology","epigenetics","epigenomics","evolution"],"organisms":["rice","\u003Ci\u003Earabidopsis thaliana\u003C\/i\u003E"],"expertises":[{"id":"chromosomes-gene-expression","name":"Chromosomes and Gene Expression"},{"id":"genetics-genomics","name":"Genetics and Genomics"},{"id":"plant-biology","name":"Plant Biology"}]},"affiliations":[{"name":["John Innes Centre"],"address":{"formatted":["United Kingdom"],"components":{"country":"United Kingdom"}}}]}

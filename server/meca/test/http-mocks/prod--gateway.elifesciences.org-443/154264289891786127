@@ -1,0 +1,22 @@
+GET /people/fd8295ba
+accept-encoding: gzip, deflate
+
+HTTP/1.1 200 OK
+server: nginx
+date: Mon, 19 Nov 2018 15:54:58 GMT
+content-type: application/vnd.elife.person+json;version=1
+transfer-encoding: chunked
+connection: close
+cache-control: max-age=300, public, stale-if-error=86400, stale-while-revalidate=300
+vary: Accept, Authorization
+etag: "0db9bc2b347205e4ceee2ff5a55d6d29"
+x-ua-compatible: IE=edge
+content-language: en
+x-content-type-options: nosniff
+x-frame-options: SAMEORIGIN
+access-control-allow-origin: *
+x-kong-upstream-latency: 118
+x-kong-proxy-latency: 0
+via: kong/0.9.5
+
+{"id":"fd8295ba","type":{"id":"reviewing-editor","label":"Reviewing Editor"},"name":{"surname":"Zhang","givenNames":"Hong","preferred":"Hong Zhang","index":"Zhang, Hong"},"emailAddresses":[{"value":"e69bf9f08f18063b3098e1cd63c26a23","access":"restricted"}],"research":{"focuses":["autophagy","lysosome","membrane contact"],"organisms":["\u003Ci\u003EC. elegans\u003C\/i\u003E"],"expertises":[{"id":"cell-biology","name":"Cell Biology"},{"id":"developmental-biology","name":"Developmental Biology"}]},"affiliations":[{"name":["Institute of Biophysics Chinese Academy of Sciences"],"address":{"formatted":["China"],"components":{"country":"China"}}}]}

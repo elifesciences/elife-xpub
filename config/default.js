@@ -44,6 +44,7 @@ module.exports = {
   },
   server: {
     api: {
+      secret: 'xpubsecret',
       url: 'https://prod--gateway.elifesciences.org/',
     },
   },

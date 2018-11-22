@@ -1,7 +1,8 @@
 const xmlbuilder = require('xmlbuilder')
 const lodash = require('lodash')
 const config = require('config')
-const { User } = require('@elifesciences/xpub-model')
+const elifeApi = require('@elifesciences/xpub-model/entities/user/helpers/elife-api')
+
 const {
   articleTypeMap,
   contribStructure,
@@ -95,12 +96,14 @@ function createXmlObject(manuscript, editorsById, affiliations, reviewerMap) {
 }
 
 async function generateArticleXml(manuscript) {
-  const editorIds = [
+  const editorTypes = [
     'opposedReviewingEditor',
     'suggestedSeniorEditor',
     'opposedSeniorEditor',
     'suggestedReviewingEditor',
-  ].reduce((ids, key) => {
+  ]
+
+  const editorIds = editorTypes.reduce((ids, key) => {
     const team = manuscript.teams.find(t => t.role === key)
     if (team) {
       return ids.concat(
@@ -110,7 +113,7 @@ async function generateArticleXml(manuscript) {
     return ids
   }, [])
 
-  const editors = await User.getEditorsByPersonId(editorIds)
+  const editors = await elifeApi.getEditorsByPersonId(editorIds)
   const editorsById = editors.reduce(
     (accumulator, editor) => ({ ...accumulator, [editor.id]: editor }),
     {},

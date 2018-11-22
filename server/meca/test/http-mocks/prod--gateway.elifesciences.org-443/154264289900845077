@@ -1,0 +1,22 @@
+GET /people/1e9e661f
+accept-encoding: gzip, deflate
+
+HTTP/1.1 200 OK
+server: nginx
+date: Mon, 19 Nov 2018 15:54:59 GMT
+content-type: application/vnd.elife.person+json;version=1
+transfer-encoding: chunked
+connection: close
+cache-control: max-age=300, public, stale-if-error=86400, stale-while-revalidate=300
+vary: Accept, Authorization
+etag: "14142d5494814771373a756be5a5ae46"
+x-ua-compatible: IE=edge
+content-language: en
+x-content-type-options: nosniff
+x-frame-options: SAMEORIGIN
+access-control-allow-origin: *
+x-kong-upstream-latency: 216
+x-kong-proxy-latency: 1
+via: kong/0.9.5
+
+{"id":"1e9e661f","type":{"id":"senior-editor","label":"Senior Editor"},"name":{"surname":"Zoghbi","givenNames":"Huda","preferred":"Huda Zoghbi","index":"Zoghbi, Huda"},"emailAddresses":[{"value":"8ac3df4aa667c9217fe4d8bedfc06482","access":"restricted"}],"image":{"uri":"https:\/\/iiif.elifesciences.org\/journal-cms\/person%2F2012-03%2Fkegley120208elife0322c.jpg","alt":"Huda Zoghbi","source":{"mediaType":"image\/jpeg","uri":"https:\/\/iiif.elifesciences.org\/journal-cms\/person%2F2012-03%2Fkegley120208elife0322c.jpg\/full\/full\/0\/default.jpg","filename":"kegley120208elife0322c.jpg"},"size":{"width":4256,"height":2832},"focalPoint":{"x":50,"y":50}},"profile":[{"text":"Huda Zoghbi is Professor of Pediatrics, Neurology, Molecular and Human Genetics, and Neuroscience at Baylor College of Medicine, Houston, Texas. She is also an Investigator with the Howard Hughes Medical Institute and Director of the Jan and Dan Duncan Neurological Research Institute at Texas Children\u2019s Hospital. Her research focuses on understanding normal brain development and on elucidating the pathogenesis of several neurological disorders including the autism spectrum disorder, Rett syndrome, and late-onset neurodegenerative diseases.","type":"paragraph"}],"research":{"focuses":["animal models of human disease and behavioural sciences","neurodegenerative disorders","polyglutamine disorders","autism","synaptic disorders","neurogenetics"],"organisms":["human"],"expertises":[{"id":"human-biology-medicine","name":"Human Biology and Medicine"},{"id":"neuroscience","name":"Neuroscience"}]},"affiliations":[{"name":["Texas Children\u0027s Hospital"],"address":{"formatted":["United States"],"components":{"country":"United States"}}}],"competingInterests":"Huda Zoghbi is actively receiving funds from the Howard Hughes Medical Institute, the National Institutes of Health, Rett Syndrome Research Trust, International Rett syndrome Foundation (and she is a member of advisory panels for all 4 organizations), Baylor College of Medicine, and Texas Children\u2019s Hospital. She is Associate Editor of Annual Reviews of Neuroscience and a member of the editorial team of Cell and Neuron. She is Vice-Chair of the McKnight Neuroscience Fund and a member of the following Scientific Advisory Panels: the Jane Coffin Childs Fund,  Gruber Genetics Prize Jury, Janssen Prize Jury, Lasker Jury, and Vilcek Prize Jury. She was an elected member at large of the 2015 Class Membership Committee of the National Academy of Sciences."}

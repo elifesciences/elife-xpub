@@ -39,59 +39,59 @@ exports[`Article XML generator generates expected XML 1`] = `
             <surname>User</surname>
             <given-names>Test</given-names>
           </name>
-          <email>elife@mailinator.com</email>
+          <email>a94e85089c7efea17a0563010705cb29</email>
           <xref ref-type=\\"aff\\" rid=\\"aff6\\"/>
         </contrib>
       </contrib-group>
       <contrib-group content-type=\\"potential_senior_editors\\">
         <contrib contrib-type=\\"suggested_senior_editor\\">
           <name>
-            <surname>Andrea Musacchio</surname>
-            <given-names/>
+            <surname>Zoghbi</surname>
+            <given-names>Huda</given-names>
           </name>
-          <email/>
+          <email>8ac3df4aa667c9217fe4d8bedfc06482</email>
           <xref ref-type=\\"aff\\" rid=\\"aff1\\"/>
         </contrib>
         <contrib contrib-type=\\"suggested_senior_editor\\">
           <name>
-            <surname>Arup K Chakraborty</surname>
-            <given-names/>
+            <surname>Li</surname>
+            <given-names>Wenhui</given-names>
           </name>
-          <email/>
-          <xref ref-type=\\"aff\\" rid=\\"aff1\\"/>
+          <email>5ddd85b12237e714f490a9c6cf585566</email>
+          <xref ref-type=\\"aff\\" rid=\\"aff2\\"/>
         </contrib>
         <contrib contrib-type=\\"opposed_senior_editor\\">
           <name>
-            <surname>Arup K Chakraborty</surname>
-            <given-names/>
+            <surname>Struhl</surname>
+            <given-names>Kevin</given-names>
           </name>
-          <email/>
-          <xref ref-type=\\"aff\\" rid=\\"aff1\\"/>
+          <email>4f5cd09b1742dad17ffe48d0c33def8f</email>
+          <xref ref-type=\\"aff\\" rid=\\"aff3\\"/>
         </contrib>
       </contrib-group>
       <contrib-group content-type=\\"potential_reviewing_editors\\">
         <contrib contrib-type=\\"suggested_reviewing_editor\\">
           <name>
-            <surname>Alan G Hinnebusch</surname>
-            <given-names/>
+            <surname>Zilberman</surname>
+            <given-names>Daniel</given-names>
           </name>
-          <email/>
+          <email>08c6488ad00599649606fbb926a63f12</email>
           <xref ref-type=\\"aff\\" rid=\\"aff4\\"/>
         </contrib>
         <contrib contrib-type=\\"suggested_reviewing_editor\\">
           <name>
-            <surname>Alejandro Sanchez Alvarado</surname>
-            <given-names/>
+            <surname>Zhang</surname>
+            <given-names>Hong</given-names>
           </name>
-          <email/>
+          <email>e69bf9f08f18063b3098e1cd63c26a23</email>
           <xref ref-type=\\"aff\\" rid=\\"aff5\\"/>
         </contrib>
         <contrib contrib-type=\\"opposed_reviewing_editor\\">
           <name>
-            <surname>Aleksandra Walczak</surname>
-            <given-names/>
+            <surname>Yu</surname>
+            <given-names>Hao</given-names>
           </name>
-          <email/>
+          <email>d3fa5c7081fecbc7cfc02be293834b86</email>
           <xref ref-type=\\"aff\\" rid=\\"aff0\\"/>
         </contrib>
       </contrib-group>
@@ -101,54 +101,54 @@ exports[`Article XML generator generates expected XML 1`] = `
             <surname>Reviewer</surname>
             <given-names>J. Edward</given-names>
           </name>
-          <email>edward@example.com</email>
+          <email>db27cf2960d24994beeafa06b08a061d</email>
         </contrib>
         <contrib contrib-type=\\"suggested_reviewer\\">
           <name>
             <surname>de Reviewer</surname>
             <given-names>Frances</given-names>
           </name>
-          <email>frances@example.org</email>
+          <email>53d85c678da1478ed6815e1494bd15af</email>
         </contrib>
         <contrib contrib-type=\\"suggested_reviewer\\">
           <name>
             <surname>Reviewer</surname>
             <given-names>Gertrude</given-names>
           </name>
-          <email>gertrude@example.net</email>
+          <email>528a83f12f51aa69557835eb6c8eb3d2</email>
         </contrib>
         <contrib contrib-type=\\"opposed_reviewer\\">
           <name>
             <surname>Hoo</surname>
             <given-names/>
           </name>
-          <email>laughing@example.com</email>
+          <email>d628cc24eba81f0a70dc05be9fffe22f</email>
         </contrib>
         <contrib contrib-type=\\"opposed_reviewer\\">
           <name>
             <surname>Who</surname>
             <given-names/>
           </name>
-          <email>singing@example.com</email>
+          <email>626ce554592c639a9d08b1e379eaf96d</email>
         </contrib>
       </contrib-group>
       <aff id=\\"aff0\\">
-        <institution>Ecole normale superieure</institution>
+        <institution>National University of Singapore &amp; Temasek Life Sciences Laboratory</institution>
       </aff>
       <aff id=\\"aff1\\">
-        <institution/>
+        <institution>Texas Children's Hospital</institution>
       </aff>
       <aff id=\\"aff2\\">
-        <institution/>
+        <institution>National Institute of Biological Sciences</institution>
       </aff>
       <aff id=\\"aff3\\">
-        <institution/>
+        <institution>Harvard Medical School</institution>
       </aff>
       <aff id=\\"aff4\\">
-        <institution>National Institute of Child Health and Human Development</institution>
+        <institution>John Innes Centre</institution>
       </aff>
       <aff id=\\"aff5\\">
-        <institution>Stowers Institute for Medical Research</institution>
+        <institution>Institute of Biophysics Chinese Academy of Sciences</institution>
       </aff>
       <aff id=\\"aff6\\">
         <institution>University of eLife</institution>

@@ -1,12 +1,11 @@
 const editorFormatter = (member, affiliations, editorsById) => {
   const editor = editorsById[member.meta.elifePersonId]
   return {
-    // TODO once we can get the data from the API
     name: {
-      surname: editor.name,
-      'given-names': '',
+      surname: editor.surname,
+      'given-names': editor.firstname,
     },
-    email: '',
+    email: editor.email,
     xref: {
       '@ref-type': 'aff',
       '@rid': `aff${affiliations.indexOf(editor.aff)}`,
