@@ -10,7 +10,7 @@ const PersonInfo = ({ person }) => {
     <React.Fragment>
       <H2>{name}</H2>
       <Paragraph>{aff}</Paragraph>
-      <SmallParagraph>
+      <SmallParagraph secondary>
         Research focuses: {subjectAreas.join(', ')}
       </SmallParagraph>
     </React.Fragment>
