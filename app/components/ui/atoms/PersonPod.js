@@ -7,6 +7,8 @@ import { Flex, Box } from 'grid-styled'
 
 import Icon from './Icon'
 import ButtonAsIconWrapper from './ButtonAsIconWrapper'
+import SmallParagraph from './SmallParagraph'
+import Paragraph from './Paragraph'
 
 const AddIcon = props => (
   <Icon
@@ -75,20 +77,14 @@ const StyledButton = styled.button`
   }
 `
 
-const RegularP = styled.p`
-  font-size: ${th('fontSizeBase')};
-  line-height: ${th('lineHeightBase')};
+const StyledParagraph = styled(Paragraph)`
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   margin: 0;
 `
 
-const SmallP = styled.p`
-  font-size: ${th('fontSizeBaseSmall')};
-  line-height: ${th('lineHeightBaseSmall')};
-  color: ${th('colorTextSecondary')}
-  // vertical spacing of 6px comes from: 24px grid - lineHeightBaseSmall
+const StyledSmallParagraph = styled(SmallParagraph).attrs({ secondary: true })`
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -186,16 +182,16 @@ const PersonText = ({
 
   return (
     <CollapsibleBox m={2} {...props}>
-      <RegularP>{name}</RegularP>
-      {institution && <RegularP>{institution}</RegularP>}
+      <StyledParagraph>{name}</StyledParagraph>
+      {institution && <StyledParagraph>{institution}</StyledParagraph>}
       {!institution && <Box mb={3} />}
       <Flex alignItems="center">
         <ButtonAsIconWrapper>
           <StyledInfoIcon />
         </ButtonAsIconWrapper>
-        <SmallP>{separatedKeywords}</SmallP>
+        <StyledSmallParagraph>{separatedKeywords}</StyledSmallParagraph>
       </Flex>
-      {isStatusShown && <SmallP>{status}</SmallP>}
+      {isStatusShown && <StyledSmallParagraph>{status}</StyledSmallParagraph>}
     </CollapsibleBox>
   )
 }
@@ -217,9 +213,9 @@ const PersonPod = ({
 const ChooserText = ({ roleName, isRequired, ...props }) => (
   <Flex flexDirection="column" justifyContent="center">
     <Box ml={2}>
-      <RegularP>
+      <StyledParagraph>
         Choose {roleName} ({isRequired ? 'required' : 'optional'})
-      </RegularP>
+      </StyledParagraph>
     </Box>
   </Flex>
 )

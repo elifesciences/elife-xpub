@@ -1,5 +1,9 @@
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 import { th } from '@pubsweet/ui-toolkit'
+
+const secondary = css`
+  color: ${th('colorTextSecondary')};
+`
 
 const Paragraph = styled.p`
   font-family: ${th('fontReading')};
@@ -12,6 +16,7 @@ const Paragraph = styled.p`
   &:last-child {
     margin-bottom: 0;
   }
+  ${props => props.secondary && secondary};
 `
 
 export default Paragraph

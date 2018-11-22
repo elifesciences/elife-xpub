@@ -7,6 +7,7 @@ import { ErrorText, Action } from '@pubsweet/ui'
 import { th } from '@pubsweet/ui-toolkit'
 import config from 'config'
 import { errorMessageMapping } from './utils'
+import Paragraph from '../../../../ui/atoms/Paragraph'
 
 import Icon from '../../../../ui/atoms/Icon'
 
@@ -64,12 +65,11 @@ const StyledDropzone = styled(({ hasError, saveInnerRef, ...rest }) => (
   padding: ${th('space.4')};
 `
 
-const UploadInstruction = styled.p`
+const UploadInstruction = styled(Paragraph)`
   margin-bottom: 0;
 `
 
-const UploadNote = styled.p`
-  color: ${th('colorTextSecondary')};
+const UploadNote = styled(Paragraph).attrs({ secondary: true })`
   margin-top: 0;
 `
 
