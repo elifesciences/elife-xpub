@@ -57,6 +57,7 @@ describe('MECA integration test', () => {
       )
 
       expect(getFileSizes(zip)).toMatchSnapshot({
+        'article.xml': expect.any(Number),
         'disclosure.pdf': expect.any(Number),
       })
 

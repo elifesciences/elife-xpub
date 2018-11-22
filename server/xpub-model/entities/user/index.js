@@ -78,10 +78,6 @@ class User extends BaseModel {
   async save() {
     return this.$query().upsertGraphAndFetch(this)
   }
-
-  static getEditorsByPersonId(...args) {
-    return api.peopleById(...args)
-  }
 }
 
 module.exports = User

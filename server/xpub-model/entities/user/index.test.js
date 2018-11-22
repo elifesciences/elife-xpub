@@ -32,7 +32,7 @@ describe('User manager', () => {
       const identity = actualUser.identities[0]
       expect(identity).toMatchObject({
         name: 'Tamlyn Rhodes',
-        email: 'example@example.org',
+        email: 'f72c502e0d657f363b5f2dc79dd8ceea',
         aff: 'Tech team, University of eLife',
         meta: {
           firstName: 'Tamlyn',

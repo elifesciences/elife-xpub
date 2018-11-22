@@ -1,8 +1,13 @@
 const { createTables } = require('@pubsweet/db-manager')
+const path = require('path')
 const { db } = require('pubsweet-server')
 const generateXml = require('./article')
 const Replay = require('replay')
 const sampleManuscript = require('./article.test.data')
+
+// Ref: https://stackoverflow.com/questions/10265798/determine-project-root-from-a-running-node-js-application
+const appRoot = process.cwd()
+const { obfuscateEmail } = require(path.join(appRoot, '/scripts/obfuscate'))
 
 const existingNames = [{ id: 1, first: 'J. Edward', last: 'Reviewer' }]
 
@@ -20,7 +25,8 @@ describe('Article XML generator', () => {
   })
 
   it('generates expected XML', async () => {
-    const xml = await generateXml(sampleManuscript)
+    let xml = await generateXml(sampleManuscript)
+    xml = obfuscateEmail(xml)
     expect(xml).toMatchSnapshot()
   })
 })

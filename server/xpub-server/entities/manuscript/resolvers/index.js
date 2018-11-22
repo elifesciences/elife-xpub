@@ -1,5 +1,7 @@
 const logger = require('@pubsweet/logger')
 const { Manuscript, User, File } = require('@elifesciences/xpub-model')
+const elifeApi = require('@elifesciences/xpub-model/entities/user/helpers/elife-api')
+
 const removeUploadedManuscript = require('./removeUploadedManuscript')
 const submitManuscript = require('./submitManuscript')
 const updateManuscript = require('./updateManuscript')
@@ -110,7 +112,7 @@ const resolvers = {
           const assigneeIds = team.teamMembers.map(
             member => member.meta.elifePersonId,
           )
-          return User.getEditorsByPersonId(assigneeIds)
+          return elifeApi.getEditorsByPersonId(assigneeIds)
         }
         case 'suggestedReviewer':
         case 'opposedReviewer':

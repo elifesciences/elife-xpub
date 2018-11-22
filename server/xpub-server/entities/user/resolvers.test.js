@@ -26,7 +26,7 @@ describe('User', () => {
             type: 'elife',
             identifier: profileId,
             aff: 'Tech team, University of eLife',
-            email: 'example@example.org',
+            email: 'f72c502e0d657f363b5f2dc79dd8ceea',
             meta: {
               firstName: 'Tamlyn',
               lastName: 'Rhodes',
