@@ -3,7 +3,25 @@
     "maxSizeMB": 100
   },
   "login": {},
-  "elife": {
-    "majorSubjectAreas": []
+  "client": {
+    "majorSubjectAreas": {
+      "biochemistry-chemical-biology": "Biochemistry and Chemical Biology",
+      "cancer-biology": "Cancer Biology",
+      "cell-biology": "Cell Biology",
+      "chromosomes-gene-expression": "Chromosomes and Gene Expression",
+      "computational-systems-biology": "Computational and Systems Biology",
+      "developmental-biology-stem-cells": "Developmental Biology and Stem Cells",
+      "ecology": "Ecology",
+      "epidemiology-global-health": "Epidemiology and Global Health",
+      "evolutionary-biology": "Evolutionary Biology",
+      "genetics-genomics": "Genetics and Genomics",
+      "human-biology-medicine": "Human Biology and Medicine",
+      "immunology-inflammation": "Immunology and Inflammation",
+      "microbiology-infectious-disease": "Microbiology and Infectious Disease",
+      "neuroscience": "Neuroscience",
+      "physics-living-systems": "Physics of Living Systems",
+      "plant-biology": "Plant Biology",
+      "structural-biology-molecular-biophysics": "Structural Biology and Molecular Biophysics"
+    }
   }
 }
