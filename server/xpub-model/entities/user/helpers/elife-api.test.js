@@ -17,7 +17,7 @@ jest.mock('config', () => ({
 jest.mock('superagent', () => ({
   header: {},
   url: '',
-  query: jest.fn(() => ({
+  query: jest.fn(() => Promise.resolve({
     body: { items: [person] },
   })),
   get(url) {
@@ -52,5 +52,10 @@ describe('eLife API tests', () => {
     expect(result[0].firstname).toBe('Given Names')
     expect(result[0].surname).toBe('Surname')
     expect(result[0].email).toBe('person@email.com')
+  })
+
+  it('logs on error', async () => {
+    request.query.mockRejectedValue(new Error('Forbidden'))
+    await expect(api.people()).rejects.toThrow('Forbidden')
   })
 })
