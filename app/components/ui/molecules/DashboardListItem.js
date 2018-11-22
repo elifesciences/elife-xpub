@@ -155,7 +155,7 @@ const DashboardListItem = ({ manuscript }) => {
         </Fragment>
       ) : (
         <Fragment>
-          <DashboardLink to={`/submit/${manuscript.id}`}>
+          <DashboardLink to={`${manuscript.formState}`}>
             {renderItemContent()}
           </DashboardLink>
           <ButtonContainer>
