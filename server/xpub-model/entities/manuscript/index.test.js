@@ -1,10 +1,10 @@
 const { createTables } = require('@pubsweet/db-manager')
-const uuid = require('uuid');
+const uuid = require('uuid')
 const Team = require('../team')
 const Manuscript = require('.')
 
 describe('Manuscript', () => {
-  let userId;
+  let userId
 
   beforeEach(() => {
     userId = uuid()
@@ -207,7 +207,7 @@ describe('Manuscript', () => {
         role: 'foo',
         teamMembers: [],
         objectType: 'manuscript',
-        objectId: manuscript.id
+        objectId: manuscript.id,
       })
       await team.save()
       expect(manuscript.teams).toHaveLength(0)
@@ -228,13 +228,12 @@ describe('Manuscript', () => {
   })
 
   describe('all()', () => {
-    it('returns users\'s manuscripts only', async () => {
-      const secondUserId = uuid();
-      await (new Manuscript({ createdBy: userId })).save()
-      await (new Manuscript({ createdBy: secondUserId })).save()
+    it("returns users's manuscripts only", async () => {
+      const secondUserId = uuid()
+      await new Manuscript({ createdBy: userId }).save()
+      await new Manuscript({ createdBy: secondUserId }).save()
       const loadedManuscripts = await Manuscript.all(userId)
       expect(loadedManuscripts).toHaveLength(1)
     })
   })
-
 })

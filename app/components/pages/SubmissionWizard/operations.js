@@ -103,6 +103,13 @@ export const SUBMIT_MANUSCRIPT = gql`
   }
   ${manuscriptFragment}
 `
+
+export const DELETE_MANUSCRIPT = gql`
+  mutation DeleteManuscript($id: ID!) {
+    deleteManuscript(id: $id)
+  }
+`
+
 export const ON_UPLOAD_PROGRESS = gql`
   subscription {
     uploadProgress

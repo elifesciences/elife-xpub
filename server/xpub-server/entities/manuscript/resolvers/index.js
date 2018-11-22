@@ -1,5 +1,5 @@
 const logger = require('@pubsweet/logger')
-const { Manuscript, User } = require('@elifesciences/xpub-model')
+const { Manuscript, User, File } = require('@elifesciences/xpub-model')
 const elifeApi = require('@elifesciences/xpub-model/entities/user/helpers/elife-api')
 
 const removeUploadedManuscript = require('./removeUploadedManuscript')
@@ -30,10 +30,20 @@ const resolvers = {
       return manuscript.save()
     },
 
-    // TODO restrict this in production
     async deleteManuscript(_, { id }, { user }) {
       const userUuid = await User.getUuidForProfile(user)
       const manuscript = await Manuscript.find(id, userUuid)
+
+      const manuscriptFile = manuscript.files[0]
+      if (manuscriptFile) {
+        try {
+          const file = await File.find(manuscriptFile.manuscriptId)
+          await file.deleteContent()
+          await file.delete()
+        } catch (error) {
+          logger.error(error)
+        }
+      }
       await manuscript.delete()
       return id
     },

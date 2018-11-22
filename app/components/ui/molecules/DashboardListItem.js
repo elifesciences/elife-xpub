@@ -1,9 +1,14 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import styled from 'styled-components'
+import { Link } from 'react-router-dom'
 import { Flex, Box } from 'grid-styled'
 import { differenceInCalendarDays, format } from 'date-fns'
 import { th } from '@pubsweet/ui-toolkit'
 import PropTypes from 'prop-types'
+import { Mutation } from 'react-apollo'
+import Icon from '../../ui/atoms/Icon'
+import { DELETE_MANUSCRIPT } from '../../pages/SubmissionWizard/operations'
+import { ALL_MANUSCRIPTS } from '../../pages/Dashboard/operations'
 import ManuscriptStatus from '../atoms/ManuscriptStatus'
 import media from '../../global/layout/media'
 
@@ -46,9 +51,7 @@ const mapColor = statusCode =>
   }[statusCode])
 
 const Root = styled(Flex)`
-  flex-direction: column;
   border-bottom: ${th('borderWidth')} ${th('borderStyle')} ${th('colorBorder')};
-  justify-content: space-between;
 
   ${media.tabletPortraitUp`
     flex-direction: row;
@@ -78,29 +81,95 @@ const DateBox = styled(Flex)`
     flex: 0 0 120px;
   `};
 `
-
 const AbsoluteDate = styled.time`
   ${media.tabletPortraitUp`
     font-size: ${th('fontSizeHeading6')};
   `};
 `
 
+const TrashIcon = props => (
+  <Icon
+    iconName="Trash"
+    overrideName="@pubsweet-pending.PeoplePicker.PersonPod.Remove"
+    {...props}
+  />
+)
+
+const StyledRemoveIcon = styled(TrashIcon)`
+  margin-left: 24px;
+  fill: ${th('colorTextSecondary')};
+`
+
+const ButtonContainer = styled(Box)`
+  width: 5%;
+`
+
+const DashboardLink = styled(Link)`
+  color: ${th('colorText')};
+  text-decoration: none;
+  width: 95%
+  :hover {
+    color: ${th('colorPrimary')};
+  }
+`
+const DashboardLinkFake = styled.div`
+  width: 95%;
+`
+
+const ItemContent = styled(Flex)`
+  flex-direction: row;
+  justify-content: space-between;
+`
+
 const DashboardListItem = ({ manuscript }) => {
-  const date = new Date(manuscript.created)
+  const onClickHandler = deleteManuscript => {
+    deleteManuscript({
+      variables: { id: manuscript.id },
+      refetchQueries: [{ query: ALL_MANUSCRIPTS }],
+    })
+  }
+
+  const renderItemContent = () => {
+    const { meta, clientStatus, created } = manuscript
+    const date = new Date(created)
+    return (
+      <ItemContent>
+        <TitleBox color={mapColor(clientStatus)} data-test-id="title" mb={3}>
+          {meta.title || '(Untitled)'}
+        </TitleBox>
+        <ManuscriptStatus statusCode={clientStatus} />
+        <DateBox>
+          <time>{dashboardDateText(date)}</time>
+          <AbsoluteDate>{format(date, 'ddd D MMM YYYY')}</AbsoluteDate>
+        </DateBox>
+      </ItemContent>
+    )
+  }
+
   return (
     <Root py={3}>
-      <TitleBox
-        color={mapColor(manuscript.clientStatus)}
-        data-test-id="title"
-        mb={3}
-      >
-        {manuscript.meta.title || '(Untitled)'}
-      </TitleBox>
-      <ManuscriptStatus statusCode={manuscript.clientStatus} />
-      <DateBox>
-        <time>{dashboardDateText(date)}</time>
-        <AbsoluteDate>{format(date, 'ddd D MMM YYYY')}</AbsoluteDate>
-      </DateBox>
+      {manuscript.clientStatus === 'SUBMITTED' ? (
+        <Fragment>
+          <DashboardLinkFake>{renderItemContent()}</DashboardLinkFake>
+          <ButtonContainer />
+        </Fragment>
+      ) : (
+        <Fragment>
+          <DashboardLink to={`/submit/${manuscript.id}`}>
+            {renderItemContent()}
+          </DashboardLink>
+          <ButtonContainer>
+            <Mutation mutation={DELETE_MANUSCRIPT}>
+              {deleteManuscript => (
+                <StyledRemoveIcon
+                  data-test-id="trash"
+                  onClick={() => onClickHandler(deleteManuscript)}
+                />
+              )}
+            </Mutation>
+          </ButtonContainer>
+        </Fragment>
+      )}
     </Root>
   )
 }
