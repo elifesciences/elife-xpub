@@ -121,6 +121,7 @@ class SupportingUpload extends React.Component {
                 loading: true,
                 error: false,
               })
+
               setTimeout(() => {
                 this.updateFileState(fileId, {
                   success: true,
