@@ -15,7 +15,7 @@ class SaveOnMount extends Component {
 const SAVE_PAGE = gql`
   mutation SavePage($url: String!, $id: String!) {
     savePage(url: $url, id: $id) {
-      formState
+      lastStepVisited
       id
     }
   }

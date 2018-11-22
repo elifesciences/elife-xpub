@@ -24,7 +24,7 @@ const manuscriptFragment = gql`
       articleType
       subjects
     }
-    formState
+    lastStepVisited
     suggestedSeniorEditors: assignees(role: "suggestedSeniorEditor") {
       ...EditorDetails
     }

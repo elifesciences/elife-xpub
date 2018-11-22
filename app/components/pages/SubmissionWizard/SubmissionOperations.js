@@ -24,7 +24,7 @@ function runMutation(formValues, mutation, { refetchQueries = [] } = {}) {
     'teams',
     'status',
     'clientStatus',
-    'formState',
+    'lastStepVisited',
   ]
 
   dataModifiers.forEach(modifier => {

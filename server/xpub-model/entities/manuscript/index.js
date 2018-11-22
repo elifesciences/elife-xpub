@@ -48,7 +48,7 @@ class Manuscript extends BaseModel {
         opposedReviewersReason: { type: 'string' },
         submitterSignature: { type: 'string' },
         disclosureConsent: { type: 'boolean' },
-        formState: { type: ['string', 'null'] },
+        lastStepVisited: { type: ['string', 'null'] },
 
         relatedManuscripts: { type: ['array', 'null'] },
         qcIssues: { type: ['array', 'null'] },
