@@ -2,13 +2,10 @@ jest.mock('./health')
 
 const express = require('express')
 const supertest = require('supertest')
-const AWS = require('aws-sdk')
 const health = require('./health')
 
 describe('ping route test', () => {
   let routes
-  let mockS3Value
-  let mockError
 
   const makeApp = () => {
     const app = express()
@@ -41,8 +38,6 @@ describe('ping route test', () => {
     }))
 
     routes = require('./routes')
-    mockS3Value = [{ a: 1 }, { b: 1 }]
-    mockError = null
     health.checkDataBase.mockResolvedValue(14)
     setS3Success(1)
     setDbSuccess(1)
