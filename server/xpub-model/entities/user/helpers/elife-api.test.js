@@ -1,5 +1,3 @@
-const person = require('./elife-api.test.person')
-
 jest.mock('config', () => ({
   server: {
     api: {
@@ -35,8 +33,10 @@ jest.mock('superagent', () => ({
   },
 }))
 
-const api = require('./elife-api')
+const logger = require('@pubsweet/logger')
 const request = require('superagent')
+const api = require('./elife-api')
+const person = require('./elife-api.test.person')
 
 describe('eLife API tests', () => {
   it('sends the Authorization token', async () => {
@@ -55,7 +55,9 @@ describe('eLife API tests', () => {
   })
 
   it('logs on error', async () => {
+    jest.spyOn(logger, 'error').mockImplementationOnce(() => {})
     request.query.mockRejectedValue(new Error('Forbidden'))
     await expect(api.people()).rejects.toThrow('Forbidden')
+    expect(logger.error).toHaveBeenCalled()
   })
 })
