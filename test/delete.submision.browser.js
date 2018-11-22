@@ -30,9 +30,11 @@ test('Create a Submission', async t => {
     .expect(author.secondNameField.value)
     .eql('Rhodes')
     .expect(author.emailField.value)
-    .eql('example@example.org')
+    .eql('f72c502e0d657f363b5f2dc79dd8ceea')
     .expect(author.institutionField.value)
     .eql('Tech team, University of eLife')
+    .selectText(author.emailField)
+    .typeText(author.emailField, 'example@example.org')
     .click(wizardStep.next)
 
   // navigate back to the dashboard page and delete the submission
