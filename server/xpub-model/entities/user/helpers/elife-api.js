@@ -13,7 +13,12 @@ const request = (endpoint, query = {}) => {
   if (secret) {
     req.header.Authorization = secret
   }
-  return req.query(query)
+  return req
+    .query(query)
+    .catch(err => {
+      logger.error('Failed to fetch from eLife API:', err.message)
+      throw err
+    })
 }
 
 const convertPerson = apiPerson => {
