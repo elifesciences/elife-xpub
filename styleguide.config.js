@@ -2,6 +2,7 @@ const path = require('path')
 const webpackConfig = require('./webpack/webpack.styleguide.config')
 
 module.exports = {
+  require: ['babel-polyfill'],
   sections: [
     {
       name: 'App components',
