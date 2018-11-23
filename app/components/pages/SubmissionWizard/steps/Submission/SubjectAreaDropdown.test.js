@@ -49,7 +49,7 @@ describe('SubjectAreaDropdown component', () => {
       // typing nothing into the field seems to be the only way to programmatically focus react-select)
       typeSubjectArea('')
       expect(wrapper.find('Menu').exists()).toBe(true)
-      expect(wrapper.find('Option')).toHaveLength(17)
+      expect(wrapper.find('Option')).toHaveLength(18)
     })
 
     it('an option can be selected from the dropdown', () => {
