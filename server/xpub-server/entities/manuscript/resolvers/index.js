@@ -4,6 +4,7 @@ const removeUploadedManuscript = require('./removeUploadedManuscript')
 const submitManuscript = require('./submitManuscript')
 const updateManuscript = require('./updateManuscript')
 const uploadManuscript = require('./uploadManuscript')
+const uploadSupporting = require('./uploadSupporting')
 
 const resolvers = {
   Query: {
@@ -41,6 +42,8 @@ const resolvers = {
     submitManuscript,
 
     uploadManuscript,
+
+    uploadSupporting,
 
     removeUploadedManuscript,
 

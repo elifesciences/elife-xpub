@@ -24,8 +24,8 @@ const UPLOAD_MANUSCRIPT_MUTATION = gql`
 `
 
 const UPLOAD_SUPPORTING_MUTATION = gql`
-  mutation UploadFile($id: ID!, $files: Upload!, $fileSize: Int!) {
-    uploadSupporting(id: $id, files: $files, fileSize: $fileSize) {
+  mutation UploadFile($id: ID!, $file: Upload!) {
+    uploadSupporting(id: $id, file: $file) {
       id
       meta {
         title
@@ -158,29 +158,18 @@ const FilesPageContainer = ({
               </Box>
               <Box width={1}>
                 <Mutation mutation={UPLOAD_SUPPORTING_MUTATION}>
-                  {(
-                    uploadSupportFiles,
-                    { loading: supportLoading, error: supportError },
-                  ) => (
+                  {uploadSupportFiles => (
                     <SupportingUpload
                       hasManuscript={hasManuscript}
                       uploadFile={file =>
-                        new Promise((resolve, reject) => {
-                          setTimeout(() => {
-                            if (Math.random() > 0.5) {
-                              resolve(file)
-                            } else {
-                              reject(new Error('Something went wrong'))
-                            }
-                          }, 1000)
-                        })
+                        new Promise((resolve, reject) =>
+                          uploadSupportFiles({
+                            variables: { file, id: values.id },
+                          })
+                            .then(data => resolve(data))
+                            .catch(err => reject(err)),
+                        )
                       }
-                      // uploadFile={file =>
-                      //   new Promise((resolve, reject) => uploadSupportFiles({
-                      //     variables: { file, id: values.id },
-                      //     }).then(data => resolve(data)).catch(err=> reject(err))
-                      //   )
-                      // }
                     />
                   )}
                 </Mutation>
