@@ -7,26 +7,36 @@ const people = [
   {
     id: 1,
     name: 'Annie Badger',
-    institution: 'A University',
-    subjectAreas: ['Cell biology'],
+    aff: 'A University',
+    focuses: ['biophysics and structural biology', 'immunology'],
+    expertises: ['Evolutionary Biology', 'Microbiology and Infectious Disease'],
   },
   {
     id: 2,
     name: 'Bobby Badger',
-    institution: 'B College',
-    subjectAreas: ['Biochemistry and chemical biology'],
+    aff: 'B College',
+    focuses: ['cell biology'],
+    expertises: [
+      'Biochemistry and Chemical Biology',
+      'Chromosomes and Gene Expression',
+    ],
   },
   {
     id: 3,
     name: 'Chastity Badger',
-    institution: 'C Institute',
-    subjectAreas: ['Ecology'],
+    aff: 'C Institute',
+    focuses: ['computational and systems biology'],
+    expertises: [
+      'Developmental Biology',
+      'Stem Cells and Regenerative Medicine',
+    ],
   },
   {
     id: 4,
     name: 'Dave Badger',
-    institution: 'D Research Lab',
-    subjectAreas: ['Neuroscience', 'Pumpkins', 'Chaffinches'],
+    aff: 'D Research Lab',
+    focuses: ['auditory cognition'],
+    expertises: ['Neuroscience', 'Pumpkins', 'Chaffinches'],
   },
 ]
 ;<PeoplePicker
@@ -57,26 +67,36 @@ const people = [
   {
     id: 1,
     name: 'Annie Badger',
-    institution: 'A University',
-    keywords: 'cell biology',
+    aff: 'A University',
+    focuses: ['biophysics and structural biology', 'immunology'],
+    expertises: ['Evolutionary Biology', 'Microbiology and Infectious Disease'],
   },
   {
     id: 2,
     name: 'Bobby Badger',
-    institution: 'B College',
-    keywords: 'biochemistry and chemical biology',
+    aff: 'B College',
+    focuses: ['cell biology'],
+    expertises: [
+      'Biochemistry and Chemical Biology',
+      'Chromosomes and Gene Expression',
+    ],
   },
   {
     id: 3,
     name: 'Chastity Badger',
-    institution: 'C Institute',
-    keywords: 'ecology',
+    aff: 'C Institute',
+    focuses: ['computational and systems biology'],
+    expertises: [
+      'Developmental Biology',
+      'Stem Cells and Regenerative Medicine',
+    ],
   },
   {
     id: 4,
     name: 'Dave Badger',
-    institution: 'D Research Lab',
-    keywords: 'neuroscience',
+    aff: 'D Research Lab',
+    focuses: ['auditory cognition'],
+    expertises: ['Neuroscience', 'Pumpkins', 'Chaffinches'],
   },
 ]
 

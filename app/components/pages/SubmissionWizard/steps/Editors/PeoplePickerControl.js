@@ -23,7 +23,7 @@ const PeoplePickerControl = ({
           institution={person.aff}
           isKeywordClickable={false}
           key={person.id}
-          keywords={person.subjectAreas}
+          keywords={[].concat(person.focuses).concat(person.expertises)}
           name={person.name}
           onIconClick={() => onRequestRemove(person)}
         />

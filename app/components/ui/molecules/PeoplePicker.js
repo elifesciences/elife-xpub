@@ -77,7 +77,7 @@ const PeoplePickerBody = ({
             }
             isKeywordClickable={false}
             key={person.id}
-            keywords={person.subjectAreas}
+            keywords={[].concat(person.focuses).concat(person.expertises)}
             name={person.name}
             onIconClick={() => toggleSelection(person)}
             // onKeywordClick will need to be added, once we know what the desired behaviour is
@@ -173,9 +173,9 @@ class PeoplePicker extends React.Component {
 
     extendedPeople = extendedPeople.map(person => ({
       ...person,
-      searchValue: `${person.name} ${person.subjectAreas.join(' ')} ${
-        person.aff ? person.aff : ''
-      }`,
+      searchValue: `${person.name} ${person.focuses.join(
+        ' ',
+      )} ${person.expertises.join(' ')} ${person.aff ? person.aff : ''}`,
     }))
     const searchOptions = extendedPeople.map(person => ({
       value: person.name,

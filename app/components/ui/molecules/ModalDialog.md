@@ -67,10 +67,10 @@ initialState = {
         id: '1234',
         name: 'Michael J Frank',
         aff: 'Max Planck Institute, Germany',
-        subjectAreas: [
-          'genetics of global gene expression',
-          'mouse models of human disease',
-          'haematology',
+        focuses: ['biophysics and structural biology', 'immunology'],
+        expertises: [
+          'Evolutionary Biology',
+          'Microbiology and Infectious Disease',
         ],
       }}
     />
