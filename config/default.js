@@ -44,6 +44,7 @@ module.exports = {
   },
   server: {
     api: {
+      secret: 'xpubsecret',
       url: 'https://prod--gateway.elifesciences.org/',
     },
   },
@@ -55,8 +56,8 @@ module.exports = {
       'cell-biology': 'Cell Biology',
       'chromosomes-gene-expression': 'Chromosomes and Gene Expression',
       'computational-systems-biology': 'Computational and Systems Biology',
-      'developmental-biology-stem-cells':
-        'Developmental Biology and Stem Cells',
+      'developmental-biology':
+        'Developmental Biology',
       ecology: 'Ecology',
       'epidemiology-global-health': 'Epidemiology and Global Health',
       'evolutionary-biology': 'Evolutionary Biology',
@@ -67,6 +68,7 @@ module.exports = {
       neuroscience: 'Neuroscience',
       'physics-living-systems': 'Physics of Living Systems',
       'plant-biology': 'Plant Biology',
+      'stem-cells-and-regenerative-medicine': 'Stem Cells and Regenerative Medicine',
       'structural-biology-molecular-biophysics':
         'Structural Biology and Molecular Biophysics',
     },

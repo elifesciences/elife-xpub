@@ -19,7 +19,7 @@ This is managed using [builder](https://github.com/elifesciences/builder) using 
 | elife-xpub--staging | [Staging](https://staging--xpub.elifesciences.org/) |
 | elife-xpub--prod    | [Production](https://xpub.elifesciences.org/)       |
 
-This project has 3 active environments, and a fourth that will be configured closer to the time of actually going live. The end2end environment This env will be as close as possible to the prod env. (e.g. RDS)
+This project has 4 active environments. The `end2end` and `staging` environments are as close as possible to the `prod` env. (e.g. RDS, ELB, S3)
 
 # Steps used for creating new stack
 
@@ -35,5 +35,3 @@ In this example we created a new environment for "prod"
 - This new pipeline needs to point to a new approved branch "approved", and is triggered manually.
 
 - New Jenkins file in (elife-xpub-deployment) called "Jenkinsfile.prod"
-
-Notes ... in time we need to set up an "elife-xpub--end2end" environment.- This will be a part of the normal CI pipeline of "test-elife-xpub" (i,e, not approved)

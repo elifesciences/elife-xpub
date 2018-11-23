@@ -1,20 +1,11 @@
-jest.mock('@pubsweet/db-manager')
+jest.mock('./health')
 
 const express = require('express')
 const supertest = require('supertest')
-const AWS = require('aws-sdk')
-const dbManager = require('@pubsweet/db-manager')
+const health = require('./health')
 
 describe('ping route test', () => {
   let routes
-  let mockS3Value
-  let mockError
-
-  AWS.S3 = jest.fn().mockImplementation(() => ({
-    listObjects(params, cb) {
-      cb(mockError, { Contents: mockS3Value })
-    },
-  }))
 
   const makeApp = () => {
     const app = express()
@@ -47,19 +38,31 @@ describe('ping route test', () => {
     }))
 
     routes = require('./routes')
-    mockS3Value = [{ a: 1 }, { b: 1 }]
-    mockError = null
+    health.checkDataBase.mockResolvedValue(14)
+    setS3Success(1)
+    setDbSuccess(1)
   })
 
+  const setS3Success = value => {
+    health.checkS3.mockResolvedValue({ Contents: value })
+  }
+
+  const setS3Error = value => {
+    health.checkS3.mockResolvedValue(new Error('Mock error'))
+  }
+
+  const setDbSuccess = value => {
+    health.checkDataBase.mockResolvedValue(value)
+  }
+
   it('returns success pointing ping endpoint', async () => {
-    dbManager.dbExists.mockResolvedValue(14)
     const request = makeApp()
     await request.get('/ping').expect(200)
   })
 
   describe('Response Errors', () => {
     it('returns failure when an invalid response is returned from the database', async () => {
-      dbManager.dbExists.mockResolvedValue(null)
+      setDbSuccess(0)
       const request = makeApp()
       const response = await request.get('/ping').expect(410)
       expect(response.body).toHaveLength(1)
@@ -67,8 +70,8 @@ describe('ping route test', () => {
     })
 
     it('returns failure when an invalid response is returned from S3', async () => {
-      mockS3Value = null
-      dbManager.dbExists.mockResolvedValue(17)
+      setS3Success(0)
+      health.checkDataBase.mockResolvedValue(17)
       const request = makeApp()
       const response = await request.get('/ping').expect(410)
       expect(response.body).toHaveLength(1)
@@ -76,8 +79,8 @@ describe('ping route test', () => {
     })
 
     it('both S3 and database return invalid responses', async () => {
-      mockS3Value = null
-      dbManager.dbExists.mockResolvedValue(0)
+      setS3Success(0)
+      setDbSuccess(0)
       const request = makeApp()
       const response = await request.get('/ping').expect(410)
       expect(response.body).toHaveLength(2)
@@ -88,9 +91,7 @@ describe('ping route test', () => {
 
   describe('Connection Errors', () => {
     it('returns connection error on S3', async () => {
-      mockS3Value = null
-      mockError = new Error('connection failed')
-      dbManager.dbExists.mockResolvedValue(14)
+      setS3Error()
       const request = makeApp()
       const response = await request.get('/ping').expect(410)
       expect(response.body).toHaveLength(1)
@@ -98,7 +99,7 @@ describe('ping route test', () => {
     })
 
     it('returns connection error on database', async () => {
-      dbManager.dbExists.mockRejectedValue(new Error('connection Error'))
+      setDbSuccess(new Error('connection Error'))
       const request = makeApp()
       const response = await request.get('/ping').expect(410)
       expect(response.body).toHaveLength(1)
@@ -106,9 +107,8 @@ describe('ping route test', () => {
     })
 
     it('both returns connection errors', async () => {
-      mockS3Value = null
-      mockError = new Error('connection failed')
-      dbManager.dbExists.mockRejectedValue(new Error('connection Error'))
+      setS3Error()
+      setDbSuccess(new Error('connection Error'))
       const request = makeApp()
       const response = await request.get('/ping').expect(410)
       expect(response.body).toHaveLength(2)

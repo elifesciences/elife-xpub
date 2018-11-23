@@ -9,6 +9,7 @@ export const ALL_MANUSCRIPTS = gql`
         title
       }
       clientStatus
+      lastStepVisited
     }
   }
 `

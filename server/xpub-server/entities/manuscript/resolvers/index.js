@@ -1,5 +1,7 @@
 const logger = require('@pubsweet/logger')
-const { Manuscript, User } = require('@elifesciences/xpub-model')
+const { Manuscript, User, File } = require('@elifesciences/xpub-model')
+const elifeApi = require('@elifesciences/xpub-model/entities/user/helpers/elife-api')
+
 const removeUploadedManuscript = require('./removeUploadedManuscript')
 const submitManuscript = require('./submitManuscript')
 const updateManuscript = require('./updateManuscript')
@@ -29,10 +31,20 @@ const resolvers = {
       return manuscript.save()
     },
 
-    // TODO restrict this in production
     async deleteManuscript(_, { id }, { user }) {
       const userUuid = await User.getUuidForProfile(user)
       const manuscript = await Manuscript.find(id, userUuid)
+
+      const manuscriptFile = manuscript.files[0]
+      if (manuscriptFile) {
+        try {
+          const file = await File.find(manuscriptFile.manuscriptId)
+          await file.deleteContent()
+          await file.delete()
+        } catch (error) {
+          logger.error(error)
+        }
+      }
       await manuscript.delete()
       return id
     },
@@ -51,12 +63,12 @@ const resolvers = {
       const userUuid = await User.getUuidForProfile(user)
       const manuscript = await Manuscript.find(vars.id, userUuid)
 
-      manuscript.formState = vars.url
+      manuscript.lastStepVisited = vars.url
       await manuscript.save()
       logger.debug(`Updated manuscript`, {
         manuscriptId: vars.id,
         userId: userUuid,
-        formState: vars.url,
+        lastStepVisited: vars.url,
       })
 
       return manuscript
@@ -103,7 +115,7 @@ const resolvers = {
           const assigneeIds = team.teamMembers.map(
             member => member.meta.elifePersonId,
           )
-          return User.getEditorsByPersonId(assigneeIds)
+          return elifeApi.getEditorsByPersonId(assigneeIds)
         }
         case 'suggestedReviewer':
         case 'opposedReviewer':

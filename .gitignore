@@ -21,4 +21,4 @@ test/screenshots/
 .pki
 .vscode
 .node-gyp
-
+.idea

@@ -18,7 +18,7 @@ module.exports = {
     },
   },
   login: {
-    url: 'https://end2end--journal.elifesciences.org/submit',
+    url: 'https://end2end--cdn-journal.elifesciences.org/submit',
     enableMock: false,
   },
   aws: {

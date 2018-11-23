@@ -20,4 +20,4 @@ x-cache-hits: 0, 1
 x-timer: S1537959472.137268,VS0,VE3
 vary: Accept, Authorization, Accept-Encoding
 
-{"id": "ewwboc7m", "name": {"preferred": "Tamlyn Rhodes", "index": "Rhodes, Tamlyn"}, "orcid": "0000-0002-6277-0372", "emailAddresses": [{ "value": "example@example.org", "access": "public" }], "affiliations": [{ "value": { "name": ["Tech team", "University of eLife"], "address": {"formatted": [ ], "components": {"locality": [], "area": [], "country": "United Kingdom" }}}, "access": "public" }]}
+{"id":"ewwboc7m","name":{"preferred":"Tamlyn Rhodes","index":"Rhodes, Tamlyn"},"orcid":"0000-0002-6277-0372","emailAddresses":[{"value":"f72c502e0d657f363b5f2dc79dd8ceea","access":"public"}],"affiliations":[{"value":{"name":["Tech team","University of eLife"],"address":{"formatted":[],"components":{"locality":[],"area":[],"country":"United Kingdom"}}},"access":"public"}]}

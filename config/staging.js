@@ -10,7 +10,7 @@ module.exports = {
     },
   },
   login: {
-    url: 'https://continuumtest--journal.elifesciences.org/submit',
+    url: 'https://continuumtest--cdn-journal.elifesciences.org/submit',
     enableMock: false,
   },
   aws: {

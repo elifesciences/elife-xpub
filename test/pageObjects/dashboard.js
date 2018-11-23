@@ -7,6 +7,7 @@ const dashboard = {
   mobileNewSubmission: Selector('[data-test-id=mobile-new-submission]'),
   titles: Selector('[data-test-id=title]'),
   statuses: Selector('[data-test-id=status]'),
+  trashButton: Selector('[data-test-id=trash]'),
 }
 
 export default dashboard

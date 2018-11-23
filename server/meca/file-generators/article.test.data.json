@@ -6,7 +6,7 @@
   "createdBy": "6d8cd1ce-15b6-46c1-b901-bc91598c8f2d",
   "previousVersion": null,
   "status": "INITIAL",
-  "formState": null,
+  "lastStepVisited": null,
   "decision": null,
   "meta": {
     "title": "Test Manuscript",
@@ -43,7 +43,7 @@
       "teamMembers": [
         {
           "meta": {
-            "elifePersonId": "f78f3df1"
+            "elifePersonId": "87f34696"
           }
         }
       ]
@@ -58,12 +58,12 @@
       "teamMembers": [
         {
           "meta": {
-            "elifePersonId": "590b9a04"
+            "elifePersonId": "1e9e661f"
           }
         },
         {
           "meta": {
-            "elifePersonId": "1968254f"
+            "elifePersonId": "3edb2ed8"
           }
         }
       ]
@@ -78,7 +78,7 @@
       "teamMembers": [
         {
           "meta": {
-            "elifePersonId": "1968254f"
+            "elifePersonId": "232d9893"
           }
         }
       ]
@@ -142,12 +142,12 @@
       "teamMembers": [
         {
           "meta": {
-            "elifePersonId": "ca22dd6b"
+            "elifePersonId": "6fabd619"
           }
         },
         {
           "meta": {
-            "elifePersonId": "6ce3402a"
+            "elifePersonId": "fd8295ba"
           }
         }
       ]

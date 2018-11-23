@@ -63,7 +63,7 @@ exports.expectedManuscript = {
   coverLetter: 'my cover letter',
   decision: null,
   disclosureConsent: true,
-  formState: null,
+  lastStepVisited: null,
   journalId: null,
   meta: {
     articleType: 'research-article',

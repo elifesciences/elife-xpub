@@ -15,6 +15,11 @@ module.exports = {
     sha: 'CI_COMMIT_SHA',
     ref: 'CI_COMMIT_REF_NAME',
   },
+  server: {
+    api: {
+      secret: 'ELIFE_API_GATEWAY_SECRET',
+    },
+  },
   meca: {
     sftp: {
       connectionOptions: {

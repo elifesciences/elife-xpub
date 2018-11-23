@@ -1,0 +1,22 @@
+GET /people/3edb2ed8
+accept-encoding: gzip, deflate
+
+HTTP/1.1 200 OK
+server: nginx
+date: Mon, 19 Nov 2018 15:54:59 GMT
+content-type: application/vnd.elife.person+json;version=1
+transfer-encoding: chunked
+connection: close
+cache-control: max-age=300, public, stale-if-error=86400, stale-while-revalidate=300
+vary: Accept, Authorization
+etag: "fe43032eb953a46aa1ba5b3807b436fd"
+x-ua-compatible: IE=edge
+content-language: en
+x-content-type-options: nosniff
+x-frame-options: SAMEORIGIN
+access-control-allow-origin: *
+x-kong-upstream-latency: 287
+x-kong-proxy-latency: 0
+via: kong/0.9.5
+
+{"id":"3edb2ed8","type":{"id":"senior-editor","label":"Senior Editor"},"name":{"surname":"Li","givenNames":"Wenhui","preferred":"Wenhui Li","index":"Li, Wenhui"},"emailAddresses":[{"value":"5ddd85b12237e714f490a9c6cf585566","access":"restricted"}],"image":{"uri":"https:\/\/iiif.elifesciences.org\/journal-cms\/person%2F2014-08%2Fwenhui20li.jpg","alt":"Wenhui Li","source":{"mediaType":"image\/jpeg","uri":"https:\/\/iiif.elifesciences.org\/journal-cms\/person%2F2014-08%2Fwenhui20li.jpg\/full\/full\/0\/default.jpg","filename":"wenhui20li.jpg"},"size":{"width":866,"height":503},"focalPoint":{"x":50,"y":50}},"profile":[{"text":"Wenhui Li is an Investigator of the National Institute of Biological Sciences (NIBS), Beijing, China. He received a bachelor\u2019s degree in medicine from the Medical School of Lanzhou University in 1994 and his PhD from the Peking Union Medical College \u0026amp; Chinese Academy of Medical Sciences in 2001. After completing his postdoctoral studies at Harvard Medical School, Li joined NIBS as an Assistant Investigator in 2007 and rose to the rank of Investigator in 2015. His team at NIBS identified a liver bile acids transporter (sodium taurocholate co-transporting polypeptide, NTCP) as a functional receptor for Hepatitis B and D virus. Li\u2019s research interest has been focusing on the molecular mechanisms of viral infections: currently his laboratory combines virology, biochemistry, immunology, and chemical biology to investigate molecular mechanisms of HBV\/HDV infection.","type":"paragraph"}],"research":{"focuses":["virus infection","hepatitis b\/d virus","receptor","antivirals"],"organisms":["human","mouse","viruses"],"expertises":[{"id":"microbiology-infectious-disease","name":"Microbiology and Infectious Disease"}]},"affiliations":[{"name":["National Institute of Biological Sciences"],"address":{"formatted":["China"],"components":{"country":"China"}}}],"competingInterests":"Wenhui Li receives funding from the Ministry of Science and Technology, National Natural Science Foundation of China, and the Science and Technology Bureau of Beijing Municipal Government. He serves as a member of the editorial boards of Chin J Virol (2011\u2013), Virologica Sinica (2013\u2013), and J Biol Chem (2016\u2013)."}

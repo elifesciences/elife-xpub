@@ -15,8 +15,8 @@ const entityTypeDefs = [
   fs.readFileSync(`${__dirname}/entities/user/typeDefs.graphqls`, 'utf8'),
 ]
 const typeDefs = `
-  ${xpubTypeDefs} 
-  ${elifeTypeDefs} 
+  ${xpubTypeDefs}
+  ${elifeTypeDefs}
   ${entityTypeDefs.join('\n\n')}
 `
 

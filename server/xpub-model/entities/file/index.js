@@ -49,6 +49,28 @@ class File extends BaseModel {
       .promise()
     return Body
   }
+
+  static async find(id) {
+    const [file] = await this.query().where({
+      manuscript_id: id,
+    })
+    if (!file) {
+      throw new Error(`file ${id} not found`)
+    }
+    return file
+  }
+
+  async deleteContent() {
+    if (!this.id) {
+      throw new Error('File has no ID, or is invalid')
+    }
+
+    return s3
+      .deleteObject({
+        Key: `${this.url}/${this.id}`,
+      })
+      .promise()
+  }
 }
 
 module.exports = File
