@@ -85,9 +85,47 @@ const Spinner = styled.span`
   }
 `
 
+// needs to be declared as a const for linting https://eslint.org/docs/rules/func-names
+const fileUploadGenerator = function*(files, uploadFile) {
+  for (let fileIndex = 0; fileIndex < files.length; ) {
+    yield {
+      upload: uploadFile(files[fileIndex].file),
+      fileId: files[fileIndex].id,
+    }
+    fileIndex += 1
+  }
+}
+
 class SupportingUpload extends React.Component {
   state = {
+    uploading: false,
     files: [],
+  }
+
+  synchronouslyUploadFiles = files => {
+    const { uploadFile } = this.props
+    const iterator = fileUploadGenerator(files, uploadFile)
+    const loop = result => {
+      if (result.done) {
+        this.setState({ uploading: false })
+      } else {
+        result.value.upload
+          .then(data => {
+            this.updateFileState(result.value.fileId, {
+              success: true,
+              loading: false,
+            })
+          })
+          .catch(() => {
+            this.updateFileState(result.value.fileId, {
+              error: true,
+              loading: false,
+            })
+          })
+          .finally(() => loop(iterator.next()))
+      }
+    }
+    loop(iterator.next())
   }
 
   updateFileState = (fileId, newState) => {
@@ -98,39 +136,33 @@ class SupportingUpload extends React.Component {
       this.setState({ files: newFilesState })
     }
   }
+
   render() {
     let dropzoneRef
     const { hasManuscript } = this.props
+    const successfullyUploadedFiles = this.state.files.filter(
+      file => !file.error,
+    )
     return (
       <React.Fragment>
         <StyledDropzone
           maxSize={config.fileUpload.maxSizeMB * 1e6}
           onDrop={droppedFiles => {
-            const newStateFiles = [...this.state.files]
-            const files = droppedFiles
-
-            if (files.length > 10 - this.state.files.length) {
-              files.splice(10 - this.state.files.length)
+            let files = droppedFiles
+            if (files.length > 10 - successfullyUploadedFiles.length) {
+              files.splice(10 - successfullyUploadedFiles.length)
             }
-            files.forEach((file, index) => {
-              const fileId = index + this.state.files.length
-              newStateFiles.push({
-                id: fileId,
-                file,
-                success: false,
-                loading: true,
-                error: false,
-              })
+            files = files.map((file, index) => ({
+              id: index + this.state.files.length,
+              file,
+              loading: true,
+            }))
 
-              setTimeout(() => {
-                this.updateFileState(fileId, {
-                  success: true,
-                  loading: false,
-                  error: false,
-                })
-              }, index * 1000)
+            this.setState({
+              uploading: true,
+              files: [...this.state.files, ...files],
             })
-            this.setState({ files: newStateFiles })
+            this.synchronouslyUploadFiles(files)
           }}
           setRef={node => {
             dropzoneRef = node
@@ -145,13 +177,14 @@ class SupportingUpload extends React.Component {
             </FileBlock>
           ))}
         </StyledDropzone>
-        {this.state.files.length < 10 &&
-          hasManuscript && (
+        {successfullyUploadedFiles.length < 10 &&
+          hasManuscript &&
+          !this.state.uploading && (
             <React.Fragment>
               Add more{' '}
               <UploadLink onClick={() => dropzoneRef.open()}>
                 supporting files
-              </UploadLink>
+              </UploadLink>{' '}
               (optional)
             </React.Fragment>
           )}

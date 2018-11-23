@@ -164,12 +164,23 @@ const FilesPageContainer = ({
                   ) => (
                     <SupportingUpload
                       hasManuscript={hasManuscript}
-                      loading={supportLoading}
-                      uploadFiles={files =>
-                        uploadSupportFiles({
-                          variables: { files },
+                      uploadFile={file =>
+                        new Promise((resolve, reject) => {
+                          setTimeout(() => {
+                            if (Math.random() > 0.5) {
+                              resolve(file)
+                            } else {
+                              reject(new Error('Something went wrong'))
+                            }
+                          }, 1000)
                         })
                       }
+                      // uploadFile={file =>
+                      //   new Promise((resolve, reject) => uploadSupportFiles({
+                      //     variables: { file, id: values.id },
+                      //     }).then(data => resolve(data)).catch(err=> reject(err))
+                      //   )
+                      // }
                     />
                   )}
                 </Mutation>
