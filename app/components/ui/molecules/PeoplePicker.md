@@ -102,7 +102,7 @@ const people = [
 
 const selection = people.slice(0, 2)
 ;<PeoplePicker.Body
-  isSelected={person => selection.includes(person)}
+  select={person => selection.includes(person)}
   maxSelection={5}
   minSelection={3}
   people={people}

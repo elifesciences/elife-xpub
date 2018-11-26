@@ -10,9 +10,10 @@ Clickable keywords:
   expertises={['Cellular Biology']}
   isKeywordClickable={true}
   onKeywordClick={keyword => console.log(keyword, 'clicked')}
+  isPicked={false}
   isStatusShown={false}
   iconType="add"
-  onIconClick={() => console.log('icon clicked')}
+  togglePersonSelection={() => console.log('icon clicked')}
 />
 ```
 
@@ -26,9 +27,10 @@ Showing the person's status:
   expertises={['Biochemistry and Chemical Biology', 'Plant Biology']}
   isKeywordClickable={false}
   status="Currently unavailable"
+  isPicked={false}
   isStatusShown={true}
   iconType="add"
-  onIconClick={() => console.log('icon clicked')}
+  togglePersonSelection={() => console.log('icon clicked')}
 />
 ```
 
@@ -43,9 +45,10 @@ Removal icon:
   isKeywordClickable={false}
   onKeywordClick={() => console.log('keyword clicked')}
   status="Currently unavailable"
+  isSelectedInForm={false}
   isStatusShown={true}
   iconType="remove"
-  onIconClick={() => console.log('icon clicked')}
+  togglePersonSelection={() => console.log('icon clicked')}
 />
 ```
 
@@ -58,9 +61,10 @@ Selected icon:
   focuses={[]}
   expertises={['Cell Biology']}
   isKeywordClickable={false}
+  isSelectedInForm={false}
   isStatusShown={true}
   iconType="selected"
-  onIconClick={() => console.log('icon clicked')}
+  togglePersonSelection={() => console.log('icon clicked')}
 />
 ```
 
@@ -74,7 +78,9 @@ Disabled:
   expertises={['Cell Biology']}
   isKeywordClickable={false}
   iconType="add"
-  isIconClickable={false}
+  isSelectedButtonClickable={false}
+  isSelectedInForm={false}
+  togglePersonSelection={() => console.log('icon clicked')}
 />
 ```
 
@@ -82,16 +88,16 @@ Disabled:
 
 ```js
 ;<PersonPod.SelectButton
-  role="Senior Editor(s)"
+  roleName="Senior Editor(s)"
   isRequired={true}
-  onIconClick={() => console.log('icon clicked')}
+  togglePersonSelection={() => console.log('icon clicked')}
 />
 ```
 
 ```js
 ;<PersonPod.SelectButton
-  role="Reviewing Editor(s)"
+  roleName="Reviewing Editor(s)"
   isRequired={false}
-  onIconClick={() => console.log('icon clicked')}
+  togglePersonSelection={() => console.log('icon clicked')}
 />
 ```

@@ -72,13 +72,14 @@ const PeoplePickerBody = ({
             focuses={person.focuses}
             iconType={isSelected(person) ? 'selected' : 'add'}
             institution={person.aff}
-            isIconClickable={
+            isKeywordClickable={false}
+            isSelectButtonClickable={
               isSelected(person) || selection.length < maxSelection
             }
-            isKeywordClickable={false}
+            isSelected={isSelected(person)}
             key={person.id}
             name={person.name}
-            onIconClick={() => toggleSelection(person)}
+            togglePersonSelection={() => toggleSelection(person)}
             // onKeywordClick will need to be added, once we know what the desired behaviour is
           />
         ))

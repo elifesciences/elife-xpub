@@ -17,14 +17,15 @@ function makePersonPodWrapper(props) {
 }
 
 const propsWithClickableFunctionality = {
+  togglePersonSelection: handleIconClick,
   iconType: 'add',
+  name: 'Richard Aldrich',
   institution: 'Utrecht University',
-  isKeywordClickable: true,
-  isStatusShown: false,
   focuses: ['cell biology'],
   expertises: ['Cancer cells', 'Neroscience'],
-  name: 'Richard Aldrich',
-  onIconClick: handleIconClick,
+  isKeywordClickable: true,
+  isSelected: true,
+  isStatusShown: false,
   onKeywordClick: handleKeywordClick,
 }
 
