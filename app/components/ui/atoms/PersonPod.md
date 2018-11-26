@@ -6,7 +6,8 @@ Clickable keywords:
 ;<PersonPod
   name="Brian B Aldrich"
   institution="Utrecht University"
-  keywords={['Cell Biology', 'Biochemistry and Chemical Biology']}
+  focuses={['cell biology', 'biochemistry and chemical biology']}
+  expertises={['Cellular Biology']}
   isKeywordClickable={true}
   onKeywordClick={keyword => console.log(keyword, 'clicked')}
   isStatusShown={false}
@@ -21,11 +22,8 @@ Showing the person's status:
 ;<PersonPod
   name="Brian B Aldrich"
   institution="Utrecht University"
-  keywords={[
-    'Structural Biology and Molecular Biophysics',
-    'Biochemistry and Chemical Biology',
-    'Plant Biology',
-  ]}
+  focuses={['structural biology and molecular biophysics']}
+  expertises={['Biochemistry and Chemical Biology', 'Plant Biology']}
   isKeywordClickable={false}
   status="Currently unavailable"
   isStatusShown={true}
@@ -40,7 +38,8 @@ Removal icon:
 ;<PersonPod
   name="Brian B Aldrich"
   institution="National Centre for Biological Sciences, Tata Institute of Fundamental Research"
-  keywords={['Human Biology and Medicine', 'Neuroscience']}
+  focuses={['human biology and medicine']}
+  expertises={['Neuroscience']}
   isKeywordClickable={false}
   onKeywordClick={() => console.log('keyword clicked')}
   status="Currently unavailable"
@@ -56,7 +55,8 @@ Selected icon:
 ;<PersonPod
   name="Brian B Aldrich"
   institution="Utrecht University"
-  keywords={['Cell Biology']}
+  focuses={[]}
+  expertises={['Cell Biology']}
   isKeywordClickable={false}
   isStatusShown={true}
   iconType="selected"
@@ -70,7 +70,8 @@ Disabled:
 ;<PersonPod
   name="Brian B Aldrich"
   institution="Utrecht University"
-  keywords={['Cell Biology']}
+  focuses={['biological experiments']}
+  expertises={['Cell Biology']}
   isKeywordClickable={false}
   iconType="add"
   isIconClickable={false}

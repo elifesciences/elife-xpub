@@ -21,7 +21,8 @@ const propsWithClickableFunctionality = {
   institution: 'Utrecht University',
   isKeywordClickable: true,
   isStatusShown: false,
-  keywords: ['cell biology'],
+  focuses: ['cell biology'],
+  expertises: ['Cancer cells', 'Neroscience'],
   name: 'Richard Aldrich',
   onIconClick: handleIconClick,
   onKeywordClick: handleKeywordClick,
@@ -48,7 +49,9 @@ describe('PersonPod component', () => {
 
   it('onKeywordClick handler - fired when selection button is clicked', () => {
     const wrapper = makePersonPodWrapper(propsWithClickableFunctionality)
-    const keyword = wrapper.find('button[data-test-id="clickable-keyword"]')
+    const keyword = wrapper
+      .find('button[data-test-id="clickable-keyword"]')
+      .at(0)
     keyword.simulate('click')
     expect(handleKeywordClick.mock.calls).toHaveLength(1)
   })
@@ -58,9 +61,11 @@ describe('PersonPod component', () => {
     expect(
       wrapper.find('button[data-test-id="clickable-keyword"]').exists(),
     ).toBe(false)
-    const keywords = wrapper.find('span[data-test-id="non-clickable-keyword"]')
-    expect(keywords.exists()).toBe(true)
-    keywords.simulate('click')
+    const keyword = wrapper
+      .find('span[data-test-id="non-clickable-keyword"]')
+      .at(0)
+    expect(keyword.exists()).toBe(true)
+    keyword.simulate('click')
     expect(handleKeywordClick.mock.calls).toHaveLength(0)
   })
 })

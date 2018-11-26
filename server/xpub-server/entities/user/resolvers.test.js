@@ -53,7 +53,10 @@ describe('User', () => {
           'cellular neurophysiology',
           'biochemical neuroscience',
         ],
-        expertises: [],
+        expertises: [
+          'Structural Biology and Molecular Biophysics',
+          'Neuroscience',
+        ],
       })
     })
   })

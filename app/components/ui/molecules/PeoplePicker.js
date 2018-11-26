@@ -51,8 +51,6 @@ const PeoplePickerBody = ({
   isSelected,
   maxSelection,
   minSelection,
-  onCancel,
-  onSubmit,
   people,
   selection,
   toggleSelection,
@@ -70,6 +68,8 @@ const PeoplePickerBody = ({
       {people
         .map(person => (
           <PersonPod
+            expertises={person.expertises}
+            focuses={person.focuses}
             iconType={isSelected(person) ? 'selected' : 'add'}
             institution={person.aff}
             isIconClickable={
@@ -77,7 +77,6 @@ const PeoplePickerBody = ({
             }
             isKeywordClickable={false}
             key={person.id}
-            keywords={[].concat(person.focuses).concat(person.expertises)}
             name={person.name}
             onIconClick={() => toggleSelection(person)}
             // onKeywordClick will need to be added, once we know what the desired behaviour is

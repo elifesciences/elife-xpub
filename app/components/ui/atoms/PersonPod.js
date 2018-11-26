@@ -115,12 +115,12 @@ const CollapsibleBox = styled(Box)`
 const PersonPodContainer = ({
   isIconClickable,
   onIconClick,
-  textContainer,
   icon,
+  children,
   ...props
 }) => (
   <StyledPod justifyContent="space-between">
-    {textContainer}
+    {children}
     <Flex flexDirection="column" justifyContent="center">
       <StyledButton
         data-test-id="person-pod-button"
@@ -146,10 +146,14 @@ const PodIcon = ({ iconType }) => {
   }
 }
 
-const PersonText = ({
+const PersonPod = ({
+  isIconClickable = true,
+  onIconClick,
+  iconType,
   name,
   institution = '',
-  keywords,
+  focuses,
+  expertises,
   isKeywordClickable,
   onKeywordClick = null,
   isStatusShown = false,
@@ -157,6 +161,7 @@ const PersonText = ({
   ...props
 }) => {
   let keywordList
+  const keywords = [].concat(focuses).concat(expertises)
   if (isKeywordClickable) {
     keywordList = keywords.map(keyword => (
       <SmallAction
@@ -181,58 +186,56 @@ const PersonText = ({
   )
 
   return (
-    <CollapsibleBox m={2} {...props}>
-      <StyledParagraph>{name}</StyledParagraph>
-      {institution && <StyledParagraph>{institution}</StyledParagraph>}
-      {!institution && <Box mb={3} />}
-      <Flex alignItems="center">
-        <ButtonAsIconWrapper>
-          <StyledInfoIcon />
-        </ButtonAsIconWrapper>
-        <StyledSmallParagraph>{separatedKeywords}</StyledSmallParagraph>
-      </Flex>
-      {isStatusShown && <StyledSmallParagraph>{status}</StyledSmallParagraph>}
-    </CollapsibleBox>
+    <React.Fragment>
+      <PersonPodContainer
+        icon={<PodIcon iconType={iconType} />}
+        isIconClickable={isIconClickable}
+        onIconClick={onIconClick}
+      >
+        <CollapsibleBox m={2} {...props}>
+          <StyledParagraph>{name}</StyledParagraph>
+          {institution && <StyledParagraph>{institution}</StyledParagraph>}
+          {!institution && <Box mb={3} />}
+          <Flex alignItems="center">
+            <ButtonAsIconWrapper>
+              <StyledInfoIcon />
+            </ButtonAsIconWrapper>
+            <StyledSmallParagraph>{separatedKeywords}</StyledSmallParagraph>
+          </Flex>
+          {isStatusShown && (
+            <StyledSmallParagraph>{status}</StyledSmallParagraph>
+          )}
+        </CollapsibleBox>
+      </PersonPodContainer>
+    </React.Fragment>
   )
 }
 
-const PersonPod = ({
-  isIconClickable = true,
+const SelectButton = ({
+  roleName,
+  isRequired,
+  isIconClickable,
   onIconClick,
-  iconType,
   ...props
 }) => (
-  <PersonPodContainer
-    icon={<PodIcon iconType={iconType} />}
-    isIconClickable={isIconClickable}
-    onIconClick={onIconClick}
-    textContainer={<PersonText {...props} />}
-  />
-)
-
-const ChooserText = ({ roleName, isRequired, ...props }) => (
-  <Flex flexDirection="column" justifyContent="center">
-    <Box ml={2}>
-      <StyledParagraph>
-        Choose {roleName} ({isRequired ? 'required' : 'optional'})
-      </StyledParagraph>
-    </Box>
-  </Flex>
-)
-
-const SelectButton = ({ isIconClickable, onIconClick, ...props }) => (
   <PersonPodContainer
     icon={<PodIcon iconType="add" />}
     isIconClickable
     onIconClick={onIconClick}
-    textContainer={<ChooserText {...props} />}
-  />
+  >
+    <Flex flexDirection="column" justifyContent="center">
+      <Box ml={2}>
+        <StyledParagraph>
+          Choose {roleName} ({isRequired ? 'required' : 'optional'})
+        </StyledParagraph>
+      </Box>
+    </Flex>
+  </PersonPodContainer>
 )
 
 PersonPodContainer.propTypes = {
   isIconClickable: PropTypes.bool.isRequired,
   onIconClick: PropTypes.func.isRequired,
-  textContainer: PropTypes.element.isRequired,
   icon: PropTypes.element.isRequired,
 }
 
@@ -240,40 +243,33 @@ PodIcon.propTypes = {
   iconType: PropTypes.oneOf(['add', 'remove', 'selected']).isRequired,
 }
 
-PersonText.propTypes = {
+PersonPod.propTypes = {
+  isIconClickable: PropTypes.bool,
+  onIconClick: PropTypes.func.isRequired,
+  iconType: PropTypes.oneOf(['add', 'remove', 'selected']).isRequired,
   name: PropTypes.string.isRequired,
   institution: PropTypes.string,
-  keywords: PropTypes.arrayOf(PropTypes.string.isRequired),
+  focuses: PropTypes.arrayOf(PropTypes.string.isRequired),
+  expertises: PropTypes.arrayOf(PropTypes.string.isRequired),
   isKeywordClickable: PropTypes.bool.isRequired,
   onKeywordClick: PropTypes.func,
   isStatusShown: PropTypes.bool,
   status: PropTypes.string,
 }
 
-PersonText.defaultProps = {
+PersonPod.defaultProps = {
+  isIconClickable: true,
   institution: '',
-  keywords: [],
+  focuses: [],
+  expertises: [],
   onKeywordClick: null,
   isStatusShown: false,
   status: '',
 }
 
-PersonPod.propTypes = {
-  isIconClickable: PropTypes.bool,
-  onIconClick: PropTypes.func.isRequired,
-  iconType: PropTypes.oneOf(['add', 'remove', 'selected']).isRequired,
-}
-
-PersonPod.defaultProps = {
-  isIconClickable: true,
-}
-
-ChooserText.propTypes = {
+SelectButton.propTypes = {
   roleName: PropTypes.string.isRequired,
   isRequired: PropTypes.bool.isRequired,
-}
-
-SelectButton.propTypes = {
   onIconClick: PropTypes.func.isRequired,
 }
 

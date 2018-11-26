@@ -9,7 +9,6 @@ const PeoplePickerControl = ({
   maxSelection = Infinity,
   minSelection = 0,
   onRequestRemove,
-  onRequestModal,
   initialSelection,
   onSubmit,
   options,
@@ -19,11 +18,12 @@ const PeoplePickerControl = ({
     {({ showModal, hideModal, isModalVisible }) => {
       const items = initialSelection.map(person => (
         <PersonPod
+          expertises={person.expertises}
+          focuses={person.focuses}
           iconType="remove"
           institution={person.aff}
           isKeywordClickable={false}
           key={person.id}
-          keywords={[].concat(person.focuses).concat(person.expertises)}
           name={person.name}
           onIconClick={() => onRequestRemove(person)}
         />
