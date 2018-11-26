@@ -8,7 +8,7 @@ services:
         CI_COMMIT_SHA: ${IMAGE_TAG}
     image: elifesciences/elife-xpub:${IMAGE_TAG}
     # no need to start the up in any scenario, yet
-    command: sh
+    command: sh -c "npx pubsweet server"
     depends_on:
       - postgres
     environment:
