@@ -34,7 +34,6 @@ module.exports = {
   },
   aws: {
     s3: {
-      endpoint: 'S3_ENDPOINT',
       params: {
         Bucket: 'S3_BUCKET',
       },
