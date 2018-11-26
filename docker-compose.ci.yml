@@ -19,6 +19,7 @@ services:
       PGUSER:
       PGPASSWORD:
       PGDATABASE:
+      PUBSWEET_SECRET:
     volumes:
       - ./build/screenshots:/tmp/screenshots
 
