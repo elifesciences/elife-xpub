@@ -94,11 +94,11 @@ const DropzoneContent = ({
     return (
       <React.Fragment>
         <StyledUploadIcon percentage={conversion.progress} />
+        <FileName>{fileName}</FileName>
         <UploadInstruction
           data-test-conversion="converting"
           data-test-id="dropzoneMessage"
         >
-          <FileName>{fileName}</FileName>
           Manuscript is uploading {conversion.progress}%
         </UploadInstruction>
       </React.Fragment>
