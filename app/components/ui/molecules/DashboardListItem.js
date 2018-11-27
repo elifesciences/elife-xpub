@@ -172,17 +172,20 @@ const DashboardListItem = ({ manuscript }) => {
                 {deleteManuscript => (
                   <ModalDialog
                     acceptText="Confirm"
-                    onAccept={() =>
+                    onAccept={() => {
+                      hideModal()
                       deleteManuscript({
                         variables: { id: manuscript.id },
                         refetchQueries: [{ query: ALL_MANUSCRIPTS }],
                       })
-                    }
+                    }}
                     onCancel={hideModal}
                     open={isModalVisible()}
                   >
-                    {'<H2>Confirm delete submission?</H2>'}
-                    Your submission "{title}" will be deleted permanently
+                    <H2>Confirm delete submission?</H2>
+                    Your submission &quot;
+                    {title}
+                    &quot; will be deleted permanently
                   </ModalDialog>
                 )}
               </Mutation>
