@@ -181,7 +181,7 @@ class SearchBox extends React.Component {
   render() {
     const { value, suggestions } = this.state
     const inputProps = {
-      placeholder: 'Search...',
+      placeholder: 'Search by name, institution or keyword',
       value,
       onChange: this.onChange,
       onKeyDown: this.onKeyDown,
