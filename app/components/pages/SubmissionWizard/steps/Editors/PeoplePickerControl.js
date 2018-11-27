@@ -9,7 +9,6 @@ const PeoplePickerControl = ({
   maxSelection = Infinity,
   minSelection = 0,
   onRequestRemove,
-  onRequestModal,
   initialSelection,
   onSubmit,
   options,
@@ -19,13 +18,15 @@ const PeoplePickerControl = ({
     {({ showModal, hideModal, isModalVisible }) => {
       const items = initialSelection.map(person => (
         <PersonPod
+          expertises={person.expertises}
+          focuses={person.focuses}
           iconType="remove"
           institution={person.aff}
           isKeywordClickable={false}
+          isSelected
           key={person.id}
-          keywords={person.subjectAreas}
           name={person.name}
-          onIconClick={() => onRequestRemove(person)}
+          togglePersonSelection={() => onRequestRemove(person)}
         />
       ))
 
@@ -34,8 +35,8 @@ const PeoplePickerControl = ({
           <PersonPod.SelectButton
             isRequired={items.length < minSelection}
             key="chooser"
-            onIconClick={showModal}
             roleName="editor"
+            togglePersonSelection={showModal}
           />,
         )
 

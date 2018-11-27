@@ -19,25 +19,29 @@ const people = [
     id: 1,
     name: 'Annie Badger',
     aff: 'A University',
-    subjectAreas: ['cell biology'],
+    focuses: ['biophysics and structural biology', 'immunology'],
+    expertises: ['Evolutionary Biology', 'Microbiology and Infectious Disease'],
   },
   {
     id: 2,
     name: 'Bobby Badger',
     aff: 'B College',
-    subjectAreas: ['biochemistry and chemical', 'biology'],
+    focuses: ['biophysics and structural biology', 'immunology'],
+    expertises: ['Evolutionary Biology', 'Microbiology and Infectious Disease'],
   },
   {
     id: 3,
     name: 'Chastity Badger',
     aff: 'C Institute',
-    subjectAreas: ['ecology'],
+    focuses: ['biophysics and structural biology', 'immunology'],
+    expertises: ['Evolutionary Biology', 'Microbiology and Infectious Disease'],
   },
   {
     id: 4,
     name: 'Dave Badger',
     aff: 'D Research Lab',
-    subjectAreas: ['neuroscience'],
+    focuses: ['biophysics and structural biology', 'immunology'],
+    expertises: ['Evolutionary Biology', 'Microbiology and Infectious Disease'],
   },
 ]
 ;<div>

@@ -45,15 +45,17 @@ describe('User', () => {
         id: '8d7e57b3',
         aff: undefined,
         name: 'Richard Aldrich',
-        subjectAreas: [
-          'Structural Biology and Molecular Biophysics',
-          'Neuroscience',
+        focuses: [
           'ion channels',
           'calcium binding proteins',
           'membrane transport',
           'allostery and cooperativity',
           'cellular neurophysiology',
           'biochemical neuroscience',
+        ],
+        expertises: [
+          'Structural Biology and Molecular Biophysics',
+          'Neuroscience',
         ],
       })
     })

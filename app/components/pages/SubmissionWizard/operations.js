@@ -5,7 +5,8 @@ const editorFragment = gql`
     id
     name
     aff
-    subjectAreas
+    focuses
+    expertises
   }
 `
 const reviewerFragment = gql`
