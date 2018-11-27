@@ -113,7 +113,6 @@ describe('Manuscripts', () => {
 
     it('sets empty title if ScienceBeam fails', async () => {
       jest.spyOn(logger, 'warn').mockImplementationOnce(() => {})
-      replaySetup('error')
       const blankManuscript = new Manuscript({ createdBy: userId })
       const { id } = await blankManuscript.save()
       const file = {
