@@ -1,9 +1,5 @@
 const { merge } = require('lodash')
 const fs = require('fs')
-const logger = require('@pubsweet/logger')
-const { logConfigSources } = require('@elifesciences/util')
-
-logConfigSources(logger.info)
 
 // concatenate schemas
 const xpubTypeDefs = fs.readFileSync(

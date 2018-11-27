@@ -28,7 +28,7 @@
     "lint:style": "stylelint app/**/*.scss app/**/*.css",
     "precommit": "lint-staged",
     "reset": "pubsweet setupdb --clobber",
-    "server": "pubsweet server",
+    "server": "log-config-sources && pubsweet server",
     "setupdb": "pubsweet setupdb",
     "start": "docker-compose up",
     "start:services": "docker-compose up postgres fakes3",
