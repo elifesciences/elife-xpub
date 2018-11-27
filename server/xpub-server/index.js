@@ -1,15 +1,9 @@
 const { merge } = require('lodash')
 const fs = require('fs')
-const config = require('config')
 const logger = require('@pubsweet/logger')
+const { logConfigSources } = require('@elifesciences/util')
 
-// log config files loaded
-const configSources = config.util.getConfigSources()
-  .map(source => source.name)
-logger.info(
-  `Loaded the following config:
-  ${configSources.join("\n  ")}`
-)
+logConfigSources(logger.info)
 
 // concatenate schemas
 const xpubTypeDefs = fs.readFileSync(
