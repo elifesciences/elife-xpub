@@ -80,12 +80,21 @@ const DropzoneErrorText = styled(ErrorText.withComponent('span'))`
 const CentredFlex = styled(Flex)`
   text-align: center;
 `
+const FileName = styled.p`
+  text-size= 14px;
+`
 
-const DropzoneContent = ({ conversion, errorMessage, dropzoneOpen }) => {
+const DropzoneContent = ({
+  conversion,
+  errorMessage,
+  dropzoneOpen,
+  fileName,
+}) => {
   if (conversion.converting) {
     return (
       <React.Fragment>
         <StyledUploadIcon percentage={conversion.progress} />
+        <FileName>{fileName}</FileName>
         <UploadInstruction
           data-test-conversion="converting"
           data-test-id="dropzoneMessage"
@@ -118,6 +127,7 @@ const DropzoneContent = ({ conversion, errorMessage, dropzoneOpen }) => {
     return (
       <React.Fragment>
         <StyledUploadSuccessIcon />
+        <FileName>{fileName}</FileName>
         <UploadInstruction
           data-test-conversion="completed"
           data-test-id="dropzoneMessage"
@@ -189,6 +199,7 @@ class ManuscriptUpload extends React.Component {
         maxSize={config.fileUpload.maxSizeMB * 1e6}
         onDrop={files => {
           this.setErrorMessage(null)
+          this.fileName = files[0].name
           onDrop(files)
         }}
         saveInnerRef={node => {
@@ -202,6 +213,7 @@ class ManuscriptUpload extends React.Component {
               conversion={conversion}
               dropzoneOpen={() => dropzoneRef.open()}
               errorMessage={this.state.errorMessage}
+              fileName={this.fileName}
             />
           </Box>
         </CentredFlex>
