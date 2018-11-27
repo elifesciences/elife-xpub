@@ -127,11 +127,11 @@ const DropzoneContent = ({
     return (
       <React.Fragment>
         <StyledUploadSuccessIcon />
+        <FileName>{fileName}</FileName>
         <UploadInstruction
           data-test-conversion="completed"
           data-test-id="dropzoneMessage"
         >
-          <FileName>{fileName}</FileName>
           Success! <Action onClick={dropzoneOpen}>Replace</Action> your
           manuscript.
         </UploadInstruction>
