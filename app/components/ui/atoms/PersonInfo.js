@@ -8,9 +8,9 @@ const PersonInfo = ({ name, institution, focuses, expertises }) => (
   <React.Fragment>
     <H2>{name}</H2>
     <Paragraph>{institution}</Paragraph>
-    <SmallParagraph>Research focuses: {focuses.join(', ')}</SmallParagraph>
+    <SmallParagraph>Expertises: {expertises.join(', ')}</SmallParagraph>
     <SmallParagraph secondary>
-      Expertises: {expertises.join(', ')}
+      Research focuses: {focuses.join(', ')}
     </SmallParagraph>
   </React.Fragment>
 )
