@@ -171,7 +171,8 @@ const DashboardListItem = ({ manuscript }) => {
               <Mutation mutation={DELETE_MANUSCRIPT}>
                 {deleteManuscript => (
                   <ModalDialog
-                    acceptText="Confirm"
+                    acceptText="Delete"
+                    attention
                     onAccept={() => {
                       hideModal()
                       deleteManuscript({

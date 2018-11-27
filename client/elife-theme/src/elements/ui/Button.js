@@ -31,6 +31,31 @@ const primary = css`
     }
   }
 `
+const attention = css`
+  background-color: ${th('colorError')};
+  border-color: ${th('colorError')};
+  color: ${th('colorTextReverse')};
+
+  &:focus,
+  &:hover {
+    background-color: ${darken('colorError', 0.3)};
+    border-color: ${darken('colorError', 0.3)};
+  }
+
+  &:active {
+    background-color: ${darken('colorError', 0.5)};
+    border-color: ${darken('colorError', 0.5)};
+  }
+
+  &[disabled] {
+    &:focus,
+    &:hover,
+    &:active {
+      background-color: ${th('colorError')};
+      border-color: ${th('colorError')};
+    }
+  }
+`
 
 export default css`
   font-size: ${th('fontSizeBaseSmall')}
@@ -44,4 +69,5 @@ export default css`
   ${props => props.small && small};
   ${props => props.extraSmall && extraSmall};
   ${props => props.primary && primary};
+  ${props => props.attention && attention};
 `

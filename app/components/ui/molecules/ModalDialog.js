@@ -37,6 +37,7 @@ const ModalDialog = ({
   open,
   size,
   transparentBackground = true,
+  attention,
   ...props
 }) => (
   <ModalOverlay
@@ -54,14 +55,26 @@ const ModalDialog = ({
             </Button>
           </Box>
           <Box>
-            <Button
-              data-test-id="accept"
-              onClick={onAccept}
-              primary
-              type="button"
-            >
-              {acceptText}
-            </Button>
+            {attention && (
+              <Button
+                attention
+                data-test-id="accept"
+                onClick={onAccept}
+                type="button"
+              >
+                {acceptText}
+              </Button>
+            )}
+            {!attention && (
+              <Button
+                data-test-id="accept"
+                onClick={onAccept}
+                primary
+                type="button"
+              >
+                {acceptText}
+              </Button>
+            )}
           </Box>
         </Flex>
       </WhiteBox>
