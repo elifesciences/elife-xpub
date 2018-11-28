@@ -181,7 +181,9 @@ class SupportingUpload extends React.Component {
               {file.loading && <Spinner />}
               {file.success && <UploadSuccessIcon />}
               {file.error && <UploadFailureIcon />}
-              {file.file.name ? file.file.name : file.file.filename}
+              <span data-test-id="file_block_name">
+                {file.file.name ? file.file.name : file.file.filename}
+              </span>
             </FileBlock>
           ))}
         </StyledDropzone>
