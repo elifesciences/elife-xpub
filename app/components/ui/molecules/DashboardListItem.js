@@ -14,7 +14,6 @@ import ManuscriptStatus from '../atoms/ManuscriptStatus'
 import media from '../../global/layout/media'
 import ModalDialog from './ModalDialog'
 import ModalHistoryState from './ModalHistoryState'
-import ButtonAsIconWrapper from '../atoms/ButtonAsIconWrapper'
 
 export const dashboardDateText = date => {
   const diffDays = differenceInCalendarDays(new Date(), date)
@@ -104,7 +103,7 @@ const StyledRemoveIcon = styled(TrashIcon)`
   fill: ${th('colorTextSecondary')};
 `
 
-const ButtonContainer = styled(ButtonAsIconWrapper)`
+const ButtonContainer = styled(Box)`
   width: 5%;
 `
 
