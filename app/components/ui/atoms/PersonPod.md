@@ -87,7 +87,7 @@ Disabled:
 ### SelectButton
 
 ```js
-;<PersonPod.SelectButton
+;<PersonPod.ChooserPod
   roleName="Senior Editor(s)"
   isRequired={true}
   togglePersonSelection={() => console.log('icon clicked')}
@@ -95,7 +95,7 @@ Disabled:
 ```
 
 ```js
-;<PersonPod.SelectButton
+;<PersonPod.ChooserPod
   roleName="Reviewing Editor(s)"
   isRequired={false}
   togglePersonSelection={() => console.log('icon clicked')}

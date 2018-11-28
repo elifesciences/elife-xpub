@@ -32,7 +32,7 @@ const PeoplePickerControl = ({
 
       if (items.length < maxSelection)
         items.push(
-          <PersonPod.SelectButton
+          <PersonPod.ChooserPod
             isRequired={items.length < minSelection}
             key="chooser"
             roleName="editor"

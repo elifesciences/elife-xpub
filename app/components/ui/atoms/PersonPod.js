@@ -252,7 +252,7 @@ class PersonPod extends React.Component {
   }
 }
 
-const SelectButton = ({
+const ChooserPod = ({
   roleName,
   isRequired,
   isSelectButtonClickable,
@@ -309,12 +309,12 @@ PersonPod.defaultProps = {
   status: '',
 }
 
-SelectButton.propTypes = {
+ChooserPod.propTypes = {
   roleName: PropTypes.string.isRequired,
   isRequired: PropTypes.bool.isRequired,
   togglePersonSelection: PropTypes.func.isRequired,
 }
 
-PersonPod.SelectButton = SelectButton
+PersonPod.ChooserPod = ChooserPod
 
 export default PersonPod
