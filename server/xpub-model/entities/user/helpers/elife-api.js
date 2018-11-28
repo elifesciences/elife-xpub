@@ -13,25 +13,30 @@ const request = (endpoint, query = {}) => {
   if (secret) {
     req.header.Authorization = secret
   }
-  return req.query(query)
+  return req
+    .query(query)
+    .catch(err => {
+      logger.error('Failed to fetch from eLife API:', err.message)
+      throw err
+    })
 }
 
 const convertPerson = apiPerson => {
+  const { id, name, research, emailAddresses, affiliations } = apiPerson
+  const { focuses = [], expertises = [] } = research
+
   let person = {
-    id: apiPerson.id,
-    name: apiPerson.name.preferred,
-    aff: apiPerson.affiliations && apiPerson.affiliations[0].name[0],
-    subjectAreas: ((apiPerson.research && apiPerson.research.expertises) || [])
-      .map(e => e.name)
-      .concat((apiPerson.research && apiPerson.research.focuses) || []),
-    surname: apiPerson.name.surname,
-    firstname: apiPerson.name.givenNames,
+    id,
+    name: name.preferred,
+    aff: affiliations ? affiliations[0].name[0] : undefined,
+    focuses,
+    expertises: expertises.map(expertise => expertise.name) || [],
+    surname: name.surname,
+    firstname: name.givenNames,
   }
   // if we used a secret then pull out the email too
-  if (config.get('server.api.secret') && apiPerson.emailAddresses) {
-    const email = apiPerson.emailAddresses.length
-      ? apiPerson.emailAddresses[0].value
-      : ''
+  if (config.get('server.api.secret') && emailAddresses) {
+    const email = emailAddresses.length ? emailAddresses[0].value : ''
 
     person = {
       ...person,

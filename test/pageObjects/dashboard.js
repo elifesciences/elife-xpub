@@ -8,6 +8,7 @@ const dashboard = {
   titles: Selector('[data-test-id=title]'),
   statuses: Selector('[data-test-id=status]'),
   trashButton: Selector('[data-test-id=trash]'),
+  continueSubmission: Selector('[data-test-id=continue-submission'),
 }
 
 export default dashboard

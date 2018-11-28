@@ -72,7 +72,8 @@ type EditorAlias {
   id: ID
   name: String
   aff: String
-  subjectAreas: [String]
+  focuses: [String]
+  expertises: [String]
 }
 type ReviewerAlias {
   name: String

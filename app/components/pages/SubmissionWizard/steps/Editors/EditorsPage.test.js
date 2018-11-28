@@ -14,6 +14,8 @@ const formValues = {
       id: 1,
       name: 'Alfred Badger',
       aff: 'Institute of Badgers',
+      focuses: ['cancer biology'],
+      expertises: ['Neuroscience'],
     },
   ],
   opposedSeniorEditors: [],

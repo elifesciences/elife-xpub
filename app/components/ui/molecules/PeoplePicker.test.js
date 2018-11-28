@@ -10,16 +10,36 @@ const people = [
     id: 1,
     name: 'Annie Nadine',
     aff: 'eLife',
-    subjectAreas: ['Biophysics and Structural Biology', 'Immunology'],
+    focuses: ['biophysics and structural biology', 'immunology'],
+    expertises: ['Evolutionary Biology', 'Microbiology and Infectious Disease'],
   },
-  { id: 2, name: 'Bobby Aaron', aff: 'eLife', subjectAreas: ['Cell Biology'] },
+  {
+    id: 2,
+    name: 'Bobby Aaron',
+    aff: 'eLife',
+    focuses: ['cell biology'],
+    expertises: [
+      'Biochemistry and Chemical Biology',
+      'Chromosomes and Gene Expression',
+    ],
+  },
   {
     id: 3,
     name: 'Chastity Bob',
     aff: 'eLife',
-    subjectAreas: ['Computational and Systems Biology'],
+    focuses: ['computational and systems biology'],
+    expertises: [
+      'Developmental Biology',
+      'Stem Cells and Regenerative Medicine',
+    ],
   },
-  { id: 4, name: 'Dave Paul', aff: 'eLife', subjectAreas: ['Neuroscience'] },
+  {
+    id: 4,
+    name: 'Dave Paul',
+    aff: 'eLife',
+    focuses: ['auditory cognition'],
+    expertises: ['Neuroscience'],
+  },
 ]
 
 const makeWrapper = props =>
@@ -181,7 +201,7 @@ describe('PeoplePicker', () => {
 
     it('does match characters in the middle of the word', () => {
       searchFor('y')
-      expect(searchWrapper.find('PersonPod')).toHaveLength(3)
+      expect(searchWrapper.find('PersonPod')).toHaveLength(4)
     })
 
     it('filters the people pods when you click on the search icon', () => {

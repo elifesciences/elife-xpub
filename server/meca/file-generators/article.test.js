@@ -1,13 +1,23 @@
 const { createTables } = require('@pubsweet/db-manager')
 const path = require('path')
 const { db } = require('pubsweet-server')
-const generateXml = require('./article')
 const Replay = require('replay')
-const sampleManuscript = require('./article.test.data')
 
 // Ref: https://stackoverflow.com/questions/10265798/determine-project-root-from-a-running-node-js-application
 const appRoot = process.cwd()
 const { obfuscateEmail } = require(path.join(appRoot, '/scripts/obfuscate'))
+
+jest.mock('config')
+const config = require('config')
+
+const realConfig = jest.requireActual('config')
+config.get.mockImplementation(key => {
+  if (key === 'server.api.secret') return config.secret
+  return realConfig.get(key)
+})
+
+const generateXml = require('./article')
+const sampleManuscript = require('./article.test.data')
 
 const existingNames = [{ id: 1, first: 'J. Edward', last: 'Reviewer' }]
 
@@ -24,9 +34,15 @@ describe('Article XML generator', () => {
     await generateXml(manuscriptWithoutTeams)
   })
 
-  it('generates expected XML', async () => {
-    let xml = await generateXml(sampleManuscript)
-    xml = obfuscateEmail(xml)
-    expect(xml).toMatchSnapshot()
+  it('generates expected XML when secret is empty', async () => {
+    config.secret = ''
+    const xml = await generateXml(sampleManuscript)
+    expect(obfuscateEmail(xml)).toMatchSnapshot()
+  })
+
+  it('generates expected XML when secret is set', async () => {
+    config.secret = 'some-secret'
+    const xml = await generateXml(sampleManuscript)
+    expect(obfuscateEmail(xml)).toMatchSnapshot()
   })
 })

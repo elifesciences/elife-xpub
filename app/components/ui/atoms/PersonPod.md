@@ -6,12 +6,14 @@ Clickable keywords:
 ;<PersonPod
   name="Brian B Aldrich"
   institution="Utrecht University"
-  keywords={['Cell Biology', 'Biochemistry and Chemical Biology']}
+  focuses={['cell biology', 'biochemistry and chemical biology']}
+  expertises={['Cellular Biology']}
   isKeywordClickable={true}
   onKeywordClick={keyword => console.log(keyword, 'clicked')}
+  isPicked={false}
   isStatusShown={false}
   iconType="add"
-  onIconClick={() => console.log('icon clicked')}
+  togglePersonSelection={() => console.log('icon clicked')}
 />
 ```
 
@@ -21,16 +23,14 @@ Showing the person's status:
 ;<PersonPod
   name="Brian B Aldrich"
   institution="Utrecht University"
-  keywords={[
-    'Structural Biology and Molecular Biophysics',
-    'Biochemistry and Chemical Biology',
-    'Plant Biology',
-  ]}
+  focuses={['structural biology and molecular biophysics']}
+  expertises={['Biochemistry and Chemical Biology', 'Plant Biology']}
   isKeywordClickable={false}
   status="Currently unavailable"
+  isPicked={false}
   isStatusShown={true}
   iconType="add"
-  onIconClick={() => console.log('icon clicked')}
+  togglePersonSelection={() => console.log('icon clicked')}
 />
 ```
 
@@ -40,13 +40,15 @@ Removal icon:
 ;<PersonPod
   name="Brian B Aldrich"
   institution="National Centre for Biological Sciences, Tata Institute of Fundamental Research"
-  keywords={['Human Biology and Medicine', 'Neuroscience']}
+  focuses={['human biology and medicine']}
+  expertises={['Neuroscience']}
   isKeywordClickable={false}
   onKeywordClick={() => console.log('keyword clicked')}
   status="Currently unavailable"
+  isSelectedInForm={false}
   isStatusShown={true}
   iconType="remove"
-  onIconClick={() => console.log('icon clicked')}
+  togglePersonSelection={() => console.log('icon clicked')}
 />
 ```
 
@@ -56,11 +58,13 @@ Selected icon:
 ;<PersonPod
   name="Brian B Aldrich"
   institution="Utrecht University"
-  keywords={['Cell Biology']}
+  focuses={[]}
+  expertises={['Cell Biology']}
   isKeywordClickable={false}
+  isSelectedInForm={false}
   isStatusShown={true}
   iconType="selected"
-  onIconClick={() => console.log('icon clicked')}
+  togglePersonSelection={() => console.log('icon clicked')}
 />
 ```
 
@@ -70,10 +74,13 @@ Disabled:
 ;<PersonPod
   name="Brian B Aldrich"
   institution="Utrecht University"
-  keywords={['Cell Biology']}
+  focuses={['biological experiments']}
+  expertises={['Cell Biology']}
   isKeywordClickable={false}
   iconType="add"
-  isIconClickable={false}
+  isSelectedButtonClickable={false}
+  isSelectedInForm={false}
+  togglePersonSelection={() => console.log('icon clicked')}
 />
 ```
 
@@ -81,16 +88,16 @@ Disabled:
 
 ```js
 ;<PersonPod.SelectButton
-  role="Senior Editor(s)"
+  roleName="Senior Editor(s)"
   isRequired={true}
-  onIconClick={() => console.log('icon clicked')}
+  togglePersonSelection={() => console.log('icon clicked')}
 />
 ```
 
 ```js
 ;<PersonPod.SelectButton
-  role="Reviewing Editor(s)"
+  roleName="Reviewing Editor(s)"
   isRequired={false}
-  onIconClick={() => console.log('icon clicked')}
+  togglePersonSelection={() => console.log('icon clicked')}
 />
 ```
