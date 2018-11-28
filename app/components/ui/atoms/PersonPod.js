@@ -9,9 +9,8 @@ import Icon from './Icon'
 import ButtonAsIconWrapper from './ButtonAsIconWrapper'
 import SmallParagraph from './SmallParagraph'
 import Paragraph from './Paragraph'
-import PersonInfo from './PersonInfo'
 import PersonPodContainer from './PersonPodContainer'
-import ModalDialog from '../molecules/ModalDialog'
+import PersonInfoModal from './PersonInfoModal'
 
 const InfoIcon = props => (
   <Icon iconName="Info" overrideName="info" {...props} />
@@ -113,20 +112,17 @@ class PersonPod extends React.Component {
 
     return (
       <React.Fragment>
-        <ModalDialog
+        <PersonInfoModal
           acceptText={isSelected ? 'Remove editor' : 'Add editor'}
-          cancelText="Cancel"
+          expertises={expertises}
+          focuses={focuses}
+          institution={institution}
+          isSelected={isSelected}
+          name={name}
           onAccept={this.acceptModal}
           onCancel={this.cancelModal}
           open={this.state.isModalOpen}
-        >
-          <PersonInfo
-            expertises={expertises}
-            focuses={focuses}
-            institution={institution}
-            name={name}
-          />
-        </ModalDialog>
+        />
         <PersonPodContainer
           isSelectButtonClickable={isSelectButtonClickable}
           selectButtonType={selectButtonType}
