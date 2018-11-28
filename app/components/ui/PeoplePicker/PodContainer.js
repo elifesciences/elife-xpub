@@ -121,6 +121,7 @@ PodContainer.propTypes = {
   isSelectButtonClickable: PropTypes.bool.isRequired,
   togglePersonSelection: PropTypes.func.isRequired,
   selectButtonType: PropTypes.oneOf(['add', 'remove', 'selected']).isRequired,
+  children: PropTypes.node.isRequired,
 }
 
 export default PodContainer

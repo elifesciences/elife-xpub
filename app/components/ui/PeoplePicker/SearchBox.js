@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import Autosuggest from 'react-autosuggest'
 import { Flex, Box } from 'grid-styled'
@@ -212,6 +213,23 @@ class SearchBox extends React.Component {
       </Flex>
     )
   }
+}
+
+const peopleArrayPropType = PropTypes.arrayOf(
+  PropTypes.shape({
+    id: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
+    name: PropTypes.string.isRequired,
+    aff: PropTypes.string.isRequired,
+    expertises: PropTypes.arrayOf(PropTypes.string.isRequired),
+    focuses: PropTypes.arrayOf(PropTypes.string.isRequired),
+  }),
+)
+
+SearchBox.propTypes = {
+  filterFunction: PropTypes.func.isRequired,
+  options: peopleArrayPropType.isRequired,
+  onSubmit: PropTypes.func.isRequired,
+  getMatchIndex: PropTypes.func.isRequired,
 }
 
 export default SearchBox

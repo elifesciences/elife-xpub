@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { Box, Flex } from 'grid-styled'
 
@@ -59,5 +60,10 @@ const PeoplePickerModal = ({ open, title, ...props }) => (
     </PeoplePicker>
   </ModalOverlay>
 )
+
+PeoplePickerModal.propTypes = {
+  open: PropTypes.bool.isRequired,
+  title: PropTypes.string.isRequired,
+}
 
 export default PeoplePickerModal

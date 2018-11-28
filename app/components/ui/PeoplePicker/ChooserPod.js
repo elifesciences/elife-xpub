@@ -8,7 +8,7 @@ import Paragraph from '../atoms/Paragraph'
 const ChooserPod = ({
   roleName,
   isRequired,
-  isSelectButtonClickable,
+  isSelectButtonClickable = true,
   togglePersonSelection,
   ...props
 }) => (
@@ -30,7 +30,12 @@ const ChooserPod = ({
 ChooserPod.propTypes = {
   roleName: PropTypes.string.isRequired,
   isRequired: PropTypes.bool.isRequired,
+  isSelectButtonClickable: PropTypes.bool,
   togglePersonSelection: PropTypes.func.isRequired,
+}
+
+ChooserPod.defaultProps = {
+  isSelectButtonClickable: true,
 }
 
 export default ChooserPod

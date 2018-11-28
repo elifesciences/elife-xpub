@@ -199,12 +199,27 @@ class PeoplePicker extends React.Component {
     })
   }
 }
+
 const peopleArrayPropType = PropTypes.arrayOf(
   PropTypes.shape({
     id: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
     name: PropTypes.string.isRequired,
+    aff: PropTypes.string.isRequired,
+    expertises: PropTypes.arrayOf(PropTypes.string.isRequired),
+    focuses: PropTypes.arrayOf(PropTypes.string.isRequired),
   }),
 )
+
+SelectedItems.propTypes = {
+  selection: peopleArrayPropType.isRequired,
+  onCloseClick: PropTypes.func.isRequired,
+}
+
+SelectionHint.propTypes = {
+  selection: peopleArrayPropType.isRequired,
+  maxSelection: PropTypes.number.isRequired,
+  minSelection: PropTypes.number.isRequired,
+}
 
 PeoplePicker.propTypes = {
   initialSelection: peopleArrayPropType,

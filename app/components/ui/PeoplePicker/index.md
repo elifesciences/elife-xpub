@@ -44,6 +44,7 @@ const people = [
   minSelection={2}
   maxSelection={3}
   onSubmit={selection => console.log(selection)}
+  onCancel={() => console.log('cancelled')}
   people={people}
 >
   {props => (
@@ -100,13 +101,16 @@ const people = [
   },
 ]
 
-const selection = people.slice(0, 2)
+initialState = {
+  selection: [],
+}
 ;<PeoplePicker.Body
+  isSelected={person => state.selection.some(p => p.id === person.id)}
   select={person => selection.includes(person)}
   maxSelection={5}
   minSelection={3}
   people={people}
-  selection={selection}
+  selection={people.slice(0, 2)}
   toggleSelection={person => console.log(person)}
 />
 ```

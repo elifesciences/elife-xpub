@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
 import PersonPod from './PersonPod'
 import ChooserPod from './ChooserPod'
@@ -62,5 +63,25 @@ const PeoplePickerControl = ({
     }}
   </ModalHistoryState>
 )
+
+const peopleArrayPropType = PropTypes.arrayOf(
+  PropTypes.shape({
+    id: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
+    name: PropTypes.string.isRequired,
+    aff: PropTypes.string.isRequired,
+    expertises: PropTypes.arrayOf(PropTypes.string.isRequired),
+    focuses: PropTypes.arrayOf(PropTypes.string.isRequired),
+  }),
+)
+
+PeoplePickerControl.propTypes = {
+  maxSelection: PropTypes.number.isRequired,
+  minSelection: PropTypes.number.isRequired,
+  onRequestRemove: PropTypes.func.isRequired,
+  initialSelection: peopleArrayPropType.isRequired,
+  onSubmit: PropTypes.func.isRequired,
+  options: peopleArrayPropType.isRequired,
+  title: PropTypes.string.isRequired,
+}
 
 export default PeoplePickerControl
