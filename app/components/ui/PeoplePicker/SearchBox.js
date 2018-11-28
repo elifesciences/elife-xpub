@@ -107,7 +107,18 @@ class SearchBox extends React.Component {
     value: '',
     suggestions: [],
   }
+
   getSuggestionValue = suggestion => this.state.value
+
+  clearSearch = event => {
+    this.setState(
+      {
+        value: '',
+      },
+      () => this.handleSearch(),
+    )
+  }
+
   onSuggestionsFetchRequested = ({ value }) => {
     const inputValue = value.trim().toLowerCase()
     const inputLength = inputValue.length
@@ -123,11 +134,13 @@ class SearchBox extends React.Component {
       suggestions,
     })
   }
+
   onSuggestionsClearRequested = () => {
     this.setState({
       suggestions: [],
     })
   }
+
   onSuggestionSelected = (_, { suggestion }) => {
     this.setState(
       {
@@ -136,28 +149,24 @@ class SearchBox extends React.Component {
       () => this.handleSearch(),
     )
   }
+
   onChange = (_, { newValue }) => {
     this.setState({
       value: newValue,
     })
   }
+
   onKeyDown = event => {
     // key code for enter is 13
     if (event.keyCode === 13) {
       this.handleSearch()
     }
   }
+
   handleSearch = event => {
     this.props.onSubmit(this.state.value)
   }
-  clearSearch = event => {
-    this.setState(
-      {
-        value: '',
-      },
-      () => this.handleSearch(),
-    )
-  }
+
   renderSuggestion = suggestion => {
     const inputValue = this.state.value.trim().toLowerCase()
     const matchIndex = this.props.getMatchIndex(inputValue, suggestion.value)
@@ -179,6 +188,7 @@ class SearchBox extends React.Component {
       </div>
     )
   }
+
   render() {
     const { value, suggestions } = this.state
     const inputProps = {
