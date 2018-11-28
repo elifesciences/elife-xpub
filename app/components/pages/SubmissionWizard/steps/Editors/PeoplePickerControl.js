@@ -1,6 +1,7 @@
 import React from 'react'
 
 import PersonPod from '../../../../ui/atoms/PersonPod'
+import ChooserPod from '../../../../ui/atoms/ChooserPod'
 import TwoColumnLayout from '../../../../global/layout/TwoColumnLayout'
 import PeoplePickerModal from './PeoplePickerModal'
 import ModalHistoryState from '../../../../ui/molecules/ModalHistoryState'
@@ -32,7 +33,7 @@ const PeoplePickerControl = ({
 
       if (items.length < maxSelection)
         items.push(
-          <PersonPod.ChooserPod
+          <ChooserPod
             isRequired={items.length < minSelection}
             key="chooser"
             roleName="editor"

@@ -83,21 +83,3 @@ Disabled:
   togglePersonSelection={() => console.log('icon clicked')}
 />
 ```
-
-### SelectButton
-
-```js
-;<PersonPod.ChooserPod
-  roleName="Senior Editor(s)"
-  isRequired={true}
-  togglePersonSelection={() => console.log('icon clicked')}
-/>
-```
-
-```js
-;<PersonPod.ChooserPod
-  roleName="Reviewing Editor(s)"
-  isRequired={false}
-  togglePersonSelection={() => console.log('icon clicked')}
-/>
-```

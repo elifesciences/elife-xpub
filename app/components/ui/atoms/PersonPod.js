@@ -152,28 +152,6 @@ class PersonPod extends React.Component {
   }
 }
 
-const ChooserPod = ({
-  roleName,
-  isRequired,
-  isSelectButtonClickable,
-  togglePersonSelection,
-  ...props
-}) => (
-  <PersonPodContainer
-    isSelectButtonClickable
-    selectButtonType="add"
-    togglePersonSelection={togglePersonSelection}
-  >
-    <Flex flexDirection="column" justifyContent="center">
-      <Box ml={2}>
-        <StyledParagraph>
-          Choose {roleName} ({isRequired ? 'required' : 'optional'})
-        </StyledParagraph>
-      </Box>
-    </Flex>
-  </PersonPodContainer>
-)
-
 PersonPod.propTypes = {
   isSelectButtonClickable: PropTypes.bool,
   togglePersonSelection: PropTypes.func.isRequired,
@@ -198,13 +176,5 @@ PersonPod.defaultProps = {
   isStatusShown: false,
   status: '',
 }
-
-ChooserPod.propTypes = {
-  roleName: PropTypes.string.isRequired,
-  isRequired: PropTypes.bool.isRequired,
-  togglePersonSelection: PropTypes.func.isRequired,
-}
-
-PersonPod.ChooserPod = ChooserPod
 
 export default PersonPod
