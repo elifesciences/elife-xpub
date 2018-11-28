@@ -18,7 +18,7 @@ function makePersonPodWrapper(props) {
 
 const propsWithClickableFunctionality = {
   togglePersonSelection: handleSelectButtonClick,
-  iconType: 'add',
+  selectButtonType: 'add',
   name: 'Richard Aldrich',
   institution: 'Utrecht University',
   focuses: ['cell biology'],

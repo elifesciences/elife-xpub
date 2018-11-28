@@ -70,7 +70,6 @@ const PeoplePickerBody = ({
           <PersonPod
             expertises={person.expertises}
             focuses={person.focuses}
-            iconType={isSelected(person) ? 'selected' : 'add'}
             institution={person.aff}
             isKeywordClickable={false}
             isSelectButtonClickable={
@@ -79,6 +78,7 @@ const PeoplePickerBody = ({
             isSelected={isSelected(person)}
             key={person.id}
             name={person.name}
+            selectButtonType={isSelected(person) ? 'selected' : 'add'}
             togglePersonSelection={() => toggleSelection(person)}
             // onKeywordClick will need to be added, once we know what the desired behaviour is
           />

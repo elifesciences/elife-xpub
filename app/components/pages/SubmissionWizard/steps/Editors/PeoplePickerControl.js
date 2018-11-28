@@ -20,12 +20,12 @@ const PeoplePickerControl = ({
         <PersonPod
           expertises={person.expertises}
           focuses={person.focuses}
-          iconType="remove"
           institution={person.aff}
           isKeywordClickable={false}
           isSelected
           key={person.id}
           name={person.name}
+          selectButtonType="remove"
           togglePersonSelection={() => onRequestRemove(person)}
         />
       ))

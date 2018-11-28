@@ -117,36 +117,46 @@ const CollapsibleBox = styled(Box)`
 const PersonPodContainer = ({
   isSelectButtonClickable,
   togglePersonSelection,
-  icon,
+  selectButtonType,
   children,
   ...props
 }) => (
   <StyledPod justifyContent="space-between">
     {children}
     <Flex flexDirection="column" justifyContent="center">
-      <StyledButton
-        data-test-id="person-pod-button"
-        disabled={!isSelectButtonClickable}
-        onClick={togglePersonSelection}
-        type="button"
-      >
-        {icon}
-      </StyledButton>
+      {selectButtonType === 'remove' && (
+        <StyledButton
+          data-test-id="person-pod-button"
+          disabled={!isSelectButtonClickable}
+          onClick={togglePersonSelection}
+          type="button"
+        >
+          <StyledRemoveIcon />
+        </StyledButton>
+      )}
+      {selectButtonType === 'selected' && (
+        <StyledButton
+          data-test-id="person-pod-button"
+          disabled={!isSelectButtonClickable}
+          onClick={togglePersonSelection}
+          type="button"
+        >
+          <StyledSelectedIcon />
+        </StyledButton>
+      )}
+      {selectButtonType === 'add' && (
+        <StyledButton
+          data-test-id="person-pod-button"
+          disabled={!isSelectButtonClickable}
+          onClick={togglePersonSelection}
+          type="button"
+        >
+          <StyledAddIcon />
+        </StyledButton>
+      )}
     </Flex>
   </StyledPod>
 )
-
-const PodIcon = ({ iconType }) => {
-  switch (iconType) {
-    case 'remove':
-      return <StyledRemoveIcon />
-    case 'selected':
-      return <StyledSelectedIcon />
-    case 'add':
-    default:
-      return <StyledAddIcon />
-  }
-}
 
 class PersonPod extends React.Component {
   constructor(props) {
@@ -174,7 +184,7 @@ class PersonPod extends React.Component {
     const {
       isSelectButtonClickable = true,
       togglePersonSelection,
-      iconType,
+      selectButtonType,
       name,
       institution = '',
       focuses,
@@ -228,8 +238,8 @@ class PersonPod extends React.Component {
           />
         </ModalDialog>
         <PersonPodContainer
-          icon={<PodIcon iconType={iconType} />}
           isSelectButtonClickable={isSelectButtonClickable}
+          selectButtonType={selectButtonType}
           togglePersonSelection={togglePersonSelection}
         >
           <CollapsibleBox m={2}>
@@ -260,8 +270,8 @@ const ChooserPod = ({
   ...props
 }) => (
   <PersonPodContainer
-    icon={<PodIcon iconType="add" />}
     isSelectButtonClickable
+    selectButtonType="add"
     togglePersonSelection={togglePersonSelection}
   >
     <Flex flexDirection="column" justifyContent="center">
@@ -277,17 +287,13 @@ const ChooserPod = ({
 PersonPodContainer.propTypes = {
   isSelectButtonClickable: PropTypes.bool.isRequired,
   togglePersonSelection: PropTypes.func.isRequired,
-  icon: PropTypes.element.isRequired,
-}
-
-PodIcon.propTypes = {
-  iconType: PropTypes.oneOf(['add', 'remove', 'selected']).isRequired,
+  selectButtonType: PropTypes.oneOf(['add', 'remove', 'selected']).isRequired,
 }
 
 PersonPod.propTypes = {
   isSelectButtonClickable: PropTypes.bool,
   togglePersonSelection: PropTypes.func.isRequired,
-  iconType: PropTypes.oneOf(['add', 'remove', 'selected']).isRequired,
+  selectButtonType: PropTypes.oneOf(['add', 'remove', 'selected']).isRequired,
   name: PropTypes.string.isRequired,
   institution: PropTypes.string,
   focuses: PropTypes.arrayOf(PropTypes.string.isRequired),
