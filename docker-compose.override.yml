@@ -21,11 +21,6 @@ services:
       - postgres-volume:/var/lib/postgresql/data
       - ./scripts/test.sql:/docker-entrypoint-initdb.d/test.sql
 
-  fakes3:
-    image: lphoward/fake-s3
-    ports:
-      - 4569:4569
-
 volumes:
   postgres-volume:
 

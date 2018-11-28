@@ -3,7 +3,6 @@ import styled from 'styled-components'
 import { Box } from 'grid-styled'
 import PropTypes from 'prop-types'
 import { H1 } from '@pubsweet/ui'
-import { th } from '@pubsweet/ui-toolkit'
 import NativeLink from '../../ui/atoms/NativeLink'
 import ButtonLink from '../../ui/atoms/ButtonLink'
 import Paragraph from '../../ui/atoms/Paragraph'
@@ -12,9 +11,7 @@ import SmallParagraph from '../../ui/atoms/SmallParagraph'
 const CenteredContent = styled(Box)`
   text-align: center;
 `
-const SubText = styled(SmallParagraph)`
-  color: ${th('colorTextSecondary')};
-`
+const SubText = styled(SmallParagraph).attrs({ secondary: true })``
 
 const BookmarkLink = styled(NativeLink)`
   display: inline-block;

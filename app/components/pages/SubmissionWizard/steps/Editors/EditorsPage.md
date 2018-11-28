@@ -12,7 +12,11 @@ const data = {
       id: 1,
       name: 'Alfred Badger',
       aff: 'Institute of Badgers',
-      subjectAreas: ['Human Biology and Medicine', 'Neuroscience'],
+      focuses: ['biophysics and structural biology', 'immunology'],
+      expertises: [
+        'Evolutionary Biology',
+        'Microbiology and Infectious Disease',
+      ],
     },
   ],
   opposedSeniorEditors: [
@@ -20,7 +24,11 @@ const data = {
       id: 3,
       name: 'Charlie Badger',
       aff: 'Badger University',
-      subjectAreas: ['Cell Biology'],
+      focuses: ['cell biology'],
+      expertises: [
+        'Biochemistry and Chemical Biology',
+        'Chromosomes and Gene Expression',
+      ],
     },
   ],
   suggestedReviewingEditors: [],

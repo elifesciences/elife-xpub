@@ -51,8 +51,6 @@ const PeoplePickerBody = ({
   isSelected,
   maxSelection,
   minSelection,
-  onCancel,
-  onSubmit,
   people,
   selection,
   toggleSelection,
@@ -70,16 +68,18 @@ const PeoplePickerBody = ({
       {people
         .map(person => (
           <PersonPod
+            expertises={person.expertises}
+            focuses={person.focuses}
             iconType={isSelected(person) ? 'selected' : 'add'}
             institution={person.aff}
-            isIconClickable={
+            isKeywordClickable={false}
+            isSelectButtonClickable={
               isSelected(person) || selection.length < maxSelection
             }
-            isKeywordClickable={false}
+            isSelected={isSelected(person)}
             key={person.id}
-            keywords={person.subjectAreas}
             name={person.name}
-            onIconClick={() => toggleSelection(person)}
+            togglePersonSelection={() => toggleSelection(person)}
             // onKeywordClick will need to be added, once we know what the desired behaviour is
           />
         ))
@@ -173,9 +173,9 @@ class PeoplePicker extends React.Component {
 
     extendedPeople = extendedPeople.map(person => ({
       ...person,
-      searchValue: `${person.name} ${person.subjectAreas.join(' ')} ${
-        person.aff ? person.aff : ''
-      }`,
+      searchValue: `${person.name} ${person.focuses.join(
+        ' ',
+      )} ${person.expertises.join(' ')} ${person.aff ? person.aff : ''}`,
     }))
     const searchOptions = extendedPeople.map(person => ({
       value: person.name,

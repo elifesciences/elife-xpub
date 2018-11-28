@@ -1,7 +1,5 @@
 import React from 'react'
-import styled from 'styled-components'
 import { Box } from 'grid-styled'
-import { th } from '@pubsweet/ui-toolkit'
 import { format, parse } from 'date-fns'
 
 import Paragraph from '../../../../ui/atoms/Paragraph'
@@ -10,10 +8,6 @@ import NativeLink from '../../../../ui/atoms/NativeLink'
 import { FormH3 } from '../../../../ui/atoms/FormHeadings'
 import ValidatedField from '../../../../ui/atoms/ValidatedField'
 import ControlledCheckbox from '../../../../ui/atoms/ControlledCheckbox'
-
-const StyledSmallParagraph = styled(SmallParagraph)`
-  color: ${th('colorTextSecondary')};
-`
 
 const localDate = parse(new Date())
 const formattedLocalDate = format(localDate, 'MMM D, YYYY')
@@ -30,9 +24,9 @@ const DisclosurePage = ({ values }) => {
         <Paragraph>
           {values.author.firstName} {values.author.lastName}
         </Paragraph>
-        <StyledSmallParagraph>
+        <SmallParagraph secondary>
           {formattedArticleType} {formattedLocalDate}
-        </StyledSmallParagraph>
+        </SmallParagraph>
       </Box>
       <Box mb={4}>
         <Paragraph>

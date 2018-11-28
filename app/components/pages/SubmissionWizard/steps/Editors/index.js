@@ -9,7 +9,8 @@ const EDITOR_LIST_QUERY = gql`
       id
       name
       aff
-      subjectAreas
+      focuses
+      expertises
     }
   }
 `

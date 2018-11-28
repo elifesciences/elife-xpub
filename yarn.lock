@@ -2483,14 +2483,14 @@ browserslist@^4.1.0:
     electron-to-chromium "^1.3.62"
     node-releases "^1.0.0-alpha.11"
 
-browserstack-local@^1.3.0:
-  version "1.3.4"
-  resolved "https://registry.yarnpkg.com/browserstack-local/-/browserstack-local-1.3.4.tgz#8ebe78cdd40c52d955907c01d03392a4645a4afc"
-  integrity sha512-9PFOhveA6hbPqLytFKXaHEG+2u6CZ46imIjTTFUGoYuMLlGtCR4irJ8jNjuRQMKPaqzImMFkRhsSF3+brZgKmQ==
+browserstack-local@^1.3.6:
+  version "1.3.7"
+  resolved "https://registry.yarnpkg.com/browserstack-local/-/browserstack-local-1.3.7.tgz#cac9fc958eaa0a352e8f1ca1dc91bb141ba5da6f"
+  integrity sha512-ilZlmiy7XYJxsztYan7XueHVr3Ix9EVh/mCiYN1G53wRPEW/hg1KMsseM6UExzVbexEqFEfwjkBLeFlSqxh+bQ==
   dependencies:
     https-proxy-agent "^2.2.1"
     is-running "^2.0.0"
-    ps-tree "^1.1.0"
+    ps-tree "=1.1.1"
     sinon "^1.17.6"
     temp-fs "^0.9.9"
 
@@ -4955,26 +4955,25 @@ event-source-polyfill@^0.0.10:
   resolved "https://registry.yarnpkg.com/event-source-polyfill/-/event-source-polyfill-0.0.10.tgz#e7e81863c333f5a842e3bf0a3b570bedaf042e09"
   integrity sha1-5+gYY8Mz9ahC478KO1cL7a8ELgk=
 
+event-stream@=3.3.4:
+  version "3.3.4"
+  resolved "https://registry.yarnpkg.com/event-stream/-/event-stream-3.3.4.tgz#4ab4c9a0f5a54db9338b4c34d86bfce8f4b35571"
+  integrity sha1-SrTJoPWlTbkzi0w02Gv86PSzVXE=
+  dependencies:
+    duplexer "~0.1.1"
+    from "~0"
+    map-stream "~0.1.0"
+    pause-stream "0.0.11"
+    split "0.3"
+    stream-combiner "~0.0.4"
+    through "~2.3.1"
+
 event-stream@~0.5:
   version "0.5.3"
   resolved "http://registry.npmjs.org/event-stream/-/event-stream-0.5.3.tgz#b77b9309f7107addfeab63f0c0eafd8db0bd8c1c"
   integrity sha1-t3uTCfcQet3+q2PwwOr9jbC9jBw=
   dependencies:
     optimist "0.2"
-
-event-stream@~3.3.0:
-  version "3.3.6"
-  resolved "https://registry.yarnpkg.com/event-stream/-/event-stream-3.3.6.tgz#cac1230890e07e73ec9cacd038f60a5b66173eef"
-  integrity sha512-dGXNg4F/FgVzlApjzItL+7naHutA3fDqbV/zAZqDDlXTjiMnQmZKu+prImWKszeBM5UQeGvAl3u1wBiKeDh61g==
-  dependencies:
-    duplexer "^0.1.1"
-    flatmap-stream "^0.1.0"
-    from "^0.1.7"
-    map-stream "0.0.7"
-    pause-stream "^0.0.11"
-    split "^1.0.1"
-    stream-combiner "^0.2.2"
-    through "^2.3.8"
 
 eventemitter2@0.4.14:
   version "0.4.14"
@@ -5587,11 +5586,6 @@ flat-cache@^1.2.1:
     graceful-fs "^4.1.2"
     write "^0.2.1"
 
-flatmap-stream@^0.1.0:
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/flatmap-stream/-/flatmap-stream-0.1.0.tgz#ed54e01422cd29281800914fcb968d58b685d5f1"
-  integrity sha512-Nlic4ZRYxikqnK5rj3YoxDVKGGtUjcNDUtvQ7XsdGLZmMwdUYnXf10o1zcXtzEZTBgc6GxeRpQxV/Wu3WPIIHA==
-
 flatten@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/flatten/-/flatten-1.0.2.tgz#dae46a9d78fbe25292258cc1e780a41d95c03782"
@@ -5758,7 +5752,7 @@ from2@^2.1.0:
     inherits "^2.0.1"
     readable-stream "^2.0.0"
 
-from@^0.1.7:
+from@~0:
   version "0.1.7"
   resolved "https://registry.yarnpkg.com/from/-/from-0.1.7.tgz#83c60afc58b9c56997007ed1a768b3ab303a44fe"
   integrity sha1-g8YK/Fi5xWmXAH7Rp2izqzA6RP4=
@@ -8790,10 +8784,10 @@ map-reverse@^1.0.1:
   resolved "https://registry.yarnpkg.com/map-reverse/-/map-reverse-1.0.1.tgz#274e9f500a611153183b5b8d8490a9c1c23ee310"
   integrity sha1-J06fUAphEVMYO1uNhJCpwcI+4xA=
 
-map-stream@0.0.7:
-  version "0.0.7"
-  resolved "https://registry.yarnpkg.com/map-stream/-/map-stream-0.0.7.tgz#8a1f07896d82b10926bd3744a2420009f88974a8"
-  integrity sha1-ih8HiW2CsQkmvTdEokIACfiJdKg=
+map-stream@~0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/map-stream/-/map-stream-0.1.0.tgz#e56aa94c4c8055a16404a0674b78f215f7c8e194"
+  integrity sha1-5WqpTEyAVaFkBKBnS3jyFffI4ZQ=
 
 map-visit@^1.0.0:
   version "1.0.0"
@@ -10321,9 +10315,9 @@ path-type@^3.0.0:
   dependencies:
     pify "^3.0.0"
 
-pause-stream@^0.0.11:
+pause-stream@0.0.11:
   version "0.0.11"
-  resolved "http://registry.npmjs.org/pause-stream/-/pause-stream-0.0.11.tgz#fe5a34b0cbce12b5aa6a2b403ee2e73b602f1445"
+  resolved "https://registry.yarnpkg.com/pause-stream/-/pause-stream-0.0.11.tgz#fe5a34b0cbce12b5aa6a2b403ee2e73b602f1445"
   integrity sha1-/lo0sMvOErWqaitAPuLnO2AvFEU=
   dependencies:
     through "~2.3"
@@ -11290,12 +11284,12 @@ ps-tree@0.0.x:
   dependencies:
     event-stream "~0.5"
 
-ps-tree@^1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/ps-tree/-/ps-tree-1.1.0.tgz#b421b24140d6203f1ed3c76996b4427b08e8c014"
-  integrity sha1-tCGyQUDWID8e08dplrRCewjowBQ=
+ps-tree@=1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/ps-tree/-/ps-tree-1.1.1.tgz#5f1ba35455b8c25eeb718d04c37de1555d96d3db"
+  integrity sha512-kef7fYYSKVqQffmzTMsVcUD1ObNJMp8sNSmHGlGKsZQyL/ht9MZKk86u0Rd1NhpTOAuhqwKCLLpktwkqz+MF8A==
   dependencies:
-    event-stream "~3.3.0"
+    event-stream "=3.3.4"
 
 pseudomap@^1.0.2:
   version "1.0.2"
@@ -13399,7 +13393,14 @@ split-string@^3.0.1, split-string@^3.0.2:
   dependencies:
     extend-shallow "^3.0.0"
 
-split@^1.0.0, split@^1.0.1:
+split@0.3:
+  version "0.3.3"
+  resolved "https://registry.yarnpkg.com/split/-/split-0.3.3.tgz#cd0eea5e63a211dfff7eb0f091c4133e2d0dd28f"
+  integrity sha1-zQ7qXmOiEd//frDwkcQTPi0N0o8=
+  dependencies:
+    through "2"
+
+split@^1.0.0:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/split/-/split-1.0.1.tgz#605bd9be303aa59fb35f9229fbea0ddec9ea07d9"
   integrity sha512-mTyOoPbrivtXnwnIxZRFYRrPNtEFKlpB2fvjSnCQUiAA6qAZzqwna5envK4uk6OIeP17CsdF3rSBGYVBsU0Tkg==
@@ -13570,13 +13571,12 @@ stream-browserify@^2.0.1:
     inherits "~2.0.1"
     readable-stream "^2.0.2"
 
-stream-combiner@^0.2.2:
-  version "0.2.2"
-  resolved "http://registry.npmjs.org/stream-combiner/-/stream-combiner-0.2.2.tgz#aec8cbac177b56b6f4fa479ced8c1912cee52858"
-  integrity sha1-rsjLrBd7Vrb0+kec7YwZEs7lKFg=
+stream-combiner@~0.0.4:
+  version "0.0.4"
+  resolved "https://registry.yarnpkg.com/stream-combiner/-/stream-combiner-0.0.4.tgz#4d5e433c185261dde623ca3f44c586bcf5c4ad14"
+  integrity sha1-TV5DPBhSYd3mI8o/RMWGvPXErRQ=
   dependencies:
     duplexer "~0.1.1"
-    through "~2.3.4"
 
 stream-each@^1.1.0:
   version "1.2.3"
@@ -14165,13 +14165,13 @@ test-exclude@^4.2.1:
     read-pkg-up "^1.0.1"
     require-main-filename "^1.0.1"
 
-testcafe-browser-provider-browserstack@^1.5.0:
-  version "1.5.0"
-  resolved "https://registry.yarnpkg.com/testcafe-browser-provider-browserstack/-/testcafe-browser-provider-browserstack-1.5.0.tgz#773c570d7d49afcbcfaa0e74adf0d52716776e09"
-  integrity sha512-Q/d0yapgIVKq1jJVU7AboStCwjnz/J421xZLuyxrcaVGOh87PoG3R9jgrAFWec69LZfByNq0cUind3NRd8pgzg==
+testcafe-browser-provider-browserstack@^1.5.1:
+  version "1.5.1"
+  resolved "https://registry.yarnpkg.com/testcafe-browser-provider-browserstack/-/testcafe-browser-provider-browserstack-1.5.1.tgz#ebcec3e98ac7e78d320339e728af2c46c7ec599b"
+  integrity sha512-iU2/N8HRHmovQTi0GMNhkgNXFA5trItM54I6mgqrOuPtXWa5G8pdtk/yr1t+kj4YW26sk8PuS1vOnqrL3521CA==
   dependencies:
     babel-runtime "^6.11.6"
-    browserstack-local "^1.3.0"
+    browserstack-local "^1.3.6"
     desired-capabilities "^0.1.0"
     jimp "^0.2.27"
     os-family "^1.0.0"
@@ -14357,7 +14357,7 @@ through2@^2.0.0, through2@^2.0.3, through2@~2.0.3:
     readable-stream "^2.1.5"
     xtend "~4.0.1"
 
-through@2, through@^2.3.6, through@^2.3.8, through@~2.3, through@~2.3.4:
+through@2, through@^2.3.6, through@~2.3, through@~2.3.1, through@~2.3.4:
   version "2.3.8"
   resolved "https://registry.yarnpkg.com/through/-/through-2.3.8.tgz#0dd4c9ffaabc357960b1b724115d7e0e86a2e1f5"
   integrity sha1-DdTJ/6q8NXlgsbckEV1+Doai4fU=
