@@ -2,8 +2,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Flex, Box } from 'grid-styled'
 
-import PersonPodContainer from './PersonPodContainer'
-import Paragraph from './Paragraph'
+import PodContainer from './PodContainer'
+import Paragraph from '../atoms/Paragraph'
 
 const ChooserPod = ({
   roleName,
@@ -12,7 +12,7 @@ const ChooserPod = ({
   togglePersonSelection,
   ...props
 }) => (
-  <PersonPodContainer
+  <PodContainer
     isSelectButtonClickable
     selectButtonType="add"
     togglePersonSelection={togglePersonSelection}
@@ -24,7 +24,7 @@ const ChooserPod = ({
         </Paragraph>
       </Box>
     </Flex>
-  </PersonPodContainer>
+  </PodContainer>
 )
 
 ChooserPod.propTypes = {

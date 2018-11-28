@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import { th } from '@pubsweet/ui-toolkit'
 import { Flex } from 'grid-styled'
 
-import Icon from './Icon'
+import Icon from '../atoms/Icon'
 
 const AddIcon = props => (
   <Icon
@@ -73,7 +73,7 @@ const StyledPod = styled(Flex)`
   height: 120px;
 `
 
-const PersonPodContainer = ({
+const PodContainer = ({
   isSelectButtonClickable,
   togglePersonSelection,
   selectButtonType,
@@ -117,10 +117,10 @@ const PersonPodContainer = ({
   </StyledPod>
 )
 
-PersonPodContainer.propTypes = {
+PodContainer.propTypes = {
   isSelectButtonClickable: PropTypes.bool.isRequired,
   togglePersonSelection: PropTypes.func.isRequired,
   selectButtonType: PropTypes.oneOf(['add', 'remove', 'selected']).isRequired,
 }
 
-export default PersonPodContainer
+export default PodContainer

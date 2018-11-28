@@ -2,12 +2,12 @@ import React from 'react'
 import styled from 'styled-components'
 import { Box, Flex } from 'grid-styled'
 
-import Centerer from '../../../../global/layout/Centerer'
-import ModalOverlay from '../../../../ui/molecules/ModalOverlay'
-import PeoplePicker from '../../../../ui/molecules/PeoplePicker'
-import SearchBox from '../../../../ui/molecules/SearchBox'
-import { FormH2 } from '../../../../ui/atoms/FormHeadings'
-import StickyFooter from '../../../../ui/atoms/StickyFooter'
+import Centerer from '../../global/layout/Centerer'
+import ModalOverlay from '../molecules/ModalOverlay'
+import PeoplePicker from '.'
+import SearchBox from './SearchBox'
+import { FormH2 } from '../atoms/FormHeadings'
+import StickyFooter from '../atoms/StickyFooter'
 
 const MainColumn = styled(Box).attrs({ mx: [0, 0, 0, '16.666%'] })`
   flex: 1 1 auto;

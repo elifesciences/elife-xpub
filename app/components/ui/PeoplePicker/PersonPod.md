@@ -1,5 +1,3 @@
-### ChosenPersonPod
-
 Clickable keywords:
 
 ```js

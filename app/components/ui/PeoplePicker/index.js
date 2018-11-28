@@ -8,7 +8,7 @@ import { Box, Flex } from 'grid-styled'
 import { escapeRegExp } from 'lodash'
 
 import SelectedItem from '../atoms/SelectedItem'
-import PersonPod from '../atoms/PersonPod'
+import PersonPod from './PersonPod'
 import TwoColumnLayout from '../../global/layout/TwoColumnLayout'
 
 const MAX_DISPLAYED_PODS = 30

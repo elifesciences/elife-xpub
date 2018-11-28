@@ -2,7 +2,7 @@ import React from 'react'
 import { mount } from 'enzyme'
 import { ThemeProvider } from 'styled-components'
 import theme from '@elifesciences/elife-theme'
-import PeoplePicker from './PeoplePicker'
+import PeoplePicker from '.'
 import SearchBox from './SearchBox'
 
 const people = [

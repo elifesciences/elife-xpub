@@ -1,10 +1,10 @@
 import React from 'react'
 
-import PersonPod from '../../../../ui/atoms/PersonPod'
-import ChooserPod from '../../../../ui/atoms/ChooserPod'
-import TwoColumnLayout from '../../../../global/layout/TwoColumnLayout'
+import PersonPod from './PersonPod'
+import ChooserPod from './ChooserPod'
 import PeoplePickerModal from './PeoplePickerModal'
-import ModalHistoryState from '../../../../ui/molecules/ModalHistoryState'
+import TwoColumnLayout from '../../global/layout/TwoColumnLayout'
+import ModalHistoryState from '../molecules/ModalHistoryState'
 
 const PeoplePickerControl = ({
   maxSelection = Infinity,

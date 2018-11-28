@@ -4,7 +4,7 @@ import { Box } from 'grid-styled'
 import { Action, ErrorText } from '@pubsweet/ui'
 import { FormH3 } from '../../../../ui/atoms/FormHeadings'
 
-import PeoplePickerControl from './PeoplePickerControl'
+import PeoplePickerControl from '../../../../ui/PeoplePicker/PeoplePickerControl'
 import Textarea from '../../../../ui/atoms/Textarea'
 import CalloutBox from '../../../../ui/atoms/CalloutBox'
 import ValidatedField from '../../../../ui/atoms/ValidatedField'

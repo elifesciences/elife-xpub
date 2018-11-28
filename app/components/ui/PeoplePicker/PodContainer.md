@@ -16,35 +16,35 @@ Props:
 Button is always 'add':
 
 ```js
-<PersonPodContainer
+<PodContainer
   isSelectButtonClickable={true}
   togglePersonSelection={() => console.log('toggled')}
   selectButtonType="add"
 >
   <div />
-</PersonPodContainer>
+</PodContainer>
 ```
 
 Button is always 'remove':
 
 ```js
-<PersonPodContainer
+<PodContainer
   isSelectButtonClickable={true}
   togglePersonSelection={() => console.log('toggled')}
   selectButtonType="remove"
 >
   <div />
-</PersonPodContainer>
+</PodContainer>
 ```
 
 Button is always 'selected':
 
 ```js
-<PersonPodContainer
+<PodContainer
   isSelectButtonClickable={true}
   togglePersonSelection={() => console.log('toggled')}
   selectButtonType="selected"
 >
   <div />
-</PersonPodContainer>
+</PodContainer>
 ```

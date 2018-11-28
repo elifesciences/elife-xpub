@@ -3,8 +3,9 @@ import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { th } from '@pubsweet/ui-toolkit'
 import { H2 } from '@pubsweet/ui'
-import SmallParagraph from './SmallParagraph'
-import Paragraph from './Paragraph'
+
+import SmallParagraph from '../atoms/SmallParagraph'
+import Paragraph from '../atoms/Paragraph'
 import ModalDialog from '../molecules/ModalDialog'
 
 const StyledH2 = styled(H2)`

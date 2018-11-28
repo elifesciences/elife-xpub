@@ -5,11 +5,11 @@ import { th } from '@pubsweet/ui-toolkit'
 import { Action } from '@pubsweet/ui'
 import { Flex, Box } from 'grid-styled'
 
-import Icon from './Icon'
-import ButtonAsIconWrapper from './ButtonAsIconWrapper'
-import SmallParagraph from './SmallParagraph'
-import Paragraph from './Paragraph'
-import PersonPodContainer from './PersonPodContainer'
+import Icon from '../atoms/Icon'
+import ButtonAsIconWrapper from '../atoms/ButtonAsIconWrapper'
+import SmallParagraph from '../atoms/SmallParagraph'
+import Paragraph from '../atoms/Paragraph'
+import PodContainer from './PodContainer'
 import PersonInfoModal from './PersonInfoModal'
 
 const InfoIcon = props => (
@@ -123,7 +123,7 @@ class PersonPod extends React.Component {
           onCancel={this.cancelModal}
           open={this.state.isModalOpen}
         />
-        <PersonPodContainer
+        <PodContainer
           isSelectButtonClickable={isSelectButtonClickable}
           selectButtonType={selectButtonType}
           togglePersonSelection={togglePersonSelection}
@@ -142,7 +142,7 @@ class PersonPod extends React.Component {
               <StyledSmallParagraph>{status}</StyledSmallParagraph>
             )}
           </CollapsibleBox>
-        </PersonPodContainer>
+        </PodContainer>
       </React.Fragment>
     )
   }
