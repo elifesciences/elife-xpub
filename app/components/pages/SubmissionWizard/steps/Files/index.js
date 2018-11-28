@@ -114,7 +114,7 @@ const FilesPageContainer = ({
   <Mutation mutation={UPLOAD_MANUSCRIPT_MUTATION}>
     {(uploadFile, { loading, error: uploadError }) => {
       const fieldName = 'files'
-      const { MANUSCRIPT_SOURCE } = manuscriptFileTypes
+      const { MANUSCRIPT_SOURCE, SUPPORTING_FILE } = manuscriptFileTypes
       const hasManuscript = values[fieldName].some(
         file => file.type === MANUSCRIPT_SOURCE,
       )
@@ -160,6 +160,9 @@ const FilesPageContainer = ({
                 <Mutation mutation={UPLOAD_SUPPORTING_MUTATION}>
                   {uploadSupportFiles => (
                     <SupportingUpload
+                      files={values[fieldName].filter(
+                        file => file.type === SUPPORTING_FILE,
+                      )}
                       hasManuscript={hasManuscript}
                       uploadFile={file =>
                         new Promise((resolve, reject) =>

@@ -7,4 +7,5 @@ export const errorMessageMapping = {
 
 export const manuscriptFileTypes = {
   MANUSCRIPT_SOURCE: 'MANUSCRIPT_SOURCE',
+  SUPPORTING_FILE: 'SUPPORTING_FILE',
 }

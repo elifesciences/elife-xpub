@@ -97,9 +97,13 @@ const fileUploadGenerator = function*(files, uploadFile) {
 }
 
 class SupportingUpload extends React.Component {
-  state = {
-    uploading: false,
-    files: [],
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      uploading: false,
+      files: props.files,
+    }
   }
 
   synchronouslyUploadFiles = files => {
