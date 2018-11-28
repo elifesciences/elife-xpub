@@ -102,7 +102,11 @@ class SupportingUpload extends React.Component {
 
     this.state = {
       uploading: false,
-      files: props.files,
+      files: props.files.map((file, index) => ({
+        file,
+        id: index,
+        success: true,
+      })),
     }
   }
 
@@ -173,11 +177,11 @@ class SupportingUpload extends React.Component {
           }}
         >
           {this.state.files.map(file => (
-            <FileBlock key={file.file.preview} p={2} uploadError={file.error}>
+            <FileBlock key={file.id} p={2} uploadError={file.error}>
               {file.loading && <Spinner />}
               {file.success && <UploadSuccessIcon />}
               {file.error && <UploadFailureIcon />}
-              {file.file.name}
+              {file.file.name ? file.file.name : file.file.filename}
             </FileBlock>
           ))}
         </StyledDropzone>
