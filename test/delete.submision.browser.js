@@ -1,4 +1,5 @@
 import config from 'config'
+import { Selector } from 'testcafe'
 import { author, dashboard, login, wizardStep } from './pageObjects'
 import setFixtureHooks from './helpers/set-fixture-hooks'
 
@@ -41,7 +42,9 @@ test('Create a Submission', async t => {
   await t
     .navigateTo(`${config.get('pubsweet-server.baseUrl')}`)
     .click(dashboard.trashButton)
-    .wait(1000)
+    .wait(100)
+    .click(Selector('[data-test-id=accept'))
+    .wait(100)
     .expect(dashboard.trashButton.count)
     .eql(0)
 })
