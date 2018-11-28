@@ -14,3 +14,8 @@ services:
     image: postgres:10.4
     ports:
       - 5432:5432
+
+  fakes3:
+    image: lphoward/fake-s3
+    ports:
+      - 4569:4569
