@@ -38,13 +38,18 @@ test('Create a Submission', async t => {
     .typeText(author.emailField, 'example@example.org')
     .click(wizardStep.next)
 
-  // navigate back to the dashboard page and delete the submission
+  // navigate back to the dashboard page and cancel the delete the submission
   await t
     .navigateTo(`${config.get('pubsweet-server.baseUrl')}`)
     .click(dashboard.trashButton)
-    .wait(100)
+    .click(Selector('[data-test-id=cancel'))
+    .expect(dashboard.trashButton.count)
+    .eql(1)
+
+  // navigate back to the dashboard page and cancel the delete the submission
+  await t
+    .click(dashboard.trashButton)
     .click(Selector('[data-test-id=accept'))
-    .wait(100)
     .expect(dashboard.trashButton.count)
     .eql(0)
 })

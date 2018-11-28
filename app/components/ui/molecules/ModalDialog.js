@@ -50,7 +50,7 @@ const ModalDialog = ({
         {children}
         <Flex justifyContent="center" mt={3}>
           <Box mr={3}>
-            <Button onClick={onCancel} type="button">
+            <Button data-test-id="cancel" onClick={onCancel} type="button">
               {cancelText}
             </Button>
           </Box>
