@@ -105,14 +105,14 @@ describe('PeoplePicker', () => {
     const wrapper = makeWrapper({ minSelection: 1, onSubmit })
 
     wrapper
-      .find('PeoplePicker')
+      .find('PeoplePickerLogic')
       .instance()
       .handleSubmit()
     expect(onSubmit).not.toHaveBeenCalled()
 
     getPersonPodButton(wrapper, 0).simulate('click')
     wrapper
-      .find('PeoplePicker')
+      .find('PeoplePickerLogic')
       .instance()
       .handleSubmit()
     expect(onSubmit).toHaveBeenCalled()
