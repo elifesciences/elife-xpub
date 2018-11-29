@@ -5,10 +5,7 @@ import { th } from '@pubsweet/ui-toolkit'
 import { Box, Flex } from 'grid-styled'
 
 import SelectedItem from '../atoms/SelectedItem'
-import PersonPod from './PersonPod'
-import TwoColumnLayout from '../../global/layout/TwoColumnLayout'
-
-const MAX_DISPLAYED_PODS = 30
+import PersonPodGrid from './PersonPodGrid'
 
 const SelectedItems = ({ selection, onCloseClick }) => (
   <Flex>
@@ -61,27 +58,13 @@ const PeoplePickerBody = ({
         selection={selection}
       />
     </Flex>
-    <TwoColumnLayout>
-      {people
-        .map(person => (
-          <PersonPod
-            expertises={person.expertises}
-            focuses={person.focuses}
-            institution={person.aff}
-            isKeywordClickable={false}
-            isSelectButtonClickable={
-              isSelected(person) || selection.length < maxSelection
-            }
-            isSelected={isSelected(person)}
-            key={person.id}
-            name={person.name}
-            selectButtonType={isSelected(person) ? 'selected' : 'add'}
-            togglePersonSelection={() => toggleSelection(person)}
-            // onKeywordClick will need to be added, once we know what the desired behaviour is
-          />
-        ))
-        .slice(0, MAX_DISPLAYED_PODS)}
-    </TwoColumnLayout>
+    <PersonPodGrid
+      isSelected={isSelected}
+      maxSelection={maxSelection}
+      people={people}
+      selection={selection}
+      toggleSelection={toggleSelection}
+    />
   </React.Fragment>
 )
 

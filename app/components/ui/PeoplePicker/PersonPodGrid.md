@@ -1,5 +1,3 @@
-`Body` is the main section of the PeoplePicker (everything except the buttons). It combines SelectedItems, SelectionHint & PersonPodGrid
-
 ```js
 const people = [
   {
@@ -41,10 +39,8 @@ const people = [
 initialState = {
   selection: people.slice(0, 2),
 }
-;<PeoplePickerBody
+;<PersonPodGrid
   isSelected={person => state.selection.some(p => p.id === person.id)}
-  maxSelection={5}
-  minSelection={3}
   people={people}
   selection={state.selection}
   toggleSelection={person => {
