@@ -20,13 +20,7 @@ const request = (endpoint, query = {}) => {
 }
 
 const convertPerson = apiPerson => {
-  const {
-    id,
-    name = {},
-    research = {},
-    emailAddresses,
-    affiliations,
-  } = apiPerson
+  const { id, name, research = {}, emailAddresses, affiliations } = apiPerson
   const { focuses = [], expertises = [] } = research
 
   let person = {

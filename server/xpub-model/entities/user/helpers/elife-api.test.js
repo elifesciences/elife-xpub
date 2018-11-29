@@ -51,6 +51,13 @@ describe('eLife API tests', () => {
     expect(result[0].firstname).toBe(person.allDetails.name.givenNames)
     expect(result[0].surname).toBe(person.allDetails.name.surname)
     expect(result[0].email).toBe(person.allDetails.emailAddresses[0].value)
+    expect(result[0].aff).toBe(person.allDetails.affiliations[0].name[0])
+    expect(result[0].expertises).toHaveLength(
+      person.allDetails.research.expertises.length,
+    )
+    expect(result[0].focuses).toHaveLength(
+      person.allDetails.research.focuses.length,
+    )
   })
 
   it('creates correct person with minimum required data', async () => {
