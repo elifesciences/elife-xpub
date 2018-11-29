@@ -1,6 +1,6 @@
 import React from 'react'
 import Dropzone from 'react-dropzone'
-import { Flex } from 'grid-styled'
+import { Box, Flex } from 'grid-styled'
 import { th } from '@pubsweet/ui-toolkit'
 import styled, { css } from 'styled-components'
 import config from 'config'
@@ -10,6 +10,19 @@ import Icon from '../../../../ui/atoms/Icon'
 const UploadLink = styled.span`
   color: ${th('colorPrimary')};
   cursor: pointer;
+`
+
+const RemoveLink = styled(Box)`
+  display: inline-flex;
+  cursor: pointer;
+  color: ${th('colorTextSecondary')};
+`
+
+const StyledRemoveIcon = styled(Icon).attrs({
+  iconName: 'Trash',
+  overrideName: '@pubsweet-pending.PeoplePicker.PersonPod.Remove',
+})`
+  fill: ${th('colorTextSecondary')};
 `
 
 const StyledDropzone = styled(({ setRef, ...rest }) => (
@@ -62,7 +75,13 @@ const UploadFailureIcon = styled(props => (
   width: ${th('space.3')};
   margin-right: ${th('space.2')};
 `
-
+const UploadControl = styled(Box).attrs({
+  width: [1, 1 / 2],
+})`
+  text-align:right &:first-child {
+    text-align: left;
+  }
+`
 const Spinner = styled.span`
   animation: full-rotation 1.1s infinite linear;
   border: 2px solid ${th('colorPrimary')};
@@ -187,16 +206,29 @@ class SupportingUpload extends React.Component {
             </FileBlock>
           ))}
         </StyledDropzone>
-        {successfullyUploadedFiles.length < 10 &&
-          hasManuscript &&
+        {hasManuscript &&
           !this.state.uploading && (
-            <React.Fragment>
-              Add more{' '}
-              <UploadLink onClick={() => dropzoneRef.open()}>
-                supporting files
-              </UploadLink>{' '}
-              (optional)
-            </React.Fragment>
+            <Flex>
+              {successfullyUploadedFiles.length < 10 && (
+                <UploadControl>
+                  Add more{' '}
+                  <UploadLink onClick={() => dropzoneRef.open()}>
+                    supporting files
+                  </UploadLink>{' '}
+                  (optional)
+                </UploadControl>
+              )}
+              <UploadControl>
+                <RemoveLink
+                  onClick={() => {
+                    console.log('Clear!')
+                  }}
+                >
+                  <StyledRemoveIcon />
+                  Clear files
+                </RemoveLink>
+              </UploadControl>
+            </Flex>
           )}
       </React.Fragment>
     )
