@@ -95,6 +95,7 @@ async function uploadManuscript(_, { file, id, fileSize }, { user }) {
   } catch (err) {
     logger.error(`Manuscript was not uploaded to S3: ${err}`)
     await fileEntity.delete()
+    clearInterval(handle)
     throw err
   }
 
