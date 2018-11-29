@@ -4,7 +4,6 @@ const logger = require('@pubsweet/logger')
 const request = require('request-promise-native')
 const { promisify } = require('util')
 const xml2js = require('xml2js')
-const lodash = require('lodash')
 
 const { ON_UPLOAD_PROGRESS } = pubsubManager.asyncIterators
 
@@ -47,6 +46,7 @@ async function uploadManuscript(_, { file, id, fileSize }, { user }) {
   const manuscript = await Manuscript.find(id, userUuid)
 
   const { stream, filename, mimetype } = await file
+  logger.info(`Manuscript Upload Size: ${filename}, ${fileSize}`)
   const fileEntity = await new File({
     manuscriptId: manuscript.id,
     url: `manuscripts/${id}`,
@@ -55,18 +55,26 @@ async function uploadManuscript(_, { file, id, fileSize }, { user }) {
   }).save()
 
   const pubsub = await pubsubManager.getPubsub()
-  const reportProgress = lodash.throttle(progress => {
+
+  // Predict upload time
+  const predictedTime = 5 + 4.67e-6 * fileSize
+  const startedTime = Date.now()
+
+  const handle = setInterval(() => {
+    const elapsed = Date.now() - startedTime
+    let progress = parseInt((100 * elapsed) / 1000 / predictedTime, 10)
+    // don't let the prediction complete the upload
+    if (progress > 99) progress = 99
     pubsub.publish(`${ON_UPLOAD_PROGRESS}.${user}`, {
-      uploadProgress: Math.floor(progress * 100),
+      uploadProgress: progress,
     })
   }, 200)
+
   const fileContents = await new Promise((resolve, reject) => {
     let uploadedSize = 0
     const chunks = []
-    reportProgress(0)
     stream.on('data', chunk => {
       uploadedSize += chunk.length
-      reportProgress(uploadedSize / fileSize)
       chunks.push(chunk)
     })
     stream.on('error', reject)
@@ -85,6 +93,7 @@ async function uploadManuscript(_, { file, id, fileSize }, { user }) {
       size: fileSize,
     })
   } catch (err) {
+    logger.error(`Manuscript was not uploaded to S3: ${err}`)
     await fileEntity.delete()
     throw err
   }
@@ -98,6 +107,7 @@ async function uploadManuscript(_, { file, id, fileSize }, { user }) {
       headers: { 'content-type': mimetype },
       timeout: config.get('scienceBeam.timeoutMs'),
     })
+
     const xmlData = await parseString(xmlBuffer.toString('utf8'))
 
     if (xmlData.article) {
@@ -126,6 +136,15 @@ async function uploadManuscript(_, { file, id, fileSize }, { user }) {
   addFileEntityToManuscript(manuscript, fileEntity)
   manuscript.meta.title = title
   await manuscript.save()
+
+  clearInterval(handle)
+  pubsub.publish(`${ON_UPLOAD_PROGRESS}.${user}`, {
+    uploadProgress: 100,
+  })
+  const actualTime = (Date.now() - startedTime) / 1000
+  logger.info(
+    `Manuscript Upload Time, Actual (${actualTime}) , Predicted (${predictedTime})`,
+  )
 
   return manuscript
 }
