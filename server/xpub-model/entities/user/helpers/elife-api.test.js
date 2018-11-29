@@ -15,28 +15,20 @@ jest.mock('config', () => ({
 jest.mock('superagent', () => ({
   header: {},
   url: '',
-  query: jest.fn(() =>
-    Promise.resolve({
-      body: { items: [person] },
-    }),
-  ),
   get: jest.fn(),
   getHeader() {
     return this.header
   },
-  getQuery() {
-    return this.query
-  },
 }))
 
 const makeGetResponse = examplePerson => () => ({
-    header: request.header,
-    query: jest.fn(() =>
-      Promise.resolve({
-        body: { items: [examplePerson] },
-      }),
-    ),
-  })
+  header: request.header,
+  query: jest.fn(() =>
+    Promise.resolve({
+      body: { items: [examplePerson] },
+    }),
+  ),
+})
 
 const logger = require('@pubsweet/logger')
 const request = require('superagent')
@@ -70,9 +62,9 @@ describe('eLife API tests', () => {
 
   it('logs on error', async () => {
     request.get.mockImplementation(() => ({
-        header: request.header,
-        query: jest.fn(() => Promise.reject(new Error('Forbidden'))),
-      }))
+      header: request.header,
+      query: jest.fn(() => Promise.reject(new Error('Forbidden'))),
+    }))
     jest.spyOn(logger, 'error').mockImplementationOnce(() => {})
     await expect(api.people()).rejects.toThrow('Forbidden')
     expect(logger.error).toHaveBeenCalled()
