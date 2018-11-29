@@ -13,6 +13,7 @@ const config = require('config')
 const realConfig = jest.requireActual('config')
 config.get.mockImplementation(key => {
   if (key === 'server.api.secret') return config.secret
+
   return realConfig.get(key)
 })
 
@@ -41,7 +42,11 @@ describe('Article XML generator', () => {
   })
 
   it('generates expected XML when secret is set', async () => {
-    config.secret = 'some-secret'
+    config.secret =
+      Replay.mode === 'replay'
+        ? 'some-secret'
+        : realConfig.get('server.api.secret')
+
     const xml = await generateXml(sampleManuscript)
     expect(obfuscateEmail(xml)).toMatchSnapshot()
   })

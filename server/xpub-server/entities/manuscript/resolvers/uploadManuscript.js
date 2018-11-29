@@ -1,14 +1,10 @@
 const config = require('config')
 const pubsubManager = require('pubsweet-server/src/graphql/pubsub')
 const logger = require('@pubsweet/logger')
-const request = require('request-promise-native')
-const { promisify } = require('util')
-const xml2js = require('xml2js')
 const lodash = require('lodash')
+const scienceBeamApi = require('./scienceBeamApi')
 
 const { ON_UPLOAD_PROGRESS } = pubsubManager.asyncIterators
-
-const parseString = promisify(xml2js.parseString)
 
 const { Manuscript, File, User } = require('@elifesciences/xpub-model')
 
@@ -89,26 +85,15 @@ async function uploadManuscript(_, { file, id, fileSize }, { user }) {
     throw err
   }
 
-  // also send source file to conversion service
   let title = ''
   try {
-    const xmlBuffer = await request.post(config.get('scienceBeam.url'), {
-      body: fileContents,
-      qs: { filename },
-      headers: { 'content-type': mimetype },
-      timeout: config.get('scienceBeam.timeoutMs'),
-    })
-    const xmlData = await parseString(xmlBuffer.toString('utf8'))
-
-    if (xmlData.article) {
-      const firstArticle = xmlData.article.front[0]
-      const articleMeta = firstArticle['article-meta']
-      const firstMeta = articleMeta[0]
-      const titleGroup = firstMeta['title-group']
-      const firstTitleGroup = titleGroup[0]
-      const titleArray = firstTitleGroup['article-title']
-      title = titleArray[0]
-    }
+    // also send source file to conversion service
+    title = await scienceBeamApi.extractSemantics(
+      config,
+      fileContents,
+      filename,
+      mimetype,
+    )
   } catch (error) {
     let errorMessage = ''
     if (error.error.code === 'ETIMEDOUT' || error.error.connect === false) {
@@ -122,7 +107,6 @@ async function uploadManuscript(_, { file, id, fileSize }, { user }) {
       filename,
     })
   }
-
   addFileEntityToManuscript(manuscript, fileEntity)
   manuscript.meta.title = title
   await manuscript.save()

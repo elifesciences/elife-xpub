@@ -12,6 +12,7 @@ const { createTables } = require('@pubsweet/db-manager')
 const mailer = require('@pubsweet/component-send-email')
 const startS3rver = require('../../../test/mock-s3-server')
 const { User, File, Manuscript } = require('@elifesciences/xpub-model')
+const scienceBeamApi = require('./scienceBeamApi')
 const { Mutation } = require('.')
 const { userData, badUserData } = require('./index.test.data')
 
@@ -112,7 +113,6 @@ describe('Manuscripts', () => {
 
     it('sets empty title if ScienceBeam fails', async () => {
       jest.spyOn(logger, 'warn').mockImplementationOnce(() => {})
-      replaySetup('error')
       const blankManuscript = new Manuscript({ createdBy: userId })
       const { id } = await blankManuscript.save()
       const file = {
@@ -122,11 +122,21 @@ describe('Manuscripts', () => {
         ),
         mimetype: 'application/pdf',
       }
+
+      jest.spyOn(scienceBeamApi, 'extractSemantics').mockRejectedValueOnce({
+        error: {
+          code: 'ETIMEDOUT',
+          connect: false,
+          message: 'timed out',
+        },
+      })
+
       const manuscript = await Mutation.uploadManuscript(
         {},
         { id, file, fileSize: 73947 },
         { user: profileId },
       )
+      expect(manuscript.meta.title).toBe('')
       expect(manuscript).toMatchObject({
         id,
         meta: { title: '' },

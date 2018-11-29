@@ -20,27 +20,21 @@ describe('User', () => {
 
     it('creates and returns a new user', async () => {
       const response = await Query.currentUser({}, {}, { user: profileId })
-      expect(response).toMatchObject({
-        identities: [
-          {
-            type: 'elife',
-            identifier: profileId,
-            aff: 'Tech team, University of eLife',
-            email: 'f72c502e0d657f363b5f2dc79dd8ceea',
-            meta: {
-              firstName: 'Tamlyn',
-              lastName: 'Rhodes',
-            },
-          },
-        ],
-      })
+      const idents = response.identities
+      expect(idents).toHaveLength(1)
+      expect(idents[0].type).toBe('elife')
+      expect(idents[0].identifier).toBe(profileId)
+      expect(idents[0].aff).toBe('Tech team, University of eLife')
+      expect(idents[0].email).toBe('f72c502e0d657f363b5f2dc79dd8ceea')
+      expect(idents[0].meta.firstName).toBe('Tamlyn')
+      expect(idents[0].meta.lastName).toBe('Rhodes')
     })
   })
 
   describe('editors', () => {
     it('returns a list of senior editors', async () => {
       const result = await Query.editors({}, { role: 'senior-editor' })
-      expect(result).toHaveLength(40)
+      expect(result.length).toBeGreaterThanOrEqual(40)
       expect(result[0]).toEqual({
         id: '8d7e57b3',
         aff: undefined,
