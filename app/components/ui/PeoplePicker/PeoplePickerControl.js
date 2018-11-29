@@ -3,7 +3,8 @@ import PropTypes from 'prop-types'
 
 import PersonPod from './PersonPod'
 import ChooserPod from './ChooserPod'
-import PeoplePickerModal from './PeoplePickerModal'
+import PeoplePickerLayout from './PeoplePickerLayout'
+import ModalOverlay from '../molecules/ModalOverlay'
 import TwoColumnLayout from '../../global/layout/TwoColumnLayout'
 import ModalHistoryState from '../molecules/ModalHistoryState'
 
@@ -14,9 +15,10 @@ const PeoplePickerControl = ({
   initialSelection,
   onSubmit,
   options,
-  title,
+  modalTitle,
+  modalName,
 }) => (
-  <ModalHistoryState name={title}>
+  <ModalHistoryState name={modalName}>
     {({ showModal, hideModal, isModalVisible }) => {
       const items = initialSelection.map(person => (
         <PersonPod
@@ -45,19 +47,20 @@ const PeoplePickerControl = ({
       return (
         <React.Fragment>
           <TwoColumnLayout>{items}</TwoColumnLayout>
-          <PeoplePickerModal
-            initialSelection={initialSelection}
-            maxSelection={maxSelection}
-            minSelection={minSelection}
-            onCancel={hideModal}
-            onSubmit={(...args) => {
-              hideModal()
-              onSubmit(...args)
-            }}
-            open={isModalVisible()}
-            people={options}
-            title={title}
-          />
+          <ModalOverlay open={isModalVisible()} transparentBackground={false}>
+            <PeoplePickerLayout
+              initialSelection={initialSelection}
+              maxSelection={maxSelection}
+              minSelection={minSelection}
+              modalTitle={modalTitle}
+              onCancel={hideModal}
+              onSubmit={(...args) => {
+                hideModal()
+                onSubmit(...args)
+              }}
+              people={options}
+            />
+          </ModalOverlay>
         </React.Fragment>
       )
     }}
@@ -81,7 +84,8 @@ PeoplePickerControl.propTypes = {
   initialSelection: peopleArrayPropType.isRequired,
   onSubmit: PropTypes.func.isRequired,
   options: peopleArrayPropType.isRequired,
-  title: PropTypes.string.isRequired,
+  modalTitle: PropTypes.string.isRequired,
+  modalName: PropTypes.string.isRequired,
 }
 
 export default PeoplePickerControl

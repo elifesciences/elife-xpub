@@ -47,7 +47,7 @@ const people = [
 ;<div>
   <button onClick={() => setState({ open: true })}>Open</button>
 
-  <PeoplePickerModal
+  <PeoplePickerLayout
     maxSelection={3}
     minSelection={2}
     open={state.open}
