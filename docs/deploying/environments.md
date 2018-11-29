@@ -11,7 +11,7 @@ Note: The docker container is built and pushed to docker with [gitlab](https://g
 
 ## Jenkins
 
-| Pipeline        | Description                                                                                                                    | Trigger                                                                                                                       |
-| --------------- | ------------------------------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------- |
-| test-elife-xpub | elife-xpub-deployment [Jenkinsfile](https://github.com/elifesciences/elife-xpub-deployment/blob/develop/Jenkinsfile)           | Runs when a new docker container is pushed to [dockerhub](https://hub.docker.com/r/xpub/xpub-elife/tags/)                     |
-| prod-elife-xpub | elife-xpub-deployment [Jenkinsfile.prod](https://github.com/elifesciences/elife-xpub-deployment/blob/develop/Jenkinsfile.prod) | Manually run [here](https://alfred.elifesciences.org/blue/organizations/jenkins/prod-elife-xpub/activity/), merges to master. |
+| Pipeline        | Description                                                                                                                    | Trigger                                                                                                                         |
+| --------------- | ------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------- |
+| test-elife-xpub | elife-xpub-deployment [Jenkinsfile](https://github.com/elifesciences/elife-xpub-deployment/blob/develop/Jenkinsfile)           | Runs when a new docker container is pushed to [dockerhub](https://hub.docker.com/r/xpub/xpub-elife/tags/), merged to `approved` |
+| prod-elife-xpub | elife-xpub-deployment [Jenkinsfile.prod](https://github.com/elifesciences/elife-xpub-deployment/blob/develop/Jenkinsfile.prod) | Manually run [here](https://alfred.elifesciences.org/blue/organizations/jenkins/prod-elife-xpub/activity/), merges to `master`. |
