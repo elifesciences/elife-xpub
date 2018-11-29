@@ -4,7 +4,9 @@ import styled from 'styled-components'
 import { Box, Flex } from 'grid-styled'
 
 import Centerer from '../../global/layout/Centerer'
-import PeoplePicker from '.'
+import PeoplePickerLogic from './PeoplePickerLogic'
+import PeoplePickerButtons from './PeoplePickerButtons'
+import PeoplePickerBody from './PeoplePickerBody'
 import SearchBox from './SearchBox'
 import { FormH2 } from '../atoms/FormHeadings'
 import StickyFooter from '../atoms/StickyFooter'
@@ -15,7 +17,7 @@ const MainColumn = styled(Box).attrs({ mx: [0, 0, 0, '16.666%'] })`
 `
 
 const PeoplePickerLayout = ({ modalTitle, ...props }) => (
-  <PeoplePicker {...props}>
+  <PeoplePickerLogic {...props}>
     {innerProps => (
       <React.Fragment>
         <Centerer pt={3} px={3}>
@@ -44,18 +46,18 @@ const PeoplePickerLayout = ({ modalTitle, ...props }) => (
         <Centerer mb={3} px={3}>
           <Flex data-test-id="people-picker-body">
             <MainColumn mb={7}>
-              <PeoplePicker.Body {...innerProps} />
+              <PeoplePickerBody {...innerProps} />
             </MainColumn>
           </Flex>
         </Centerer>
         <StickyFooter>
           <MainColumn>
-            <PeoplePicker.Buttons {...innerProps} />
+            <PeoplePickerButtons {...innerProps} />
           </MainColumn>
         </StickyFooter>
       </React.Fragment>
     )}
-  </PeoplePicker>
+  </PeoplePickerLogic>
 )
 
 PeoplePickerLayout.propTypes = {

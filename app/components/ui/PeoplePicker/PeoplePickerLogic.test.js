@@ -2,7 +2,8 @@ import React from 'react'
 import { mount } from 'enzyme'
 import { ThemeProvider } from 'styled-components'
 import theme from '@elifesciences/elife-theme'
-import PeoplePicker from '.'
+import PeoplePickerLogic from './PeoplePickerLogic'
+import PeoplePickerBody from './PeoplePickerBody'
 import SearchBox from './SearchBox'
 
 const people = [
@@ -45,10 +46,10 @@ const people = [
 const makeWrapper = props =>
   mount(
     <ThemeProvider theme={theme}>
-      <PeoplePicker
+      <PeoplePickerLogic
         // need to pass children as a prop in order to override it in some tests
         // eslint-disable-next-line react/no-children-prop
-        children={innerProps => <PeoplePicker.Body {...innerProps} />}
+        children={innerProps => <PeoplePickerBody {...innerProps} />}
         onCancel={jest.fn()}
         onSubmit={jest.fn()}
         people={people}
@@ -134,7 +135,7 @@ describe('PeoplePicker', () => {
   describe('integration with Search Box', () => {
     const searchWrapper = mount(
       <ThemeProvider theme={theme}>
-        <PeoplePicker
+        <PeoplePickerLogic
           // need inner props for search box
           // eslint-disable-next-line react/no-children-prop
           children={innerProps => (
@@ -145,7 +146,7 @@ describe('PeoplePicker', () => {
                 onSubmit={innerProps.searchSubmit}
                 options={innerProps.searchOptions}
               />
-              <PeoplePicker.Body {...innerProps} />
+              <PeoplePickerBody {...innerProps} />
             </div>
           )}
           onCancel={jest.fn()}
