@@ -24,7 +24,6 @@ const StyledSmallParagraph = styled(SmallParagraph)`
 
 const PersonInfoModal = ({
   isSelected,
-  acceptText,
   onAccept,
   onCancel,
   open,
@@ -32,26 +31,28 @@ const PersonInfoModal = ({
   institution,
   focuses,
   expertises,
-}) => (
-  <ModalDialog
-    acceptText={isSelected ? 'Remove editor' : 'Add editor'}
-    cancelText="Cancel"
-    onAccept={onAccept}
-    onCancel={onCancel}
-    open={open}
-  >
-    <StyledH2>{name}</StyledH2>
-    <Paragraph>{institution}</Paragraph>
-    <SmallParagraph>Expertise: {expertises.join(', ')}</SmallParagraph>
-    <StyledSmallParagraph secondary>
-      Research focuses: {focuses.join(', ')}
-    </StyledSmallParagraph>
-  </ModalDialog>
-)
+}) => {
+  const acceptText = isSelected ? 'Remove editor' : 'Add editor'
+  return (
+    <ModalDialog
+      acceptText={acceptText}
+      cancelText="Cancel"
+      onAccept={onAccept}
+      onCancel={onCancel}
+      open={open}
+    >
+      <StyledH2>{name}</StyledH2>
+      <Paragraph>{institution}</Paragraph>
+      <SmallParagraph>Expertise: {expertises.join(', ')}</SmallParagraph>
+      <StyledSmallParagraph secondary>
+        Research focuses: {focuses.join(', ')}
+      </StyledSmallParagraph>
+    </ModalDialog>
+  )
+}
 
 PersonInfoModal.propTypes = {
   isSelected: PropTypes.bool.isRequired,
-  acceptText: PropTypes.string.isRequired,
   onAccept: PropTypes.func.isRequired,
   onCancel: PropTypes.func.isRequired,
   open: PropTypes.bool.isRequired,

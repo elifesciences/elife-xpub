@@ -119,7 +119,6 @@ class PersonPod extends React.Component {
     return (
       <React.Fragment>
         <PersonInfoModal
-          acceptText={isSelected ? 'Remove editor' : 'Add editor'}
           expertises={expertises}
           focuses={focuses}
           institution={institution}
