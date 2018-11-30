@@ -56,7 +56,7 @@ async function uploadManuscript(_, { file, id, fileSize }, { user }) {
 
   const pubsub = await pubsubManager.getPubsub()
 
-  // Predict upload time
+  // Predict upload time - The analysis was done on #839
   const predictedTime = 5 + 4.67e-6 * fileSize
   const startedTime = Date.now()
 
