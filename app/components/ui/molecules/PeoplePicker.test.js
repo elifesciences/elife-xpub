@@ -2,8 +2,7 @@ import React from 'react'
 import { mount } from 'enzyme'
 import { ThemeProvider } from 'styled-components'
 import theme from '@elifesciences/elife-theme'
-import PeoplePickerLogic from './PeoplePickerLogic'
-import PeoplePickerBody from './PeoplePickerBody'
+import PeoplePicker from './PeoplePicker'
 import SearchBox from './SearchBox'
 
 const people = [
@@ -46,10 +45,10 @@ const people = [
 const makeWrapper = props =>
   mount(
     <ThemeProvider theme={theme}>
-      <PeoplePickerLogic
+      <PeoplePicker
         // need to pass children as a prop in order to override it in some tests
         // eslint-disable-next-line react/no-children-prop
-        children={innerProps => <PeoplePickerBody {...innerProps} />}
+        children={innerProps => <PeoplePicker.Body {...innerProps} />}
         onCancel={jest.fn()}
         onSubmit={jest.fn()}
         people={people}
@@ -105,14 +104,14 @@ describe('PeoplePicker', () => {
     const wrapper = makeWrapper({ minSelection: 1, onSubmit })
 
     wrapper
-      .find('PeoplePickerLogic')
+      .find('PeoplePicker')
       .instance()
       .handleSubmit()
     expect(onSubmit).not.toHaveBeenCalled()
 
     getPersonPodButton(wrapper, 0).simulate('click')
     wrapper
-      .find('PeoplePickerLogic')
+      .find('PeoplePicker')
       .instance()
       .handleSubmit()
     expect(onSubmit).toHaveBeenCalled()
@@ -135,7 +134,7 @@ describe('PeoplePicker', () => {
   describe('integration with Search Box', () => {
     const searchWrapper = mount(
       <ThemeProvider theme={theme}>
-        <PeoplePickerLogic
+        <PeoplePicker
           // need inner props for search box
           // eslint-disable-next-line react/no-children-prop
           children={innerProps => (
@@ -146,7 +145,7 @@ describe('PeoplePicker', () => {
                 onSubmit={innerProps.searchSubmit}
                 options={innerProps.searchOptions}
               />
-              <PeoplePickerBody {...innerProps} />
+              <PeoplePicker.Body {...innerProps} />
             </div>
           )}
           onCancel={jest.fn()}

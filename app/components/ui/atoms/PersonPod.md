@@ -1,3 +1,5 @@
+### ChosenPersonPod
+
 Clickable keywords:
 
 ```js
@@ -10,7 +12,7 @@ Clickable keywords:
   onKeywordClick={keyword => console.log(keyword, 'clicked')}
   isPicked={false}
   isStatusShown={false}
-  selectButtonType="add"
+  iconType="add"
   togglePersonSelection={() => console.log('icon clicked')}
 />
 ```
@@ -27,7 +29,7 @@ Showing the person's status:
   status="Currently unavailable"
   isPicked={false}
   isStatusShown={true}
-  selectButtonType="add"
+  iconType="add"
   togglePersonSelection={() => console.log('icon clicked')}
 />
 ```
@@ -45,7 +47,7 @@ Removal icon:
   status="Currently unavailable"
   isSelectedInForm={false}
   isStatusShown={true}
-  selectButtonType="remove"
+  iconType="remove"
   togglePersonSelection={() => console.log('icon clicked')}
 />
 ```
@@ -61,7 +63,7 @@ Selected icon:
   isKeywordClickable={false}
   isSelectedInForm={false}
   isStatusShown={true}
-  selectButtonType="selected"
+  iconType="selected"
   togglePersonSelection={() => console.log('icon clicked')}
 />
 ```
@@ -75,9 +77,27 @@ Disabled:
   focuses={['biological experiments']}
   expertises={['Cell Biology']}
   isKeywordClickable={false}
-  selectButtonType="add"
+  iconType="add"
   isSelectedButtonClickable={false}
   isSelectedInForm={false}
+  togglePersonSelection={() => console.log('icon clicked')}
+/>
+```
+
+### SelectButton
+
+```js
+;<PersonPod.SelectButton
+  roleName="Senior Editor(s)"
+  isRequired={true}
+  togglePersonSelection={() => console.log('icon clicked')}
+/>
+```
+
+```js
+;<PersonPod.SelectButton
+  roleName="Reviewing Editor(s)"
+  isRequired={false}
   togglePersonSelection={() => console.log('icon clicked')}
 />
 ```
