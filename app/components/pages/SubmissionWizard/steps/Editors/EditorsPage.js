@@ -4,7 +4,7 @@ import { Box } from 'grid-styled'
 import { Action, ErrorText } from '@pubsweet/ui'
 import { FormH3 } from '../../../../ui/atoms/FormHeadings'
 
-import PeoplePickerControl from '../../../../ui/PeoplePicker/PeoplePickerControl'
+import PeoplePickerControl from './PeoplePickerControl'
 import Textarea from '../../../../ui/atoms/Textarea'
 import CalloutBox from '../../../../ui/atoms/CalloutBox'
 import ValidatedField from '../../../../ui/atoms/ValidatedField'
@@ -150,7 +150,6 @@ class EditorsPage extends React.Component {
               initialSelection={values.suggestedSeniorEditors}
               maxSelection={limits.suggestedSeniorEditors.max}
               minSelection={limits.suggestedSeniorEditors.min}
-              modalName="suggestedSeniorEditors"
               onRequestRemove={person =>
                 this.removeSelection('suggestedSeniorEditors', person)
               }
@@ -180,7 +179,6 @@ class EditorsPage extends React.Component {
               initialSelection={values.opposedSeniorEditors}
               maxSelection={limits.opposedSeniorEditors.max}
               minSelection={limits.opposedSeniorEditors.min}
-              modalName="opposedSeniorEditors"
               onRequestRemove={person =>
                 this.removeSelection('opposedSeniorEditors', person)
               }
@@ -213,7 +211,6 @@ class EditorsPage extends React.Component {
               initialSelection={values.suggestedReviewingEditors}
               maxSelection={limits.suggestedReviewingEditors.max}
               minSelection={limits.suggestedReviewingEditors.min}
-              modalName="suggestedReviewingEditors"
               onRequestRemove={person =>
                 this.removeSelection('suggestedReviewingEditors', person)
               }
@@ -245,7 +242,6 @@ class EditorsPage extends React.Component {
               initialSelection={values.opposedReviewingEditors}
               maxSelection={limits.opposedReviewingEditors.max}
               minSelection={limits.opposedReviewingEditors.min}
-              modalName="opposedReviewingEditors"
               onRequestRemove={person =>
                 this.removeSelection('opposedReviewingEditors', person)
               }
