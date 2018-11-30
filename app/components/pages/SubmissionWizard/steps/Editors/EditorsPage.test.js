@@ -59,7 +59,7 @@ function makeWrapper(props) {
 describe('EditorsPage component', () => {
   it('modals contents are initially hidden', () => {
     const wrapper = makeWrapper()
-    expect(wrapper.find('PeoplePicker')).toHaveLength(0)
+    expect(wrapper.find('PeoplePickerLogic')).toHaveLength(0)
   })
 
   it('shows exclusion box', () => {
