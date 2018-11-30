@@ -1,4 +1,6 @@
-A people picker in a modal
+Please note: the PeoplePicker is a combination of the `PeoplePickerLayout` (how it's rendered) & the `PeoplePickerLogic` (how the sub-components interact)
+
+The People Picker Layout is responsible for rendering the `PeoplePickerBody`, `PeoplePickerButtons` & `SearchBox` in eLife's chosen order - search at the top, then grid, then buttons below.
 
 **Search box behaviour within the People Picker**
 
@@ -47,7 +49,7 @@ const people = [
 ;<div>
   <button onClick={() => setState({ open: true })}>Open</button>
 
-  <PeoplePickerModal
+  <PeoplePickerLayout
     maxSelection={3}
     minSelection={2}
     open={state.open}

@@ -32,6 +32,10 @@ module.exports = {
           name: 'Molecules',
           components: 'app/components/ui/molecules/**/*.js',
         },
+        {
+          name: 'PeoplePicker',
+          components: 'app/components/ui/PeoplePicker/**/*.js',
+        },
       ],
     },
     {
