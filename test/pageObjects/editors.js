@@ -11,6 +11,13 @@ const editors = {
   suggestedReviewingEditorSelection: Selector(
     '[data-test-id="suggested-reviewing-editors"] [data-test-id="person-pod-button"]',
   ),
+  personPodInfoButtons: Selector('[data-test-id="info-button"]'),
+  cancelInfoModal: Selector('[data-test-id="info-modal"]').find(
+    '[data-test-id="modal-dialog-cancel"]',
+  ),
+  acceptInfoModal: Selector('[data-test-id="info-modal"]').find(
+    '[data-test-id="modal-dialog-accept"]',
+  ),
   peoplePickerOptions: Selector(
     '[data-test-id="people-picker-body"] [data-test-id="person-pod-button"]',
   ),

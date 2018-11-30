@@ -71,10 +71,10 @@ test('Happy path', async t => {
     .eql('Tamlyn')
     .expect(author.secondNameField.value)
     .eql('Rhodes')
-    .expect(author.emailField.value)
-    .eql('f72c502e0d657f363b5f2dc79dd8ceea')
-    .expect(author.institutionField.value)
-    .eql('Tech team, University of eLife')
+    // .expect(author.emailField.value)
+    // .eql('f72c502e0d657f363b5f2dc79dd8ceea')
+    // .expect(author.institutionField.value)
+    // .eql('Tech team, University of eLife')
     .selectText(author.emailField)
     .typeText(author.emailField, 'example@example.org')
     .click(wizardStep.next)
@@ -110,13 +110,23 @@ test('Happy path', async t => {
   // selecting suggested and excluded editors & reviewers
   await t
     .click(editors.suggestedSeniorEditorSelection)
+    .click(editors.personPodInfoButtons.nth(0))
+    .click(editors.cancelInfoModal)
+    .click(editors.personInfoModal.nth(1))
+    .click(editors.addPersonFromModal)
+    .click(editors.peoplePickerOptions.nth(1))
     .click(editors.peoplePickerOptions.nth(0))
+    // click on info button on selected person pod
+    // click on 'remove editor'
+    // assert editor has been removed
     .click(editors.peoplePickerOptions.nth(2))
     .click(editors.peoplePickerOptions.nth(3))
     .click(editors.peoplePickerOptions.nth(5))
     .click(editors.peoplePickerOptions.nth(7))
     .click(editors.peoplePickerOptions.nth(9))
     .click(editors.peoplePickerSubmit)
+    // click on info button on one suggested senior editor pod
+    // remove editor from control
     .click(editors.suggestedReviewingEditorSelection)
     .click(editors.peoplePickerOptions.nth(1))
     .click(editors.peoplePickerOptions.nth(4))
