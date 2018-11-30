@@ -15593,10 +15593,10 @@ xmlbuilder@~9.0.1:
   resolved "https://registry.yarnpkg.com/xmlbuilder/-/xmlbuilder-9.0.7.tgz#132ee63d2ec5565c557e20f4c22df9aca686b10d"
   integrity sha1-Ey7mPS7FVlxVfiD0wi35rKaGsQ0=
 
-xpub-edit@^2.5.2:
-  version "2.5.2"
-  resolved "https://registry.yarnpkg.com/xpub-edit/-/xpub-edit-2.5.2.tgz#0a026891edc5bd20dac68e749ed2d6d3032c5739"
-  integrity sha512-jhj5dJfu/hAON45UjsFOVpfocDeVNIGSJX+Jr98k3gfLAR5VzZ4r2/geuklBvdJ0A8V7/gkUKI2oQY3/HYTZcg==
+xpub-edit@^2.5.4:
+  version "2.5.4"
+  resolved "https://registry.yarnpkg.com/xpub-edit/-/xpub-edit-2.5.4.tgz#0a026891edc5bd20dac68e749ed2d6d3032c5739"
+  integrity sha512-gQLsUz8/pgfgnicgAqp52s4rIm09wunfEg7F9QXoxmcsRrkee1xDAoqvWivuMAQRwYqJUxTif8LT4Op61RxX3A==
   dependencies:
     "@pubsweet/ui-toolkit" "^1.2.0"
     prosemirror-commands "^1.0.1"
