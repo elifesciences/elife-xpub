@@ -229,7 +229,7 @@ const peopleArrayPropType = PropTypes.arrayOf(
   PropTypes.shape({
     id: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
     name: PropTypes.string.isRequired,
-    aff: PropTypes.string.isRequired,
+    aff: PropTypes.string,
     expertises: PropTypes.arrayOf(PropTypes.string.isRequired),
     focuses: PropTypes.arrayOf(PropTypes.string.isRequired),
   }),

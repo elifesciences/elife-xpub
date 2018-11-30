@@ -97,18 +97,16 @@ class PeoplePickerLogic extends React.Component {
   }
 }
 
-const peopleArrayPropType = PropTypes.arrayOf(
-  PropTypes.shape({
-    id: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
-    name: PropTypes.string.isRequired,
-    aff: PropTypes.string.isRequired,
-    expertises: PropTypes.arrayOf(PropTypes.string.isRequired),
-    focuses: PropTypes.arrayOf(PropTypes.string.isRequired),
-  }),
-)
+const peoplePropTypes = PropTypes.shape({
+  id: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
+  name: PropTypes.string.isRequired,
+  aff: PropTypes.string,
+  expertises: PropTypes.arrayOf(PropTypes.string.isRequired),
+  focuses: PropTypes.arrayOf(PropTypes.string.isRequired),
+})
 
 PeoplePickerLogic.propTypes = {
-  initialSelection: peopleArrayPropType,
+  initialSelection: PropTypes.arrayOf(peoplePropTypes),
   minSelection: PropTypes.number,
   maxSelection: PropTypes.number,
   onSubmit: PropTypes.func.isRequired,
