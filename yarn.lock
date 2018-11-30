@@ -15595,7 +15595,7 @@ xmlbuilder@~9.0.1:
 
 xpub-edit@^2.5.4:
   version "2.5.4"
-  resolved "https://registry.yarnpkg.com/xpub-edit/-/xpub-edit-2.5.4.tgz#0a026891edc5bd20dac68e749ed2d6d3032c5739"
+  resolved "https://registry.yarnpkg.com/xpub-edit/-/xpub-edit-2.5.4.tgz#7271ba888eee0e8a620e1f730577841829bdfd06"
   integrity sha512-gQLsUz8/pgfgnicgAqp52s4rIm09wunfEg7F9QXoxmcsRrkee1xDAoqvWivuMAQRwYqJUxTif8LT4Op61RxX3A==
   dependencies:
     "@pubsweet/ui-toolkit" "^1.2.0"
