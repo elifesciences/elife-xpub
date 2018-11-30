@@ -6,7 +6,7 @@ import { Flex, Box } from 'grid-styled'
 import { th } from '@pubsweet/ui-toolkit'
 import { Button } from '@pubsweet/ui'
 
-import { peoplePropType } from './types'
+import { personNamePropType } from './types'
 import Icon from '../atoms/Icon'
 import ClearSearchButton from '../atoms/CrossIconButton'
 
@@ -228,7 +228,7 @@ class SearchBox extends React.Component {
 
 SearchBox.propTypes = {
   filterFunction: PropTypes.func.isRequired,
-  options: peoplePropType.isRequired,
+  options: PropTypes.arrayOf(PropTypes.objectOf(personNamePropType)).isRequired,
   onSubmit: PropTypes.func.isRequired,
   getMatchIndex: PropTypes.func.isRequired,
 }

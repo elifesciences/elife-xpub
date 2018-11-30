@@ -14,7 +14,7 @@ const request = (endpoint, query = {}) => {
     req.header.Authorization = secret
   }
   return req.query(query).catch(err => {
-    logger.error('Failed to fetch from eLife API:', err.message)
+    logger.error('Failed to fetch from eLife API:', err.message, err.stack)
     throw err
   })
 }

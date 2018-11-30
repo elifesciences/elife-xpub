@@ -24,7 +24,6 @@ const StyledSmallParagraph = styled(SmallParagraph)`
 
 const PersonInfoModal = ({
   isSelected,
-  acceptText,
   onAccept,
   onCancel,
   open,
@@ -51,7 +50,6 @@ const PersonInfoModal = ({
 
 PersonInfoModal.propTypes = {
   isSelected: PropTypes.bool.isRequired,
-  acceptText: PropTypes.string.isRequired,
   onAccept: PropTypes.func.isRequired,
   onCancel: PropTypes.func.isRequired,
   open: PropTypes.bool.isRequired,

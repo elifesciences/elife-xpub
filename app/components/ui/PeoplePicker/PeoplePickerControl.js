@@ -15,7 +15,7 @@ const PeoplePickerControl = ({
   onRequestRemove,
   initialSelection,
   onSubmit,
-  options,
+  people,
   modalTitle,
   modalName,
 }) => (
@@ -59,7 +59,7 @@ const PeoplePickerControl = ({
                 hideModal()
                 onSubmit(...args)
               }}
-              people={options}
+              people={people}
             />
           </ModalOverlay>
         </React.Fragment>
@@ -74,7 +74,7 @@ PeoplePickerControl.propTypes = {
   onRequestRemove: PropTypes.func.isRequired,
   initialSelection: peoplePropType.isRequired,
   onSubmit: PropTypes.func.isRequired,
-  options: peoplePropType.isRequired,
+  people: peoplePropType.isRequired,
   modalTitle: PropTypes.string.isRequired,
   modalName: PropTypes.string.isRequired,
 }
