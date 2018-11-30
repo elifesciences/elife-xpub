@@ -6,7 +6,8 @@ const removeUploadedManuscript = require('./removeUploadedManuscript')
 const submitManuscript = require('./submitManuscript')
 const updateManuscript = require('./updateManuscript')
 const uploadManuscript = require('./uploadManuscript')
-const uploadSupporting = require('./uploadSupporting')
+const uploadSupportingFiles = require('./uploadSupportingFiles')
+const removeSupportingFiles = require('./removeSupportingFiles')
 
 const resolvers = {
   Query: {
@@ -34,17 +35,18 @@ const resolvers = {
     async deleteManuscript(_, { id }, { user }) {
       const userUuid = await User.getUuidForProfile(user)
       const manuscript = await Manuscript.find(id, userUuid)
-
-      const manuscriptFile = manuscript.files[0]
-      if (manuscriptFile) {
+      const files = await File.findByManuscriptId(id)
+      if (files) {
         try {
-          const file = await File.find(manuscriptFile.manuscriptId)
-          await file.deleteContent()
-          await file.delete()
+          await files.forEach(file => {
+            file.deleteContent()
+            file.delete()
+          })
         } catch (error) {
           logger.error(error)
         }
       }
+
       await manuscript.delete()
       return id
     },
@@ -55,9 +57,11 @@ const resolvers = {
 
     uploadManuscript,
 
-    uploadSupporting,
+    uploadSupportingFiles,
 
     removeUploadedManuscript,
+
+    removeSupportingFiles,
 
     async savePage(_, vars, { user }) {
       const userUuid = await User.getUuidForProfile(user)

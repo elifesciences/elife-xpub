@@ -25,7 +25,7 @@ const UPLOAD_MANUSCRIPT_MUTATION = gql`
 
 const UPLOAD_SUPPORTING_MUTATION = gql`
   mutation UploadFile($id: ID!, $file: Upload!) {
-    uploadSupporting(id: $id, file: $file) {
+    uploadSupportingFiles(id: $id, file: $file) {
       id
       meta {
         title
@@ -41,6 +41,18 @@ const UPLOAD_SUPPORTING_MUTATION = gql`
 const DELETE_MANUSCRIPT_MUTATION = gql`
   mutation UploadFile($id: ID!) {
     removeUploadedManuscript(id: $id) {
+      id
+      files {
+        filename
+        type
+      }
+    }
+  }
+`
+
+const DELETE_SUPPORTING_FILES_MUTATION = gql`
+  mutation UploadFile($id: ID!) {
+    removeSupportingFiles(id: $id) {
       id
       files {
         filename
@@ -159,21 +171,30 @@ const FilesPageContainer = ({
               <Box width={1}>
                 <Mutation mutation={UPLOAD_SUPPORTING_MUTATION}>
                   {uploadSupportFiles => (
-                    <SupportingUpload
-                      files={values[fieldName].filter(
-                        file => file.type === SUPPORTING_FILE,
+                    <Mutation mutation={DELETE_SUPPORTING_FILES_MUTATION}>
+                      {removeSupportFiles => (
+                        <SupportingUpload
+                          files={values[fieldName].filter(
+                            file => file.type === SUPPORTING_FILE,
+                          )}
+                          hasManuscript={hasManuscript}
+                          removeFiles={() =>
+                            removeSupportFiles({
+                              variables: { id: values.id },
+                            })
+                          }
+                          uploadFile={file =>
+                            new Promise((resolve, reject) =>
+                              uploadSupportFiles({
+                                variables: { file, id: values.id },
+                              })
+                                .then(data => resolve(data))
+                                .catch(err => reject(err)),
+                            )
+                          }
+                        />
                       )}
-                      hasManuscript={hasManuscript}
-                      uploadFile={file =>
-                        new Promise((resolve, reject) =>
-                          uploadSupportFiles({
-                            variables: { file, id: values.id },
-                          })
-                            .then(data => resolve(data))
-                            .catch(err => reject(err)),
-                        )
-                      }
-                    />
+                    </Mutation>
                   )}
                 </Mutation>
               </Box>

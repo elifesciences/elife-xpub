@@ -5,6 +5,7 @@ import { th } from '@pubsweet/ui-toolkit'
 import styled, { css } from 'styled-components'
 import config from 'config'
 
+import media from '../../../../global/layout/media'
 import Icon from '../../../../ui/atoms/Icon'
 
 const UploadLink = styled.span`
@@ -76,11 +77,16 @@ const UploadFailureIcon = styled(props => (
   margin-right: ${th('space.2')};
 `
 const UploadControl = styled(Box).attrs({
-  width: [1, 1 / 2],
+  width: 1 / 2,
 })`
-  text-align:right &:first-child {
+  display: none;
+  text-align: right;
+  &:first-child {
     text-align: left;
   }
+  ${media.tabletPortraitUp`
+    display: block;
+  `};
 `
 const Spinner = styled.span`
   animation: full-rotation 1.1s infinite linear;
@@ -105,7 +111,7 @@ const Spinner = styled.span`
 `
 
 // needs to be declared as a const for linting https://eslint.org/docs/rules/func-names
-const fileUploadGenerator = function*(files, uploadFile) {
+function* fileUploadGenerator(files, uploadFile) {
   for (let fileIndex = 0; fileIndex < files.length; ) {
     yield {
       upload: uploadFile(files[fileIndex].file),
@@ -166,7 +172,7 @@ class SupportingUpload extends React.Component {
 
   render() {
     let dropzoneRef
-    const { hasManuscript } = this.props
+    const { hasManuscript, removeFiles } = this.props
     const successfullyUploadedFiles = this.state.files.filter(
       file => !file.error,
     )
@@ -220,9 +226,11 @@ class SupportingUpload extends React.Component {
               )}
               <UploadControl>
                 <RemoveLink
-                  onClick={() => {
-                    console.log('Clear!')
-                  }}
+                  onClick={() =>
+                    removeFiles().then(() => {
+                      this.setState({ files: [] })
+                    })
+                  }
                 >
                   <StyledRemoveIcon />
                   Clear files
