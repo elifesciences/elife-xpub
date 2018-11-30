@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import { Flex, Box } from 'grid-styled'
 import { differenceInCalendarDays, format } from 'date-fns'
 import { th } from '@pubsweet/ui-toolkit'
+import { H2 } from '@pubsweet/ui'
 import PropTypes from 'prop-types'
 import { Mutation } from 'react-apollo'
 import Icon from '../../ui/atoms/Icon'
@@ -11,6 +12,8 @@ import { DELETE_MANUSCRIPT } from '../../pages/SubmissionWizard/operations'
 import { ALL_MANUSCRIPTS } from '../../pages/Dashboard/operations'
 import ManuscriptStatus from '../atoms/ManuscriptStatus'
 import media from '../../global/layout/media'
+import ModalDialog from './ModalDialog'
+import ModalHistoryState from './ModalHistoryState'
 
 export const dashboardDateText = date => {
   const diffDays = differenceInCalendarDays(new Date(), date)
@@ -122,20 +125,15 @@ const ItemContent = styled(Flex)`
 `
 
 const DashboardListItem = ({ manuscript }) => {
-  const onClickHandler = deleteManuscript => {
-    deleteManuscript({
-      variables: { id: manuscript.id },
-      refetchQueries: [{ query: ALL_MANUSCRIPTS }],
-    })
-  }
+  const title = manuscript.meta.title || '(Untitled)'
 
   const renderItemContent = () => {
-    const { meta, clientStatus, created } = manuscript
+    const { clientStatus, created } = manuscript
     const date = new Date(created)
     return (
       <ItemContent>
         <TitleBox color={mapColor(clientStatus)} data-test-id="title" mb={3}>
-          {meta.title || '(Untitled)'}
+          {title}
         </TitleBox>
         <ManuscriptStatus statusCode={clientStatus} />
         <DateBox>
@@ -154,24 +152,46 @@ const DashboardListItem = ({ manuscript }) => {
           <ButtonContainer />
         </Fragment>
       ) : (
-        <Fragment>
-          <DashboardLink
-            data-test-id="continue-submission"
-            to={`${manuscript.lastStepVisited}`}
-          >
-            {renderItemContent()}
-          </DashboardLink>
-          <ButtonContainer>
-            <Mutation mutation={DELETE_MANUSCRIPT}>
-              {deleteManuscript => (
+        <ModalHistoryState name={manuscript.id}>
+          {({ showModal, hideModal, isModalVisible }) => (
+            <Fragment>
+              <DashboardLink
+                data-test-id="continue-submission"
+                to={`${manuscript.lastStepVisited}`}
+              >
+                {renderItemContent()}
+              </DashboardLink>
+              <ButtonContainer>
                 <StyledRemoveIcon
                   data-test-id="trash"
-                  onClick={() => onClickHandler(deleteManuscript)}
+                  onClick={() => showModal()}
                 />
-              )}
-            </Mutation>
-          </ButtonContainer>
-        </Fragment>
+              </ButtonContainer>
+              <Mutation mutation={DELETE_MANUSCRIPT}>
+                {deleteManuscript => (
+                  <ModalDialog
+                    acceptText="Delete"
+                    attention
+                    onAccept={() => {
+                      hideModal()
+                      deleteManuscript({
+                        variables: { id: manuscript.id },
+                        refetchQueries: [{ query: ALL_MANUSCRIPTS }],
+                      })
+                    }}
+                    onCancel={hideModal}
+                    open={isModalVisible()}
+                  >
+                    <H2>Confirm delete submission?</H2>
+                    Your submission &quot;
+                    {title}
+                    &quot; will be deleted permanently
+                  </ModalDialog>
+                )}
+              </Mutation>
+            </Fragment>
+          )}
+        </ModalHistoryState>
       )}
     </Root>
   )

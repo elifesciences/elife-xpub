@@ -75,4 +75,10 @@ elifePipeline {
             )
         }
     }
+
+    elifeMainlineOnly {
+        stage 'Downstream', {
+            build job: '/dependencies/dependencies-elife-xpub-deployment-update-xpub', wait: false, parameters: [string(name: 'commit', value: commit)]
+        }
+    }
 }
