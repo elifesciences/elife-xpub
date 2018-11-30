@@ -6,6 +6,7 @@ import { Flex, Box } from 'grid-styled'
 import { th } from '@pubsweet/ui-toolkit'
 import { Button } from '@pubsweet/ui'
 
+import { peoplePropType } from './types'
 import Icon from '../atoms/Icon'
 import ClearSearchButton from '../atoms/CrossIconButton'
 
@@ -225,19 +226,9 @@ class SearchBox extends React.Component {
   }
 }
 
-const peopleArrayPropType = PropTypes.arrayOf(
-  PropTypes.shape({
-    id: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
-    name: PropTypes.string.isRequired,
-    aff: PropTypes.string,
-    expertises: PropTypes.arrayOf(PropTypes.string.isRequired),
-    focuses: PropTypes.arrayOf(PropTypes.string.isRequired),
-  }),
-)
-
 SearchBox.propTypes = {
   filterFunction: PropTypes.func.isRequired,
-  options: peopleArrayPropType.isRequired,
+  options: peoplePropType.isRequired,
   onSubmit: PropTypes.func.isRequired,
   getMatchIndex: PropTypes.func.isRequired,
 }

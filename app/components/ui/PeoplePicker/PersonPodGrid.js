@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
+import { peoplePropType } from './types'
 import TwoColumnLayout from '../../global/layout/TwoColumnLayout'
 import PersonPod from './PersonPod'
 
@@ -36,21 +37,11 @@ const PersonPodGrid = ({
   </TwoColumnLayout>
 )
 
-const peopleArrayPropType = PropTypes.arrayOf(
-  PropTypes.shape({
-    id: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
-    name: PropTypes.string.isRequired,
-    aff: PropTypes.string,
-    expertises: PropTypes.arrayOf(PropTypes.string.isRequired),
-    focuses: PropTypes.arrayOf(PropTypes.string.isRequired),
-  }),
-)
-
 PersonPodGrid.propTypes = {
-  people: peopleArrayPropType.isRequired,
+  people: peoplePropType.isRequired,
   isSelected: PropTypes.func.isRequired,
   toggleSelection: PropTypes.func.isRequired,
-  selection: peopleArrayPropType.isRequired,
+  selection: peoplePropType.isRequired,
   maxSelection: PropTypes.number,
 }
 

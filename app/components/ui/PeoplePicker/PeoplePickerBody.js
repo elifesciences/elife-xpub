@@ -4,6 +4,7 @@ import styled from 'styled-components'
 import { th } from '@pubsweet/ui-toolkit'
 import { Box, Flex } from 'grid-styled'
 
+import { peoplePropType } from './types'
 import SelectedItem from '../atoms/SelectedItem'
 import PersonPodGrid from './PersonPodGrid'
 
@@ -68,23 +69,13 @@ const PeoplePickerBody = ({
   </React.Fragment>
 )
 
-const peopleArrayPropType = PropTypes.arrayOf(
-  PropTypes.shape({
-    id: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
-    name: PropTypes.string.isRequired,
-    aff: PropTypes.string,
-    expertises: PropTypes.arrayOf(PropTypes.string.isRequired),
-    focuses: PropTypes.arrayOf(PropTypes.string.isRequired),
-  }),
-)
-
 SelectedItems.propTypes = {
-  selection: peopleArrayPropType.isRequired,
+  selection: peoplePropType.isRequired,
   onCloseClick: PropTypes.func.isRequired,
 }
 
 SelectionHint.propTypes = {
-  selection: peopleArrayPropType.isRequired,
+  selection: peoplePropType.isRequired,
   maxSelection: PropTypes.number.isRequired,
   minSelection: PropTypes.number.isRequired,
 }
@@ -93,8 +84,8 @@ PeoplePickerBody.propTypes = {
   isSelected: PropTypes.func.isRequired,
   maxSelection: PropTypes.number.isRequired,
   minSelection: PropTypes.number.isRequired,
-  people: peopleArrayPropType.isRequired,
-  selection: peopleArrayPropType.isRequired,
+  people: peoplePropType.isRequired,
+  selection: peoplePropType.isRequired,
   toggleSelection: PropTypes.func.isRequired,
 }
 

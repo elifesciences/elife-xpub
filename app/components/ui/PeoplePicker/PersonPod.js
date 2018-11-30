@@ -5,6 +5,12 @@ import { th } from '@pubsweet/ui-toolkit'
 import { Action } from '@pubsweet/ui'
 import { Flex, Box } from 'grid-styled'
 
+import {
+  personNamePropType,
+  affiliationPropType,
+  expertisesPropType,
+  focusesPropType,
+} from './types'
 import Icon from '../atoms/Icon'
 import ButtonAsIconWrapper from '../atoms/ButtonAsIconWrapper'
 import SmallParagraph from '../atoms/SmallParagraph'
@@ -152,14 +158,15 @@ PersonPod.propTypes = {
   isSelectButtonClickable: PropTypes.bool,
   togglePersonSelection: PropTypes.func.isRequired,
   selectButtonType: PropTypes.oneOf(['add', 'remove', 'selected']).isRequired,
-  name: PropTypes.string.isRequired,
-  institution: PropTypes.string,
-  focuses: PropTypes.arrayOf(PropTypes.string.isRequired),
-  expertises: PropTypes.arrayOf(PropTypes.string.isRequired),
+  name: personNamePropType.isRequired,
+  institution: affiliationPropType,
+  focuses: focusesPropType,
+  expertises: expertisesPropType,
   isKeywordClickable: PropTypes.bool.isRequired,
   onKeywordClick: PropTypes.func,
   isStatusShown: PropTypes.bool,
   isSelected: PropTypes.bool.isRequired,
+  // status should be moved into types.js if/when this information is added to the people endpoint
   status: PropTypes.string,
 }
 

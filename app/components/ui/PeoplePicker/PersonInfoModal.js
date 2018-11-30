@@ -4,6 +4,12 @@ import styled from 'styled-components'
 import { th } from '@pubsweet/ui-toolkit'
 import { H2 } from '@pubsweet/ui'
 
+import {
+  personNamePropType,
+  affiliationPropType,
+  focusesPropType,
+  expertisesPropType,
+} from './types'
 import SmallParagraph from '../atoms/SmallParagraph'
 import Paragraph from '../atoms/Paragraph'
 import ModalDialog from '../molecules/ModalDialog'
@@ -49,10 +55,10 @@ PersonInfoModal.propTypes = {
   onAccept: PropTypes.func.isRequired,
   onCancel: PropTypes.func.isRequired,
   open: PropTypes.bool.isRequired,
-  name: PropTypes.string.isRequired,
-  institution: PropTypes.string.isRequired,
-  focuses: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
-  expertises: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
+  name: personNamePropType.isRequired,
+  institution: affiliationPropType.isRequired,
+  focuses: focusesPropType.isRequired,
+  expertises: expertisesPropType.isRequired,
 }
 
 export default PersonInfoModal

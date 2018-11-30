@@ -3,6 +3,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { escapeRegExp } from 'lodash'
 
+import { peoplePropType } from './types'
+
 class PeoplePickerLogic extends React.Component {
   constructor(props) {
     super(props)
@@ -97,16 +99,8 @@ class PeoplePickerLogic extends React.Component {
   }
 }
 
-const peoplePropTypes = PropTypes.shape({
-  id: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
-  name: PropTypes.string.isRequired,
-  aff: PropTypes.string,
-  expertises: PropTypes.arrayOf(PropTypes.string.isRequired),
-  focuses: PropTypes.arrayOf(PropTypes.string.isRequired),
-})
-
 PeoplePickerLogic.propTypes = {
-  initialSelection: PropTypes.arrayOf(peoplePropTypes),
+  initialSelection: peoplePropType,
   minSelection: PropTypes.number,
   maxSelection: PropTypes.number,
   onSubmit: PropTypes.func.isRequired,
