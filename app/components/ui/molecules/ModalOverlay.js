@@ -46,7 +46,13 @@ function cssTimeToMilliseconds(timeString) {
   }
 }
 
-const ModalOverlay = ({ children, open, theme, transparentBackground }) => (
+const ModalOverlay = ({
+  children,
+  open,
+  theme,
+  transparentBackground,
+  ...props
+}) => (
   <Root aria-live="assertive">
     <CSSTransition
       classNames="modal"
@@ -54,6 +60,7 @@ const ModalOverlay = ({ children, open, theme, transparentBackground }) => (
       mountOnEnter
       timeout={cssTimeToMilliseconds(theme.transitionDuration)}
       unmountOnExit
+      {...props}
     >
       <Container transparentBackground={transparentBackground}>
         {children}

@@ -37,6 +37,7 @@ const PersonInfoModal = ({
     <ModalDialog
       acceptText={acceptText}
       cancelText="Cancel"
+      data-test-id="info-modal"
       onAccept={onAccept}
       onCancel={onCancel}
       open={open}

@@ -71,7 +71,7 @@ const ModalDialog = ({
             )}
             {!attention && (
               <Button
-                data-test-id="accept"
+                data-test-id="modal-dialog-accept"
                 onClick={onAccept}
                 primary
                 type="button"

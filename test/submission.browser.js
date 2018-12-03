@@ -112,8 +112,11 @@ test('Happy path', async t => {
     .click(editors.suggestedSeniorEditorSelection)
     .click(editors.personPodInfoButtons.nth(0))
     .click(editors.cancelInfoModal)
-    .click(editors.personInfoModal.nth(1))
-    .click(editors.addPersonFromModal)
+  await t
+    .click(editors.personPodInfoButtons.nth(1))
+    .click(editors.acceptInfoModal)
+
+  await t
     .click(editors.peoplePickerOptions.nth(1))
     .click(editors.peoplePickerOptions.nth(0))
     // click on info button on selected person pod

@@ -119,7 +119,6 @@ class PersonPod extends React.Component {
     return (
       <React.Fragment>
         <PersonInfoModal
-          data-test-id="info-modal"
           expertises={expertises}
           focuses={focuses}
           institution={institution}
