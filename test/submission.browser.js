@@ -115,21 +115,23 @@ test('Happy path', async t => {
   await t
     .click(editors.personPodInfoButtons.nth(1))
     .click(editors.acceptInfoModal)
-
+    .expect(editors.selectedPeople.count)
+    .eql(1)
   await t
-    .click(editors.peoplePickerOptions.nth(1))
+    .click(editors.personPodInfoButtons.nth(1))
+    .click(editors.acceptInfoModal)
+    .expect(editors.selectedPeople.count)
+    .eql(0)
+  await t
     .click(editors.peoplePickerOptions.nth(0))
-    // click on info button on selected person pod
-    // click on 'remove editor'
-    // assert editor has been removed
     .click(editors.peoplePickerOptions.nth(2))
     .click(editors.peoplePickerOptions.nth(3))
     .click(editors.peoplePickerOptions.nth(5))
     .click(editors.peoplePickerOptions.nth(7))
     .click(editors.peoplePickerOptions.nth(9))
+    .expect(editors.selectedPeople.count)
+    .eql(6)
     .click(editors.peoplePickerSubmit)
-    // click on info button on one suggested senior editor pod
-    // remove editor from control
     .click(editors.suggestedReviewingEditorSelection)
     .click(editors.peoplePickerOptions.nth(1))
     .click(editors.peoplePickerOptions.nth(4))

@@ -5,6 +5,7 @@ const editors = {
   url: new RegExp(
     `${config.get('pubsweet-server.baseUrl')}/submit/[a-f0-9-]{36}/editors`,
   ),
+  selectedPeople: Selector('[data-test-id="selected-item"]'),
   suggestedSeniorEditorSelection: Selector(
     '[data-test-id="suggested-senior-editors"] [data-test-id="person-pod-button"]',
   ),
