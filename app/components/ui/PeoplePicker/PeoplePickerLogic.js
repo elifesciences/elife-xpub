@@ -15,7 +15,7 @@ class PeoplePickerLogic extends React.Component {
   }
 
   toggleSelection(person) {
-    if (this.isSelected(person)) {
+    if (this.select(person)) {
       this.setState({
         selection: this.state.selection.filter(p => p.id !== person.id),
       })
@@ -30,7 +30,7 @@ class PeoplePickerLogic extends React.Component {
     }
   }
 
-  isSelected(person) {
+  select(person) {
     return this.state.selection.some(p => p.id === person.id)
   }
 
@@ -90,7 +90,7 @@ class PeoplePickerLogic extends React.Component {
       searchOptions,
       filterFunction: this.filterPeople,
       getMatchIndex: this.getMatchIndex,
-      isSelected: person => this.isSelected(person),
+      isSelected: person => this.select(person),
       isValid: this.isValid(),
       selection: this.state.selection,
       onSubmit: () => this.handleSubmit(),

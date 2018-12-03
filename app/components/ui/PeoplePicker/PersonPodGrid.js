@@ -13,6 +13,7 @@ const PersonPodGrid = ({
   toggleSelection,
   selection,
   maxSelection,
+  ...props
 }) => (
   <TwoColumnLayout>
     {people

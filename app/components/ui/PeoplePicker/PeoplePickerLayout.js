@@ -23,7 +23,7 @@ const PeoplePickerLayout = ({ modalTitle, ...props }) => (
         <Centerer pt={3} px={3}>
           <Flex>
             <MainColumn>
-              <FormH2>Choose {modalTitle}</FormH2>
+              <FormH2>{modalTitle}</FormH2>
             </MainColumn>
           </Flex>
         </Centerer>
