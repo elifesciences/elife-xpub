@@ -58,10 +58,10 @@ const VALID_FILE_TYPES = [
 const StyledDropzone = styled(({ hasError, saveInnerRef, ...rest }) => (
   <Dropzone ref={saveInnerRef} {...rest} />
 ))`
-  border-style: dashed;
+  border-style: ${th('borderStyle')}; 
   border-color: ${({ hasError = false }) =>
     hasError ? th('colorError') : th('colorBorder')};
-  border-width: 2px;
+  border-width: ${th('borderWidth')};
   padding: ${th('space.4')};
 `
 

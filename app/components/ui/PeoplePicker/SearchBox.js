@@ -1,10 +1,12 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import Autosuggest from 'react-autosuggest'
 import { Flex, Box } from 'grid-styled'
 import { th } from '@pubsweet/ui-toolkit'
 import { Button } from '@pubsweet/ui'
 
+import { personNamePropType } from './types'
 import Icon from '../atoms/Icon'
 import ClearSearchButton from '../atoms/CrossIconButton'
 
@@ -106,7 +108,18 @@ class SearchBox extends React.Component {
     value: '',
     suggestions: [],
   }
+
   getSuggestionValue = suggestion => this.state.value
+
+  clearSearch = event => {
+    this.setState(
+      {
+        value: '',
+      },
+      () => this.handleSearch(),
+    )
+  }
+
   onSuggestionsFetchRequested = ({ value }) => {
     const inputValue = value.trim().toLowerCase()
     const inputLength = inputValue.length
@@ -122,11 +135,13 @@ class SearchBox extends React.Component {
       suggestions,
     })
   }
+
   onSuggestionsClearRequested = () => {
     this.setState({
       suggestions: [],
     })
   }
+
   onSuggestionSelected = (_, { suggestion }) => {
     this.setState(
       {
@@ -135,28 +150,24 @@ class SearchBox extends React.Component {
       () => this.handleSearch(),
     )
   }
+
   onChange = (_, { newValue }) => {
     this.setState({
       value: newValue,
     })
   }
+
   onKeyDown = event => {
     // key code for enter is 13
     if (event.keyCode === 13) {
       this.handleSearch()
     }
   }
+
   handleSearch = event => {
     this.props.onSubmit(this.state.value)
   }
-  clearSearch = event => {
-    this.setState(
-      {
-        value: '',
-      },
-      () => this.handleSearch(),
-    )
-  }
+
   renderSuggestion = suggestion => {
     const inputValue = this.state.value.trim().toLowerCase()
     const matchIndex = this.props.getMatchIndex(inputValue, suggestion.value)
@@ -178,6 +189,7 @@ class SearchBox extends React.Component {
       </div>
     )
   }
+
   render() {
     const { value, suggestions } = this.state
     const inputProps = {
@@ -212,6 +224,13 @@ class SearchBox extends React.Component {
       </Flex>
     )
   }
+}
+
+SearchBox.propTypes = {
+  filterFunction: PropTypes.func.isRequired,
+  options: PropTypes.arrayOf(PropTypes.objectOf(personNamePropType)).isRequired,
+  onSubmit: PropTypes.func.isRequired,
+  getMatchIndex: PropTypes.func.isRequired,
 }
 
 export default SearchBox
