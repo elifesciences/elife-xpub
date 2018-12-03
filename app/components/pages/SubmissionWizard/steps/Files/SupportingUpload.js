@@ -13,17 +13,15 @@ const UploadLink = styled.span`
   cursor: pointer;
 `
 
-const RemoveLink = styled(Box)`
-  display: inline-flex;
+const RemoveLink = styled.span`
   cursor: pointer;
-  color: ${th('colorTextSecondary')};
+  color: ${th('colorPrimary')};
 `
 
-const StyledRemoveIcon = styled(Icon).attrs({
-  iconName: 'Trash',
-  overrideName: '@pubsweet-pending.PeoplePicker.PersonPod.Remove',
-})`
-  fill: ${th('colorTextSecondary')};
+const ValidationText = styled.div`
+color: ${th('colorSuccess')}
+margin-top: ${th('space.1')};
+font-size: ${th('fontSizeBaseSmall')};
 `
 
 const StyledDropzone = styled(({ setRef, ...rest }) => (
@@ -214,29 +212,35 @@ class SupportingUpload extends React.Component {
         </StyledDropzone>
         {hasManuscript &&
           !this.state.uploading && (
-            <Flex>
-              {successfullyUploadedFiles.length < 10 && (
-                <UploadControl>
-                  Add more{' '}
-                  <UploadLink onClick={() => dropzoneRef.open()}>
-                    supporting files
-                  </UploadLink>{' '}
-                  (optional)
-                </UploadControl>
-              )}
-              <UploadControl>
-                <RemoveLink
-                  onClick={() =>
-                    removeFiles().then(() => {
-                      this.setState({ files: [] })
-                    })
-                  }
-                >
-                  <StyledRemoveIcon />
-                  Clear files
-                </RemoveLink>
-              </UploadControl>
-            </Flex>
+            <React.Fragment>
+              <Flex>
+                {successfullyUploadedFiles.length < 10 && (
+                  <React.Fragment>
+                    <UploadControl>
+                      Add more{' '}
+                      <UploadLink onClick={() => dropzoneRef.open()}>
+                        supporting files
+                      </UploadLink>{' '}
+                      (optional)
+                    </UploadControl>
+                  </React.Fragment>
+                )}
+                {successfullyUploadedFiles.length > 0 && (
+                  <UploadControl>
+                    <RemoveLink
+                      onClick={() =>
+                        removeFiles().then(() => {
+                          this.setState({ files: [] })
+                        })
+                      }
+                    >
+                      Remove all
+                    </RemoveLink>
+                  </UploadControl>
+                )}
+              </Flex>
+              <ValidationText>Maximum 10 supporting files</ValidationText>
+            </React.Fragment>
           )}
       </React.Fragment>
     )
