@@ -127,9 +127,16 @@ const FilesPageContainer = ({
     {(uploadFile, { loading, error: uploadError }) => {
       const fieldName = 'files'
       const { MANUSCRIPT_SOURCE, SUPPORTING_FILE } = manuscriptFileTypes
-      const hasManuscript = values[fieldName].some(
+      const manuscriptFileIndex = values[fieldName].findIndex(
         file => file.type === MANUSCRIPT_SOURCE,
       )
+      const hasManuscript = manuscriptFileIndex > -1
+
+      let manuscriptFile = {}
+      if (hasManuscript) {
+        manuscriptFile = values[fieldName][manuscriptFileIndex]
+      }
+
       return (
         <Mutation mutation={DELETE_MANUSCRIPT_MUTATION}>
           {deleteFile => (
@@ -152,6 +159,7 @@ const FilesPageContainer = ({
                     error: uploadError,
                   }}
                   data-test-id="upload"
+                  fileName={manuscriptFile.filename}
                   formError={touched[fieldName] && errors[fieldName]}
                   onDrop={files =>
                     onFileDrop(

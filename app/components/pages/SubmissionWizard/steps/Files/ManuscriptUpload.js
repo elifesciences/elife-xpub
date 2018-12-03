@@ -188,7 +188,7 @@ class ManuscriptUpload extends React.Component {
   }
 
   render() {
-    const { onDrop, conversion, formError, ...props } = this.props
+    const { onDrop, conversion, formError, fileName, ...props } = this.props
     let dropzoneRef
     return (
       <StyledDropzone
@@ -213,7 +213,7 @@ class ManuscriptUpload extends React.Component {
               conversion={conversion}
               dropzoneOpen={() => dropzoneRef.open()}
               errorMessage={this.state.errorMessage}
-              fileName={this.fileName}
+              fileName={this.fileName || fileName}
             />
           </Box>
         </CentredFlex>
