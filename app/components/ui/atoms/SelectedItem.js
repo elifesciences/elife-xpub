@@ -20,7 +20,7 @@ const Root = styled.div`
 `
 
 const SelectedItem = ({ label, onCloseClick }) => (
-  <Root>
+  <Root data-test-id="selected-item">
     {label} <StyledRemoveButton onClick={onCloseClick} />
   </Root>
 )

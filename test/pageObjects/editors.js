@@ -5,11 +5,19 @@ const editors = {
   url: new RegExp(
     `${config.get('pubsweet-server.baseUrl')}/submit/[a-f0-9-]{36}/editors`,
   ),
+  selectedPeople: Selector('[data-test-id="selected-item"]'),
   suggestedSeniorEditorSelection: Selector(
     '[data-test-id="suggested-senior-editors"] [data-test-id="person-pod-button"]',
   ),
   suggestedReviewingEditorSelection: Selector(
     '[data-test-id="suggested-reviewing-editors"] [data-test-id="person-pod-button"]',
+  ),
+  personPodInfoButtons: Selector('[data-test-id="info-button"]'),
+  cancelInfoModal: Selector('[data-test-id="info-modal"]').find(
+    '[data-test-id="modal-dialog-cancel"]',
+  ),
+  acceptInfoModal: Selector('[data-test-id="info-modal"]').find(
+    '[data-test-id="modal-dialog-accept"]',
   ),
   peoplePickerOptions: Selector(
     '[data-test-id="people-picker-body"] [data-test-id="person-pod-button"]',

@@ -31,7 +31,9 @@ describe('PersonInfoModal', () => {
         />
       </ThemeProvider>,
     )
-    const buttonText = wrapper.find('[data-test-id="accept"] button').text()
+    const buttonText = wrapper
+      .find('[data-test-id="modal-dialog-accept"] button')
+      .text()
     expect(buttonText).toEqual('Add editor')
   })
 
@@ -50,7 +52,9 @@ describe('PersonInfoModal', () => {
         />
       </ThemeProvider>,
     )
-    const buttonText = wrapper.find('[data-test-id="accept"] button').text()
+    const buttonText = wrapper
+      .find('[data-test-id="modal-dialog-accept"] button')
+      .text()
     expect(buttonText).toEqual('Remove editor')
   })
 
@@ -69,7 +73,9 @@ describe('PersonInfoModal', () => {
         />
       </ThemeProvider>,
     )
-    const acceptButton = wrapper.find('[data-test-id="accept"] button')
+    const acceptButton = wrapper.find(
+      '[data-test-id="modal-dialog-accept"] button',
+    )
     acceptButton.simulate('click')
     expect(handleAccept).toHaveBeenCalled()
   })
@@ -89,7 +95,9 @@ describe('PersonInfoModal', () => {
         />
       </ThemeProvider>,
     )
-    const cancelButton = wrapper.find('[data-test-id="cancel"] button')
+    const cancelButton = wrapper.find(
+      '[data-test-id="modal-dialog-cancel"] button',
+    )
     cancelButton.simulate('click')
     expect(handleAccept).toHaveBeenCalled()
   })

@@ -9,6 +9,8 @@ const dashboard = {
   statuses: Selector('[data-test-id=status]'),
   trashButton: Selector('[data-test-id=trash]'),
   continueSubmission: Selector('[data-test-id=continue-submission'),
+  modalConfirm: Selector('[data-test-id="modal-dialog-accept"'),
+  modalCancel: Selector('[data-test-id=modal-dialog-cancel'),
 }
 
 export default dashboard

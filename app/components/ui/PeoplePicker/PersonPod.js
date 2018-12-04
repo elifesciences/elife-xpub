@@ -138,7 +138,10 @@ class PersonPod extends React.Component {
             {institution && <StyledParagraph>{institution}</StyledParagraph>}
             {!institution && <Box mb={3} />}
             <Flex alignItems="center">
-              <ButtonAsIconWrapper onClick={this.openModal}>
+              <ButtonAsIconWrapper
+                data-test-id="info-button"
+                onClick={this.openModal}
+              >
                 <StyledInfoIcon />
               </ButtonAsIconWrapper>
               <StyledSmallParagraph>{separatedKeywords}</StyledSmallParagraph>
