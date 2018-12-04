@@ -112,17 +112,16 @@ test('Happy path', async t => {
     .click(editors.suggestedSeniorEditorSelection)
     .click(editors.personPodInfoButtons.nth(0))
     .click(editors.cancelInfoModal)
-  await t
+    .expect(editors.selectedPeople.count)
+    .eql(0)
     .click(editors.personPodInfoButtons.nth(1))
     .click(editors.acceptInfoModal)
     .expect(editors.selectedPeople.count)
     .eql(1)
-  await t
     .click(editors.personPodInfoButtons.nth(1))
     .click(editors.acceptInfoModal)
     .expect(editors.selectedPeople.count)
     .eql(0)
-  await t
     .click(editors.peoplePickerOptions.nth(0))
     .click(editors.peoplePickerOptions.nth(2))
     .click(editors.peoplePickerOptions.nth(3))
