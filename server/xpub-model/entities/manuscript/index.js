@@ -140,7 +140,15 @@ class Manuscript extends BaseModel {
     return manuscripts
   }
 
+  async refresh() {
+    const refreshed = await this.$query()
+    await this.$loadRelated('[teams, files]')
+    this.$set(refreshed)
+  }
+
   async save() {
+    // TODO: Refetch manuscript and check for last updated conflict to throw error if object is stale
+
     // save manuscript and all related files and teams
     // note that this also deletes any related entities that are not present
     await this.$query().upsertGraphAndFetch(this)

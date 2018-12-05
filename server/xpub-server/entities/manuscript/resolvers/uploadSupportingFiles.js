@@ -29,7 +29,7 @@ async function uploadSupportingFiles(_, { file, id }, { user }) {
     await fileEntity.delete()
     throw err
   }
-
+  manuscript.refresh()
   manuscript.files.push(fileEntity)
   await manuscript.save()
 
