@@ -60,7 +60,7 @@ elifePipeline {
                             'commit': commit,
                             'targetUrl': "https://s3.amazonaws.com/ci-elife-xpub-styleguide/${folder}/index.html",
                         ]
-                   )
+                    )
 
                     //  variables:
                     //    GIT_STRATEGY: none
