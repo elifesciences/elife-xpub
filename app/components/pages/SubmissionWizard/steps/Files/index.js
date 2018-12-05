@@ -6,7 +6,11 @@ import CoverLetterEditor from './CoverLetterEditor'
 import ValidatedField from '../../../../ui/atoms/ValidatedField'
 import ManuscriptUpload from './ManuscriptUpload'
 import SupportingUpload from './SupportingUpload'
-import { errorMessageMapping, manuscriptFileTypes } from './utils'
+import {
+  errorMessageMapping,
+  manuscriptFileTypes,
+  MAX_SUPPORTING_FILES,
+} from './utils'
 
 const UPLOAD_MANUSCRIPT_MUTATION = gql`
   mutation UploadFile($id: ID!, $file: Upload!, $fileSize: Int!) {
@@ -186,6 +190,7 @@ const FilesPageContainer = ({
                             file => file.type === SUPPORTING_FILE,
                           )}
                           hasManuscript={hasManuscript}
+                          maxSupportingFiles={MAX_SUPPORTING_FILES}
                           removeFiles={() =>
                             removeSupportFiles({
                               variables: { id: values.id },

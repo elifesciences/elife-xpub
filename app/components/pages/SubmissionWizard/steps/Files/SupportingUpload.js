@@ -169,7 +169,7 @@ class SupportingUpload extends React.Component {
 
   render() {
     let dropzoneRef
-    const { hasManuscript, removeFiles } = this.props
+    const { hasManuscript, removeFiles, maxSupportingFiles } = this.props
     const successfullyUploadedFiles = this.state.files.filter(
       file => !file.error,
     )
@@ -179,8 +179,13 @@ class SupportingUpload extends React.Component {
           maxSize={config.fileUpload.maxSizeMB * 1e6}
           onDrop={droppedFiles => {
             let files = droppedFiles
-            if (files.length > 10 - successfullyUploadedFiles.length) {
-              files.splice(10 - successfullyUploadedFiles.length)
+            if (
+              files.length >
+              maxSupportingFiles - successfullyUploadedFiles.length
+            ) {
+              files.splice(
+                maxSupportingFiles - successfullyUploadedFiles.length,
+              )
             }
             files = files.map((file, index) => ({
               id: index + this.state.files.length,
@@ -213,7 +218,7 @@ class SupportingUpload extends React.Component {
           !this.state.uploading && (
             <React.Fragment>
               <Flex>
-                {successfullyUploadedFiles.length < 10 && (
+                {successfullyUploadedFiles.length < maxSupportingFiles && (
                   <React.Fragment>
                     <UploadControl>
                       Add more{' '}
@@ -238,7 +243,9 @@ class SupportingUpload extends React.Component {
                   </UploadControl>
                 )}
               </Flex>
-              <ValidationText>Maximum 10 supporting files</ValidationText>
+              <ValidationText>
+                Maximum {maxSupportingFiles} supporting files
+              </ValidationText>
             </React.Fragment>
           )}
       </React.Fragment>
