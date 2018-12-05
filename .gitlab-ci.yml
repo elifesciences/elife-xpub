@@ -128,26 +128,6 @@ push:latest:
   only:
     - develop
 
-styleguide:
-  image: $IMAGE_ORG/$IMAGE_NAME:$CI_COMMIT_SHA
-  stage: deploy
-  tags:
-    - elife-kubernetes-runner
-  except:
-    - schedules
-  variables:
-    GIT_STRATEGY: none
-    NODE_ENV: production
-    NODE_CONFIG_ENV: styleguide
-    S3_BUCKET: ci-elife-xpub-styleguide
-    URL: https://s3.amazonaws.com/$S3_BUCKET/$CI_COMMIT_REF_NAME/index.html
-  script:
-    - cd ${HOME}
-    - npm run build:styleguide
-    - node scripts/upload-to-s3.js _build_styleguide $CI_COMMIT_REF_NAME
-    - ./scripts/github_status.sh success Styleguide $URL "Deployed successfully"
-    - "printf \"\nStyleguide: $URL\n\""
-
 scale-cluster:
   image: pubsweet/kubernetes:latest
   stage: build

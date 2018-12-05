@@ -26,7 +26,6 @@ elifePipeline {
                         sh "IMAGE_TAG=${commit} docker-compose -f docker-compose.yml -f docker-compose.ci.yml run --rm --name elife-xpub_app_test app npm test"
                     }, 'test', commit)
                 },
-                // TODO: not sure this can run in parallel with `test`?
                 'test:browser': {
                     try {
                         withCommitStatus({
@@ -42,6 +41,35 @@ elifePipeline {
                     }, 'test:dependencies', commit)
                 },
             ]
+
+            def folder
+            elifePullRequestOnly { prNumber ->
+                folder = "${prNumber}"
+            }
+            elifeMainlineOnly {
+                folder = 'develop'
+            }
+            actions['styleguide'] = {
+                def targetUrl = "https://s3.amazonaws.com/ci-elife-xpub-styleguide/${folder}/index.html"
+                withCommitStatus(
+                    {
+                        try {
+                            sh "IMAGE_TAG=${commit} docker-compose -f docker-compose.yml -f docker-compose.ci.yml run --name elife-xpub_app_style_guide app npm run build:styleguide"
+                            sh "docker cp elife-xpub_app_style_guide:/home/xpub/_build_styleguide ${folder}"
+                            sh "aws s3 cp --recursive ${folder} s3://ci-elife-xpub-styleguide/${folder}"
+                            echo "Styleguide URL: $targetUrl"
+                        } catch (e) {
+                            sh "docker-compose -f docker-compose.yml -f docker-compose.ci.yml down -v"
+                        }
+                    },
+                    [
+                        'name': 'styleguide',
+                        'commit': commit,
+                        'targetUrl': targetUrl,
+                    ]
+                )
+            }
+
             try {
                 sh "IMAGE_TAG=${commit} docker-compose -f docker-compose.yml -f docker-compose.ci.yml up -d postgres"
                 sh "IMAGE_TAG=${commit} docker-compose -f docker-compose.yml -f docker-compose.ci.yml run --rm --name elife-xpub_wait_postgres app bash -c './scripts/wait-for-it.sh postgres:5432'"
