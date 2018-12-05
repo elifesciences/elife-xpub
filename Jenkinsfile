@@ -44,10 +44,10 @@ elifePipeline {
 
             elifePullRequestOnly { prNumber ->
                 actions['styleguide'] = {
+                    def folder = "${prNumber}"
                     withCommitStatus(
                         {
                             try {
-                                def folder = "${prNumber}"
                                 sh "IMAGE_TAG=${commit} docker-compose -f docker-compose.yml -f docker-compose.ci.yml run --name elife-xpub_app_style_guide app npm run build:styleguide"
                                 sh "docker cp elife-xpub_app_style_guide:/home/xpub/_build_styleguide ${folder}"
                                 sh "aws s3 cp --recursive ${folder} s3://ci-elife-xpub-styleguide/${folder}"
