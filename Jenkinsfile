@@ -45,12 +45,14 @@ elifePipeline {
             elifePullRequestOnly { prNumber ->
                 actions['styleguide'] = {
                     def folder = "${prNumber}"
+                    def targetUrl = "https://s3.amazonaws.com/ci-elife-xpub-styleguide/${folder}/index.html"
                     withCommitStatus(
                         {
                             try {
                                 sh "IMAGE_TAG=${commit} docker-compose -f docker-compose.yml -f docker-compose.ci.yml run --name elife-xpub_app_style_guide app npm run build:styleguide"
                                 sh "docker cp elife-xpub_app_style_guide:/home/xpub/_build_styleguide ${folder}"
                                 sh "aws s3 cp --recursive ${folder} s3://ci-elife-xpub-styleguide/${folder}"
+                                echo "Styleguide URL: $targetUrl"
                             } catch (e) {
                                 sh "docker-compose -f docker-compose.yml -f docker-compose.ci.yml down -v"
                             }
@@ -58,20 +60,9 @@ elifePipeline {
                         [
                             'name': 'styleguide',
                             'commit': commit,
-                            'targetUrl': "https://s3.amazonaws.com/ci-elife-xpub-styleguide/${folder}/index.html",
+                            'targetUrl': targetUrl,
                         ]
                     )
-
-                    //  variables:
-                    //    GIT_STRATEGY: none
-                    //    NODE_ENV: production
-                    //    NODE_CONFIG_ENV: styleguide
-                    //    S3_BUCKET: ci-elife-xpub-styleguide
-                    //    URL: https://s3.amazonaws.com/$S3_BUCKET/$CI_COMMIT_REF_NAME/index.html
-                    //  script:
-                    //    - node scripts/upload-to-s3.js _build_styleguide $CI_COMMIT_REF_NAME
-                    //    - ./scripts/github_status.sh success Styleguide $URL "Deployed successfully"
-                    //    - "printf \"\nStyleguide: $URL\n\""
                 }
             }
 
