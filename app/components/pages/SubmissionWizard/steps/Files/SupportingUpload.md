@@ -4,6 +4,7 @@ Awaiting file
 ;<SupportingUpload
   hasManuscript={true}
   maxSupportingFiles={10}
+  files={[]}
   uploadFile={file =>
     new Promise((resolve, reject) => {
       setTimeout(() => {
