@@ -46,8 +46,10 @@ elifePipeline {
                 actions['styleguide'] = {
                     withCommitStatus({
                         try {
+                            def folder = "${prNumber}"
                             sh "IMAGE_TAG=${commit} docker-compose -f docker-compose.yml -f docker-compose.ci.yml run --name elife-xpub_app_style_guide app npm run build:styleguide"
-                            sh "docker cp elife-xpub_app_style_guide:/home/xpub/_build_styleguide ."
+                            sh "docker cp elife-xpub_app_style_guide:/home/xpub/_build_styleguide ${folder}"
+                            sh "aws s3 cp --recursive ${folder} s3://ci-elife-xpub-styleguide"
                         } catch (e) {
                             sh "docker-compose -f docker-compose.yml -f docker-compose.ci.yml down -v"
                         }
