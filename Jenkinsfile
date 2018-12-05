@@ -41,6 +41,31 @@ elifePipeline {
                     }, 'test:dependencies', commit)
                 },
             ]
+
+            elifePullRequestOnly { prNumber ->
+                actions['styleguide'] = {
+                    withCommitStatus({
+                        try {
+                            sh "IMAGE_TAG=${commit} docker-compose -f docker-compose.yml -f docker-compose.ci.yml run --name elife-xpub_app_style_guide app npm run build:styleguide"
+                            sh "docker cp elife-xpub_app_style_guide:/home/xpub/_build_styleguide ."
+                        } catch (e) {
+                            sh "docker-compose -f docker-compose.yml -f docker-compose.ci.yml down -v"
+                        }
+                    }, 'styleguide', commit)
+
+                    //  variables:
+                    //    GIT_STRATEGY: none
+                    //    NODE_ENV: production
+                    //    NODE_CONFIG_ENV: styleguide
+                    //    S3_BUCKET: ci-elife-xpub-styleguide
+                    //    URL: https://s3.amazonaws.com/$S3_BUCKET/$CI_COMMIT_REF_NAME/index.html
+                    //  script:
+                    //    - node scripts/upload-to-s3.js _build_styleguide $CI_COMMIT_REF_NAME
+                    //    - ./scripts/github_status.sh success Styleguide $URL "Deployed successfully"
+                    //    - "printf \"\nStyleguide: $URL\n\""
+                }
+            }
+
             try {
                 sh "IMAGE_TAG=${commit} docker-compose -f docker-compose.yml -f docker-compose.ci.yml up -d postgres"
                 sh "IMAGE_TAG=${commit} docker-compose -f docker-compose.yml -f docker-compose.ci.yml run --rm --name elife-xpub_wait_postgres app bash -c './scripts/wait-for-it.sh postgres:5432'"
@@ -60,31 +85,6 @@ elifePipeline {
     }
 
     elifePullRequestOnly { prNumber ->
-        // TODO: run in parallel
-        stage 'Styleguide', {
-            withCommitStatus({
-                try {
-                    sh "IMAGE_TAG=${commit} docker-compose -f docker-compose.yml -f docker-compose.ci.yml run --name elife-xpub_app_style_guide app npm run build:styleguide"
-                    sh "docker cp elife-xpub_app_style_guide:/home/xpub/_build_styleguide ."
-                } catch (e) {
-                    sh "docker-compose -f docker-compose.yml -f docker-compose.ci.yml down -v"
-                }
-            }, 'styleguide', commit)
-
-            //  variables:
-            //    GIT_STRATEGY: none
-            //    NODE_ENV: production
-            //    NODE_CONFIG_ENV: styleguide
-            //    S3_BUCKET: ci-elife-xpub-styleguide
-            //    URL: https://s3.amazonaws.com/$S3_BUCKET/$CI_COMMIT_REF_NAME/index.html
-            //  script:
-            //    - cd ${HOME}
-            //    - npm run build:styleguide
-            //    - node scripts/upload-to-s3.js _build_styleguide $CI_COMMIT_REF_NAME
-            //    - ./scripts/github_status.sh success Styleguide $URL "Deployed successfully"
-            //    - "printf \"\nStyleguide: $URL\n\""
-        }
-
         stage 'Deploy for review', {
             checkout scm
             sh "scripts/helm_deploy.sh pr-${prNumber} ${commit}"
