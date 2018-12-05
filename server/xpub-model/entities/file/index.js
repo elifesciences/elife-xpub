@@ -51,9 +51,7 @@ class File extends BaseModel {
   }
 
   static async find(id) {
-    const file = await this.query().where({
-      id,
-    })
+    const file = await this.find(id)
 
     return file
   }

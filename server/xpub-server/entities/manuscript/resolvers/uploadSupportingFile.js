@@ -1,6 +1,6 @@
 const { Manuscript, File, User } = require('@elifesciences/xpub-model')
 
-async function uploadSupportingFiles(_, { file, id }, { user }) {
+async function uploadSupportingFile(_, { file, id }, { user }) {
   const userUuid = await User.getUuidForProfile(user)
   const manuscript = await Manuscript.find(id, userUuid)
 
@@ -36,4 +36,4 @@ async function uploadSupportingFiles(_, { file, id }, { user }) {
   return manuscript
 }
 
-module.exports = uploadSupportingFiles
+module.exports = uploadSupportingFile

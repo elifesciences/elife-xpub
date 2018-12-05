@@ -6,7 +6,7 @@ const removeUploadedManuscript = require('./removeUploadedManuscript')
 const submitManuscript = require('./submitManuscript')
 const updateManuscript = require('./updateManuscript')
 const uploadManuscript = require('./uploadManuscript')
-const uploadSupportingFiles = require('./uploadSupportingFiles')
+const uploadSupportingFile = require('./uploadSupportingFile')
 const removeSupportingFiles = require('./removeSupportingFiles')
 
 const resolvers = {
@@ -57,7 +57,7 @@ const resolvers = {
 
     uploadManuscript,
 
-    uploadSupportingFiles,
+    uploadSupportingFile,
 
     removeUploadedManuscript,
 

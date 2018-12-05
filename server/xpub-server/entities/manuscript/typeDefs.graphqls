@@ -8,7 +8,7 @@ extend type Mutation {
   deleteManuscript(id: ID!): ID!
   updateManuscript(data: ManuscriptInput!): Manuscript!
   uploadManuscript(id: ID!, file: Upload!, fileSize: Int!): Manuscript!
-  uploadSupportingFiles(id: ID!, file: Upload!): Manuscript!
+  uploadSupportingFile(id: ID!, file: Upload!): Manuscript!
   removeSupportingFiles(id: ID!): Manuscript!
   removeUploadedManuscript(id: ID!): Manuscript!
   submitManuscript(data: ManuscriptInput!): Manuscript!
