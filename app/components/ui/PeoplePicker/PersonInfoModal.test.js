@@ -5,8 +5,8 @@ import theme from '@elifesciences/elife-theme'
 
 import PersonInfoModal from './PersonInfoModal'
 
-const handleAccept = jest.fn()
-const handleCancel = jest.fn()
+let handleAccept
+let handleCancel
 
 const person = {
   name: 'Joe Bloggs',
@@ -16,6 +16,11 @@ const person = {
 }
 
 describe('PersonInfoModal', () => {
+  beforeEach(() => {
+    handleAccept = jest.fn()
+    handleCancel = jest.fn()
+  })
+  
   it("renders button with 'Add editor' text, if person has already been selected", () => {
     const wrapper = mount(
       <ThemeProvider theme={theme}>
