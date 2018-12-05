@@ -104,6 +104,6 @@ describe('PersonInfoModal', () => {
       '[data-test-id="modal-dialog-cancel"] button',
     )
     cancelButton.simulate('click')
-    expect(handleAccept).toHaveBeenCalled()
+    expect(handleCancel).toHaveBeenCalled()
   })
 })
