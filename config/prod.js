@@ -20,7 +20,12 @@ module.exports = {
   },
   mailer: {
     from: 'editorial@elifesciences.org',
-    path: `${__dirname}/non-serializable/mailer`,
+    path: {
+      transport: {
+        host: 'localhost',
+        port: 25,
+      },
+    },
   },
   aws: {
     s3: {

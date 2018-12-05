@@ -32,6 +32,15 @@ module.exports = {
     },
     apiKey: 'MECA_API_KEY',
   },
+  mailer: {
+    from: 'EMAIL_FROM_ADDRESS',
+    path: {
+      transport: {
+        host: 'EMAIL_TRANSPORT_HOST',
+        port: 'EMAIL_TRANSPORT_PORT',
+      },
+    },
+  },
   aws: {
     s3: {
       params: {

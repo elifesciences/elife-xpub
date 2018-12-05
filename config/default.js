@@ -83,7 +83,16 @@ module.exports = {
   },
   mailer: {
     from: 'dev@example.com',
-    path: `${__dirname}/non-serializable/fake-mailer`,
+    path: {
+      transport: {
+        host: 'smtp.ethereal.email',
+        port: 587,
+        auth: {
+          user: 't5oksg3zpiv6endr@ethereal.email',
+          pass: 'WgDgJYhXPTUCun3sXj',
+        },
+      },
+    },
   },
   aws: {
     credentials: {

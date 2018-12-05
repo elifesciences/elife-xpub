@@ -50,12 +50,14 @@ module.exports = {
     notificationEmail: 'test@example.com',
   },
   mailer: {
-    transport: {
-      sendmail: false,
-      port: 1025,
-      auth: {
-        user: 'user',
-        pass: 'pass',
+    path: {
+      transport: {
+        sendmail: false,
+        port: 1025,
+        auth: {
+          user: 'user',
+          pass: 'pass',
+        },
       },
     },
   },
