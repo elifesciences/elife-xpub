@@ -29,7 +29,7 @@ const UPLOAD_MANUSCRIPT_MUTATION = gql`
 
 const UPLOAD_SUPPORTING_MUTATION = gql`
   mutation UploadFile($id: ID!, $file: Upload!) {
-    uploadSupportingFiles(id: $id, file: $file) {
+    uploadSupportingFile(id: $id, file: $file) {
       id
       meta {
         title
