@@ -1,6 +1,6 @@
 module.exports = {
   transport: {
-    host: 'localhost',
-    port: 25,
+    host: `${process.env.MAILER_HOST || 'localhost'}`,
+    port: `${process.env.MAILER_PORT || 25}`,
   },
 }
