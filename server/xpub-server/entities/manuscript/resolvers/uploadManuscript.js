@@ -13,6 +13,7 @@ function addFileEntityToManuscript(manuscriptEntity, fileEntity) {
     element => element.type === 'MANUSCRIPT_SOURCE',
   )
 
+  manuscript.refresh()
   if (manuscriptUploadIndex < 0) {
     manuscript.files.push(fileEntity)
   } else {
