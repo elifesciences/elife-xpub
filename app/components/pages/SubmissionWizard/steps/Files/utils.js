@@ -9,3 +9,5 @@ export const manuscriptFileTypes = {
   MANUSCRIPT_SOURCE: 'MANUSCRIPT_SOURCE',
   SUPPORTING_FILE: 'SUPPORTING_FILE',
 }
+
+export const MAX_SUPPORTING_FILES = 10

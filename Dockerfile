@@ -44,7 +44,6 @@ COPY templates templates
 ENV NODE_ENV "production"
 ARG CI_COMMIT_SHA
 ENV CI_COMMIT_SHA ${CI_COMMIT_SHA}
-RUN echo "{ \"version\": \"${CI_COMMIT_SHA}\", \"date\":\"$(date)\" }" > app/version.json
 
 ENV XPUB_LOG_PATH "/var/log/xpub"
 RUN mkdir -p ${XPUB_LOG_PATH}

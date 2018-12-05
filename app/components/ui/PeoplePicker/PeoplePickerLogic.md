@@ -1,8 +1,14 @@
-`PeoplePicker` uses a render prop to allow customising the layout.
+`PeoplePickerLogic` uses a render prop to allow customising the layout.
+
+Note that by spreading the `prop` parameter from the render prop function into
+the `Buttons` and `Body` components as shown in the examples, you avoid the need
+to update your code should the API change in future.
 
 ### Buttons above body
 
 ```js
+const PeoplePickerBody = require('./PeoplePickerBody').default
+const PeoplePickerButtons = require('./PeoplePickerButtons').default
 const people = [
   {
     id: 1,
@@ -39,30 +45,29 @@ const people = [
     expertises: ['Neuroscience', 'Pumpkins', 'Chaffinches'],
   },
 ]
-;<PeoplePicker
+;<PeoplePickerLogic
   initialSelection={[people[1]]}
   minSelection={2}
   maxSelection={3}
   onSubmit={selection => console.log(selection)}
+  onCancel={() => console.log('cancelled')}
   people={people}
 >
   {props => (
     <React.Fragment>
-      <PeoplePicker.Buttons {...props} />
+      <PeoplePickerButtons {...props} />
       <hr />
-      <PeoplePicker.Body {...props} />
+      <PeoplePickerBody {...props} />
     </React.Fragment>
   )}
-</PeoplePicker>
+</PeoplePickerLogic>
 ```
 
-Note that by spreading the `prop` parameter from the render prop function into
-the `Buttons` and `Body` components as shown in the example, you avoid the need
-to update your code should the API change in future.
-
-### Body only
+### Buttons below body
 
 ```js
+const PeoplePickerBody = require('./PeoplePickerBody').default
+const PeoplePickerButtons = require('./PeoplePickerButtons').default
 const people = [
   {
     id: 1,
@@ -99,20 +104,20 @@ const people = [
     expertises: ['Neuroscience', 'Pumpkins', 'Chaffinches'],
   },
 ]
-
-const selection = people.slice(0, 2)
-;<PeoplePicker.Body
-  select={person => selection.includes(person)}
-  maxSelection={5}
-  minSelection={3}
+;<PeoplePickerLogic
+  initialSelection={[people[1]]}
+  minSelection={2}
+  maxSelection={3}
+  onSubmit={selection => console.log(selection)}
+  onCancel={() => console.log('cancelled')}
   people={people}
-  selection={selection}
-  toggleSelection={person => console.log(person)}
-/>
-```
-
-### Buttons only
-
-```js
-;<PeoplePicker.Buttons isValid={true} />
+>
+  {props => (
+    <React.Fragment>
+      <PeoplePickerBody {...props} />
+      <hr />
+      <PeoplePickerButtons {...props} />
+    </React.Fragment>
+  )}
+</PeoplePickerLogic>
 ```

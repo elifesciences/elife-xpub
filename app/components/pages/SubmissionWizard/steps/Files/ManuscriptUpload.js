@@ -58,10 +58,10 @@ const VALID_FILE_TYPES = [
 const StyledDropzone = styled(({ hasError, saveInnerRef, ...rest }) => (
   <Dropzone ref={saveInnerRef} {...rest} />
 ))`
-  border-style: dashed;
+  border-style: ${th('borderStyle')};
   border-color: ${({ hasError = false }) =>
     hasError ? th('colorError') : th('colorBorder')};
-  border-width: 2px;
+  border-width: ${th('borderWidth')};
   padding: ${th('space.4')};
 `
 
@@ -199,7 +199,7 @@ class ManuscriptUpload extends React.Component {
         maxSize={config.fileUpload.maxSizeMB * 1e6}
         onDrop={files => {
           this.setErrorMessage(null)
-          this.fileName = files[0].name
+          this.droppedFileName = files[0].name
           onDrop(files)
         }}
         saveInnerRef={node => {
@@ -213,7 +213,7 @@ class ManuscriptUpload extends React.Component {
               conversion={conversion}
               dropzoneOpen={() => dropzoneRef.open()}
               errorMessage={this.state.errorMessage}
-              fileName={this.fileName || fileName}
+              fileName={this.droppedFileName || fileName}
             />
           </Box>
         </CentredFlex>

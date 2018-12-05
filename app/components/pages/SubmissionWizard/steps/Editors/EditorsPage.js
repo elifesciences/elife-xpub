@@ -4,7 +4,7 @@ import { Box } from 'grid-styled'
 import { Action, ErrorText } from '@pubsweet/ui'
 import { FormH3 } from '../../../../ui/atoms/FormHeadings'
 
-import PeoplePickerControl from './PeoplePickerControl'
+import PeoplePickerControl from '../../../../ui/PeoplePicker/PeoplePickerControl'
 import Textarea from '../../../../ui/atoms/Textarea'
 import CalloutBox from '../../../../ui/atoms/CalloutBox'
 import ValidatedField from '../../../../ui/atoms/ValidatedField'
@@ -150,14 +150,15 @@ class EditorsPage extends React.Component {
               initialSelection={values.suggestedSeniorEditors}
               maxSelection={limits.suggestedSeniorEditors.max}
               minSelection={limits.suggestedSeniorEditors.min}
+              modalName="suggestedSeniorEditors"
+              modalTitle="Suggest senior editors"
               onRequestRemove={person =>
                 this.removeSelection('suggestedSeniorEditors', person)
               }
               onSubmit={selection =>
                 this.setSelection('suggestedSeniorEditors', selection)
               }
-              options={seniorEditors}
-              title="senior editors"
+              people={seniorEditors}
             />
             <ValidationMessage
               message={
@@ -179,14 +180,15 @@ class EditorsPage extends React.Component {
               initialSelection={values.opposedSeniorEditors}
               maxSelection={limits.opposedSeniorEditors.max}
               minSelection={limits.opposedSeniorEditors.min}
+              modalName="opposedSeniorEditors"
+              modalTitle="Exclude senior editors"
               onRequestRemove={person =>
                 this.removeSelection('opposedSeniorEditors', person)
               }
               onSubmit={selection =>
                 this.setSelection('opposedSeniorEditors', selection)
               }
-              options={seniorEditors}
-              title="senior editors"
+              people={seniorEditors}
             />
 
             <ValidationMessage
@@ -211,14 +213,15 @@ class EditorsPage extends React.Component {
               initialSelection={values.suggestedReviewingEditors}
               maxSelection={limits.suggestedReviewingEditors.max}
               minSelection={limits.suggestedReviewingEditors.min}
+              modalName="suggestedReviewingEditors"
+              modalTitle="Suggest reviewing editors"
               onRequestRemove={person =>
                 this.removeSelection('suggestedReviewingEditors', person)
               }
               onSubmit={selection =>
                 this.setSelection('suggestedReviewingEditors', selection)
               }
-              options={reviewingEditors}
-              title="reviewing editors"
+              people={reviewingEditors}
             />
 
             <ValidationMessage
@@ -242,14 +245,15 @@ class EditorsPage extends React.Component {
               initialSelection={values.opposedReviewingEditors}
               maxSelection={limits.opposedReviewingEditors.max}
               minSelection={limits.opposedReviewingEditors.min}
+              modalName="opposedReviewingEditors"
+              modalTitle="Exclude reviewing editors"
               onRequestRemove={person =>
                 this.removeSelection('opposedReviewingEditors', person)
               }
               onSubmit={selection =>
                 this.setSelection('opposedReviewingEditors', selection)
               }
-              options={reviewingEditors}
-              title="Reviewing Editors"
+              people={reviewingEditors}
             />
 
             <ValidationMessage

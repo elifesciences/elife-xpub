@@ -5,7 +5,7 @@ import theme from '@elifesciences/elife-theme'
 
 import PersonPod from './PersonPod'
 
-const handleIconClick = jest.fn()
+const handleSelectButtonClick = jest.fn()
 const handleKeywordClick = jest.fn()
 
 function makePersonPodWrapper(props) {
@@ -17,8 +17,8 @@ function makePersonPodWrapper(props) {
 }
 
 const propsWithClickableFunctionality = {
-  togglePersonSelection: handleIconClick,
-  iconType: 'add',
+  togglePersonSelection: handleSelectButtonClick,
+  selectButtonType: 'add',
   name: 'Richard Aldrich',
   institution: 'Utrecht University',
   focuses: ['cell biology'],
@@ -39,13 +39,13 @@ describe('PersonPod component', () => {
     jest.clearAllMocks()
   })
 
-  it('onIconClick handler - fired when selection button is clicked', () => {
+  it('togglePersonSelection handler - fired when selection button is clicked', () => {
     const wrapper = makePersonPodWrapper(propsWithClickableFunctionality)
     const selectionButton = wrapper.find(
       'button[data-test-id="person-pod-button"]',
     )
     selectionButton.simulate('click')
-    expect(handleIconClick.mock.calls).toHaveLength(1)
+    expect(handleSelectButtonClick.mock.calls).toHaveLength(1)
   })
 
   it('onKeywordClick handler - fired when selection button is clicked', () => {

@@ -6,7 +6,11 @@ import CoverLetterEditor from './CoverLetterEditor'
 import ValidatedField from '../../../../ui/atoms/ValidatedField'
 import ManuscriptUpload from './ManuscriptUpload'
 import SupportingUpload from './SupportingUpload'
-import { errorMessageMapping, manuscriptFileTypes } from './utils'
+import {
+  errorMessageMapping,
+  manuscriptFileTypes,
+  MAX_SUPPORTING_FILES,
+} from './utils'
 
 const UPLOAD_MANUSCRIPT_MUTATION = gql`
   mutation UploadFile($id: ID!, $file: Upload!, $fileSize: Int!) {
@@ -125,16 +129,17 @@ const FilesPageContainer = ({
 }) => (
   <Mutation mutation={UPLOAD_MANUSCRIPT_MUTATION}>
     {(uploadFile, { loading, error: uploadError }) => {
-      const fieldName = 'files'
+      const filesFieldName = 'files'
+      const submissionFiles = values[filesFieldName]
       const { MANUSCRIPT_SOURCE, SUPPORTING_FILE } = manuscriptFileTypes
-      const manuscriptFileIndex = values[fieldName].findIndex(
+      const manuscriptFileIndex = submissionFiles.findIndex(
         file => file.type === MANUSCRIPT_SOURCE,
       )
       const hasManuscript = manuscriptFileIndex > -1
 
       let manuscriptFile = {}
       if (hasManuscript) {
-        manuscriptFile = values[fieldName][manuscriptFileIndex]
+        manuscriptFile = submissionFiles[manuscriptFileIndex]
       }
 
       return (
@@ -160,7 +165,7 @@ const FilesPageContainer = ({
                   }}
                   data-test-id="upload"
                   fileName={manuscriptFile.filename}
-                  formError={touched[fieldName] && errors[fieldName]}
+                  formError={touched[filesFieldName] && errors[filesFieldName]}
                   onDrop={files =>
                     onFileDrop(
                       files,
@@ -182,10 +187,11 @@ const FilesPageContainer = ({
                     <Mutation mutation={DELETE_SUPPORTING_FILES_MUTATION}>
                       {removeSupportFiles => (
                         <SupportingUpload
-                          files={values[fieldName].filter(
+                          files={submissionFiles.filter(
                             file => file.type === SUPPORTING_FILE,
                           )}
                           hasManuscript={hasManuscript}
+                          maxSupportingFiles={MAX_SUPPORTING_FILES}
                           removeFiles={() =>
                             removeSupportFiles({
                               variables: { id: values.id },
