@@ -1,4 +1,6 @@
-A people picker in a modal
+Please note: the PeoplePicker is a combination of the `PeoplePickerLayout` (how it's rendered) & the `PeoplePickerLogic` (how the sub-components interact)
+
+The People Picker Layout is responsible for rendering the `PeoplePickerBody`, `PeoplePickerButtons` & `SearchBox` in eLife's chosen order - search at the top, then grid, then buttons below.
 
 **Search box behaviour within the People Picker**
 
@@ -13,7 +15,8 @@ Searching for an empty string returns all person pods.
 Currently the input won't generate a dropdown list of suggestions (but will at some point in the future).
 
 ```js
-initialState = { open: false }
+const PeoplePickerBody = require('./PeoplePickerBody').default
+const PeoplePickerButtons = require('./PeoplePickerButtons').default
 const people = [
   {
     id: 1,
@@ -44,19 +47,22 @@ const people = [
     expertises: ['Evolutionary Biology', 'Microbiology and Infectious Disease'],
   },
 ]
-;<div>
-  <button onClick={() => setState({ open: true })}>Open</button>
-
-  <PeoplePickerModal
-    maxSelection={3}
-    minSelection={2}
-    open={state.open}
-    onCancel={() => setState({ open: false })}
-    onSubmit={selection => {
-      console.log('Selected', selection)
-      setState({ open: false })
-    }}
-    people={people}
-  />
-</div>
+initialState = { open: false }
+;<PeoplePickerLayout
+  modalTitle="This is the title of the picker"
+  initialSelection={[people[1]]}
+  minSelection={1}
+  maxSelection={3}
+  onSubmit={selection => console.log('Selected', selection)}
+  onCancel={() => console.log('Cancelled')}
+  people={people}
+>
+  {props => (
+    <React.Fragment>
+      <PeoplePickerButtons {...props} />
+      <hr />
+      <PeoplePickerBody {...props} />
+    </React.Fragment>
+  )}
+</PeoplePickerLayout>
 ```

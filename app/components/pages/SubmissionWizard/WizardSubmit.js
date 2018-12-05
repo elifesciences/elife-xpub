@@ -30,7 +30,7 @@ const WizardSubmit = ({ setTouched, submitForm, validateForm }) => (
           open={isModalVisible()}
         >
           <H2>Confirm submission?</H2>
-          Your initial submission will be send for editorial assessment. You
+          Your initial submission will be sent for editorial assessment. You
           will be unable to make changes after this point.
         </ModalDialog>
       </React.Fragment>

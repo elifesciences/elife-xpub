@@ -1,5 +1,3 @@
-### ChosenPersonPod
-
 Clickable keywords:
 
 ```js
@@ -10,9 +8,9 @@ Clickable keywords:
   expertises={['Cellular Biology']}
   isKeywordClickable={true}
   onKeywordClick={keyword => console.log(keyword, 'clicked')}
-  isPicked={false}
+  isSelected={false}
   isStatusShown={false}
-  iconType="add"
+  selectButtonType="add"
   togglePersonSelection={() => console.log('icon clicked')}
 />
 ```
@@ -27,9 +25,9 @@ Showing the person's status:
   expertises={['Biochemistry and Chemical Biology', 'Plant Biology']}
   isKeywordClickable={false}
   status="Currently unavailable"
-  isPicked={false}
+  isSelected={false}
   isStatusShown={true}
-  iconType="add"
+  selectButtonType="add"
   togglePersonSelection={() => console.log('icon clicked')}
 />
 ```
@@ -45,9 +43,9 @@ Removal icon:
   isKeywordClickable={false}
   onKeywordClick={() => console.log('keyword clicked')}
   status="Currently unavailable"
-  isSelectedInForm={false}
+  isSelected={false}
   isStatusShown={true}
-  iconType="remove"
+  selectButtonType="remove"
   togglePersonSelection={() => console.log('icon clicked')}
 />
 ```
@@ -61,9 +59,9 @@ Selected icon:
   focuses={[]}
   expertises={['Cell Biology']}
   isKeywordClickable={false}
-  isSelectedInForm={false}
+  isSelected={false}
   isStatusShown={true}
-  iconType="selected"
+  selectButtonType="selected"
   togglePersonSelection={() => console.log('icon clicked')}
 />
 ```
@@ -77,27 +75,9 @@ Disabled:
   focuses={['biological experiments']}
   expertises={['Cell Biology']}
   isKeywordClickable={false}
-  iconType="add"
+  selectButtonType="add"
   isSelectedButtonClickable={false}
-  isSelectedInForm={false}
-  togglePersonSelection={() => console.log('icon clicked')}
-/>
-```
-
-### SelectButton
-
-```js
-;<PersonPod.SelectButton
-  roleName="Senior Editor(s)"
-  isRequired={true}
-  togglePersonSelection={() => console.log('icon clicked')}
-/>
-```
-
-```js
-;<PersonPod.SelectButton
-  roleName="Reviewing Editor(s)"
-  isRequired={false}
+  isSelected={false}
   togglePersonSelection={() => console.log('icon clicked')}
 />
 ```

@@ -1,9 +1,10 @@
 import React from 'react'
+import { Box } from 'grid-styled'
 import Centerer from './Centerer'
 import AppBar from '../AppBar'
 
 const Layout = ({ children }) => (
-  <React.Fragment>
+  <Box pb={5}>
     <AppBar
       defaultMenuItems={[
         { label: 'Author guide', link: '/author-guide' },
@@ -13,7 +14,7 @@ const Layout = ({ children }) => (
       userMenuItems={[{ label: 'Dashboard', link: '/' }]}
     />
     <Centerer>{children}</Centerer>
-  </React.Fragment>
+  </Box>
 )
 
 export default Layout
