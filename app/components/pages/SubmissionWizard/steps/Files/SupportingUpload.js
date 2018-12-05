@@ -108,7 +108,6 @@ const Spinner = styled.span`
   }
 `
 
-// needs to be declared as a const for linting https://eslint.org/docs/rules/func-names
 function* fileUploadGenerator(files, uploadFile) {
   for (let fileIndex = 0; fileIndex < files.length; ) {
     yield {
