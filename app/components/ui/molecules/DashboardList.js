@@ -13,6 +13,9 @@ const EmptyListMessage = styled(Box)`
 const EmptyListSmallParagraph = styled(SmallParagraph)`
   font-family: ${th('fontInterface')};
 `
+const EmptyListParagraph = styled(SmallParagraph)`
+  margin-bottom: 24px;
+`
 
 const DashboardList = ({ manuscripts }) =>
   manuscripts.length > 0 ? (
@@ -25,7 +28,9 @@ const DashboardList = ({ manuscripts }) =>
     ))
   ) : (
     <EmptyListMessage mt={7}>
-      You currently have no active submissions
+      <EmptyListParagraph>
+        You currently have no active submissions
+      </EmptyListParagraph>
       <EmptyListSmallParagraph>
         You may want to bookmark this page to easily retrieve your in progress
         submissions.
