@@ -5,7 +5,7 @@ import { peoplePropType } from './types'
 import TwoColumnLayout from '../../global/layout/TwoColumnLayout'
 import PersonPod from './PersonPod'
 
-const MAX_DISPLAYED_PODS = 30
+import { FixedSizeGrid as Grid } from 'react-window'
 
 const PersonPodGrid = ({
   people,
@@ -15,7 +15,10 @@ const PersonPodGrid = ({
   maxSelection,
   ...props
 }) => (
-  <TwoColumnLayout>
+  <Grid
+    columnCount={2}
+    columnWidth=
+  >
     {people
       .map(person => (
         <PersonPod
@@ -33,8 +36,7 @@ const PersonPodGrid = ({
           togglePersonSelection={() => toggleSelection(person)}
           // onKeywordClick will need to be added, once we know what the desired behaviour is
         />
-      ))
-      .slice(0, MAX_DISPLAYED_PODS)}
+      ))}
   </TwoColumnLayout>
 )
 
