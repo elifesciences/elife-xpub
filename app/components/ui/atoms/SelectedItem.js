@@ -17,6 +17,7 @@ const Root = styled.div`
   color: ${th('colorTextReverse')};
   display: inline-flex;
   align-items: center;
+  margin-bottom: 12px;
 `
 
 const SelectedItem = ({ label, onCloseClick }) => (
