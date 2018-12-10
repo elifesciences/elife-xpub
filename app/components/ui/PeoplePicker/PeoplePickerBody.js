@@ -8,8 +8,13 @@ import { peoplePropType } from './types'
 import SelectedItem from '../atoms/SelectedItem'
 import PersonPodGrid from './PersonPodGrid'
 
+const SelectedItemsGrid = styled(Flex)`
+  flex-wrap: wrap;
+  align-items: center;
+`
+
 const SelectedItems = ({ selection, onCloseClick }) => (
-  <Flex>
+  <SelectedItemsGrid>
     {selection.map(person => (
       <Box key={person.id} mr={1}>
         <SelectedItem
@@ -18,7 +23,7 @@ const SelectedItems = ({ selection, onCloseClick }) => (
         />
       </Box>
     ))}
-  </Flex>
+  </SelectedItemsGrid>
 )
 
 const SuccessMessage = styled.div`
