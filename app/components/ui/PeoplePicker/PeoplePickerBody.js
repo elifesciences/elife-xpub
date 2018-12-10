@@ -56,7 +56,7 @@ const PeoplePickerBody = ({
   toggleSelection,
 }) => (
   <React.Fragment>
-    <Flex justifyContent="space-between" mb={3}>
+    <Flex justifyContent="space-between">
       <SelectedItems onCloseClick={toggleSelection} selection={selection} />
       <SelectionHint
         maxSelection={maxSelection}

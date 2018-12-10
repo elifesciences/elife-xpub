@@ -7,6 +7,12 @@ import PersonPod from './PersonPod'
 
 import { FixedSizeGrid as Grid } from 'react-window'
 
+const Cell = ({ columnIndex, rowIndex, style  }) => (
+    <div style={style}>
+      Item {rowIndex},{columnIndex}
+    </div>
+);
+
 const PersonPodGrid = ({
   people,
   isSelected,
@@ -17,27 +23,14 @@ const PersonPodGrid = ({
 }) => (
   <Grid
     columnCount={2}
-    columnWidth=
+    columnWidth={420}
+    rowCount={people.length}
+    rowHeight={120 + 24}
+    height={350}
+    width={840}
   >
-    {people
-      .map(person => (
-        <PersonPod
-          expertises={person.expertises}
-          focuses={person.focuses}
-          institution={person.aff}
-          isKeywordClickable={false}
-          isSelectButtonClickable={
-            isSelected(person) || selection.length < maxSelection
-          }
-          isSelected={isSelected(person)}
-          key={person.id}
-          name={person.name}
-          selectButtonType={isSelected(person) ? 'selected' : 'add'}
-          togglePersonSelection={() => toggleSelection(person)}
-          // onKeywordClick will need to be added, once we know what the desired behaviour is
-        />
-      ))}
-  </TwoColumnLayout>
+    {Cell}
+  </Grid>
 )
 
 PersonPodGrid.propTypes = {
