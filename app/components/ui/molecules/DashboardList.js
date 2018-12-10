@@ -13,7 +13,7 @@ const EmptyListMessage = styled(Box)`
 const EmptyListSmallParagraph = styled(SmallParagraph)`
   font-family: ${th('fontInterface')};
 `
-const EmptyListParagraph = styled(SmallParagraph)`
+const EmptyListParagraph = styled(Box)`
   margin-bottom: 24px;
 `
 
