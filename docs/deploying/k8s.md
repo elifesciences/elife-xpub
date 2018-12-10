@@ -27,7 +27,7 @@ Change the cwd to the place you wish to install, in this example `~/.local/bin`.
 
 ```
 cd ~/.local/bin
-wget https://amazon-eks.s3-us-west-2.amazonaws.com/1.10.3/2018-07-26/bin/linux/amd64/aws-iam-authenticator
+wget [url from aws docs, see link below]
 chmod +x aws-iam-authenticator
 aws-iam-authenticator
 ```
