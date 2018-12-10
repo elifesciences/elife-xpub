@@ -51,13 +51,19 @@ class File extends BaseModel {
   }
 
   static async find(id) {
-    const [file] = await this.query().where({
-      manuscript_id: id,
-    })
-    if (!file) {
-      throw new Error(`file ${id} not found`)
-    }
+    const file = await this.find(id)
+
     return file
+  }
+
+  static async findByManuscriptId(manuscriptId) {
+    const files = await this.query().where({
+      manuscript_id: manuscriptId,
+    })
+    if (!files) {
+      throw new Error(`file with manuscript_id ${manuscriptId} not found`)
+    }
+    return files
   }
 
   async deleteContent() {

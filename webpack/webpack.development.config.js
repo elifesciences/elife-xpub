@@ -15,6 +15,7 @@ module.exports = [
       app: [
         'react-hot-loader/patch',
         'webpack-hot-middleware/client',
+        'babel-polyfill',
         './index',
       ],
     },

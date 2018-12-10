@@ -5,9 +5,14 @@ import { Box } from 'grid-styled'
 import CoverLetterEditor from './CoverLetterEditor'
 import ValidatedField from '../../../../ui/atoms/ValidatedField'
 import ManuscriptUpload from './ManuscriptUpload'
-import { errorMessageMapping, manuscriptFileTypes } from './utils'
+import SupportingUpload from './SupportingUpload'
+import {
+  errorMessageMapping,
+  manuscriptFileTypes,
+  MAX_SUPPORTING_FILES,
+} from './utils'
 
-const UPLOAD_MUTATION = gql`
+const UPLOAD_MANUSCRIPT_MUTATION = gql`
   mutation UploadFile($id: ID!, $file: Upload!, $fileSize: Int!) {
     uploadManuscript(id: $id, file: $file, fileSize: $fileSize) {
       id
@@ -22,9 +27,36 @@ const UPLOAD_MUTATION = gql`
   }
 `
 
-const DELETE_MUTATION = gql`
+const UPLOAD_SUPPORTING_MUTATION = gql`
+  mutation UploadFile($id: ID!, $file: Upload!) {
+    uploadSupportingFile(id: $id, file: $file) {
+      id
+      meta {
+        title
+      }
+      files {
+        filename
+        type
+      }
+    }
+  }
+`
+
+const DELETE_MANUSCRIPT_MUTATION = gql`
   mutation UploadFile($id: ID!) {
     removeUploadedManuscript(id: $id) {
+      id
+      files {
+        filename
+        type
+      }
+    }
+  }
+`
+
+const DELETE_SUPPORTING_FILES_MUTATION = gql`
+  mutation UploadFile($id: ID!) {
+    removeSupportingFiles(id: $id) {
       id
       files {
         filename
@@ -95,12 +127,23 @@ const FilesPageContainer = ({
   uploadData = {},
   uploadLoading,
 }) => (
-  <Mutation mutation={UPLOAD_MUTATION}>
+  <Mutation mutation={UPLOAD_MANUSCRIPT_MUTATION}>
     {(uploadFile, { loading, error: uploadError }) => {
-      const fieldName = 'files'
-      const { MANUSCRIPT_SOURCE } = manuscriptFileTypes
+      const filesFieldName = 'files'
+      const submissionFiles = values[filesFieldName]
+      const { MANUSCRIPT_SOURCE, SUPPORTING_FILE } = manuscriptFileTypes
+      const manuscriptFileIndex = submissionFiles.findIndex(
+        file => file.type === MANUSCRIPT_SOURCE,
+      )
+      const hasManuscript = manuscriptFileIndex > -1
+
+      let manuscriptFile = {}
+      if (hasManuscript) {
+        manuscriptFile = submissionFiles[manuscriptFileIndex]
+      }
+
       return (
-        <Mutation mutation={DELETE_MUTATION}>
+        <Mutation mutation={DELETE_MANUSCRIPT_MUTATION}>
           {deleteFile => (
             <React.Fragment>
               <Box mb={3} width={1}>
@@ -112,18 +155,17 @@ const FilesPageContainer = ({
                   onChange={value => setFieldValue('coverLetter', value)}
                 />
               </Box>
-              <Box width={1}>
+              <Box mb={3} width={1}>
                 <ManuscriptUpload
                   conversion={{
                     converting: loading || uploadData.uploadProgress < 100,
-                    completed: values[fieldName].some(
-                      file => file.type === MANUSCRIPT_SOURCE,
-                    ),
+                    completed: hasManuscript,
                     progress: getProgress(uploadLoading, uploadData),
                     error: uploadError,
                   }}
                   data-test-id="upload"
-                  formError={touched[fieldName] && errors[fieldName]}
+                  fileName={manuscriptFile.filename}
+                  formError={touched[filesFieldName] && errors[filesFieldName]}
                   onDrop={files =>
                     onFileDrop(
                       files,
@@ -138,6 +180,37 @@ const FilesPageContainer = ({
                     )
                   }
                 />
+              </Box>
+              <Box width={1}>
+                <Mutation mutation={UPLOAD_SUPPORTING_MUTATION}>
+                  {uploadSupportFiles => (
+                    <Mutation mutation={DELETE_SUPPORTING_FILES_MUTATION}>
+                      {removeSupportFiles => (
+                        <SupportingUpload
+                          files={submissionFiles.filter(
+                            file => file.type === SUPPORTING_FILE,
+                          )}
+                          hasManuscript={hasManuscript}
+                          maxSupportingFiles={MAX_SUPPORTING_FILES}
+                          removeFiles={() =>
+                            removeSupportFiles({
+                              variables: { id: values.id },
+                            })
+                          }
+                          uploadFile={file =>
+                            new Promise((resolve, reject) =>
+                              uploadSupportFiles({
+                                variables: { file, id: values.id },
+                              })
+                                .then(data => resolve(data))
+                                .catch(err => reject(err)),
+                            )
+                          }
+                        />
+                      )}
+                    </Mutation>
+                  )}
+                </Mutation>
               </Box>
             </React.Fragment>
           )}
