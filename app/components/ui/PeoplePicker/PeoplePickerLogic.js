@@ -14,6 +14,14 @@ class PeoplePickerLogic extends React.Component {
     }
   }
 
+  shouldComponentUpdate(nextProps, nextState) {
+    return !(
+      this.state.selection.length === nextState.selection.length &&
+      this.props.people.length === nextProps.people.length &&
+      this.state.searchValue === nextState.searchValue
+    )
+  }
+
   toggleSelection(person) {
     if (this.select(person)) {
       this.setState({
