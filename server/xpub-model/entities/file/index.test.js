@@ -1,7 +1,19 @@
 const { createTables } = require('@pubsweet/db-manager')
-const File = require('.')
+const AbstractFile = require('.')
 const config = require('config')
 const startS3rver = require('../../../xpub-server/test/mock-s3-server')
+
+class DummyFile extends AbstractFile {
+  get storage() {
+    return {
+      putContent: () => {},
+      getContent: () => {},
+      deleteObject: () => ({
+        promise: () => Promise.resolve(true),
+      }),
+    }
+  }
+}
 
 describe('Manuscript', () => {
   beforeEach(() => createTables(true))
@@ -22,7 +34,7 @@ describe('Manuscript', () => {
     })
 
     it('if should fail if id is not provided once delete content', async () => {
-      const file = new File()
+      const file = new DummyFile()
       let response
       const error = new Error('File has no ID, or is invalid')
       try {
@@ -34,7 +46,7 @@ describe('Manuscript', () => {
     })
 
     it('if should delete the s3 content', async () => {
-      const file = new File({
+      const file = new DummyFile({
         manuscriptId: 1,
         id: 1,
         url: '/an/url',
@@ -45,11 +57,11 @@ describe('Manuscript', () => {
 
     it('if should return an error deleting the s3 content, if there is no access to S3', async () => {
       jest
-        .spyOn(File.prototype, 'deleteContent')
+        .spyOn(DummyFile.prototype, 'deleteContent')
         .mockImplementationOnce(() =>
           Promise.reject(new Error('Failed to persist file')),
         )
-      const file = new File({
+      const file = new DummyFile({
         manuscriptId: 1,
         id: 1,
         url: '/an/url',

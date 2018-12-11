@@ -1,14 +1,10 @@
-const config = require('config')
-const AWS = require('aws-sdk')
 const BaseModel = require('@pubsweet/base-model')
 
-const s3 = new AWS.S3({
-  ...config.get('aws.credentials'),
-  ...config.get('aws.s3'),
-  apiVersion: '2006-03-01',
-})
+class AbstractFile extends BaseModel {
+  get storage() {
+    throw Error('Not Implemented')
+  }
 
-class File extends BaseModel {
   static get tableName() {
     return 'file'
   }
@@ -32,7 +28,7 @@ class File extends BaseModel {
       throw new Error('File has no ID, must be saved first')
     }
 
-    return s3
+    return this.storage
       .putObject({
         Body: content,
         Key: `${this.url}/${this.id}`,
@@ -44,7 +40,7 @@ class File extends BaseModel {
   }
 
   async getContent() {
-    const { Body } = await s3
+    const { Body } = await this.storage
       .getObject({ Key: `${this.url}/${this.id}` })
       .promise()
     return Body
@@ -71,7 +67,7 @@ class File extends BaseModel {
       throw new Error('File has no ID, or is invalid')
     }
 
-    return s3
+    return this.storage
       .deleteObject({
         Key: `${this.url}/${this.id}`,
       })
@@ -79,4 +75,4 @@ class File extends BaseModel {
   }
 }
 
-module.exports = File
+module.exports = AbstractFile

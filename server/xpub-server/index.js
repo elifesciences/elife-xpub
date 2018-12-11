@@ -1,5 +1,6 @@
 const { merge } = require('lodash')
 const fs = require('fs')
+const S3File = require('./s3File')
 
 // concatenate schemas
 const xpubTypeDefs = fs.readFileSync(
@@ -37,4 +38,5 @@ module.exports = {
   typeDefs,
   resolvers,
   migrationsPath: `./schema/migrations`,
+  S3File,
 }

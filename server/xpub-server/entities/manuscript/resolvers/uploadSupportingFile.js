@@ -1,11 +1,12 @@
-const { Manuscript, File, User } = require('@elifesciences/xpub-model')
+const { Manuscript, User } = require('@elifesciences/xpub-model')
+const { S3File } = require('@elifesciences/xpub-server')
 
 async function uploadSupportingFile(_, { file, id }, { user }) {
   const userUuid = await User.getUuidForProfile(user)
   const manuscript = await Manuscript.find(id, userUuid)
 
   const { stream, filename } = await file
-  const fileEntity = await new File({
+  const fileEntity = await new S3File({
     manuscriptId: manuscript.id,
     url: `supporting/${id}`,
     filename,
