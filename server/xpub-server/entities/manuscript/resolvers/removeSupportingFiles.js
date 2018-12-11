@@ -5,13 +5,9 @@ async function removeSupportingFiles(_, { id }, { user }) {
   const userUuid = await User.getUuidForProfile(user)
   const manuscript = await Manuscript.find(id, userUuid)
 
-  manuscript.files.forEach((file, index) => {
-    if (file.type === 'SUPPORTING_FILE') {
-      manuscript.files.splice(index, 1)
-    }
-  })
-
-  await manuscript.save()
+  const filesWithoutSupporting = manuscript.files.filter(
+    file => file.type !== 'SUPPORTING_FILE',
+  )
 
   const files = await File.findByManuscriptId(id)
 
