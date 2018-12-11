@@ -5,7 +5,7 @@ import { withClientState } from 'apollo-link-state'
 
 import { configureStore, Root } from 'pubsweet-client'
 
-import theme from '@elifesciences/elife-theme'
+import theme, { GlobalStyles } from '@elifesciences/elife-theme'
 
 import Routes from './routes'
 import * as AuthorDetailsSchema from './components/pages/SubmissionWizard/steps/Author/schema'
@@ -27,11 +27,14 @@ const makeApolloConfig = ({ cache, link, ...config }) => {
 }
 
 export default hot(module)(() => (
-  <Root
-    history={history}
-    makeApolloConfig={makeApolloConfig}
-    routes={<Routes />}
-    store={store}
-    theme={theme}
-  />
+  <React.Fragment>
+    <GlobalStyles/>
+    <Root
+      history={history}
+      makeApolloConfig={makeApolloConfig}
+      routes={<Routes />}
+      store={store}
+      theme={theme}
+    />
+  </React.Fragment>
 ))
