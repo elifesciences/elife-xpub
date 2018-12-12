@@ -10,7 +10,7 @@
   "rules": {
     "global-require": 0,
     "class-methods-use-this": ["error", {
-       "exceptMethods": ["storage"]
+       "exceptMethods": ["storage", "render"]
      }],
     "import/no-dynamic-require": 0,
     "import/no-extraneous-dependencies": 0,

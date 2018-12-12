@@ -2,9 +2,9 @@ const { createTables } = require('@pubsweet/db-manager')
 const { User, Manuscript } = require('@elifesciences/xpub-model')
 const { interfaceRemoveSupportingFiles } = require('./removeSupportingFiles')
 const { userData } = require('./index.test.data')
-const { AbstractFile } = require('@elifesciences/xpub-model')
+const { File } = require('@elifesciences/xpub-model')
 
-class DummyFile extends AbstractFile {
+class DummyFile extends File {
   get storage() {
     return {
       putContent: () => {},

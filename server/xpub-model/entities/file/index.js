@@ -1,10 +1,6 @@
 const BaseModel = require('@pubsweet/base-model')
 
-class AbstractFile extends BaseModel {
-  get storage() {
-    throw Error('Not Implemented')
-  }
-
+class File extends BaseModel {
   static get tableName() {
     return 'file'
   }
@@ -23,29 +19,6 @@ class AbstractFile extends BaseModel {
     }
   }
 
-  async putContent(content, { size } = {}) {
-    if (!this.id) {
-      throw new Error('File has no ID, must be saved first')
-    }
-
-    return this.storage
-      .putObject({
-        Body: content,
-        Key: `${this.url}/${this.id}`,
-        ContentType: this.mimetype,
-        ContentLength: size,
-        ACL: 'private',
-      })
-      .promise()
-  }
-
-  async getContent() {
-    const { Body } = await this.storage
-      .getObject({ Key: `${this.url}/${this.id}` })
-      .promise()
-    return Body
-  }
-
   static async find(id) {
     const file = await this.find(id)
 
@@ -61,18 +34,6 @@ class AbstractFile extends BaseModel {
     }
     return files
   }
-
-  async deleteContent() {
-    if (!this.id) {
-      throw new Error('File has no ID, or is invalid')
-    }
-
-    return this.storage
-      .deleteObject({
-        Key: `${this.url}/${this.id}`,
-      })
-      .promise()
-  }
 }
 
-module.exports = AbstractFile
+module.exports = File

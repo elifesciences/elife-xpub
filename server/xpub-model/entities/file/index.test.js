@@ -1,9 +1,9 @@
 const { createTables } = require('@pubsweet/db-manager')
-const AbstractFile = require('.')
+const File = require('.')
 const config = require('config')
 const startS3rver = require('../../../xpub-server/test/mock-s3-server')
 
-class DummyFile extends AbstractFile {
+class DummyFile extends File {
   get storage() {
     return {
       putContent: () => {},
@@ -33,7 +33,7 @@ describe('Manuscript', () => {
       s3Server.close(done)
     })
 
-    it('if should fail if id is not provided once delete content', async () => {
+    it('should fail if id is not provided when deleting content', async () => {
       const file = new DummyFile()
       let response
       const error = new Error('File has no ID, or is invalid')
