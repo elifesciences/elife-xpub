@@ -1,12 +1,21 @@
 const { createTables } = require('@pubsweet/db-manager')
 const { User, Manuscript } = require('@elifesciences/xpub-model')
 const { userData } = require('./index.test.data')
-const removeSupportingFiles = require('./removeSupportingFiles')
+const { modelRemoveSupportingFiles } = require('./removeSupportingFiles')
+
+const dummyStorage = {
+  getContent: () => {},
+  putContent: () => {},
+  deleteContent: () => ({
+    promise: Promise.resolve(true),
+  }),
+}
 
 const expectRemoveSupportingFilesDoesNothing = async (manuscriptIn, userId) => {
   let manuscript = await manuscriptIn.save()
   manuscript = await Manuscript.find(manuscript.id, userId)
-  const mutatedManuscript = await removeSupportingFiles(
+  const mutatedManuscript = await modelRemoveSupportingFiles(
+    dummyStorage,
     null,
     { id: manuscript.id },
     { user: userId },
@@ -28,7 +37,8 @@ const expectRemoveSupportingFilesLeavesManuscript = async (
   manuscript = await Manuscript.find(manuscript.id, userId)
   expect(manuscript.files).toHaveLength(fileList.length)
 
-  const mutatedManuscript = await removeSupportingFiles(
+  const mutatedManuscript = await modelRemoveSupportingFiles(
+    dummyStorage,
     null,
     { id: manuscript.id },
     { user: userId },

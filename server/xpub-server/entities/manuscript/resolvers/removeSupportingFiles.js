@@ -3,7 +3,11 @@ const logger = require('@pubsweet/logger')
 const { File } = require('@elifesciences/xpub-model')
 const { S3Storage } = require('@elifesciences/xpub-server')
 
-async function removeSupportingFiles(_, { id }, { user }) {
+async function removeSupportingFiles(_, id, user) {
+  modelRemoveSupportingFiles(S3Storage, _, id, user)
+}
+
+async function modelRemoveSupportingFiles(storage, _, { id }, { user }) {
   let manuscript = await Manuscript.find(id, user)
 
   const filesWithoutSupporting = manuscript.files.filter(
@@ -19,7 +23,7 @@ async function removeSupportingFiles(_, { id }, { user }) {
       .forEach(async file => {
         try {
           modified = true
-          await S3Storage.deleteContent(file)
+          await storage.deleteContent(file)
           await file.delete()
         } catch (err) {
           logger.error(`Unable to delete file ${file.id}`, err)
@@ -34,4 +38,7 @@ async function removeSupportingFiles(_, { id }, { user }) {
   return manuscript
 }
 
-module.exports = removeSupportingFiles
+module.exports = {
+  removeSupportingFiles,
+  modelRemoveSupportingFiles,
+}
