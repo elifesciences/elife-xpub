@@ -1,5 +1,5 @@
 const logger = require('@pubsweet/logger')
-const { Manuscript, User } = require('@elifesciences/xpub-model')
+const { Manuscript, User, File } = require('@elifesciences/xpub-model')
 const elifeApi = require('@elifesciences/xpub-model/entities/user/helpers/elife-api')
 
 const removeUploadedManuscript = require('./removeUploadedManuscript')
