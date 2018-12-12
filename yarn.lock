@@ -345,7 +345,7 @@
     joi "^13.6.0"
     lodash "^4.17.4"
 
-"@pubsweet/ui-toolkit@^1.2.0":
+"@pubsweet/ui-toolkit@1.2.0", "@pubsweet/ui-toolkit@^1.2.0":
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/@pubsweet/ui-toolkit/-/ui-toolkit-1.2.0.tgz#5531149fa2229acc06e76e964b8a412bf503c4ce"
   dependencies:
