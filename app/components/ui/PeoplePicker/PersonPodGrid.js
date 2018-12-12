@@ -1,84 +1,79 @@
-import React, { PureComponent } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
-import { FixedSizeGrid as Grid } from 'react-window'
-import memoize from 'memoize-one'
+import { List, WindowScroller } from 'react-virtualized'
 
 import { peoplePropType } from './types'
-// import TwoColumnLayout from '../../global/layout/TwoColumnLayout'
-import PersonPod from './PersonPod'
+// import PersonPod from './PersonPod'
 
-class Pod extends PureComponent {
-  render() {
-    const { data, style, columnIndex, rowIndex } = this.props
-    const {
-      people,
-      isSelected,
-      toggleSelection,
-      selection,
-      maxSelection,
-    } = data
-    const person = people[rowIndex * 2 + columnIndex]
-    return person ? (
-      <div style={style}>
-        <PersonPod
-          expertises={person.expertises}
-          focuses={person.focuses}
-          institution={person.aff}
-          isKeywordClickable={false}
-          isSelectButtonClickable={
-            isSelected(person) || selection.length < maxSelection
-          }
-          isSelected={isSelected(person)}
-          key={person.id}
-          name={person.name}
-          selectButtonType={isSelected(person) ? 'selected' : 'add'}
-          togglePersonSelection={() => toggleSelection(person)}
-        />
-      </div>
-    ) : null
+// const Pod = ({
+//   person,
+//   isSelected,
+//   toggleSelection,
+//   selection,
+//   maxSelection,
+// }) => (
+//   <PersonPod
+//     expertises={person.expertises}
+//     focuses={person.focuses}
+//     institution={person.aff}
+//     isKeywordClickable={false}
+//     isSelectButtonClickable={
+//       isSelected(person) || selection.length < maxSelection
+//     }
+//     isSelected={isSelected(person)}
+//     key={person.id}
+//     name={person.name}
+//     selectButtonType={isSelected(person) ? 'selected' : 'add'}
+//     togglePersonSelection={() => toggleSelection(person)}
+//   />
+// )
+
+class PersonPodGrid extends React.PuroComponent {
+  constructor(props) {
+    super(props)
+    this.state = {}
+    this.setRef = this.setRef.bind(this)
+    this.toggleView = this.toggleView.bind(this)
   }
-}
 
-const PersonPodGrid = ({
-  people,
-  isSelected,
-  toggleSelection,
-  selection,
-  maxSelection,
-  ...props
-}) => {
-  const createItemData = memoize(
-    (_people, _isSelected, _toggleSelection, _selection, _maxSelection) => ({
-      people: _people,
-      isSelected: _isSelected,
-      toggleSelection: _toggleSelection,
-      selection: _selection,
-      maxSelection: _maxSelection,
-    }),
+  rowRenderer = ({ index, key, style, parent }) => (
+    <div key={key} style={style}>
+      <p> {index} </p>
+    </div>
   )
 
-  const itemData = createItemData(
-    people,
-    isSelected,
-    toggleSelection,
-    selection,
-    maxSelection,
-  )
-  return people.length > 0 ? (
-    <Grid
-      columnCount={2}
-      columnWidth={400}
-      height={1000}
-      itemData={itemData}
-      rowCount={Math.ceil(people.length / 2)}
-      rowHeight={150}
-      width={window.innerWidth}
-    >
-      {Pod}
-    </Grid>
-  ) : (
-    'Loading...'
-  )
+  setRef = ref => (this.windowScroller = ref)
+
+  toggleView() {
+    this.setState(
+      {
+        show: !this.state.show,
+      },
+      () => {
+        this.windowScroller.updatePosition()
+      },
+    )
+  }
+
+  render() {
+    return (
+      <WindowScroller ref={this.setRef} scrollElement={window}>
+        {({ height, scrollTop }) => (
+          <div>
+            <List
+              autoHeight
+              height={height}
+              rowCount={1000}
+              rowHeight={30}
+              rowRenderer={this.rowRenderer}
+              scrollTop={scrollTop}
+              width={200}
+            />
+          </div>
+        )}
+      </WindowScroller>
+    )
+  }
 }
 
 PersonPodGrid.propTypes = {

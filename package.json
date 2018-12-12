@@ -69,8 +69,8 @@
     ]
   },
   "resolutions": {
-    "styled-system": "2.3.6",
-    "@pubsweet/ui-toolkit": "1.2.0"
+    "@pubsweet/ui-toolkit": "1.2.0",
+    "styled-system": "2.3.6"
   },
   "workspaces": [
     "client/*",
@@ -109,7 +109,7 @@
     "react-select": "^2.0.0",
     "react-tabs": "^2.3.0",
     "react-transition-group": "^2.4.0",
-    "react-window": "^1.3.1",
+    "react-virtualized": "^9.21.0",
     "recompose": "^0.28.2",
     "redux": "^3.6.0",
     "redux-logger": "^3.0.1",
