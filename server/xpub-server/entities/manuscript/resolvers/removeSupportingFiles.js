@@ -1,11 +1,10 @@
-const { Manuscript, User } = require('@elifesciences/xpub-model')
+const { Manuscript } = require('@elifesciences/xpub-model')
 const logger = require('@pubsweet/logger')
 const { File } = require('@elifesciences/xpub-model')
 const { S3Storage } = require('@elifesciences/xpub-server')
 
-async function removeSupportingFiles(_, id, user) {
-  const userUuid = await User.getUuidForProfile(user)
-  let manuscript = await Manuscript.find(id, userUuid)
+async function removeSupportingFiles(_, { id }, { user }) {
+  let manuscript = await Manuscript.find(id, user)
 
   const filesWithoutSupporting = manuscript.files.filter(
     file => file.type !== 'SUPPORTING_FILE',

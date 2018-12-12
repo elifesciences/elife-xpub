@@ -1,33 +1,15 @@
 const { createTables } = require('@pubsweet/db-manager')
 const { User, Manuscript } = require('@elifesciences/xpub-model')
-const { interfaceRemoveSupportingFiles } = require('./removeSupportingFiles')
 const { userData } = require('./index.test.data')
-const { File } = require('@elifesciences/xpub-model')
+const removeSupportingFiles = require('./removeSupportingFiles')
 
-class DummyFile extends File {
-  get storage() {
-    return {
-      putContent: () => {},
-      getContent: () => {},
-      deleteObject: () => ({
-        promise: () => Promise.resolve(true),
-      }),
-    }
-  }
-}
-
-const expectRemoveSupportingFilesDoesNothing = async (
-  manuscriptIn,
-  userId,
-  profileId,
-) => {
+const expectRemoveSupportingFilesDoesNothing = async (manuscriptIn, userId) => {
   let manuscript = await manuscriptIn.save()
   manuscript = await Manuscript.find(manuscript.id, userId)
-
-  const mutatedManuscript = await interfaceRemoveSupportingFiles(
-    DummyFile,
+  const mutatedManuscript = await removeSupportingFiles(
+    null,
     { id: manuscript.id },
-    { user: profileId },
+    { user: userId },
   )
   const strManuscript = JSON.stringify(manuscript, null, 4)
   const strMutated = JSON.stringify(mutatedManuscript, null, 4)
@@ -37,7 +19,6 @@ const expectRemoveSupportingFilesDoesNothing = async (
 const expectRemoveSupportingFilesLeavesManuscript = async (
   fileList,
   userId,
-  profileId,
 ) => {
   let manuscript = new Manuscript({
     createdBy: userId,
@@ -47,17 +28,16 @@ const expectRemoveSupportingFilesLeavesManuscript = async (
   manuscript = await Manuscript.find(manuscript.id, userId)
   expect(manuscript.files).toHaveLength(fileList.length)
 
-  const mutatedManuscript = await interfaceRemoveSupportingFiles(
-    DummyFile,
+  const mutatedManuscript = await removeSupportingFiles(
+    null,
     { id: manuscript.id },
-    { user: profileId },
+    { user: userId },
   )
   expect(mutatedManuscript.files).toHaveLength(1)
   expect(mutatedManuscript.files[0].type).toBe('MANUSCRIPT_SOURCE')
 }
 
 describe('Manuscripts', () => {
-  const profileId = userData.identities[0].identifier
   let userId
   beforeEach(async () => {
     await createTables(true)
@@ -70,11 +50,7 @@ describe('Manuscripts', () => {
     it('does not change the manuscript when no files to remove', async () => {
       const manuscript = new Manuscript({ createdBy: userId, files: [] })
 
-      await expectRemoveSupportingFilesDoesNothing(
-        manuscript,
-        userId,
-        profileId,
-      )
+      await expectRemoveSupportingFilesDoesNothing(manuscript, userId)
     })
 
     it('does not remove the manuscript', async () => {
@@ -87,11 +63,7 @@ describe('Manuscripts', () => {
         createdBy: userId,
         files: [fakeManuscript],
       })
-      await expectRemoveSupportingFilesDoesNothing(
-        manuscript,
-        userId,
-        profileId,
-      )
+      await expectRemoveSupportingFilesDoesNothing(manuscript, userId)
     })
 
     it('does not remove the manuscript when supporting files present', async () => {
@@ -108,13 +80,11 @@ describe('Manuscripts', () => {
       await expectRemoveSupportingFilesLeavesManuscript(
         [fakeManuscript, fakeSupport],
         userId,
-        profileId,
       )
 
       await expectRemoveSupportingFilesLeavesManuscript(
         [fakeManuscript, fakeSupport, fakeSupport, fakeSupport],
         userId,
-        profileId,
       )
     })
   })
