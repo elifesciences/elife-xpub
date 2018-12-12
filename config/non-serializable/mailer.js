@@ -4,7 +4,7 @@ module.exports = {
     port: `${process.env.MAILER_PORT || 25}`,
   },
   auth: {
-    user: `${process.env.MAILER_AUTH_USER || 'user'}`,
-    pass: `${process.env.MAILER_AUTH_PASSWORD || 'password'}`,
+    user: `${process.env.MAILER_AUTH_USER || ''}`,
+    pass: `${process.env.MAILER_AUTH_PASSWORD || ''}`,
   },
 }
