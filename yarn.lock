@@ -361,7 +361,7 @@
     joi "^13.6.0"
     lodash "^4.17.4"
 
-"@pubsweet/ui-toolkit@^1.2.0":
+"@pubsweet/ui-toolkit@1.2.0", "@pubsweet/ui-toolkit@^1.2.0":
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/@pubsweet/ui-toolkit/-/ui-toolkit-1.2.0.tgz#5531149fa2229acc06e76e964b8a412bf503c4ce"
   integrity sha512-HwnFt4eES5RopLLY7ajb//UvaCLXS29XCWOOB5cs90DkwysVZaH/GM5HB/QtClQ5tuXiR3BqfjLy2mHMA0Z+PQ==
@@ -15598,7 +15598,7 @@ xpub-edit@^2.5.4:
   resolved "https://registry.yarnpkg.com/xpub-edit/-/xpub-edit-2.5.4.tgz#7271ba888eee0e8a620e1f730577841829bdfd06"
   integrity sha512-gQLsUz8/pgfgnicgAqp52s4rIm09wunfEg7F9QXoxmcsRrkee1xDAoqvWivuMAQRwYqJUxTif8LT4Op61RxX3A==
   dependencies:
-    "@pubsweet/ui-toolkit" "^1.2.0"
+    "@pubsweet/ui-toolkit" "^2.0.1"
     prosemirror-commands "^1.0.1"
     prosemirror-dropcursor "^1.0.0"
     prosemirror-gapcursor "^1.0.0"
