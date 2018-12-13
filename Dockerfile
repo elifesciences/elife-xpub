@@ -1,4 +1,5 @@
-FROM xpub/xpub:base
+# built from ./Dockerfile-base
+FROM xpub/xpub:20181213-1147
 
 WORKDIR ${HOME}
 
