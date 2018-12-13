@@ -97,7 +97,7 @@ describe('PeoplePicker', () => {
     expectSelectionLength(wrapper, 1)
 
     getPersonPodButton(wrapper, 1).simulate('click')
-    expectSelectionLength(wrapper, 1)
+    expectSelectionLength(wrapper, 2)
   })
 
   it('allows submit only after minimum is met', () => {
