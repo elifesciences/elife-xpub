@@ -69,7 +69,8 @@
     ]
   },
   "resolutions": {
-    "styled-system": "2.3.6"
+    "styled-system": "2.3.6",
+    "@pubsweet/ui-toolkit": "1.2.0"
   },
   "workspaces": [
     "client/*",

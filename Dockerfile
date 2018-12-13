@@ -1,4 +1,4 @@
-FROM xpub/xpub:base
+FROM xpub/xpub:20181213
 
 WORKDIR ${HOME}
 
