@@ -5,3 +5,4 @@
 - [Local Deployment Testing](https://github.com/elifesciences/elife-xpub-deployment/blob/develop/local-development.md)
 - [Infrastructure](infrastructure.md)
 - [Environments](environments,md)
+- [Docker Catalogue](dockercatalogue.md)
