@@ -1,5 +1,4 @@
-# built from https://gitlab.coko.foundation/yld/xpub-deployment-config-postgres
-FROM xpub/xpub:base
+FROM xpub/xpub:20181213
 
 WORKDIR ${HOME}
 
