@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { List } from 'react-virtualized'
+import { List, WindowScroller } from 'react-virtualized'
 
 import { peoplePropType } from './types'
 import PersonPod from './PersonPod'
@@ -50,20 +50,30 @@ class PersonPodGrid extends React.Component {
     )
   }
   render() {
-    const rowHeight = 100
-    const rowWidth = 800
-    const height = 1000
-
     return (
-      <div>
-        <List
-          height={height}
-          rowCount={this.props.people.length}
-          rowHeight={rowHeight}
-          rowRenderer={this.rowRenderer}
-          width={rowWidth}
-        />
-      </div>
+      <WindowScroller
+        // onScroll={() => console.log('Scrolled')}
+        // ref={el => (this.ref = el)}
+        scrollElement={window}
+      >
+        {({ height, isScrolling, onChildScroll, scrollTop, registerChild }) => (
+          <div ref={registerChild}>
+            <List
+              autoHeight
+              height={height}
+              isScrolling={isScrolling}
+              onScroll={onChildScroll}
+              overscanRowCount={2}
+              rowCount={Math.ceil(this.props.people.length / 2)}
+              rowHeight={100}
+              rowRenderer={this.rowRenderer}
+              rowWidth={500}
+              scrollTop={scrollTop}
+              width={800}
+            />
+          </div>
+        )}
+      </WindowScroller>
     )
   }
 }
