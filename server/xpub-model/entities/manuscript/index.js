@@ -147,6 +147,8 @@ class Manuscript extends BaseModel {
   }
 
   async refresh() {
+    const refreshed = await Manuscript.find(this.id, this.createdBy)
+    await this.$set(refreshed)
     await this.$loadRelated('[teams, files]')
   }
 
