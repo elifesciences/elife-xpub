@@ -7,13 +7,13 @@ const { ON_UPLOAD_PROGRESS } = pubsubManager.asyncIterators
 
 const { Manuscript, File, User } = require('@elifesciences/xpub-model')
 
-function addFileEntityToManuscript(manuscriptEntity, fileEntity) {
+async function addFileEntityToManuscript(manuscriptEntity, fileEntity) {
   const manuscript = manuscriptEntity
+  await manuscript.refresh()
   const manuscriptUploadIndex = manuscript.files.findIndex(
     element => element.type === 'MANUSCRIPT_SOURCE',
   )
 
-  manuscript.refresh()
   if (manuscriptUploadIndex < 0) {
     manuscript.files.push(fileEntity)
   } else {
@@ -118,7 +118,7 @@ async function uploadManuscript(_, { file, id, fileSize }, { user }) {
       filename,
     })
   }
-  addFileEntityToManuscript(manuscript, fileEntity)
+  await addFileEntityToManuscript(manuscript, fileEntity)
   manuscript.meta.title = title
   await manuscript.save()
 
