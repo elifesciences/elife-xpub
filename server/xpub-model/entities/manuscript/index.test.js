@@ -265,7 +265,21 @@ describe('Manuscript', () => {
 
   describe('refresh()', () => {
     it('refreshes manuscript', async () => {
-      await testOverwritingWithOldData(userId, true)
+      const ms = await getThreeVersions(userId)
+
+      // update and save v3
+      ms.v3.meta.title = 'Version3'
+      ms.v3 = await ms.v3.save()
+      expect(ms.v3.meta.title).toBe('Version3')
+      expect(getDbTime(ms.v1.updated)).toBeLessThan(getDbTime(ms.v3.updated))
+
+      // If you are refreshing - it should now be v3
+      ms.v2.meta.title = 'Version2'
+      await ms.v2.refresh()
+      expect(ms.v2.meta.title).toBe('Version3')
+
+      const msFinal = await Manuscript.find(ms.v1.id, userId)
+      expect(msFinal.meta.title).toBe('Version3')
     })
   })
 
@@ -332,7 +346,22 @@ describe('Manuscript', () => {
       ).rejects.toThrow())
 
     it('does not overwrite an updated manuscript', async () => {
-      await testOverwritingWithOldData(userId)
+      const ms = await getThreeVersions(userId)
+
+      // update and save v3
+      ms.v3.meta.title = 'Version3'
+      ms.v3 = await ms.v3.save()
+      expect(ms.v3.meta.title).toBe('Version3')
+      expect(getDbTime(ms.v1.updated)).toBeLessThan(getDbTime(ms.v3.updated))
+
+      // If you are not refreshing - save() should not work and throw
+      ms.v2.meta.title = 'Version2'
+      await expect(ms.v2.save()).rejects.toThrow(
+        'Data Integrity Error property updated',
+      )
+
+      const msFinal = await Manuscript.find(ms.v1.id, userId)
+      expect(msFinal.meta.title).toBe('Version3')
     })
   })
 
@@ -351,39 +380,22 @@ describe('Manuscript', () => {
   })
 })
 
-const testOverwritingWithOldData = async (userId, refresh = false) => {
-  const manuscriptV1 = await new Manuscript({
+const getDbTime = time => new Date(time).getTime()
+
+const getThreeVersions = async userId => {
+  const v1 = await new Manuscript({
     createdBy: userId,
     meta: {
       title: 'Version1',
     },
   }).save()
-  expect(manuscriptV1).toHaveProperty('updated')
-  const v1Time = new Date(manuscriptV1.updated).getTime()
+  const v2 = await Manuscript.find(v1.id, userId)
+  const v3 = await Manuscript.find(v1.id, userId)
 
-  const manuscriptV2 = await Manuscript.find(manuscriptV1.id, userId)
-  manuscriptV2.meta.title = 'Version2'
+  expect(v1).toHaveProperty('updated')
+  expect(getDbTime(v1.updated)).toEqual(getDbTime(v1.created))
+  expect(getDbTime(v2.updated)).toEqual(getDbTime(v2.created))
+  expect(getDbTime(v3.updated)).toEqual(getDbTime(v3.created))
 
-  let manuscriptV3 = await Manuscript.find(manuscriptV1.id, userId)
-  manuscriptV3.meta.title = 'Version3'
-  manuscriptV3 = await manuscriptV3.save()
-  expect(manuscriptV3.meta.title).toBe('Version3')
-  const v3Time = new Date(manuscriptV3.updated).getTime()
-
-  expect(v1Time).toBeLessThan(v3Time)
-
-  if (!refresh) {
-    // If you are not refreshing - save() should not work and throw
-    await expect(manuscriptV2.save()).rejects.toThrow(
-      'Data Integrity Error property updated',
-    )
-  } else {
-    await manuscriptV2.refresh()
-    // In memory should have been refreshed from the database
-    expect(manuscriptV2.meta.title).toBe('Version3')
-  }
-
-  // The database should still be at v3
-  const ms = await Manuscript.find(manuscriptV1.id, userId)
-  expect(ms.meta.title).toBe('Version3')
+  return { v1, v2, v3 }
 }
