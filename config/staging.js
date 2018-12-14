@@ -13,10 +13,6 @@ module.exports = {
     url: 'https://continuumtest--cdn-journal.elifesciences.org/submit',
     enableMock: false,
   },
-  mailer: {
-    from: 'editorial-staging@elifesciences.org',
-    path: `${__dirname}/non-serializable/mailer`,
-  },
   aws: {
     s3: {
       params: {
