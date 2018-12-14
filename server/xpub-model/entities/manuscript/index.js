@@ -1,6 +1,12 @@
 const lodash = require('lodash')
+const { transaction } = require('objection')
 const emptyManuscript = require('./helpers/empty')
 const BaseModel = require('@pubsweet/base-model')
+
+const integrityError = (property, value, message) =>
+  new Error(
+    `Data Integrity Error property ${property} set to ${value}: ${message}`,
+  )
 
 const mergeObjects = (...inputs) =>
   lodash.mergeWith(
@@ -147,11 +153,40 @@ class Manuscript extends BaseModel {
   }
 
   async save() {
-    // save manuscript and all related files and teams
-    // note that this also deletes any related entities that are not present
-    await this.$query().upsertGraphAndFetch(this)
-    // reload related entities
-    await this.$loadRelated('[teams, files]')
+    const simpleSave = async () => {
+      // save manuscript and all related files and teams
+      // note that this also deletes any related entities that are not present
+      await this.$query().upsertGraphAndFetch(this)
+      // reload related entities
+      await this.$loadRelated('[teams, files]')
+    }
+
+    if (this.created && this.updated) {
+      let trx
+      try {
+        trx = await transaction.start(BaseModel.knex())
+
+        const current = await this.constructor.query(trx).findById(this.id)
+
+        const storedUpdateTime = new Date(current.updated).getTime()
+        const instanceUpdateTime = new Date(this.updated).getTime()
+
+        if (instanceUpdateTime < storedUpdateTime) {
+          throw integrityError(
+            'updated',
+            this.updated,
+            'is older than the one stored in the database!',
+          )
+        }
+        await simpleSave()
+        await trx.commit()
+      } catch (err) {
+        await trx.rollback()
+        throw err
+      }
+    } else {
+      await simpleSave()
+    }
     return this
   }
 

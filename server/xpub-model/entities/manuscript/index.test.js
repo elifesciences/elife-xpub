@@ -358,6 +358,9 @@ const testOverwritingWithOldData = async (userId, refresh = false) => {
       title: 'Version1',
     },
   }).save()
+  expect(manuscriptV1).toHaveProperty('updated')
+  const v1Time = new Date(manuscriptV1.updated).getTime()
+
   const manuscriptV2 = await Manuscript.find(manuscriptV1.id, userId)
   manuscriptV2.meta.title = 'Version2'
 
@@ -365,6 +368,9 @@ const testOverwritingWithOldData = async (userId, refresh = false) => {
   manuscriptV3.meta.title = 'Version3'
   manuscriptV3 = await manuscriptV3.save()
   expect(manuscriptV3.meta.title).toBe('Version3')
+  const v3Time = new Date(manuscriptV3.updated).getTime()
+
+  expect(v1Time).toBeLessThan(v3Time)
 
   if (!refresh) {
     // If you are not refreshing - save() should not work and throw
