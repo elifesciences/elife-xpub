@@ -22,3 +22,4 @@ test/screenshots/
 .vscode
 .node-gyp
 .idea
+migrations-*
