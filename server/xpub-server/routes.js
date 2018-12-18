@@ -60,4 +60,8 @@ module.exports = app => {
     }
     res.status(statusCode).send(body)
   })
+
+  app.get('/status', nocache, async (req, res) => {
+    res.status(200).send({})
+  })
 }
