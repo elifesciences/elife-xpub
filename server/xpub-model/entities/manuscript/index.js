@@ -2,11 +2,13 @@ const lodash = require('lodash')
 const { transaction } = require('objection')
 const emptyManuscript = require('./helpers/empty')
 const BaseModel = require('@pubsweet/base-model')
+const logger = require('@pubsweet/logger')
 
-const integrityError = (property, value, message) =>
-  new Error(
-    `Data Integrity Error property ${property} set to ${value}: ${message}`,
-  )
+// Temporarily commented out see #1162
+// const integrityError = (property, value, message) =>
+//   new Error(
+//     `Data Integrity Error property ${property} set to ${value}: ${message}`,
+//   )
 
 const mergeObjects = (...inputs) =>
   lodash.mergeWith(
@@ -152,6 +154,15 @@ class Manuscript extends BaseModel {
     await this.$loadRelated('[teams, files]')
   }
 
+  async needsRefresh(trx = null) {
+    const current = await this.constructor.query(trx).findById(this.id)
+
+    const storedUpdateTime = new Date(current.updated).getTime()
+    const instanceUpdateTime = new Date(this.updated).getTime()
+
+    return instanceUpdateTime < storedUpdateTime
+  }
+
   async save() {
     const simpleSave = async (trx = null) => {
       // save manuscript and all related files and teams
@@ -166,18 +177,20 @@ class Manuscript extends BaseModel {
       try {
         trx = await transaction.start(BaseModel.knex())
 
-        const current = await this.constructor.query(trx).findById(this.id)
-
-        const storedUpdateTime = new Date(current.updated).getTime()
-        const instanceUpdateTime = new Date(this.updated).getTime()
-
-        if (instanceUpdateTime < storedUpdateTime) {
-          throw integrityError(
-            'updated',
-            this.updated,
-            'is older than the one stored in the database!',
+        if (await this.needsRefresh(trx)) {
+          logger.error(
+            `Attempt to save Manuscript ${this.id} with updated=${
+              this.updated
+            }`,
           )
+          // Temporarily commented out see #1162
+          // throw integrityError(
+          //   'updated',
+          //   this.updated,
+          //   'is older than the one stored in the database!',
+          // )
         }
+
         await simpleSave(trx)
         await trx.commit()
       } catch (err) {
