@@ -53,13 +53,6 @@ const schema = yup.object().shape({
   suggestedReviewers: suggestedReviewerValidator(),
   opposedReviewers: opposedReviewerValidator(),
   opposedReviewersReason: opposedReasonValidator('opposedReviewers'),
-  suggestionsConflict: yup
-    .bool()
-    .required()
-    .oneOf(
-      [true],
-      'Please do not suggest people with a known conflict of interest',
-    ),
 })
 
 export { schema, limits }
