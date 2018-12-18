@@ -11850,6 +11850,11 @@ react-hot-loader@^4.3.4:
     react-lifecycles-compat "^3.0.4"
     shallowequal "^1.0.2"
 
+react-hotjar@^1.0.11:
+  version "1.0.11"
+  resolved "https://registry.yarnpkg.com/react-hotjar/-/react-hotjar-1.0.11.tgz#d802ca46ecc2bd4aed44cde595bb89c9fb35cc54"
+  integrity sha512-vxGoy6A/iyTBT3n5Q8R+wMbJvtpMYr8NXuFQEqRmEw1VY9GYyC5PQEnHKYoBx2Iuo0JL6X1cgA44RR2imlASmw==
+
 react-icon-base@2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/react-icon-base/-/react-icon-base-2.1.0.tgz#a196e33fdf1e7aaa1fda3aefbb68bdad9e82a79d"
