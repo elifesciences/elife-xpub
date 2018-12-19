@@ -9,8 +9,9 @@ const { Manuscript, User } = require('@elifesciences/xpub-model')
 const { File } = require('@elifesciences/xpub-model')
 const { S3Storage } = require('@elifesciences/xpub-server')
 
-function addFileEntityToManuscript(manuscriptEntity, fileEntity) {
+async function addFileEntityToManuscript(manuscriptEntity, fileEntity) {
   const manuscript = manuscriptEntity
+  await manuscript.refresh()
   const manuscriptUploadIndex = manuscript.files.findIndex(
     element => element.type === 'MANUSCRIPT_SOURCE',
   )
@@ -119,7 +120,7 @@ async function uploadManuscript(_, { file, id, fileSize }, { user }) {
       filename,
     })
   }
-  addFileEntityToManuscript(manuscript, fileEntity)
+  await addFileEntityToManuscript(manuscript, fileEntity)
   manuscript.meta.title = title
   await manuscript.save()
 

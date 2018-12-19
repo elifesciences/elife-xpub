@@ -55,7 +55,7 @@ describe('ping route test', () => {
     health.checkDataBase.mockResolvedValue(value)
   }
 
-  it('returns success pointing ping endpoint', async () => {
+  it('returns success when app ok', async () => {
     const request = makeApp()
     await request.get('/ping').expect(200)
   })
@@ -115,5 +115,47 @@ describe('ping route test', () => {
       expect(response.body[0]).toEqual('Database Error')
       expect(response.body[1]).toEqual('S3 Error')
     })
+  })
+})
+
+describe('status route test', () => {
+  let routes
+
+  const makeApp = () => {
+    const app = express()
+    routes(app)
+    return supertest(app)
+  }
+
+  beforeEach(() => {
+    jest.mock('config', () => ({
+      publicConfig: {
+        isPublic: true,
+        key: 'value',
+      },
+      privateConfig: {
+        secret: 'password',
+      },
+      aws: {
+        credentials: {
+          region: '',
+          accessKeyId: '',
+          secretAccessKey: '',
+        },
+        s3: {
+          s3ForcePathStyle: true,
+          params: {
+            Bucket: 'dev-elife-xpub',
+          },
+        },
+      },
+    }))
+
+    routes = require('./routes')
+  })
+
+  it('returns success when app ok', async () => {
+    const request = makeApp()
+    await request.get('/status').expect(200)
   })
 })
