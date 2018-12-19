@@ -22,18 +22,12 @@ async function updateManuscript(_, { data }, { user }) {
   manuscript.applyInput(data)
 
   const newAuthors = manuscript.getAuthor()
-  const newAuthorEmails = newAuthors
-    .map(author => author.alias.email)
-    .join(',')
+  const newAuthorEmails = newAuthors.map(author => author.alias.email).join(',')
 
   // Send email here only when author changes...
   if (newAuthorEmails !== originalAuthorEmails) {
-    const textCompile = pug.compileFile(
-      'templates/dashboard-email-text.pug',
-    )
-    const htmlCompile = pug.compileFile(
-      'templates/dashboard-email-html.pug',
-    )
+    const textCompile = pug.compileFile('templates/dashboard-email-text.pug')
+    const htmlCompile = pug.compileFile('templates/dashboard-email-html.pug')
     const text = textCompile({
       authorName: newAuthors[0].alias.firstName,
       linkDashboard: config.pubsweet.base_url,
@@ -50,6 +44,11 @@ async function updateManuscript(_, { data }, { user }) {
         from: 'editorial@elifesciences.org',
         text,
         html,
+      })
+      .then(() => {
+        logger.info(
+          `Sent confirmation email to corresponding author: ${newAuthorEmails}`,
+        )
       })
       .catch(err => {
         logger.error(
