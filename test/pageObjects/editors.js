@@ -27,7 +27,6 @@ const editors = {
   fifthReviewerEmail: Selector('[name="suggestedReviewers.4.email"]'),
   sixthReviewerName: Selector('[name="suggestedReviewers.5.name"]'),
   sixthReviewerEmail: Selector('[name="suggestedReviewers.5.email"]'),
-  conflictOfInterest: Selector('[name=suggestionsConflict]').parent(),
   validationErrors: Selector('[data-test-id^="error-"]'),
 }
 

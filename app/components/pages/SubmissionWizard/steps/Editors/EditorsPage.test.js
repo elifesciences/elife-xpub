@@ -30,7 +30,6 @@ const formValues = {
   ],
   opposedReviewers: [],
   opposedReviewersReason: '',
-  suggestionsConflict: false,
 }
 
 function makeWrapper(props) {
