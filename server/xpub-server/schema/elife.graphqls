@@ -44,12 +44,14 @@ type AuthorMetadata {
   # to be defined
   #contributions: AuthorMetadataContribution!
   corresponding: Boolean!
+  conflictOfInterest: String
 }
 
 type ReviewerMetadata {
   rank: Int!
   # Accounts for instances where a post-doc has helped review
   coRelationship: [TeamMember]
+  conflictOfInterest: String
   revealIdentity: Boolean!
 }
 
