@@ -16,6 +16,11 @@ class AuditLog extends BaseModel {
       },
     }
   }
+
+  async delete() {
+    throw new Error('Unsupported operation')
+  }
+
 }
 
 module.exports = AuditLog
