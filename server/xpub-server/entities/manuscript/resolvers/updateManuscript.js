@@ -52,7 +52,6 @@ async function updateManuscript(_, { data }, { user }) {
     (await isValidEmail(newAuthorEmails)) &&
     newAuthorEmails !== originalAuthorEmails
   ) {
-    console.log(`######### ${newAuthorEmails}`)
     const textCompile = pug.compileFile('templates/dashboard-email-text.pug')
     const htmlCompile = pug.compileFile('templates/dashboard-email-html.pug')
     const text = textCompile({
