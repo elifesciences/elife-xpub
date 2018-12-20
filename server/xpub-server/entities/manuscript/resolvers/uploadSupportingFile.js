@@ -1,6 +1,6 @@
 const { Manuscript, User } = require('@elifesciences/xpub-model')
 const { File } = require('@elifesciences/xpub-model')
-const { S3Storage } = require('@elifesciences/xpub-server')
+const { S3Storage } = require('@elifesciences/xpub-controller')
 
 async function uploadSupportingFile(_, { file, id }, { user }) {
   const userUuid = await User.getUuidForProfile(user)

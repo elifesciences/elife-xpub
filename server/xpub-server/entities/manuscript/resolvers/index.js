@@ -7,7 +7,7 @@ const submitManuscript = require('./submitManuscript')
 const updateManuscript = require('./updateManuscript')
 const uploadManuscript = require('./uploadManuscript')
 const uploadSupportingFile = require('./uploadSupportingFile')
-const { removeSupportingFiles } = require('./removeSupportingFiles')
+const removeSupportingFiles = require('./removeSupportingFiles')
 
 const resolvers = {
   Query: {

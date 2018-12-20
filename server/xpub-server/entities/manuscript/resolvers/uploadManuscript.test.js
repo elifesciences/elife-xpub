@@ -15,8 +15,8 @@ const { User, Manuscript } = require('@elifesciences/xpub-model')
 const scienceBeamApi = require('./scienceBeamApi')
 const { Mutation } = require('.')
 const { userData, badUserData } = require('./index.test.data')
-const { S3Storage } = require('@elifesciences/xpub-server')
 const replaySetup = require('../../../../../test/helpers/replay-setup')
+const { S3Storage } = require('@elifesciences/xpub-controller')
 
 describe('Manuscripts', () => {
   const profileId = userData.identities[0].identifier

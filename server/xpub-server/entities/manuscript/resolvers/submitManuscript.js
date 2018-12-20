@@ -4,7 +4,7 @@ const mailer = require('@pubsweet/component-send-email')
 const logger = require('@pubsweet/logger')
 const { mecaExport } = require('@elifesciences/xpub-meca-export')
 const { Manuscript, User } = require('@elifesciences/xpub-model')
-const S3Storage = require('../../../s3Storage')
+const { S3Storage } = require('@elifesciences/xpub-controller')
 const manuscriptInputSchema = require('../helpers/manuscriptInputValidationSchema')
 
 async function submitManuscript(_, { data }, { user, ip }) {
