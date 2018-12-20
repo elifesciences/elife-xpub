@@ -1,9 +1,32 @@
+const Joi = require('joi')
 const pug = require('pug')
+const dns = require('dns')
+const util = require('util')
 const config = require('config')
 const mailer = require('@pubsweet/component-send-email')
 const logger = require('@pubsweet/logger')
-
 const { Manuscript, User } = require('@elifesciences/xpub-model')
+
+const resolveMx = util.promisify(dns.resolveMx)
+
+const isValidEmail = async email => {
+  let result = false
+  try {
+    await Joi.validate(
+      email,
+      Joi.string()
+        .email()
+        .required(),
+    )
+    const tld = email.split('@')[1]
+    const lookup = await resolveMx(tld)
+    result = lookup.length > 0
+  } catch (err) {
+    return false
+  }
+
+  return result
+}
 
 async function updateManuscript(_, { data }, { user }) {
   const userUuid = await User.getUuidForProfile(user)
@@ -25,7 +48,11 @@ async function updateManuscript(_, { data }, { user }) {
   const newAuthorEmails = newAuthors.map(author => author.alias.email).join(',')
 
   // Send email here only when author changes...
-  if (newAuthorEmails !== originalAuthorEmails) {
+  if (
+    (await isValidEmail(newAuthorEmails)) &&
+    newAuthorEmails !== originalAuthorEmails
+  ) {
+    console.log(`######### ${newAuthorEmails}`)
     const textCompile = pug.compileFile('templates/dashboard-email-text.pug')
     const htmlCompile = pug.compileFile('templates/dashboard-email-html.pug')
     const text = textCompile({
