@@ -1,0 +1,15 @@
+{
+  "name": "@elifesciences/xpub-controller",
+  "version": "1.0.0",
+  "description": "",
+  "license": "MIT",
+  "author": "",
+  "main": "index.js",
+  "scripts": {},
+  "keywords": [],
+  "dependencies": {
+  },
+  "peerDependencies": {
+    "pubsweet-server": ">=2.0.0"
+  }
+}
