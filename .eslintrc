@@ -9,6 +9,12 @@
   "parser": "babel-eslint",
   "rules": {
     "global-require": 0,
+    "class-methods-use-this": ["error", {
+       "exceptMethods": ["storage",
+        "render",
+        "componentDidMount",
+        "shouldComponentUpdate"]
+     }],
     "import/no-dynamic-require": 0,
     "import/no-extraneous-dependencies": 0,
     "import/prefer-default-export": 0,
