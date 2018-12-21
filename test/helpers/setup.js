@@ -9,20 +9,21 @@ import replaySetup from './replay-setup'
 const net = require('net')
 const util = require('util')
 
-const portInUse = (port, callback) => {
-  const server = net.createServer(socket => {
-    socket.write('Echo server\r\n')
-    socket.pipe(socket)
-  })
+const portInUse = (host, port, callback) => {
+  const client = new net.Socket()
 
-  server.listen(port, '127.0.0.1')
-  server.on('error', e => {
-    console.log(`The port ${port} is in use. ${e.toString()}`)
-    callback(null, true)
-  })
-  server.on('listening', e => {
-    console.log(`The port ${port} is NOT in use.`)
-    server.close()
+  client.connect(
+    port,
+    host,
+    () => {
+      console.log(`---- Checking ${host}:${port} = available.`)
+      client.end()
+      callback(null, true)
+    },
+  )
+
+  client.on('error', e => {
+    console.log(`---- Checking ${host}:${port} = NOT available.`)
     callback(null, false)
   })
 }
@@ -32,8 +33,9 @@ let s3rver
 let requestedStart = false
 
 export async function startServer() {
-  await isPortInUse(config.get('pubsweet-server.port'))
-  await isPortInUse(config.get('pubsweet-server.db.port'))
+  await isPortInUse('127.0.0.1', config.get('pubsweet-server.port'))
+  const db = config.get('pubsweet-server.db')
+  await isPortInUse(db.host, db.port)
   if (!requestedStart) {
     requestedStart = true
     console.log(`---- No longer can requestStart`)
@@ -65,4 +67,8 @@ export async function setup(t) {
 
 export async function teardown() {
   await new Promise(resolve => s3rver.instance.close(resolve))
+}
+
+export async function stopServer() {
+  console.log(`---- stopServer requested....`)
 }
