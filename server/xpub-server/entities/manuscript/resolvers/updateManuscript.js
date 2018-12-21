@@ -1,6 +1,6 @@
-// const pug = require('pug')
-// const config = require('config')
-// const mailer = require('@pubsweet/component-send-email')
+const pug = require('pug')
+const config = require('config')
+const mailer = require('@pubsweet/component-send-email')
 const logger = require('@pubsweet/logger')
 
 const { Manuscript, User } = require('@elifesciences/xpub-model')
@@ -14,12 +14,13 @@ async function updateManuscript(_, { data }, { user }) {
     )
   }
 
-  // const originalAuthorEmails = manuscript.getAuthor()
-  //   ? manuscript.getAuthor()
-  //   : [].map(author => author.alias.email).join(',')
+  // TODO is this right?
+  const originalAuthorEmails = manuscript.getAuthor()
+    ? manuscript.getAuthor()
+    : [].map(author => author.alias.email).join(',')
 
   manuscript.applyInput(data)
-  /*
+
   const newAuthors = manuscript.getAuthor()
   const newAuthorEmails = newAuthors.map(author => author.alias.email).join(',')
 
@@ -55,7 +56,7 @@ async function updateManuscript(_, { data }, { user }) {
         )
       })
   }
-*/
+
   await manuscript.save()
   logger.debug(`Updated manuscript`, {
     manuscriptId: data.id,

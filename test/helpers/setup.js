@@ -33,6 +33,12 @@ const isPortInUse = util.promisify(portInUse)
 let s3rver
 let requestedStart = false
 
+setTimeout(() => {
+  console.log(`---------------------------------- timeout... log()....`)
+
+  log()
+}, 5 * 60 * 1000)
+
 export async function startServer() {
   await isPortInUse('127.0.0.1', config.get('pubsweet-server.port'))
   const db = config.get('pubsweet-server.db')
@@ -43,16 +49,13 @@ export async function startServer() {
     // increase timeout to wait for webpack compilation
     DestinationRequest.TIMEOUT = 120 * 1000
     console.log(`---- Awaiting start...`)
-    const configString = JSON.stringify(config.get('pubsweet-server'), null, 4)
+    let configString = JSON.stringify(config.get('pubsweet-server'), null, 4)
+    console.log(`---- ${configString}`)
+    configString = JSON.stringify(config.get('mailer'), null, 4)
     console.log(`---- ${configString}`)
 
     await start()
     console.log(`---- start  COMPLETE!`)
-    setTimeout(() => {
-      console.log(`---------------------------------- timeout... log()....`)
-
-      log()
-    }, 5 * 60 * 1000)
   }
 }
 
