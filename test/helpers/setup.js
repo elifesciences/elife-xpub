@@ -48,6 +48,11 @@ export async function startServer() {
 
     await start()
     console.log(`---- start  COMPLETE!`)
+    setTimeout(() => {
+      console.log(`---------------------------------- timeout... log()....`)
+
+      log()
+    }, 5 * 60 * 1000)
   }
 }
 
@@ -72,5 +77,4 @@ export async function teardown() {
 
 export async function stopServer() {
   console.log(`---- stopServer requested....`)
-  log()
 }
