@@ -16,7 +16,7 @@ export async function startServer() {
   console.log('test/helpers/setup.js::startServer')
   if (!server) {
     // increase timeout to wait for webpack compilation
-    DestinationRequest.TIMEOUT = 60 * 1000
+    DestinationRequest.TIMEOUT = 180 * 1000
     console.log('test/helpers/setup.js::startServer await start')
     server = await start()
     console.log('test/helpers/setup.js::startServer started')
