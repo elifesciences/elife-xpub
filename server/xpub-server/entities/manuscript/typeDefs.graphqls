@@ -43,7 +43,6 @@ input ManuscriptInput {
   previouslyDiscussed: String
   previouslySubmitted: [String]
   cosubmission: [String!]!
-  suggestionsConflict: Boolean
   submitterSignature: String
   disclosureConsent: Boolean
   meta: ManuscriptMetaInput

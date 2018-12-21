@@ -10,7 +10,6 @@ const emptyManuscript = {
   opposedSeniorEditorsReason: '',
   opposedReviewingEditorsReason: '',
   opposedReviewersReason: '',
-  suggestionsConflict: false,
   files: [],
   coverLetter: `
 <p><strong>How will your work make others in the field think differently and move the field forward?</strong></p>
