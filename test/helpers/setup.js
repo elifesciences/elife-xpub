@@ -1,3 +1,4 @@
+import log from 'why-is-node-running'
 import DestinationRequest from 'testcafe-hammerhead/lib/request-pipeline/destination-request'
 import { createTables } from '@pubsweet/db-manager'
 import config from 'config'
@@ -71,4 +72,5 @@ export async function teardown() {
 
 export async function stopServer() {
   console.log(`---- stopServer requested....`)
+  log()
 }
