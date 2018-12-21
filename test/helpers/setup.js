@@ -14,7 +14,14 @@ let s3rver
 
 export async function startServer() {
   console.log('test/helpers/setup.js::startServer')
+  let serverStartAttempt = false
   if (!server) {
+    if (serverStartAttempt) {
+      throw new Error(
+        "Attempting to start the server again, but a previous attempt hasn't been executed yet",
+      )
+    }
+    serverStartAttempt = true
     // increase timeout to wait for webpack compilation
     DestinationRequest.TIMEOUT = 180 * 1000
     console.log('test/helpers/setup.js::startServer await start')
