@@ -11,10 +11,10 @@ import replaySetup from './replay-setup'
 
 let server
 let s3rver
+let serverStartAttempt = false
 
 export async function startServer() {
   console.log('test/helpers/setup.js::startServer')
-  let serverStartAttempt = false
   if (!server) {
     if (serverStartAttempt) {
       throw new Error(
