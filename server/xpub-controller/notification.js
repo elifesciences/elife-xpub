@@ -5,15 +5,17 @@ const util = require('util')
 const mailer = require('@pubsweet/component-send-email')
 const logger = require('@pubsweet/logger')
 
+const resolveMx = util.promisify(dns.resolveMx)
+
 class Notification {
   constructor(config, people) {
-    this.resolveMx = util.promisify(dns.resolveMx)
     this.people = people
     this.config = config
   }
 
-  async isValidEmail(email) {
+  static async isValidEmail(email) {
     let result = false
+    let tld = ''
     try {
       await Joi.validate(
         email,
@@ -21,10 +23,11 @@ class Notification {
           .email()
           .required(),
       )
-      const tld = email.split('@')[1]
-      const lookup = await this.resolveMx(tld)
+      tld = email.split('@')[1]
+      const lookup = await resolveMx(tld)
       result = lookup.length > 0
     } catch (err) {
+      logger.warn(`Not a valid email or TLD: ${email}, ${err}`)
       return false
     }
 
@@ -34,12 +37,14 @@ class Notification {
   async sendDashboardEmail() {
     const emailList = this.people.map(person => person.alias.email).join(',')
     const valid = await this.people
-      .map(async person => this.isValidEmail(person.alias.email))
+      .map(async person => Notification.isValidEmail(person.alias.email))
       .reduce((previous, current) => previous && current)
 
     if (!valid) {
+      logger.warn(`Failed attempt to send email to: ${emailList}`)
       return false
     }
+
     const textCompile = pug.compileFile('templates/dashboard-email-text.pug')
     const htmlCompile = pug.compileFile('templates/dashboard-email-html.pug')
     const firstNameList = this.people
