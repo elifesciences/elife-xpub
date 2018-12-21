@@ -19,6 +19,7 @@ export async function startServer() {
     DestinationRequest.TIMEOUT = 60 * 1000
     console.log('test/helpers/setup.js::startServer await start')
     server = await start()
+    console.log('test/helpers/setup.js::startServer started')
   }
 }
 
