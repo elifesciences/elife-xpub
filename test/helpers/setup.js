@@ -9,14 +9,15 @@ import start from 'pubsweet/src/startup/start'
 
 import replaySetup from './replay-setup'
 
-let server
 let s3rver
+let requestedStart = false
 
 export async function startServer() {
-  if (!server) {
+  if (!requestedStart) {
+    requestedStart = true
     // increase timeout to wait for webpack compilation
     DestinationRequest.TIMEOUT = 60 * 1000
-    server = await start()
+    await start()
   }
 }
 
