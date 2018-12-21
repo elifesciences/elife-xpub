@@ -3,8 +3,8 @@ import { Selector } from 'testcafe'
 import { author, dashboard, login, wizardStep } from './pageObjects'
 import setFixtureHooks from './helpers/set-fixture-hooks'
 
-//const f = fixture('Submission')
-//setFixtureHooks(f)
+const f = fixture('Submission')
+setFixtureHooks(f)
 
 test('Delete a Submission', async t => {
   await t

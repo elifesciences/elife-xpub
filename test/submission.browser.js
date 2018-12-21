@@ -16,8 +16,8 @@ import {
 } from './pageObjects'
 import setFixtureHooks from './helpers/set-fixture-hooks'
 
-//const f = fixture('Submission')
-//setFixtureHooks(f)
+const f = fixture('Submission')
+setFixtureHooks(f)
 
 const manuscript = {
   title: 'The Relationship Between Lamport Clocks and Interrupts Using Obi',
