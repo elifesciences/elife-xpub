@@ -13,18 +13,25 @@ let server
 let s3rver
 
 export async function startServer() {
+  console.log('test/helpers/setup.js::startServer')
   if (!server) {
     // increase timeout to wait for webpack compilation
     DestinationRequest.TIMEOUT = 60 * 1000
+    console.log('test/helpers/setup.js::startServer await start')
     server = await start()
   }
 }
 
 export async function setup(t) {
+  console.log('test/helpers/setup.js::setup')
+
+  console.log('test/helpers/setup.js::setup createTables')
   await createTables(true)
 
+  console.log('test/helpers/setup.js::setup replaySetup')
   replaySetup('success')
 
+  console.log('test/helpers/setup.js::setup await startS3Server')
   // setup mock S3 server
   s3rver = await startS3Server({
     ...config.get('aws.credentials'),
@@ -33,5 +40,6 @@ export async function setup(t) {
 }
 
 export async function teardown() {
+  console.log('test/helpers/setup.js::teardown')
   await new Promise(resolve => s3rver.instance.close(resolve))
 }
