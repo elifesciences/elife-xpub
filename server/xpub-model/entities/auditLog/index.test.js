@@ -1,5 +1,4 @@
 const { createTables } = require('@pubsweet/db-manager')
-const config = require('config')
 const User = require('../user')
 const AuditLog = require('.')
 const replaySetup = require('../../../../test/helpers/replay-setup')
