@@ -80,6 +80,7 @@ class PersonPod extends React.Component {
       isSelectButtonClickable = true,
       togglePersonSelection,
       selectButtonType,
+      maxSelection,
       name,
       institution = '',
       focuses,
@@ -122,7 +123,9 @@ class PersonPod extends React.Component {
           expertises={expertises}
           focuses={focuses}
           institution={institution}
+          isSelectButtonClickable={isSelectButtonClickable}
           isSelected={isSelected}
+          maxSelection={maxSelection}
           name={name}
           onAccept={this.acceptModal}
           onCancel={this.cancelModal}
@@ -138,7 +141,10 @@ class PersonPod extends React.Component {
             {institution && <StyledParagraph>{institution}</StyledParagraph>}
             {!institution && <Box mb={3} />}
             <Flex alignItems="center">
-              <ButtonAsIconWrapper onClick={this.openModal}>
+              <ButtonAsIconWrapper
+                data-test-id="people-picker-info"
+                onClick={this.openModal}
+              >
                 <StyledInfoIcon />
               </ButtonAsIconWrapper>
               <StyledSmallParagraph>{separatedKeywords}</StyledSmallParagraph>

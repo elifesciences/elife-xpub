@@ -38,6 +38,7 @@ const ModalDialog = ({
   size,
   transparentBackground = true,
   attention,
+  isSelectButtonClickable,
   ...props
 }) => (
   <ModalOverlay
@@ -68,6 +69,7 @@ const ModalDialog = ({
             {!attention && (
               <Button
                 data-test-id="accept"
+                disabled={!isSelectButtonClickable}
                 onClick={onAccept}
                 primary
                 type="button"
