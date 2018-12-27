@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Box } from 'grid-styled'
+import { Box } from '@rebass/grid'
 import media from '../../global/layout/media'
 import StickyFooter from '../../ui/atoms/StickyFooter'
 import DashboardContent from './DashboardContent'

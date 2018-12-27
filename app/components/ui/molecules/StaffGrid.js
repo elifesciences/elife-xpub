@@ -1,5 +1,5 @@
 import React from 'react'
-import { Flex, Box } from 'grid-styled'
+import { Flex, Box } from '@rebass/grid'
 
 const StaffGrid = ({ children, ...props }) => (
   <Flex flexWrap="wrap" mb={-3} mx={-2} {...props}>

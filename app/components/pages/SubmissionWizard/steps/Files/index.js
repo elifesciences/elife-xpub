@@ -1,7 +1,7 @@
 import React from 'react'
 import gql from 'graphql-tag'
 import { Mutation } from 'react-apollo'
-import { Box } from 'grid-styled'
+import { Box } from '@rebass/grid'
 import CoverLetterEditor from './CoverLetterEditor'
 import ValidatedField from '../../../../ui/atoms/ValidatedField'
 import ManuscriptUpload from './ManuscriptUpload'

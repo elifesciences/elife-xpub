@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { th } from '@pubsweet/ui-toolkit'
-import { Box } from 'grid-styled'
+import { Box } from '@rebass/grid'
 
 const Label = styled.label`
   font-size: ${th('fontSizeBaseSmall')};

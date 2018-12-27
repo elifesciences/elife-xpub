@@ -1,6 +1,6 @@
 import React from 'react'
 import Dropzone from 'react-dropzone'
-import { Box, Flex } from 'grid-styled'
+import { Box, Flex } from '@rebass/grid'
 import { th } from '@pubsweet/ui-toolkit'
 import styled, { css } from 'styled-components'
 import config from 'config'
