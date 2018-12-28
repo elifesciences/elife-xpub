@@ -21,7 +21,7 @@ class TextureEditor extends React.Component {
   setRef = ref => (this.ref = ref)
 
   render() {
-    return <TextureContainer innerRef={this.setRef} />
+    return <TextureContainer ref={this.setRef} />
   }
 }
 

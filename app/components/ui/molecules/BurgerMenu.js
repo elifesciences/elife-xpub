@@ -69,7 +69,7 @@ class BurgerMenu extends React.Component {
         </ButtonAsIconWrapper>
         <ModalOverlay open={this.state.menuOpen} transparentBackground>
           <MenuPanel
-            innerRef={node => {
+            ref={node => {
               this.menuRef = node
             }}
           >

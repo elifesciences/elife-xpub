@@ -120,7 +120,7 @@ class ProfileMenu extends React.Component {
 
     return (
       <PositionRelative
-        innerRef={node => {
+        ref={node => {
           this.wrapperRef = node
         }}
       >
