@@ -1,5 +1,5 @@
 import React from 'react'
-import { hot } from 'react-hot-loader'
+import { hot } from 'react-hot-loader/root'
 import createHistory from 'history/createBrowserHistory'
 import { withClientState } from 'apollo-link-state'
 
@@ -26,7 +26,7 @@ const makeApolloConfig = ({ cache, link, ...config }) => {
   }
 }
 
-export default hot(module)(() => (
+const App = () => (
   <React.Fragment>
     <GlobalStyles/>
     <Root
@@ -37,4 +37,6 @@ export default hot(module)(() => (
       theme={theme}
     />
   </React.Fragment>
-))
+)
+
+export default hot(App)
