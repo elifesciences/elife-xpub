@@ -1,5 +1,4 @@
 /* eslint-disable import/extensions */
-import GlobalStyles from './global'
 import * as elements from './elements'
 import * as icons from './icons'
 
