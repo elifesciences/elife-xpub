@@ -11362,7 +11362,7 @@ pubsweet-client@^6.1.0:
     styled-normalize "^3.0.1"
     subscriptions-transport-ws "^0.9.12"
 
-pubsweet-server@^10.1.4:
+pubsweet-server@^10.0.3, pubsweet-server@^10.1.4:
   version "10.1.4"
   resolved "https://registry.yarnpkg.com/pubsweet-server/-/pubsweet-server-10.1.4.tgz#71d61077b4b165ce9cf5c66e41eaa37655919625"
   integrity sha512-0YARitsvffmPz/gbfZVnPpbfvShPin6saz6uVOT+esx3Ze2qFCnO5mNREAf7tbdNvINgIOkIbCHl77gCPOYAmw==
@@ -11411,7 +11411,7 @@ pubsweet-sse@^1.0.2:
   resolved "https://registry.yarnpkg.com/pubsweet-sse/-/pubsweet-sse-1.0.2.tgz#cf69ffa658dc70dfe68df8ac861c55365c3647a5"
   integrity sha512-8DhfnCKqcn0vSOJVwqdzICEYHfMtJBwtBxfeMzyG91CI9jDuhDxm4DIxh3nWQiuctZjO/QncY1dMT6DcmSfxTQ==
 
-pubsweet@^3.0.13:
+pubsweet@^3.0.8:
   version "3.0.13"
   resolved "https://registry.yarnpkg.com/pubsweet/-/pubsweet-3.0.13.tgz#0f47b3b686421a48e46c7a301f96d2c2e2ced65a"
   integrity sha512-Mql1aynMv1cJHE6D+ZWTgW8U/zsbOOB0LwgR7Fu8dQGSi1ulpn5tCmIzHe4nHzFscjXdvMNCmKRvi5aHcZH5aw==
