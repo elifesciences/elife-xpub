@@ -3,7 +3,6 @@ const Identity = require('./entities/identity')
 const Manuscript = require('./entities/manuscript')
 const Team = require('./entities/team')
 const User = require('./entities/user')
-const AuditLog = require('./entities/auditLog')
 
 module.exports = {
   File,
@@ -11,5 +10,4 @@ module.exports = {
   Manuscript,
   Team,
   User,
-  AuditLog
 }
