@@ -1,15 +1,22 @@
-const { File, Manuscript } = require('@elifesciences/xpub-model')
+const ManuscriptModel = require('@elifesciences/xpub-model').Manuscript
+const FileModel = require('@elifesciences/xpub-model').File
 const logger = require('@pubsweet/logger')
 
 class SupportingFiles {
-  static async remove(storage, _, { id }, { user }) {
-    let manuscript = await Manuscript.find(id, user)
+  constructor(storage, id, user) {
+    this.storage = storage
+    this.id = id
+    this.user = user
+  }
+
+  async removeAll() {
+    let manuscript = await ManuscriptModel.find(this.id, this.user)
 
     const filesWithoutSupporting = manuscript.files.filter(
       file => file.type !== 'SUPPORTING_FILE',
     )
 
-    const files = await File.findByManuscriptId(id)
+    const files = await FileModel.findByManuscriptId(this.id)
 
     if (files && files.length > 0) {
       let modified = false
@@ -18,7 +25,7 @@ class SupportingFiles {
         .forEach(async file => {
           try {
             modified = true
-            await storage.deleteContent(file)
+            await this.storage.deleteContent(file)
             await file.delete()
           } catch (err) {
             logger.error(`Unable to delete file ${file.id}`, err)
