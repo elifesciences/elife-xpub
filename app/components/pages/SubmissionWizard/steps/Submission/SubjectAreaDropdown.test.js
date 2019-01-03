@@ -1,5 +1,5 @@
 import React from 'react'
-import { shallow, mount } from 'enzyme'
+import { mount } from 'enzyme'
 import theme from '@elifesciences/elife-theme'
 
 import SubjectAreaDropdown from './SubjectAreaDropdown'
