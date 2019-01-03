@@ -20,8 +20,7 @@ const MyDropdown = (
 
 describe('SubjectAreaDropdown component', () => {
   it('renders label & select', () => {
-    // dive is necessary because SubjectAreaDropdown is wrapped by withTheme
-    const wrapper = shallow(MyDropdown).dive()
+    const wrapper = mount(MyDropdown)
     expect(wrapper.html()).toContain('My label')
     expect(wrapper.find('[inputId="subject-area-select"]').exists()).toBe(true)
     expect(wrapper.text()).not.toContain('No more than two subject areas')
