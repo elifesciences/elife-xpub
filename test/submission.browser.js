@@ -139,6 +139,7 @@ test('Happy path', async t => {
     .typeText(editors.fifthReviewerEmail, 'sneha@example.net')
     .typeText(editors.sixthReviewerName, 'Emily')
     .typeText(editors.sixthReviewerEmail, 'emily@example.org')
+    .click(editors.conflictOfInterest)
     .click(wizardStep.next)
 
   // consenting to data disclosure

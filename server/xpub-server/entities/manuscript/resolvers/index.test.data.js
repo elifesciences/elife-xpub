@@ -55,6 +55,7 @@ exports.manuscriptInput = {
   ],
   suggestedReviewingEditors: ['ef56', 'gh78'],
   suggestedSeniorEditors: ['ab12', 'cd34'],
+  suggestionsConflict: false,
 }
 
 exports.expectedManuscript = {
@@ -79,4 +80,5 @@ exports.expectedManuscript = {
   qcIssues: null,
   status: 'INITIAL',
   submitterSignature: 'Sneha Berry',
+  suggestionsConflict: false,
 }

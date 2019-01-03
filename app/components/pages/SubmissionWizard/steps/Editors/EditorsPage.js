@@ -8,6 +8,7 @@ import PeoplePickerControl from '../../../../ui/PeoplePicker/PeoplePickerControl
 import Textarea from '../../../../ui/atoms/Textarea'
 import CalloutBox from '../../../../ui/atoms/CalloutBox'
 import ValidatedField from '../../../../ui/atoms/ValidatedField'
+import ControlledCheckbox from '../../../../ui/atoms/ControlledCheckbox'
 import TwoColumnLayout from '../../../../global/layout/TwoColumnLayout'
 import { limits } from './schema'
 
@@ -339,6 +340,12 @@ class EditorsPage extends React.Component {
             />
           </OptionalExclude>
         </Box>
+
+        <ValidatedField
+          component={ControlledCheckbox}
+          label="I declare that, to the best of my knowledge, these experts have no conflict of interest"
+          name="suggestionsConflict"
+        />
       </React.Fragment>
     )
   }

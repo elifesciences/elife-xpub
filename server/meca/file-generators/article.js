@@ -83,6 +83,7 @@ function createXmlObject(manuscript, editorsById, affiliations, reviewerMap) {
           'opposed-reviewing-editor-comment':
             manuscript.opposedReviewingEditorsReason,
           'opposed-reviewer-comment': manuscript.opposedReviewersReason,
+          'suggestions-conflict': manuscript.suggestionsConflict,
           'previously-discussed': manuscript.previouslyDiscussed,
           'previously-submitted': manuscript.previouslySubmitted[0],
           'created-by': manuscript.createdBy,

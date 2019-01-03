@@ -183,6 +183,10 @@ exports[`Article XML generator generates expected XML when secret is empty 1`] =
           <meta-value>Wandering days are over</meta-value>
         </custom-meta>
         <custom-meta>
+          <meta-name>suggestions-conflict</meta-name>
+          <meta-value>true</meta-value>
+        </custom-meta>
+        <custom-meta>
           <meta-name>previously-discussed</meta-name>
           <meta-value>Talked to bob about it</meta-value>
         </custom-meta>
@@ -381,6 +385,10 @@ exports[`Article XML generator generates expected XML when secret is set 1`] = `
         <custom-meta>
           <meta-name>opposed-reviewer-comment</meta-name>
           <meta-value>Wandering days are over</meta-value>
+        </custom-meta>
+        <custom-meta>
+          <meta-name>suggestions-conflict</meta-name>
+          <meta-value>true</meta-value>
         </custom-meta>
         <custom-meta>
           <meta-name>previously-discussed</meta-name>

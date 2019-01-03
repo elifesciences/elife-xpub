@@ -10,6 +10,7 @@ describe('Editors page form validation', () => {
       suggestedReviewingEditors: [{ id: 1 }, { id: 2 }],
       opposedReviewingEditors: [{ id: 3 }],
       opposedReviewingEditorsReason: 'Just because',
+      suggestionsConflict: true,
       suggestedReviewers: [
         { name: 'A', email: 'a@here.com' },
         { name: 'B', email: 'b@here.com' },
@@ -33,6 +34,7 @@ describe('Editors page form validation', () => {
       suggestedReviewingEditors: [],
       opposedReviewingEditors: [{ id: 1 }, { id: 2 }, { id: 3 }],
       opposedReviewingEditorsReason: '',
+      suggestionsConflict: false,
       suggestedReviewers: [{ name: '', email: 'bloop' }],
       opposedReviewers: [{ name: 'Jane Doe', email: 'jane@doe.com' }],
       opposedReviewersReason: '',
@@ -54,6 +56,8 @@ describe('Editors page form validation', () => {
       ],
       suggestedReviewingEditors: 'Please suggest at least 2 editors',
       suggestedSeniorEditors: 'Please suggest at least 2 editors',
+      suggestionsConflict:
+        'Please do not suggest people with a known conflict of interest',
       opposedReviewersReason: 'Please provide a reason for exclusion',
     })
   })

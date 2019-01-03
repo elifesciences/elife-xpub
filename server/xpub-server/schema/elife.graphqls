@@ -5,6 +5,7 @@ extend type Manuscript {
   submitterSignature: String
   disclosureConsent: Boolean
   relatedManuscripts: [RelatedManuscript!]
+  suggestionsConflict: Boolean!
   qcIssues: [QCIssue!]
   assignees(role: String!): [Assignee]
 }

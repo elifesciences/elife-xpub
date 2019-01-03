@@ -89,6 +89,7 @@ const manuscriptInputSchema = Joi.object()
       then: Joi.string().required(),
       otherwise: Joi.string().allow(''),
     }),
+    suggestionsConflict: Joi.boolean().required(),
     submitterSignature: Joi.string().required(),
     disclosureConsent: Joi.bool().required(),
   })

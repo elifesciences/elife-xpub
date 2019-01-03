@@ -47,6 +47,7 @@ const manuscriptFragment = gql`
       ...ReviewerDetails
     }
     opposedReviewersReason
+    suggestionsConflict
     files {
       filename
       type
