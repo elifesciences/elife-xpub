@@ -5,9 +5,7 @@ const scienceBeamApi = require('./scienceBeamApi')
 
 const { ON_UPLOAD_PROGRESS } = pubsubManager.asyncIterators
 
-const { Manuscript, User } = require('@elifesciences/xpub-model')
-const { File } = require('@elifesciences/xpub-model')
-const { S3Storage } = require('@elifesciences/xpub-controller')
+const { Manuscript, File, User } = require('@elifesciences/xpub-model')
 
 async function addFileEntityToManuscript(manuscriptEntity, fileEntity) {
   const manuscript = manuscriptEntity
@@ -88,7 +86,7 @@ async function uploadManuscript(_, { file, id, fileSize }, { user }) {
   })
 
   try {
-    await S3Storage.putContent(fileEntity, fileContents, {
+    await fileEntity.putContent(fileContents, {
       size: fileSize,
     })
   } catch (err) {

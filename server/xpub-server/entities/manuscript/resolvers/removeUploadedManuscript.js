@@ -11,7 +11,6 @@ async function removeUploadedManuscript(_, vars, { user }) {
 
   if (manuscriptUploadIndex > -1) {
     manuscript.files.splice(manuscriptUploadIndex, 1)
-    // TODO: Should we remove the content from S3 ???
     await manuscript.save()
     logger.debug(`Manuscript file removed`, {
       manuscriptId: vars.id,

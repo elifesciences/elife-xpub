@@ -11,12 +11,12 @@ const logger = require('@pubsweet/logger')
 const { createTables } = require('@pubsweet/db-manager')
 const mailer = require('@pubsweet/component-send-email')
 const startS3rver = require('../../../test/mock-s3-server')
-const { User, Manuscript } = require('@elifesciences/xpub-model')
+const { User, File, Manuscript } = require('@elifesciences/xpub-model')
 const scienceBeamApi = require('./scienceBeamApi')
 const { Mutation } = require('.')
 const { userData, badUserData } = require('./index.test.data')
+
 const replaySetup = require('../../../../../test/helpers/replay-setup')
-const { S3Storage } = require('@elifesciences/xpub-controller')
 
 describe('Manuscripts', () => {
   const profileId = userData.identities[0].identifier
@@ -80,14 +80,13 @@ describe('Manuscripts', () => {
       )
 
       const loadedManuscript = await Manuscript.find(id, userId)
-      const file = await loadedManuscript.getSource()
-      const pdfBinary = await S3Storage.getContent(file)
+      const pdfBinary = await loadedManuscript.getSource().getContent()
       expect(pdfBinary.toString().substr(0, 6)).toEqual('%PDF-1')
     })
 
     it('fails if S3 upload fails', async () => {
       jest
-        .spyOn(S3Storage, 'putContent')
+        .spyOn(File.prototype, 'putContent')
         .mockImplementationOnce(() =>
           Promise.reject(new Error('Failed to persist file')),
         )

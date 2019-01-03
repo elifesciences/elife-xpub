@@ -8,9 +8,7 @@ const logger = require('@pubsweet/logger')
 const { createTables } = require('@pubsweet/db-manager')
 const mailer = require('@pubsweet/component-send-email')
 const { mecaExport } = require('@elifesciences/xpub-meca-export')
-const { User, Manuscript } = require('@elifesciences/xpub-model')
-const { S3Storage } = require('@elifesciences/xpub-controller')
-
+const { User, File, Manuscript } = require('@elifesciences/xpub-model')
 const { Mutation } = require('.')
 const {
   userData,
@@ -49,10 +47,10 @@ describe('Manuscripts', () => {
 
     beforeAll(() =>
       jest
-        .spyOn(S3Storage, 'getContent')
+        .spyOn(File.prototype, 'getContent')
         .mockImplementation(() => 'A real PDF'))
 
-    afterAll(() => S3Storage.getContent.mockRestore())
+    afterAll(() => File.prototype.getContent.mockRestore())
 
     beforeEach(async () => {
       jest.clearAllMocks()

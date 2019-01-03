@@ -4,7 +4,6 @@ const mailer = require('@pubsweet/component-send-email')
 const logger = require('@pubsweet/logger')
 const { mecaExport } = require('@elifesciences/xpub-meca-export')
 const { Manuscript, User } = require('@elifesciences/xpub-model')
-const { S3Storage } = require('@elifesciences/xpub-controller')
 const manuscriptInputSchema = require('../helpers/manuscriptInputValidationSchema')
 
 async function submitManuscript(_, { data }, { user, ip }) {
@@ -37,7 +36,7 @@ async function submitManuscript(_, { data }, { user, ip }) {
   manuscript.status = Manuscript.statuses.MECA_EXPORT_PENDING
   await manuscript.save()
 
-  const content = await S3Storage.getContent(sourceFile)
+  const content = await sourceFile.getContent()
   mecaExport(manuscript, content, ip)
     .then(() => {
       logger.info(`Manuscript ${manuscript.id} successfully exported`)
