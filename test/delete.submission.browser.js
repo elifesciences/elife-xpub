@@ -6,7 +6,7 @@ import setFixtureHooks from './helpers/set-fixture-hooks'
 const f = fixture('Submission')
 setFixtureHooks(f)
 
-test('Create a Submission', async t => {
+test('Delete a Submission', async t => {
   await t
     .navigateTo(login.url)
     .click(login.button)
