@@ -187,7 +187,6 @@ const FilesPageContainer = ({
                     <Mutation mutation={DELETE_SUPPORTING_FILES_MUTATION}>
                       {removeSupportFiles => (
                         <SupportingUpload
-                          data-test-id="supportingFilesUpload"
                           files={submissionFiles.filter(
                             file => file.type === SUPPORTING_FILE,
                           )}

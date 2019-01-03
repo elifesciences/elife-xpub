@@ -222,10 +222,7 @@ class SupportingUpload extends React.Component {
                   <React.Fragment>
                     <UploadControl>
                       Add more{' '}
-                      <UploadLink
-                        data-test-id="supportingFilesLink"
-                        onClick={() => dropzoneRef.open()}
-                      >
+                      <UploadLink onClick={() => dropzoneRef.open()}>
                         supporting files
                       </UploadLink>{' '}
                       (optional)
