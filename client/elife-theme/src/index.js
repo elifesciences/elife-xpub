@@ -1,9 +1,11 @@
 /* eslint-disable import/extensions */
-import './global'
 import * as elements from './elements'
 import * as icons from './icons'
 
 const gridUnit = 6
+
+export { icons }
+export { default as GlobalStyle } from './global'
 
 export default {
   /* Colors */
@@ -98,4 +100,3 @@ export default {
   },
 }
 
-export { icons }

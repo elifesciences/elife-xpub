@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
-import { Box, Flex } from 'grid-styled'
+import { Box, Flex } from '@rebass/grid'
 import { th } from '@pubsweet/ui-toolkit'
 import Icon from '../atoms/Icon'
 import ButtonAsIconWrapper from '../atoms/ButtonAsIconWrapper'
@@ -69,7 +69,7 @@ class BurgerMenu extends React.Component {
         </ButtonAsIconWrapper>
         <ModalOverlay open={this.state.menuOpen} transparentBackground>
           <MenuPanel
-            innerRef={node => {
+            ref={node => {
               this.menuRef = node
             }}
           >

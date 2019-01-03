@@ -1,6 +1,6 @@
 import React from 'react'
 import { Menu, Action } from '@pubsweet/ui'
-import { Box } from 'grid-styled'
+import { Box } from '@rebass/grid'
 
 import ValidatedField from '../../../../ui/atoms/ValidatedField'
 import Textarea from '../../../../ui/atoms/Textarea'

@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import Autosuggest from 'react-autosuggest'
-import { Flex, Box } from 'grid-styled'
+import { Flex, Box } from '@rebass/grid'
 import { th } from '@pubsweet/ui-toolkit'
 import { Button } from '@pubsweet/ui'
 

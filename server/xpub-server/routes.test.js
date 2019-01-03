@@ -1,3 +1,4 @@
+jest.mock('@pubsweet/logger')
 jest.mock('./health')
 
 const express = require('express')

@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { Formik } from 'formik'
-import { Box, Flex } from 'grid-styled'
+import { Box, Flex } from '@rebass/grid'
 import { Button } from '@pubsweet/ui'
 import ButtonLink from '../../ui/atoms/ButtonLink'
 import { FormH2 } from '../../ui/atoms/FormHeadings'
