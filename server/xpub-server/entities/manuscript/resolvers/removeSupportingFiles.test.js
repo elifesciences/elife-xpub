@@ -14,12 +14,8 @@ const dummyStorage = {
 const expectRemoveSupportingFilesDoesNothing = async (manuscriptIn, userId) => {
   let manuscript = await manuscriptIn.save()
   manuscript = await Manuscript.find(manuscript.id, userId)
-  const mutatedManuscript = await SupportingFiles.remove(
-    dummyStorage,
-    null,
-    { id: manuscript.id },
-    { user: userId },
-  )
+  const files = new SupportingFiles(dummyStorage, manuscript.id, userId)
+  const mutatedManuscript = await files.removeAll()
   const strManuscript = JSON.stringify(manuscript, null, 4)
   const strMutated = JSON.stringify(mutatedManuscript, null, 4)
   expect(strManuscript).toEqual(strMutated)
@@ -36,13 +32,8 @@ const expectRemoveSupportingFilesLeavesManuscript = async (
   manuscript = await manuscript.save()
   manuscript = await Manuscript.find(manuscript.id, userId)
   expect(manuscript.files).toHaveLength(fileList.length)
-
-  const mutatedManuscript = await SupportingFiles.remove(
-    dummyStorage,
-    null,
-    { id: manuscript.id },
-    { user: userId },
-  )
+  const files = new SupportingFiles(dummyStorage, manuscript.id, userId)
+  const mutatedManuscript = await files.removeAll()
   expect(mutatedManuscript.files).toHaveLength(1)
   expect(mutatedManuscript.files[0].type).toBe('MANUSCRIPT_SOURCE')
 }

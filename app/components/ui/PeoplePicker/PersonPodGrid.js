@@ -5,8 +5,6 @@ import { peoplePropType } from './types'
 import TwoColumnLayout from '../../global/layout/TwoColumnLayout'
 import PersonPod from './PersonPod'
 
-const MAX_DISPLAYED_PODS = 30
-
 const PersonPodGrid = ({
   people,
   isSelected,
@@ -28,13 +26,13 @@ const PersonPodGrid = ({
           }
           isSelected={isSelected(person)}
           key={person.id}
+          maxSelection={maxSelection}
           name={person.name}
           selectButtonType={isSelected(person) ? 'selected' : 'add'}
           togglePersonSelection={() => toggleSelection(person)}
           // onKeywordClick will need to be added, once we know what the desired behaviour is
         />
-      ))
-      .slice(0, MAX_DISPLAYED_PODS)}
+      ))}
   </TwoColumnLayout>
 )
 

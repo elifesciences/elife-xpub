@@ -38,6 +38,7 @@ const ModalDialog = ({
   size,
   transparentBackground = true,
   attention,
+  isSelectButtonClickable,
   ...props
 }) => (
   <ModalOverlay
@@ -68,6 +69,7 @@ const ModalDialog = ({
             {!attention && (
               <Button
                 data-test-id="accept"
+                disabled={!isSelectButtonClickable}
                 onClick={onAccept}
                 primary
                 type="button"
@@ -90,12 +92,14 @@ ModalDialog.propTypes = {
   onCancel: PropTypes.func.isRequired,
   open: PropTypes.bool.isRequired,
   size: PropTypes.oneOf(['s', 'm', 'l']),
+  isSelectButtonClickable: PropTypes.bool,
 }
 
 ModalDialog.defaultProps = {
   acceptText: 'OK',
   cancelText: 'Cancel',
   size: 's',
+  isSelectButtonClickable: true,
 }
 
 export default ModalDialog
