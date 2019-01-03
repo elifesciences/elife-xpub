@@ -1,0 +1,24 @@
+GET /people/6d0822a6
+accept-encoding: gzip, deflate
+
+HTTP/1.1 200 OK
+server: nginx
+date: Thu, 03 Jan 2019 15:45:51 GMT
+content-type: application/vnd.elife.person+json;version=1
+transfer-encoding: chunked
+connection: close
+cache-control: max-age=300, public, stale-if-error=86400, stale-while-revalidate=300
+vary: Accept, Authorization
+etag: "5b784cdd6170fb89b3776821b47e8ad1"
+x-ua-compatible: IE=edge
+content-language: en
+x-content-type-options: nosniff
+x-frame-options: SAMEORIGIN
+x-consumer-groups-filtered: user
+x-consumer-groups-remote-addr: 34.226.197.243
+access-control-allow-origin: *
+x-kong-upstream-latency: 80
+x-kong-proxy-latency: 0
+via: kong/0.9.5
+
+{"id":"6d0822a6","type":{"id":"senior-editor","label":"Senior Editor"},"name":{"surname":"Storz","givenNames":"Gisela","preferred":"Gisela Storz","index":"Storz, Gisela"},"image":{"uri":"https:\/\/iiif.elifesciences.org\/journal-cms\/person%2F2018-01%2Fa06w3761.jpg","alt":"","source":{"mediaType":"image\/jpeg","uri":"https:\/\/iiif.elifesciences.org\/journal-cms\/person%2F2018-01%2Fa06w3761.jpg\/full\/full\/0\/default.jpg","filename":"a06w3761.jpg"},"size":{"width":3600,"height":2400},"focalPoint":{"x":50,"y":50}},"profile":[{"text":"Gisela Storz has been an Investigator in the Eunice Kennedy Shriver Institute of Child Health and Human Development in Bethesda, Maryland since 1991. She obtained a BA in Biochemistry from the University of Colorado in 1984 and a PhD in Biochemistry from the University of California, Berkeley in 1988, where she studied the bacterial response to oxidative stress working with Bruce Ames. Her current work is focused on understanding gene regulation in response to environmental signals and elucidating the roles of small RNAs and small proteins of less than 50 amino acids in these regulatory networks. Dr. Storz was the recipient of the American Society for Microbiology Eli Lilly Award and is a member of the American Academy of Microbiology, American Academy of Arts and Sciences and US National Academy of Sciences.","type":"paragraph"}],"research":{"focuses":["small noncoding RNAs","oxidative stress","gene regulation","bacterial physiology","regulatory RNAs"],"organisms":["\u003Ci\u003EE. coli\u003C\/i\u003E"],"expertises":[{"id":"microbiology-infectious-disease","name":"Microbiology and Infectious Disease"},{"id":"chromosomes-gene-expression","name":"Chromosomes and Gene Expression"}]},"affiliations":[{"name":["National Institute of Child Health and Human Development"],"address":{"formatted":["United States"],"components":{"country":"United States"}}}],"competingInterests":"Gisela Storz is employed by the Intramural Program of the National Institutes of Health. She served on the Scientific Advisory Board of Max Planck Institute for Terrestrial Microbiology. In addition to being a Senior Editor for eLife, she is an Editor at RNA and on the Editorial Boards of mBio, Annual Reviews of Genetics and Microbiology Spectrum."}

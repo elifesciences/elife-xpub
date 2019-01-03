@@ -19,7 +19,7 @@ class PeoplePickerLogic extends React.Component {
       this.setState({
         selection: this.state.selection.filter(p => p.id !== person.id),
       })
-    } else {
+    } else if (this.state.selection.length < this.props.maxSelection) {
       this.setState({ selection: this.state.selection.concat(person) })
     }
   }
