@@ -26,6 +26,7 @@ const PersonPodGrid = ({
           }
           isSelected={isSelected(person)}
           key={person.id}
+          maxSelection={maxSelection}
           name={person.name}
           selectButtonType={isSelected(person) ? 'selected' : 'add'}
           togglePersonSelection={() => toggleSelection(person)}

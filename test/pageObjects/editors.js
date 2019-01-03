@@ -28,6 +28,10 @@ const editors = {
   sixthReviewerName: Selector('[name="suggestedReviewers.5.name"]'),
   sixthReviewerEmail: Selector('[name="suggestedReviewers.5.email"]'),
   validationErrors: Selector('[data-test-id^="error-"]'),
+  peoplePickerInfo: Selector('[data-test-id="people-picker-info"]'),
+  peoplePickerModalErrorMaximum: Selector(
+    '[data-test-id="maximum-people-selected-error"]',
+  ),
 }
 
 export default editors
