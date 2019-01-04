@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { th } from '@pubsweet/ui-toolkit'
-import { Box, Flex } from 'grid-styled'
+import { Box, Flex } from '@rebass/grid'
 
 import { peoplePropType } from './types'
 import SelectedItem from '../atoms/SelectedItem'

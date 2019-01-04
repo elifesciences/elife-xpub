@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { th } from '@pubsweet/ui-toolkit'
 import { Action } from '@pubsweet/ui'
-import { Flex, Box } from 'grid-styled'
+import { Flex, Box } from '@rebass/grid'
 
 import {
   personNamePropType,

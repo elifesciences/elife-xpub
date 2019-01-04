@@ -1,7 +1,7 @@
 import React from 'react'
 import config from 'config'
 import styled from 'styled-components'
-import { Box } from 'grid-styled'
+import { Box } from '@rebass/grid'
 import { Link } from 'react-router-dom'
 import { th } from '@pubsweet/ui-toolkit'
 import NativeLink from '../../ui/atoms/NativeLink'
@@ -120,7 +120,7 @@ class ProfileMenu extends React.Component {
 
     return (
       <PositionRelative
-        innerRef={node => {
+        ref={node => {
           this.wrapperRef = node
         }}
       >

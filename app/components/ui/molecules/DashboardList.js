@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Box } from 'grid-styled'
+import { Box } from '@rebass/grid'
 import { th } from '@pubsweet/ui-toolkit'
 
 import SmallParagraph from '../../ui/atoms/SmallParagraph'

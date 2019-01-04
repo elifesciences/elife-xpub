@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { th } from '@pubsweet/ui-toolkit'
-import { Flex } from 'grid-styled'
+import { Flex } from '@rebass/grid'
 
 import Icon from '../atoms/Icon'
 

@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { Box } from 'grid-styled'
+import { Box } from '@rebass/grid'
 
 const Centerer = styled(Box).attrs({
   mx: 'auto',
