@@ -113,13 +113,13 @@ const getProfile = async profileId => {
 const getOrcid = async orcidId => {
   const token = await getOrcidAccessToken()
 
-  const [personResponse] = await Promise.all([
+  const [personResponse, employmentsResponse] = await Promise.all([
     requestOrcid(token, orcidId, 'person'),
-    // requestOrcid(token, orcidId, 'employments'),
+    requestOrcid(token, orcidId, 'employments'),
   ])
 
-  console.log(personResponse)
-  // console.log(employmentsResponse)
+  console.log(JSON.stringify(personResponse, null, 4))
+  console.log(JSON.stringify(employmentsResponse, null, 4))
 }
 
 /**
