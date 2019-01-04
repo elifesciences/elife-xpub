@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Flex, Box } from 'grid-styled'
+import { Flex, Box } from '@rebass/grid'
 
 const TwoColumnLayout = ({ children, bottomSpacing, ...props }) => (
   <Flex flexWrap="wrap" mx={-2} {...props}>

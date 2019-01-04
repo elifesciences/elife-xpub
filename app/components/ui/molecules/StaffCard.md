@@ -1,8 +1,8 @@
 Staff Card
 
 ```js
-const Flex = require('grid-styled').Flex
-const Box = require('grid-styled').Box
+const Flex = require('@rebass/grid').Flex
+const Box = require('@rebass/grid').Box
 ;<Flex>
   <Box Box width={1 / 3} px={2}>
     <StaffCard

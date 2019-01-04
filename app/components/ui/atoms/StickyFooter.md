@@ -5,7 +5,7 @@ Footer which is stuck to the bottom of the viewport.
 ```js
 initialState = { show: false }
 const Button = require('@pubsweet/ui').Button
-const { Flex, Box } = require('grid-styled')
+const { Flex, Box } = require('@rebass/grid')
 ;<div>
   <button onClick={() => setState({ show: !state.show })}>Toggle</button>
   {state.show && (

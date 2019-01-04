@@ -1,11 +1,11 @@
 import React from 'react'
-import { hot } from 'react-hot-loader'
+import { hot } from 'react-hot-loader/root'
 import createHistory from 'history/createBrowserHistory'
 import { withClientState } from 'apollo-link-state'
 
 import { configureStore, Root } from 'pubsweet-client'
 
-import theme from '@elifesciences/elife-theme'
+import theme, { GlobalStyle } from '@elifesciences/elife-theme'
 
 import Routes from './routes'
 import * as AuthorDetailsSchema from './components/pages/SubmissionWizard/steps/Author/schema'
@@ -26,12 +26,17 @@ const makeApolloConfig = ({ cache, link, ...config }) => {
   }
 }
 
-export default hot(module)(() => (
-  <Root
-    history={history}
-    makeApolloConfig={makeApolloConfig}
-    routes={<Routes />}
-    store={store}
-    theme={theme}
-  />
-))
+const App = () => (
+  <React.Fragment>
+    <GlobalStyle/>
+    <Root
+      history={history}
+      makeApolloConfig={makeApolloConfig}
+      routes={<Routes />}
+      store={store}
+      theme={theme}
+    />
+  </React.Fragment>
+)
+
+export default hot(App)

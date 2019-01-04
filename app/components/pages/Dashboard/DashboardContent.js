@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
-import { Box } from 'grid-styled'
+import { Box } from '@rebass/grid'
 import { th } from '@pubsweet/ui-toolkit'
 
 import media from '../../global/layout/media'

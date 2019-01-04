@@ -2,7 +2,7 @@ import React from 'react'
 import { Route, Switch, Redirect } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
-import { Box, Flex } from 'grid-styled'
+import { Box, Flex } from '@rebass/grid'
 import { th } from '@pubsweet/ui-toolkit'
 
 import ErrorBoundary from '../../global/ErrorBoundary'

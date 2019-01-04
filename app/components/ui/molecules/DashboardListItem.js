@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
-import { Flex, Box } from 'grid-styled'
+import { Flex, Box } from '@rebass/grid'
 import { differenceInCalendarDays, format } from 'date-fns'
 import { th } from '@pubsweet/ui-toolkit'
 import { H2 } from '@pubsweet/ui'

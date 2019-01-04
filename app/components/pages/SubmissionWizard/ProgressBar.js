@@ -1,6 +1,6 @@
 import React from 'react'
 import { Steps } from '@pubsweet/ui'
-import { Box } from 'grid-styled'
+import { Box } from '@rebass/grid'
 import PropTypes from 'prop-types'
 
 const ProgressBar = ({ currentStep }) => (
