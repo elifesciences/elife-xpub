@@ -219,16 +219,27 @@ class Manuscript extends BaseModel {
     this.status = status
   }
 
-  // atomically update the manuscript status
   static async updateStatus(id, status) {
-    // Can't use objection's patch method as this overwrites existing data with defaults
-    const updates = await this.knex()
-      .table(this.tableName)
-      .where({ id })
-      .update({ status })
-    if (updates === 0) {
+    const [manuscript] = await this.query().where({
+      'manuscript.id': id,
+    })
+
+    if (!manuscript) {
       throw new Error(`${this.name} not found`)
     }
+    // todo why does eager loading sometimes not work?
+    await manuscript.$loadRelated('[teams, files, audits]')
+
+    manuscript.status = status
+
+    const audit = {
+      userId: manuscript.createdBy,
+      action: 'UPDATED_STATUS'
+    }
+    if (!manuscript.audits) manuscript.audits = []
+    manuscript.audits.push(audit)
+
+    await manuscript.save()
   }
 
   applyInput(input) {

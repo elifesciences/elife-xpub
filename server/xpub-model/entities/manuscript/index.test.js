@@ -240,7 +240,7 @@ describe('Manuscript', () => {
   })
 
   describe('Manuscript.updateStatus', () => {
-    it('updates status only', async () => {
+    it('updates status', async () => {
       const manuscript = await new Manuscript({
         meta: {
           title: 'Title',
@@ -254,6 +254,21 @@ describe('Manuscript', () => {
         meta: {
           title: 'Title',
         },
+      })
+    })
+
+    it('adds an entry to the manuscript\'s audit log', async () => {
+      const manuscript = await new Manuscript({
+        createdBy: userId,
+      }).save()
+      await Manuscript.updateStatus(manuscript.id, 'NEXT')
+      const loadedManuscript = await Manuscript.find(manuscript.id, userId)
+      expect(loadedManuscript).toMatchObject({
+        status: 'NEXT',
+        audits: [{
+          userId,
+          action: 'UPDATED_STATUS'
+        }]
       })
     })
 
