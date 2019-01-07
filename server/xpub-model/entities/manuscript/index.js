@@ -210,7 +210,7 @@ class Manuscript extends BaseModel {
     return this
   }
 
-  async updateStatus(status) {
+  updateStatus(status) {
     const audit = {
       userId: this.createdBy,
       action: 'UPDATED_STATUS'
