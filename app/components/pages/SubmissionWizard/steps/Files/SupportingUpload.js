@@ -177,6 +177,7 @@ class SupportingUpload extends React.Component {
       <React.Fragment>
         {successfullyUploadedFiles.length > 0 && <p>Supporting Files:</p>}
         <StyledDropzone
+          data-test-id="supportingFilesUpload"
           maxSize={config.fileUpload.maxSizeMB * 1e6}
           onDrop={droppedFiles => {
             let files = droppedFiles
@@ -236,6 +237,7 @@ class SupportingUpload extends React.Component {
                 {successfullyUploadedFiles.length > 0 && (
                   <UploadControl>
                     <RemoveLink
+                      data-test-id="supportingFilesRemove"
                       onClick={() =>
                         removeFiles().then(() => {
                           this.setState({ files: [] })

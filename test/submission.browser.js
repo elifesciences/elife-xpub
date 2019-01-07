@@ -22,6 +22,10 @@ setFixtureHooks(f)
 const manuscript = {
   title: 'The Relationship Between Lamport Clocks and Interrupts Using Obi',
   file: './fixtures/dummy-manuscript-2.pdf',
+  supportingFiles: [
+    './fixtures/dummy-supporting-1.pdf',
+    './fixtures/dummy-supporting-2.docx',
+  ],
 }
 
 const getPageUrl = ClientFunction(() => window.location.href)
@@ -85,6 +89,7 @@ test('Happy path', async t => {
     .setFilesToUpload(files.manuscriptUpload, manuscript.file)
     // wait for editor onChange
     .wait(1000)
+    .setFilesToUpload(files.supportingFilesUpload, manuscript.supportingFiles)
     .click(wizardStep.next)
 
   // adding manuscript metadata
