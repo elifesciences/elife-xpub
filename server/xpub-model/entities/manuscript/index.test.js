@@ -388,6 +388,17 @@ describe('Manuscript', () => {
       expect(manuscript.status).toEqual(Manuscript.statuses.MECA_EXPORT_PENDING)
     })
 
+    it('adds an entry to the manuscript\'s audit log', () => {
+      const manuscript = new Manuscript({
+        createdBy: userId
+      })
+      manuscript.updateStatus(Manuscript.statuses.MECA_EXPORT_PENDING)
+      expect(manuscript.audits).toHaveLength(1)
+      expect(manuscript.audits[0]).toEqual({
+        userId,
+        action: 'UPDATED_STATUS'
+      })
+    })
   })
 })
 
