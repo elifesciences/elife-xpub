@@ -9,6 +9,7 @@ const files = {
   manuscriptUpload: Selector('[data-test-id=upload]>input'),
   supportingFilesUpload: Selector('[data-test-id=supportingFilesUpload]>input'),
   supportingFilesRemove: Selector('[data-test-id=supportingFilesRemove]'),
+  supportingFile: Selector('[data-test-id=file_block_name]'),
 }
 
 export default files

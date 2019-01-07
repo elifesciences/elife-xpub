@@ -89,7 +89,15 @@ test('Happy path', async t => {
     .setFilesToUpload(files.manuscriptUpload, manuscript.file)
     // wait for editor onChange
     .wait(1000)
+    .setFilesToUpload(files.supportingFilesUpload, [
+      manuscript.supportingFiles[0],
+    ])
+    .expect(files.supportingFile.count)
+    .eql(1)
+    .click(files.supportingFilesRemove)
     .setFilesToUpload(files.supportingFilesUpload, manuscript.supportingFiles)
+    .expect(files.supportingFile.count)
+    .eql(2)
     .click(wizardStep.next)
 
   // adding manuscript metadata
