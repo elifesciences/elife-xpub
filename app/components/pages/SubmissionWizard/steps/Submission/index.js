@@ -76,7 +76,7 @@ const SubmissionPage = ({ values, setFieldValue, setFieldTouched }) => (
     </OptionalSection>
 
     <OptionalSection
-      label="This manuscript is part of a co-submission"
+      label="This manuscript is part of a co-submission to eLife"
       namedAs="cosubmissionToggle"
       onClose={() => setFieldValue('firstCosubmissionTitle', null)}
       onOpen={() => setFieldValue('firstCosubmissionTitle', '')}
@@ -84,7 +84,7 @@ const SubmissionPage = ({ values, setFieldValue, setFieldTouched }) => (
     >
       <Box mb={2}>
         <ValidatedField
-          label="Title of co-submitted article"
+          label="Co-submission article title"
           name="firstCosubmissionTitle"
         />
       </Box>
@@ -106,7 +106,7 @@ const SubmissionPage = ({ values, setFieldValue, setFieldTouched }) => (
         // the second title is not null so show it
         <Box mb={2}>
           <ValidatedField
-            label="Title of second co-submitted article (optional)"
+            label="Second co-submission article title (optional)"
             name="secondCosubmissionTitle"
           />
         </Box>
