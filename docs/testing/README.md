@@ -63,3 +63,9 @@ image locally by running `docker build -t $USER/elife-xpub .` in the root of the
 
 Using `host.docker.internal` allows the integration tests connect to the database on the host.
 This avoids having to set up a Docker network just for this container to speak to a database.
+
+## test:browser debugging
+
+`test:browser` runs testcafe along with Google Chrome headless and a copy of the application spawn by the test framework itself and listening on port 4000.
+
+[Chrome's remote debugging](https://developers.google.com/web/updates/2017/04/headless-chrome#frontend) support is [configured](https://devexpress.github.io/testcafe/documentation/using-testcafe/common-concepts/browsers/testing-in-headless-mode.html#automation-port) to be exposed on the host on port `10081`, which can be accessed from another Chrome's `chrome://inspect` window. This gives a graphical view of what is happening inside the Chrome in the container.

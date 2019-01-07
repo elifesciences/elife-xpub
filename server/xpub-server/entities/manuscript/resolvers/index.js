@@ -1,6 +1,7 @@
 const logger = require('@pubsweet/logger')
 const { Manuscript, User, File } = require('@elifesciences/xpub-model')
 const elifeApi = require('@elifesciences/xpub-model/entities/user/helpers/elife-api')
+const { S3Storage } = require('@elifesciences/xpub-controller')
 
 const removeUploadedManuscript = require('./removeUploadedManuscript')
 const submitManuscript = require('./submitManuscript')
@@ -39,7 +40,7 @@ const resolvers = {
       if (files) {
         try {
           await files.forEach(file => {
-            file.deleteContent()
+            S3Storage.deleteContent(file)
             file.delete()
           })
         } catch (error) {
