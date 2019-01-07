@@ -3,6 +3,7 @@ import { Redirect } from 'react-router'
 import { Query } from 'react-apollo'
 import { CURRENT_USER } from './queries'
 import ErrorPage from '../pages/Error'
+import Loading from '../ui/atoms/Loading'
 
 const AuthenticatedComponent = ({ children }) => (
   <Query query={CURRENT_USER}>
@@ -11,7 +12,7 @@ const AuthenticatedComponent = ({ children }) => (
         return <Redirect to="/login" />
       }
 
-      if (loading) return 'Loading...'
+      if (loading) return <Loading />
 
       if (error) {
         return <ErrorPage error={error} />
