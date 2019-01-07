@@ -239,30 +239,6 @@ describe('Manuscript', () => {
       expect(Manuscript.findByStatus('FAKE', userId)).resolves.toEqual([]))
   })
 
-  describe('Manuscript.updateStatus', () => {
-    it('updates status only', async () => {
-      const manuscript = await new Manuscript({
-        meta: {
-          title: 'Title',
-        },
-        createdBy: userId,
-      }).save()
-      await Manuscript.updateStatus(manuscript.id, 'NEXT')
-      const loadedManuscript = await Manuscript.find(manuscript.id, userId)
-      expect(loadedManuscript).toMatchObject({
-        status: 'NEXT',
-        meta: {
-          title: 'Title',
-        },
-      })
-    })
-
-    it('fails to update non-existent manuscript', () =>
-      expect(
-        Manuscript.updateStatus('f05bbbf9-ddf4-494f-a8da-84957e2708ee', 'NEXT'),
-      ).rejects.toThrow('Manuscript not found'))
-  })
-
   describe('refresh()', () => {
     it('refreshes manuscript', async () => {
       const ms = await getThreeVersions(userId)

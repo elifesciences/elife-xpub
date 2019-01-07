@@ -39,24 +39,24 @@ async function submitManuscript(_, { data }, { user, ip }) {
 
   const content = await S3Storage.getContent(sourceFile)
   mecaExport(manuscript, content, ip)
-    .then(() => {
-      logger.info(`Manuscript ${manuscript.id} successfully exported`)
-      return Manuscript.updateStatus(
-        manuscript.id,
+    .then((exportedManuscript) => {
+      logger.info(`Manuscript ${exportedManuscript.id} successfully exported`)
+      exportedManuscript.updateStatus(
         Manuscript.statuses.MECA_EXPORT_SUCCEEDED,
       )
+      return exportedManuscript.save()
     })
     .catch(async err => {
       logger.error('MECA export failed', err)
-      await Manuscript.updateStatus(
-        manuscript.id,
+      manuscript.updateStatus(
         Manuscript.statuses.MECA_EXPORT_FAILED,
       )
+      await manuscript.save()
       return mailer.send({
         to: config.get('meca.notificationEmail'),
         subject: 'MECA export failed',
-        text: `Manuscript ID: ${manuscript.id}
-Manuscript title: ${manuscript.meta.title}
+        text: `Manuscript ID: ${exportedManuscript.id}
+Manuscript title: ${exportedManuscript.meta.title}
 Error:
 
 ${err}`,

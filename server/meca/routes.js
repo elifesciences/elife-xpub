@@ -34,7 +34,9 @@ module.exports = app => {
         ? Manuscript.statuses.MECA_IMPORT_SUCCEEDED
         : Manuscript.statuses.MECA_IMPORT_FAILED
 
-    Manuscript.updateStatus(manuscriptId, status)
+    const manuscript = Manuscript.find(manuscriptId)
+    manuscript.updateStatus(status)
+      .save()
       .then(() => res.sendStatus(204))
       .catch(err => {
         logger.error('Failed to process MECA callback', {

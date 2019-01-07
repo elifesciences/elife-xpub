@@ -219,18 +219,6 @@ class Manuscript extends BaseModel {
     this.status = status
   }
 
-  // atomically update the manuscript status
-  static async updateStatus(id, status) {
-    // Can't use objection's patch method as this overwrites existing data with defaults
-    const updates = await this.knex()
-      .table(this.tableName)
-      .where({ id })
-      .update({ status })
-    if (updates === 0) {
-      throw new Error(`${this.name} not found`)
-    }
-  }
-
   applyInput(input) {
     mergeObjects(
       this,
