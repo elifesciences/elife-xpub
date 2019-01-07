@@ -111,7 +111,7 @@ class UserTool {
       {},
       secret,
     )
-    console.log(profile.body)
+    console.log(JSON.stringify(profile.body, null, 4))
   }
 
   async getOrcid(orcidId) {

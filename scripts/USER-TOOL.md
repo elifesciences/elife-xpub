@@ -1,6 +1,6 @@
 # user-tool
 
-A tool to help diagnose the values between xPub, Profiles Service and ORCiD
+A tool to help diagnose the values between xPub, Profiles Service and ORCID.
 
 ## Usage
 
@@ -47,16 +47,13 @@ Which will return all of the profile information, if you wish to see the `emailA
 
 ### get-orcid
 
-You can use curl to test
+From the same search done above (using `get-profiles`) or from querying the individual profile (`get-profile xxxxxx`) you can find the `orcid`. This id can be used to query the ORCID service to get the details from a user stored by ORCID. For example:
 
 ```
-curl -v -i -L -H "Accept: application/json" \
-    -d "client_id=${ORCID_CLIENTID}" \
-    -d "client_secret=${ORCID_SECRET}" \
-    -d "scope=/read-public" \
-    -d "grant_type=client_credentials" \
-    "https://sandbox.orcid.org/oauth/token"
+node scripts/user-tool.js get-orcid 0000-0003-3830-8230
 ```
+
+The output is not show as its quite verbose, things to watch for are things like the `visibility` field which can be set to `PRIVATE` for various fields you were expecting to see.
 
 ## Configuration
 
