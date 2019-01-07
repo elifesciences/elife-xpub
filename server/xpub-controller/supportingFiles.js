@@ -11,7 +11,6 @@ class SupportingFiles {
 
   async removeAll() {
     let manuscript = await ManuscriptModel.find(this.id, this.user)
-
     const filesWithoutSupporting = manuscript.files.filter(
       file => file.type !== 'SUPPORTING_FILE',
     )
