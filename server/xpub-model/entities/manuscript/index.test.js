@@ -356,7 +356,7 @@ describe('Manuscript', () => {
     })
   })
 
-  describe.only('updateStatus()', () => {
+  describe('updateStatus()', () => {
     it('updates manuscript status', () => {
       const manuscript = new Manuscript()
       expect(manuscript.status).toEqual(Manuscript.statuses.INITIAL)
