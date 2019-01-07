@@ -27,8 +27,18 @@ const Spinner = styled.div`
   }
 `
 
+const SpinnerWrapper = styled.div`
+  display: flex;
+  width: 100%;
+  height: 200px;
+  justify-content: center;
+  align-items: center;
+`
+
 const Loading = ({ size, lineThickness }) => (
-  <Spinner lineThickness={lineThickness} size={size} />
+  <SpinnerWrapper>
+    <Spinner lineThickness={lineThickness} size={size} />
+  </SpinnerWrapper>
 )
 
 Loading.propTypes = {
