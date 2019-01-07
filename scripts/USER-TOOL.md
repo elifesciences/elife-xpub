@@ -4,6 +4,8 @@ A tool to help diagnose the values between xPub, Profiles Service and ORCiD
 
 ## Usage
 
+You can specify the sandbox / staging environment by using the `-s` switch. All the following commands will then be directed at the appropriate services.
+
 ### profiles
 
 You can get all the profiles from the Profiles Service by running:
