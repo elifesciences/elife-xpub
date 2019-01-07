@@ -88,6 +88,14 @@ class Manuscript extends BaseModel {
           to: 'team.objectId',
         },
       },
+      audits: {
+        relation: BaseModel.HasManyRelation,
+        modelClass: `${__dirname}/../auditLog`,
+        join: {
+          from: 'manuscript.id',
+          to: 'audit_log.objectId',
+        },
+      }
     }
   }
 
@@ -119,7 +127,7 @@ class Manuscript extends BaseModel {
       throw new Error(`${this.name} not found`)
     }
     // todo why does eager loading sometimes not work?
-    await manuscript.$loadRelated('[teams, files]')
+    await manuscript.$loadRelated('[teams, files, audits]')
 
     return manuscript
   }
@@ -131,7 +139,7 @@ class Manuscript extends BaseModel {
     })
     // todo why do I need to do this?
     await Promise.all(
-      manuscripts.map(manuscript => manuscript.$loadRelated('[teams, files]')),
+      manuscripts.map(manuscript => manuscript.$loadRelated('[teams, files, audits]')),
     )
     return manuscripts
   }
@@ -142,7 +150,7 @@ class Manuscript extends BaseModel {
     })
 
     await Promise.all(
-      manuscripts.map(manuscript => manuscript.$loadRelated('[teams, files]')),
+      manuscripts.map(manuscript => manuscript.$loadRelated('[teams, files, audits]')),
     )
     return manuscripts
   }
@@ -150,7 +158,7 @@ class Manuscript extends BaseModel {
   async refresh() {
     const refreshed = await Manuscript.find(this.id, this.createdBy)
     await this.$set(refreshed)
-    await this.$loadRelated('[teams, files]')
+    await this.$loadRelated('[teams, files, audits]')
   }
 
   async needsRefresh(trx = null) {
@@ -164,11 +172,11 @@ class Manuscript extends BaseModel {
 
   async save() {
     const simpleSave = async (trx = null) => {
-      // save manuscript and all related files and teams
+      // save manuscript and all relations
       // note that this also deletes any related entities that are not present
       await this.$query(trx).upsertGraphAndFetch(this)
       // reload related entities
-      await this.$loadRelated('[teams, files]', null, trx)
+      await this.$loadRelated('[teams, files, audits]', null, trx)
     }
 
     if (this.created && this.updated) {
@@ -200,6 +208,15 @@ class Manuscript extends BaseModel {
       await simpleSave()
     }
     return this
+  }
+
+  async updateStatus(status) {
+    const audit = {
+      userId: this.createdBy,
+      action: 'UPDATED_STATUS'
+    }
+    this.audits.push(audit)
+    this.status = status
   }
 
   // atomically update the manuscript status
