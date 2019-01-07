@@ -379,6 +379,16 @@ describe('Manuscript', () => {
       expect(loadedManuscripts).toHaveLength(1)
     })
   })
+
+  describe.only('updateStatus()', () => {
+    it('updates manuscript status', () => {
+      const manuscript = new Manuscript()
+      expect(manuscript.status).toEqual(Manuscript.statuses.INITIAL)
+      manuscript.updateStatus(Manuscript.statuses.MECA_EXPORT_PENDING)
+      expect(manuscript.status).toEqual(Manuscript.statuses.MECA_EXPORT_PENDING)
+    })
+
+  })
 })
 
 const getDbTime = time => new Date(time).getTime()
