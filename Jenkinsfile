@@ -29,7 +29,7 @@ elifePipeline {
                 'test:browser': {
                     try {
                         withCommitStatus({
-                            sh "echo Disabled browser tests"
+                            sh "IMAGE_TAG=${commit} NODE_ENV=production NODE_CONFIG_ENV=test PGDATABASE=test_browser docker-compose -f docker-compose.yml -f docker-compose.ci.yml run --rm --name elife-xpub_app_test_browser app bash -c 'npm run test:browser -- --screenshots /tmp/screenshots --screenshots-on-fails'"
                         }, 'test:browser', commit)
                     } finally {
                         archiveArtifacts artifacts: "build/screenshots/*", allowEmptyArchive: true
