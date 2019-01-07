@@ -11,7 +11,7 @@ describe('Manuscript', () => {
     return createTables(true)
   })
 
-  describe('applyInput', () => {
+  describe('applyInput()', () => {
     it('picks only whitelisted properties', () => {
       const manuscript = new Manuscript({
         meta: {
@@ -126,7 +126,7 @@ describe('Manuscript', () => {
     })
   })
 
-  describe('addTeam', () => {
+  describe('addTeam()', () => {
     it('adds team', () => {
       const team = {
         id: 1,
@@ -212,7 +212,7 @@ describe('Manuscript', () => {
       ).rejects.toThrow('Manuscript not found'))
   })
 
-  describe('findByStatus()', () => {
+  describe('Manuscript.findByStatus()', () => {
     it('finds by status', async () => {
       const manuscript = new Manuscript({
         createdBy: userId,
@@ -239,7 +239,7 @@ describe('Manuscript', () => {
       expect(Manuscript.findByStatus('FAKE', userId)).resolves.toEqual([]))
   })
 
-  describe('updateStatus()', () => {
+  describe('Manuscript.updateStatus', () => {
     it('updates status only', async () => {
       const manuscript = await new Manuscript({
         meta: {
@@ -366,7 +366,7 @@ describe('Manuscript', () => {
     })
   })
 
-  describe('all()', () => {
+  describe('Manuscript.all()', () => {
     it("returns users's manuscripts only", async () => {
       const secondUserId = uuid()
       await new Manuscript({
