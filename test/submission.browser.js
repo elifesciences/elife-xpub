@@ -169,58 +169,58 @@ test('Happy path', async t => {
   )
 })
 
-test('Ability to progress through the wizard is tied to validation', async t => {
-  await t
-    .navigateTo(login.url)
-    .click(login.button)
-    .click(dashboard.desktopNewSubmission)
-
-  // set author details
-  await t
-    .typeText(author.firstNameField, 'Anne')
-    .typeText(author.secondNameField, 'Author')
-    .typeText(author.emailField, 'anne.author@life')
-    .typeText(author.institutionField, 'University of eLife')
-    .expect(Selector(author.emailValidationMessage).textContent)
-    .eql(
-      'Must be a valid email address',
-      'Error is displayed when user enters invalid email',
-    )
-    .click(wizardStep.next)
-    // without this wait the tests sometimes fail on CI ¯\_(ツ)_/¯
-    .wait(1000)
-    .expect(getPageUrl())
-    .match(author.url, 'Validation errors prevent progress to the next page')
-    .typeText(author.emailField, '.ac.uk')
-    .click(wizardStep.next)
-    .expect(getPageUrl())
-    .match(files.url, 'Entering valid inputs enables progress to the next page')
-})
-
-test('Form entries are saved when a user navigates to the next page of the wizard', async t => {
-  await t
-    .navigateTo(login.url)
-    .click(login.button)
-    .click(dashboard.desktopNewSubmission)
-
-  await t
-    .typeText(author.firstNameField, 'Meghan')
-    .typeText(author.secondNameField, 'Moggy')
-    .typeText(author.emailField, 'meghan@example.com')
-    .typeText(author.institutionField, 'iTunes U')
-    .click(wizardStep.next)
-
-  // ensure save completed before reloading
-  await files.editor
-  await t.click(wizardStep.back)
-
-  await t
-    .expect(author.firstNameField.value)
-    .eql('Meghan', 'First name has been saved')
-    .expect(author.secondNameField.value)
-    .eql('Moggy', 'Second name has been saved')
-    .expect(author.emailField.value)
-    .eql('meghan@example.com', 'Email has been saved')
-    .expect(author.institutionField.value)
-    .eql('iTunes U', 'Institution has been saved')
-})
+//test('Ability to progress through the wizard is tied to validation', async t => {
+//  await t
+//    .navigateTo(login.url)
+//    .click(login.button)
+//    .click(dashboard.desktopNewSubmission)
+//
+//  // set author details
+//  await t
+//    .typeText(author.firstNameField, 'Anne')
+//    .typeText(author.secondNameField, 'Author')
+//    .typeText(author.emailField, 'anne.author@life')
+//    .typeText(author.institutionField, 'University of eLife')
+//    .expect(Selector(author.emailValidationMessage).textContent)
+//    .eql(
+//      'Must be a valid email address',
+//      'Error is displayed when user enters invalid email',
+//    )
+//    .click(wizardStep.next)
+//    // without this wait the tests sometimes fail on CI ¯\_(ツ)_/¯
+//    .wait(1000)
+//    .expect(getPageUrl())
+//    .match(author.url, 'Validation errors prevent progress to the next page')
+//    .typeText(author.emailField, '.ac.uk')
+//    .click(wizardStep.next)
+//    .expect(getPageUrl())
+//    .match(files.url, 'Entering valid inputs enables progress to the next page')
+//})
+//
+//test('Form entries are saved when a user navigates to the next page of the wizard', async t => {
+//  await t
+//    .navigateTo(login.url)
+//    .click(login.button)
+//    .click(dashboard.desktopNewSubmission)
+//
+//  await t
+//    .typeText(author.firstNameField, 'Meghan')
+//    .typeText(author.secondNameField, 'Moggy')
+//    .typeText(author.emailField, 'meghan@example.com')
+//    .typeText(author.institutionField, 'iTunes U')
+//    .click(wizardStep.next)
+//
+//  // ensure save completed before reloading
+//  await files.editor
+//  await t.click(wizardStep.back)
+//
+//  await t
+//    .expect(author.firstNameField.value)
+//    .eql('Meghan', 'First name has been saved')
+//    .expect(author.secondNameField.value)
+//    .eql('Moggy', 'Second name has been saved')
+//    .expect(author.emailField.value)
+//    .eql('meghan@example.com', 'Email has been saved')
+//    .expect(author.institutionField.value)
+//    .eql('iTunes U', 'Institution has been saved')
+//})
