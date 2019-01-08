@@ -48,6 +48,32 @@ describe('Manuscripts', () => {
   })
 
   describe('removeSupportingFiles', () => {
+    it('removes supporting files', async () => {
+      const fakeManuscript = {
+        filename: 'manuscript.pdf',
+        type: 'MANUSCRIPT_SOURCE',
+        url: 'manuscript/',
+      }
+
+      const fakeSupport = {
+        filename: 'support.pdf',
+        type: 'SUPPORTING_FILE',
+        url: 'supporting/',
+      }
+
+      let manuscript = new Manuscript({
+        createdBy: userId,
+        files: [fakeSupport, fakeSupport, fakeManuscript],
+      })
+
+      manuscript = await manuscript.save()
+      manuscript = await Manuscript.find(manuscript.id, userId)
+      expect(manuscript.files).toHaveLength(3)
+      const files = new SupportingFiles(dummyStorage, manuscript.id, userId)
+      const mutatedManuscript = await files.removeAll()
+      expect(mutatedManuscript.files).toHaveLength(1)
+    })
+
     it('does not change the manuscript when no files to remove', async () => {
       const manuscript = new Manuscript({ createdBy: userId, files: [] })
 
