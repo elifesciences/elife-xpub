@@ -48,5 +48,7 @@ describe('uploadSupportingFile', () => {
     )
     manuscript = await Manuscript.find(id, userId)
     expect(manuscript.files).toHaveLength(1)
+    expect(manuscript.files[0].type).toEqual('SUPPORTING_FILE')
+    expect(manuscript.files[0].filename).toEqual(supportingFile.filename)
   })
 })
