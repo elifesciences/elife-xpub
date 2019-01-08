@@ -60,9 +60,9 @@ The output is not show as its quite verbose, things to watch for are things like
 By convention please store the following in `~/.xpub_secrets`
 
 ```
-export ELIFE_API_GATEWAY_SECRET=<get from staging>
-export ORCID_CLIENTID=<secret>
-export ORCID_SECRET=<secret>
+export ELIFE_API_GATEWAY_SECRET=<get from staging/prod>
+export ORCID_CLIENTID=<client id from staging/prod>
+export ORCID_SECRET=<secret from staging/prod>
 ```
 
 Before running any commands make sure these are source'ed into your shell with:
