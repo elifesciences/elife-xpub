@@ -10,7 +10,7 @@ import {
 } from './pageObjects'
 import setFixtureHooks from './helpers/set-fixture-hooks'
 
-const f = fixture('PeoplePicker')
+const f = fixture.skip('PeoplePicker')
 setFixtureHooks(f)
 
 const manuscript = {
