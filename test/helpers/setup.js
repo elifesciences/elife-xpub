@@ -13,14 +13,21 @@ let server
 let s3rver
 let serverStartAttempt = false
 
+let newCorrelationId = function () {
+  return Math.random() * 10000000
+}
+let log = function (message, correlationId = '') {
+  console.log(`[${correlationId}] ${message}`)
+}
+
 export async function startServer() {
-  // TODO: add correlation id between lines
+  let correlationId = newCorrelationId()
   // TODO: add date and time
-  console.log('test/helpers/setup.js::startServer start')
+  log('test/helpers/setup.js::startServer start', correlationId)
   if (!server) {
-    console.log('test/helpers/setup.js::startServer !server')
+    log('test/helpers/setup.js::startServer !server', correlationId)
     if (serverStartAttempt) {
-      console.log('test/helpers/setup.js::startServer serverStartAttempt')
+      log('test/helpers/setup.js::startServer serverStartAttempt', correlationId)
       throw new Error(
         "Attempting to start the server again, but a previous attempt hasn't been executed yet",
       )
@@ -28,11 +35,11 @@ export async function startServer() {
     serverStartAttempt = true
     // increase timeout to wait for webpack compilation
     DestinationRequest.TIMEOUT = 180 * 1000
-    console.log('test/helpers/setup.js::startServer await start')
+    log('test/helpers/setup.js::startServer await start', correlationId)
     server = await start()
-    console.log('test/helpers/setup.js::startServer started')
+    log('test/helpers/setup.js::startServer started', correlationId)
   }
-  console.log('test/helpers/setup.js::startServer end')
+  log('test/helpers/setup.js::startServer end', correlationId)
 }
 
 export async function setup(t) {
