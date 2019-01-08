@@ -17,7 +17,8 @@ const newCorrelationId = function() {
   return Math.floor(Math.random() * 10000000)
 }
 const log = function(message, correlationId = '') {
-  console.log(`[${correlationId}] ${message}`)
+  const timestamp = new Date()
+  console.log(`[${timestamp}][${correlationId}] ${message}`)
 }
 
 export async function startServer() {
@@ -65,6 +66,6 @@ export async function setup(t) {
 }
 
 export async function teardown() {
-  console.log('test/helpers/setup.js::teardown')
+  log('test/helpers/setup.js::teardown')
   await new Promise(resolve => s3rver.instance.close(resolve))
 }
