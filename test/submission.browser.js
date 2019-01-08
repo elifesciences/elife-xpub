@@ -16,7 +16,7 @@ import {
 } from './pageObjects'
 import setFixtureHooks from './helpers/set-fixture-hooks'
 
-const f = fixture('Submission')
+const f = fixture.skip('Submission')
 setFixtureHooks(f)
 
 const manuscript = {
