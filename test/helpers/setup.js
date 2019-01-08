@@ -14,7 +14,7 @@ let s3rver
 let serverStartAttempt = false
 
 let newCorrelationId = function () {
-  return Math.random() * 10000000
+  return Math.floor(Math.random() * 10000000)
 }
 let log = function (message, correlationId = '') {
   console.log(`[${correlationId}] ${message}`)
