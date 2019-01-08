@@ -35,7 +35,10 @@ export async function startServer() {
       const e = new Error(
         "Attempting to start the server again, but a previous attempt hasn't been executed yet",
       )
-      log(`test/helpers/setup.js::startServer stack trace: ${e.stack}`, correlationId)
+      log(
+        `test/helpers/setup.js::startServer stack trace: ${e.stack}`,
+        correlationId,
+      )
       throw e
     }
     serverStartAttempt = true
