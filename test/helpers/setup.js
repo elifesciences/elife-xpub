@@ -14,8 +14,11 @@ let s3rver
 let serverStartAttempt = false
 
 export async function startServer() {
-  console.log('test/helpers/setup.js::startServer')
+  // TODO: add correlation id between lines
+  // TODO: add date and time
+  console.log('test/helpers/setup.js::startServer start')
   if (!server) {
+    console.log('test/helpers/setup.js::startServer !server')
     if (serverStartAttempt) {
       throw new Error(
         "Attempting to start the server again, but a previous attempt hasn't been executed yet",
@@ -28,10 +31,11 @@ export async function startServer() {
     server = await start()
     console.log('test/helpers/setup.js::startServer started')
   }
+  console.log('test/helpers/setup.js::startServer end')
 }
 
 export async function setup(t) {
-  console.log('test/helpers/setup.js::setup')
+  console.log('test/helpers/setup.js::setup start')
 
   console.log('test/helpers/setup.js::setup createTables')
   await createTables(true)
@@ -45,6 +49,7 @@ export async function setup(t) {
     ...config.get('aws.credentials'),
     ...config.get('aws.s3'),
   })
+  console.log('test/helpers/setup.js::setup end')
 }
 
 export async function teardown() {
