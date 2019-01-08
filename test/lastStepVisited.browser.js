@@ -3,7 +3,7 @@ import config from 'config'
 import { author, dashboard, login, wizardStep } from './pageObjects'
 import setFixtureHooks from './helpers/set-fixture-hooks'
 
-const f = fixture('Submission')
+const f = fixture('LastStepVisited')
 setFixtureHooks(f)
 
 test('Interrupt and resume Submission', async t => {
