@@ -13,21 +13,24 @@ let server
 let s3rver
 let serverStartAttempt = false
 
-let newCorrelationId = function () {
+const newCorrelationId = function() {
   return Math.floor(Math.random() * 10000000)
 }
-let log = function (message, correlationId = '') {
+const log = function(message, correlationId = '') {
   console.log(`[${correlationId}] ${message}`)
 }
 
 export async function startServer() {
-  let correlationId = newCorrelationId()
+  const correlationId = newCorrelationId()
   // TODO: add date and time
   log('test/helpers/setup.js::startServer start', correlationId)
   if (!server) {
     log('test/helpers/setup.js::startServer !server', correlationId)
     if (serverStartAttempt) {
-      log('test/helpers/setup.js::startServer serverStartAttempt', correlationId)
+      log(
+        'test/helpers/setup.js::startServer serverStartAttempt',
+        correlationId,
+      )
       throw new Error(
         "Attempting to start the server again, but a previous attempt hasn't been executed yet",
       )
