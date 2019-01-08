@@ -3,21 +3,21 @@
 // import assert from 'assert'
 // import logger from '@pubsweet/logger'
 // import startSshServer from '@elifesciences/xpub-meca-export/test/mock-sftp-server'
-import {
+// import {
   // author,
   // dashboard,
   // disclosure,
   // editors,
   // files,
-  login,
+  // login,
   // submission,
   // thankyou,
   // wizardStep,
-} from './pageObjects'
-import setFixtureHooks from './helpers/set-fixture-hooks'
+// } from './pageObjects'
+// import setFixtureHooks from './helpers/set-fixture-hooks'
 
-const f = fixture.skip('Submission')
-setFixtureHooks(f)
+// const f = fixture.skip('Submission')
+// setFixtureHooks(f)
 
 // const manuscript = {
 //   title: 'The Relationship Between Lamport Clocks and Interrupts Using Obi',
@@ -44,13 +44,14 @@ setFixtureHooks(f)
 // }
 
 test('Happy path', async t => {
+  await Promise.resolve()
   // const { mockFs, server } = await startSshServer(
   //   config.get('meca.sftp.connectionOptions.port'),
   // )
 
-  await t
-    .navigateTo(login.url)
-    .click(login.button)
+  // await t
+  //   .navigateTo(login.url)
+  //   .click(login.button)
     // .click(dashboard.desktopNewSubmission)
 
   // // author details initially empty
