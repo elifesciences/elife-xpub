@@ -20,6 +20,7 @@ export async function startServer() {
   if (!server) {
     console.log('test/helpers/setup.js::startServer !server')
     if (serverStartAttempt) {
+      console.log('test/helpers/setup.js::startServer serverStartAttempt')
       throw new Error(
         "Attempting to start the server again, but a previous attempt hasn't been executed yet",
       )
