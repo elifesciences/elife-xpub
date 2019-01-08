@@ -1,7 +1,7 @@
 # built from ./Dockerfile-base
-FROM xpub/xpub:20181213-1147
+FROM node:10
 
-WORKDIR ${HOME}
+WORKDIR /
 
 ADD ./src .
 RUN npm install superagent

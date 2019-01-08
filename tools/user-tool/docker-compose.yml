@@ -6,3 +6,7 @@ services:
       context: .
       dockerfile: ./Dockerfile
     command: sh -c "node user-tool.js"
+    environment:
+      - ELIFE_API_GATEWAY_SECRET=${ELIFE_API_GATEWAY_SECRET}
+      - ORCID_CLIENTID=${ORCID_CLIENTID}
+      - ORCID_SECRET=${ORCID_SECRET}
