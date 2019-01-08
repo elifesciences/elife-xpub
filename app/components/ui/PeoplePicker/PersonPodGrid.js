@@ -4,37 +4,58 @@ import PropTypes from 'prop-types'
 import { peoplePropType } from './types'
 import TwoColumnLayout from '../../global/layout/TwoColumnLayout'
 import PersonPod from './PersonPod'
+import Loading from '../atoms/Loading'
 
-const PersonPodGrid = ({
-  people,
-  isSelected,
-  toggleSelection,
-  selection,
-  maxSelection,
-  ...props
-}) => (
-  <TwoColumnLayout>
-    {people
-      .map(person => (
-        <PersonPod
-          expertises={person.expertises}
-          focuses={person.focuses}
-          institution={person.aff}
-          isKeywordClickable={false}
-          isSelectButtonClickable={
-            isSelected(person) || selection.length < maxSelection
-          }
-          isSelected={isSelected(person)}
-          key={person.id}
-          maxSelection={maxSelection}
-          name={person.name}
-          selectButtonType={isSelected(person) ? 'selected' : 'add'}
-          togglePersonSelection={() => toggleSelection(person)}
-          // onKeywordClick will need to be added, once we know what the desired behaviour is
-        />
-      ))}
-  </TwoColumnLayout>
-)
+class PersonPodGrid extends React.Component {
+  state = {
+    stillRendering: true,
+    peopleLoaded: false,
+  }
+
+  componentDidMount() {
+    setTimeout(() => this.setState({ stillRendering: false }), 10)
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.people.length > 1) {
+      this.setState({ peopleLoaded: true })
+    }
+  }
+
+  render() {
+    const {
+      people,
+      isSelected,
+      toggleSelection,
+      selection,
+      maxSelection,
+    } = this.props
+    return this.state.stillRendering || !this.state.peopleLoaded ? (
+      <Loading />
+    ) : (
+      <TwoColumnLayout>
+        {people.map(person => (
+          <PersonPod
+            expertises={person.expertises}
+            focuses={person.focuses}
+            institution={person.aff}
+            isKeywordClickable={false}
+            isSelectButtonClickable={
+              isSelected(person) || selection.length < maxSelection
+            }
+            isSelected={isSelected(person)}
+            key={person.id}
+            maxSelection={maxSelection}
+            name={person.name}
+            selectButtonType={isSelected(person) ? 'selected' : 'add'}
+            togglePersonSelection={() => toggleSelection(person)}
+            // onKeywordClick will need to be added, once we know what the desired behaviour is
+          />
+        ))}
+      </TwoColumnLayout>
+    )
+  }
+}
 
 PersonPodGrid.propTypes = {
   people: peoplePropType.isRequired,
