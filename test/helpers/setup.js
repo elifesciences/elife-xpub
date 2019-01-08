@@ -46,21 +46,22 @@ export async function startServer() {
 }
 
 export async function setup(t) {
-  console.log('test/helpers/setup.js::setup start')
+  const correlationId = newCorrelationId()
+  log('test/helpers/setup.js::setup start', correlationId)
 
-  console.log('test/helpers/setup.js::setup createTables')
+  log('test/helpers/setup.js::setup createTables', correlationId)
   await createTables(true)
 
-  console.log('test/helpers/setup.js::setup replaySetup')
+  log('test/helpers/setup.js::setup replaySetup', correlationId)
   replaySetup('success')
 
-  console.log('test/helpers/setup.js::setup await startS3Server')
+  log('test/helpers/setup.js::setup await startS3Server', correlationId)
   // setup mock S3 server
   s3rver = await startS3Server({
     ...config.get('aws.credentials'),
     ...config.get('aws.s3'),
   })
-  console.log('test/helpers/setup.js::setup end')
+  log('test/helpers/setup.js::setup end', correlationId)
 }
 
 export async function teardown() {
