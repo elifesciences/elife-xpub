@@ -16,9 +16,13 @@
 // } from './pageObjects'
 // import setFixtureHooks from './helpers/set-fixture-hooks'
 
-// const f = fixture.skip('Submission')
+const f = fixture('Submission')
 // setFixtureHooks(f)
 
+  f
+    .before(() => Promise.resolve())
+    .beforeEach(() => Promise.resolve())
+    .afterEach(() => Promise.resolve())
 // const manuscript = {
 //   title: 'The Relationship Between Lamport Clocks and Interrupts Using Obi',
 //   file: './fixtures/dummy-manuscript-2.pdf',
