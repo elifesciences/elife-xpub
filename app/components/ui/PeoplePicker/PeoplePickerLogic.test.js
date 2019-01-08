@@ -43,8 +43,8 @@ const people = [
   },
 ]
 
-const makeWrapper = props =>
-  mount(
+const makeWrapper = async props => {
+  const wrapper = mount(
     <ThemeProvider theme={theme}>
       <PeoplePickerLogic
         // need to pass children as a prop in order to override it in some tests
@@ -57,6 +57,10 @@ const makeWrapper = props =>
       />
     </ThemeProvider>,
   )
+  await setTimeout(() => {}, 10)
+  wrapper.update()
+  return wrapper
+}
 
 const getPersonPodButton = (wrapper, index) =>
   wrapper.find('button[data-test-id="person-pod-button"]').at(index)
@@ -132,7 +136,7 @@ describe('PeoplePicker', () => {
     expectSelectionLength(wrapper, 0)
   })
 
-  describe('integration with Search Box', () => {
+  describe('integration with Search Box', async () => {
     const searchWrapper = mount(
       <ThemeProvider theme={theme}>
         <PeoplePickerLogic
@@ -155,6 +159,8 @@ describe('PeoplePicker', () => {
         />
       </ThemeProvider>,
     )
+    await setTimeout(() => {}, 10)
+    searchWrapper.update()
 
     function searchFor(inputValue) {
       const input = searchWrapper.find('input')
