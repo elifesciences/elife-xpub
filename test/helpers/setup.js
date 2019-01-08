@@ -32,9 +32,11 @@ export async function startServer() {
         'test/helpers/setup.js::startServer serverStartAttempt',
         correlationId,
       )
-      throw new Error(
+      const e = new Error(
         "Attempting to start the server again, but a previous attempt hasn't been executed yet",
       )
+      log('test/helpers/setup.js::startServer stack trace ' + e.stack, correlationId)
+      throw e
     }
     serverStartAttempt = true
     // increase timeout to wait for webpack compilation
