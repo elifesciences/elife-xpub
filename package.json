@@ -36,7 +36,7 @@
     "stop:services": "docker-compose down -v",
     "styleguide": "styleguidist server",
     "test": "NODE_CONFIG_ENV=test jest --runInBand",
-    "test:browser": "NODE_CONFIG_ENV=test NODE_ENV=production testcafe --concurrency 1 \"${BROWSER:-chrome}\" 'test/**/*.browser.js'",
+    "test:browser": "NODE_CONFIG_ENV=test NODE_ENV=production testcafe --concurrency 1 \"${BROWSER:-chrome}\" --dev 'test/**/*.browser.js'",
     "test:dependencies": "check-yarn-dupes react react-dom styled-components pubsweet-server",
     "update": "yarn upgrade-interactive --latest"
   },
