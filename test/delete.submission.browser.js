@@ -7,13 +7,14 @@ const f = fixture('DeleteSubmission')
 setFixtureHooks(f)
 
 test('Delete a Submission', async t => {
-  console.log('Delete a submission start')
+  console.log('tests/delete.submission.browser.js start')
   await t
     .navigateTo(login.url)
     .click(login.button)
     .click(dashboard.desktopNewSubmission)
 
   // author details initially empty
+  console.log('tests/delete.submission.browser.js author details')
   await t
     .expect(author.firstNameField.value)
     .eql('')
@@ -25,6 +26,7 @@ test('Delete a Submission', async t => {
     .eql('')
 
   // create a new submission
+  console.log('tests/delete.submission.browser.js create a new submission')
   await t
     .click(author.orcidPrefill)
     .expect(author.firstNameField.value)
@@ -40,6 +42,7 @@ test('Delete a Submission', async t => {
     .click(wizardStep.next)
 
   // navigate back to the dashboard page and cancel the delete the submission
+  console.log('tests/delete.submission.browser.js cancel')
   await t
     .navigateTo(`${config.get('pubsweet-server.baseUrl')}`)
     .click(dashboard.trashButton)
@@ -47,7 +50,8 @@ test('Delete a Submission', async t => {
     .expect(dashboard.trashButton.count)
     .eql(1)
 
-  // navigate back to the dashboard page and cancel the delete the submission
+  // navigate back to the dashboard page and accept the delete the submission
+  console.log('tests/delete.submission.browser.js accept')
   await t
     .click(dashboard.trashButton)
     .click(Selector('[data-test-id=accept'))
