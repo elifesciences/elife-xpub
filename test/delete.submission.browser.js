@@ -7,6 +7,7 @@ const f = fixture('DeleteSubmission')
 setFixtureHooks(f)
 
 test('Delete a Submission', async t => {
+  console.log('Delete a submission start')
   await t
     .navigateTo(login.url)
     .click(login.button)
