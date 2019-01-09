@@ -7,8 +7,9 @@ const files = {
   ),
   editor: Selector('[name="coverLetter"] div[contenteditable=true]'),
   manuscriptUpload: Selector('[data-test-id=upload]>input'),
-  supportingFilesUploadLink: Selector('[data-test-id=supportingFilesLink]'),
   supportingFilesUpload: Selector('[data-test-id=supportingFilesUpload]>input'),
+  supportingFilesRemove: Selector('[data-test-id=supportingFilesRemove]'),
+  supportingFile: Selector('[data-test-id=file_block_name]'),
 }
 
 export default files
