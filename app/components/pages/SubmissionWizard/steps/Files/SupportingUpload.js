@@ -37,7 +37,7 @@ const StyledDropzone = styled(({ setRef, ...rest }) => (
   border-style: none;
   width: auto;
   height: auto;
-  margin-bottom: ${th('space.2')};
+  margin-bottom: ${th('space.3')};
   ${props =>
     props.children.length &&
     css`
