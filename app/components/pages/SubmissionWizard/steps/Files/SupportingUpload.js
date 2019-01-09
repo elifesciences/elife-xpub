@@ -24,13 +24,20 @@ margin-top: ${th('space.1')};
 font-size: ${th('fontSizeBaseSmall')};
 `
 
+const SectionHeading = styled.span`
+  color: ${th('colorTextSecondary')};
+  display: inline-block;
+  margin-bottom: ${th('space.3')};
+  font-size: ${th('fontSizeBaseSmall')};
+`
+
 const StyledDropzone = styled(({ setRef, ...rest }) => (
   <Dropzone ref={setRef} {...rest} />
 ))`
   border-style: none;
   width: auto;
   height: auto;
-  margin-bottom: ${th('space.2')};
+  margin-bottom: ${th('space.3')};
   ${props =>
     props.children.length &&
     css`
@@ -79,6 +86,7 @@ const UploadControl = styled(Box).attrs({
 })`
   display: none;
   text-align: right;
+  font-size: ${th('fontSizeBaseSmall')};
   &:first-child {
     text-align: left;
   }
@@ -175,7 +183,9 @@ class SupportingUpload extends React.Component {
     )
     return (
       <React.Fragment>
-        {successfullyUploadedFiles.length > 0 && <p>Supporting Files:</p>}
+        {successfullyUploadedFiles.length > 0 && (
+          <SectionHeading>Supporting files:</SectionHeading>
+        )}
         <StyledDropzone
           data-test-id="supportingFilesUpload"
           maxSize={config.fileUpload.maxSizeMB * 1e6}
