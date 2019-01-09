@@ -20,6 +20,8 @@ const log = function(message, correlationId = '') {
   const timestamp = new Date()
   console.log(`[${timestamp}][${correlationId}] ${message}`)
 }
+const util = require('util');
+const exec = util.promisify(require('child_process').exec);
 
 export async function startServer() {
   const correlationId = newCorrelationId()
@@ -48,6 +50,9 @@ export async function startServer() {
     log('test/helpers/setup.js::startServer await start', correlationId)
     server = await start()
     log('test/helpers/setup.js::startServer started', correlationId)
+    log('test/helpers/setup.js::startServer sleep start', correlationId)
+    await exec('sleep 30')
+    log('test/helpers/setup.js::startServer sleep end', correlationId)
   }
   log('test/helpers/setup.js::startServer end', correlationId)
   console.timeEnd('test/helpers/setup.js::startServer')
