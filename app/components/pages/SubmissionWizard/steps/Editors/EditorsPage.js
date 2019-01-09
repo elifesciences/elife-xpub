@@ -102,7 +102,7 @@ class EditorsPage extends React.Component {
       if (reviewers) {
         // first count the blanks at the end
         let numBlanks = 0
-        for (let index = reviewers.length - 1; index > 0; index -= 1) {
+        for (let index = reviewers.length - 1; index >= 0; index -= 1) {
           const item = reviewers[index]
           if (itemIsBlank(item)) {
             numBlanks += 1

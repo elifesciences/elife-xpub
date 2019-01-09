@@ -33,11 +33,7 @@ const data = {
   ],
   suggestedReviewingEditors: [],
   opposedReviewingEditors: [],
-  suggestedReviewers: [
-    { name: '', email: '' },
-    { name: '', email: '' },
-    { name: '', email: '' },
-  ],
+  suggestedReviewers: [{ name: '', email: '' }],
   opposedReviewers: [],
   opposedReviewersReason: '',
   noConflictOfInterest: false,

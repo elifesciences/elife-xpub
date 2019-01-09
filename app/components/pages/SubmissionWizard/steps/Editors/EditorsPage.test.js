@@ -23,11 +23,7 @@ const formValues = {
   suggestedReviewingEditors: [],
   opposedReviewingEditors: [],
   opposedReviewingEditorsReason: '',
-  suggestedReviewers: [
-    { name: '', email: '' },
-    { name: '', email: '' },
-    { name: '', email: '' },
-  ],
+  suggestedReviewers: [{ name: '', email: '' }],
   opposedReviewers: [],
   opposedReviewersReason: '',
 }
