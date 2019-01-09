@@ -54,6 +54,7 @@ const PeoplePickerBody = ({
   people,
   selection,
   toggleSelection,
+  ...props
 }) => (
   <React.Fragment>
     <Flex justifyContent="space-between" mb={3}>

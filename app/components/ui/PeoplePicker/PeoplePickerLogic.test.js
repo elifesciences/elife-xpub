@@ -6,6 +6,8 @@ import PeoplePickerLogic from './PeoplePickerLogic'
 import PeoplePickerBody from './PeoplePickerBody'
 import SearchBox from './SearchBox'
 
+jest.useFakeTimers()
+
 const people = [
   {
     id: 1,
@@ -43,8 +45,8 @@ const people = [
   },
 ]
 
-const makeWrapper = props =>
-  mount(
+const makeWrapper = props => {
+  const wrapper = mount(
     <ThemeProvider theme={theme}>
       <PeoplePickerLogic
         // need to pass children as a prop in order to override it in some tests
@@ -57,6 +59,10 @@ const makeWrapper = props =>
       />
     </ThemeProvider>,
   )
+  jest.runAllTimers()
+  wrapper.update()
+  return wrapper
+}
 
 const getPersonPodButton = (wrapper, index) =>
   wrapper.find('button[data-test-id="person-pod-button"]').at(index)
@@ -121,7 +127,6 @@ describe('PeoplePicker', () => {
   it('clicking on selected item icon removes it', () => {
     const wrapper = makeWrapper()
     expectSelectionLength(wrapper, 0)
-
     getPersonPodButton(wrapper, 0).simulate('click')
     expectSelectionLength(wrapper, 1)
 

@@ -11,6 +11,7 @@ import {
 } from './operations'
 import CosubmissionModifier from './formDataModifiers/CosubmissionModifier'
 import EditorSuggestionsModifier from './formDataModifiers/EditorSuggestionsModifier'
+import Loading from '../../ui/atoms/Loading'
 
 const dataModifiers = [
   new CosubmissionModifier(),
@@ -51,7 +52,7 @@ const SubmissionOperations = ({
   ...props
 }) => {
   if (data.loading) {
-    return <div>Loading...</div>
+    return <Loading />
   }
 
   if (data.error) {
