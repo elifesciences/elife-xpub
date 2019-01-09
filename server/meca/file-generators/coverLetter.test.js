@@ -6,12 +6,7 @@ describe('Cover letter HTML generator', () => {
     expect(html).toContain('<!DOCTYPE html>')
   })
 
-  test.each([
-    ['coverLetter'],
-    ['opposedSeniorEditorsReason'],
-    ['opposedReviewingEditorsReason'],
-    ['opposedReviewersReason'],
-  ])('replaces %s', async key => {
+  test.each([['coverLetter']])('replaces %s', async key => {
     const randomString = Math.random()
       .toString(36)
       .substr(2)
