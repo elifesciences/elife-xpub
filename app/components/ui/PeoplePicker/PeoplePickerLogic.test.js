@@ -77,8 +77,8 @@ describe('PeoplePicker', () => {
     expect(render).toHaveBeenCalled()
   })
 
-  it('renders as many person pods as people', async () => {
-    const wrapper = await makeWrapper()
+  it('renders as many person pods as people', () => {
+    const wrapper = makeWrapper()
     const buttons = wrapper.find('PersonPod')
 
     expect(buttons).toHaveLength(people.length)
@@ -137,7 +137,7 @@ describe('PeoplePicker', () => {
     expectSelectionLength(wrapper, 0)
   })
 
-  describe('integration with Search Box', async () => {
+  describe('integration with Search Box', () => {
     const searchWrapper = mount(
       <ThemeProvider theme={theme}>
         <PeoplePickerLogic
