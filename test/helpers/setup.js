@@ -24,6 +24,7 @@ const log = function(message, correlationId = '') {
 export async function startServer() {
   const correlationId = newCorrelationId()
   // TODO: add date and time
+  console.time('test/helpers/setup.js::startServer')
   log('test/helpers/setup.js::startServer start', correlationId)
   if (!server) {
     log('test/helpers/setup.js::startServer !server', correlationId)
@@ -49,10 +50,13 @@ export async function startServer() {
     log('test/helpers/setup.js::startServer started', correlationId)
   }
   log('test/helpers/setup.js::startServer end', correlationId)
+  console.timeEnd('test/helpers/setup.js::startServer')
+  console.log(`Memory: ${process.memoryUsage()}`)
 }
 
 export async function setup(t) {
   const correlationId = newCorrelationId()
+  console.time('test/helpers/setup.js::setup')
   log('test/helpers/setup.js::setup start', correlationId)
 
   log('test/helpers/setup.js::setup createTables', correlationId)
@@ -68,6 +72,8 @@ export async function setup(t) {
     ...config.get('aws.s3'),
   })
   log('test/helpers/setup.js::setup end', correlationId)
+  console.timeEnd('test/helpers/setup.js::setup')
+  console.log(`Memory: ${process.memoryUsage()}`)
 }
 
 export async function teardown() {
