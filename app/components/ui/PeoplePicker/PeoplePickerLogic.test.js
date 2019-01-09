@@ -127,7 +127,6 @@ describe('PeoplePicker', () => {
   it('clicking on selected item icon removes it', () => {
     const wrapper = makeWrapper()
     expectSelectionLength(wrapper, 0)
-    console.log(wrapper.debug())
     getPersonPodButton(wrapper, 0).simulate('click')
     expectSelectionLength(wrapper, 1)
 
@@ -161,8 +160,6 @@ describe('PeoplePicker', () => {
         />
       </ThemeProvider>,
     )
-    await setTimeout(() => {}, 10)
-    searchWrapper.update()
 
     function searchFor(inputValue) {
       const input = searchWrapper.find('input')
