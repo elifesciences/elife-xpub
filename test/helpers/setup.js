@@ -51,7 +51,7 @@ export async function startServer() {
   }
   log('test/helpers/setup.js::startServer end', correlationId)
   console.timeEnd('test/helpers/setup.js::startServer')
-  console.log(`Memory: ${process.memoryUsage()}`)
+  console.log(`Memory: ${JSON.stringify(process.memoryUsage(), null, 4)}`)
 }
 
 export async function setup(t) {
@@ -73,7 +73,7 @@ export async function setup(t) {
   })
   log('test/helpers/setup.js::setup end', correlationId)
   console.timeEnd('test/helpers/setup.js::setup')
-  console.log(`Memory: ${process.memoryUsage()}`)
+  console.log(`Memory: ${JSON.stringify(process.memoryUsage(), null, 4)}`)
 }
 
 export async function teardown() {
