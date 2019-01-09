@@ -7,9 +7,13 @@ import PersonPod from './PersonPod'
 import Loading from '../atoms/Loading'
 
 class PersonPodGrid extends React.Component {
-  state = {
-    stillRendering: true,
-    peopleLoaded: false,
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      stillRendering: true,
+      peopleLoaded: props.people && props.people.length > 0,
+    }
   }
 
   componentDidMount() {
@@ -17,7 +21,7 @@ class PersonPodGrid extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.people.length > 1) {
+    if (nextProps.people.length > 0) {
       this.setState({ peopleLoaded: true })
     }
   }
