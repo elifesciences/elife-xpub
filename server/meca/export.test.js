@@ -62,6 +62,8 @@ describe('MECA integration test', () => {
       })
 
       expect(getFilenames(zip)).toEqual([
+        '00000001.pdf',
+        '00000002.pdf',
         'article.xml',
         'cover_letter.html',
         'disclosure.pdf',

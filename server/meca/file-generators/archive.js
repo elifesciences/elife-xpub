@@ -1,6 +1,6 @@
 const JsZip = require('jszip')
 
-async function makeZip(files) {
+async function makeZip(files, supportingFiles) {
   const zip = new JsZip()
 
   await Promise.all(
