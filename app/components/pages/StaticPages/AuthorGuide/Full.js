@@ -9,7 +9,7 @@ const Full = props => (
   <React.Fragment>
     <H1>Full Submissions</H1>
 
-    <Paragraph>
+    <Paragraph.Writing>
       If an author is invited to submit a Full Submission, they will receive a
       link to the article submission system, which will take them to a page
       incorporating existing information about their Initial Submission. The
@@ -18,26 +18,26 @@ const Full = props => (
       all co-authors will be contacted to verify their authorship, contribution,
       and competing interest statements. Please note that Research Advances
       bypass the Initial Submission step.
-    </Paragraph>
+    </Paragraph.Writing>
 
     <H2>Submission Files</H2>
 
-    <Paragraph>
+    <Paragraph.Writing>
       At this point, authors can either upload another single PDF of their
       manuscript (with the text and figures combined), or they can upload the
       source files separately if they prefer.
-    </Paragraph>
+    </Paragraph.Writing>
 
-    <Paragraph>
+    <Paragraph.Writing>
       Either way, authors are strongly encouraged to think creatively about the
       presentation of their work, to take advantage of the flexibility and file
       formats eLife offers, and to keep the article as concise as possible. To
       assist the review process, please organise and format the manuscript so
       that it is easily readable. Please include page and line numbers, double
       spacing, and a legible font size for the main text and figure legends.
-    </Paragraph>
+    </Paragraph.Writing>
 
-    <Paragraph>
+    <Paragraph.Writing>
       Regarding the use of supplementary data, our vision is presented in{' '}
       <NativeLink
         href="https://elifesciences.org/inside-elife/6f32c567/supplementary-data"
@@ -48,12 +48,12 @@ const Full = props => (
       . In short, we strive to make supplementary data, if applicable, easily
       searchable, discoverable, and citable, and made available in the most
       useful format for reuse.
-    </Paragraph>
+    </Paragraph.Writing>
 
     <List.Ordered>
       <li>
         <strong>eLife Transparent Reporting Form: </strong>
-        <Paragraph>
+        <Paragraph.Writing>
           To facilitate the interpretation and replication of experiments,
           authors should, where appropriate, provide detailed information in
           areas relating to sample-size estimation, replicates, and statistical
@@ -74,18 +74,18 @@ const Full = props => (
           </NativeLink>
           ), which should describe the places within the submission where this
           information has been included.
-        </Paragraph>
-        <Paragraph>
+        </Paragraph.Writing>
+        <Paragraph.Writing>
           Please note that we publish the completed Transparent Reporting Form
           for submissions accepted for publication. This will be available to
           download as a supplementary file in the format provided by the
           authors.
-        </Paragraph>
+        </Paragraph.Writing>
       </li>
 
       <li>
         <strong>Figures and Figure Supplements: </strong>
-        <Paragraph>
+        <Paragraph.Writing>
           eLife does not have space or printing constraints, so any number of
           colour figures can be included within Research Articles, although we
           urge authors to present their results as concisely as possible. Short
@@ -102,9 +102,9 @@ const Full = props => (
           ). These &quot;Figure Supplements&quot; must be linked to one of the
           primary figures: they can, for example, provide additional examples of
           analyses or data shown in a primary figure.
-        </Paragraph>
+        </Paragraph.Writing>
         <Paragraph />
-        <Paragraph>
+        <Paragraph.Writing>
           There is no limit on the number of Figure Supplements for any one
           primary figure. Each figure supplement should be clearly labelled,
           Figure 1–figure supplement 1, Figure 1–figure supplement 2, Figure
@@ -112,8 +112,8 @@ const Full = props => (
           legend). Figure Supplements should be referred to in the legend of the
           associated primary figure, and should also be listed at the end of the
           article text file.
-        </Paragraph>
-        <Paragraph>
+        </Paragraph.Writing>
+        <Paragraph.Writing>
           Authors should provide information about data processing and analysis
           in their figure legends, including any statistical tests applied, with
           exact sample number, p values of tests, criteria for data inclusion or
@@ -121,15 +121,15 @@ const Full = props => (
           unwieldy to have this information in the legend of a figure, in which
           case the information can be provided in a source data file – see
           below.
-        </Paragraph>
-        <Paragraph>
+        </Paragraph.Writing>
+        <Paragraph.Writing>
           Although we understand that authors sometimes need to provide
           composite figures as main figures, we urge authors not to make such
           figures (and their legends) too large to avoid the figure and its
           legend extending beyond one page in the PDF. We also encourage authors
           to avoid composite figure supplements wherever possible.
-        </Paragraph>
-        <Paragraph>
+        </Paragraph.Writing>
+        <Paragraph.Writing>
           When preparing figures, we recommend that authors follow the
           principles of{' '}
           <NativeLink
@@ -140,17 +140,17 @@ const Full = props => (
           </NativeLink>{' '}
           (Masataka, Okabe and Kei Ito, J*Fly), whereby colour schemes are
           chosen to ensure maximum accessibility for all types of colour vision.
-        </Paragraph>
-        <Paragraph>
+        </Paragraph.Writing>
+        <Paragraph.Writing>
           Figures can be uploaded individually in the following formats: TIFF,
           GIF, JPG, EPS, AI, PDF and Corel Draw. If you would like to supply PDF
           images please ensure that they are saved in a Vector image format.
-        </Paragraph>
+        </Paragraph.Writing>
       </li>
 
       <li>
         <strong>Source Data Files, for Figures and Tables: </strong>
-        <Paragraph>
+        <Paragraph.Writing>
           eLife encourages authors to provide Source Data files, for example,
           for figures such as histograms or tables showing summary data (as
           shown in{' '}
@@ -168,8 +168,8 @@ const Full = props => (
           (and optional legend). Source data files should be referred to in the
           relevant figure legend or table footnote, and they should also be
           listed at the end of the article text file.
-        </Paragraph>
-        <Paragraph>
+        </Paragraph.Writing>
+        <Paragraph.Writing>
           In addition, authors should provide information about data processing
           and analysis, including any statistical tests applied, with exact
           sample number, p values of tests, criteria for data inclusion or
@@ -177,12 +177,12 @@ const Full = props => (
           unwieldy to have this information in the legend of a figure, in which
           case the information should be provided along with the source data
           file.
-        </Paragraph>
+        </Paragraph.Writing>
       </li>
 
       <li>
         <strong>Rich Media Files: </strong>
-        <Paragraph>
+        <Paragraph.Writing>
           Rich media files encompass forms of presentation that go beyond static
           presentation: for example, videos, audio clips, animations,
           slideshows, and interactive diagrams. Rich media files should be
@@ -200,8 +200,8 @@ const Full = props => (
             eLife 2012;1:e00007
           </NativeLink>
           ).
-        </Paragraph>
-        <Paragraph>
+        </Paragraph.Writing>
+        <Paragraph.Writing>
           eLife supports JMOL, a Java viewer for three-dimensional chemical
           structures, and we encourage authors to provide{' '}
           <NativeLink
@@ -211,12 +211,12 @@ const Full = props => (
             compatible files
           </NativeLink>
           .
-        </Paragraph>
+        </Paragraph.Writing>
       </li>
 
       <li>
         <strong>Source Code: </strong>
-        <Paragraph>
+        <Paragraph.Writing>
           Relevant software or source code should be deposited in an open
           software archive. Where appropriate, authors can upload source code
           files to the submission system (for example, MATLAB, R, Python, C,
@@ -233,20 +233,20 @@ const Full = props => (
             Software sharing policy
           </Link>
           .
-        </Paragraph>
+        </Paragraph.Writing>
       </li>
 
       <li>
         <strong>Reporting Standards Documents: </strong>
-        <Paragraph>
+        <Paragraph.Writing>
           eLife encourages authors to upload any relevant reporting standards
           documents.
-        </Paragraph>
+        </Paragraph.Writing>
       </li>
 
       <li>
         <strong>Supplementary Files: </strong>
-        <Paragraph>
+        <Paragraph.Writing>
           Authors are discouraged from uploading large PDFs of data and/or text
           as supplementary files for the reasons explained above. However,
           information not central to the narrative, that falls outside of the
@@ -256,21 +256,21 @@ const Full = props => (
           should be labelled as Supplementary File 1, Supplementary File 2 and
           so on, and have a title (and optional legend). Supplementary files
           should be listed at the end of the article file.
-        </Paragraph>
+        </Paragraph.Writing>
       </li>
 
       <li>
         <strong>Related Manuscripts: </strong>
-        <Paragraph>
+        <Paragraph.Writing>
           Any related manuscripts should be described in the cover letter and
           uploaded using the Related Manuscript file type.
-        </Paragraph>
+        </Paragraph.Writing>
       </li>
     </List.Ordered>
 
     <H2>Submission Metadata</H2>
 
-    <Paragraph>
+    <Paragraph.Writing>
       The Full Submission requires additional information about the article and
       all authors. This allows eLife to propagate published content to a wide
       range of resources and indexes, so that accepted articles are widely
@@ -289,30 +289,30 @@ const Full = props => (
         learn more
       </NativeLink>
       ).
-    </Paragraph>
+    </Paragraph.Writing>
 
     <List.Ordered>
       <li>
         <strong>Impact Statement: </strong>
-        <Paragraph>
+        <Paragraph.Writing>
           The impact statement is single sentence (typically 15-30 words) that
           summarises the most important finding of the work: it needs to
           complement (rather than repeat) the title, and should avoid acronyms
           that are not well known to a broad readership. It also needs to be
           written in third-person (i.e., it should not use “we” or “our”).
-        </Paragraph>
+        </Paragraph.Writing>
       </li>
 
       <li>
         <strong>Complete Author Information: </strong>
-        <Paragraph>
+        <Paragraph.Writing>
           Co-author details should be entered: in addition to the full author
           name and affiliation (department, institution, city, and country), a
           competing interests statement is required for each author. All
           financial and non-financial competing interests that could reasonably
           be perceived to be relevant to the work should be declared.
-        </Paragraph>
-        <Paragraph>
+        </Paragraph.Writing>
+        <Paragraph.Writing>
           Information about individual author contributions should be provided
           using the Contributor Roles Taxonomy: Conceptualization; Methodology;
           Software; Validation; Formal analysis; Investigation; Resources; Data
@@ -326,49 +326,49 @@ const Full = props => (
             read more
           </NativeLink>
           ).
-        </Paragraph>
-        <Paragraph>
+        </Paragraph.Writing>
+        <Paragraph.Writing>
           During the Full Submission process, an email is sent to all authors to
           confirm that they approve of the submission of the manuscript, its
           content, authorship, and the order of authorship. It is also possible
           to indicate joint first authorship during the submission process.
-        </Paragraph>
-        <Paragraph>
+        </Paragraph.Writing>
+        <Paragraph.Writing>
           If one or more author groups or consortia are indicated as authors, to
           ensure that individual collaborators are searchable on resources such
           as PubMed, please provide the list of collaborators in an Excel file
           (uploaded as file type Collaborators). Please ensure given names and
           surnames are listed in separate columns per collaborator. They will be
           listed under the acknowledgements on publication.
-        </Paragraph>
+        </Paragraph.Writing>
       </li>
 
       <li>
         <strong>Funding: </strong>
-        <Paragraph>
+        <Paragraph.Writing>
           In addition to a list of the sources of funding, authors are also
           expected to provide the relevant grant numbers, where possible, and
           list the authors associated with the specific funding sources. Please
           do not include information about direct funding in the
           acknowledgements to avoid duplication.
-        </Paragraph>
-        <Paragraph>
+        </Paragraph.Writing>
+        <Paragraph.Writing>
           Authors are also required to state whether the funding sources were
           involved in study design, data collection and interpretation, or the
           decision to submit the work for publication.
-        </Paragraph>
+        </Paragraph.Writing>
       </li>
 
       <li>
         <strong>Datasets: </strong>
-        <Paragraph>
+        <Paragraph.Writing>
           All datasets used in a publication should be cited in the text and
           listed in the reference section and/or data availability statement.
           References for data sets and program code should include a persistent
           identifier, for example a Digital Object Identifier (DOI) or accession
           number.
-        </Paragraph>
-        <Paragraph>
+        </Paragraph.Writing>
+        <Paragraph.Writing>
           In the submission form, authors should provide the following
           information about newly generated and previously published datasets in
           the following format: Author(s), Year, Dataset Title, Dataset ID
@@ -392,12 +392,12 @@ const Full = props => (
             CC0 public domain dedication
           </NativeLink>
           .
-        </Paragraph>
-        <Paragraph>
+        </Paragraph.Writing>
+        <Paragraph.Writing>
           Where appropriate, data analysis tools should also be made available
           to assist interested researchers in the manipulation and use of the
           data.
-        </Paragraph>
+        </Paragraph.Writing>
       </li>
 
       <li>
@@ -405,16 +405,16 @@ const Full = props => (
           Ethics Statement for Human Subjects Research or Animal
           Experimentation:{' '}
         </strong>
-        <Paragraph>
+        <Paragraph.Writing>
           Authors are required to provide an ethics statement during submission
           to indicate the institutional review board or ethics committee that
           has approved the study and/or the guidelines that have been followed.
-        </Paragraph>
+        </Paragraph.Writing>
       </li>
 
       <li>
         <strong>Editor and Reviewer Suggestions/Exclusions: </strong>
-        <Paragraph>
+        <Paragraph.Writing>
           We request that authors provide suggestions for at least four
           potential reviewers of the work. To encourage diversity, please
           consider specifically suggesting reviewers at an early stage of their
@@ -425,15 +425,15 @@ const Full = props => (
           article. We will make every effort to follow author requests for
           excluded individuals unless the editors judge that such exclusion
           would interfere with the rigorous assessment of the work.
-        </Paragraph>
+        </Paragraph.Writing>
       </li>
     </List.Ordered>
 
-    <Paragraph>
+    <Paragraph.Writing>
       If your Full Submission has been peer reviewed and you have been asked to
       make revisions, please review our guidelines for{' '}
       <Link to="author-guide/revised">Revised Submissions</Link>.
-    </Paragraph>
+    </Paragraph.Writing>
   </React.Fragment>
 )
 

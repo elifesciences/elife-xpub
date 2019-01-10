@@ -9,11 +9,13 @@ const Types = props => (
   <React.Fragment>
     <H1>Article Types</H1>
 
-    <Paragraph>eLife publishes the following article types.</Paragraph>
+    <Paragraph.Writing>
+      eLife publishes the following article types.
+    </Paragraph.Writing>
 
     <H2>Editorials, Insights, and Feature articles</H2>
 
-    <Paragraph>
+    <Paragraph.Writing>
       <NativeLink
         href="https://elifesciences.org/articles/editorial"
         target="_blank"
@@ -21,9 +23,9 @@ const Types = props => (
         Editorials
       </NativeLink>{' '}
       in eLife are written by eLife editors or staff.
-    </Paragraph>
+    </Paragraph.Writing>
 
-    <Paragraph>
+    <Paragraph.Writing>
       <NativeLink
         href="https://elifesciences.org/articles/insight"
         target="_blank"
@@ -34,9 +36,9 @@ const Types = props => (
       Article published in the journal. Insights are written by experts in the
       field of the Research Article: they explain why the results reported are
       significant and outline some of the challenges that remain in the field.
-    </Paragraph>
+    </Paragraph.Writing>
 
-    <Paragraph>
+    <Paragraph.Writing>
       <NativeLink
         href="https://elifesciences.org/articles/feature"
         target="_blank"
@@ -50,11 +52,11 @@ const Types = props => (
       an active/engaging style. Feature Articles are peer reviewed at the
       discretion of the eLife editors and staff. Queries should be sent to the
       Features Editor at features [at] elifesciences [dot] org.
-    </Paragraph>
+    </Paragraph.Writing>
 
     <H2>Research Articles</H2>
 
-    <Paragraph>
+    <Paragraph.Writing>
       There is no maximum length for Research Articles, but we suggest that
       authors try not to exceed 5,000 words in the main text, excluding the
       Materials and methods, References, and Figure legends. There are no limits
@@ -64,11 +66,11 @@ const Types = props => (
       References; Figures with the corresponding legend below each one; and
       Tables. A Methods or Model section can appear after the Introduction where
       it makes sense to do so.
-    </Paragraph>
+    </Paragraph.Writing>
 
     <H2>Short Reports</H2>
 
-    <Paragraph>
+    <Paragraph.Writing>
       We welcome the submission of Short Reports, for example reporting the
       results of a single set of experiments, provided the conclusion is clear
       and justified, and the findings are novel and judged to be of high
@@ -77,11 +79,11 @@ const Types = props => (
       legends, with no more than three or four main display items (figures,
       tables, videos). Authors have more flexibility in the format, for example
       with a combined Results and Discussion section.
-    </Paragraph>
+    </Paragraph.Writing>
 
     <H2>Tools and Resources</H2>
 
-    <Paragraph>
+    <Paragraph.Writing>
       This category highlights tools or resources that are especially important
       for their respective fields and have the potential to accelerate
       discovery. For example, we welcome the submission of significant
@@ -99,9 +101,9 @@ const Types = props => (
       advances need to be comprehensively described, along with details of the
       reagents and equipment, and their sources. Authors should follow the
       format for Research Articles or Short Reports, as appropriate.
-    </Paragraph>
+    </Paragraph.Writing>
 
-    <Paragraph>
+    <Paragraph.Writing>
       Tools and Resources articles do not have to report major new biological
       insights or mechanisms, but it must be clear that they will enable such
       advances to take place. Specifically, submissions will be assessed in
@@ -113,11 +115,11 @@ const Types = props => (
       should be properly compared and benchmarked against existing methods used
       in the field. Minor improvements on existing methodologies are unlikely to
       fare well in review.
-    </Paragraph>
+    </Paragraph.Writing>
 
     <H2>Research Advances</H2>
 
-    <Paragraph>
+    <Paragraph.Writing>
       This format is for substantial developments that directly build upon a
       Research Article, Short Report or Tools and Resources article published
       previously by eLife. A Research Advance can be submitted by some or all of
@@ -128,9 +130,9 @@ const Types = props => (
       mechanistic insights or extend the pathway under investigation. Research
       Advances can also report significant improvements to experimental tools
       and techniques.
-    </Paragraph>
+    </Paragraph.Writing>
 
-    <Paragraph>
+    <Paragraph.Writing>
       Research Advances can be of any length, and any number of main display
       items, but there may only need to be minimal introductory material.
       Authors have flexibility in the format, for example with a combined
@@ -152,9 +154,9 @@ const Types = props => (
         Word
       </NativeLink>
       ) to accompany their submission.
-    </Paragraph>
+    </Paragraph.Writing>
 
-    <Paragraph>
+    <Paragraph.Writing>
       When published, Research Advances are linked to the original article, and
       they are indexed and citable in their own right. When the authors of the
       original article are not involved in the Research Advance, the
@@ -162,11 +164,11 @@ const Types = props => (
       during the review process. Where appropriate, the Research Advance will be
       considered by the same editors and reviewers who were involved in the
       assessment of the original paper.{' '}
-    </Paragraph>
+    </Paragraph.Writing>
 
     <H2>Scientific Correspondence</H2>
 
-    <Paragraph>
+    <Paragraph.Writing>
       This format should be used for a manuscript that challenges the central
       findings of a paper published in eLife, and for the formal response to
       such a manuscript. In the first instance, the author must contact the
@@ -174,9 +176,9 @@ const Types = props => (
       matters (and include evidence of these efforts in their initial
       submission). Scientific Correspondence must also be submitted within a
       year of the original eLife paper being published.
-    </Paragraph>
+    </Paragraph.Writing>
 
-    <Paragraph>
+    <Paragraph.Writing>
       The title of the manuscript should be &apos;Comment on &quot;Title of
       original article&quot;&apos;, and it should be written in a measured tone;
       manuscripts not written in measured tone will be sent back to the authors
@@ -188,9 +190,9 @@ const Types = props => (
         this blogpost
       </NativeLink>{' '}
       for more information.
-    </Paragraph>
+    </Paragraph.Writing>
 
-    <Paragraph>
+    <Paragraph.Writing>
       Where possible, the initial submission is considered by the Senior Editor
       and the Reviewing Editor who handled the original paper (and by others if
       necessary). In the first instance the Editors will decide if any of the
@@ -200,43 +202,43 @@ const Types = props => (
       will be put on hold until the Correction has been finalized. If a
       Correction is published, the authors of the Scientific Correspondence will
       be asked to revise their submission accordingly.
-    </Paragraph>
+    </Paragraph.Writing>
 
-    <Paragraph>
+    <Paragraph.Writing>
       If the Editors agree that the initial submission represents a credible
       challenge to the central findings of the original paper, a full submission
       is invited; the initial submission is also sent to the authors of the
       original paper and they are given 14 days to submit a formal response. If
       the initial submission does not represent a credible challenge to the
       original paper, it is declined.
-    </Paragraph>
+    </Paragraph.Writing>
 
-    <Paragraph>
+    <Paragraph.Writing>
       Once any response has been received, the Editors discuss the challenge and
       the response, and then decide between the following options: accept both
       for publication; accept the challenge but reject the response; reject
       both; proceed with peer review of one or both manuscripts; take another
       course of action.
-    </Paragraph>
+    </Paragraph.Writing>
 
-    <Paragraph>
+    <Paragraph.Writing>
       If the Editors opt for peer review, the following outcomes are possible:
       the challenge and the response are both accepted; the challenge is
       accepted but the response is rejected; the challenge is rejected (which
       means there is no need to publish the response). Please note the
       manuscripts will typically be accepted or rejected at this stage of the
       process; revised manuscripts will not usually be requested.
-    </Paragraph>
+    </Paragraph.Writing>
 
-    <Paragraph>
+    <Paragraph.Writing>
       Full submissions and formal responses should not usually exceed 1,500
       words in the main text, excluding the Materials and methods, References,
       and Figure legends, and should have no more than four main display items
       (figures, tables, videos). Both the challenge and the response can contain
       original data.
-    </Paragraph>
+    </Paragraph.Writing>
 
-    <Paragraph>
+    <Paragraph.Writing>
       While priority is given to manuscripts that challenge eLife papers, we
       will also consider important submissions that challenge papers published
       elsewhere. As described above, the author must contact the corresponding
@@ -244,16 +246,16 @@ const Types = props => (
       evidence of these efforts in their initial submission), and the Scientific
       Correspondence must be submitted within a year of the original paper being
       published.
-    </Paragraph>
+    </Paragraph.Writing>
 
     <CalloutTextBox>
-      <Paragraph>
+      <Paragraph.Writing>
         Authors submitting a Research Article, Short Report, Tools and Resources
         Article, or Scientific Correspondence are encouraged to read about the{' '}
         <Link to="/author-guide/initial">Initial Submission</Link> process.
         Authors of Research Advances can proceed to the{' '}
         <Link to="/author-guide/full">Full Submission</Link> section.
-      </Paragraph>
+      </Paragraph.Writing>
     </CalloutTextBox>
   </React.Fragment>
 )

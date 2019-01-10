@@ -1,10 +1,12 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import SmallParagraph from '../../ui/atoms/SmallParagraph'
+import Paragraph from '../../ui/atoms/Paragraph'
 import NativeLink from '../../ui/atoms/NativeLink'
 
-const CenterdSmallParagraph = styled(SmallParagraph).attrs({ secondary: true })`
+const CenterdSmallParagraph = styled(Paragraph.Small).attrs({
+  secondary: true,
+})`
   text-align: center;
 `
 

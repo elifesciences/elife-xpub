@@ -11,7 +11,7 @@ const Post = props => (
 
     <H2>Acceptance</H2>
 
-    <Paragraph>
+    <Paragraph.Writing>
       eLife is an open-access journal: articles are distributed under the terms
       of the{' '}
       <NativeLink
@@ -30,11 +30,11 @@ const Post = props => (
         BOAI definition of open access
       </NativeLink>
       .
-    </Paragraph>
+    </Paragraph.Writing>
 
     <H3>Detailed Protocols</H3>
 
-    <Paragraph>
+    <Paragraph.Writing>
       If your paper involves a method that would also benefit from the
       publication of a step-by-step protocol (e.g.,{' '}
       <NativeLink href="http://bio-protocol.org/e1067" target="_blank">
@@ -49,7 +49,7 @@ const Post = props => (
         protocols.io
       </NativeLink>
       , which is an open-access repository of science methods.
-    </Paragraph>
+    </Paragraph.Writing>
 
     <List.Unordered>
       <li>
@@ -86,7 +86,7 @@ const Post = props => (
 
     <H3>Publication of the Accepted Manuscript</H3>
 
-    <Paragraph>
+    <Paragraph.Writing>
       To ensure that new research is made available as rapidly as possible,
       eLife offers an{' '}
       <NativeLink
@@ -97,30 +97,30 @@ const Post = props => (
       </NativeLink>{' '}
       whereby a PDF of their accepted manuscript can be published within a few
       days of acceptance.
-    </Paragraph>
+    </Paragraph.Writing>
 
-    <Paragraph>
+    <Paragraph.Writing>
       Accepted manuscripts are citable, have a DOI, are listed in PubMed, and
       are available to download from eLife’s upcoming, browse, and archive
       pages.
-    </Paragraph>
+    </Paragraph.Writing>
 
-    <Paragraph>
+    <Paragraph.Writing>
       The main figures and tables of the accepted manuscript are available at
       the end of the PDF. Additional items such as videos, figure supplements,
       and source data files are available to download as a separate zip file.
-    </Paragraph>
+    </Paragraph.Writing>
 
-    <Paragraph>
+    <Paragraph.Writing>
       Authors are invited to opt-in to this service when submitting a revised
       manuscript. In the event that the study has potentially broad public
       significance, we recommend that authors consult their institutional press
       officer before choosing to publish the accepted manuscript.
-    </Paragraph>
+    </Paragraph.Writing>
 
     <H3>Publication of the Final Version</H3>
 
-    <Paragraph>
+    <Paragraph.Writing>
       The final version of the accepted article will be published, along with
       the decision letter incorporating the review comments and the authors’
       response to those comments (as in{' '}
@@ -133,30 +133,30 @@ const Post = props => (
       ). If authors have any questions or concerns about the content of the
       decision letter after peer review, or their response to this letter, it is
       important to notify the journal office as soon as possible.
-    </Paragraph>
+    </Paragraph.Writing>
 
-    <Paragraph>
+    <Paragraph.Writing>
       The corresponding author will have an opportunity to review a proof of the
       article in HTML format prior to publication. Authors will have 48 hours to
       answer queries generated during the production process. Changes should be
       limited to essential corrections.
-    </Paragraph>
+    </Paragraph.Writing>
 
     <H2>Corrections to Published Articles</H2>
 
-    <Paragraph>
+    <Paragraph.Writing>
       Publishers have a responsibility to correct errors that have been
       discovered in published articles. Requests for corrections or retractions
       should be sent to the journal’s editorial staff for consideration and
       further advice.
-    </Paragraph>
+    </Paragraph.Writing>
 
-    <Paragraph>
+    <Paragraph.Writing>
       Corrections are limited to those that will affect the scientific integrity
       of the content.
-    </Paragraph>
+    </Paragraph.Writing>
 
-    <Paragraph>
+    <Paragraph.Writing>
       In the rare instance that there is a substantive error that requires a
       correction to an accepted manuscript before the final version is
       published, a second version of the accepted manuscript will be published.
@@ -164,9 +164,9 @@ const Post = props => (
       correction(s) will be included as a footnote within the PDF of the new
       version. A description of the correction(s) will also be added as a
       comment online.
-    </Paragraph>
+    </Paragraph.Writing>
 
-    <Paragraph>
+    <Paragraph.Writing>
       Once the final version of record is published, a formal correction would
       need to be issued for any further changes. Formal corrections are
       published on the eLife website, with links to a corrected version of the
@@ -176,13 +176,13 @@ const Post = props => (
       relevant indexes and repositories, although some services will not be able
       to present the correction or replace the content. If you have any concerns
       about a correction, please contact the editorial staff.
-    </Paragraph>
+    </Paragraph.Writing>
 
     <H2>Rejection</H2>
 
     <H3>Using eLife peer reviews when submitting to another journal</H3>
 
-    <Paragraph>
+    <Paragraph.Writing>
       Because we are committed to improving the overall efficiency of the
       publishing process, we are willing to share referee reports and identities
       (where they agree) with another journal of the corresponding author’s
@@ -231,9 +231,9 @@ const Post = props => (
         Neuroscience Peer Review Consortium
       </NativeLink>
       .
-    </Paragraph>
+    </Paragraph.Writing>
 
-    <Paragraph>
+    <Paragraph.Writing>
       In the event that an article is rejected after peer review, we ask
       permission from the reviewers to pass on their full review and identity to
       another journal, so that authors can request that the peer-review
@@ -247,15 +247,15 @@ const Post = props => (
       elifesciences.org) to request the referee reports and identities. When
       authors have made revisions, they should upload a response to the previous
       reviews alongside their manuscript.
-    </Paragraph>
+    </Paragraph.Writing>
 
     <H3>Appeals</H3>
 
-    <Paragraph>
+    <Paragraph.Writing>
       If authors feel that their article has been erroneously rejected by eLife,
       they should contact the editorial office. Appeals are first sent to the
       appropriate Senior editor for consideration.
-    </Paragraph>
+    </Paragraph.Writing>
   </React.Fragment>
 )
 

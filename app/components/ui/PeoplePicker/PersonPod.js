@@ -13,7 +13,6 @@ import {
 } from './types'
 import Icon from '../atoms/Icon'
 import ButtonAsIconWrapper from '../atoms/ButtonAsIconWrapper'
-import SmallParagraph from '../atoms/SmallParagraph'
 import Paragraph from '../atoms/Paragraph'
 import PodContainer from './PodContainer'
 import PersonInfoModal from './PersonInfoModal'
@@ -29,14 +28,14 @@ const StyledInfoIcon = styled(InfoIcon)`
   fill: ${th('colorPrimary')};
 `
 
-const StyledParagraph = styled(Paragraph)`
+const StyledParagraph = styled(Paragraph.Writing)`
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   margin: 0;
 `
 
-const StyledSmallParagraph = styled(SmallParagraph).attrs({ secondary: true })`
+const StyledSmallParagraph = styled(Paragraph.Small).attrs({ secondary: true })`
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;

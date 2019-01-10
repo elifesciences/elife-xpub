@@ -10,7 +10,7 @@ const JournalPolicies = props => (
   <React.Fragment>
     <H1>Journal Policies</H1>
 
-    <Paragraph>
+    <Paragraph.Writing>
       eLife is a member of the{' '}
       <NativeLink href="http://publicationethics.org/" target="_blank">
         Committee on Publication Ethics
@@ -28,16 +28,16 @@ const JournalPolicies = props => (
         Uniform Requirements for Manuscripts Submitted to Biomedical Journals
       </NativeLink>
       , guidelines established by the ICMJE.
-    </Paragraph>
+    </Paragraph.Writing>
 
-    <Paragraph>
+    <Paragraph.Writing>
       Authors are expected to comply with best practice in research and
       publishing ethics, and with our associated guidelines and policies, for
       example with regard to authorship, competing interests, and data
       availability and reporting standards.
-    </Paragraph>
+    </Paragraph.Writing>
 
-    <Paragraph>
+    <Paragraph.Writing>
       eLife is a signatory of the{' '}
       <NativeLink href="https://centerforopenscience.org/top/" target="_blank">
         Transparency and Openness Promotion (TOP) Guidelines
@@ -48,11 +48,11 @@ const JournalPolicies = props => (
       </NativeLink>{' '}
       that promotes shared standards for increasing openness, transparency, and
       reproducibility.
-    </Paragraph>
+    </Paragraph.Writing>
 
     <H2>Allegations of Misconduct</H2>
 
-    <Paragraph>
+    <Paragraph.Writing>
       If we receive an allegation of potential research or publication
       misconduct, we will alert those affected and ask for their response. We
       reserve the right to suspend the review process where necessary; to
@@ -65,11 +65,11 @@ const JournalPolicies = props => (
         editorial@elifesciences.org
       </NativeLink>
       , with their message addressed to the Editor-in-Chief, Randy Schekman.
-    </Paragraph>
+    </Paragraph.Writing>
 
     <H2>Animal and/or Human Experiments</H2>
 
-    <Paragraph>
+    <Paragraph.Writing>
       Work involving human subjects or animal experimentation is expected to be
       conducted to the highest ethical standards, for example in accordance with
       the{' '}
@@ -85,9 +85,9 @@ const JournalPolicies = props => (
         NC3Rs
       </NativeLink>
       .
-    </Paragraph>
+    </Paragraph.Writing>
 
-    <Paragraph>
+    <Paragraph.Writing>
       For clinical trials, eLife follows the{' '}
       <NativeLink
         href="http://www.icmje.org/about-icmje/faqs/clinical-trials-registration/"
@@ -117,9 +117,9 @@ const JournalPolicies = props => (
         flow diagram
       </NativeLink>{' '}
       with their submission.
-    </Paragraph>
+    </Paragraph.Writing>
 
-    <Paragraph>
+    <Paragraph.Writing>
       For human subjects research informed consent must have been obtained (or
       the reason for lack of consent explained). When this work includes
       identifying, or potentially identifying, information, authors must also
@@ -142,11 +142,11 @@ const JournalPolicies = props => (
       form should not be submitted alongside the article, but authors should
       file it with the individual&apos;s case notes and the ethics statement
       should state that consent authorisation for publication has been obtained.
-    </Paragraph>
+    </Paragraph.Writing>
 
     <H2>Authorship</H2>
 
-    <Paragraph>
+    <Paragraph.Writing>
       eLife follows the guidelines of the International Committee of Medical
       Journal Editors (ICMJE) for{' '}
       <NativeLink
@@ -163,15 +163,15 @@ const JournalPolicies = props => (
         Contributor Role Taxonomy
       </NativeLink>{' '}
       (CRediT) is used to indicate each author’s contributions.
-    </Paragraph>
+    </Paragraph.Writing>
 
-    <Paragraph>
+    <Paragraph.Writing>
       Please note that acquisition of funding or the provision of space,
       providing published data or materials, or general supervision of the
       research group alone does not justify authorship.
-    </Paragraph>
+    </Paragraph.Writing>
 
-    <Paragraph>
+    <Paragraph.Writing>
       Following the recommendations of the ICMJE regarding{' '}
       <NativeLink
         href="http://www.icmje.org/recommendations/browse/roles-and-responsibilities/defining-the-role-of-authors-and-contributors.html"
@@ -183,11 +183,11 @@ const JournalPolicies = props => (
       satisfy the authorship criteria should be listed in the acknowledgements
       section. Authors should seek permission to mention any individuals listed
       in the acknowledgements.
-    </Paragraph>
+    </Paragraph.Writing>
 
     <H2>Cell Lines</H2>
 
-    <Paragraph>
+    <Paragraph.Writing>
       Regarding the use of cell lines, authors must report their source, confirm
       the identity has been authenticated, state the authentication method (such
       as STR profiling), and report the mycoplasma contamination testing status.
@@ -221,11 +221,11 @@ const JournalPolicies = props => (
         Science Exchange
       </NativeLink>
       , and others.
-    </Paragraph>
+    </Paragraph.Writing>
 
     <H2>Competing Interests</H2>
 
-    <Paragraph>
+    <Paragraph.Writing>
       Authors, reviewers, and editors are all required to declare any competing
       interests that might be perceived to interfere with the objectivity of the
       presentation or handling of the work. For further information on competing
@@ -244,11 +244,11 @@ const JournalPolicies = props => (
         PLOS
       </NativeLink>
       .
-    </Paragraph>
+    </Paragraph.Writing>
 
     <H2 id="copyrightedMaterial">Copyrighted Material</H2>
 
-    <Paragraph>
+    <Paragraph.Writing>
       Copyrighted material (in full or in part) should not be included in a
       submission to eLife, unless you have explicit permission from the
       copyright holder that it can be reproduced under the terms of a{' '}
@@ -259,9 +259,9 @@ const JournalPolicies = props => (
         Creative Commons Attribution license
       </NativeLink>
       .
-    </Paragraph>
+    </Paragraph.Writing>
 
-    <Paragraph>
+    <Paragraph.Writing>
       Occasionally we have published figures or parts of figures which cannot be
       re-published under a{' '}
       <NativeLink
@@ -273,25 +273,25 @@ const JournalPolicies = props => (
       . In those instances we ensure the correct attribution is provided within
       the human readable text (HTML and PDF versions of the article) and the
       underlying XML, for machine readability.
-    </Paragraph>
+    </Paragraph.Writing>
 
     <H2>Availability of Data, Software, and Research Materials</H2>
 
-    <Paragraph>
+    <Paragraph.Writing>
       Data, methods used in the analysis, and materials used to conduct the
       research must be clearly and precisely documented, and be maximally
       available to any researcher for purposes of reproducing the results or
       replicating the procedure.
-    </Paragraph>
+    </Paragraph.Writing>
 
-    <Paragraph>
+    <Paragraph.Writing>
       Regardless of whether authors use original data or are reusing data
       available from public repositories, they must provide program code,
       scripts for statistical packages, and other documentation sufficient to
       allow an informed researcher to precisely reproduce all published results.
-    </Paragraph>
+    </Paragraph.Writing>
 
-    <Paragraph>
+    <Paragraph.Writing>
       In rare cases, despite authors’ best efforts, certain data or materials
       cannot be shared for legal or ethical reasons. In such cases, authors must
       inform the editors at the time of submission. This will be taken into
@@ -299,7 +299,7 @@ const JournalPolicies = props => (
       data and material sharing at the beginning of their projects to provide
       for these circumstances. Editors may grant exceptions to data and material
       access requirements provided that authors:
-    </Paragraph>
+    </Paragraph.Writing>
 
     <List.Unordered>
       <li>
@@ -322,16 +322,16 @@ const JournalPolicies = props => (
 
     <H3>Data Availability</H3>
 
-    <Paragraph>
+    <Paragraph.Writing>
       To maintain high standards of research reproducibility, and to promote the
       reuse of new findings, eLife requires all datasets associated with an
       article to be made freely and widely available (unless there are strong
       reasons to restrict access, for example in the case of human subjects
       data), in the most useful formats, and according to the relevant reporting
       standards.
-    </Paragraph>
+    </Paragraph.Writing>
 
-    <Paragraph>
+    <Paragraph.Writing>
       Wherever possible, authors should make major datasets available using
       domain-specific public archives (for example,{' '}
       <NativeLink href="http://www.ncbi.nlm.nih.gov/genbank/" target="_blank">
@@ -363,9 +363,9 @@ const JournalPolicies = props => (
         FAIRsharing information resource
       </NativeLink>
       .
-    </Paragraph>
+    </Paragraph.Writing>
 
-    <Paragraph>Authors using original data must:</Paragraph>
+    <Paragraph.Writing>Authors using original data must:</Paragraph.Writing>
 
     <List.Unordered>
       <li>
@@ -388,14 +388,14 @@ const JournalPolicies = props => (
       </li>
     </List.Unordered>
 
-    <Paragraph>
+    <Paragraph.Writing>
       Trusted repositories adhere to policies that make data discoverable,
       accessible, usable, and preserved for the long term. Trusted repositories
       also assign unique and persistent identifiers. Author-maintained websites
       are not compliant with this requirement.
-    </Paragraph>
+    </Paragraph.Writing>
 
-    <Paragraph>
+    <Paragraph.Writing>
       Authors using unpublished datasets must abide by the relevant community
       guidelines for the use and acknowledgment of those data resources
       (including the{' '}
@@ -415,11 +415,11 @@ const JournalPolicies = props => (
       agreements in the case of genomic datasets), obtaining permission where
       required (which should be stated in the cover letter), and citing the
       appropriate laboratory, website, and accession numbers.
-    </Paragraph>
+    </Paragraph.Writing>
 
     <H3>Software</H3>
 
-    <Paragraph>
+    <Paragraph.Writing>
       Authors are required to follow the guidelines developed by{' '}
       <NativeLink
         href="http://journals.plos.org/ploscompbiol/s/materials-and-software-sharing"
@@ -440,9 +440,9 @@ const JournalPolicies = props => (
         open source license
       </NativeLink>
       .
-    </Paragraph>
+    </Paragraph.Writing>
 
-    <Paragraph>
+    <Paragraph.Writing>
       Authors are encouraged to use version control services such as GitHub,
       GitLab, and SourceForge. eLife maintains a{' '}
       <NativeLink
@@ -456,11 +456,11 @@ const JournalPolicies = props => (
       files&quot;, such as images, zip files, or program data) should be kept to
       a minimum and, if possible, they should not exceed 50MB. Please try to
       avoid files larger than 100MB as they will require special handling.
-    </Paragraph>
+    </Paragraph.Writing>
 
     <H3>Research Materials and RRIDs</H3>
 
-    <Paragraph>
+    <Paragraph.Writing>
       In accordance with the principles established in{' '}
       <NativeLink
         href="http://www.plantphysiol.org/content/132/1/19"
@@ -471,9 +471,9 @@ const JournalPolicies = props => (
       (doi:10.1104/pp.900068), a condition of publication is that authors must
       make the materials and resources described in their article promptly
       available upon reasonable request from academic researchers.
-    </Paragraph>
+    </Paragraph.Writing>
 
-    <Paragraph>
+    <Paragraph.Writing>
       All biological reagents must be made available to qualified investigators
       upon reasonable request. We strongly encourage authors to deposit copies
       of their plasmids as DNA or bacterial stocks with repositories such as{' '}
@@ -528,16 +528,16 @@ const JournalPolicies = props => (
         RIKEN Bioresource Centre
       </NativeLink>
       .
-    </Paragraph>
+    </Paragraph.Writing>
 
-    <Paragraph>
+    <Paragraph.Writing>
       Authors should include a statement at the end of the Materials and methods
       to provide information about the availability of the materials and
       resources described in the article, including any restrictions in
       availability or use.
-    </Paragraph>
+    </Paragraph.Writing>
 
-    <Paragraph>
+    <Paragraph.Writing>
       To help promote the identification, discovery, and reuse of key research
       resources, we encourage you to include Research Resource Identifiers
       (RRIDs) within the Materials and Methods section to identify the model
@@ -576,11 +576,11 @@ const JournalPolicies = props => (
       </NativeLink>{' '}
       lists existing RRIDs, and instructions for creating a new one if an RRID
       matching the resource does not already exist.
-    </Paragraph>
+    </Paragraph.Writing>
 
     <H2>Dual Use</H2>
 
-    <Paragraph>
+    <Paragraph.Writing>
       Regarding the oversight of dual use life-sciences research, we follow the
       recommendations formulated by the{' '}
       <NativeLink
@@ -592,11 +592,11 @@ const JournalPolicies = props => (
       (NSABB). If there are any concerns about dual use life-sciences research
       during submission or review, please bring them to the attention of the
       journal’s editors.
-    </Paragraph>
+    </Paragraph.Writing>
 
     <H2>Editorial Independence and Integrity</H2>
 
-    <Paragraph>
+    <Paragraph.Writing>
       eLife follows the guidance of the{' '}
       <NativeLink
         href="http://www.wame.org/policy-statements#Relationship between Editors and Owners"
@@ -620,24 +620,24 @@ const JournalPolicies = props => (
       editorial content of the journal. Submissions are judged on their own
       merits, regardless of funding, author affiliations, or author
       relationships with eLife.
-    </Paragraph>
+    </Paragraph.Writing>
 
-    <Paragraph>
+    <Paragraph.Writing>
       The funders and sponsors of eLife have no role in the selection,
       evaluation, or editing of the content. The content published in eLife does
       not represent the opinions of the Howard Hughes Medical Institute, the Max
       Planck Society, the Wellcome Trust or the Knut and Alice Wallenberg
       Foundation.
-    </Paragraph>
+    </Paragraph.Writing>
 
-    <Paragraph>
+    <Paragraph.Writing>
       Information provided during the submission and review process is strictly
       confidential.
-    </Paragraph>
+    </Paragraph.Writing>
 
     <H2>Image Acquisition and Presentation</H2>
 
-    <Paragraph>
+    <Paragraph.Writing>
       Image files must not be manipulated or adjusted in any way that could lead
       to misinterpretation of the information present in the original image. See{' '}
       <NativeLink
@@ -658,7 +658,7 @@ const JournalPolicies = props => (
       (Cromey 2010, Sci Eng Ethics, 16-639-667) for valuable guidance on
       acceptable practice and examples of inappropriate manipulation. Please
       take note of the following guidance in particular:
-    </Paragraph>
+    </Paragraph.Writing>
 
     <List.Unordered>
       <li>
@@ -681,7 +681,7 @@ const JournalPolicies = props => (
       </li>
     </List.Unordered>
 
-    <Paragraph>
+    <Paragraph.Writing>
       Please note that authors should provide information within their
       submission about the tools and techniques used when acquiring and
       preparing images. For example, submissions including microscopy images or
@@ -689,17 +689,17 @@ const JournalPolicies = props => (
       acquisition parameters, and whether the image received any
       post-acquisition treatment (for example stating if the format or scales
       were modified).
-    </Paragraph>
+    </Paragraph.Writing>
 
-    <Paragraph>
+    <Paragraph.Writing>
       Images may be subject to screening prior to acceptance and we may need to
       request the original, unprocessed figure files/raw data for further
       review.
-    </Paragraph>
+    </Paragraph.Writing>
 
     <H2>Licensing</H2>
 
-    <Paragraph>
+    <Paragraph.Writing>
       Because articles published by eLife are licensed under a{' '}
       <NativeLink
         href="https://creativecommons.org/licenses/by/4.0/"
@@ -710,18 +710,18 @@ const JournalPolicies = props => (
       , others are free to copy, distribute, and reuse them (in part or in
       full), without needing to seek permission, as long as the author and
       original source are properly cited.
-    </Paragraph>
+    </Paragraph.Writing>
 
     <H2>Media Policy</H2>
 
-    <Paragraph>
+    <Paragraph.Writing>
       eLife’s media policy is designed to encourage high-quality, informed and
       widespread discussion of new research – before and after publication.
-    </Paragraph>
+    </Paragraph.Writing>
 
     <H3>Presenting and discussing work prior to publication</H3>
 
-    <Paragraph>
+    <Paragraph.Writing>
       Prior to publication, authors are encouraged to present their findings to
       their peers, including at meetings and conferences; to deposit a copy of
       their manuscript with a preprint server (or other open repository or
@@ -733,9 +733,9 @@ const JournalPolicies = props => (
       days of acceptance (our “publish on accept” service), so that readers of
       any (potential) early coverage will be able to access the full paper as
       soon as possible.
-    </Paragraph>
+    </Paragraph.Writing>
 
-    <Paragraph>
+    <Paragraph.Writing>
       Authors are welcome to speak to the media about their work at any time
       prior to publication and may share advance copies of their manuscript with
       journalists as they prefer. They may also wish to ask their institutional
@@ -744,11 +744,11 @@ const JournalPolicies = props => (
       at the time of publication only, rather than in advance, so that as many
       journalists as possible receive the story, and access to the full,
       peer-reviewed paper, at the same time.
-    </Paragraph>
+    </Paragraph.Writing>
 
     <H3>Our policy not to embargo eLife papers</H3>
 
-    <Paragraph>
+    <Paragraph.Writing>
       Because authors are completely free to release their content ahead of
       publication and to talk with the media at any stage, we do not release
       content under embargo, except under exceptional circumstances. This means
@@ -756,11 +756,11 @@ const JournalPolicies = props => (
       of publication without breaking an embargo. However, we strongly recommend
       that their stories are published at the time of or after publication, so
       that readers have access to the full, peer-reviewed paper.
-    </Paragraph>
+    </Paragraph.Writing>
 
     <H3>Making content widely accessible</H3>
 
-    <Paragraph>
+    <Paragraph.Writing>
       Many eLife papers are published with a plain-language summary (called an
       eLife digest) to explain the background and central findings of the work
       to a broad readership. We also publish the most substantive parts of the
@@ -770,9 +770,9 @@ const JournalPolicies = props => (
       work. Where eLife considers papers to be of potential interest to a broad
       audience, these will also be promoted widely to the media and to
       interested readers either on the day of publication or post publication.
-    </Paragraph>
+    </Paragraph.Writing>
 
-    <Paragraph>
+    <Paragraph.Writing>
       More information for institutional press officers and journalists is
       available at{' '}
       <NativeLink
@@ -782,11 +782,11 @@ const JournalPolicies = props => (
         https://elifesciences.org/for-the-press
       </NativeLink>
       .
-    </Paragraph>
+    </Paragraph.Writing>
 
     <H2>Nomenclature</H2>
 
-    <Paragraph>
+    <Paragraph.Writing>
       Correct and established nomenclature should be used throughout the
       article, such as for gene names, species names and SI units. The
       appropriate nomenclature databases for correct gene names and symbols
@@ -846,9 +846,9 @@ const JournalPolicies = props => (
         Zebrafish Nomenclature Guidelines
       </NativeLink>
       .
-    </Paragraph>
+    </Paragraph.Writing>
 
-    <Paragraph>
+    <Paragraph.Writing>
       Note that in the specific case of a study that reports a new taxon name,
       authors are required to follow the guidelines developed by PLOS for{' '}
       <NativeLink
@@ -858,11 +858,11 @@ const JournalPolicies = props => (
         zoological and botanical names
       </NativeLink>
       .
-    </Paragraph>
+    </Paragraph.Writing>
 
     <H2>Preregistration</H2>
 
-    <Paragraph>
+    <Paragraph.Writing>
       Preregistration of studies involves registering the study design,
       variables, and treatment conditions prior to conducting the research. For
       clinical trials, eLife follows the{' '}
@@ -875,9 +875,9 @@ const JournalPolicies = props => (
       that all trials must be prospectively registered to be considered for
       publication, and the clinical trial registration number will be requested
       during submission.
-    </Paragraph>
+    </Paragraph.Writing>
 
-    <Paragraph>
+    <Paragraph.Writing>
       eLife is using the Registered Reports approach as part of the{' '}
       <NativeLink
         href="https://elifesciences.org/collections/reproducibility-project-cancer-biology"
@@ -888,11 +888,11 @@ const JournalPolicies = props => (
       . For other submissions, authors are encouraged to consider whether
       preregistration would be appropriate, noting if they have done so within
       their cover letter.
-    </Paragraph>
+    </Paragraph.Writing>
 
     <H2>Reporting Standards</H2>
 
-    <Paragraph>
+    <Paragraph.Writing>
       To facilitate the interpretation and replication of experiments, authors
       are required to complete eLife&apos;s{' '}
       <NativeLink
@@ -904,9 +904,9 @@ const JournalPolicies = props => (
       before peer review. Authors are also required to adhere to
       well-established reporting standards, such as for microarray experiments,
       clinical trials, and so on.
-    </Paragraph>
+    </Paragraph.Writing>
 
-    <Paragraph>
+    <Paragraph.Writing>
       Authors are required to cite the specific guidelines that they have
       followed in the reporting of their work, and we encourage authors to
       upload any relevant reporting checklists or documents as a Reporting
@@ -927,18 +927,18 @@ const JournalPolicies = props => (
         ARRIVE guidelines
       </NativeLink>{' '}
       for reporting work involving animal research.
-    </Paragraph>
+    </Paragraph.Writing>
 
-    <Paragraph>
+    <Paragraph.Writing>
       In the specific case of a study containing an X-ray crystal structure,
       authors are required to upload a validation summary report from one of the{' '}
       <NativeLink href="http://www.wwpdb.org/" target="_blank">
         Worldwide Protein Data Bank
       </NativeLink>{' '}
       organisations as a Related Manuscript File.
-    </Paragraph>
+    </Paragraph.Writing>
 
-    <Paragraph>
+    <Paragraph.Writing>
       In the specific case of a study containing functional enzyme data, we
       encourage authors to deposit data to{' '}
       <NativeLink
@@ -949,10 +949,10 @@ const JournalPolicies = props => (
       </NativeLink>{' '}
       and to upload the “Experimental data fact sheet” that accompanies the
       deposition as a Reporting Standards Document in the submission to eLife.
-    </Paragraph>
+    </Paragraph.Writing>
 
     <CalloutTextBox>
-      <Paragraph>
+      <Paragraph.Writing>
         <strong>Research Conducted by eLife.</strong> As a way of improving our
         services, we periodically undertake research and surveys relating to
         eLife&apos;s submission and review process. Where appropriate we will
@@ -964,7 +964,7 @@ const JournalPolicies = props => (
           contact the journal office
         </NativeLink>
         .
-      </Paragraph>
+      </Paragraph.Writing>
     </CalloutTextBox>
   </React.Fragment>
 )

@@ -1,14 +1,14 @@
 A paragraph styled with eLife variables:
 
 ```js
-<Paragraph>
+<Paragraph.Writing>
   Regular sized paragraph regular sized paragraph regular sized paragraph
   regular sized paragraph regular sized paragraph regular sized paragraph
   regular sized paragraph regular sized paragraph regular sized paragraph
   regular sized paragraph regular sized paragraph regular sized paragraph
   regular sized paragraph regular sized paragraph regular sized paragraph
   regular sized paragraph regular sized paragraph{' '}
-</Paragraph>
+</Paragraph.Writing>
 ```
 
 vs an unstyled `<p>`:

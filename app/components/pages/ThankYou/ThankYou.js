@@ -8,12 +8,11 @@ import { hotjar } from 'react-hotjar'
 import NativeLink from '../../ui/atoms/NativeLink'
 import ButtonLink from '../../ui/atoms/ButtonLink'
 import Paragraph from '../../ui/atoms/Paragraph'
-import SmallParagraph from '../../ui/atoms/SmallParagraph'
 
 const CenteredContent = styled(Box)`
   text-align: center;
 `
-const SubText = styled(SmallParagraph).attrs({ secondary: true })``
+const SubText = styled(Paragraph.Small).attrs({ secondary: true })``
 
 const BookmarkLink = styled(NativeLink)`
   display: inline-block;
@@ -38,12 +37,14 @@ class ThankYou extends React.Component {
     return (
       <CenteredContent mx="auto" width={[1, 1, 1, 600]}>
         <H1>Thank you</H1>
-        <Paragraph>
+        <Paragraph.Writing>
           Your submission, &quot;
           {title}
           &quot; has been received.
-        </Paragraph>
-        <Paragraph>You will be informed of a decision soon.</Paragraph>
+        </Paragraph.Writing>
+        <Paragraph.Writing>
+          You will be informed of a decision soon.
+        </Paragraph.Writing>
         <SubText>
           You may want to bookmark the link below to check the progress of your
           submission.

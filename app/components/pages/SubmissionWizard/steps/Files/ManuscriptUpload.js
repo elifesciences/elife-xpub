@@ -65,11 +65,11 @@ const StyledDropzone = styled(({ hasError, saveInnerRef, ...rest }) => (
   padding: ${th('space.4')};
 `
 
-const UploadInstruction = styled(Paragraph)`
+const UploadInstruction = styled(Paragraph.Writing)`
   margin-bottom: 0;
 `
 
-const UploadNote = styled(Paragraph).attrs({ secondary: true })`
+const UploadNote = styled(Paragraph.Writing).attrs({ secondary: true })`
   margin-top: 0;
 `
 

@@ -10,7 +10,6 @@ import {
   focusesPropType,
   expertisesPropType,
 } from './types'
-import SmallParagraph from '../atoms/SmallParagraph'
 import Paragraph from '../atoms/Paragraph'
 import ModalDialog from '../molecules/ModalDialog'
 
@@ -18,10 +17,10 @@ const StyledH2 = styled(H2)`
   margin-bottom: 0;
 `
 
-const StyledSmallParagraph = styled(SmallParagraph)`
+const StyledSmallParagraph = styled(Paragraph.Small)`
   margin-bottom: ${th('space.4')};
 `
-const ErrorParagraph = styled(SmallParagraph)`
+const ErrorParagraph = styled(Paragraph.Small)`
   margin-bottom: ${th('space.4')};
   color: ${th('colorError')};
 `
@@ -47,8 +46,8 @@ const PersonInfoModal = ({
     open={open}
   >
     <StyledH2>{name}</StyledH2>
-    <Paragraph>{institution}</Paragraph>
-    <SmallParagraph>Expertise: {expertises.join(', ')}</SmallParagraph>
+    <Paragraph.Writing>{institution}</Paragraph.Writing>
+    <Paragraph.Small>Expertise: {expertises.join(', ')}</Paragraph.Small>
     <StyledSmallParagraph secondary>
       Research focuses: {focuses.join(', ')}
     </StyledSmallParagraph>

@@ -3,7 +3,6 @@ import { Box } from '@rebass/grid'
 import { format, parse } from 'date-fns'
 
 import Paragraph from '../../../../ui/atoms/Paragraph'
-import SmallParagraph from '../../../../ui/atoms/SmallParagraph'
 import NativeLink from '../../../../ui/atoms/NativeLink'
 import { FormH3 } from '../../../../ui/atoms/FormHeadings'
 import ValidatedField from '../../../../ui/atoms/ValidatedField'
@@ -21,15 +20,15 @@ const DisclosurePage = ({ values }) => {
     <React.Fragment>
       <Box mb={4}>
         <FormH3>{values.meta.title}</FormH3>
-        <Paragraph>
+        <Paragraph.Writing>
           {values.author.firstName} {values.author.lastName}
-        </Paragraph>
-        <SmallParagraph secondary>
+        </Paragraph.Writing>
+        <Paragraph.Small secondary>
           {formattedArticleType} {formattedLocalDate}
-        </SmallParagraph>
+        </Paragraph.Small>
       </Box>
       <Box mb={4}>
-        <Paragraph>
+        <Paragraph.Writing>
           Our{' '}
           <NativeLink
             href="https://elifesciences.org/privacy-notice"
@@ -56,7 +55,7 @@ const DisclosurePage = ({ values }) => {
           ). Please enter your name and check the box below to give this
           consent. Without this consent we will not be able to evaluate your
           submission.
-        </Paragraph>
+        </Paragraph.Writing>
       </Box>
       <Box mb={3} w={1 / 2}>
         <ValidatedField
