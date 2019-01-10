@@ -7,7 +7,7 @@ Object {
   "article.xml": Any<Number>,
   "cover_letter.html": 533,
   "disclosure.pdf": Any<Number>,
-  "manifest.xml": 2009,
+  "manifest.xml": 2117,
   "manuscript.pdf": 14,
   "transfer.xml": 1951,
 }

@@ -10,27 +10,34 @@ const archiveGenerator = require('./file-generators/archive')
 const upload = require('./services/upload')
 
 async function generate(manuscript, getContent, clientIp) {
-  let content = ''
-  const supportingFiles = {}
+  const manditoryFiles = [
+    { name: 'article.xml', content: articleGenerator(manuscript) },
+    { name: 'cover_letter.html', content: coverLetterGenerator(manuscript) },
+    {
+      name: 'disclosure.pdf',
+      content: disclosureGenerator(manuscript, clientIp),
+    },
+    { name: 'manifest.xml', content: manifestGenerator(manuscript.files) },
+    { name: 'transfer.xml', content: transferGenerator('') },
+  ]
+
+  const uploadedFiles = []
 
   manuscript.files.forEach(file => {
     if (file.type === 'MANUSCRIPT_SOURCE') {
-      content = getContent(file)
+      uploadedFiles.push({
+        name: 'manuscript.pdf',
+        content: getContent(file),
+      })
     } else if (file.type === 'SUPPORTING_FILE') {
-      supportingFiles[file.filename] = getContent(file)
+      uploadedFiles.push({
+        name: file.filename,
+        content: getContent(file),
+      })
     }
   })
 
-  const manditoryFiles = {
-    'article.xml': articleGenerator(manuscript),
-    'cover_letter.html': coverLetterGenerator(manuscript),
-    'disclosure.pdf': disclosureGenerator(manuscript, clientIp),
-    'manifest.xml': manifestGenerator(manuscript.files),
-    'manuscript.pdf': content,
-    'transfer.xml': transferGenerator(''), // auth code not currently used
-  }
-
-  return archiveGenerator({ ...manditoryFiles, ...supportingFiles })
+  return archiveGenerator(manditoryFiles.concat(uploadedFiles))
 }
 
 async function mecaExport(manuscript, getContent, clientIp) {
