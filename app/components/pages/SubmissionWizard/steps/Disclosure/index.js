@@ -20,15 +20,15 @@ const DisclosurePage = ({ values }) => {
     <React.Fragment>
       <Box mb={4}>
         <FormH3>{values.meta.title}</FormH3>
-        <Paragraph.Writing>
+        <Paragraph.Reading>
           {values.author.firstName} {values.author.lastName}
-        </Paragraph.Writing>
+        </Paragraph.Reading>
         <Paragraph.Small secondary>
           {formattedArticleType} {formattedLocalDate}
         </Paragraph.Small>
       </Box>
       <Box mb={4}>
-        <Paragraph.Writing>
+        <Paragraph.Reading>
           Our{' '}
           <NativeLink
             href="https://elifesciences.org/privacy-notice"
@@ -55,7 +55,7 @@ const DisclosurePage = ({ values }) => {
           ). Please enter your name and check the box below to give this
           consent. Without this consent we will not be able to evaluate your
           submission.
-        </Paragraph.Writing>
+        </Paragraph.Reading>
       </Box>
       <Box mb={3} w={1 / 2}>
         <ValidatedField

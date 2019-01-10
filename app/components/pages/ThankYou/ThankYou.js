@@ -37,14 +37,14 @@ class ThankYou extends React.Component {
     return (
       <CenteredContent mx="auto" width={[1, 1, 1, 600]}>
         <H1>Thank you</H1>
-        <Paragraph.Writing>
+        <Paragraph.Reading>
           Your submission, &quot;
           {title}
           &quot; has been received.
-        </Paragraph.Writing>
-        <Paragraph.Writing>
+        </Paragraph.Reading>
+        <Paragraph.Reading>
           You will be informed of a decision soon.
-        </Paragraph.Writing>
+        </Paragraph.Reading>
         <SubText>
           You may want to bookmark the link below to check the progress of your
           submission.

@@ -10,7 +10,7 @@ const EditorialProcess = props => (
   <React.Fragment>
     <H1>The Editorial Process</H1>
 
-    <Paragraph.Writing>
+    <Paragraph.Reading>
       eLife publishes{' '}
       <NativeLink
         href="https://elifesciences.org/elife-news/what-are-elife-papers-made-of"
@@ -24,9 +24,9 @@ const EditorialProcess = props => (
       researchers evaluate new submissions and approximately two-thirds are
       returned to the authors without further peer review. Approximately half of
       the articles that are selected for peer review go on to be published.
-    </Paragraph.Writing>
+    </Paragraph.Reading>
 
-    <Paragraph.Writing>
+    <Paragraph.Reading>
       To help increase the accessibility of research and ensure that it is
       communicated as rapidly as possible, authors are encouraged to make use of
       preprint servers, such as{' '}
@@ -54,9 +54,9 @@ const EditorialProcess = props => (
         Authorea
       </NativeLink>{' '}
       and then transfer their files for consideration by eLife.
-    </Paragraph.Writing>
+    </Paragraph.Reading>
 
-    <Paragraph.Writing>
+    <Paragraph.Reading>
       Alternatively, authors can submit to eLife directly, or they can submit
       using the{' '}
       <NativeLink
@@ -84,9 +84,9 @@ const EditorialProcess = props => (
         open it directly in Overleaf
       </NativeLink>{' '}
       .
-    </Paragraph.Writing>
+    </Paragraph.Reading>
 
-    <Paragraph.Writing>
+    <Paragraph.Reading>
       We are also committed to treating all authors and manuscripts as fairly as
       possible, and we offer &quot;scoop protection&quot; in the sense that, if
       other researchers publish similar findings after submission, this will not
@@ -99,20 +99,20 @@ const EditorialProcess = props => (
       </NativeLink>{' '}
       and <NativeLink href="#scoop_protection">the FAQ</NativeLink> below for
       more details on our policies on preprints and scoop protection.
-    </Paragraph.Writing>
+    </Paragraph.Reading>
 
     <CalloutTextBox>
-      <Paragraph.Writing>
+      <Paragraph.Reading>
         On January 1, 2017, eLife introduced a fee for publication. A fee of
         $2,500* is collected for all published papers submitted on or after this
         date; however, authors with insufficient funding to pay the fee are
         eligible for a fee waiver (
         <Link to="/author-guide/fees">read more</Link>
         ).
-      </Paragraph.Writing>
+      </Paragraph.Reading>
     </CalloutTextBox>
 
-    <Paragraph.Writing>
+    <Paragraph.Reading>
       The eLife editorial process broadly occurs in three phases. Authors
       submitting to eLife should be familiar with our journal{' '}
       <Link to="/author-guide/journal-policies">policies</Link>. If you have
@@ -120,11 +120,11 @@ const EditorialProcess = props => (
       the guidelines relating to full submissions. If your full submission has
       been peer reviewed and you have been asked to make revisions, please
       review our guidelines for revised submissions.
-    </Paragraph.Writing>
+    </Paragraph.Reading>
 
     <H2>Initial Submissions</H2>
 
-    <Paragraph.Writing>
+    <Paragraph.Reading>
       If you are interested in submitting your work to eLife, please review the
       guidelines relating to{' '}
       <Link to="/author-guide/initial">Initial Submissions</Link>. During the
@@ -138,7 +138,7 @@ const EditorialProcess = props => (
       rapidly assess new submissions, often in consultation with members of the
       Board of Reviewing Editors or with external guest editors where necessary,
       to identify the ones that are appropriate for in-depth peer review.
-    </Paragraph.Writing>
+    </Paragraph.Reading>
 
     <List.Ordered>
       <li>
@@ -156,7 +156,7 @@ const EditorialProcess = props => (
     </List.Ordered>
 
     <H2>Full Submissions</H2>
-    <Paragraph.Writing>
+    <Paragraph.Reading>
       For manuscripts that are invited for in-depth peer review, we request more
       detailed information about the work to support the peer review process,
       for example names of co-authors, details of major datasets, and ethics
@@ -176,10 +176,10 @@ const EditorialProcess = props => (
         PDF of the agreement
       </NativeLink>
       ) if one or more authors are US-government employees.
-    </Paragraph.Writing>
+    </Paragraph.Reading>
 
     <H2>Revised Submissions</H2>
-    <Paragraph.Writing>
+    <Paragraph.Reading>
       We will require a response to the essential revision requirements outlined
       in the decision letter. A response to minor comments is optional. In the
       event of acceptance, the substantive revision requests and the authors’
@@ -191,7 +191,7 @@ const EditorialProcess = props => (
         Creative Commons Attribution license
       </NativeLink>
       .
-    </Paragraph.Writing>
+    </Paragraph.Reading>
 
     <H2 id="scoop_protection">FAQ on preprints and scoop protection</H2>
 
@@ -199,19 +199,19 @@ const EditorialProcess = props => (
       1. If I have uploaded my manuscript to a preprint server, can I also
       submit it to eLife?
     </H3>
-    <Paragraph.Writing>
+    <Paragraph.Reading>
       Yes, we encourage authors to post their manuscripts as preprints, and this
       can be done before submission, at the time of submission, or later. It is
       also possible to submit a manuscript to eLife and then post if directly to
       bioRxiv or Authorea as a preprint, and vice versa.
-    </Paragraph.Writing>
+    </Paragraph.Reading>
 
     <H3>
       2. If I make an initial submission to eLife and a paper on a similar topic
       has recently been published in a peer-reviewed journal, will the other
       paper influence the treatment of my submission to eLife?
     </H3>
-    <Paragraph.Writing>
+    <Paragraph.Reading>
       The Editors always take the existing literature into account when making
       decisions about submissions, so situations like this are dealt with on a
       case-by-case basis. However, eLife does not subscribe to a
@@ -231,17 +231,17 @@ const EditorialProcess = props => (
         Marder, 2017
       </NativeLink>
       ).
-    </Paragraph.Writing>
+    </Paragraph.Reading>
 
     <H3>
       3. If I make an initial submission to eLife and a preprint on a similar
       topic has been posted on a recognized server, will the preprint influence
       the evaluation of my submission to eLife?
     </H3>
-    <Paragraph.Writing>
+    <Paragraph.Reading>
       No. However, in situations like this we would encourage you to post your
       initial submission as a preprint on a recognized server.
-    </Paragraph.Writing>
+    </Paragraph.Reading>
 
     <H3>
       4. Does eLife offer &quot;scoop protection&quot;? In other words, if I
@@ -250,12 +250,12 @@ const EditorialProcess = props => (
       on my initial submission, will the paper in the other journal influence
       the evaluation of my submission to eLife?
     </H3>
-    <Paragraph.Writing>
+    <Paragraph.Reading>
       eLife does offer &quot;scoop protection&quot; in the sense that your
       initial submission will not be rejected on the grounds that it lacks
       novelty because of the paper in the other journal. However, it is still
       possible that the initial submission will be rejected on other grounds.
-    </Paragraph.Writing>
+    </Paragraph.Reading>
 
     <H3>
       5. If I make an initial submission to eLife and a preprint on a similar
@@ -263,12 +263,12 @@ const EditorialProcess = props => (
       my initial submission, will the preprint influence the evaluation of my
       submission to eLife?
     </H3>
-    <Paragraph.Writing>
+    <Paragraph.Reading>
       As in the previous case, your initial submission will not be rejected on
       the grounds that it lacks novelty because of the preprint. However, it is
       still possible that the initial submission will be rejected on other
       grounds.
-    </Paragraph.Writing>
+    </Paragraph.Reading>
 
     <H3>
       6. If I make an initial submission to eLife and a manuscript on a similar
@@ -276,12 +276,12 @@ const EditorialProcess = props => (
       publication by eLife, will the other manuscript influence the evaluation
       of my submission to eLife?
     </H3>
-    <Paragraph.Writing>
+    <Paragraph.Reading>
       As in the previous case, your initial submission will not be rejected on
       the grounds that it lacks novelty because of the other manuscript.
       However, it is still possible that the initial submission will be rejected
       on other grounds.
-    </Paragraph.Writing>
+    </Paragraph.Reading>
 
     <H3>
       7. If my initial submission to eLife is available as a preprint and it
@@ -289,15 +289,15 @@ const EditorialProcess = props => (
       other preprints) before a decision has been made, will this feedback
       influence the evaluation of my submission?
     </H3>
-    <Paragraph.Writing>
+    <Paragraph.Reading>
       The Editors will primarily base their decision on the content of your
       submission, but public feedback on the work (positive or negative) might
       be taken into account. If a full submission is invited, you are advised to
       be open about the existence of such feedback in your cover letter.
-    </Paragraph.Writing>
+    </Paragraph.Reading>
 
     <H3>8. Can I cite a preprint in my submission to eLife?</H3>
-    <Paragraph.Writing>
+    <Paragraph.Reading>
       Yes, providing it has been posted on a recognised public preprint server
       and has a persistent ID. Preprints should be cited as follows: -
       Author(s). Year. Title. Name of preprint server. doi or url For example: -
@@ -307,7 +307,7 @@ const EditorialProcess = props => (
       https://doi.org/10.1101/059436 - Chung J, Gulcehre C, Cho K, Bengio Y.
       2014. Empirical evaluation of gated recurrent neural networks on sequence
       modeling. arXiv. http://arxiv.abs/1412.3555
-    </Paragraph.Writing>
+    </Paragraph.Reading>
 
     <CalloutTextBox>
       Authors can submit their research as one of several{' '}

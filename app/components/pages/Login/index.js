@@ -93,17 +93,17 @@ class LoginPage extends React.Component {
           </H2>
         </Box>
         <Box mb={5}>
-          <Paragraph.Writing>
+          <Paragraph.Reading>
             The leading scientists behind eLife are committed to rapid, fair,
             and constructive review. Before you submit your work, please note
             that eLife is a very selective journal that aims to publish work of
             the highest scientific standards and importance.
-          </Paragraph.Writing>
-          <Paragraph.Writing>
+          </Paragraph.Reading>
+          <Paragraph.Reading>
             Our new manuscript submission system will guide you through the
             process of submitting your research.
             {!token && ' Log in with your ORCID identifier to get started.'}
-          </Paragraph.Writing>
+          </Paragraph.Reading>
         </Box>
         {token ? (
           <Box mb={5}>
@@ -123,13 +123,13 @@ class LoginPage extends React.Component {
             </Box>
           </Flex>
         )}
-        <Paragraph.Writing>
+        <Paragraph.Reading>
           For{' '}
           <NativeLink href={legacySubmissionUrl}>
             existing manuscripts
           </NativeLink>{' '}
           go to our full submission and peer review system.
-        </Paragraph.Writing>
+        </Paragraph.Reading>
       </Container>
     )
   }
