@@ -103,7 +103,6 @@ const Full = props => (
           primary figures: they can, for example, provide additional examples of
           analyses or data shown in a primary figure.
         </Paragraph.Reading>
-        <Paragraph />
         <Paragraph.Reading>
           There is no limit on the number of Figure Supplements for any one
           primary figure. Each figure supplement should be clearly labelled,
