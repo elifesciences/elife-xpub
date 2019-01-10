@@ -1,17 +1,42 @@
-A paragraph styled with eLife variables:
+Paragraph style variables:
+
+Paragraph.Writing
 
 ```js
 <Paragraph.Writing>
-  Regular sized paragraph regular sized paragraph regular sized paragraph
-  regular sized paragraph regular sized paragraph regular sized paragraph
-  regular sized paragraph regular sized paragraph regular sized paragraph
-  regular sized paragraph regular sized paragraph regular sized paragraph
-  regular sized paragraph regular sized paragraph regular sized paragraph
-  regular sized paragraph regular sized paragraph{' '}
+  Writing paragraph writing paragraph writing paragraph writing paragraph
+  writing paragraph writing paragraph writing paragraph writing paragraph
+  writing paragraph writing paragraph writing paragraph writing paragraph
+  writing paragraph writing paragraph writing paragraph writing paragraph
+  writing paragraph{' '}
 </Paragraph.Writing>
 ```
 
-vs an unstyled `<p>`:
+Paragraph.Reading
+
+```js
+<Paragraph.Reading>
+  Reading paragraph reading paragraph reading paragraph reading paragraph
+  reading paragraph reading paragraph reading paragraph reading paragraph
+  reading paragraph reading paragraph reading paragraph reading paragraph
+  reading paragraph reading paragraph reading paragraph reading paragraph
+  reading paragraph reading paragraph reading paragraph{' '}
+</Paragraph.Reading>
+```
+
+Paragraph.Small
+
+```js
+<Paragraph.Small>
+  Small paragraph small paragraph small paragraph small paragraph small
+  paragraph small paragraph small paragraph small paragraph small paragraph
+  small paragraph small paragraph small paragraph small paragraph small
+  paragraph small paragraph small paragraph small paragraph small paragraph
+  small paragraph{' '}
+</Paragraph.Small>
+```
+
+Unstyled `<p>`:
 
 ```js
 <p>
