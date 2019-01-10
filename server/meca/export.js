@@ -9,7 +9,16 @@ const archiveGenerator = require('./file-generators/archive')
 
 const upload = require('./services/upload')
 
-async function generate(manuscript, content, clientIp) {
+// const files = new SupportingFiles(dummyStorage, manuscript.id, userId)
+
+async function generate(manuscript, getContent, clientIp) {
+  let content = ''
+  manuscript.files.forEach(file => {
+    if (file.type === 'MANUSCRIPT_SOURCE') {
+      content = getContent(file)
+    }
+  })
+
   return archiveGenerator({
     'article.xml': articleGenerator(manuscript),
     'cover_letter.html': coverLetterGenerator(manuscript),
@@ -20,9 +29,9 @@ async function generate(manuscript, content, clientIp) {
   })
 }
 
-async function mecaExport(manuscript, content, clientIp) {
+async function mecaExport(manuscript, getContent, clientIp) {
   logger.info(`Starting MECA export`, { manuscriptId: manuscript.id })
-  const archive = await generate(manuscript, content, clientIp)
+  const archive = await generate(manuscript, getContent, clientIp)
   await upload(archive, manuscript.id)
 }
 

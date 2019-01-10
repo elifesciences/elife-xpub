@@ -49,7 +49,7 @@ describe('MECA integration test', () => {
 
   describe('when generating an archive', () => {
     it('should contain the correct files', async () => {
-      await mecaExport(sampleManuscript, 'This is a test')
+      await mecaExport(sampleManuscript, file => 'This is a test')
 
       const finalName = `${sampleManuscript.id}${mecaPostfix}`
       const zip = await JsZip.loadAsync(
@@ -73,7 +73,7 @@ describe('MECA integration test', () => {
   })
 
   it('uploads archive to SFTP', async () => {
-    await mecaExport(sampleManuscript, 'This is a test')
+    await mecaExport(sampleManuscript, file => 'This is a test')
 
     expect(sftp.mockFs.readdirSync('/')).toEqual(['test'])
     const finalName = `${sampleManuscript.id}${mecaPostfix}`
@@ -87,7 +87,7 @@ describe('MECA integration test', () => {
   })
 
   it('uploads archive to S3', async () => {
-    await mecaExport(sampleManuscript, '')
+    await mecaExport(sampleManuscript, file => '')
 
     const objectKey = `${config.get('meca.s3.remotePath')}/${
       sampleManuscript.id

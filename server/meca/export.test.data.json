@@ -168,7 +168,27 @@
       "updated": null,
       "filename": "7de61e41-b163-4108-9198-1492e2b54a1f.pdf",
       "mimeType": null,
-      "manuscriptId": ""
+      "manuscriptId": "6d8cd1ce-15b6-46c1-b901-bc91598c8f2f"
+    },
+    {
+      "url": "uploads/604e06ca-882d-4b5b-a147-e016893e60e9/f357bfb6b9b0886c2afc1ea1ddcabc61.pdf",
+      "size": null,
+      "type": "SUPPORTING_FILE",
+      "label": null,
+      "updated": null,
+      "filename": "00000001.pdf",
+      "mimeType": "application/pdf",
+      "manuscriptId": "6d8cd1ce-15b6-46c1-b901-bc91598c8f2f"
+    },
+    {
+      "url": "uploads/604e06ca-882d-4b5b-a147-e016893e60e9/f357bfb6b9b0886c2afc1ea1ddcabc61.pdf",
+      "size": null,
+      "type": "SUPPORTING_FILE",
+      "label": null,
+      "updated": null,
+      "filename": "00000002.pdf",
+      "mimeType": "application/pdf",
+      "manuscriptId": "6d8cd1ce-15b6-46c1-b901-bc91598c8f2f"
     }
   ]
 }

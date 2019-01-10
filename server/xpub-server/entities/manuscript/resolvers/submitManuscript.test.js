@@ -1,6 +1,9 @@
 jest.mock('@pubsweet/logger')
 jest.mock('@elifesciences/xpub-meca-export', () => ({
-  mecaExport: jest.fn(() => Promise.resolve()),
+  mecaExport: jest.fn((m, fn, ip) => {
+    fn()
+    return Promise.resolve()
+  }),
 }))
 
 const lodash = require('lodash')
@@ -103,8 +106,9 @@ describe('Manuscripts', () => {
         actualContent,
         actualIp,
       ] = mecaExport.mock.calls[0]
+
       expect(actualManuscript.id).toBe(id)
-      expect(actualContent).toBe('A real PDF')
+      expect(actualContent).toHaveBeenCalled()
       expect(actualIp).toBe(ip)
     })
 

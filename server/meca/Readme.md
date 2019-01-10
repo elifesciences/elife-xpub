@@ -6,9 +6,12 @@ xPub component to generate and export a Manuscript Exchange Common Approach (MEC
 
     const {mecaExport} = require('@elifesciences/xpub-meca-export')
 
-    mecaExport(manuscriptObject, manuscriptContent, clientIp)
+    mecaExport(manuscriptObject, getContentFunction, clientIp)
         .then(() => console.log('Successfully uploaded archive to SFTP'))
         .catch(err => console.error(err))
+
+The `getContentFunction` has the signiture of one argument, the `File` object which
+will return the file contents of that object.
 
 ## Export callback endpoint
 
