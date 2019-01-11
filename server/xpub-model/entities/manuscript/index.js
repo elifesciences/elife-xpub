@@ -293,12 +293,9 @@ class Manuscript extends BaseModel {
   // would mean applying the input to the manuscript first
   static removeOptionalBlankReviewers(input) {
     const itemIsBlank = item => item.name + item.email === ''
-
     const filteredReviewers = input.suggestedReviewers.filter(
-      (item, index) =>
-        index < Manuscript.MIN_SUGGESTED_REVIEWERS || !itemIsBlank(item),
+      item => !itemIsBlank(item),
     )
-
     return { ...input, suggestedReviewers: filteredReviewers }
   }
 
