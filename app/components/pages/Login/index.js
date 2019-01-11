@@ -119,7 +119,9 @@ class LoginPage extends React.Component {
               </a>
             </Box>
             <Box>
-              No ORCID? <NativeLink href={signupUrl}>Sign up</NativeLink> now.
+              <Paragraph.Reading>
+                No ORCID? <NativeLink href={signupUrl}>Sign up</NativeLink> now.
+              </Paragraph.Reading>
             </Box>
           </Flex>
         )}
