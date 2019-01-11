@@ -259,12 +259,13 @@ class SupportingUpload extends React.Component {
                   </UploadControl>
                 )}
               </Flex>
-              {successfullyUploadedFiles.length > 9 && (
-                <ValidationText>
-                  Maximum {maxSupportingFiles} supporting files
-                </ValidationText>
-              )}
             </React.Fragment>
+          )}
+        {hasManuscript &&
+          successfullyUploadedFiles.length > 9 && (
+            <ValidationText>
+              Maximum {maxSupportingFiles} supporting files
+            </ValidationText>
           )}
       </React.Fragment>
     )
