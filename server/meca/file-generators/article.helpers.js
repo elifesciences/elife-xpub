@@ -56,9 +56,9 @@ const contribStructure = {
 const articleTypeMap = {
   'research-article': 5,
   'short-report': 13,
-  'tools-resources': 19,
+  'tools-resources': 18,
   'scientific-correspondence': 20,
-  feature: 23,
+  feature: 24,
 }
 
 const journalMeta = {
