@@ -275,29 +275,31 @@ class EditorsPage extends React.Component {
 
           {values.suggestedReviewers.map((_, index) => (
             // eslint-disable-next-line react/no-array-index-key
-            <Box key={index} mb={2}>
-              <TwoColumnLayout bottomSpacing={false}>
-                <ValidatedField
-                  label={
-                    index < limits.suggestedReviewers.min
-                      ? `Reviewer ${index + 1} name`
-                      : `Reviewer ${index + 1} name (optional)`
-                  }
-                  name={`suggestedReviewers.${index}.name`}
-                  onChange={this.handleSuggestedReviewersChanged}
-                />
-                <ValidatedField
-                  label={
-                    index < limits.suggestedReviewers.min
-                      ? `Reviewer ${index + 1} email`
-                      : `Reviewer ${index + 1} email (optional)`
-                  }
-                  name={`suggestedReviewers.${index}.email`}
-                  onChange={this.handleSuggestedReviewersChanged}
-                  type="email"
-                />
-              </TwoColumnLayout>
-            </Box>
+            <div data-test-id="suggestedReviewerInputGroup" key={index}>
+              <Box mb={2}>
+                <TwoColumnLayout bottomSpacing={false}>
+                  <ValidatedField
+                    label={
+                      index < limits.suggestedReviewers.min
+                        ? `Reviewer ${index + 1} name`
+                        : `Reviewer ${index + 1} name (optional)`
+                    }
+                    name={`suggestedReviewers.${index}.name`}
+                    onChange={this.handleSuggestedReviewersChanged}
+                  />
+                  <ValidatedField
+                    label={
+                      index < limits.suggestedReviewers.min
+                        ? `Reviewer ${index + 1} email`
+                        : `Reviewer ${index + 1} email (optional)`
+                    }
+                    name={`suggestedReviewers.${index}.email`}
+                    onChange={this.handleSuggestedReviewersChanged}
+                    type="email"
+                  />
+                </TwoColumnLayout>
+              </Box>
+            </div>
           ))}
 
           <OptionalExclude
