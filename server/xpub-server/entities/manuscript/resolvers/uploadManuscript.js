@@ -17,8 +17,18 @@ async function addFileEntityToManuscript(manuscriptEntity, fileEntity) {
   )
 
   if (manuscriptUploadIndex < 0) {
+    logger.info(
+      `Manuscript Upload addFileEntityToManuscript::push ${
+        fileEntity.filename
+      }`,
+    )
     manuscript.files.push(fileEntity)
   } else {
+    logger.info(
+      `Manuscript Upload addFileEntityToManuscript::update ${
+        fileEntity.filename
+      }`,
+    )
     manuscript.files[manuscriptUploadIndex] = fileEntity
   }
 }
@@ -70,6 +80,7 @@ async function uploadManuscript(_, { file, id, fileSize }, { user }) {
     })
   }, 200)
 
+  logger.info(`Manuscript Upload fileContents::start ${filename} | ${id}`)
   const fileContents = await new Promise((resolve, reject) => {
     let uploadedSize = 0
     const chunks = []
@@ -87,6 +98,9 @@ async function uploadManuscript(_, { file, id, fileSize }, { user }) {
       }
     })
   })
+  logger.info(`Manuscript Upload fileContents::end ${filename} | ${id}`)
+
+  logger.info(`Manuscript Upload S3::start ${filename} | ${id}`)
 
   try {
     await S3Storage.putContent(fileEntity, fileContents, {
@@ -98,6 +112,7 @@ async function uploadManuscript(_, { file, id, fileSize }, { user }) {
     clearInterval(handle)
     throw err
   }
+  logger.info(`Manuscript Upload S3::end ${filename} | ${id}`)
 
   let title = ''
   try {
@@ -123,7 +138,10 @@ async function uploadManuscript(_, { file, id, fileSize }, { user }) {
   }
   await addFileEntityToManuscript(manuscript, fileEntity)
   manuscript.meta.title = title
+  logger.info(`Manuscript Upload Manuscript::save ${title} | ${id}`)
+
   await manuscript.save()
+  logger.info(`Manuscript Upload Manuscript::saved ${manuscript.title} | ${id}`)
 
   clearInterval(handle)
   pubsub.publish(`${ON_UPLOAD_PROGRESS}.${user}`, {

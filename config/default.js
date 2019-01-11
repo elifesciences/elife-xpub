@@ -118,7 +118,7 @@ module.exports = {
     notificationEmail: '',
   },
   scienceBeam: {
-    url: 'https://sciencebeam-texture.elifesciences.org/api/convert',
+    url: '',
     timeoutMs: 6000,
   },
   fileUpload: {
