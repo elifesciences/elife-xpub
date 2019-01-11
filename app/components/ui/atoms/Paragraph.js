@@ -4,9 +4,16 @@ import { th } from '@pubsweet/ui-toolkit'
 const secondary = css`
   color: ${th('colorTextSecondary')};
 `
-
-const Paragraph = styled.p`
+const small = css`
+  font-size: ${th('fontSizeBaseSmall')};
+  line-height: ${th(`lineHeightBaseSmall`)};
+`
+const reading = css`
   font-family: ${th('fontReading')};
+`
+
+const BaseParagraph = styled.p`
+  font-family: ${th('fontWriting')};
   font-size: ${th('fontSizeBase')};
   line-height: ${th(`lineHeightBase`)};
 
@@ -18,5 +25,14 @@ const Paragraph = styled.p`
   }
   ${props => props.secondary && secondary};
 `
+const Paragraph = {
+  Small: styled(BaseParagraph)`
+    ${small};
+  `,
+  Reading: styled(BaseParagraph)`
+    ${reading};
+  `,
+  Writing: BaseParagraph,
+}
 
 export default Paragraph
