@@ -8,20 +8,20 @@ const ReviewProcess = props => (
   <React.Fragment>
     <H1>The Review Process</H1>
 
-    <Paragraph>
+    <Paragraph.Reading>
       For general information, we have provided an overview of the{' '}
       <Link to="/author-guide/editorial-process">editorial process</Link>,
       including how we identify the submissions that are appropriate for
       in-depth peer review.
-    </Paragraph>
+    </Paragraph.Reading>
 
-    <Paragraph>
+    <Paragraph.Reading>
       Upon receiving the full submission, a member of the Board of Reviewing
       Editors will usually review the article him or herself and solicit at
       least one other external reviewer.
-    </Paragraph>
+    </Paragraph.Reading>
 
-    <Paragraph>
+    <Paragraph.Reading>
       An online consultation session is opened with the reviewer(s) once all the
       reviews have been received. The Reviewing Editor will draft a decision
       letter, with input welcome from the other reviewer(s). A{' '}
@@ -39,15 +39,15 @@ const ReviewProcess = props => (
       not sent to the authors. Additional rounds of revision are usually
       eliminated, as the Reviewing Editor is able to assess most revised
       submissions without re-review.
-    </Paragraph>
+    </Paragraph.Reading>
 
-    <Paragraph>
+    <Paragraph.Reading>
       If the decision is that the article cannot be revised in a reasonable time
       frame for publication in eLife and must therefore be rejected, the letter
       will usually include the full reviews, with the reasons clearly explained.
-    </Paragraph>
+    </Paragraph.Reading>
 
-    <Paragraph>
+    <Paragraph.Reading>
       We very much appreciate the efforts of our peer reviewers, and we are
       pleased to work with{' '}
       <NativeLink href="https://publons.com/in/elife/" target="_blank">
@@ -55,7 +55,7 @@ const ReviewProcess = props => (
       </NativeLink>{' '}
       to give researchers the opportunity to be recognised for providing reviews
       for eLife.
-    </Paragraph>
+    </Paragraph.Reading>
   </React.Fragment>
 )
 

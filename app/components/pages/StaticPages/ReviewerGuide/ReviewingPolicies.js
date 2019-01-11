@@ -9,17 +9,17 @@ const ReviewingPolicies = props => (
   <React.Fragment>
     <H1>Reviewing Policies</H1>
 
-    <Paragraph>
+    <Paragraph.Reading>
       We encourage our reviewers to familiarise themselves with{' '}
       <Link to="/reviewer-guide/reviewing-policies">
         eLife&apos;s journal policies
       </Link>{' '}
       before the review process commences.
-    </Paragraph>
+    </Paragraph.Reading>
 
     <H2>Confidentiality and co-review</H2>
 
-    <Paragraph>
+    <Paragraph.Reading>
       The review process is strictly confidential and must be treated as such by
       reviewers during the review process and subsequently. However,
       co-reviewing a manuscript with a single experienced junior colleague can
@@ -32,25 +32,25 @@ const ReviewingPolicies = props => (
       both reviewers. The senior reviewer should be the main point of contact
       for the discussion between the reviewers, but the senior reviewer can
       confer with their co-reviewer during this discussion.
-    </Paragraph>
+    </Paragraph.Reading>
 
-    <Paragraph>
+    <Paragraph.Reading>
       Other than co-reviewing for training purposes, reviewers should not
       contact anyone not directly involved with the assessment of the article,
       including colleagues or other experts in the field, unless this has been
       discussed and approved in advance by the Reviewing Editor.
-    </Paragraph>
+    </Paragraph.Reading>
 
-    <Paragraph>
+    <Paragraph.Reading>
       The content of the consultation session between the reviewers is also
       confidential and it is the role of the Reviewing Editor to draft the
       decision letter, based on the reviews and the discussion between the
       reviewers.
-    </Paragraph>
+    </Paragraph.Reading>
 
     <H2>Reviewer Anonymity</H2>
 
-    <Paragraph>
+    <Paragraph.Reading>
       We do not release the identities of the reviewers to the authors (unless
       requested by the reviewers themselves) but in the course of the discussion
       that forms part of the review process, each reviewer will know the
@@ -58,11 +58,11 @@ const ReviewingPolicies = props => (
       permission to reveal his or her identity and report to another journal, if
       the work is rejected and the author requests the reports for the purposes
       of submission to another journal.
-    </Paragraph>
+    </Paragraph.Reading>
 
     <H2>Competing Interests</H2>
 
-    <Paragraph>
+    <Paragraph.Reading>
       We ask reviewers to recognise potential competing interests that could
       lead them to be positively or negatively disposed towards an article. We
       follow the recommendations of the{' '}
@@ -84,7 +84,7 @@ const ReviewingPolicies = props => (
       themselves if they feel that they are unable to offer an impartial review.
       Common reasons for editors and reviewers to recuse themselves from the
       peer-review process include but are not limited to:
-    </Paragraph>
+    </Paragraph.Reading>
 
     <List.Unordered>
       <li>
@@ -105,12 +105,12 @@ const ReviewingPolicies = props => (
       </li>
     </List.Unordered>
 
-    <Paragraph>
+    <Paragraph.Reading>
       We will make every effort to follow authors’ requests to exclude potential
       reviewers, provided that a specific reason is provided.
-    </Paragraph>
+    </Paragraph.Reading>
 
-    <Paragraph>
+    <Paragraph.Reading>
       <strong>Research Conducted by eLife.</strong> As a way of improving our
       services, we periodically undertake research and surveys relating to
       eLife&apos;s submission and review process. Where appropriate we will
@@ -123,7 +123,7 @@ const ReviewingPolicies = props => (
         here
       </NativeLink>
       ).
-    </Paragraph>
+    </Paragraph.Reading>
   </React.Fragment>
 )
 

@@ -12,10 +12,10 @@ const Initial = props => (
 
     <H2>Cover Letter</H2>
 
-    <Paragraph>
+    <Paragraph.Reading>
       To help with the initial evaluation of your submission, please briefly
       answer the following questions in your cover letter:
-    </Paragraph>
+    </Paragraph.Reading>
 
     <List.Unordered>
       <li>
@@ -32,11 +32,11 @@ const Initial = props => (
       </li>
     </List.Unordered>
 
-    <Paragraph>
+    <Paragraph.Reading>
       In addition, please upload any related studies that you have published
       recently or have under consideration elsewhere as related manuscript files
       and describe them in your cover letter.
-    </Paragraph>
+    </Paragraph.Reading>
 
     <H2>Single Manuscript PDF</H2>
 
@@ -59,9 +59,9 @@ const Initial = props => (
       </li>
     </List.Unordered>
 
-    <Paragraph>
+    <Paragraph.Reading>
       The manuscript should include the following components:
-    </Paragraph>
+    </Paragraph.Reading>
 
     <List.Ordered>
       <li>
@@ -88,28 +88,28 @@ const Initial = props => (
         <strong>
           Introduction, Results, Discussion, Materials and Methods:{' '}
         </strong>
-        <Paragraph>
+        <Paragraph.Reading>
           We encourage a clear and concise style of writing. Various writing
           guides are available, including Preparing a Manuscript for Submission
           to a Biomedical Journal (ICMJE) and The Elements of Style (New York:
           bartleby.com, 1999).
-        </Paragraph>
-        <Paragraph>
+        </Paragraph.Reading>
+        <Paragraph.Reading>
           Any &quot;personal communications&quot; relating to unpublished data
           should be incorporated within the main text, in the following format:
           (Author Initial(s) and Surname, personal communication, Month and
           Year). Authors should have permission from anyone named in this way
           and should be aware that a supporting letter will sometimes be
           requested.
-        </Paragraph>
-        <Paragraph>
+        </Paragraph.Reading>
+        <Paragraph.Reading>
           Within the Materials and Methods and/or figure legends, we encourage
           authors to provide complete information about their experiments,
           analyses, or data collection to ensure that readers can easily
           understand what was measured and analysed, and can accurately perform
           the relevant protocols.
-        </Paragraph>
-        <Paragraph>
+        </Paragraph.Reading>
+        <Paragraph.Reading>
           In cases where a new method within the submission would benefit from
           step-by-step protocols in addition to the methods described in the
           article, we would encourage authors to also consider submitting a
@@ -121,12 +121,12 @@ const Initial = props => (
             Bio-protocol
           </NativeLink>
           .
-        </Paragraph>
-        <Paragraph>
+        </Paragraph.Reading>
+        <Paragraph.Reading>
           On first mention, please provide details of any manufacturers in the
           following format: company name, city, country (or state, if based in
           the United States).
-        </Paragraph>
+        </Paragraph.Reading>
       </li>
       <li>
         <strong>Acknowledgements: </strong>
@@ -145,35 +145,35 @@ const Initial = props => (
       </li>
       <li>
         <strong>References: </strong>
-        <Paragraph>
+        <Paragraph.Reading>
           Accepted and published works, datasets (newly generated and previously
           published), program code, and previously published methods should be
           appropriately cited and included in the reference list to ensure that
           a wide range of research objects are afforded recognition through
           citation.
-        </Paragraph>
-        <Paragraph>
+        </Paragraph.Reading>
+        <Paragraph.Reading>
           Please find below the information we require for each type of
           reference. Please note, authors do not need to spend time formatting
           their references and can submit manuscripts formatted in a variety of
           reference styles, including Harvard, Vancouver, and Chicago. Wherever
           possible, please do not truncate the number of authors in the
           references list, but please do provide a DOI if possible.
-        </Paragraph>
+        </Paragraph.Reading>
       </li>
     </List.Ordered>
 
     <RequiredInfoTable />
 
-    <Paragraph>
+    <Paragraph.Reading>
       If using a reference manager, we suggest selecting APA style as this is
       the best match for eLife reference style. However, we accept any reference
       style and will format all references during the production process.
-    </Paragraph>
+    </Paragraph.Reading>
 
     <H2>Figures, Tables, and Rich Media Files</H2>
 
-    <Paragraph>
+    <Paragraph.Reading>
       Figures and tables should be included within the PDF. If authors already
       have a file available with the figures and tables embedded within the
       text, please provide this, but otherwise the figures and tables can be
@@ -183,9 +183,9 @@ const Initial = props => (
       legends should be included at the end of the article file. Figures and
       tables should be numbered in the order in which they are cited in the
       text.
-    </Paragraph>
+    </Paragraph.Reading>
 
-    <Paragraph>
+    <Paragraph.Reading>
       We encourage the use of rich media files: for example, videos, audio
       clips, animations, slideshows, and interactive diagrams. Authors can
       upload such files during the Initial Submission process if they will
@@ -193,23 +193,23 @@ const Initial = props => (
       Full Submission is requested. Anything crucial for the initial evaluation
       should be uploaded at the Initial Submission stage (either as rich media
       or supplementary files).
-    </Paragraph>
+    </Paragraph.Reading>
 
-    <Paragraph>
+    <Paragraph.Reading>
       At this stage, supplementary figures and tables can be included if they
       exist, and if desired, within the single PDF.
-    </Paragraph>
+    </Paragraph.Reading>
 
-    <Paragraph>
+    <Paragraph.Reading>
       When preparing figures, we recommend that authors follow the principles of{' '}
       <NativeLink href="http://jfly.iam.u-tokyo.ac.jp/color/" target="_blank">
         Colour Universal Design
       </NativeLink>{' '}
       (Masataka Okabe and Kei Ito, J*FLY), whereby colour schemes are chosen to
       ensure maximum accessibility for all types of colour vision.
-    </Paragraph>
+    </Paragraph.Reading>
 
-    <Paragraph>
+    <Paragraph.Reading>
       When preparing coloured tables, authors should note that we can only
       accomodate schemes as outlined in{' '}
       <NativeLink
@@ -219,14 +219,14 @@ const Initial = props => (
         this guide
       </NativeLink>
       .
-    </Paragraph>
+    </Paragraph.Reading>
 
     <H2>Limited Metadata</H2>
 
-    <Paragraph>
+    <Paragraph.Reading>
       You will be asked to enter the following information in the submission
       system:
-    </Paragraph>
+    </Paragraph.Reading>
 
     <List.Ordered>
       <li>
@@ -243,7 +243,7 @@ const Initial = props => (
       </li>
       <li>
         <strong>Major Subject Area(s): </strong>
-        <Paragraph>
+        <Paragraph.Reading>
           A list of major subject areas is provided from which authors should
           select one or two (choosing from:{' '}
           <NativeLink
@@ -351,7 +351,7 @@ const Initial = props => (
             Plant Biology
           </NativeLink>
           ).
-        </Paragraph>
+        </Paragraph.Reading>
       </li>
       <li>
         <strong>Funding information: </strong>
@@ -373,11 +373,11 @@ const Initial = props => (
       </li>
     </List.Ordered>
 
-    <Paragraph>
+    <Paragraph.Reading>
       If you receive an encouraging response to your Initial Submission, please
       review the guidelines relating to{' '}
       <Link to="/author-guide/full">Full Submissions</Link>.
-    </Paragraph>
+    </Paragraph.Reading>
   </React.Fragment>
 )
 
