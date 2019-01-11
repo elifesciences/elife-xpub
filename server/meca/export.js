@@ -14,7 +14,7 @@ async function generate(manuscript, content, clientIp) {
     'article.xml': articleGenerator(manuscript),
     'cover_letter.html': coverLetterGenerator(manuscript),
     'disclosure.pdf': disclosureGenerator(manuscript, clientIp),
-    'manifest.xml': manifestGenerator(),
+    'manifest.xml': manifestGenerator(manuscript.files),
     'manuscript.pdf': content,
     'transfer.xml': transferGenerator(''), // auth code not currently used
   })

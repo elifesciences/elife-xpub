@@ -3,6 +3,7 @@ import gql from 'graphql-tag'
 import { Query } from 'react-apollo'
 import ThankYou from './ThankYou'
 import ErrorPage from '../Error'
+import Loading from '../../ui/atoms/Loading'
 
 const MANUSCRIPT_TITLE = gql`
   query GetManuscript($id: ID!) {
@@ -17,7 +18,7 @@ const ThankYouPage = ({ match }) => (
   <Query query={MANUSCRIPT_TITLE} variables={{ id: match.params.id }}>
     {({ data, loading, error }) => {
       if (loading) {
-        return <div>Loading...</div>
+        return <Loading />
       }
 
       if (error) {
