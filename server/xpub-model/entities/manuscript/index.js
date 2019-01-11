@@ -275,11 +275,7 @@ class Manuscript extends BaseModel {
     // not every time an object is instantiated
     this.addTeam({
       role: 'suggestedReviewer',
-      teamMembers: [
-        { meta: { name: '', email: '' } },
-        { meta: { name: '', email: '' } },
-        { meta: { name: '', email: '' } },
-      ],
+      teamMembers: [{ meta: { name: '', email: '' } }],
     })
   }
 

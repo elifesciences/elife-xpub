@@ -1,7 +1,7 @@
 import * as yup from 'yup'
 import { cloneDeep, countBy, findIndex } from 'lodash'
 
-const MIN_REVIEWERS = 3
+const MIN_REVIEWERS = 0
 const MAX_REVIEWERS = 6
 
 export const suggestedReviewersLimits = {
