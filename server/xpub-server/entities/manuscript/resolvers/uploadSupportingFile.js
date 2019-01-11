@@ -6,12 +6,13 @@ async function uploadSupportingFile(_, { file, id }, { user }) {
   const userUuid = await User.getUuidForProfile(user)
   const manuscript = await Manuscript.find(id, userUuid)
 
-  const { stream, filename } = await file
+  const { stream, filename, mimetype: mimeType } = await file
   const fileEntity = await new File({
     manuscriptId: manuscript.id,
     url: `supporting/${id}`,
     filename,
     type: 'SUPPORTING_FILE',
+    mimeType,
   }).save()
 
   const fileContents = await new Promise((resolve, reject) => {
