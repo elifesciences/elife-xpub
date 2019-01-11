@@ -83,6 +83,9 @@ describe('Manuscripts', () => {
       const file = await loadedManuscript.getSource()
       const pdfBinary = await S3Storage.getContent(file)
       expect(pdfBinary.toString().substr(0, 6)).toEqual('%PDF-1')
+      expect(loadedManuscript.files[0].type).toEqual('MANUSCRIPT_SOURCE')
+      expect(loadedManuscript.files[0].filename).toEqual(fileUpload.filename)
+      expect(loadedManuscript.files[0].mimeType).toEqual(fileUpload.mimetype)
     })
 
     it('fails if S3 upload fails', async () => {
