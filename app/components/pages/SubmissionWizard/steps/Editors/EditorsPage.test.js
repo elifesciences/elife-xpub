@@ -68,11 +68,10 @@ describe('EditorsPage component', () => {
 
   it('Adds a new suggested reviewer row when details are entered into the last current row', () => {
     const wrapper = makeWrapper()
-    expect(
-      wrapper.find('[data-test-id="suggestedReviewerInputGroup"]'),
-    ).toHaveLength(1)
-    wrapper
-      .find('[data-test-id="suggestedReviewerInputGroup"]')
+    const suggestedReviewerInputs = () =>
+      wrapper.find('[data-test-id="suggestedReviewerInputGroup"]')
+    expect(suggestedReviewerInputs()).toHaveLength(1)
+    suggestedReviewerInputs()
       .at(0)
       .find('input')
       .at(0)
@@ -80,8 +79,38 @@ describe('EditorsPage component', () => {
         target: { name: 'suggestedReviewers.0.name', value: 'name' },
       })
     wrapper.update()
-    expect(
-      wrapper.find('[data-test-id="suggestedReviewerInputGroup"]'),
-    ).toHaveLength(2)
+    expect(suggestedReviewerInputs()).toHaveLength(2)
+  })
+  it('Removes trailing suggested reviewer rows when cleared down', () => {
+    const wrapper = makeWrapper()
+    const suggestedReviewerInputs = () =>
+      wrapper.find('[data-test-id="suggestedReviewerInputGroup"]')
+
+    const enterSuggestedReviewerDetails = (index, value) => {
+      suggestedReviewerInputs()
+        .at(index)
+        .find('input')
+        .at(0)
+        .simulate('change', {
+          target: { name: `suggestedReviewers.${index}.name`, value },
+        })
+      wrapper.update()
+    }
+
+    expect(suggestedReviewerInputs()).toHaveLength(1)
+
+    for (let lineNumber = 0; lineNumber < 3; lineNumber += 1) {
+      enterSuggestedReviewerDetails(lineNumber, `name ${lineNumber}`)
+    }
+
+    expect(suggestedReviewerInputs()).toHaveLength(4)
+    // remove not trailing reviewer details
+    enterSuggestedReviewerDetails(1, '')
+    enterSuggestedReviewerDetails(0, '')
+    expect(suggestedReviewerInputs()).toHaveLength(4)
+
+    // remove trailing reviewer detail
+    enterSuggestedReviewerDetails(2, '')
+    expect(suggestedReviewerInputs()).toHaveLength(1)
   })
 })
