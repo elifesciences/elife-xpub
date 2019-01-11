@@ -28,7 +28,6 @@ const BaseParagraph = styled.p`
 const Paragraph = {
   Small: styled(BaseParagraph)`
     ${small};
-    ${reading};
   `,
   Reading: styled(BaseParagraph)`
     ${reading};
