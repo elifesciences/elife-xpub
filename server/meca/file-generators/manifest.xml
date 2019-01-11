@@ -32,4 +32,5 @@
         <instance media-type="text/html" href="cover_letter.html"/>
     </item>
 
+    {supplementaryFiles}
 </manifest>
