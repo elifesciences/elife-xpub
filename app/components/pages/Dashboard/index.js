@@ -21,7 +21,7 @@ const MobileOnlyContainer = styled(Box)`
 
 const DashboardPage = ({ history }) => (
   <React.Fragment>
-    <Box mx={[0, 0, '16.666%', '16.666%']}>
+    <Box mx={[0, 0, 0, '16.666%']}>
       <DesktopSubmitContainer mb={1} mt={3}>
         <NewSubmissionButton
           dataTestId="desktop-new-submission"
