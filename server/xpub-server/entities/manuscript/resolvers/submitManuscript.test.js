@@ -98,13 +98,9 @@ describe('Manuscripts', () => {
       )
 
       expect(mecaExport).toHaveBeenCalled()
-      const [
-        actualManuscript,
-        actualContent,
-        actualIp,
-      ] = mecaExport.mock.calls[0]
+      const [actualManuscript, , actualIp] = mecaExport.mock.calls[0]
+
       expect(actualManuscript.id).toBe(id)
-      expect(actualContent).toBe('A real PDF')
       expect(actualIp).toBe(ip)
     })
 

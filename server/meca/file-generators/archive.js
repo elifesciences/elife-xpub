@@ -4,8 +4,8 @@ async function makeZip(files) {
   const zip = new JsZip()
 
   await Promise.all(
-    Object.entries(files).map(async ([name, file]) => {
-      zip.file(name, await file)
+    Object.entries(files).map(async ([, file]) => {
+      zip.file(file.name, await file.content)
     }),
   )
 

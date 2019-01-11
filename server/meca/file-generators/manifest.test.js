@@ -2,8 +2,8 @@ const generateManifest = require('./manifest')
 const sampleManuscript = require('./article.test.data')
 
 describe('Manifest XML generator', () => {
-  it('returns required items', async () => {
-    const xml = await generateManifest(sampleManuscript.files)
+  it('returns required items', () => {
+    const xml = generateManifest(sampleManuscript.files)
 
     // has article xml
     expect(xml).toContain(
