@@ -50,5 +50,6 @@ describe('uploadSupportingFile', () => {
     expect(manuscript.files).toHaveLength(1)
     expect(manuscript.files[0].type).toEqual('SUPPORTING_FILE')
     expect(manuscript.files[0].filename).toEqual(supportingFile.filename)
+    expect(manuscript.files[0].mimeType).toEqual(supportingFile.mimetype)
   })
 })
