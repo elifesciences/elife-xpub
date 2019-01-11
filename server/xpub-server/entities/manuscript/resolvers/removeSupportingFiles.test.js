@@ -4,9 +4,9 @@ const { User, Manuscript } = require('@elifesciences/xpub-model')
 const { userData } = require('./index.test.data')
 
 const dummyStorage = {
-  getContent: () => {},
-  putContent: () => {},
-  deleteContent: () => ({
+  getContent: async () => {},
+  putContent: async () => {},
+  deleteContent: async () => ({
     promise: Promise.resolve(true),
   }),
 }
