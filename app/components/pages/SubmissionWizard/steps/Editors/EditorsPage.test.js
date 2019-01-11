@@ -69,7 +69,9 @@ describe('EditorsPage component', () => {
   it('Adds a new suggested reviewer row when details are entered into the last current row', () => {
     const wrapper = makeWrapper()
     const suggestedReviewerInputs = () =>
-      wrapper.find('[data-test-id="suggestedReviewerInputGroup"]')
+      wrapper.find(
+        '[data-test-id="suggestedReviewerInputGroup"] > TwoColumnLayout',
+      )
     expect(suggestedReviewerInputs()).toHaveLength(1)
     suggestedReviewerInputs()
       .at(0)
@@ -81,10 +83,13 @@ describe('EditorsPage component', () => {
     wrapper.update()
     expect(suggestedReviewerInputs()).toHaveLength(2)
   })
+
   it('Removes trailing suggested reviewer rows when cleared down', () => {
     const wrapper = makeWrapper()
     const suggestedReviewerInputs = () =>
-      wrapper.find('[data-test-id="suggestedReviewerInputGroup"]')
+      wrapper.find(
+        '[data-test-id="suggestedReviewerInputGroup"] > TwoColumnLayout',
+      )
 
     const enterSuggestedReviewerDetails = (index, value) => {
       suggestedReviewerInputs()

@@ -150,7 +150,7 @@ class EditorsPage extends React.Component {
               maxSelection={limits.suggestedSeniorEditors.max}
               minSelection={limits.suggestedSeniorEditors.min}
               modalName="suggestedSeniorEditors"
-              modalTitle="Suggest senior editors"
+              modalTitle="Suggest Senior Editors"
               onRequestRemove={person =>
                 this.removeSelection('suggestedSeniorEditors', person)
               }
@@ -180,7 +180,7 @@ class EditorsPage extends React.Component {
               maxSelection={limits.opposedSeniorEditors.max}
               minSelection={limits.opposedSeniorEditors.min}
               modalName="opposedSeniorEditors"
-              modalTitle="Exclude senior editors"
+              modalTitle="Exclude Senior Editors"
               onRequestRemove={person =>
                 this.removeSelection('opposedSeniorEditors', person)
               }
@@ -213,7 +213,7 @@ class EditorsPage extends React.Component {
               maxSelection={limits.suggestedReviewingEditors.max}
               minSelection={limits.suggestedReviewingEditors.min}
               modalName="suggestedReviewingEditors"
-              modalTitle="Suggest reviewing editors"
+              modalTitle="Suggest Reviewing Editors"
               onRequestRemove={person =>
                 this.removeSelection('suggestedReviewingEditors', person)
               }
@@ -245,7 +245,7 @@ class EditorsPage extends React.Component {
               maxSelection={limits.opposedReviewingEditors.max}
               minSelection={limits.opposedReviewingEditors.min}
               modalName="opposedReviewingEditors"
-              modalTitle="Exclude reviewing editors"
+              modalTitle="Exclude Reviewing Editors"
               onRequestRemove={person =>
                 this.removeSelection('opposedReviewingEditors', person)
               }
@@ -275,31 +275,29 @@ class EditorsPage extends React.Component {
 
           {values.suggestedReviewers.map((_, index) => (
             // eslint-disable-next-line react/no-array-index-key
-            <div data-test-id="suggestedReviewerInputGroup" key={index}>
-              <Box mb={2}>
-                <TwoColumnLayout bottomSpacing={false}>
-                  <ValidatedField
-                    label={
-                      index < limits.suggestedReviewers.min
-                        ? `Reviewer ${index + 1} name`
-                        : `Reviewer ${index + 1} name (optional)`
-                    }
-                    name={`suggestedReviewers.${index}.name`}
-                    onChange={this.handleSuggestedReviewersChanged}
-                  />
-                  <ValidatedField
-                    label={
-                      index < limits.suggestedReviewers.min
-                        ? `Reviewer ${index + 1} email`
-                        : `Reviewer ${index + 1} email (optional)`
-                    }
-                    name={`suggestedReviewers.${index}.email`}
-                    onChange={this.handleSuggestedReviewersChanged}
-                    type="email"
-                  />
-                </TwoColumnLayout>
-              </Box>
-            </div>
+            <Box data-test-id="suggestedReviewerInputGroup" key={index} mb={2}>
+              <TwoColumnLayout bottomSpacing={false}>
+                <ValidatedField
+                  label={
+                    index < limits.suggestedReviewers.min
+                      ? `Reviewer ${index + 1} name`
+                      : `Reviewer ${index + 1} name (optional)`
+                  }
+                  name={`suggestedReviewers.${index}.name`}
+                  onChange={this.handleSuggestedReviewersChanged}
+                />
+                <ValidatedField
+                  label={
+                    index < limits.suggestedReviewers.min
+                      ? `Reviewer ${index + 1} email`
+                      : `Reviewer ${index + 1} email (optional)`
+                  }
+                  name={`suggestedReviewers.${index}.email`}
+                  onChange={this.handleSuggestedReviewersChanged}
+                  type="email"
+                />
+              </TwoColumnLayout>
+            </Box>
           ))}
 
           <OptionalExclude
