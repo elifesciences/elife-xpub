@@ -44,13 +44,14 @@ async function uploadManuscript(_, { file, id, fileSize }, { user }) {
   const userUuid = await User.getUuidForProfile(user)
   const manuscript = await Manuscript.find(id, userUuid)
 
-  const { stream, filename, mimetype } = await file
+  const { stream, filename, mimetype: mimeType } = await file
   logger.info(`Manuscript Upload Size: ${filename}, ${fileSize}`)
   const fileEntity = await new File({
     manuscriptId: manuscript.id,
     url: `manuscripts/${id}`,
     filename,
     type: 'MANUSCRIPT_SOURCE',
+    mimeType,
   }).save()
 
   const pubsub = await pubsubManager.getPubsub()
@@ -105,7 +106,7 @@ async function uploadManuscript(_, { file, id, fileSize }, { user }) {
       config,
       fileContents,
       filename,
-      mimetype,
+      mimeType,
     )
   } catch (error) {
     let errorMessage = ''
