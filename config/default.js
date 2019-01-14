@@ -119,7 +119,7 @@ module.exports = {
   },
   scienceBeam: {
     url: 'https://sciencebeam-texture.elifesciences.org/api/convert',
-    timeoutMs: 6000,
+    timeoutMs: 20000,
   },
   fileUpload: {
     isPublic: true,

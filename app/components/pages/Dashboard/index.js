@@ -11,17 +11,17 @@ import NewSubmissionButton from './NewSubmissionButton'
 const DesktopSubmitContainer = styled(Box)`
   text-align: right;
   display: none;
-  ${media.mobileUp`display: block;`};
+  ${media.tabletPortraitUp`display: block;`};
 `
 
 const MobileOnlyContainer = styled(Box)`
   display: block;
-  ${media.mobileUp`display: none;`};
+  ${media.tabletPortraitUp`display: none;`};
 `
 
 const DashboardPage = ({ history }) => (
   <React.Fragment>
-    <Box mx={[0, 0, '16.666%', '16.666%']}>
+    <Box mx={[0, 0, 0, '16.666%']} pb={[6, 6, 0, 0]}>
       <DesktopSubmitContainer mb={1} mt={3}>
         <NewSubmissionButton
           dataTestId="desktop-new-submission"
@@ -42,7 +42,7 @@ const DashboardPage = ({ history }) => (
       />
     </Box>
     <MobileOnlyContainer>
-      <StickyFooter>
+      <StickyFooter pb={[18, 18, 5, 5]}>
         <NewSubmissionButton
           dataTestId="mobile-new-submission"
           history={history}

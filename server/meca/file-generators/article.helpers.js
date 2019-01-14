@@ -58,7 +58,7 @@ const articleTypeMap = {
   'short-report': 13,
   'tools-resources': 18,
   'scientific-correspondence': 20,
-  feature: 24,
+  feature: 23,
 }
 
 const journalMeta = {

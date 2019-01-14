@@ -105,9 +105,6 @@ class Manuscript extends BaseModel {
   static get MAX_SUGGESTED_REVIEWERS() {
     return 6
   }
-  static get MIN_SUGGESTED_REVIEWERS() {
-    return 3
-  }
 
   static async find(id, user) {
     const [manuscript] = await this.query().where({
@@ -293,12 +290,9 @@ class Manuscript extends BaseModel {
   // would mean applying the input to the manuscript first
   static removeOptionalBlankReviewers(input) {
     const itemIsBlank = item => item.name + item.email === ''
-
     const filteredReviewers = input.suggestedReviewers.filter(
-      (item, index) =>
-        index < Manuscript.MIN_SUGGESTED_REVIEWERS || !itemIsBlank(item),
+      item => !itemIsBlank(item),
     )
-
     return { ...input, suggestedReviewers: filteredReviewers }
   }
 
