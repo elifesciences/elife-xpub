@@ -68,8 +68,8 @@ const TitleBox = styled(Box)`
   font-family: ${th('fontHeading')};
   font-weight: 400;
   text-align: left;
-  flex-grow: 1;
   ${media.tabletPortraitUp`
+    flex-grow: 1;
     margin-bottom: 0;
     margin-right: ${th('space.3')};
   `};
@@ -100,7 +100,11 @@ const TrashIcon = props => (
 
 const StyledRemoveIcon = styled(TrashIcon)`
   margin-left: 24px;
+  display: none;
   fill: ${th('colorTextSecondary')};
+  ${media.tabletPortraitUp`
+    display:inline-block;
+  `};
 `
 
 const ButtonContainer = styled(Box)`
@@ -119,9 +123,12 @@ const DashboardLinkFake = styled.div`
   width: 95%;
 `
 
-const ItemContent = styled(Flex)`
+const ItemContent = styled(Box)`
+  ${media.tabletPortraitUp`
+  display: flex;
   flex-direction: row;
   justify-content: space-between;
+`};
 `
 
 const DashboardListItem = ({ manuscript }) => {
