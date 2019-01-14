@@ -18,9 +18,12 @@ class Manuscript {
       )
     }
 
-    const originalEmails = manuscript.getAuthor()
+    const originalEmails = (manuscript.getAuthor()
       ? manuscript.getAuthor()
-      : [].map(author => author.alias.email).join(',')
+      : []
+    )
+      .map(author => author.alias.email)
+      .join(',')
 
     manuscript.applyInput(data)
 
