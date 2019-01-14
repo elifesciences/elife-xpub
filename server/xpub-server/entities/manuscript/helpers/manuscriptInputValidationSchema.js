@@ -5,7 +5,6 @@ const MAX_SUGGESTED_SENIOR_EDITORS = 6
 const MIN_SUGGESTED_REVIEWING_EDITORS = 2
 const MAX_SUGGESTED_REVIEWING_EDITORS = 6
 const MAX_SUGGESTED_REVIEWERS = 6
-const MIN_SUGGESTED_REVIEWERS = 0
 
 const manuscriptInputSchema = Joi.object()
   .keys({
@@ -74,7 +73,6 @@ const manuscriptInputSchema = Joi.object()
             .required(),
         }),
       )
-      .min(MIN_SUGGESTED_REVIEWERS)
       .max(MAX_SUGGESTED_REVIEWERS),
     opposedReviewers: Joi.array().items(
       Joi.object().keys({

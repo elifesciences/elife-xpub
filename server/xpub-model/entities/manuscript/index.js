@@ -105,9 +105,6 @@ class Manuscript extends BaseModel {
   static get MAX_SUGGESTED_REVIEWERS() {
     return 6
   }
-  static get MIN_SUGGESTED_REVIEWERS() {
-    return 3
-  }
 
   static async find(id, user) {
     const [manuscript] = await this.query().where({
