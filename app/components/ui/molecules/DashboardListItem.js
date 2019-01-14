@@ -77,11 +77,11 @@ const TitleBox = styled(Box)`
 const DateBox = styled(Flex)`
   color: ${th('colorTextSecondary')}
   justify-content: space-between;
-
   ${media.tabletPortraitUp`
     flex-direction: column;
     text-align: right;
     flex: 0 0 120px;
+    justify-content: flex-start;
   `};
 `
 const AbsoluteDate = styled.time`
