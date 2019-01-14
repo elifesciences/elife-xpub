@@ -12,7 +12,7 @@ import { FormH2 } from '../atoms/FormHeadings'
 import StickyFooter from '../atoms/StickyFooter'
 
 const MainColumn = styled(Box).attrs({ mx: [0, 0, 0, '16.666%'] })`
-  flex: 1 1 auto;
+  flex: 1 1 100%;
   min-width: 0;
 `
 

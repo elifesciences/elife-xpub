@@ -49,6 +49,7 @@ const SmallAction = styled(Action)`
 `
 
 const CollapsibleBox = styled(Box)`
+  width: 100%;
   min-width: 0;
 `
 
