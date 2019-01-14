@@ -378,6 +378,36 @@ describe('Manuscript', () => {
       const loadedManuscripts = await Manuscript.all(userId)
       expect(loadedManuscripts).toHaveLength(1)
     })
+    it('returns in the correct order', async () => {
+      const originalDate = Date
+      const createManuscript = async (createdDate, title) => {
+        // Mock Date so the created by can be controlled
+        const mockDate = new Date(createdDate)
+        global.Date = jest.fn(() => mockDate)
+        global.Date.now = originalDate.now
+        global.Date.UTC = originalDate.UTC
+
+        await new Manuscript({
+          meta: {
+            title,
+          },
+          createdBy: userId,
+        }).save()
+
+        // Reset Date object so calling new Date returns a real Date object
+        global.Date = originalDate
+      }
+
+      await createManuscript('2019-01-09T14:50:48.476Z', '0')
+      await createManuscript('2019-01-04T14:50:48.476Z', '3')
+      await createManuscript('2019-01-07T17:50:48.476Z', '1')
+      await createManuscript('2019-01-05T17:50:48.476Z', '2')
+
+      const orderedManuscripts = await Manuscript.all(userId)
+      orderedManuscripts.forEach((manuscript, index) => {
+        expect(manuscript.meta.title).toEqual(index.toString())
+      })
+    })
   })
 })
 

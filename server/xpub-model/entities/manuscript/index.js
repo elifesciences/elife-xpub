@@ -134,9 +134,11 @@ class Manuscript extends BaseModel {
   }
 
   static async all(user) {
-    const manuscripts = await this.query().where({
-      'manuscript.created_by': user,
-    })
+    const manuscripts = await this.query()
+      .where({
+        'manuscript.created_by': user,
+      })
+      .orderBy('created', 'desc')
 
     await Promise.all(
       manuscripts.map(manuscript => manuscript.$loadRelated('[teams, files]')),
