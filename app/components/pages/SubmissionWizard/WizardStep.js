@@ -45,7 +45,7 @@ const WizardStep = ({
       ...formProps
     }) => (
       <Flex>
-        <BoxNoMinWidth flex="1 1 auto" mx={[0, 0, 0, '16.666%']}>
+        <BoxNoMinWidth flex="1 1 100%" mx={[0, 0, 0, '16.666%']}>
           <form noValidate onSubmit={handleSubmit}>
             <AutoSave
               disabled={isSubmitting}
