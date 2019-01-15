@@ -24,8 +24,8 @@ const convertPerson = apiPerson => {
   const { focuses = [], expertises = [] } = research
 
   const affiliationString = affiliations
-    ? affiliations.map(a => (a.name ? a.name.join(', ') : '')).join(', ')
-    : ''
+    ? affiliations.map(a => (a.name ? a.name.join(', ') : undefined)).join(', ')
+    : undefined
 
   let person = {
     id,
