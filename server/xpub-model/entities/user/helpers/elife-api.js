@@ -46,16 +46,19 @@ const convertPerson = apiPerson => {
 
 const people = async role => {
   logger.debug('Fetching editors from /people', { role })
+
   let items = []
   let response
   let page = 1
   do {
-    response = await request('people', {
-      order: 'asc',
-      page,
-      'per-page': 100,
-      type: role,
-    })
+    let query = `order=asc&page=${page}&per-page=100`
+    if (role) {
+      role.split(',').forEach(r => {
+        query += `&type[]=${r}`
+      })
+    }
+
+    response = await request('people', query)
     if (response.body.items) {
       items = items.concat(response.body.items)
     }
