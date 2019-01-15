@@ -1,0 +1,20 @@
+GET /profiles/ewwboc7m
+accept-encoding: gzip, deflate
+
+HTTP/1.1 200 OK
+server: nginx
+date: Tue, 15 Jan 2019 14:42:02 GMT
+content-type: application/vnd.elife.profile+json;version=1
+content-length: 159
+connection: close
+vary: Accept, Authorization
+cache-control: max-age=300, public, stale-if-error=86400,stale-while-revalidate=300
+etag: "744e02fd7e21d5d5d36b9669da605cee"
+accept-ranges: none
+x-consumer-groups-filtered: user
+access-control-allow-origin: *
+x-kong-upstream-latency: 20
+x-kong-proxy-latency: 0
+via: kong/0.9.5
+
+{"id": "ewwboc7m", "name": {"preferred": "Tamlyn Rhodes", "index": "Rhodes, Tamlyn"}, "orcid": "0000-0002-6277-0372", "emailAddresses": [], "affiliations": []}

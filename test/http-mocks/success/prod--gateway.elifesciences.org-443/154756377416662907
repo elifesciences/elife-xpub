@@ -1,0 +1,24 @@
+GET /people/fd108300
+accept-encoding: gzip, deflate
+
+HTTP/1.1 200 OK
+server: nginx
+date: Tue, 15 Jan 2019 14:49:34 GMT
+content-type: application/vnd.elife.person+json;version=1
+transfer-encoding: chunked
+connection: close
+cache-control: max-age=300, public, stale-if-error=86400, stale-while-revalidate=300
+vary: Accept, Authorization
+etag: "fd0c2312dad5393293c368d34a8ec52b"
+x-ua-compatible: IE=edge
+content-language: en
+x-content-type-options: nosniff
+x-frame-options: SAMEORIGIN
+x-consumer-groups-filtered: user
+x-consumer-groups-remote-addr: 34.226.197.243
+access-control-allow-origin: *
+x-kong-upstream-latency: 129
+x-kong-proxy-latency: 0
+via: kong/0.9.5
+
+{"id":"fd108300","type":{"id":"senior-editor","label":"Senior Editor"},"name":{"surname":"Cooper","givenNames":"Jonathan A","preferred":"Jonathan A Cooper","index":"Cooper, Jonathan A"},"image":{"uri":"https:\/\/iiif.elifesciences.org\/journal-cms\/person%2F2014-04%2Fjon_cooper.jpg","alt":"Jonathan A Cooper","source":{"mediaType":"image\/jpeg","uri":"https:\/\/iiif.elifesciences.org\/journal-cms\/person%2F2014-04%2Fjon_cooper.jpg\/full\/full\/0\/default.jpg","filename":"jon_cooper.jpg"},"size":{"width":214,"height":321},"focalPoint":{"x":50,"y":50}},"profile":[{"text":"Jon Cooper is a member of the Fred Hutchinson Cancer Research Center in Seattle, where he is also a Senior Vice-President and Director of the Division of Basic Sciences. He holds an Affiliate Professor appointment in the Biochemistry department at the University of Washington. After undergraduate studies at the University of Cambridge and post-graduate research at the University of Warwick, he performed postdoctoral research with Bernard Moss at the NIH and with Tony Hunter at the Salk Institute. With Tony, he found that oncogenic retroviruses (Rous sarcoma virus and others) and growth factors (EGF and PDGF) stimulate the tyrosine phosphorylation of overlapping subsets of cell proteins, which were candidates to regulate cell proliferation and metabolism. He joined Fred Hutch in 1985 to continue the work he started at the Salk, investigating the mechanisms by which protein kinases regulate cell proliferation and transformation. His laboratory played important roles in establishing how Src is regulated, how activated growth factor receptors recruit signaling proteins, and Ras-Raf-MAPK signaling. In 1995, postdoc Brian Howell knocked out the gene for a Src substrate and observed a distinctive brain development phenotype. Efforts by several laboratories rapidly established a signaling pathway that regulates neuron migrations during brain development. Further studies on this pathway revealed the importance of ubiquitination and degradation for terminating signaling, and led in recent years to detailed investigation of the roles of Cullin-RING ligases in regulating signal transduction events in vivo and in cultured cells.","type":"paragraph"}],"research":{"focuses":["signaling pathways","cell migration","phosphorylation","cell transformation"],"expertises":[{"id":"cell-biology","name":"Cell Biology"},{"id":"neuroscience","name":"Neuroscience"}]},"affiliations":[{"name":["Fred Hutchinson Cancer Research Center"],"address":{"formatted":["United States"],"components":{"country":"United States"}}}],"competingInterests":"Jon Cooper receives research grants from the NIH and he serves on the editorial board of Molecular and Cellular Biology."}

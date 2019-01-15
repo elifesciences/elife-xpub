@@ -66,9 +66,7 @@ class PeoplePickerLogic extends React.Component {
 
   render() {
     const { people, ...otherProps } = this.props
-    let extendedPeople = [...people].sort((a, b) =>
-      a.name.localeCompare(b.name),
-    )
+    let extendedPeople = [...people]
 
     extendedPeople = extendedPeople.map(person => ({
       ...person,
@@ -76,9 +74,11 @@ class PeoplePickerLogic extends React.Component {
         ' ',
       )} ${person.expertises.join(' ')} ${person.aff ? person.aff : ''}`,
     }))
+
     const searchOptions = extendedPeople.map(person => ({
       value: person.name,
     }))
+
     return this.props.children({
       ...otherProps,
       people: this.filterPeople(
