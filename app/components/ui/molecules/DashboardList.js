@@ -12,6 +12,9 @@ const EmptyListMessage = styled(Box)`
 `
 const EmptyListSmallParagraph = styled(Paragraph.Small)`
   font-family: ${th('fontInterface')};
+  font-size: 12px;
+  font-weight: 400;
+  font-family: 'Noto Sans';
 `
 const EmptyListParagraph = styled(Box)`
   margin-bottom: 24px;
