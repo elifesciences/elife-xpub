@@ -7,7 +7,7 @@ import config from 'config'
 import { H2 } from '@pubsweet/ui'
 import styled from 'styled-components'
 import { th } from '@pubsweet/ui-toolkit'
-import OrcidButton from '../../ui/atoms/OrcidButton'
+import ButtonOrcid from '../../ui/atoms/ButtonOrcid'
 import ButtonLink from '../../ui/atoms/ButtonLink'
 import Paragraph from '../../ui/atoms/Paragraph'
 import NativeLink from '../../ui/atoms/NativeLink'
@@ -115,7 +115,7 @@ class LoginPage extends React.Component {
           <Flex alignItems="center" mb={5}>
             <Box mr={3}>
               <a href={loginUrl}>
-                <OrcidButton data-test-id="login">Login with ORCID</OrcidButton>
+                <ButtonOrcid data-test-id="login">Login with ORCID</ButtonOrcid>
               </a>
             </Box>
             <Box>
