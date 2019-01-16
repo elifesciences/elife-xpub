@@ -1,13 +1,7 @@
 import React from 'react'
-import styled from 'styled-components'
-import { Action } from '@pubsweet/ui'
-import { th } from '@pubsweet/ui-toolkit'
+import ActionText from '../../../../ui/atoms/ActionText'
 import ValidatedField from '../../../../ui/atoms/ValidatedField'
 import TwoColumnLayout from '../../../../global/layout/TwoColumnLayout'
-
-const ActionText = styled(Action)`
-  font-family: ${th('fontWriting')};
-`
 
 const AuthorPage = ({ prefill }) => (
   <React.Fragment>
