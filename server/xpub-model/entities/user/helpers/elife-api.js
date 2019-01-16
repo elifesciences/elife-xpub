@@ -5,6 +5,19 @@ const logger = require('@pubsweet/logger')
 
 const apiRoot = config.get('server.api.url')
 
+// Taken from journal-cms:
+// sync/field.storage.node.field_person_type.yml
+const validRoles = [
+  'director',
+  'early-career',
+  'executive',
+  'leadership',
+  'reviewing-editor',
+  'senior-editor',
+]
+
+const isValidRole = role => validRoles.indexOf(role) > 1
+
 const request = (endpoint, query = {}) => {
   const req = superagent.get(apiRoot + endpoint)
 
@@ -54,6 +67,9 @@ const people = async role => {
     let query = `order=asc&page=${page}&per-page=100`
     if (role) {
       role.split(',').forEach(r => {
+        if (!isValidRole(r)) {
+          throw new TypeError(`Invalid Role Querying the eLife API: ${r}`)
+        }
         query += `&type[]=${r}`
       })
     }

@@ -71,12 +71,12 @@ describe('eLife API tests', () => {
     let queryString = ''
     const storedImplementation = request.get
     request.get.mockImplementation(() => ({
-        header: request.header,
-        query: jest.fn(query => {
-          queryString = query
-          return Promise.resolve({ body: { items: [] } })
-        }),
-      }))
+      header: request.header,
+      query: jest.fn(query => {
+        queryString = query
+        return Promise.resolve({ body: { items: [] } })
+      }),
+    }))
     await api.people('senior-editor')
     expect(queryString).toBe(
       'order=asc&page=1&per-page=100&type[]=senior-editor',
@@ -96,6 +96,13 @@ describe('eLife API tests', () => {
     }))
     jest.spyOn(logger, 'error').mockImplementationOnce(() => {})
     await expect(api.people()).rejects.toThrow('Forbidden')
+    expect(logger.error).toHaveBeenCalled()
+  })
+
+  it('throws a TypeError on invalid role', async () => {
+    await expect(api.people('dogs,cats')).rejects.toThrow(
+      'Invalid Role Querying the eLife API: dogs',
+    )
     expect(logger.error).toHaveBeenCalled()
   })
 })
