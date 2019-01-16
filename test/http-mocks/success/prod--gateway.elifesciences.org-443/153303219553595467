@@ -1,4 +1,4 @@
-GET /people?order=asc&page=2&per-page=100&type=reviewing-editor
+GET /people?order=asc&page=2&per-page=100&type[]=reviewing-editor
 accept-encoding: gzip, deflate
 
 HTTP/1.1 200 OK

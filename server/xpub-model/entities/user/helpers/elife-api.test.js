@@ -37,7 +37,7 @@ const person = require('./elife-api.test.person')
 
 describe('eLife API tests', () => {
   it('sends the Authorization token', async () => {
-    request.get.mockImplementation(makeGetResponse(person.allDetails))
+    request.get.mockImplementationOnce(makeGetResponse(person.allDetails))
     await api.people()
     const header = request.getHeader()
     expect(Object.keys(header)).toContain('Authorization')
@@ -45,7 +45,7 @@ describe('eLife API tests', () => {
   })
 
   it('creates the correct person structure', async () => {
-    request.get.mockImplementation(makeGetResponse(person.allDetails))
+    request.get.mockImplementationOnce(makeGetResponse(person.allDetails))
     const result = await api.people()
     expect(result).toHaveLength(1)
     expect(result[0].firstname).toBe(person.allDetails.name.givenNames)
@@ -61,19 +61,48 @@ describe('eLife API tests', () => {
   })
 
   it('creates correct person with minimum required data', async () => {
-    request.get.mockImplementation(makeGetResponse(person.minimumDetails))
+    request.get.mockImplementationOnce(makeGetResponse(person.minimumDetails))
     const result = await api.people()
     expect(result).toHaveLength(1)
     expect(result[0].id).toBe(person.minimumDetails.id)
   })
 
-  it('logs on error', async () => {
+  it('query string formatted for PHP', async () => {
+    let queryString = ''
+    const storedImplementation = request.get
     request.get.mockImplementation(() => ({
+      header: request.header,
+      query: jest.fn(query => {
+        queryString = query
+        return Promise.resolve({ body: { items: [] } })
+      }),
+    }))
+    await api.people('senior-editor')
+    expect(queryString).toBe(
+      'order=asc&page=1&per-page=100&type[]=senior-editor',
+    )
+
+    await api.people('senior-editor,leadership')
+    expect(queryString).toBe(
+      'order=asc&page=1&per-page=100&type[]=senior-editor&type[]=leadership',
+    )
+    request.get = storedImplementation
+  })
+
+  it('logs on error', async () => {
+    request.get.mockImplementationOnce(() => ({
       header: request.header,
       query: jest.fn(() => Promise.reject(new Error('Forbidden'))),
     }))
     jest.spyOn(logger, 'error').mockImplementationOnce(() => {})
     await expect(api.people()).rejects.toThrow('Forbidden')
+    expect(logger.error).toHaveBeenCalled()
+  })
+
+  it('throws a TypeError on invalid role', async () => {
+    await expect(api.people('dogs,cats')).rejects.toThrow(
+      'Invalid Role Querying the eLife API: dogs',
+    )
     expect(logger.error).toHaveBeenCalled()
   })
 })
