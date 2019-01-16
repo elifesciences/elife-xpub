@@ -4,6 +4,7 @@ import styled from 'styled-components'
 import { th } from '@pubsweet/ui-toolkit'
 import { Box, Flex } from '@rebass/grid'
 
+import media from '../../global/layout/media'
 import { peoplePropType } from './types'
 import SelectedItem from '../atoms/SelectedItem'
 import PersonPodGrid from './PersonPodGrid'
@@ -11,6 +12,16 @@ import PersonPodGrid from './PersonPodGrid'
 const SelectedItemsGrid = styled(Flex)`
   flex-wrap: wrap;
   align-items: center;
+`
+
+const SelectedContainer = styled(Flex).attrs({
+  mb: [3, 3, 2, 2],
+})`
+  flex-direction: column;
+  ${media.tabletPortraitUp`
+    justify-content: space-between;
+    flex-direction: row;
+  `};
 `
 
 const SelectedItems = ({ selection, onCloseClick }) => (
@@ -26,7 +37,14 @@ const SelectedItems = ({ selection, onCloseClick }) => (
   </SelectedItemsGrid>
 )
 
-const SuccessMessage = styled.div`
+const MessageWrapper = styled.div`
+  ${media.tabletPortraitUp`
+    position: absolute;
+    top: -60px;
+    right: 0;
+  `};
+`
+const SuccessMessage = styled(MessageWrapper)`
   color: ${th('colorSuccess')};
 `
 
@@ -35,10 +53,10 @@ const SelectionHint = ({ selection, minSelection, maxSelection }) => {
   if (selectionLength < minSelection) {
     const numRequired = minSelection - selectionLength
     return (
-      <div>
+      <MessageWrapper>
         {numRequired} more suggestion
         {numRequired === 1 ? '' : 's'} required
-      </div>
+      </MessageWrapper>
     )
   }
   if (selectionLength >= maxSelection) {
@@ -57,14 +75,14 @@ const PeoplePickerBody = ({
   ...props
 }) => (
   <React.Fragment>
-    <Flex justifyContent="space-between" mb={3}>
+    <SelectedContainer>
       <SelectedItems onCloseClick={toggleSelection} selection={selection} />
       <SelectionHint
         maxSelection={maxSelection}
         minSelection={minSelection}
         selection={selection}
       />
-    </Flex>
+    </SelectedContainer>
     <PersonPodGrid
       isSelected={isSelected}
       maxSelection={maxSelection}
