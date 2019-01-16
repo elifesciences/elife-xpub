@@ -1,10 +1,10 @@
 import { darken, th } from '@pubsweet/ui-toolkit'
 import styled from 'styled-components'
-import ButtonBase from './ButtonBase'
+import { Button } from '@pubsweet/ui'
 
 const colorOrcid = '#A6CE39'
 
-const ButtonOrcid = styled(ButtonBase).attrs({ primary: true })`
+const ButtonOrcid = styled(Button).attrs({ primary: true })`
   border-color: ${colorOrcid};
   background-color: ${colorOrcid};
   color: ${th('colorText')};

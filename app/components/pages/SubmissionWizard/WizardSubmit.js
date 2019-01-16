@@ -1,6 +1,5 @@
 import React from 'react'
-import { H2 } from '@pubsweet/ui'
-import ButtonBase from '../../ui/atoms/ButtonBase'
+import { H2, Button } from '@pubsweet/ui'
 import ModalDialog from '../../ui/molecules/ModalDialog'
 import ModalHistoryState from '../../ui/molecules/ModalHistoryState'
 
@@ -8,7 +7,7 @@ const WizardSubmit = ({ setTouched, submitForm, validateForm }) => (
   <ModalHistoryState>
     {({ showModal, hideModal, isModalVisible }) => (
       <React.Fragment>
-        <ButtonBase
+        <Button
           data-test-id="submit"
           onClick={() =>
             validateForm().then(errors => {
@@ -23,7 +22,7 @@ const WizardSubmit = ({ setTouched, submitForm, validateForm }) => (
           type="button"
         >
           Submit
-        </ButtonBase>
+        </Button>
         <ModalDialog
           acceptText="Confirm"
           onAccept={submitForm}
