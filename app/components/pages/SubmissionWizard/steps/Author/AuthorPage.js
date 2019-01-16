@@ -1,14 +1,20 @@
 import React from 'react'
+import styled from 'styled-components'
 import { Action } from '@pubsweet/ui'
+import { th } from '@pubsweet/ui-toolkit'
 import ValidatedField from '../../../../ui/atoms/ValidatedField'
 import TwoColumnLayout from '../../../../global/layout/TwoColumnLayout'
+
+const ActionText = styled(Action)`
+  font-family: ${th('fontWriting')};
+`
 
 const AuthorPage = ({ prefill }) => (
   <React.Fragment>
     <p>
-      <Action data-test-id="orcid-prefill" onClick={prefill}>
+      <ActionText data-test-id="orcid-prefill" onClick={prefill}>
         Pre-fill my details
-      </Action>{' '}
+      </ActionText>{' '}
       using ORCID
     </p>
 
