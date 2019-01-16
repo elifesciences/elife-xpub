@@ -1,8 +1,9 @@
 import { cloneDeep } from 'lodash'
 import React from 'react'
 import { Box } from '@rebass/grid'
-import { Action, ErrorText } from '@pubsweet/ui'
+import { ErrorText } from '@pubsweet/ui'
 import { FormH3 } from '../../../../ui/atoms/FormHeadings'
+import ActionText from '../../../../ui/atoms/ActionText'
 
 import PeoplePickerControl from '../../../../ui/PeoplePicker/PeoplePickerControl'
 import Textarea from '../../../../ui/atoms/Textarea'
@@ -26,9 +27,9 @@ const OptionalExclude = ({
   ) : (
     <Box {...props}>
       Would you like to{' '}
-      <Action onClick={onRequestOpen} type="button">
+      <ActionText onClick={onRequestOpen} type="button">
         exclude a {roleName}
-      </Action>
+      </ActionText>
       ?
     </Box>
   )

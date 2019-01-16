@@ -1,8 +1,9 @@
 import React from 'react'
-import { Menu, Action } from '@pubsweet/ui'
+import { Menu } from '@pubsweet/ui'
 import { Box } from '@rebass/grid'
 
 import ValidatedField from '../../../../ui/atoms/ValidatedField'
+import ActionText from '../../../../ui/atoms/ActionText'
 import Textarea from '../../../../ui/atoms/Textarea'
 import SubjectAreaDropdown from './SubjectAreaDropdown'
 import OptionalSection from './OptionalSection'
@@ -93,13 +94,13 @@ const SubmissionPage = ({ values, setFieldValue, setFieldTouched }) => (
         // If null showing the link to show the second title...
         <Box>
           Would you like to{' '}
-          <Action
+          <ActionText
             name="moreSubmission"
             onClick={() => setFieldValue('secondCosubmissionTitle', '', false)}
             type="button"
           >
             add details
-          </Action>{' '}
+          </ActionText>{' '}
           of another co-submission?
         </Box>
       ) : (

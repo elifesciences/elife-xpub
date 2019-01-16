@@ -3,11 +3,12 @@ import PropTypes from 'prop-types'
 import { Flex, Box } from '@rebass/grid'
 import styled from 'styled-components'
 import Dropzone from 'react-dropzone'
-import { ErrorText, Action } from '@pubsweet/ui'
+import { ErrorText } from '@pubsweet/ui'
 import { th } from '@pubsweet/ui-toolkit'
 import config from 'config'
 import { errorMessageMapping } from './utils'
 import Paragraph from '../../../../ui/atoms/Paragraph'
+import ActionText from '../../../../ui/atoms/ActionText'
 
 import Icon from '../../../../ui/atoms/Icon'
 
@@ -114,7 +115,7 @@ const DropzoneContent = ({
           data-test-id="dropzoneMessage"
         >
           <DropzoneErrorText>Oops!</DropzoneErrorText> {errorMessage} Please{' '}
-          <Action onClick={dropzoneOpen}>try again.</Action>
+          <ActionText onClick={dropzoneOpen}>try again.</ActionText>
         </UploadInstruction>
 
         <UploadNote>
@@ -132,7 +133,7 @@ const DropzoneContent = ({
           data-test-conversion="completed"
           data-test-id="dropzoneMessage"
         >
-          Success! <Action onClick={dropzoneOpen}>Replace</Action> your
+          Success! <ActionText onClick={dropzoneOpen}>Replace</ActionText> your
           manuscript.
         </UploadInstruction>
       </React.Fragment>
@@ -142,8 +143,8 @@ const DropzoneContent = ({
     <React.Fragment>
       <StyledUploadIcon />
       <UploadInstruction data-test-id="dropzoneMessage">
-        <Action onClick={dropzoneOpen}>Upload</Action> your manuscript or drag
-        it here.
+        <ActionText onClick={dropzoneOpen}>Upload</ActionText> your manuscript
+        or drag it here.
       </UploadInstruction>
       <UploadNote>
         Please note that files larger than 10MB may result in review delays.
