@@ -7,6 +7,9 @@ import NativeLink from '../../ui/atoms/NativeLink'
 const CenteredSmallParagraph = styled(Paragraph.Small).attrs({
   secondary: true,
 })`
+  font-size: 12px;
+  font-weight: 400;
+  font-family: 'Noto Sans';
   text-align: center;
 `
 
