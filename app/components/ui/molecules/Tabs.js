@@ -25,7 +25,6 @@ const Tab = styled(UnstyledTab).attrs({
   padding: ${th('space.3')};
   list-style: none;
   cursor: pointer;
-
   border-bottom: 4px solid transparent;
   margin-bottom: -1px;
   color: ${th('colorTextSecondary')};
