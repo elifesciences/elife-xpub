@@ -23,15 +23,20 @@ const convertPerson = apiPerson => {
   const { id, name, research = {}, emailAddresses, affiliations } = apiPerson
   const { focuses = [], expertises = [] } = research
 
+  const affiliationString = affiliations
+    ? affiliations.map(a => (a.name ? a.name.join(', ') : undefined)).join(', ')
+    : undefined
+
   let person = {
     id,
     name: name.preferred,
-    aff: affiliations ? affiliations[0].name[0] : undefined,
+    aff: affiliationString,
     focuses,
     expertises: expertises.map(expertise => expertise.name) || [],
     surname: name.surname,
     firstname: name.givenNames,
   }
+
   // if we used a secret then pull out the email too
   if (config.get('server.api.secret') && emailAddresses) {
     const email = emailAddresses.length ? emailAddresses[0].value : ''
