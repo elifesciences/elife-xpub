@@ -15,7 +15,7 @@ const MobileOnlySubmissionsContainer = styled(Box).attrs({ mx: -3 })`
 `
 
 const TabbedSubmissions = styled(Tabs)`
-  min-height: 300px;
+  min-height: 475px;
   margin-bottom: ${th('space.3')};
 `
 
