@@ -39,7 +39,6 @@ const Tab = styled(UnstyledTab).attrs({
   }
 
   &.disabled {
-    color: ${th('colorTextSecondary')};
     cursor: default;
   }
 `
