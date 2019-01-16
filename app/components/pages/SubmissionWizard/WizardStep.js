@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { Formik } from 'formik'
 import { Box, Flex } from '@rebass/grid'
-import { Button } from '@pubsweet/ui'
+import ButtonBase from '../../ui/atoms/ButtonBase'
 import ButtonLink from '../../ui/atoms/ButtonLink'
 import { FormH2 } from '../../ui/atoms/FormHeadings'
 import AutoSave from './AutoSave'
@@ -77,9 +77,9 @@ const WizardStep = ({
                     validateForm={validateForm}
                   />
                 ) : (
-                  <Button data-test-id="next" primary type="submit">
+                  <ButtonBase data-test-id="next" primary type="submit">
                     Next
-                  </Button>
+                  </ButtonBase>
                 )}
               </Box>
             </Flex>
