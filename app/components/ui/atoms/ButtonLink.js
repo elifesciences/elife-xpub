@@ -1,9 +1,9 @@
 import React from 'react'
 import { withRouter } from 'react-router-dom'
-import { Button } from '@pubsweet/ui'
+import ButtonBase from './ButtonBase'
 
 const ButtonLink = ({ history, to, ...props }) => (
-  <Button onClick={() => history.push(to)} {...props} />
+  <ButtonBase onClick={() => history.push(to)} {...props} />
 )
 
 export default withRouter(ButtonLink)
