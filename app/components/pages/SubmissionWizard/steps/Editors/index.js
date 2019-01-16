@@ -19,7 +19,10 @@ const EditorsPageContainer = ({ ...props }) => (
   <Query query={EDITOR_LIST_QUERY} variables={{ role: 'reviewing-editor' }}>
     {({ data: { editors: reviewingEditors = [] } }) => (
       // TODO handle errors
-      <Query query={EDITOR_LIST_QUERY} variables={{ role: 'senior-editor' }}>
+      <Query
+        query={EDITOR_LIST_QUERY}
+        variables={{ role: 'senior-editor,leadership' }}
+      >
         {({ data: { editors: seniorEditors = [] } }) => (
           <EditorsPage
             reviewingEditors={reviewingEditors}
