@@ -20,14 +20,14 @@ async function addFileEntityToManuscript(manuscriptEntity, fileEntity) {
     logger.info(
       `Manuscript Upload addFileEntityToManuscript::push ${
         fileEntity.filename
-      }`,
+      } | ${manuscriptEntity.id}`,
     )
     manuscript.files.push(fileEntity)
   } else {
     logger.info(
       `Manuscript Upload addFileEntityToManuscript::update ${
         fileEntity.filename
-      }`,
+      } | ${manuscriptEntity.id}`,
     )
     manuscript.files[manuscriptUploadIndex] = fileEntity
   }
@@ -55,12 +55,12 @@ async function uploadManuscript(_, { file, id, fileSize }, { user }) {
   const manuscript = await Manuscript.find(id, userUuid)
 
   const { stream, filename, mimetype: mimeType } = await file
-  logger.info(`Manuscript Upload Size: ${filename}, ${fileSize}`)
+  logger.info(`Manuscript Upload Size: ${filename}, ${fileSize} | ${id}`)
   const fileEntity = await new File({
     manuscriptId: manuscript.id,
     url: `manuscripts/${id}`,
     filename,
-    type: 'MANUSCRIPT_SOURCE',
+    type: 'MANUSCRIPT_SOURCE_PENDING',
     mimeType,
   }).save()
 
@@ -107,7 +107,7 @@ async function uploadManuscript(_, { file, id, fileSize }, { user }) {
       size: fileSize,
     })
   } catch (err) {
-    logger.error(`Manuscript was not uploaded to S3: ${err}`)
+    logger.error(`Manuscript was not uploaded to S3: ${err} | ${id}`)
     await fileEntity.delete()
     clearInterval(handle)
     throw err
@@ -136,12 +136,21 @@ async function uploadManuscript(_, { file, id, fileSize }, { user }) {
       filename,
     })
   }
-  await addFileEntityToManuscript(manuscript, fileEntity)
-  manuscript.meta.title = title
-  logger.info(`Manuscript Upload Manuscript::save ${title} | ${id}`)
 
+  // After the length file operations above - now update the manuscript...
+  // If we get here we can replace the manuscript source successfully.
+  await addFileEntityToManuscript(manuscript, fileEntity)
+
+  // Change from pending
+  fileEntity.type = 'MANUSCRIPT_SOURCE'
+  fileEntity.save()
+
+  logger.info(`Manuscript Upload Manuscript::save ${title} | ${id}`)
+  manuscript.meta.title = title
   await manuscript.save()
-  logger.info(`Manuscript Upload Manuscript::saved ${manuscript.title} | ${id}`)
+  logger.info(
+    `Manuscript Upload Manuscript::saved ${manuscript.meta.title} | ${id}`,
+  )
 
   clearInterval(handle)
   pubsub.publish(`${ON_UPLOAD_PROGRESS}.${user}`, {
@@ -149,7 +158,7 @@ async function uploadManuscript(_, { file, id, fileSize }, { user }) {
   })
   const actualTime = (Date.now() - startedTime) / 1000
   logger.info(
-    `Manuscript Upload Time, Actual (${actualTime}) , Predicted (${predictedTime})`,
+    `Manuscript Upload Time, Actual (${actualTime}) , Predicted (${predictedTime}) | ${id}`,
   )
 
   return manuscript
