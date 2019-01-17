@@ -46,22 +46,34 @@ function cssTimeToMilliseconds(timeString) {
   }
 }
 
-const ModalOverlay = ({ children, open, theme, transparentBackground }) => (
-  <Root aria-live="assertive">
-    <CSSTransition
-      classNames="modal"
-      in={open}
-      mountOnEnter
-      timeout={cssTimeToMilliseconds(theme.transitionDuration)}
-      unmountOnExit
-    >
-      <Container transparentBackground={transparentBackground}>
-        {children}
-        <ScrollLock />
-      </Container>
-    </CSSTransition>
-  </Root>
-)
+class ModalOverlay extends React.Component {
+  constructor(props) {
+    super(props)
+    this.overlay = React.createRef()
+  }
+
+  render() {
+    const { children, open, theme, transparentBackground } = this.props
+    return (
+      <Root aria-live="assertive">
+        <CSSTransition
+          classNames="modal"
+          in={open}
+          mountOnEnter
+          timeout={cssTimeToMilliseconds(theme.transitionDuration)}
+          unmountOnExit
+        >
+          <Container transparentBackground={transparentBackground} ref={this.overlay}>
+            {children}
+            {this.overlay.current &&
+              <ScrollLock touchScrollTarget={this.overlay.current} />
+            }
+          </Container>
+        </CSSTransition>
+      </Root>
+    )
+  }
+}
 
 ModalOverlay.propTypes = {
   open: PropTypes.bool.isRequired,
