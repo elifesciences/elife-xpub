@@ -11,7 +11,6 @@ import ButtonOrcid from '../../ui/atoms/ButtonOrcid'
 import ButtonLink from '../../ui/atoms/ButtonLink'
 import Paragraph from '../../ui/atoms/Paragraph'
 import NativeLink from '../../ui/atoms/NativeLink'
-import media from '../../global/layout/media'
 
 const { url: loginUrl, signupUrl, legacySubmissionUrl } = config.login
 
@@ -21,10 +20,7 @@ const EXCHANGE_TOKEN_MUTATION = gql`
   }
 `
 const Container = styled(Box)`
-  margin-top: ${th('space.3')};
-  ${media.tabletPortraitUp`
-    margin-top:${'calc(50vh - 300px)'};
-  `};
+  margin-top: ${th('calc(50vh - 300px)')};
 `
 
 class LoginPage extends React.Component {
