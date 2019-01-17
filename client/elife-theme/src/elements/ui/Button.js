@@ -61,10 +61,12 @@ export default css`
   font-size: ${th('fontSizeBaseSmall')}
   line-height: ${th('lineHeightBaseSmall')};
   padding: ${th('space.2')};
-  min-width: calc(${th('gridUnit')} * 28);
+  padding-bottom: 9px;
   text-transform: uppercase;
   font-family: ${th('fontHeading')};
   font-weight: 400;
+  min-width: 120px;
+  height: 48px;
 
   ${props => props.small && small};
   ${props => props.extraSmall && extraSmall};

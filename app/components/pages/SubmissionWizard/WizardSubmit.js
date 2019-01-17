@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, H2 } from '@pubsweet/ui'
+import { H2, Button } from '@pubsweet/ui'
 import ModalDialog from '../../ui/molecules/ModalDialog'
 import ModalHistoryState from '../../ui/molecules/ModalHistoryState'
 
