@@ -20,14 +20,14 @@ async function addFileEntityToManuscript(manuscriptEntity, fileEntity) {
     logger.info(
       `Manuscript Upload addFileEntityToManuscript::push ${
         fileEntity.filename
-      }`,
+      } | ${manuscriptEntity.id}`,
     )
     manuscript.files.push(fileEntity)
   } else {
     logger.info(
       `Manuscript Upload addFileEntityToManuscript::update ${
         fileEntity.filename
-      }`,
+      } | ${manuscriptEntity.id}`,
     )
     manuscript.files[manuscriptUploadIndex] = fileEntity
   }
@@ -55,12 +55,12 @@ async function uploadManuscript(_, { file, id, fileSize }, { user }) {
   const manuscript = await Manuscript.find(id, userUuid)
 
   const { stream, filename, mimetype: mimeType } = await file
-  logger.info(`Manuscript Upload Size: ${filename}, ${fileSize}`)
+  logger.info(`Manuscript Upload Size: ${filename}, ${fileSize} | ${id}`)
   const fileEntity = await new File({
     manuscriptId: manuscript.id,
     url: `manuscripts/${id}`,
     filename,
-    type: 'MANUSCRIPT_SOURCE',
+    type: 'MANUSCRIPT_SOURCE_PENDING',
     mimeType,
   }).save()
 
@@ -136,10 +136,13 @@ async function uploadManuscript(_, { file, id, fileSize }, { user }) {
       filename,
     })
   }
+
+  // If we get here we can replace the manuscript source successfully.
+  fileEntity.type = 'MANUSCRIPT_SOURCE'
   await addFileEntityToManuscript(manuscript, fileEntity)
   manuscript.meta.title = title
-  logger.info(`Manuscript Upload Manuscript::save ${title} | ${id}`)
 
+  logger.info(`Manuscript Upload Manuscript::save ${title} | ${id}`)
   await manuscript.save()
   logger.info(`Manuscript Upload Manuscript::saved ${manuscript.title} | ${id}`)
 
@@ -149,7 +152,7 @@ async function uploadManuscript(_, { file, id, fileSize }, { user }) {
   })
   const actualTime = (Date.now() - startedTime) / 1000
   logger.info(
-    `Manuscript Upload Time, Actual (${actualTime}) , Predicted (${predictedTime})`,
+    `Manuscript Upload Time, Actual (${actualTime}) , Predicted (${predictedTime}) | ${id}`,
   )
 
   return manuscript
