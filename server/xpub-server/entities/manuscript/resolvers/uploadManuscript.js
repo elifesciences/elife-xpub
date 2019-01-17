@@ -9,6 +9,17 @@ const { Manuscript, User } = require('@elifesciences/xpub-model')
 const { File } = require('@elifesciences/xpub-model')
 const { S3Storage } = require('@elifesciences/xpub-controller')
 
+async function debugMsFiles(id, user) {
+  const ms = await Manuscript.find(id, user)
+  if (ms.files) {
+    ms.files.forEach(element => {
+      logger.info(`MS ${id} : ${element.type} File ${element.id}`)
+    })
+  } else {
+    logger.info(`<No Files> on ${id}`)
+  }
+}
+
 async function addFileEntityToManuscript(manuscriptEntity, fileEntity) {
   const manuscript = manuscriptEntity
   await manuscript.refresh()
@@ -54,8 +65,10 @@ async function uploadManuscript(_, { file, id, fileSize }, { user }) {
   const userUuid = await User.getUuidForProfile(user)
   const manuscript = await Manuscript.find(id, userUuid)
 
+  logger.info(`Manuscript Upload Starting: ${id}`)
+  await debugMsFiles(id, userUuid)
+
   const { stream, filename, mimetype: mimeType } = await file
-  logger.info(`Manuscript Upload Size: ${filename}, ${fileSize}`)
   const fileEntity = await new File({
     manuscriptId: manuscript.id,
     url: `manuscripts/${id}`,
@@ -63,6 +76,9 @@ async function uploadManuscript(_, { file, id, fileSize }, { user }) {
     type: 'MANUSCRIPT_SOURCE',
     mimeType,
   }).save()
+
+  logger.info(`Manuscript Upload Size: ${filename}, ${fileSize}`)
+  await debugMsFiles(id, userUuid)
 
   const pubsub = await pubsubManager.getPubsub()
 
@@ -81,6 +97,8 @@ async function uploadManuscript(_, { file, id, fileSize }, { user }) {
   }, 200)
 
   logger.info(`Manuscript Upload fileContents::start ${filename} | ${id}`)
+  await debugMsFiles(id, userUuid)
+
   const fileContents = await new Promise((resolve, reject) => {
     let uploadedSize = 0
     const chunks = []
@@ -113,6 +131,7 @@ async function uploadManuscript(_, { file, id, fileSize }, { user }) {
     throw err
   }
   logger.info(`Manuscript Upload S3::end ${filename} | ${id}`)
+  await debugMsFiles(id, userUuid)
 
   let title = ''
   try {
@@ -139,9 +158,11 @@ async function uploadManuscript(_, { file, id, fileSize }, { user }) {
   await addFileEntityToManuscript(manuscript, fileEntity)
   manuscript.meta.title = title
   logger.info(`Manuscript Upload Manuscript::save ${title} | ${id}`)
+  await debugMsFiles(id, userUuid)
 
   await manuscript.save()
   logger.info(`Manuscript Upload Manuscript::saved ${manuscript.title} | ${id}`)
+  await debugMsFiles(id, userUuid)
 
   clearInterval(handle)
   pubsub.publish(`${ON_UPLOAD_PROGRESS}.${user}`, {
