@@ -107,7 +107,7 @@ async function uploadManuscript(_, { file, id, fileSize }, { user }) {
       size: fileSize,
     })
   } catch (err) {
-    logger.error(`Manuscript was not uploaded to S3: ${err}`)
+    logger.error(`Manuscript was not uploaded to S3: ${err} | ${id}`)
     await fileEntity.delete()
     clearInterval(handle)
     throw err
@@ -137,12 +137,16 @@ async function uploadManuscript(_, { file, id, fileSize }, { user }) {
     })
   }
 
+  // After the length file operations above - now update the manuscript...
   // If we get here we can replace the manuscript source successfully.
-  fileEntity.type = 'MANUSCRIPT_SOURCE'
   await addFileEntityToManuscript(manuscript, fileEntity)
-  manuscript.meta.title = title
+
+  // Change from pending
+  fileEntity.type = 'MANUSCRIPT_SOURCE'
+  fileEntity.save()
 
   logger.info(`Manuscript Upload Manuscript::save ${title} | ${id}`)
+  manuscript.meta.title = title
   await manuscript.save()
   logger.info(
     `Manuscript Upload Manuscript::saved ${manuscript.meta.title} | ${id}`,
