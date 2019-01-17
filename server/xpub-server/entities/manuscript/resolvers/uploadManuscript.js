@@ -144,7 +144,9 @@ async function uploadManuscript(_, { file, id, fileSize }, { user }) {
 
   logger.info(`Manuscript Upload Manuscript::save ${title} | ${id}`)
   await manuscript.save()
-  logger.info(`Manuscript Upload Manuscript::saved ${manuscript.title} | ${id}`)
+  logger.info(
+    `Manuscript Upload Manuscript::saved ${manuscript.meta.title} | ${id}`,
+  )
 
   clearInterval(handle)
   pubsub.publish(`${ON_UPLOAD_PROGRESS}.${user}`, {
