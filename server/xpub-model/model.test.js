@@ -106,6 +106,21 @@ describe('related objects behave as we expect', () => {
       expect(dbFile).toHaveProperty('id')
       expect(dbFile.label).toBe('changed')
     })
+
+    it('puts id on a new file', async () => {
+      const manuscript = await createInitialManuscript(userId)
+      const { id } = manuscript
+
+      const fileEntity = new File({
+        manuscriptId: id,
+        url: `manuscripts/${id}`,
+        filename: 'text.txt',
+        type: 'MANUSCRIPT_SOURCE_PENDING',
+        mimeType: 'application/txt',
+      })
+      await fileEntity.save()
+      expect(fileEntity).toHaveProperty('id')
+    })
   })
 })
 
