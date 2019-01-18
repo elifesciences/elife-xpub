@@ -19,12 +19,6 @@ class File extends BaseModel {
     }
   }
 
-  static async find(id) {
-    const file = await this.find(id)
-
-    return file
-  }
-
   static async findByManuscriptId(manuscriptId) {
     const files = await this.query().where({
       manuscript_id: manuscriptId,
