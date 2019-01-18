@@ -9,30 +9,6 @@ const { Manuscript, User } = require('@elifesciences/xpub-model')
 const { File } = require('@elifesciences/xpub-model')
 const { S3Storage } = require('@elifesciences/xpub-controller')
 
-async function addFileEntityToManuscript(manuscriptEntity, fileEntity) {
-  const manuscript = manuscriptEntity
-  await manuscript.refresh()
-  const manuscriptUploadIndex = manuscript.files.findIndex(
-    element => element.type === 'MANUSCRIPT_SOURCE',
-  )
-
-  if (manuscriptUploadIndex < 0) {
-    logger.info(
-      `Manuscript Upload addFileEntityToManuscript::push ${
-        fileEntity.filename
-      } | ${manuscriptEntity.id}`,
-    )
-    manuscript.files.push(fileEntity)
-  } else {
-    logger.info(
-      `Manuscript Upload addFileEntityToManuscript::update ${
-        fileEntity.filename
-      } | ${manuscriptEntity.id}`,
-    )
-    manuscript.files[manuscriptUploadIndex] = fileEntity
-  }
-}
-
 async function uploadManuscript(_, { file, id, fileSize }, { user }) {
   /**
    * TODO
@@ -52,12 +28,13 @@ async function uploadManuscript(_, { file, id, fileSize }, { user }) {
   }
 
   const userUuid = await User.getUuidForProfile(user)
-  const manuscript = await Manuscript.find(id, userUuid)
+  // make sure the manuscript exists
+  await Manuscript.find(id, userUuid)
 
   const { stream, filename, mimetype: mimeType } = await file
   logger.info(`Manuscript Upload Size: ${filename}, ${fileSize} | ${id}`)
   const fileEntity = await new File({
-    manuscriptId: manuscript.id,
+    manuscriptId: id,
     url: `manuscripts/${id}`,
     filename,
     type: 'MANUSCRIPT_SOURCE_PENDING',
@@ -138,16 +115,32 @@ async function uploadManuscript(_, { file, id, fileSize }, { user }) {
   }
 
   // After the length file operations above - now update the manuscript...
-  // If we get here we can replace the manuscript source successfully.
-  await addFileEntityToManuscript(manuscript, fileEntity)
+  const manuscript = await Manuscript.find(id, userUuid)
 
-  // Change from pending
+  const fileIndex = manuscript.files.findIndex(
+    element => element.type === 'MANUSCRIPT_SOURCE',
+  )
+
+  logger.info(
+    `Manuscript Upload addFileEntityToManuscript::${fileIndex} ${
+      fileEntity.filename
+    } | ${id}`,
+  )
+
+  if (fileIndex < 0) {
+    manuscript.files.push(fileEntity)
+  } else {
+    manuscript.files[fileIndex] = fileEntity
+  }
+
+  // change the file entity from pending
   fileEntity.type = 'MANUSCRIPT_SOURCE'
   fileEntity.save()
 
   logger.info(`Manuscript Upload Manuscript::save ${title} | ${id}`)
   manuscript.meta.title = title
   await manuscript.save()
+
   logger.info(
     `Manuscript Upload Manuscript::saved ${manuscript.meta.title} | ${id}`,
   )
