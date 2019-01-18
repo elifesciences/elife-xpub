@@ -64,11 +64,62 @@ describe('related objects behave as we expect', () => {
       })
       manuscript.files[0] = file
       await manuscript.save()
-      manuscript = await Manuscript.find(manuscript.id, userId)
 
+      // in memory
       expect(manuscript.files).toHaveLength(1)
       expect(manuscript.files[0].filename).toBe('test2.txt')
       expect(File.find(oldFileId)).rejects.toThrow()
+
+      manuscript = await Manuscript.find(manuscript.id, userId)
+
+      // from database
+      expect(manuscript.files).toHaveLength(1)
+      expect(manuscript.files[0].filename).toBe('test2.txt')
+      expect(File.find(oldFileId)).rejects.toThrow()
+    })
+
+    it('mutates the manuscript when save() is called', async () => {
+      let manuscript = await createManuscriptWithOneFile(userId)
+      manuscript.meta.title = 'changed'
+      await manuscript.save()
+      // in memory
+      expect(manuscript).toHaveProperty('id')
+      expect(manuscript.meta.title).toBe('changed')
+      manuscript = await Manuscript.find(manuscript.id, userId)
+      // from database
+      expect(manuscript).toHaveProperty('id')
+      expect(manuscript.meta.title).toBe('changed')
+    })
+
+    it('mutates the file when save() is called', async () => {
+      const manuscript = await createManuscriptWithOneFile(userId)
+      const file = await File.find(manuscript.files[0].id)
+      file.label = 'changed'
+      await file.save()
+
+      // in memory
+      expect(file).toHaveProperty('id')
+      expect(file.label).toBe('changed')
+      const dbFile = await File.find(manuscript.files[0].id)
+
+      // from database
+      expect(dbFile).toHaveProperty('id')
+      expect(dbFile.label).toBe('changed')
+    })
+
+    it('puts id on a new file', async () => {
+      const manuscript = await createInitialManuscript(userId)
+      const { id } = manuscript
+
+      const fileEntity = new File({
+        manuscriptId: id,
+        url: `manuscripts/${id}`,
+        filename: 'text.txt',
+        type: 'MANUSCRIPT_SOURCE_PENDING',
+        mimeType: 'application/txt',
+      })
+      await fileEntity.save()
+      expect(fileEntity).toHaveProperty('id')
     })
   })
 })

@@ -19,6 +19,12 @@ class File extends BaseModel {
     }
   }
 
+  async save() {
+    // overridden to mutate the object instance
+    await this.$query().upsertGraphAndFetch(this)
+    return this
+  }
+
   static async findByManuscriptId(manuscriptId) {
     const files = await this.query().where({
       manuscript_id: manuscriptId,
