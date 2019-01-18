@@ -37,7 +37,7 @@ async function uploadManuscript(_, { file, id, fileSize }, { user }) {
     manuscriptId: id,
     url: `manuscripts/${id}`,
     filename,
-    type: 'MANUSCRIPT_SOURCE_PENDING',
+    type: 'MANUSCRIPT_SOURCE',
     mimeType,
   }).save()
 
@@ -132,10 +132,6 @@ async function uploadManuscript(_, { file, id, fileSize }, { user }) {
   } else {
     manuscript.files[fileIndex] = fileEntity
   }
-
-  // change the file entity from pending
-  fileEntity.type = 'MANUSCRIPT_SOURCE'
-  fileEntity.save()
 
   logger.info(`Manuscript Upload Manuscript::save ${title} | ${id}`)
   manuscript.meta.title = title

@@ -128,7 +128,7 @@ const DropzoneContent = ({
     return (
       <React.Fragment>
         <StyledUploadSuccessIcon />
-        <FileName>{fileName}</FileName>
+        <FileName data-test-id="fileName">{fileName}</FileName>
         <UploadInstruction
           data-test-conversion="completed"
           data-test-id="dropzoneMessage"

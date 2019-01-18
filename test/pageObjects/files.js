@@ -10,6 +10,7 @@ const files = {
   supportingFilesUpload: Selector('[data-test-id=supportingFilesUpload]>input'),
   supportingFilesRemove: Selector('[data-test-id=supportingFilesRemove]'),
   supportingFile: Selector('[data-test-id=file_block_name]'),
+  fileName: Selector('[data-test-id=fileName]'),
 }
 
 export default files
