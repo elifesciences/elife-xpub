@@ -8,7 +8,7 @@ function supplementaryXml(files) {
 
   let supplementaryFileXml = ''
   const template = fs.readFileSync(
-    `${__dirname}/manifest-supplementary-file.xml`,
+    `${__dirname}/templates/manifest-supplementary-file.xml`,
     'utf8',
   )
 
@@ -22,19 +22,29 @@ function supplementaryXml(files) {
   return supplementaryFileXml
 }
 
-function manifestXml(suppFilesXml) {
-  const template = fs.readFileSync(`${__dirname}/manifest.xml`, 'utf8')
-  const xml = template.replace('{supplementaryFiles}', suppFilesXml)
-
-  return xml
-}
-
 function generateManifest(files) {
   if (!Array.isArray(files)) {
-    throw TypeError(`Expecting array: ${typeof files}`)
+    throw new TypeError(`Expecting array: ${typeof files}`)
   }
+  const manuscriptFiles = files.filter(
+    file => file.type === 'MANUSCRIPT_SOURCE',
+  )
+  if (manuscriptFiles.length > 1) {
+    throw new Error(
+      `Could not determine the manuscript, ${JSON.stringify(files, null, 4)}`,
+    )
+  }
+  const manuscript = manuscriptFiles[0]
+  const template = fs.readFileSync(
+    `${__dirname}/templates/manifest.xml`,
+    'utf8',
+  )
+  const result = template
+    .replace('{supplementaryFiles}', supplementaryXml(files))
+    .replace('{manuscript.mimeType}', manuscript.mimeType)
+    .replace('{manuscript.filename}', manuscript.filename)
 
-  return manifestXml(supplementaryXml(files))
+  return result
 }
 
 module.exports = generateManifest
