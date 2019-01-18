@@ -17,7 +17,7 @@ describe('Manifest XML generator', () => {
 
     // has manuscript
     expect(xml).toContain(
-      '<instance media-type="application/pdf" href="manuscript.pdf"/>',
+      '<instance media-type="application/pdf" href="00000000.pdf"/>',
     )
 
     // has disclosure

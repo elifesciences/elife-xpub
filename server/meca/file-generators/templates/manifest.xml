@@ -17,7 +17,7 @@
     <item id="xpub-123" type="manuscript" submission-item-id="custom003" version="0">
         <description>This is the main manuscript</description>
         <file-order>1</file-order>
-        <instance media-type="application/pdf" href="manuscript.pdf"/>
+        <instance media-type="{manuscript.mimeType}" href="{manuscript.filename}"/>
     </item>
 
     <item id="xpub-124" type="disclosure" submission-item-id="custom004" version="0">

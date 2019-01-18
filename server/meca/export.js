@@ -21,21 +21,11 @@ async function generate(manuscript, getContent, clientIp) {
     { name: 'transfer.xml', content: transferGenerator('') },
   ]
 
-  const uploadedFiles = []
-
-  manuscript.files.forEach(file => {
-    if (file.type === 'MANUSCRIPT_SOURCE') {
-      uploadedFiles.push({
-        name: 'manuscript.pdf',
-        content: getContent(file),
-      })
-    } else if (file.type === 'SUPPORTING_FILE') {
-      uploadedFiles.push({
-        name: file.filename,
-        content: getContent(file),
-      })
-    }
-  })
+  const uploadedFiles = manuscript.files.map(file => ({
+    name: file.filename,
+    content: getContent(file),
+    type: file.type,
+  }))
 
   return archiveGenerator(manditoryFiles.concat(uploadedFiles))
 }

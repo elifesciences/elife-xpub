@@ -33,13 +33,6 @@ async function uploadManuscript(_, { file, id, fileSize }, { user }) {
 
   const { stream, filename, mimetype: mimeType } = await file
   logger.info(`Manuscript Upload Size: ${filename}, ${fileSize} | ${id}`)
-  const fileEntity = await new File({
-    manuscriptId: id,
-    url: `manuscripts/${id}`,
-    filename,
-    type: 'MANUSCRIPT_SOURCE_PENDING',
-    mimeType,
-  }).save()
 
   const pubsub = await pubsubManager.getPubsub()
 
@@ -78,6 +71,14 @@ async function uploadManuscript(_, { file, id, fileSize }, { user }) {
   logger.info(`Manuscript Upload fileContents::end ${filename} | ${id}`)
 
   logger.info(`Manuscript Upload S3::start ${filename} | ${id}`)
+  const fileEntity = new File({
+    manuscriptId: id,
+    url: `manuscripts/${id}`,
+    filename,
+    type: 'MANUSCRIPT_SOURCE_PENDING',
+    mimeType,
+  })
+  await fileEntity.save()
 
   try {
     await S3Storage.putContent(fileEntity, fileContents, {
@@ -117,29 +118,42 @@ async function uploadManuscript(_, { file, id, fileSize }, { user }) {
   // After the length file operations above - now update the manuscript...
   const manuscript = await Manuscript.find(id, userUuid)
 
-  const fileIndex = manuscript.files.findIndex(
+  const oldFileIndex = manuscript.files.findIndex(
     element => element.type === 'MANUSCRIPT_SOURCE',
   )
 
   logger.info(
-    `Manuscript Upload addFileEntityToManuscript::${fileIndex} ${
+    `Manuscript Upload found index ${oldFileIndex} ${
       fileEntity.filename
     } | ${id}`,
   )
 
-  if (fileIndex < 0) {
-    manuscript.files.push(fileEntity)
-  } else {
-    manuscript.files[fileIndex] = fileEntity
+  if (oldFileIndex >= 0) {
+    const oldFile = await File.find(manuscript.files[oldFileIndex].id)
+    manuscript.files.splice(oldFileIndex, 1)
+    await oldFile.delete()
   }
 
-  // change the file entity from pending
-  fileEntity.type = 'MANUSCRIPT_SOURCE'
-  fileEntity.save()
+  const pendingFileIndex = manuscript.files.findIndex(
+    element => element.type === 'MANUSCRIPT_SOURCE_PENDING',
+  )
+
+  manuscript.files[pendingFileIndex].type = 'MANUSCRIPT_SOURCE'
 
   logger.info(`Manuscript Upload Manuscript::save ${title} | ${id}`)
   manuscript.meta.title = title
   await manuscript.save()
+
+  // validation
+  const m = await Manuscript.find(id, userUuid)
+  const sourceList = m.files.filter(f => f.type === 'MANUSCRIPT_SOURCE')
+  const pendingList = m.files.filter(
+    f => f.type === 'MANUSCRIPT_SOURCE_PENDING',
+  )
+  if (sourceList.length !== 1 || pendingList.length !== 0) {
+    logger.error(`Validation failed ${JSON.stringify(m, null, 4)}`)
+    throw new Error(`Validation Failure on ${m.id}`)
+  }
 
   logger.info(
     `Manuscript Upload Manuscript::saved ${manuscript.meta.title} | ${id}`,
