@@ -200,7 +200,7 @@ class ManuscriptUpload extends React.Component {
         maxSize={config.fileUpload.maxSizeMB * 1e6}
         onDrop={files => {
           this.setErrorMessage(null)
-          this.droppedFileName = files[0].name
+          this.droppedFileName = files.length && files[0].name
           onDrop(files)
         }}
         saveInnerRef={node => {

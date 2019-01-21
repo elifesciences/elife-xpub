@@ -11,6 +11,7 @@ const files = {
   supportingFilesRemove: Selector('[data-test-id=supportingFilesRemove]'),
   supportingFile: Selector('[data-test-id=file_block_name]'),
   fileName: Selector('[data-test-id=fileName]'),
+  dropzoneMessage: Selector('[data-test-id=dropzoneMessage]'),
 }
 
 export default files
