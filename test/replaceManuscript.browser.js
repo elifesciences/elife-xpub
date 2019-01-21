@@ -10,6 +10,12 @@ const manuscript = {
   fileName: 'dummy-manuscript.pdf',
 }
 
+const unsupportedManuscriptFile = {
+  title: 'Image',
+  file: './fixtures/dummy-manuscript-3.png',
+  fileName: 'dummy-manuscript-3.png',
+}
+
 const manuscriptReplacement = {
   title: 'The Relationship Between Lamport Clocks and Interrupts Using Obi',
   file: './fixtures/dummy-manuscript-2.pdf',
@@ -51,6 +57,11 @@ test('Replace Manuscript on the Submission', async t => {
   // uploading files - manuscript and cover letter
   await t
     .typeText(files.editor, '\nPlease consider this for publication')
+    // Test file type validation is working
+    .setFilesToUpload(files.manuscriptUpload, unsupportedManuscriptFile.file)
+    .wait(2000)
+    .expect(files.dropzoneMessage.textContent)
+    .contains('That file is not supported.')
     .setFilesToUpload(files.manuscriptUpload, manuscript.file)
     .expect(files.fileName.textContent)
     .eql(manuscript.fileName)
