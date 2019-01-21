@@ -17,7 +17,7 @@ const history = createHistory()
 const store = configureStore(history, {})
 
 const initializeReactGA = googleAnalyticsId => {
-  const debug = googleAnalyticsId === 'test' ? true : false
+  const debug = googleAnalyticsId === 'test'
   ReactGA.initialize(googleAnalyticsId, { debug })
   ReactGA.pageview('/')
 }
