@@ -20,7 +20,7 @@ const initializeReactGA = googleAnalyticsId => {
   ReactGA.pageview('/')
 }
 
-initializeReactGA(config.googleAnalytics)
+initializeReactGA(config.googleAnalytics.id)
 
 const makeApolloConfig = ({ cache, link }) => {
   const clientStateLink = withClientState({
