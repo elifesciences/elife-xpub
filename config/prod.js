@@ -36,4 +36,7 @@ module.exports = {
   googleAnalytics: {
     id: 'UA-132441389-1',
   },
+  hotJar: {
+    id: 443270,
+  },
 }
