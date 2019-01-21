@@ -19,9 +19,9 @@ const ChooserPod = ({
   >
     <Flex flexDirection="column" justifyContent="center">
       <Box ml={2}>
-        <Paragraph>
+        <Paragraph.Writing>
           Choose {roleName} ({isRequired ? 'required' : 'optional'})
-        </Paragraph>
+        </Paragraph.Writing>
       </Box>
     </Flex>
   </PodContainer>

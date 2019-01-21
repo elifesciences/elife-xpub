@@ -8,7 +8,10 @@ const placeholders = [
 ]
 
 async function generateCoverLetter(manuscript) {
-  const template = await fs.readFile(`${__dirname}/coverLetter.html`, 'utf8')
+  const template = await fs.readFile(
+    `${__dirname}/templates/coverLetter.html`,
+    'utf8',
+  )
   return placeholders.reduce(
     (html, key) => html.replace(`{${key}}`, manuscript[key]),
     template,

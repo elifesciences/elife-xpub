@@ -1,8 +1,9 @@
 import { cloneDeep } from 'lodash'
 import React from 'react'
 import { Box } from '@rebass/grid'
-import { Action, ErrorText } from '@pubsweet/ui'
+import { ErrorText } from '@pubsweet/ui'
 import { FormH3 } from '../../../../ui/atoms/FormHeadings'
+import ActionText from '../../../../ui/atoms/ActionText'
 
 import PeoplePickerControl from '../../../../ui/PeoplePicker/PeoplePickerControl'
 import Textarea from '../../../../ui/atoms/Textarea'
@@ -26,9 +27,9 @@ const OptionalExclude = ({
   ) : (
     <Box {...props}>
       Would you like to{' '}
-      <Action onClick={onRequestOpen} type="button">
+      <ActionText onClick={onRequestOpen} type="button">
         exclude a {roleName}
-      </Action>
+      </ActionText>
       ?
     </Box>
   )
@@ -102,7 +103,7 @@ class EditorsPage extends React.Component {
       if (reviewers) {
         // first count the blanks at the end
         let numBlanks = 0
-        for (let index = reviewers.length - 1; index > 0; index -= 1) {
+        for (let index = reviewers.length - 1; index >= 0; index -= 1) {
           const item = reviewers[index]
           if (itemIsBlank(item)) {
             numBlanks += 1
@@ -150,7 +151,7 @@ class EditorsPage extends React.Component {
               maxSelection={limits.suggestedSeniorEditors.max}
               minSelection={limits.suggestedSeniorEditors.min}
               modalName="suggestedSeniorEditors"
-              modalTitle="Suggest senior editors"
+              modalTitle="Suggest Senior Editors"
               onRequestRemove={person =>
                 this.removeSelection('suggestedSeniorEditors', person)
               }
@@ -180,7 +181,7 @@ class EditorsPage extends React.Component {
               maxSelection={limits.opposedSeniorEditors.max}
               minSelection={limits.opposedSeniorEditors.min}
               modalName="opposedSeniorEditors"
-              modalTitle="Exclude senior editors"
+              modalTitle="Exclude Senior Editors"
               onRequestRemove={person =>
                 this.removeSelection('opposedSeniorEditors', person)
               }
@@ -213,7 +214,7 @@ class EditorsPage extends React.Component {
               maxSelection={limits.suggestedReviewingEditors.max}
               minSelection={limits.suggestedReviewingEditors.min}
               modalName="suggestedReviewingEditors"
-              modalTitle="Suggest reviewing editors"
+              modalTitle="Suggest Reviewing Editors"
               onRequestRemove={person =>
                 this.removeSelection('suggestedReviewingEditors', person)
               }
@@ -245,7 +246,7 @@ class EditorsPage extends React.Component {
               maxSelection={limits.opposedReviewingEditors.max}
               minSelection={limits.opposedReviewingEditors.min}
               modalName="opposedReviewingEditors"
-              modalTitle="Exclude reviewing editors"
+              modalTitle="Exclude Reviewing Editors"
               onRequestRemove={person =>
                 this.removeSelection('opposedReviewingEditors', person)
               }
@@ -275,7 +276,7 @@ class EditorsPage extends React.Component {
 
           {values.suggestedReviewers.map((_, index) => (
             // eslint-disable-next-line react/no-array-index-key
-            <Box key={index} mb={2}>
+            <Box data-test-id="suggestedReviewerInputGroup" key={index} mb={2}>
               <TwoColumnLayout bottomSpacing={false}>
                 <ValidatedField
                   label={

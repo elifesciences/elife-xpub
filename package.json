@@ -36,7 +36,7 @@
     "stop:services": "docker-compose down -v",
     "styleguide": "styleguidist server",
     "test": "NODE_CONFIG_ENV=test jest --runInBand",
-    "test:browser": "NODE_CONFIG_ENV=test NODE_ENV=production testcafe --concurrency 1 \"${BROWSER:-chrome}\" 'test/**/*.browser.js'",
+    "test:browser": "NODE_CONFIG_ENV=test NODE_ENV=production DEBUG=replay testcafe --concurrency 1 \"${BROWSER:-chrome}\" 'test/**/*.browser.js'",
     "test:dependencies": "check-yarn-dupes react react-dom styled-components pubsweet-server",
     "update": "yarn upgrade-interactive --latest"
   },
@@ -97,6 +97,7 @@
     "react-autosuggest": "^9.3.4",
     "react-dom": "^16.4.2",
     "react-dropzone": "^4.3.0",
+    "react-ga": "^2.5.6",
     "react-google-charts": "^3.0.8",
     "react-hot-loader": "^4.6.3",
     "react-hotjar": "^1.0.11",

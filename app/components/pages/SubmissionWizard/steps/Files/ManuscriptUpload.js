@@ -3,11 +3,12 @@ import PropTypes from 'prop-types'
 import { Flex, Box } from '@rebass/grid'
 import styled from 'styled-components'
 import Dropzone from 'react-dropzone'
-import { ErrorText, Action } from '@pubsweet/ui'
+import { ErrorText } from '@pubsweet/ui'
 import { th } from '@pubsweet/ui-toolkit'
 import config from 'config'
 import { errorMessageMapping } from './utils'
 import Paragraph from '../../../../ui/atoms/Paragraph'
+import ActionText from '../../../../ui/atoms/ActionText'
 
 import Icon from '../../../../ui/atoms/Icon'
 
@@ -65,11 +66,11 @@ const StyledDropzone = styled(({ hasError, saveInnerRef, ...rest }) => (
   padding: ${th('space.4')};
 `
 
-const UploadInstruction = styled(Paragraph)`
+const UploadInstruction = styled(Paragraph.Writing)`
   margin-bottom: 0;
 `
 
-const UploadNote = styled(Paragraph).attrs({ secondary: true })`
+const UploadNote = styled(Paragraph.Writing).attrs({ secondary: true })`
   margin-top: 0;
 `
 
@@ -114,7 +115,7 @@ const DropzoneContent = ({
           data-test-id="dropzoneMessage"
         >
           <DropzoneErrorText>Oops!</DropzoneErrorText> {errorMessage} Please{' '}
-          <Action onClick={dropzoneOpen}>try again.</Action>
+          <ActionText onClick={dropzoneOpen}>try again.</ActionText>
         </UploadInstruction>
 
         <UploadNote>
@@ -127,12 +128,12 @@ const DropzoneContent = ({
     return (
       <React.Fragment>
         <StyledUploadSuccessIcon />
-        <FileName>{fileName}</FileName>
+        <FileName data-test-id="fileName">{fileName}</FileName>
         <UploadInstruction
           data-test-conversion="completed"
           data-test-id="dropzoneMessage"
         >
-          Success! <Action onClick={dropzoneOpen}>Replace</Action> your
+          Success! <ActionText onClick={dropzoneOpen}>Replace</ActionText> your
           manuscript.
         </UploadInstruction>
       </React.Fragment>
@@ -142,8 +143,8 @@ const DropzoneContent = ({
     <React.Fragment>
       <StyledUploadIcon />
       <UploadInstruction data-test-id="dropzoneMessage">
-        <Action onClick={dropzoneOpen}>Upload</Action> your manuscript or drag
-        it here.
+        <ActionText onClick={dropzoneOpen}>Upload</ActionText> your manuscript
+        or drag it here.
       </UploadInstruction>
       <UploadNote>
         Please note that files larger than 10MB may result in review delays.
@@ -199,7 +200,7 @@ class ManuscriptUpload extends React.Component {
         maxSize={config.fileUpload.maxSizeMB * 1e6}
         onDrop={files => {
           this.setErrorMessage(null)
-          this.droppedFileName = files[0].name
+          this.droppedFileName = files.length && files[0].name
           onDrop(files)
         }}
         saveInnerRef={node => {

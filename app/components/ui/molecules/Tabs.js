@@ -25,20 +25,19 @@ const Tab = styled(UnstyledTab).attrs({
   padding: ${th('space.3')};
   list-style: none;
   cursor: pointer;
-  color: ${th('colorText')};
   border-bottom: 4px solid transparent;
   margin-bottom: -1px;
-
+  color: ${th('colorTextSecondary')};
   &:hover {
     color: ${th('colorPrimary')};
   }
 
   &.selected {
     border-bottom-color: ${th('colorPrimary')};
+    color: ${th('colorText')};
   }
 
   &.disabled {
-    color: ${th('colorTextSecondary')};
     cursor: default;
   }
 `

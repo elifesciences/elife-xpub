@@ -5,6 +5,19 @@ const logger = require('@pubsweet/logger')
 
 const apiRoot = config.get('server.api.url')
 
+// Taken from journal-cms:
+// sync/field.storage.node.field_person_type.yml
+const validRoles = [
+  'director',
+  'early-career',
+  'executive',
+  'leadership',
+  'reviewing-editor',
+  'senior-editor',
+]
+
+const isValidRole = role => validRoles.indexOf(role) > 1
+
 const request = (endpoint, query = {}) => {
   const req = superagent.get(apiRoot + endpoint)
 
@@ -23,15 +36,20 @@ const convertPerson = apiPerson => {
   const { id, name, research = {}, emailAddresses, affiliations } = apiPerson
   const { focuses = [], expertises = [] } = research
 
+  const affiliationString = affiliations
+    ? affiliations.map(a => (a.name ? a.name.join(', ') : undefined)).join(', ')
+    : undefined
+
   let person = {
     id,
     name: name.preferred,
-    aff: affiliations ? affiliations[0].name[0] : undefined,
+    aff: affiliationString,
     focuses,
     expertises: expertises.map(expertise => expertise.name) || [],
     surname: name.surname,
     firstname: name.givenNames,
   }
+
   // if we used a secret then pull out the email too
   if (config.get('server.api.secret') && emailAddresses) {
     const email = emailAddresses.length ? emailAddresses[0].value : ''
@@ -46,16 +64,22 @@ const convertPerson = apiPerson => {
 
 const people = async role => {
   logger.debug('Fetching editors from /people', { role })
+
   let items = []
   let response
   let page = 1
   do {
-    response = await request('people', {
-      order: 'asc',
-      page,
-      'per-page': 100,
-      type: role,
-    })
+    let query = `order=asc&page=${page}&per-page=100`
+    if (role) {
+      role.split(',').forEach(r => {
+        if (!isValidRole(r)) {
+          throw new TypeError(`Invalid Role Querying the eLife API: ${r}`)
+        }
+        query += `&type[]=${r}`
+      })
+    }
+
+    response = await request('people', query)
     if (response.body.items) {
       items = items.concat(response.body.items)
     }

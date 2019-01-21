@@ -1,14 +1,14 @@
 import React from 'react'
-import { Action } from '@pubsweet/ui'
+import ActionText from '../../../../ui/atoms/ActionText'
 import ValidatedField from '../../../../ui/atoms/ValidatedField'
 import TwoColumnLayout from '../../../../global/layout/TwoColumnLayout'
 
 const AuthorPage = ({ prefill }) => (
   <React.Fragment>
     <p>
-      <Action data-test-id="orcid-prefill" onClick={prefill}>
+      <ActionText data-test-id="orcid-prefill" onClick={prefill}>
         Pre-fill my details
-      </Action>{' '}
+      </ActionText>{' '}
       using ORCID
     </p>
 

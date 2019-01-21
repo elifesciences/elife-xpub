@@ -5,7 +5,6 @@ import { th } from '@pubsweet/ui-toolkit'
 import styled, { css } from 'styled-components'
 import config from 'config'
 
-import media from '../../../../global/layout/media'
 import Icon from '../../../../ui/atoms/Icon'
 
 const UploadLink = styled.span`
@@ -84,15 +83,12 @@ const UploadFailureIcon = styled(props => (
 const UploadControl = styled(Box).attrs({
   width: 1 / 2,
 })`
-  display: none;
+  display: block;
   text-align: right;
   font-size: ${th('fontSizeBaseSmall')};
   &:first-child {
     text-align: left;
   }
-  ${media.tabletPortraitUp`
-    display: block;
-  `};
 `
 const Spinner = styled.span`
   animation: full-rotation 1.1s infinite linear;
@@ -259,12 +255,13 @@ class SupportingUpload extends React.Component {
                   </UploadControl>
                 )}
               </Flex>
-              {successfullyUploadedFiles.length > 9 && (
-                <ValidationText>
-                  Maximum {maxSupportingFiles} supporting files
-                </ValidationText>
-              )}
             </React.Fragment>
+          )}
+        {hasManuscript &&
+          successfullyUploadedFiles.length > 9 && (
+            <ValidationText>
+              Maximum {maxSupportingFiles} supporting files
+            </ValidationText>
           )}
       </React.Fragment>
     )

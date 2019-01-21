@@ -42,6 +42,9 @@ export const Steps = {
     font-size: ${th('fontSizeBaseSmall')};
     color: ${({ isCurrent }) =>
       isCurrent ? th('colorText') : th('colorFurniture')};
+    @media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+      left: -50px;
+    }
   `,
 
   Bullet: css`

@@ -28,4 +28,5 @@ module.exports = {
     licenseKey: 'c7fdeadcfa',
     applicationID: '162979288',
   },
+  googleAnalytics: 'UA-132441389-2',
 }

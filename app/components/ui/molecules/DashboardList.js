@@ -3,15 +3,18 @@ import styled from 'styled-components'
 import { Box } from '@rebass/grid'
 import { th } from '@pubsweet/ui-toolkit'
 
-import SmallParagraph from '../../ui/atoms/SmallParagraph'
 import DashboardListItem from '../../ui/molecules/DashboardListItem'
+import Paragraph from '../atoms/Paragraph'
 
 const EmptyListMessage = styled(Box)`
   text-align: center;
   color: ${th('colorTextSecondary')};
 `
-const EmptyListSmallParagraph = styled(SmallParagraph)`
+const EmptyListSmallParagraph = styled(Paragraph.Small)`
   font-family: ${th('fontInterface')};
+  font-size: 12px;
+  font-weight: 400;
+  font-family: 'Noto Sans';
 `
 const EmptyListParagraph = styled(Box)`
   margin-bottom: 24px;

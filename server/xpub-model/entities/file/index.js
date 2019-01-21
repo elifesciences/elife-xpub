@@ -19,10 +19,10 @@ class File extends BaseModel {
     }
   }
 
-  static async find(id) {
-    const file = await this.find(id)
-
-    return file
+  async save() {
+    // overridden to mutate the object instance
+    await this.$query().upsertGraphAndFetch(this)
+    return this
   }
 
   static async findByManuscriptId(manuscriptId) {

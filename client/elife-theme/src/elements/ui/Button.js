@@ -60,11 +60,12 @@ const attention = css`
 export default css`
   font-size: ${th('fontSizeBaseSmall')}
   line-height: ${th('lineHeightBaseSmall')};
-  padding: ${th('space.2')};
-  min-width: calc(${th('gridUnit')} * 28);
+  padding: 12px 18px 9px 18px;
   text-transform: uppercase;
   font-family: ${th('fontHeading')};
   font-weight: 400;
+  min-width: 120px;
+  height: 48px;
 
   ${props => props.small && small};
   ${props => props.extraSmall && extraSmall};

@@ -7,7 +7,7 @@ import { suggestedReviewersLimits } from './SuggestedReviewersValidator'
 
 const limits = {
   suggestedSeniorEditors: { min: 2, max: 6 },
-  opposedSeniorEditors: { min: 0, max: 2 },
+  opposedSeniorEditors: { min: 0, max: 1 },
   suggestedReviewingEditors: { min: 2, max: 6 },
   opposedReviewingEditors: { min: 0, max: 2 },
   suggestedReviewers: {

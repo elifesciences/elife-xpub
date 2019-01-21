@@ -9,7 +9,7 @@ const EmptyListMessage = styled(Box)`
 `
 
 const Archived = () => (
-  <EmptyListMessage mt={7}>Archived placeholder view.</EmptyListMessage>
+  <EmptyListMessage mt={7}>You currently have no archived submissions</EmptyListMessage>
 )
 
 export default Archived

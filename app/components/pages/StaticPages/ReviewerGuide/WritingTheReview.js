@@ -11,7 +11,7 @@ const WritingTheReview = props => (
 
     <H2>Article Selection Criteria</H2>
 
-    <Paragraph>
+    <Paragraph.Reading>
       eLife’s{' '}
       <NativeLink
         href="http://elifesciences.org/about#aims-and-scope"
@@ -27,11 +27,11 @@ const WritingTheReview = props => (
       potential to drive a field forward, and real-world outcomes. Articles must
       be methodologically and scientifically rigorous, ethically conducted, and
       objectively presented according to the appropriate community standards.
-    </Paragraph>
+    </Paragraph.Reading>
 
     <H2>Your Review</H2>
 
-    <Paragraph>
+    <Paragraph.Reading>
       You will be asked for a general assessment and a summary of any
       substantive concerns (ideally in fewer than 500 words but longer reviews
       can also be submitted), and a list of minor comments. If you want to state
@@ -40,7 +40,7 @@ const WritingTheReview = props => (
       references. When constructing your comments, you should follow these
       important eLife editorial principles and justify any requests for
       additional work:
-    </Paragraph>
+    </Paragraph.Reading>
 
     <List.Ordered>
       <li>
@@ -60,23 +60,23 @@ const WritingTheReview = props => (
       </li>
     </List.Ordered>
 
-    <Paragraph>
+    <Paragraph.Reading>
       When revisions are requested, the Reviewing Editor’s decision letter will
       only contain the most relevant review comments, with any subsequent
       resubmission assessed only by the original Reviewing Editor in most cases.
       These principles are intended to accelerate scientific progress by
       promoting modes of communication whereby new results are made available
       quickly, openly, and in a way that helps others to build upon them.
-    </Paragraph>
+    </Paragraph.Reading>
 
-    <Paragraph>
+    <Paragraph.Reading>
       In the interests of transparency and reproducibility, eLife asks authors
       to complete our transparent reporting form with information relating to
       sample-size estimation, replicates, and statistical reporting. The form is
       available to download and consider alongside the other manuscript files.
-    </Paragraph>
+    </Paragraph.Reading>
 
-    <Paragraph>
+    <Paragraph.Reading>
       eLife is a member of the Committee on Publication Ethics (COPE), supports
       their principles, and follows their flowcharts for dealing with potential
       breaches of{' '}
@@ -87,26 +87,26 @@ const WritingTheReview = props => (
       forms of misconduct, reviewers should alert the journal’s editorial staff
       in the first instance. The editorial staff will consult the Senior Editor
       and Reviewing Editor, and consider the concerns further.
-    </Paragraph>
+    </Paragraph.Reading>
 
     <H2>Submitting the Review</H2>
 
-    <Paragraph>
+    <Paragraph.Reading>
       You will be asked to confirm that you do not have any competing interests
       to declare; that you disclose the name(s) of anybody with whom you have
       discussed the article, or who has assisted in the review process
       (including co-reviewing for training purposes); whether you want to remain
       anonymous; and whether you agree to allow us to share your full review and
       identity with other journals in the event of rejection.
-    </Paragraph>
+    </Paragraph.Reading>
 
-    <Paragraph>
+    <Paragraph.Reading>
       The main part of the review consists of a general assessment and a summary
       of any substantive concerns (in fewer than 500 words), and a list of minor
       comments. Please be aware that in the event of acceptance, the decision
       letter containing the integrated review comments will be published
       (subject to author approval).
-    </Paragraph>
+    </Paragraph.Reading>
   </React.Fragment>
 )
 

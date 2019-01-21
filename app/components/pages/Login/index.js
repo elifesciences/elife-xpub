@@ -7,11 +7,10 @@ import config from 'config'
 import { H2 } from '@pubsweet/ui'
 import styled from 'styled-components'
 import { th } from '@pubsweet/ui-toolkit'
-import OrcidButton from '../../ui/atoms/OrcidButton'
+import ButtonOrcid from '../../ui/atoms/ButtonOrcid'
 import ButtonLink from '../../ui/atoms/ButtonLink'
 import Paragraph from '../../ui/atoms/Paragraph'
 import NativeLink from '../../ui/atoms/NativeLink'
-import media from '../../global/layout/media'
 
 const { url: loginUrl, signupUrl, legacySubmissionUrl } = config.login
 
@@ -21,10 +20,7 @@ const EXCHANGE_TOKEN_MUTATION = gql`
   }
 `
 const Container = styled(Box)`
-  margin-top: ${th('space.3')};
-  ${media.tabletPortraitUp`
-    margin-top:${'calc(50vh - 300px)'};
-  `};
+  margin-top: ${th('calc(50vh - 300px)')};
 `
 
 class LoginPage extends React.Component {
@@ -93,17 +89,17 @@ class LoginPage extends React.Component {
           </H2>
         </Box>
         <Box mb={5}>
-          <Paragraph>
+          <Paragraph.Reading>
             The leading scientists behind eLife are committed to rapid, fair,
             and constructive review. Before you submit your work, please note
             that eLife is a very selective journal that aims to publish work of
             the highest scientific standards and importance.
-          </Paragraph>
-          <Paragraph>
+          </Paragraph.Reading>
+          <Paragraph.Reading>
             Our new manuscript submission system will guide you through the
             process of submitting your research.
             {!token && ' Log in with your ORCID identifier to get started.'}
-          </Paragraph>
+          </Paragraph.Reading>
         </Box>
         {token ? (
           <Box mb={5}>
@@ -115,21 +111,23 @@ class LoginPage extends React.Component {
           <Flex alignItems="center" mb={5}>
             <Box mr={3}>
               <a href={loginUrl}>
-                <OrcidButton data-test-id="login">Login with ORCID</OrcidButton>
+                <ButtonOrcid data-test-id="login">Login with ORCID</ButtonOrcid>
               </a>
             </Box>
             <Box>
-              No ORCID? <NativeLink href={signupUrl}>Sign up</NativeLink> now.
+              <Paragraph.Reading>
+                No ORCID? <NativeLink href={signupUrl}>Sign up</NativeLink> now.
+              </Paragraph.Reading>
             </Box>
           </Flex>
         )}
-        <Paragraph>
+        <Paragraph.Reading>
           For{' '}
           <NativeLink href={legacySubmissionUrl}>
             existing manuscripts
           </NativeLink>{' '}
           go to our full submission and peer review system.
-        </Paragraph>
+        </Paragraph.Reading>
       </Container>
     )
   }

@@ -13,9 +13,14 @@ const Root = styled.div`
   background-color: ${th('colorBackground')};
 `
 
-const StickyFooter = ({ children, ...props }) => (
+const StickyFooter = ({
+  children,
+  pb = [18, 5, 5, 5],
+  pt = [18, 3, 3, 3],
+  ...props
+}) => (
   <Root {...props}>
-    <Centerer pb={[18, 5, 5, 5]} pt={[18, 3, 3, 3]}>
+    <Centerer pb={pb} pt={pt}>
       {children}
     </Centerer>
   </Root>

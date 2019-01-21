@@ -1,0 +1,24 @@
+GET /people/bd98e2b7
+accept-encoding: gzip, deflate
+
+HTTP/1.1 200 OK
+server: nginx
+date: Tue, 15 Jan 2019 14:50:15 GMT
+content-type: application/vnd.elife.person+json;version=1
+transfer-encoding: chunked
+connection: close
+cache-control: max-age=300, public, stale-if-error=86400, stale-while-revalidate=300
+vary: Accept, Authorization
+etag: "4b763541f5a8ae2bc62d877c55d19414"
+x-ua-compatible: IE=edge
+content-language: en
+x-content-type-options: nosniff
+x-frame-options: SAMEORIGIN
+x-consumer-groups-filtered: user
+x-consumer-groups-remote-addr: 34.226.197.243
+access-control-allow-origin: *
+x-kong-upstream-latency: 96
+x-kong-proxy-latency: 0
+via: kong/0.9.5
+
+{"id":"bd98e2b7","type":{"id":"reviewing-editor","label":"Reviewing Editor"},"name":{"surname":"Diedrichsen","givenNames":"J\u00f6rn","preferred":"J\u00f6rn Diedrichsen","index":"Diedrichsen, J\u00f6rn"},"research":{"focuses":["motor control","fMRI"],"organisms":["human"],"expertises":[{"id":"neuroscience","name":"Neuroscience"}]},"affiliations":[{"name":["University of Western Ontario"],"address":{"formatted":["Canada"],"components":{"country":"Canada"}}}]}

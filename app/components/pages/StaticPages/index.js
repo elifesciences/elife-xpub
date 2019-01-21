@@ -38,7 +38,7 @@ const StaticPage = ({ history, navList }) => (
 
       <Flex>
         <SideNavContainer
-          ml={[0, 0, `8.33vw`, `8.33vw`, `8.33vw`]} // 8.33% of viewport width = 1/12 (i.e. 1 column of spacing in a 12 column grid)
+          ml={[0, 0, `8.33%`, `8.33%`, `8.33%`]}
           mr={3}
           pt={18} // To match the top padding on the H1 in the 'main' component
           width={[0, 0, 3 / 12, 2 / 12, 2 / 12]}
@@ -48,7 +48,7 @@ const StaticPage = ({ history, navList }) => (
 
         <ScrollToTop>
           <MainContainer
-            mr={[0, 0, `8.33vw`, `16.67vw`, `25vw`]} // [0, 0, 1, 2, 3] columns out of a 12 column grid
+            mr={[0, 0, `8.33%`, `16.67%`, `25%`]}
             width={[1, 1, 7 / 12, 7 / 12, 6 / 12]}
           >
             <Switch>

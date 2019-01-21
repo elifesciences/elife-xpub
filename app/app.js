@@ -2,6 +2,8 @@ import React from 'react'
 import { hot } from 'react-hot-loader/root'
 import createHistory from 'history/createBrowserHistory'
 import { withClientState } from 'apollo-link-state'
+import ReactGA from 'react-ga'
+import config from 'config'
 
 import { configureStore, Root } from 'pubsweet-client'
 
@@ -13,7 +15,14 @@ import * as AuthorDetailsSchema from './components/pages/SubmissionWizard/steps/
 const history = createHistory()
 const store = configureStore(history, {})
 
-const makeApolloConfig = ({ cache, link, ...config }) => {
+const initializeReactGA = googleAnalyticsId => {
+  ReactGA.initialize(googleAnalyticsId)
+  ReactGA.pageview('/')
+}
+
+initializeReactGA(config.googleAnalytics)
+
+const makeApolloConfig = ({ cache, link }) => {
   const clientStateLink = withClientState({
     cache,
     ...AuthorDetailsSchema.clientStateConfig,
@@ -28,7 +37,7 @@ const makeApolloConfig = ({ cache, link, ...config }) => {
 
 const App = () => (
   <React.Fragment>
-    <GlobalStyle/>
+    <GlobalStyle />
     <Root
       history={history}
       makeApolloConfig={makeApolloConfig}

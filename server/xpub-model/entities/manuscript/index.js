@@ -113,9 +113,6 @@ class Manuscript extends BaseModel {
   static get MAX_SUGGESTED_REVIEWERS() {
     return 6
   }
-  static get MIN_SUGGESTED_REVIEWERS() {
-    return 3
-  }
 
   static async find(id, user) {
     const [manuscript] = await this.query().where({
@@ -145,9 +142,11 @@ class Manuscript extends BaseModel {
   }
 
   static async all(user) {
-    const manuscripts = await this.query().where({
-      'manuscript.created_by': user,
-    })
+    const manuscripts = await this.query()
+      .where({
+        'manuscript.created_by': user,
+      })
+      .orderBy('created', 'desc')
 
     await Promise.all(
       manuscripts.map(manuscript => manuscript.$loadRelated('[teams, files, audits]')),
@@ -303,11 +302,7 @@ class Manuscript extends BaseModel {
     // not every time an object is instantiated
     this.addTeam({
       role: 'suggestedReviewer',
-      teamMembers: [
-        { meta: { name: '', email: '' } },
-        { meta: { name: '', email: '' } },
-        { meta: { name: '', email: '' } },
-      ],
+      teamMembers: [{ meta: { name: '', email: '' } }],
     })
   }
 
@@ -325,12 +320,9 @@ class Manuscript extends BaseModel {
   // would mean applying the input to the manuscript first
   static removeOptionalBlankReviewers(input) {
     const itemIsBlank = item => item.name + item.email === ''
-
     const filteredReviewers = input.suggestedReviewers.filter(
-      (item, index) =>
-        index < Manuscript.MIN_SUGGESTED_REVIEWERS || !itemIsBlank(item),
+      item => !itemIsBlank(item),
     )
-
     return { ...input, suggestedReviewers: filteredReviewers }
   }
 

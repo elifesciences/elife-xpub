@@ -9,20 +9,30 @@ const archiveGenerator = require('./file-generators/archive')
 
 const upload = require('./services/upload')
 
-async function generate(manuscript, content, clientIp) {
-  return archiveGenerator({
-    'article.xml': articleGenerator(manuscript),
-    'cover_letter.html': coverLetterGenerator(manuscript),
-    'disclosure.pdf': disclosureGenerator(manuscript, clientIp),
-    'manifest.xml': manifestGenerator(manuscript.files),
-    'manuscript.pdf': content,
-    'transfer.xml': transferGenerator(''), // auth code not currently used
-  })
+async function generate(manuscript, getContent, clientIp) {
+  const manditoryFiles = [
+    { name: 'article.xml', content: articleGenerator(manuscript) },
+    { name: 'cover_letter.html', content: coverLetterGenerator(manuscript) },
+    {
+      name: 'disclosure.pdf',
+      content: disclosureGenerator(manuscript, clientIp),
+    },
+    { name: 'manifest.xml', content: manifestGenerator(manuscript.files) },
+    { name: 'transfer.xml', content: transferGenerator('') },
+  ]
+
+  const uploadedFiles = manuscript.files.map(file => ({
+    name: file.filename,
+    content: getContent(file),
+    type: file.type,
+  }))
+
+  return archiveGenerator(manditoryFiles.concat(uploadedFiles))
 }
 
-async function mecaExport(manuscript, content, clientIp) {
+async function mecaExport(manuscript, getContent, clientIp) {
   logger.info(`Starting MECA export`, { manuscriptId: manuscript.id })
-  const archive = await generate(manuscript, content, clientIp)
+  const archive = await generate(manuscript, getContent, clientIp)
   await upload(archive, manuscript.id)
 }
 
