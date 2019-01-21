@@ -4,6 +4,7 @@ import createHistory from 'history/createBrowserHistory'
 import { withClientState } from 'apollo-link-state'
 import ReactGA from 'react-ga'
 import config from 'config'
+import { hotjar } from 'react-hotjar'
 
 import { configureStore, Root } from 'pubsweet-client'
 
@@ -21,6 +22,7 @@ const initializeReactGA = googleAnalyticsId => {
 }
 
 initializeReactGA(config.googleAnalytics)
+hotjar.initialize(config.hotJar.id, config.hotJar.snippetVersion)
 
 const makeApolloConfig = ({ cache, link }) => {
   const clientStateLink = withClientState({

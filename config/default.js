@@ -131,4 +131,8 @@ module.exports = {
     applicationID: '',
   },
   schema: {}, // schema extensions for pubsweet-server
+  hotJar: {
+    isPublic: true,
+    snippetVersion: 6,
+  },
 }
