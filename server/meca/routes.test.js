@@ -14,7 +14,7 @@ const makeApp = () => {
   return supertest(app)
 }
 
-describe.only('MECA HTTP callback handler', () => {
+describe('MECA HTTP callback handler', () => {
   let userId
   const apiKey = config.get('meca.apiKey')
 
