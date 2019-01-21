@@ -21,8 +21,9 @@ const initializeReactGA = googleAnalyticsId => {
   ReactGA.pageview('/')
 }
 
-initializeReactGA(config.googleAnalytics)
+initializeReactGA(config.googleAnalytics.id)
 hotjar.initialize(config.hotJar.id, config.hotJar.snippetVersion)
+
 
 const makeApolloConfig = ({ cache, link }) => {
   const clientStateLink = withClientState({

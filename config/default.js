@@ -130,6 +130,10 @@ module.exports = {
     licenseKey: '',
     applicationID: '',
   },
+  googleAnalytics: {
+    isPublic: true,
+    id: '',
+  },
   schema: {}, // schema extensions for pubsweet-server
   hotJar: {
     isPublic: true,

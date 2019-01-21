@@ -33,8 +33,10 @@ module.exports = {
     licenseKey: 'c53c018d69',
     applicationID: '162983119',
   },
+  googleAnalytics: {
+    id: 'UA-132441389-1',
+  },
   hotJar: {
     id: 443270,
   },
-  googleAnalytics: 'UA-132441389-1',
 }
