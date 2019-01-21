@@ -1,14 +1,18 @@
 const { createTables } = require('@pubsweet/db-manager')
 const uuid = require('uuid')
 const Team = require('../team')
+const User = require('../user')
 const Manuscript = require('.')
 
 describe('Manuscript', () => {
   let userId
 
-  beforeEach(() => {
-    userId = uuid()
-    return createTables(true)
+  beforeEach(async () => {
+    await createTables(true)
+    const profileId = 'ewwboc7m'
+    const identities = [{ type: 'elife', identifier: profileId }]
+    const user = await new User({ identities }).save()
+    userId = user.id
   })
 
   describe('applyInput()', () => {
@@ -433,13 +437,14 @@ describe('Manuscript', () => {
       expect(manuscript.status).toEqual(Manuscript.statuses.MECA_EXPORT_PENDING)
     })
 
-    it('adds an entry to the manuscript\'s audit log', () => {
+    it('adds an entry to the manuscript\'s audit log', async () => {
       const manuscript = new Manuscript({
         createdBy: userId
       })
       manuscript.updateStatus(Manuscript.statuses.MECA_EXPORT_PENDING)
+      await manuscript.save()
       expect(manuscript.audits).toHaveLength(1)
-      expect(manuscript.audits[0]).toEqual({
+      expect(manuscript.audits[0]).toMatchObject({
         userId,
         action: 'UPDATED_STATUS'
       })
