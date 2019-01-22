@@ -10,7 +10,13 @@ set -e
 WID=$(xdotool search --all --onlyvisible --desktop 1 --class "google-chrome")
 CMD="xdotool windowactivate --sync ${WID}"
 WAIT=0.5
-$CMD mousemove 1816 324 click 1
+
+$CMD key F5
+sleep 3
+$CMD key --repeat 7 Tab
+sleep $WAIT
+$CMD key space
+# $CMD mousemove 1816 324 click 1
 
 echo Author #####################
 sleep $WAIT
@@ -60,10 +66,11 @@ $CMD type "Automated test by Peter $(date)"
 
 $CMD key Tab
 $CMD key space
-$CMD mousemove 1063 620 click 1
-$CMD mousemove 1054 689 click 1
-$CMD mousemove 1043 790 click 1
-
+sleep $WAIT
+$CMD mousemove 1063 620 click 1 # Select Article Type
+sleep $WAIT
+$CMD key Tab space Return
+sleep $WAIT
 $CMD key --repeat 5 Tab
 $CMD key space
 sleep $WAIT
@@ -83,22 +90,26 @@ $CMD key --repeat 3 Tab
 $CMD key space
 sleep $WAIT
 $CMD mousemove 1200 1013 click 1
-sleep $WAIT
+sleep 2
 
 $CMD key --repeat 2 Tab
 $CMD key space
 sleep $WAIT
 
 echo Suggest Reviewing Editors
-sleep 3 # There are lots so wait for the spinner
+sleep 5 # There are lots so wait for the spinner
 $CMD key --repeat 5 Tab
-$CMD key space
 sleep $WAIT
+$CMD key space
+
+sleep 1
 $CMD key --repeat 3 Tab
-$CMD key space
 sleep $WAIT
+$CMD key space
+sleep 1
+echo CLICK!
 $CMD mousemove 1200 1013 click 1
-sleep 3 # Can take a time to add
+sleep 8 # Can take a time to add
 
 $CMD key --repeat 6 Tab
 $CMD key space
