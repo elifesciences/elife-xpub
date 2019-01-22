@@ -132,7 +132,7 @@ module.exports = {
   },
   googleAnalytics: {
     isPublic: true,
-    id: 'test',
+    trackingId: '',
   },
   schema: {}, // schema extensions for pubsweet-server
   hotJar: {

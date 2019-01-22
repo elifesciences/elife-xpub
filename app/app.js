@@ -16,13 +16,13 @@ import * as AuthorDetailsSchema from './components/pages/SubmissionWizard/steps/
 const history = createHistory()
 const store = configureStore(history, {})
 
-const initializeReactGA = googleAnalyticsId => {
-  const debug = googleAnalyticsId === 'test'
-  ReactGA.initialize(googleAnalyticsId, { debug })
+const initializeReactGA = ({trackingId='test', debug}) => {
+  if (trackingId === '') trackingId = 'test'
+  ReactGA.initialize(trackingId, { debug })
   ReactGA.pageview('/')
 }
 
-initializeReactGA(config.googleAnalytics.id)
+initializeReactGA(config.googleAnalytics)
 hotjar.initialize(config.hotJar.id, config.hotJar.snippetVersion)
 
 

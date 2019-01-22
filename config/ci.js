@@ -11,4 +11,7 @@ module.exports = {
       disableUpload: true,
     },
   },
+  googleAnalytics: {
+    debug: true
+  }
 }
