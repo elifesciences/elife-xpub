@@ -46,7 +46,7 @@ WID_DIALOG=$(xdotool search --name "Open Files")
 CMD_DIALOG="xdotool windowactivate --sync ${WID_DIALOG}"
 $CMD_DIALOG key ctrl+l
 sleep $WAIT
-$CMD_DIALOG type "~/Documents/Manuscripts/Test Manuscript.pdf"
+$CMD_DIALOG type "~/Pictures/dancing-banana.gif"
 $CMD_DIALOG key Return
 sleep 3
 
@@ -56,7 +56,7 @@ sleep $WAIT
 
 echo Submission #####################
 $CMD key Tab
-$CMD type "Automated test by Peter"
+$CMD type "Automated test by Peter $(date)"
 
 $CMD key Tab
 $CMD key space
@@ -90,7 +90,7 @@ $CMD key space
 sleep $WAIT
 
 echo Suggest Reviewing Editors
-sleep 2 # There are lots so wait for the spinner
+sleep 3 # There are lots so wait for the spinner
 $CMD key --repeat 5 Tab
 $CMD key space
 sleep $WAIT
@@ -98,7 +98,7 @@ $CMD key --repeat 3 Tab
 $CMD key space
 sleep $WAIT
 $CMD mousemove 1200 1013 click 1
-sleep 2 # Can take a time to add 
+sleep 3 # Can take a time to add
 
 $CMD key --repeat 6 Tab
 $CMD key space

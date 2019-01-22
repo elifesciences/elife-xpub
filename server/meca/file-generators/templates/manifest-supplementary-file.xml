@@ -1,4 +1,6 @@
     <item id="{id}" type="supplemental" submission-item-id="{id}" version="0">
+        <title>{filename}</title>
+        <description>{filename}</description>
         <filename>{filename}</filename>
         <file-order>1</file-order>
         <instance media-type="{mimeType}" href="{filename}"/>

@@ -1,5 +1,7 @@
 const fs = require('fs-extra')
 
+const replaceAll = (template, key, value) => template.replace(new RegExp(`{${key}}`, 'g'), value)
+
 function supplementaryXml(files) {
   const keyList = ['id', 'mimeType', 'filename']
   const fileList = files.filter(
@@ -14,7 +16,7 @@ function supplementaryXml(files) {
 
   fileList.forEach(file => {
     supplementaryFileXml += keyList.reduce(
-      (xml, key) => xml.replace(new RegExp(`{${key}}`, 'g'), file[key]),
+      (xml, key) => replaceAll(xml, key, file[key]),
       template,
     )
   })
@@ -39,12 +41,12 @@ function generateManifest(files) {
     `${__dirname}/templates/manifest.xml`,
     'utf8',
   )
+
   const result = template
     .replace('{supplementaryFiles}', supplementaryXml(files))
     .replace('{manuscript.mimeType}', manuscript.mimeType)
-    .replace('{manuscript.filename}', manuscript.filename)
 
-  return result
+  return replaceAll(result, 'manuscript.filename', manuscript.filename)
 }
 
 module.exports = generateManifest
