@@ -59,8 +59,5 @@ module.exports = {
     },
     apiKey: 'abcd1234',
   },
-
-  googleAnalytics: {
-    debug: true
-  }
+  
 }
