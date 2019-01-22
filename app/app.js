@@ -16,9 +16,9 @@ import * as AuthorDetailsSchema from './components/pages/SubmissionWizard/steps/
 const history = createHistory()
 const store = configureStore(history, {})
 
-const initializeReactGA = ({trackingId='test', debug}) => {
-  if (trackingId === '') trackingId = 'test'
-  ReactGA.initialize(trackingId, { debug })
+const initializeReactGA = ({trackingId='test', debug} = {}) => {
+  const id = (trackingId === '') ? 'test' : trackingId
+  ReactGA.initialize(id, { debug })
   ReactGA.pageview('/')
 }
 
