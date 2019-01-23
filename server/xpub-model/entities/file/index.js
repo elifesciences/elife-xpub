@@ -17,7 +17,7 @@ class File extends BaseModel {
         url: { type: 'string' },
         status: {
           type: 'string',
-          enum: ['CREATED', 'UPLOADING', 'UPLOADED', 'CANCELLED'],
+          enum: ['CREATED', 'UPLOADED', 'STORED', 'CANCELLED'],
           default: 'CREATED',
         },
       },
