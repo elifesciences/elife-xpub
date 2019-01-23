@@ -6,9 +6,9 @@ const File = require('./entities/file')
 describe('related objects behave as we expect', () => {
   let userId
 
-  beforeEach(() => {
+  beforeEach(async () => {
     userId = uuid()
-    return createTables(true)
+    await createTables(true)
   })
 
   describe('manuscript <-> file', () => {
@@ -91,20 +91,63 @@ describe('related objects behave as we expect', () => {
       expect(manuscript.meta.title).toBe('changed')
     })
 
-    it('mutates the file when save() is called', async () => {
+    it('file changes are reflected on the manuscript', async () => {
       const manuscript = await createManuscriptWithOneFile(userId)
       const file = await File.find(manuscript.files[0].id)
-      file.label = 'changed'
+      file.status = 'UPLOADED'
       await file.save()
 
       // in memory
       expect(file).toHaveProperty('id')
-      expect(file.label).toBe('changed')
-      const dbFile = await File.find(manuscript.files[0].id)
+      expect(file.status).toBe('UPLOADED')
+
+      file.status = 'STORED'
+      await file.save()
+
+      // in memory
+      expect(file).toHaveProperty('id')
+      expect(file.status).toBe('STORED')
+
+      const f = await File.find(manuscript.files[0].id)
+      expect(f.status).toBe('STORED')
+
+      // find the manuscript and check its updated via there...
+      const m = await Manuscript.find(manuscript.id, userId)
+      expect(m.files[0].status).toBe('STORED')
+    })
+
+    it('mutates the file when save() is called', async () => {
+      const manuscript = await createManuscriptWithOneFile(userId)
+      const file = await File.find(manuscript.files[0].id)
+      file.status = 'UPLOADED'
+      await file.save()
+
+      // in memory
+      expect(file).toHaveProperty('id')
+      expect(file.status).toBe('UPLOADED')
 
       // from database
+      let dbFile = await File.find(manuscript.files[0].id)
+      // once we query for the file again we cannot use the older 'file'
+      // if we do it won't apply changes to the db
       expect(dbFile).toHaveProperty('id')
-      expect(dbFile.label).toBe('changed')
+      expect(dbFile.status).toBe('UPLOADED')
+
+      dbFile.status = 'STORED'
+      await dbFile.save()
+
+      // in memory
+      expect(dbFile).toHaveProperty('id')
+      expect(dbFile.status).toBe('STORED')
+
+      // from database
+      dbFile = await File.find(manuscript.files[0].id)
+      expect(dbFile).toHaveProperty('id')
+      expect(dbFile.status).toBe('STORED')
+
+      // find the manuscript and check its updated via there...
+      const m = await Manuscript.find(manuscript.id, userId)
+      expect(m.files[0].status).toBe('STORED')
     })
 
     it('puts id on a new file', async () => {
