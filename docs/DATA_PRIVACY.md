@@ -9,11 +9,11 @@ Please familiarise yourself with the following information:
 `elife-xpub` has been designed to integrate with [eLife's journal site](elifesciences.org).
 As such users control and manage the privacy of their data via their [ORCiD](orcid.org) account.
 eLife ensures that user data is kept up-to-date via the [Profiles Service](https://github.com/elifesciences/profiles)
-and its this service that `elife-xpub` interacts with to get all the user data.
+and it's this service that `elife-xpub` interacts with to get all the user data.
 
 ## Review 2019-01-22
 
-Peter, Hannah reviewed the handling of data within `elife-xpub` as a precursor to launch.
+The Product Manager along with the Technical Lead reviewed the handling of data within `elife-xpub` as a precursor to launch with the Data Controller.
 
 Findings:
 
