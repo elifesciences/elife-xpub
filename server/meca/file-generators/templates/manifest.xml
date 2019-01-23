@@ -15,19 +15,25 @@
     </item>
 
     <item id="xpub-123" type="manuscript" submission-item-id="custom003" version="0">
-        <description>This is the main manuscript</description>
+        <title>Article File</title>
+        <description>Article File</description>
+        <filename>{manuscript.filename}</filename>
         <file-order>1</file-order>
         <instance media-type="{manuscript.mimeType}" href="{manuscript.filename}"/>
     </item>
 
     <item id="xpub-124" type="disclosure" submission-item-id="custom004" version="0">
-        <description>This is the disclosure</description>
+        <title>Disclosure</title>
+        <description>The auto-generated disclosure from xPub.</description>
+        <filename>disclosure.pdf</filename>
         <file-order>1</file-order>
         <instance media-type="application/pdf" href="disclosure.pdf"/>
     </item>
 
     <item id="xpub-125" type="coverletter" submission-item-id="custom005" version="0">
-        <description>This is the cover letter</description>
+        <title>Cover Letter</title>
+        <description>The cover letter supplied by the submitter.</description>
+        <filename>cover_letter.html</filename>
         <file-order>1</file-order>
         <instance media-type="text/html" href="cover_letter.html"/>
     </item>

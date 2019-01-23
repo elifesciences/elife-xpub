@@ -8,6 +8,7 @@ const checkIcon = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
 
 export default css`
   font-size: ${th('fontSizeBaseSmall')};
+  margin-left: 30px;
   
   input {
     position: absolute;
@@ -24,6 +25,7 @@ export default css`
     width: ${th('space.3')};
     height: ${th('space.3')};
     margin-right: ${th('space.1')};
+    margin-left: -30px;
 
     background: transparent;
     border: 1px solid ${th('colorBorder')};
