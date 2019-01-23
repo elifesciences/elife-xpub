@@ -271,7 +271,8 @@ describe('Manuscript', () => {
         status: 'NEXT',
         audits: [{
           userId,
-          action: 'UPDATED_STATUS'
+          action: 'UPDATED_STATUS',
+          objectType: 'manuscript'
         }]
       })
     })
@@ -446,7 +447,8 @@ describe('Manuscript', () => {
       expect(manuscript.audits).toHaveLength(1)
       expect(manuscript.audits[0]).toMatchObject({
         userId,
-        action: 'UPDATED_STATUS'
+        action: 'UPDATED_STATUS',
+        objectType: 'manuscript'
       })
     })
   })

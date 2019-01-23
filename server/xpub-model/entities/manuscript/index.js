@@ -212,7 +212,8 @@ class Manuscript extends BaseModel {
   updateStatus(status) {
     const audit = {
       userId: this.createdBy,
-      action: 'UPDATED_STATUS'
+      action: 'UPDATED_STATUS',
+      objectType: 'manuscript',
     }
     this.audits.push(audit)
     this.status = status
@@ -233,7 +234,8 @@ class Manuscript extends BaseModel {
 
     const audit = {
       userId: manuscript.createdBy,
-      action: 'UPDATED_STATUS'
+      action: 'UPDATED_STATUS',
+      objectType: 'manuscript',
     }
     if (!manuscript.audits) manuscript.audits = []
     manuscript.audits.push(audit)
