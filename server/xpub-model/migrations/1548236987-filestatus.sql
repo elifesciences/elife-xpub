@@ -1,4 +1,4 @@
--- Pubsweet does not handle droping types
+-- Pubsweet does not handle dropping types
 -- So handle the expcetion if it exists 
 -- (don't explicitly drop it as it might still be in use on the table)
 DO $$ BEGIN
