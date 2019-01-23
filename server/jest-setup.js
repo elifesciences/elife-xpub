@@ -1,4 +1,4 @@
-const { db } = require('pubsweet-server')
+const db = require('@pubsweet/db-manager/src/db')
 const replaySetup = require('../test/helpers/replay-setup')
 
 replaySetup('success')

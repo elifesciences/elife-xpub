@@ -1,5 +1,5 @@
 const config = require('config')
-const { db } = require('pubsweet-server')
+const db = require('@pubsweet/db-manager/src/db')
 const AWS = require('aws-sdk')
 
 const S3_API_VERSION = '2006-03-01'
