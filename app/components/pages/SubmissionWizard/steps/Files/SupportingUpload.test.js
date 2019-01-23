@@ -30,6 +30,8 @@ describe('SupportingUpload', () => {
         },
       ],
     })
-    expect(wrapper.find('[data-test-id="file_block_name"]')).toHaveLength(2)
+    expect(wrapper.find('[data-test-id="file-block-name"] span')).toHaveLength(
+      2,
+    )
   })
 })
