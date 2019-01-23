@@ -1,8 +1,15 @@
 const { createTables } = require('@pubsweet/db-manager')
+const uuid = require('uuid')
 const File = require('.')
+const Manuscript = require('../manuscript')
 
 describe('Manuscript', () => {
-  beforeEach(() => createTables(true))
+  let userId
+
+  beforeEach(async () => {
+    userId = uuid()
+    await createTables(true)
+  })
 
   describe('delete File', () => {
     it('should fail if id is not provided when deleting the file', async () => {
@@ -27,6 +34,20 @@ describe('Manuscript', () => {
       })
       const response = await file.delete()
       expect(response).toBeTruthy()
+    })
+
+    it('should be initialised in the CREATED state', async () => {
+      const manuscript = new Manuscript({
+        createdBy: userId,
+      })
+      await manuscript.save()
+      const file = new File({
+        manuscriptId: manuscript.id,
+        filename: 'thisfile.txt',
+        url: '/an/url',
+      })
+      await file.save()
+      expect(file.status).toBe('CREATED')
     })
   })
 })
