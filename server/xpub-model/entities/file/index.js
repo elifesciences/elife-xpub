@@ -15,6 +15,11 @@ class File extends BaseModel {
         mimeType: { type: ['string', 'null'] },
         size: { type: ['string', 'null'] },
         url: { type: 'string' },
+        status: {
+          type: 'string',
+          enum: ['CREATED', 'UPLOADING', 'UPLOADED', 'CANCELLED'],
+          default: 'CREATED',
+        },
       },
     }
   }
