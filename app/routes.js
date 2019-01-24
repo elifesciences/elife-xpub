@@ -14,21 +14,22 @@ import ContactUs from './components/pages/StaticPages/ContactUs'
 import SubmissionWizard from './components/pages/SubmissionWizard'
 import ErrorPage from './components/pages/Error'
 import ThankYouPage from './components/pages/ThankYou'
+import TrackedRoute from './trackedRoute'
 
 const Routes = () => (
   <Layout>
     <ErrorBoundary>
       <Switch>
-        <Route component={LoginPage} exact path="/login" />
-        <Route component={LogoutPage} exact path="/logout" />
-        <Route component={AuthorGuide} path="/author-guide" />
-        <Route component={ReviewerGuide} path="/reviewer-guide" />
-        <Route component={ContactUs} path="/contact-us" />
+        <TrackedRoute component={LoginPage} exact path="/login" />
+        <TrackedRoute component={LogoutPage} exact path="/logout" />
+        <TrackedRoute component={AuthorGuide} path="/author-guide" />
+        <TrackedRoute component={ReviewerGuide} path="/reviewer-guide" />
+        <TrackedRoute component={ContactUs} path="/contact-us" />
         <AuthenticatedComponent>
           <Switch>
-            <Route component={ThankYouPage} path="/thankyou/:id" />
+            <TrackedRoute component={ThankYouPage} path="/thankyou/:id" />
             <Route component={SubmissionWizard} path="/submit/:id" />
-            <Route component={DashboardPage} exact path="/" />
+            <TrackedRoute component={DashboardPage} exact path="/" />
             <ErrorPage error="404: page not found" />
           </Switch>
         </AuthenticatedComponent>

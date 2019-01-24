@@ -3,8 +3,12 @@ import Dropzone from 'react-dropzone'
 import { Box, Flex } from '@rebass/grid'
 import { th } from '@pubsweet/ui-toolkit'
 import styled, { css } from 'styled-components'
-import config from 'config'
 
+import {
+  errorMessageMapping,
+  MAX_SUPPORTING_FILES,
+  MAX_FILE_SIZE,
+} from './utils'
 import Icon from '../../../../ui/atoms/Icon'
 
 const UploadLink = styled.span`
@@ -189,7 +193,7 @@ class SupportingUpload extends React.Component {
   }
 
   onFileDrop = (acceptedFiles, rejectedFiles) => {
-    let storageSpace = this.props.maxSupportingFiles - this.state.files.length
+    let storageSpace = MAX_SUPPORTING_FILES - this.state.files.length
 
     if (storageSpace > 0) {
       const filesToUpload = acceptedFiles
@@ -227,7 +231,7 @@ class SupportingUpload extends React.Component {
 
   render() {
     let dropzoneRef
-    const { hasManuscript, removeFiles, maxSupportingFiles } = this.props
+    const { hasManuscript, removeFiles } = this.props
     const successfullyUploadedFiles = this.state.files.filter(
       file => !file.error,
     )
@@ -238,7 +242,7 @@ class SupportingUpload extends React.Component {
         )}
         <StyledDropzone
           data-test-id="supportingFilesUpload"
-          maxSize={config.fileUpload.maxSizeMB * 1e6}
+          maxSize={MAX_FILE_SIZE * 1e6}
           onDrop={this.onFileDrop}
           setRef={node => {
             dropzoneRef = node
@@ -261,7 +265,7 @@ class SupportingUpload extends React.Component {
                 </FileName>
                 {file.rejected && (
                   <ErrorMessage data-test-id="file-block-error">
-                    Must be less than 100mb
+                    {errorMessageMapping.MAX_SIZE_EXECEEDED}
                   </ErrorMessage>
                 )}
               </FileHolder>
@@ -272,7 +276,7 @@ class SupportingUpload extends React.Component {
           !this.state.uploading && (
             <React.Fragment>
               <Flex>
-                {successfullyUploadedFiles.length < maxSupportingFiles && (
+                {successfullyUploadedFiles.length < MAX_SUPPORTING_FILES && (
                   <React.Fragment>
                     <UploadControl>
                       Add more{' '}
@@ -306,7 +310,7 @@ class SupportingUpload extends React.Component {
         {hasManuscript &&
           successfullyUploadedFiles.length > 9 && (
             <ValidationText>
-              Maximum {maxSupportingFiles} supporting files
+              Maximum {MAX_SUPPORTING_FILES} supporting files
             </ValidationText>
           )}
       </React.Fragment>

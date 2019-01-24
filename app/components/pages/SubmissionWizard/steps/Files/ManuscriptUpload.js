@@ -5,8 +5,7 @@ import styled from 'styled-components'
 import Dropzone from 'react-dropzone'
 import { ErrorText } from '@pubsweet/ui'
 import { th } from '@pubsweet/ui-toolkit'
-import config from 'config'
-import { errorMessageMapping } from './utils'
+import { errorMessageMapping, MAX_FILE_SIZE } from './utils'
 import Paragraph from '../../../../ui/atoms/Paragraph'
 import ActionText from '../../../../ui/atoms/ActionText'
 
@@ -197,7 +196,7 @@ class ManuscriptUpload extends React.Component {
         disableClick
         disabled={conversion.converting}
         hasError={this.state.errorMessage && !conversion.converting}
-        maxSize={config.fileUpload.maxSizeMB * 1e6}
+        maxSize={MAX_FILE_SIZE * 1e6}
         onDrop={files => {
           this.setErrorMessage(null)
           this.droppedFileName = files.length && files[0].name
