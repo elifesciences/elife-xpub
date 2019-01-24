@@ -17,7 +17,9 @@ describe('AuditLog', () => {
   it('should save to the database', async () => {
     const audit = await new AuditLog({
       userId: user.id,
-      action: 'some-action'
+      action: 'some-action',
+      objectType: 'some-object',
+      value: 'some-value'
     }).save()
     expect(audit.id).toBeTruthy()
   })

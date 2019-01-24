@@ -272,7 +272,8 @@ describe('Manuscript', () => {
         audits: [{
           userId,
           action: 'UPDATED_STATUS',
-          objectType: 'manuscript'
+          objectType: 'manuscript',
+          value: 'NEXT',
         }]
       })
     })
@@ -448,7 +449,8 @@ describe('Manuscript', () => {
       expect(manuscript.audits[0]).toMatchObject({
         userId,
         action: 'UPDATED_STATUS',
-        objectType: 'manuscript'
+        objectType: 'manuscript',
+        value: 'MECA_EXPORT_PENDING',
       })
     })
   })

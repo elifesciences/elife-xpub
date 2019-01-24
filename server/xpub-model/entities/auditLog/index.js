@@ -11,6 +11,7 @@ class AuditLog extends BaseModel {
       properties: {
         userId: { type: 'uuid' },
         action: { type: 'string' },
+        value: { type: ['string', 'null'] },
         objectId: { type: 'uuid' },
         objectType: { type: ['string', 'null'] }
       },

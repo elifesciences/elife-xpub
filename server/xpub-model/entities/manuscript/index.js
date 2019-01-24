@@ -214,6 +214,7 @@ class Manuscript extends BaseModel {
       userId: this.createdBy,
       action: 'UPDATED_STATUS',
       objectType: 'manuscript',
+      value: status,
     }
     this.audits.push(audit)
     this.status = status
@@ -236,6 +237,7 @@ class Manuscript extends BaseModel {
       userId: manuscript.createdBy,
       action: 'UPDATED_STATUS',
       objectType: 'manuscript',
+      value: status,
     }
     if (!manuscript.audits) manuscript.audits = []
     manuscript.audits.push(audit)
