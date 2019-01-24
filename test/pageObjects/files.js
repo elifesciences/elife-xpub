@@ -10,6 +10,7 @@ const files = {
   supportingFilesUpload: Selector('[data-test-id=supportingFilesUpload]>input'),
   supportingFilesRemove: Selector('[data-test-id=supportingFilesRemove]'),
   supportingFile: Selector('[data-test-id=file-block-name]'),
+  supportingFileError: Selector('[data-test-id=file-block-error]'),
   fileName: Selector('[data-test-id=fileName]'),
   dropzoneMessage: Selector('[data-test-id=dropzoneMessage]'),
 }

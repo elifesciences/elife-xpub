@@ -48,7 +48,9 @@ module.exports = {
       },
     },
   },
-
+  fileUpload: {
+    maxSizeMB: 10,
+  },
   meca: {
     s3: {
       remotePath: 'localhost',
@@ -59,5 +61,4 @@ module.exports = {
     },
     apiKey: 'abcd1234',
   },
-  
 }

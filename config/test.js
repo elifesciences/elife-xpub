@@ -36,6 +36,9 @@ module.exports = {
       ),
     },
   },
+  fileUpload: {
+    maxSizeMB: 10,
+  },
   meca: {
     sftp: {
       connectionOptions: {

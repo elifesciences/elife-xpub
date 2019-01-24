@@ -28,6 +28,8 @@ const manuscript = {
   ],
 }
 
+const supportingFileLarge = './fixtures/dummy-pdf-test11MB.pdf'
+
 const getPageUrl = ClientFunction(() => window.location.href)
 const autoRetry = async (fn, timeout = 5000) => {
   const delay = 100
@@ -98,6 +100,14 @@ test('Happy path', async t => {
     .setFilesToUpload(files.supportingFilesUpload, manuscript.supportingFiles)
     .expect(files.supportingFile.count)
     .eql(2)
+
+  // uploading supporting large files - should display an error
+  await t
+    .setFilesToUpload(files.supportingFilesUpload, [supportingFileLarge])
+    .expect(files.supportingFile.count)
+    .eql(3)
+    .expect(files.supportingFileError.count)
+    .eql(1)
     .click(wizardStep.next)
 
   // adding manuscript metadata
