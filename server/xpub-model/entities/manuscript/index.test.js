@@ -1,17 +1,22 @@
 const { createTables } = require('@pubsweet/db-manager')
 const uuid = require('uuid')
 const Team = require('../team')
+const User = require('../user')
+const AuditLog = require('../auditLog')
 const Manuscript = require('.')
 
 describe('Manuscript', () => {
   let userId
 
-  beforeEach(() => {
-    userId = uuid()
-    return createTables(true)
+  beforeEach(async () => {
+    await createTables(true)
+    const profileId = 'ewwboc7m'
+    const identities = [{ type: 'elife', identifier: profileId }]
+    const user = await new User({ identities }).save()
+    userId = user.id
   })
 
-  describe('applyInput', () => {
+  describe('applyInput()', () => {
     it('picks only whitelisted properties', () => {
       const manuscript = new Manuscript({
         meta: {
@@ -126,7 +131,7 @@ describe('Manuscript', () => {
     })
   })
 
-  describe('addTeam', () => {
+  describe('addTeam()', () => {
     it('adds team', () => {
       const team = {
         id: 1,
@@ -212,7 +217,7 @@ describe('Manuscript', () => {
       ).rejects.toThrow('Manuscript not found'))
   })
 
-  describe('findByStatus()', () => {
+  describe('Manuscript.findByStatus()', () => {
     it('finds by status', async () => {
       const manuscript = new Manuscript({
         createdBy: userId,
@@ -239,21 +244,36 @@ describe('Manuscript', () => {
       expect(Manuscript.findByStatus('FAKE', userId)).resolves.toEqual([]))
   })
 
-  describe('updateStatus()', () => {
-    it('updates status only', async () => {
+  describe('Manuscript.updateStatus', () => {
+    it('updates status', async () => {
       const manuscript = await new Manuscript({
         meta: {
           title: 'Title',
         },
         createdBy: userId,
       }).save()
-      await Manuscript.updateStatus(manuscript.id, 'NEXT')
-      const loadedManuscript = await Manuscript.find(manuscript.id, userId)
+      const loadedManuscript = await Manuscript.updateStatus(manuscript.id, 'NEXT')
       expect(loadedManuscript).toMatchObject({
         status: 'NEXT',
         meta: {
           title: 'Title',
         },
+      })
+    })
+
+    it("adds an entry to the manuscript's audit log", async () => {
+      const manuscript = await new Manuscript({
+        createdBy: userId,
+      }).save()
+      const loadedManuscript = await Manuscript.updateStatus(manuscript.id, 'NEXT')
+      const audits = await AuditLog.all()
+
+      expect(loadedManuscript.status).toBe('NEXT')
+      expect(audits).toHaveLength(1)
+      expect(audits[0]).toMatchObject({
+        action: 'UPDATED',
+        objectType: 'manuscript.status',
+        value: 'NEXT',
       })
     })
 
@@ -366,7 +386,7 @@ describe('Manuscript', () => {
     })
   })
 
-  describe('all()', () => {
+  describe('Manuscript.all()', () => {
     it("returns users's manuscripts only", async () => {
       const secondUserId = uuid()
       await new Manuscript({

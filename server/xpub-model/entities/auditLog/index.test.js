@@ -1,29 +1,26 @@
 const { createTables } = require('@pubsweet/db-manager')
-const User = require('../user')
+const uuid = require('uuid')
 const AuditLog = require('.')
 const replaySetup = require('../../../../test/helpers/replay-setup')
 
 replaySetup('success')
 
 describe('AuditLog', () => {
-  let user
-
   beforeEach(async () => {
     await createTables(true)
-    const profileId = 'ewwboc7m'
-    user = await User.findOrCreate(profileId)
   })
 
   it('should save to the database', async () => {
     const audit = await new AuditLog({
-      userId: user.id,
-      action: 'some-action'
+      action: 'CREATED',
+      objectId: uuid(),
+      objectType: 'some-object.some-attribute',
+      value: 'some-value',
     }).save()
     expect(audit.id).toBeTruthy()
   })
 
   describe('delete', () => {
-
     it('if should throw an unsupported error', async () => {
       const audit = new AuditLog()
       const error = new Error('Unsupported operation')
@@ -35,7 +32,5 @@ describe('AuditLog', () => {
       }
       expect(response).toEqual(error)
     })
-
   })
 })
-

@@ -1,8 +1,9 @@
 const lodash = require('lodash')
 const { transaction } = require('objection')
-const emptyManuscript = require('./helpers/empty')
 const BaseModel = require('@pubsweet/base-model')
 const logger = require('@pubsweet/logger')
+const emptyManuscript = require('./helpers/empty')
+const AuditLog = require('../auditLog')
 
 // Temporarily commented out see #1162
 // const integrityError = (property, value, message) =>
@@ -128,7 +129,7 @@ class Manuscript extends BaseModel {
     })
     // todo why do I need to do this?
     await Promise.all(
-      manuscripts.map(manuscript => manuscript.$loadRelated('[teams, files]')),
+      manuscripts.map(manuscript => manuscript.$loadRelated('[teams, files ]')),
     )
     return manuscripts
   }
@@ -163,7 +164,7 @@ class Manuscript extends BaseModel {
 
   async save() {
     const simpleSave = async (trx = null) => {
-      // save manuscript and all related files and teams
+      // save manuscript and all relations
       // note that this also deletes any related entities that are not present
       await this.$query(trx).upsertGraphAndFetch(this)
       // reload related entities
@@ -201,16 +202,27 @@ class Manuscript extends BaseModel {
     return this
   }
 
-  // atomically update the manuscript status
   static async updateStatus(id, status) {
-    // Can't use objection's patch method as this overwrites existing data with defaults
-    const updates = await this.knex()
-      .table(this.tableName)
-      .where({ id })
-      .update({ status })
-    if (updates === 0) {
+    const [manuscript] = await this.query().where({
+      'manuscript.id': id,
+    })
+
+    if (!manuscript) {
       throw new Error(`${this.name} not found`)
     }
+    // todo why does eager loading sometimes not work?
+    await manuscript.$loadRelated('[teams, files]')
+
+    manuscript.status = status
+
+    await new AuditLog({
+      action: 'UPDATED',
+      objectId: id,
+      objectType: 'manuscript.status',
+      value: status,
+    }).save()
+
+    return manuscript.save()
   }
 
   applyInput(input) {

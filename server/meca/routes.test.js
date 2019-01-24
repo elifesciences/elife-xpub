@@ -4,7 +4,7 @@ const logger = require('@pubsweet/logger')
 const express = require('express')
 const bodyParser = require('body-parser')
 const supertest = require('supertest')
-const { Manuscript } = require('@elifesciences/xpub-model')
+const { Manuscript, User } = require('@elifesciences/xpub-model')
 const routes = require('./routes')
 
 const makeApp = () => {
@@ -15,12 +15,16 @@ const makeApp = () => {
 }
 
 describe('MECA HTTP callback handler', () => {
-  const userId = '9A3E046F-8CC9-4880-81E6-309CF0B726F4'
+  let userId
   const apiKey = config.get('meca.apiKey')
 
-  beforeEach(() => {
+  beforeEach(async () => {
     jest.clearAllMocks()
-    return createTables(true)
+    await createTables(true)
+    const profileId = 'ewwboc7m'
+    const identities = [{ type: 'elife', identifier: profileId }]
+    const user = await new User({ identities }).save()
+    userId = user.id
   })
 
   it('rejects wrong API key', async () => {
