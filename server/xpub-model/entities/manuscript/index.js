@@ -1,8 +1,9 @@
 const lodash = require('lodash')
 const { transaction } = require('objection')
-const emptyManuscript = require('./helpers/empty')
 const BaseModel = require('@pubsweet/base-model')
 const logger = require('@pubsweet/logger')
+const emptyManuscript = require('./helpers/empty')
+const AuditLog = require('../auditLog')
 
 // Temporarily commented out see #1162
 // const integrityError = (property, value, message) =>
@@ -88,14 +89,6 @@ class Manuscript extends BaseModel {
           to: 'team.objectId',
         },
       },
-      audits: {
-        relation: BaseModel.HasManyRelation,
-        modelClass: `${__dirname}/../auditLog`,
-        join: {
-          from: 'manuscript.id',
-          to: 'audit_log.objectId',
-        },
-      }
     }
   }
 
@@ -124,7 +117,7 @@ class Manuscript extends BaseModel {
       throw new Error(`${this.name} not found`)
     }
     // todo why does eager loading sometimes not work?
-    await manuscript.$loadRelated('[teams, files, audits]')
+    await manuscript.$loadRelated('[teams, files]')
 
     return manuscript
   }
@@ -136,7 +129,7 @@ class Manuscript extends BaseModel {
     })
     // todo why do I need to do this?
     await Promise.all(
-      manuscripts.map(manuscript => manuscript.$loadRelated('[teams, files, audits]')),
+      manuscripts.map(manuscript => manuscript.$loadRelated('[teams, files ]')),
     )
     return manuscripts
   }
@@ -149,7 +142,7 @@ class Manuscript extends BaseModel {
       .orderBy('created', 'desc')
 
     await Promise.all(
-      manuscripts.map(manuscript => manuscript.$loadRelated('[teams, files, audits]')),
+      manuscripts.map(manuscript => manuscript.$loadRelated('[teams, files]')),
     )
     return manuscripts
   }
@@ -157,7 +150,7 @@ class Manuscript extends BaseModel {
   async refresh() {
     const refreshed = await Manuscript.find(this.id, this.createdBy)
     await this.$set(refreshed)
-    await this.$loadRelated('[teams, files, audits]')
+    await this.$loadRelated('[teams, files]')
   }
 
   async needsRefresh(trx = null) {
@@ -175,7 +168,7 @@ class Manuscript extends BaseModel {
       // note that this also deletes any related entities that are not present
       await this.$query(trx).upsertGraphAndFetch(this)
       // reload related entities
-      await this.$loadRelated('[teams, files, audits]', null, trx)
+      await this.$loadRelated('[teams, files]', null, trx)
     }
 
     if (this.created && this.updated) {
@@ -209,14 +202,14 @@ class Manuscript extends BaseModel {
     return this
   }
 
-  updateStatus(status) {
-    const audit = {
+  async updateStatus(status) {
+    await new AuditLog({
       userId: this.createdBy,
       action: 'UPDATED',
+      objectId: this.id,
       objectType: 'manuscript.status',
       value: status,
-    }
-    this.audits.push(audit)
+    }).save()
     this.status = status
   }
 
@@ -229,7 +222,7 @@ class Manuscript extends BaseModel {
       throw new Error(`${this.name} not found`)
     }
     // todo why does eager loading sometimes not work?
-    await manuscript.$loadRelated('[teams, files, audits]')
+    await manuscript.$loadRelated('[teams, files]')
 
     manuscript.status = status
 

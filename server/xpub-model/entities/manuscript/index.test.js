@@ -2,6 +2,7 @@ const { createTables } = require('@pubsweet/db-manager')
 const uuid = require('uuid')
 const Team = require('../team')
 const User = require('../user')
+const AuditLog = require('../auditLog')
 const Manuscript = require('.')
 
 describe('Manuscript', () => {
@@ -432,10 +433,13 @@ describe('Manuscript', () => {
   })
 
   describe('updateStatus()', () => {
-    it('updates manuscript status', () => {
-      const manuscript = new Manuscript()
+    it('updates manuscript status', async () => {
+      const manuscript = new Manuscript({
+        createdBy: userId
+      })
+      await manuscript.save()
       expect(manuscript.status).toEqual(Manuscript.statuses.INITIAL)
-      manuscript.updateStatus(Manuscript.statuses.MECA_EXPORT_PENDING)
+      await manuscript.updateStatus(Manuscript.statuses.MECA_EXPORT_PENDING)
       expect(manuscript.status).toEqual(Manuscript.statuses.MECA_EXPORT_PENDING)
     })
 
@@ -443,12 +447,14 @@ describe('Manuscript', () => {
       const manuscript = new Manuscript({
         createdBy: userId
       })
-      manuscript.updateStatus(Manuscript.statuses.MECA_EXPORT_PENDING)
       await manuscript.save()
-      expect(manuscript.audits).toHaveLength(1)
-      expect(manuscript.audits[0]).toMatchObject({
+      await manuscript.updateStatus(Manuscript.statuses.MECA_EXPORT_PENDING)
+      const audits = await AuditLog.all()
+      expect(audits).toHaveLength(1)
+      expect(audits[0]).toMatchObject({
         userId,
         action: 'UPDATED',
+        objectId: manuscript.id,
         objectType: 'manuscript.status',
         value: 'MECA_EXPORT_PENDING',
       })

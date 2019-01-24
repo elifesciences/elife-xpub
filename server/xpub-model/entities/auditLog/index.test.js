@@ -1,4 +1,5 @@
 const { createTables } = require('@pubsweet/db-manager')
+const uuid = require('uuid')
 const User = require('../user')
 const AuditLog = require('.')
 const replaySetup = require('../../../../test/helpers/replay-setup')
@@ -18,6 +19,7 @@ describe('AuditLog', () => {
     const audit = await new AuditLog({
       userId: user.id,
       action: 'CREATED',
+      objectId: uuid(),
       objectType: 'some-object.some-attribute',
       value: 'some-value'
     }).save()
