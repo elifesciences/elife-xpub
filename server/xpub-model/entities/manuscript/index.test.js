@@ -262,20 +262,21 @@ describe('Manuscript', () => {
       })
     })
 
-    it('adds an entry to the manuscript\'s audit log', async () => {
+    it("adds an entry to the manuscript's audit log", async () => {
       const manuscript = await new Manuscript({
         createdBy: userId,
       }).save()
       await Manuscript.updateStatus(manuscript.id, 'NEXT')
       const loadedManuscript = await Manuscript.find(manuscript.id, userId)
-      expect(loadedManuscript).toMatchObject({
-        status: 'NEXT',
-        audits: [{
-          userId,
-          action: 'UPDATED',
-          objectType: 'manuscript.status',
-          value: 'NEXT',
-        }]
+      const audits = await AuditLog.all()
+
+      expect(loadedManuscript.status).toBe('NEXT')
+      expect(audits).toHaveLength(1)
+      expect(audits[0]).toMatchObject({
+        userId,
+        action: 'UPDATED',
+        objectType: 'manuscript.status',
+        value: 'NEXT',
       })
     })
 
@@ -435,7 +436,7 @@ describe('Manuscript', () => {
   describe('updateStatus()', () => {
     it('updates manuscript status', async () => {
       const manuscript = new Manuscript({
-        createdBy: userId
+        createdBy: userId,
       })
       await manuscript.save()
       expect(manuscript.status).toEqual(Manuscript.statuses.INITIAL)
@@ -443,9 +444,9 @@ describe('Manuscript', () => {
       expect(manuscript.status).toEqual(Manuscript.statuses.MECA_EXPORT_PENDING)
     })
 
-    it('adds an entry to the manuscript\'s audit log', async () => {
+    it("adds an entry to the manuscript's audit log", async () => {
       const manuscript = new Manuscript({
-        createdBy: userId
+        createdBy: userId,
       })
       await manuscript.save()
       await manuscript.updateStatus(Manuscript.statuses.MECA_EXPORT_PENDING)

@@ -226,14 +226,13 @@ class Manuscript extends BaseModel {
 
     manuscript.status = status
 
-    const audit = {
+    await new AuditLog({
       userId: manuscript.createdBy,
       action: 'UPDATED',
+      objectId: id,
       objectType: 'manuscript.status',
       value: status,
-    }
-    if (!manuscript.audits) manuscript.audits = []
-    manuscript.audits.push(audit)
+    }).save()
 
     await manuscript.save()
   }
