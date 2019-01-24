@@ -34,7 +34,7 @@ async function submitManuscript(_, { data }, { user, ip }) {
     })
   }
 
-  manuscript.updateStatus(Manuscript.statuses.MECA_EXPORT_PENDING)
+  await manuscript.updateStatus(Manuscript.statuses.MECA_EXPORT_PENDING)
   await manuscript.save()
 
   mecaExport(manuscript, S3Storage.getContent, ip)
