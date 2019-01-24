@@ -18,9 +18,9 @@ const RemoveLink = styled.span`
 `
 
 const ValidationText = styled.div`
-color: ${th('colorSuccess')}
-margin-top: ${th('space.1')};
-font-size: ${th('fontSizeBaseSmall')};
+  color: ${th('colorSuccess')};
+  margin-top: ${th('space.1')};
+  font-size: ${th('fontSizeBaseSmall')};
 `
 
 const SectionHeading = styled.span`
@@ -48,7 +48,6 @@ const FileBlock = styled(({ fileError, ...rest }) => <Flex {...rest} />)`
   ${props =>
     props.fileError
       ? css`
-          margin: -1px -1px 0 -1px;
           color: ${th('colorError')};
         `
       : css`
@@ -58,6 +57,7 @@ const FileBlock = styled(({ fileError, ...rest }) => <Flex {...rest} />)`
         `};
 `
 const FileHolder = styled(Flex)`
+  align-items: center;
   flex-wrap: wrap;
 `
 
@@ -66,6 +66,7 @@ const FileName = styled.span`
 `
 
 const IconHolder = styled.div`
+  display: flex;
   flex-shrink: 0;
 `
 
@@ -78,7 +79,7 @@ const UploadSuccessIcon = styled(props => (
 ))`
   height: ${th('space.3')};
   width: ${th('space.3')};
-  margin-right: ${th('space.2')};
+  margin-right: ${th('space.3')};
 `
 
 const UploadFailureIcon = styled(props => (
@@ -90,7 +91,7 @@ const UploadFailureIcon = styled(props => (
 ))`
   height: ${th('space.3')};
   width: ${th('space.3')};
-  margin-right: ${th('space.2')};
+  margin-right: ${th('space.3')};
 `
 const UploadControl = styled(Box).attrs({
   width: 1 / 2,
@@ -113,7 +114,7 @@ const Spinner = styled.span`
   text-indent: -9999em;
   transform: translateZ(0);
   width: ${th('space.3')};
-  margin-right: ${th('space.2')};
+  margin-right: ${th('space.3')};
   @keyframes full-rotation {
     0% {
       transform: rotate(0deg);
@@ -247,7 +248,7 @@ class SupportingUpload extends React.Component {
             <FileBlock
               fileError={file.error || file.rejected}
               key={file.id}
-              p={2}
+              p={3}
             >
               <IconHolder>
                 {file.loading && <Spinner />}
