@@ -216,7 +216,6 @@ class Manuscript extends BaseModel {
     manuscript.status = status
 
     await new AuditLog({
-      userId: manuscript.createdBy,
       action: 'UPDATED',
       objectId: id,
       objectType: 'manuscript.status',

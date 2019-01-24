@@ -17,7 +17,6 @@ describe('AuditLog', () => {
 
   it('should save to the database', async () => {
     const audit = await new AuditLog({
-      userId: user.id,
       action: 'CREATED',
       objectId: uuid(),
       objectType: 'some-object.some-attribute',

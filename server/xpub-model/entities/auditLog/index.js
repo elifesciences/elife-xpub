@@ -7,9 +7,9 @@ class AuditLog extends BaseModel {
 
   static get schema() {
     return {
-      required: ['userId', 'action', 'objectId'],
+      required: ['action', 'objectId'],
       properties: {
-        userId: { type: 'uuid' },
+        userId: { type: 'uuid' }, // Currently not used
         action: {
           type: 'string',
           enum: ['CREATED', 'UPDATED', 'DELETED'],

@@ -271,7 +271,6 @@ describe('Manuscript', () => {
       expect(loadedManuscript.status).toBe('NEXT')
       expect(audits).toHaveLength(1)
       expect(audits[0]).toMatchObject({
-        userId,
         action: 'UPDATED',
         objectType: 'manuscript.status',
         value: 'NEXT',
