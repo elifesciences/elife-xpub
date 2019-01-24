@@ -64,7 +64,7 @@ class Notification {
     mailer
       .send({
         to: emailList,
-        subject: 'Libero Submission System: New Submission',
+        subject: 'Your eLife submission',
         from: 'editorial@elifesciences.org',
         text,
         html,
