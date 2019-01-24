@@ -9,7 +9,7 @@ const manuscriptInputSchema = require('../helpers/manuscriptInputValidationSchem
 
 async function submitManuscript(_, { data }, { user, ip }) {
   const userUuid = await User.getUuidForProfile(user)
-  const manuscript = await Manuscript.find(data.id, userUuid)
+  let manuscript = await Manuscript.find(data.id, userUuid)
   if (manuscript.status !== Manuscript.statuses.INITIAL) {
     throw new Error(
       `Cannot submit manuscript with status of ${manuscript.status}`,
@@ -34,8 +34,8 @@ async function submitManuscript(_, { data }, { user, ip }) {
     })
   }
 
-  await manuscript.updateStatus(Manuscript.statuses.MECA_EXPORT_PENDING)
   await manuscript.save()
+  manuscript = await Manuscript.updateStatus(manuscript.id, Manuscript.statuses.MECA_EXPORT_PENDING)
 
   mecaExport(manuscript, S3Storage.getContent, ip)
     .then(() => {

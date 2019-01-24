@@ -202,17 +202,6 @@ class Manuscript extends BaseModel {
     return this
   }
 
-  async updateStatus(status) {
-    await new AuditLog({
-      userId: this.createdBy,
-      action: 'UPDATED',
-      objectId: this.id,
-      objectType: 'manuscript.status',
-      value: status,
-    }).save()
-    this.status = status
-  }
-
   static async updateStatus(id, status) {
     const [manuscript] = await this.query().where({
       'manuscript.id': id,
@@ -234,7 +223,7 @@ class Manuscript extends BaseModel {
       value: status,
     }).save()
 
-    await manuscript.save()
+    return manuscript.save()
   }
 
   applyInput(input) {

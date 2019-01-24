@@ -252,8 +252,7 @@ describe('Manuscript', () => {
         },
         createdBy: userId,
       }).save()
-      await Manuscript.updateStatus(manuscript.id, 'NEXT')
-      const loadedManuscript = await Manuscript.find(manuscript.id, userId)
+      const loadedManuscript = await Manuscript.updateStatus(manuscript.id, 'NEXT')
       expect(loadedManuscript).toMatchObject({
         status: 'NEXT',
         meta: {
@@ -266,8 +265,7 @@ describe('Manuscript', () => {
       const manuscript = await new Manuscript({
         createdBy: userId,
       }).save()
-      await Manuscript.updateStatus(manuscript.id, 'NEXT')
-      const loadedManuscript = await Manuscript.find(manuscript.id, userId)
+      const loadedManuscript = await Manuscript.updateStatus(manuscript.id, 'NEXT')
       const audits = await AuditLog.all()
 
       expect(loadedManuscript.status).toBe('NEXT')
@@ -429,35 +427,6 @@ describe('Manuscript', () => {
       const orderedManuscripts = await Manuscript.all(userId)
       orderedManuscripts.forEach((manuscript, index) => {
         expect(manuscript.meta.title).toEqual(index.toString())
-      })
-    })
-  })
-
-  describe('updateStatus()', () => {
-    it('updates manuscript status', async () => {
-      const manuscript = new Manuscript({
-        createdBy: userId,
-      })
-      await manuscript.save()
-      expect(manuscript.status).toEqual(Manuscript.statuses.INITIAL)
-      await manuscript.updateStatus(Manuscript.statuses.MECA_EXPORT_PENDING)
-      expect(manuscript.status).toEqual(Manuscript.statuses.MECA_EXPORT_PENDING)
-    })
-
-    it("adds an entry to the manuscript's audit log", async () => {
-      const manuscript = new Manuscript({
-        createdBy: userId,
-      })
-      await manuscript.save()
-      await manuscript.updateStatus(Manuscript.statuses.MECA_EXPORT_PENDING)
-      const audits = await AuditLog.all()
-      expect(audits).toHaveLength(1)
-      expect(audits[0]).toMatchObject({
-        userId,
-        action: 'UPDATED',
-        objectId: manuscript.id,
-        objectType: 'manuscript.status',
-        value: 'MECA_EXPORT_PENDING',
       })
     })
   })
