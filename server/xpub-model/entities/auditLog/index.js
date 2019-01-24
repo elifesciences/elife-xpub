@@ -10,7 +10,10 @@ class AuditLog extends BaseModel {
       required: ['userId', 'action'],
       properties: {
         userId: { type: 'uuid' },
-        action: { type: 'string' },
+        action: {
+          type: 'string',
+          enum: ['CREATED', 'UPDATED', 'DELETED'],
+        },
         value: { type: ['string', 'null'] },
         objectId: { type: 'uuid' },
         objectType: { type: ['string', 'null'] }
