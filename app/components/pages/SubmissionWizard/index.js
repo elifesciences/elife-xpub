@@ -1,5 +1,5 @@
 import React from 'react'
-import { Route, Switch, Redirect } from 'react-router-dom'
+import { Switch, Redirect } from 'react-router-dom'
 import { Subscription } from 'react-apollo'
 import SubmissionOperations from './SubmissionOperations'
 import AuthorPageContainer from './steps/Author'
@@ -15,6 +15,7 @@ import { schema as disclosurePageSchema } from './steps/Disclosure/schema'
 import WizardStep from './WizardStep'
 import ErrorPage from '../../../components/pages/Error'
 import { ON_UPLOAD_PROGRESS } from './operations'
+import TrackedRoute from '../../../trackedRoute'
 
 const SubmissionWizard = ({ match, history }) => (
   <SubmissionOperations manuscriptId={match.params.id}>
@@ -22,7 +23,7 @@ const SubmissionWizard = ({ match, history }) => (
       <Subscription subscription={ON_UPLOAD_PROGRESS}>
         {({ data: uploadData, loading: uploadLoading }) => (
           <Switch>
-            <Route
+            <TrackedRoute
               exact
               path={`${match.path}/files`}
               render={() => (
@@ -42,7 +43,7 @@ const SubmissionWizard = ({ match, history }) => (
                 />
               )}
             />
-            <Route
+            <TrackedRoute
               path={`${match.path}/submission`}
               render={() => (
                 <WizardStep
@@ -59,7 +60,7 @@ const SubmissionWizard = ({ match, history }) => (
                 />
               )}
             />
-            <Route
+            <TrackedRoute
               path={`${match.path}/editors`}
               render={() => (
                 <WizardStep
@@ -76,7 +77,7 @@ const SubmissionWizard = ({ match, history }) => (
                 />
               )}
             />
-            <Route
+            <TrackedRoute
               path={`${match.path}/disclosure`}
               render={() => (
                 <WizardStep
@@ -94,7 +95,7 @@ const SubmissionWizard = ({ match, history }) => (
                 />
               )}
             />
-            <Route
+            <TrackedRoute
               path={`${match.path}/author`}
               render={() => (
                 <WizardStep
