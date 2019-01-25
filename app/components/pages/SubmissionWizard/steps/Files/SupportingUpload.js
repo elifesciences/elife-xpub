@@ -3,8 +3,12 @@ import Dropzone from 'react-dropzone'
 import { Box, Flex } from '@rebass/grid'
 import { th } from '@pubsweet/ui-toolkit'
 import styled, { css } from 'styled-components'
-import config from 'config'
 
+import {
+  errorMessageMapping,
+  MAX_SUPPORTING_FILES,
+  MAX_FILE_SIZE,
+} from './utils'
 import Icon from '../../../../ui/atoms/Icon'
 
 const UploadLink = styled.span`
@@ -18,9 +22,9 @@ const RemoveLink = styled.span`
 `
 
 const ValidationText = styled.div`
-color: ${th('colorSuccess')}
-margin-top: ${th('space.1')};
-font-size: ${th('fontSizeBaseSmall')};
+  color: ${th('colorSuccess')};
+  margin-top: ${th('space.1')};
+  font-size: ${th('fontSizeBaseSmall')};
 `
 
 const SectionHeading = styled.span`
@@ -43,13 +47,12 @@ const StyledDropzone = styled(({ setRef, ...rest }) => (
       border: ${th('borderWidth')} ${th('borderStyle')} ${th('colorBorder')};
     `};
 `
-const FileBlock = styled(({ uploadError, ...rest }) => <Flex {...rest} />)`
+const FileBlock = styled(({ fileError, ...rest }) => <Flex {...rest} />)`
   border-top: ${th('borderWidth')} ${th('borderStyle')} ${th('colorBorder')};
   ${props =>
-    props.uploadError
+    props.fileError
       ? css`
-          margin: -1px -1px 0 -1px;
-          border: ${th('borderWidth')} ${th('borderStyle')} ${th('colorError')};
+          color: ${th('colorError')};
         `
       : css`
           &:first-child {
@@ -57,6 +60,20 @@ const FileBlock = styled(({ uploadError, ...rest }) => <Flex {...rest} />)`
           }
         `};
 `
+const FileHolder = styled(Flex)`
+  align-items: center;
+  flex-wrap: wrap;
+`
+
+const FileName = styled.span`
+  margin-right: 12px;
+`
+
+const IconHolder = styled.div`
+  display: flex;
+  flex-shrink: 0;
+`
+
 const UploadSuccessIcon = styled(props => (
   <Icon
     iconName="CheckCircle"
@@ -66,7 +83,7 @@ const UploadSuccessIcon = styled(props => (
 ))`
   height: ${th('space.3')};
   width: ${th('space.3')};
-  margin-right: ${th('space.2')};
+  margin-right: ${th('space.3')};
 `
 
 const UploadFailureIcon = styled(props => (
@@ -78,7 +95,7 @@ const UploadFailureIcon = styled(props => (
 ))`
   height: ${th('space.3')};
   width: ${th('space.3')};
-  margin-right: ${th('space.2')};
+  margin-right: ${th('space.3')};
 `
 const UploadControl = styled(Box).attrs({
   width: 1 / 2,
@@ -101,7 +118,7 @@ const Spinner = styled.span`
   text-indent: -9999em;
   transform: translateZ(0);
   width: ${th('space.3')};
-  margin-right: ${th('space.2')};
+  margin-right: ${th('space.3')};
   @keyframes full-rotation {
     0% {
       transform: rotate(0deg);
@@ -110,6 +127,10 @@ const Spinner = styled.span`
       transform: rotate(360deg);
     }
   }
+`
+
+const ErrorMessage = styled.span`
+  font-size: 12px;
 `
 
 function* fileUploadGenerator(files, uploadFile) {
@@ -171,9 +192,46 @@ class SupportingUpload extends React.Component {
     }
   }
 
+  onFileDrop = (acceptedFiles, rejectedFiles) => {
+    let storageSpace = MAX_SUPPORTING_FILES - this.state.files.length
+
+    if (storageSpace > 0) {
+      const filesToUpload = acceptedFiles
+        .slice(0, storageSpace)
+        .map((file, index) => ({
+          id: index + this.state.files.length,
+          file,
+          loading: true,
+        }))
+      if (filesToUpload.length > 0) {
+        this.setState({
+          uploading: true,
+        })
+        this.synchronouslyUploadFiles(filesToUpload)
+      }
+      storageSpace -= filesToUpload.length
+      let rejectedFilesToAdd = []
+      if (storageSpace > 0) {
+        rejectedFilesToAdd = rejectedFiles
+          .slice(0, storageSpace)
+          .map((file, index) => ({
+            id: index + filesToUpload.length + this.state.files.length,
+            file,
+            loading: false,
+            success: false,
+            rejected: true,
+          }))
+      }
+
+      this.setState({
+        files: [...this.state.files, ...filesToUpload, ...rejectedFilesToAdd],
+      })
+    }
+  }
+
   render() {
     let dropzoneRef
-    const { hasManuscript, removeFiles, maxSupportingFiles } = this.props
+    const { hasManuscript, removeFiles } = this.props
     const successfullyUploadedFiles = this.state.files.filter(
       file => !file.error,
     )
@@ -184,41 +242,33 @@ class SupportingUpload extends React.Component {
         )}
         <StyledDropzone
           data-test-id="supportingFilesUpload"
-          maxSize={config.fileUpload.maxSizeMB * 1e6}
-          onDrop={droppedFiles => {
-            let files = droppedFiles
-            if (
-              files.length >
-              maxSupportingFiles - successfullyUploadedFiles.length
-            ) {
-              files.splice(
-                maxSupportingFiles - successfullyUploadedFiles.length,
-              )
-            }
-            files = files.map((file, index) => ({
-              id: index + this.state.files.length,
-              file,
-              loading: true,
-            }))
-
-            this.setState({
-              uploading: true,
-              files: [...this.state.files, ...files],
-            })
-            this.synchronouslyUploadFiles(files)
-          }}
+          maxSize={MAX_FILE_SIZE * 1e6}
+          onDrop={this.onFileDrop}
           setRef={node => {
             dropzoneRef = node
           }}
         >
           {this.state.files.map(file => (
-            <FileBlock key={file.id} p={2} uploadError={file.error}>
-              {file.loading && <Spinner />}
-              {file.success && <UploadSuccessIcon />}
-              {file.error && <UploadFailureIcon />}
-              <span data-test-id="file_block_name">
-                {file.file.name ? file.file.name : file.file.filename}
-              </span>
+            <FileBlock
+              fileError={file.error || file.rejected}
+              key={file.id}
+              p={3}
+            >
+              <IconHolder>
+                {file.loading && <Spinner />}
+                {file.success && <UploadSuccessIcon />}
+                {(file.error || file.rejected) && <UploadFailureIcon />}
+              </IconHolder>
+              <FileHolder>
+                <FileName data-test-id="file-block-name">
+                  {file.file.name ? file.file.name : file.file.filename}
+                </FileName>
+                {file.rejected && (
+                  <ErrorMessage data-test-id="file-block-error">
+                    {errorMessageMapping.MAX_SIZE_EXECEEDED}
+                  </ErrorMessage>
+                )}
+              </FileHolder>
             </FileBlock>
           ))}
         </StyledDropzone>
@@ -226,7 +276,7 @@ class SupportingUpload extends React.Component {
           !this.state.uploading && (
             <React.Fragment>
               <Flex>
-                {successfullyUploadedFiles.length < maxSupportingFiles && (
+                {successfullyUploadedFiles.length < MAX_SUPPORTING_FILES && (
                   <React.Fragment>
                     <UploadControl>
                       Add more{' '}
@@ -260,7 +310,7 @@ class SupportingUpload extends React.Component {
         {hasManuscript &&
           successfullyUploadedFiles.length > 9 && (
             <ValidationText>
-              Maximum {maxSupportingFiles} supporting files
+              Maximum {MAX_SUPPORTING_FILES} supporting files
             </ValidationText>
           )}
       </React.Fragment>

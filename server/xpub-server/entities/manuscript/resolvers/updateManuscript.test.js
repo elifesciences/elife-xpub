@@ -80,7 +80,7 @@ describe('Manuscript resolvers', () => {
       // Check the dashboard email
       expect(allEmails[0]).toMatchObject({
         to: 'mymail@mail.com',
-        subject: 'Libero Submission System: New Submission',
+        subject: 'Your eLife submission',
       })
 
       const actualManuscript = await Manuscript.find(manuscript.id, userId)
