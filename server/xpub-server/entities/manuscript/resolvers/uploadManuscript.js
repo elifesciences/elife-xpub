@@ -130,8 +130,6 @@ async function uploadManuscript(_, { file, id, fileSize }, { user }) {
 
   // After the length file operations above - now update the manuscript...
   const manuscript = await Manuscript.find(id, userUuid)
-  if (manuscript.files[0].status !== 'STORED')
-    throw new Error(`Should not be ${manuscript.files[0].status}`)
   const oldFileIndex = manuscript.files.findIndex(
     element => element.type === 'MANUSCRIPT_SOURCE',
   )

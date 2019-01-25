@@ -25,18 +25,18 @@ async function uploadSupportingFile(_, { file, id }, { user }) {
       resolve(Buffer.concat(chunks))
     })
   })
+  await File.updateStatus(fileEntity.id, 'UPLOADED')
 
   try {
     await S3Storage.putContent(fileEntity, fileContents, {})
+    await File.updateStatus(fileEntity.id, 'STORED')
   } catch (err) {
+    await File.updateStatus(fileEntity.id, 'CANCELLED')
     await fileEntity.delete()
     throw err
   }
 
-  manuscript.files.push(fileEntity)
-  await manuscript.save()
-
-  return manuscript
+  return Manuscript.find(id, userUuid)
 }
 
 module.exports = uploadSupportingFile
