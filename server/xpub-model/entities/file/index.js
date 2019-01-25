@@ -25,9 +25,6 @@ class File extends BaseModel {
   }
 
   async save() {
-    // overridden to mutate the object instance
-    if (this.$$omitFromDatabaseJson) delete this.$$omitFromDatabaseJson
-
     await this.$query().upsertGraphAndFetch(this)
 
     return this

@@ -91,25 +91,51 @@ describe('related objects behave as we expect', () => {
       expect(manuscript.meta.title).toBe('changed')
     })
 
-    it('file changes are reflected on the manuscript', async () => {
+    it('successive entity changes without re-queries are bad', async () => {
       const manuscript = await createManuscriptWithOneFile(userId)
-      const file = await File.find(manuscript.files[0].id)
+      const fileId = manuscript.files[0].id
+      let file = await File.find(fileId)
+
+      expect(file.status).toBe('CREATED')
+
       file.status = 'UPLOADED'
       await file.save()
 
-      // in memory
+      expect(file).toHaveProperty('id')
+      expect(file.status).toBe('UPLOADED')
+
+      file.status = 'STORED'
+      // saving at this point causes pubsweet to throw a ValidationError
+      // This should be fixed the next time we upgrade and so the
+      // behaviour will change
+      expect(file.save()).rejects.toThrow()
+
+      // re-query
+      file = await File.find(fileId)
+      expect(file).toHaveProperty('id')
+      // the following is really not expected
+      // but is how things work with the current bug
+      expect(file.status).toBe('UPLOADED')
+    })
+
+    it('successive entity changes need re-queries', async () => {
+      const manuscript = await createManuscriptWithOneFile(userId)
+      const fileId = manuscript.files[0].id
+      let file = await File.find(fileId)
+
+      file.status = 'UPLOADED'
+      await file.save()
+
+      file = await File.find(fileId)
       expect(file).toHaveProperty('id')
       expect(file.status).toBe('UPLOADED')
 
       file.status = 'STORED'
       await file.save()
 
-      // in memory
+      file = await File.find(fileId)
       expect(file).toHaveProperty('id')
       expect(file.status).toBe('STORED')
-
-      const f = await File.find(manuscript.files[0].id)
-      expect(f.status).toBe('STORED')
 
       // find the manuscript and check its updated via there...
       const m = await Manuscript.find(manuscript.id, userId)
