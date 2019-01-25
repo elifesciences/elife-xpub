@@ -86,6 +86,7 @@ describe('Manuscripts', () => {
       expect(loadedManuscript.files[0].type).toEqual('MANUSCRIPT_SOURCE')
       expect(loadedManuscript.files[0].filename).toEqual(fileUpload.filename)
       expect(loadedManuscript.files[0].mimeType).toEqual(fileUpload.mimetype)
+      expect(loadedManuscript.files[0].status).toEqual('STORED')
     })
 
     it('fails if S3 upload fails', async () => {

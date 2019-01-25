@@ -9,6 +9,18 @@ const { Manuscript, User } = require('@elifesciences/xpub-model')
 const { File } = require('@elifesciences/xpub-model')
 const { S3Storage } = require('@elifesciences/xpub-controller')
 
+async function initFileUpload(id, filename, mimeType) {
+  const fileEntity = new File({
+    manuscriptId: id,
+    url: `manuscripts/${id}`,
+    filename,
+    type: 'MANUSCRIPT_SOURCE_PENDING',
+    mimeType,
+  })
+  await fileEntity.save()
+  return fileEntity.id
+}
+
 async function uploadManuscript(_, { file, id, fileSize }, { user }) {
   /**
    * TODO
@@ -28,10 +40,13 @@ async function uploadManuscript(_, { file, id, fileSize }, { user }) {
   }
 
   const userUuid = await User.getUuidForProfile(user)
+
   // make sure the manuscript exists
   await Manuscript.find(id, userUuid)
-
   const { stream, filename, mimetype: mimeType } = await file
+
+  const fileId = await initFileUpload(id, filename, mimeType)
+
   logger.info(`Manuscript Upload Size: ${filename}, ${fileSize} | ${id}`)
 
   const pubsub = await pubsubManager.getPubsub()
@@ -68,28 +83,26 @@ async function uploadManuscript(_, { file, id, fileSize }, { user }) {
       }
     })
   })
+  await File.updateStatus(fileId, 'UPLOADED')
+
   logger.info(`Manuscript Upload fileContents::end ${filename} | ${id}`)
 
   logger.info(`Manuscript Upload S3::start ${filename} | ${id}`)
-  const fileEntity = new File({
-    manuscriptId: id,
-    url: `manuscripts/${id}`,
-    filename,
-    type: 'MANUSCRIPT_SOURCE_PENDING',
-    mimeType,
-  })
-  await fileEntity.save()
 
+  const fileEntity = await File.find(fileId)
   try {
     await S3Storage.putContent(fileEntity, fileContents, {
       size: fileSize,
     })
+    await File.updateStatus(fileId, 'STORED')
   } catch (err) {
     logger.error(`Manuscript was not uploaded to S3: ${err} | ${id}`)
+    await File.updateStatus(fileId, 'CANCELLED')
     await fileEntity.delete()
     clearInterval(handle)
     throw err
   }
+
   logger.info(`Manuscript Upload S3::end ${filename} | ${id}`)
 
   let title = ''
@@ -117,7 +130,8 @@ async function uploadManuscript(_, { file, id, fileSize }, { user }) {
 
   // After the length file operations above - now update the manuscript...
   const manuscript = await Manuscript.find(id, userUuid)
-
+  if (manuscript.files[0].status !== 'STORED')
+    throw new Error(`Should not be ${manuscript.files[0].status}`)
   const oldFileIndex = manuscript.files.findIndex(
     element => element.type === 'MANUSCRIPT_SOURCE',
   )
