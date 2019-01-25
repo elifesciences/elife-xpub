@@ -132,6 +132,11 @@ class EditorsPage extends React.Component {
     })
   }
 
+  filterEditors = (editors, toFilter) => {
+    const toFilterIds = toFilter.map(item => item.id)
+    return editors.filter(editor => toFilterIds.indexOf(editor.id) === -1)
+  }
+
   render() {
     const {
       errors,
@@ -158,7 +163,10 @@ class EditorsPage extends React.Component {
               onSubmit={selection =>
                 this.setSelection('suggestedSeniorEditors', selection)
               }
-              people={seniorEditors}
+              people={this.filterEditors(
+                seniorEditors,
+                values.opposedSeniorEditors,
+              )}
             />
             <ValidationMessage
               message={
@@ -188,7 +196,10 @@ class EditorsPage extends React.Component {
               onSubmit={selection =>
                 this.setSelection('opposedSeniorEditors', selection)
               }
-              people={seniorEditors}
+              people={this.filterEditors(
+                seniorEditors,
+                values.suggestedSeniorEditors,
+              )}
             />
 
             <ValidationMessage
@@ -221,7 +232,10 @@ class EditorsPage extends React.Component {
               onSubmit={selection =>
                 this.setSelection('suggestedReviewingEditors', selection)
               }
-              people={reviewingEditors}
+              people={this.filterEditors(
+                reviewingEditors,
+                values.opposedReviewingEditors,
+              )}
             />
 
             <ValidationMessage
@@ -253,7 +267,10 @@ class EditorsPage extends React.Component {
               onSubmit={selection =>
                 this.setSelection('opposedReviewingEditors', selection)
               }
-              people={reviewingEditors}
+              people={this.filterEditors(
+                reviewingEditors,
+                values.suggestedReviewingEditors,
+              )}
             />
 
             <ValidationMessage
