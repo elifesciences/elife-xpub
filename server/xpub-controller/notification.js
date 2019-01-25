@@ -47,17 +47,18 @@ class Notification {
 
     const textCompile = pug.compileFile('templates/dashboard-email-text.pug')
     const htmlCompile = pug.compileFile('templates/dashboard-email-html.pug')
+
     const firstNameList = this.people
       .map(person => person.alias.firstName)
       .join(',')
 
     const text = textCompile({
       authorName: firstNameList,
-      linkDashboard: this.config.pubsweet.base_url,
+      linkDashboard: this.config['pubsweet-server'].baseUrl,
     })
     const html = htmlCompile({
       authorName: firstNameList,
-      linkDashboard: this.config.pubsweet.base_url,
+      linkDashboard: this.config['pubsweet-server'].baseUrl,
     })
 
     let sent = false

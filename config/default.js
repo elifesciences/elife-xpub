@@ -16,7 +16,6 @@ module.exports = {
       '@elifesciences/xpub-client-config',
       '@pubsweet/component-send-email',
     ],
-    base_url: 'http://localhost:3000',
   },
   'pubsweet-server': {
     db: {
