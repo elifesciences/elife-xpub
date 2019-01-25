@@ -1,4 +1,5 @@
 const BaseModel = require('@pubsweet/base-model')
+const AuditLog = require('../auditLog')
 
 class File extends BaseModel {
   static get tableName() {
@@ -25,9 +26,22 @@ class File extends BaseModel {
   }
 
   async save() {
-    // overridden to mutate the object instance
     await this.$query().upsertGraphAndFetch(this)
+
     return this
+  }
+
+  async updateStatus(status) {
+    this.status = status
+
+    await new AuditLog({
+      action: 'UPDATED',
+      objectId: this.id,
+      objectType: 'file.status',
+      value: status,
+    }).save()
+
+    return this.save()
   }
 
   static async findByManuscriptId(manuscriptId) {

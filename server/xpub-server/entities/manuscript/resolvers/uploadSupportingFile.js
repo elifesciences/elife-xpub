@@ -7,13 +7,15 @@ async function uploadSupportingFile(_, { file, id }, { user }) {
   const manuscript = await Manuscript.find(id, userUuid)
 
   const { stream, filename, mimetype: mimeType } = await file
-  const fileEntity = await new File({
+  let fileEntity = new File({
     manuscriptId: manuscript.id,
     url: `supporting/${id}`,
     filename,
     type: 'SUPPORTING_FILE',
     mimeType,
-  }).save()
+  })
+  await fileEntity.save()
+  const fileId = fileEntity.id
 
   const fileContents = await new Promise((resolve, reject) => {
     const chunks = []
@@ -25,18 +27,20 @@ async function uploadSupportingFile(_, { file, id }, { user }) {
       resolve(Buffer.concat(chunks))
     })
   })
+  await fileEntity.updateStatus('UPLOADED')
+  // This line is necessary while we are using base-model v1.1.0
+  fileEntity = await File.find(fileId)
 
   try {
     await S3Storage.putContent(fileEntity, fileContents, {})
+    await fileEntity.updateStatus('STORED')
   } catch (err) {
+    await fileEntity.updateStatus('CANCELLED')
     await fileEntity.delete()
     throw err
   }
 
-  manuscript.files.push(fileEntity)
-  await manuscript.save()
-
-  return manuscript
+  return Manuscript.find(id, userUuid)
 }
 
 module.exports = uploadSupportingFile

@@ -28,10 +28,20 @@ async function uploadManuscript(_, { file, id, fileSize }, { user }) {
   }
 
   const userUuid = await User.getUuidForProfile(user)
+
   // make sure the manuscript exists
   await Manuscript.find(id, userUuid)
-
   const { stream, filename, mimetype: mimeType } = await file
+  let fileEntity = new File({
+    manuscriptId: id,
+    url: `manuscripts/${id}`,
+    filename,
+    type: 'MANUSCRIPT_SOURCE_PENDING',
+    mimeType,
+  })
+  await fileEntity.save()
+  const fileId = fileEntity.id
+
   logger.info(`Manuscript Upload Size: ${filename}, ${fileSize} | ${id}`)
 
   const pubsub = await pubsubManager.getPubsub()
@@ -68,28 +78,26 @@ async function uploadManuscript(_, { file, id, fileSize }, { user }) {
       }
     })
   })
+  await fileEntity.updateStatus('UPLOADED')
+
   logger.info(`Manuscript Upload fileContents::end ${filename} | ${id}`)
 
   logger.info(`Manuscript Upload S3::start ${filename} | ${id}`)
-  const fileEntity = new File({
-    manuscriptId: id,
-    url: `manuscripts/${id}`,
-    filename,
-    type: 'MANUSCRIPT_SOURCE_PENDING',
-    mimeType,
-  })
-  await fileEntity.save()
 
+  fileEntity = await File.find(fileId)
   try {
     await S3Storage.putContent(fileEntity, fileContents, {
       size: fileSize,
     })
+    await fileEntity.updateStatus('STORED')
   } catch (err) {
     logger.error(`Manuscript was not uploaded to S3: ${err} | ${id}`)
+    await fileEntity.updateStatus('CANCELLED')
     await fileEntity.delete()
     clearInterval(handle)
     throw err
   }
+
   logger.info(`Manuscript Upload S3::end ${filename} | ${id}`)
 
   let title = ''
@@ -117,7 +125,6 @@ async function uploadManuscript(_, { file, id, fileSize }, { user }) {
 
   // After the length file operations above - now update the manuscript...
   const manuscript = await Manuscript.find(id, userUuid)
-
   const oldFileIndex = manuscript.files.findIndex(
     element => element.type === 'MANUSCRIPT_SOURCE',
   )
