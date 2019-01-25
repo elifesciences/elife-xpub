@@ -31,18 +31,22 @@ class File extends BaseModel {
     return this
   }
 
-  static async updateStatus(id, status) {
-    const fileEntity = await File.find(id)
-    fileEntity.status = status
+  async updateStatus(status) {
+    this.status = status
 
     await new AuditLog({
       action: 'UPDATED',
-      objectId: id,
+      objectId: this.id,
       objectType: 'file.status',
       value: status,
     }).save()
 
-    return fileEntity.save()
+    return this.save()
+  }
+
+  static async updateStatus(id, status) {
+    const fileEntity = await File.find(id)
+    return fileEntity.updateStatus(status)
   }
 
   static async findByManuscriptId(manuscriptId) {

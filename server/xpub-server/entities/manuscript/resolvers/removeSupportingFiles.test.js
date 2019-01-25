@@ -1,6 +1,6 @@
 const { createTables } = require('@pubsweet/db-manager')
 const { SupportingFiles } = require('@elifesciences/xpub-controller')
-const { User, Manuscript } = require('@elifesciences/xpub-model')
+const { AuditLog, User, Manuscript } = require('@elifesciences/xpub-model')
 const { userData } = require('./index.test.data')
 
 const dummyStorage = {
@@ -33,6 +33,7 @@ const expectRemoveSupportingFilesLeavesManuscript = async (
   manuscript = await Manuscript.find(manuscript.id, userId)
   expect(manuscript.files).toHaveLength(fileList.length)
   const files = new SupportingFiles(dummyStorage, manuscript.id, userId)
+
   const mutatedManuscript = await files.removeAll()
   expect(mutatedManuscript.files).toHaveLength(1)
   expect(mutatedManuscript.files[0].type).toBe('MANUSCRIPT_SOURCE')
@@ -72,6 +73,13 @@ describe('Manuscripts', () => {
       const files = new SupportingFiles(dummyStorage, manuscript.id, userId)
       const mutatedManuscript = await files.removeAll()
       expect(mutatedManuscript.files).toHaveLength(1)
+
+      const audits = await AuditLog.all()
+      expect(audits).toHaveLength(2)
+      expect(audits[0].value).toBe('CANCELLED')
+      expect(audits[0].objectId).toBe(manuscript.files[0].id)
+      expect(audits[1].value).toBe('CANCELLED')
+      expect(audits[1].objectId).toBe(manuscript.files[1].id)
     })
 
     it('does not change the manuscript when no files to remove', async () => {
