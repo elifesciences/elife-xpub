@@ -44,11 +44,6 @@ class File extends BaseModel {
     return this.save()
   }
 
-  static async updateStatus(id, status) {
-    const fileEntity = await File.find(id)
-    return fileEntity.updateStatus(status)
-  }
-
   static async findByManuscriptId(manuscriptId) {
     const files = await this.query().where({
       manuscript_id: manuscriptId,
