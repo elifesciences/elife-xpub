@@ -40,6 +40,15 @@ describe('Manuscript', () => {
       })
     })
 
+    it('throws an error if selected editor is opposed', () => {
+      const manuscript = new Manuscript({})
+      const conflictingInput = {
+        suggestedSeniorEditors: ['1'],
+        opposedSeniorEditors: ['1'],
+      }
+      expect(() => manuscript.applyInput(conflictingInput)).toThrow()
+    })
+
     it('updates teams', () => {
       const manuscript = new Manuscript({
         teams: [
@@ -252,7 +261,10 @@ describe('Manuscript', () => {
         },
         createdBy: userId,
       }).save()
-      const loadedManuscript = await Manuscript.updateStatus(manuscript.id, 'NEXT')
+      const loadedManuscript = await Manuscript.updateStatus(
+        manuscript.id,
+        'NEXT',
+      )
       expect(loadedManuscript).toMatchObject({
         status: 'NEXT',
         meta: {
@@ -265,7 +277,10 @@ describe('Manuscript', () => {
       const manuscript = await new Manuscript({
         createdBy: userId,
       }).save()
-      const loadedManuscript = await Manuscript.updateStatus(manuscript.id, 'NEXT')
+      const loadedManuscript = await Manuscript.updateStatus(
+        manuscript.id,
+        'NEXT',
+      )
       const audits = await AuditLog.all()
 
       expect(loadedManuscript.status).toBe('NEXT')

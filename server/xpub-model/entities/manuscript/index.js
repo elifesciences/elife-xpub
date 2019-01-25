@@ -250,13 +250,18 @@ class Manuscript extends BaseModel {
       'opposedReviewingEditor',
     ]
 
-    const matchingSenior = input.suggestedSeniorEditors.some(editor =>
-      input.opposedSeniorEditors.includes(editor),
-    )
-    const matchingReviewing = input.suggestedReviewingEditors.some(editor =>
-      input.opposedReviewingEditors.includes(editor),
+    const findMatching = (arr1 = [], arr2 = []) =>
+      arr1.some(item => arr2.includes(item))
+
+    const matchingSenior = findMatching(
+      input.suggestedSeniorEditors,
+      input.opposedSeniorEditors,
     )
 
+    const matchingReviewing = findMatching(
+      input.suggestedReviewingEditors,
+      input.opposedReviewingEditors,
+    )
     if (matchingSenior || matchingReviewing) {
       throw new Error(`Same editor has been suggested and oppesed`)
     }
