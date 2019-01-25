@@ -249,6 +249,18 @@ class Manuscript extends BaseModel {
       'suggestedReviewingEditor',
       'opposedReviewingEditor',
     ]
+
+    const matchingSenior = input.suggestedSeniorEditors.some(editor =>
+      input.opposedSeniorEditors.includes(editor),
+    )
+    const matchingReviewing = input.suggestedReviewingEditors.some(editor =>
+      input.opposedReviewingEditors.includes(editor),
+    )
+
+    if (matchingSenior || matchingReviewing) {
+      throw new Error(`Same editor has been suggested and oppesed`)
+    }
+
     const editorSuggestionTeams = editorSuggestionRoles.map(role => {
       const key = `${role}s`
       const suggestedEditorIds = input[key] || []
