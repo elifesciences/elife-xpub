@@ -1,4 +1,5 @@
 const BaseModel = require('@pubsweet/base-model')
+const AuditLog = require('../auditLog')
 
 class File extends BaseModel {
   static get tableName() {
@@ -33,6 +34,14 @@ class File extends BaseModel {
   static async updateStatus(id, status) {
     const fileEntity = await File.find(id)
     fileEntity.status = status
+
+    await new AuditLog({
+      action: 'UPDATED',
+      objectId: id,
+      objectType: 'file.status',
+      value: status,
+    }).save()
+
     return fileEntity.save()
   }
 
