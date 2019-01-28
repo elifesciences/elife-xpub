@@ -152,7 +152,9 @@ class SupportingUpload extends React.Component {
       files: props.files.map((file, index) => ({
         file,
         id: index,
-        success: true,
+        success: file.status === 'STORED',
+        loading: file.status === 'CREATED' || file.status === 'UPLOADED',
+        error: file.status === 'CANCELLED',
       })),
     }
   }
