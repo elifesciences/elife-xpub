@@ -71,7 +71,7 @@ const SubmissionPage = ({ values, setFieldValue, setFieldTouched }) => (
       value={values.previouslySubmitted.length}
     >
       <ValidatedField
-        label="Previous article title"
+        label="Please give details"
         name="previouslySubmitted.0"
       />
     </OptionalSection>

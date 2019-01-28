@@ -29,20 +29,24 @@ describe('ProfileMenu', () => {
   it('does not show menu by default', () => {
     const wrapper = makeWrapper()
     expect(wrapper.find('[data-test-id="logout"]')).toHaveLength(0)
+    expect(wrapper.find('[data-test-id="manage-orcid"]')).toHaveLength(0)
   })
 
   it('shows menu on button click', () => {
     const wrapper = makeWrapper()
     wrapper.find('button[data-test-id="profile-menu"]').simulate('click')
     expect(wrapper.find('a[data-test-id="logout"]')).toHaveLength(1)
+    expect(wrapper.find('a[data-test-id="manage-orcid"]')).toHaveLength(1)
   })
 
   it('hides menu on second button click', () => {
     const wrapper = makeWrapper()
     wrapper.find('button[data-test-id="profile-menu"]').simulate('click')
     expect(wrapper.find('a[data-test-id="logout"]')).toHaveLength(1)
+    expect(wrapper.find('a[data-test-id="manage-orcid"]')).toHaveLength(1)
     wrapper.find('button[data-test-id="profile-menu"]').simulate('click')
     expect(wrapper.find('a[data-test-id="logout"]')).toHaveLength(0)
+    expect(wrapper.find('a[data-test-id="manage-orcid"]')).toHaveLength(0)
   })
 
   it('hides menu on click outside of container', () => {
@@ -59,9 +63,11 @@ describe('ProfileMenu', () => {
 
     wrapper.find('button[data-test-id="profile-menu"]').simulate('click')
     expect(wrapper.find('a[data-test-id="logout"]')).toHaveLength(1)
+    expect(wrapper.find('a[data-test-id="manage-orcid"]')).toHaveLength(1)
     const div = wrapper.find('#outside').instance()
     documentClickHandler({ target: div })
     wrapper.update()
     expect(wrapper.find('a[data-test-id="logout"]')).toHaveLength(0)
+    expect(wrapper.find('a[data-test-id="manage-orcid"]')).toHaveLength(0)
   })
 })

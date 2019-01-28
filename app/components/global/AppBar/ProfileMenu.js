@@ -1,6 +1,6 @@
 import React from 'react'
 import config from 'config'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 import { Box } from '@rebass/grid'
 import { Link } from 'react-router-dom'
 import { th } from '@pubsweet/ui-toolkit'
@@ -72,7 +72,7 @@ const MenuHeading = styled.div`
   text-overflow: ellipsis;
 `
 
-const MenuItemLink = styled(Link)`
+const menuItemLinkStyling = css`
   display: block;
   padding: ${th('space.2')};
   padding-right: ${th('space.3')};
@@ -83,6 +83,12 @@ const MenuItemLink = styled(Link)`
     background-color: ${th('colorPrimary')};
     color: ${th('colorTextReverse')};
   }
+`
+const MenuItemLink = styled(Link)`
+  ${menuItemLinkStyling};
+`
+const MenuItemExternalLink = styled.a`
+  ${menuItemLinkStyling};
 `
 
 const LoginWrapper = styled(Box)`
@@ -141,6 +147,15 @@ class ProfileMenu extends React.Component {
                   <MenuHeading>{user.identities[0].name}</MenuHeading>
                 </MenuItem>
                 <MenuItem>
+                  <MenuItem>
+                    <MenuItemExternalLink
+                      data-test-id="manage-orcid"
+                      href="https://orcid.org/my-orcid"
+                      target="_blank"
+                    >
+                      Manage ORCID
+                    </MenuItemExternalLink>
+                  </MenuItem>
                   <MenuItemLink data-test-id="logout" to="/logout">
                     Logout
                   </MenuItemLink>

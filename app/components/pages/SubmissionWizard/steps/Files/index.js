@@ -18,6 +18,7 @@ const UPLOAD_MANUSCRIPT_MUTATION = gql`
       files {
         filename
         type
+        status
       }
     }
   }
@@ -33,6 +34,7 @@ const UPLOAD_SUPPORTING_MUTATION = gql`
       files {
         filename
         type
+        status
       }
     }
   }
@@ -45,6 +47,7 @@ const DELETE_MANUSCRIPT_MUTATION = gql`
       files {
         filename
         type
+        status
       }
     }
   }
@@ -57,6 +60,7 @@ const DELETE_SUPPORTING_FILES_MUTATION = gql`
       files {
         filename
         type
+        status
       }
     }
   }
