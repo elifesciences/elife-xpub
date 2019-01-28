@@ -21,6 +21,10 @@ const StyledCrossIcon = styled(CrossIcon)`
 
 const Root = styled.div``
 
+const Label = styled.label`
+  font-size: 14px;
+`
+
 const SelectLimitMessage = styled.p`
   color: ${th('colorSuccess')};
 `
@@ -191,7 +195,7 @@ class SubjectAreaDropdown extends React.Component {
       <Root>
         {/* htmlFor matches with react-select's inputId, which applies the correct id to the internal sub-component */}
         {/* eslint-disable-next-line jsx-a11y/label-has-for */}
-        <label htmlFor="subject-area-select">{label}</label>
+        <Label htmlFor="subject-area-select">{label}</Label>
         {!hasReachedMultiselectLimit && <Select {...selectChildProps} />}
         {hasReachedMultiselectLimit && (
           <div>
