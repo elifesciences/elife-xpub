@@ -1,6 +1,6 @@
 import React from 'react'
 import config from 'config'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 import { Box } from '@rebass/grid'
 import { Link } from 'react-router-dom'
 import { th } from '@pubsweet/ui-toolkit'
@@ -72,7 +72,7 @@ const MenuHeading = styled.div`
   text-overflow: ellipsis;
 `
 
-const MenuItemLink = styled(Link)`
+const menuItemLinkStyling = css`
   display: block;
   padding: ${th('space.2')};
   padding-right: ${th('space.3')};
@@ -84,17 +84,11 @@ const MenuItemLink = styled(Link)`
     color: ${th('colorTextReverse')};
   }
 `
+const MenuItemLink = styled(Link)`
+  ${menuItemLinkStyling};
+`
 const MenuItemExternalLink = styled.a`
-  display: block;
-  padding: ${th('space.2')};
-  padding-right: ${th('space.3')};
-  color: ${th('colorText')};
-  text-decoration: none;
-
-  &:hover {
-    background-color: ${th('colorPrimary')};
-    color: ${th('colorTextReverse')};
-  }
+  ${menuItemLinkStyling};
 `
 
 const LoginWrapper = styled(Box)`
