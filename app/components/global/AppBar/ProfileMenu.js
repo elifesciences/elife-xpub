@@ -84,6 +84,18 @@ const MenuItemLink = styled(Link)`
     color: ${th('colorTextReverse')};
   }
 `
+const MenuItemExternalLink = styled.a`
+  display: block;
+  padding: ${th('space.2')};
+  padding-right: ${th('space.3')};
+  color: ${th('colorText')};
+  text-decoration: none;
+
+  &:hover {
+    background-color: ${th('colorPrimary')};
+    color: ${th('colorTextReverse')};
+  }
+`
 
 const LoginWrapper = styled(Box)`
   ${media.tabletPortraitUp`
@@ -141,6 +153,15 @@ class ProfileMenu extends React.Component {
                   <MenuHeading>{user.identities[0].name}</MenuHeading>
                 </MenuItem>
                 <MenuItem>
+                  <MenuItem>
+                    <MenuItemExternalLink
+                      data-test-id="manage-orcid"
+                      href="https://orcid.org/my-orcid"
+                      target="_blank"
+                    >
+                      Manage ORCID
+                    </MenuItemExternalLink>
+                  </MenuItem>
                   <MenuItemLink data-test-id="logout" to="/logout">
                     Logout
                   </MenuItemLink>
