@@ -61,30 +61,29 @@ class SubjectAreaDropdown extends React.Component {
     this.customReactSelectStyles = {
       valueContainer: (base, state) => ({
         ...base,
-        padding: `${gridUnitValue / 2}px`, // combines with margin on multiValue to achieve gridUnit spacing around tags
+        padding: '0px',
       }),
       placeholder: (base, state) => ({
         ...base,
-        color: this.props.theme.colorText,
-        margin: `${gridUnitValue / 2}px`,
-        padding: `${gridUnitValue / 2}px`,
+        color: this.props.theme.colorTextPlaceholder,
+        padding: '10px',
       }),
       input: (base, state) => ({
         ...base,
-        padding: `${gridUnitValue / 2}px`,
+        paddingLeft: '10px',
       }),
       multiValue: (base, state) => ({
         ...base,
         backgroundColor: this.props.theme.colorPrimary,
         color: this.props.theme.colorTextReverse,
-        margin: `${gridUnitValue / 2}px`, // combines with padding on valueContainer to achieve gridUnit spacing around tags
+        margin: '5px 3px 5px 5px',
       }),
       multiValueLabel: (base, state) => ({
         ...base,
         color: this.props.theme.colorTextReverse,
         fontSize: this.props.theme.fontSizeBase,
-        padding: '8px 4px 8px 8px',
-        paddingLeft: '8px',
+        padding: `${gridUnitValue}px ${gridUnitValue /
+          2}px ${gridUnitValue}px ${gridUnitValue * 2}px`,
       }),
       multiValueRemove: (base, state) => ({
         ...base,
@@ -142,7 +141,7 @@ class SubjectAreaDropdown extends React.Component {
           ),
         },
         backgroundColor: this.props.theme.backgroundColor,
-        minHeight: this.props.gridUnit,
+        minHeight: `48px`,
       }),
     }
   }
