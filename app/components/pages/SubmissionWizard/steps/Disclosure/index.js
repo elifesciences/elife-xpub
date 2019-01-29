@@ -57,7 +57,7 @@ const DisclosurePage = ({ values }) => {
           submission.
         </Paragraph.Reading>
       </Box>
-      <Box mb={3} w={1 / 2}>
+      <Box mb={3}>
         <ValidatedField
           label="Acknowledged by (Name):"
           name="submitterSignature"
