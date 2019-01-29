@@ -7,13 +7,11 @@ export default {
     transition: none;
     font-size: ${th('gridUnit')};
   `,
-  ArrowContainer: css`
-    border-left: none;
-  `,
   Label: css`
     margin-bottom: ${th('space.1')};
   `,
   Opener: css`
+    min-height: 46px;
     &:hover {
       border-color: ${th('colorBorder')};
     }
@@ -41,11 +39,9 @@ export default {
     &:hover {
       color: ${th('colorText')};
     }
+    border-right: none;
   `,
   Placeholder: css`
     font-style: normal;
-    &:hover {
-      color: ${th('colorTextPlaceholder')};
-    }
   `,
 }
