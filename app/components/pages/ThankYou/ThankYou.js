@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import { Box } from '@rebass/grid'
 import PropTypes from 'prop-types'
 import { H1 } from '@pubsweet/ui'
+import config from 'config'
 
 import NativeLink from '../../ui/atoms/NativeLink'
 import ButtonLink from '../../ui/atoms/ButtonLink'
@@ -20,7 +21,9 @@ const BookmarkLink = styled(NativeLink)`
 
 class ThankYou extends React.Component {
   componentDidMount() {
-    window.hj('trigger', 'thank_you_page_hotjar_feedback')
+    if (config.hotJar.enabled) {
+      window.hj('trigger', 'thank_you_page_hotjar_feedback')
+    }
   }
 
   render() {
