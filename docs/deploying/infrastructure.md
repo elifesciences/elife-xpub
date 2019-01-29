@@ -26,8 +26,8 @@ In this example we created a new environment for "prod"
 
 - Create new builder stack - VM, Sec Group, DNS etc ... called "elife-xpub--prod"
 
-  - Done using ./bldr launch:elife-xpub,prod (then picks the saltstack up from the formula)
-  - For "prod" this still deploys a local postgres
+  - Done using ./bldr launch:elife-xpub,prod (then picks the saltstack up from the [formula](https://github.com/elifesciences/elife-xpub-formula))
+  - This still deploys a local `postgres` that is unused, as the application points to RDS on a separate host
 
 - Create New Jenkins pipeline: "prod-elife-xpub". But any new environment needs to get added to one of the two existing Jenkins pipelines.
 
