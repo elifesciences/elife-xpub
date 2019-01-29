@@ -61,4 +61,7 @@ module.exports = {
     },
     apiKey: 'abcd1234',
   },
+  hotJar: {
+    enabled: false,
+  },
 }

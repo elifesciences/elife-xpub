@@ -136,6 +136,7 @@ module.exports = {
   schema: {}, // schema extensions for pubsweet-server
   hotJar: {
     isPublic: true,
+    enabled: true,
     snippetVersion: 6,
   },
 }
