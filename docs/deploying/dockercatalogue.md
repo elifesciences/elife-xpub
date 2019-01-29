@@ -1,6 +1,8 @@
 # Catalogue of Docker Images
 
-The description should include the "What" and "Why"
+`elife-xpub` is tested and deployed through Docker container images, which allow a reproducible environment and a atomic deployment over servers or container orchestrators.
+
+All images listed here are available publicly on Docker Hub, and are pushed there by Jenkins builds.
 
 ## Image xpub/xpub
 
