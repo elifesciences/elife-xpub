@@ -114,6 +114,9 @@ class SubjectAreaDropdown extends React.Component {
         // leave room for the bottom border of the Control component to be visible on validation/focus
         marginTop: this.props.theme.borderWidth,
       }),
+      indicatorsContainer: () => ({
+        display: 'none',
+      }),
       option: (base, { isSelected, isFocused }) => ({
         ...base,
         backgroundColor:
