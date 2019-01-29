@@ -11,7 +11,8 @@ export default {
     margin-bottom: ${th('space.1')};
   `,
   Opener: css`
-    min-height: 46px;
+    min-height: ${th('space.5')};
+    padding: 0 ${th('space.2')};
     &:hover {
       border-color: ${th('colorBorder')};
     }

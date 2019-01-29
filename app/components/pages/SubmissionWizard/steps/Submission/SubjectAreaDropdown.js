@@ -148,7 +148,7 @@ class SubjectAreaDropdown extends React.Component {
           ),
         },
         backgroundColor: this.props.theme.backgroundColor,
-        minHeight: `48px`,
+        minHeight: `${gridUnitValue * 8}px`,
       }),
     }
   }
