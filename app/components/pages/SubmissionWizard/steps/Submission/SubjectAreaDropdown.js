@@ -65,7 +65,7 @@ class SubjectAreaDropdown extends React.Component {
         default: isFocused ? '#2684FF' : theme.colorBorder,
       }[validationStatus])
 
-    const gridUnitValue = parseInt(this.props.theme.gridUnit, 10)
+    const { space } = this.props.theme
 
     this.customReactSelectStyles = {
       valueContainer: (base, state) => ({
@@ -91,12 +91,11 @@ class SubjectAreaDropdown extends React.Component {
         ...base,
         color: this.props.theme.colorTextReverse,
         fontSize: this.props.theme.fontSizeBase,
-        padding: `${gridUnitValue}px ${gridUnitValue /
-          2}px ${gridUnitValue}px ${gridUnitValue * 2}px`,
+        padding: `${space[1]} 3px ${space[1]} ${space[2]}`,
       }),
       multiValueRemove: (base, state) => ({
         ...base,
-        padding: `0 ${this.props.theme.gridUnit} 0 0`,
+        padding: `0 ${space[1]} 0 0`,
         backgroundColor: this.props.theme.colorPrimary,
         ':hover': {
           cursor: 'pointer',
@@ -132,7 +131,7 @@ class SubjectAreaDropdown extends React.Component {
           isSelected || isFocused
             ? this.props.theme.colorTextReverse
             : this.props.theme.colorText,
-        padding: `${gridUnitValue * 2}px`,
+        padding: space[2],
       }),
       control: (base, { isFocused }) => ({
         ...base,
@@ -153,7 +152,7 @@ class SubjectAreaDropdown extends React.Component {
           ),
         },
         backgroundColor: this.props.theme.backgroundColor,
-        minHeight: `${gridUnitValue * 8}px`,
+        minHeight: space[5],
       }),
     }
   }
