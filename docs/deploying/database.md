@@ -116,3 +116,7 @@ The `PGHOST` being used here is the RDS node that has just been created (2nd arg
 ```
 
 The `PGHOST` being used here is the existing RDS node for this environment (2nd argument).
+
+#### 7. Remove the new node
+
+Don't worry about this: when the emergency has been addressed, ask your administrator to clean up the temporary RDS node and its own snapshots.
