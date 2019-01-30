@@ -25,8 +25,11 @@ const Label = styled.label`
   font-size: 14px;
 `
 
-const SelectLimitMessage = styled.p`
+const SelectLimitMessage = styled.div`
   color: ${th('colorSuccess')};
+  min-height: ${th('lineHeightBaseSmall')};
+  margin-top: ${th('space.1')};
+  font-size: ${th('fontSizeBaseSmall')};
 `
 
 const subjectAreas = config.client.majorSubjectAreas
