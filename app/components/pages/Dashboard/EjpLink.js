@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
-
+import { Link } from 'react-router-dom'
+import { th } from '@pubsweet/ui-toolkit'
 import Paragraph from '../../ui/atoms/Paragraph'
 import NativeLink from '../../ui/atoms/NativeLink'
 
@@ -13,13 +14,21 @@ const CenteredSmallParagraph = styled(Paragraph.Small).attrs({
   text-align: center;
 `
 
+const ResearchAdvanceLink = styled(Link)`
+  color: ${th('colorPrimary')};
+  text-decoration: none;
+`
+
 const EjpLink = () => (
   <CenteredSmallParagraph>
-    Can&#39;t find a submission? You might find it in our full{' '}
+    To find existing submissions or to submit a{' '}
+    <ResearchAdvanceLink to="/author-guide/types">
+      Research Advance
+    </ResearchAdvanceLink>{' '}
+    please visit our{' '}
     <NativeLink href="https://submit.elifesciences.org">
-      peer review and submissions
+      full peer review and submissions system
     </NativeLink>{' '}
-    system
   </CenteredSmallParagraph>
 )
 
