@@ -36,7 +36,7 @@ There is no automated rollback of migrations.
 
 RDS snapshots are taken daily and [retained for 4 weeks in `prod`](https://github.com/elifesciences/builder/blob/master/projects/elife.yaml#L1970).
 
-The scripts `dump-database.sh` and `restore-database.sh`, on PATH in the servers, can respectively be used to perform a new dump from any Postgres host and to restore that dump.
+The scripts `dump-database.sh` and `restore-database.sh` are available on the PATH, and can be used respectively to perform a new dump from any Postgres host and to restore that dump. You can execute them from any folder, and it is advised to target `/ext/tmp` for dumps as it provides plenty of space.
 
 ### Restoring from an RDS snapshot
 
