@@ -265,7 +265,7 @@ class SupportingUpload extends React.Component {
                 </FileName>
                 {file.rejected && (
                   <ErrorMessage data-test-id="file-block-error">
-                    {errorMessageMapping.MAX_SIZE_EXECEEDED}
+                    {errorMessageMapping.MAX_SIZE_EXCEEDED}
                   </ErrorMessage>
                 )}
               </FileHolder>
