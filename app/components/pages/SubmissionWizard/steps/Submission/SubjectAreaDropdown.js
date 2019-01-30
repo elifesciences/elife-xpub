@@ -54,8 +54,10 @@ class SubjectAreaDropdown extends React.Component {
       isFocused,
     ) =>
       ({
-        error: theme.colorError,
-        success: theme.colorSuccess,
+        error: isFocused ? theme.colorBorder : theme.colorError,
+        success: this.state.hasReachedMultiselectLimit
+          ? theme.colorSuccess
+          : theme.colorBorder,
         warning: theme.colorWarning,
         default: isFocused ? '#2684FF' : theme.colorBorder,
       }[validationStatus])
@@ -74,7 +76,7 @@ class SubjectAreaDropdown extends React.Component {
       }),
       input: (base, state) => ({
         ...base,
-        paddingLeft: '10px',
+        marginLeft: '10px',
       }),
       multiValue: (base, state) => ({
         ...base,
