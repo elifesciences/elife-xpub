@@ -138,6 +138,7 @@ function* fileUploadGenerator(files, uploadFile) {
     yield {
       upload: uploadFile(files[fileIndex].file),
       fileId: files[fileIndex].id,
+      filename: files[fileIndex].file.name,
     }
     fileIndex += 1
   }
@@ -168,10 +169,17 @@ class SupportingUpload extends React.Component {
       } else {
         result.value.upload
           .then(data => {
-            this.updateFileState(result.value.fileId, {
-              success: true,
-              loading: false,
-            })
+            const updatedFile = data.data.uploadSupportingFile.files.filter(
+              file => file.filename === result.value.filename,
+            )[0]
+            this.updateFileState(
+              result.value.fileId,
+              {
+                success: true,
+                loading: false,
+              },
+              updatedFile.id,
+            )
           })
           .catch(() => {
             this.updateFileState(result.value.fileId, {
@@ -185,11 +193,13 @@ class SupportingUpload extends React.Component {
     loop(iterator.next())
   }
 
-  updateFileState = (fileId, newState) => {
+  updateFileState = (fileId, newState, id) => {
     const newFilesState = [...this.state.files]
     const fileIndex = newFilesState.findIndex(file => file.id === fileId)
     if (fileIndex > -1) {
-      newFilesState[fileIndex] = { ...newFilesState[fileIndex], ...newState }
+      const updatingState = { ...newFilesState[fileIndex] }
+      updatingState.file.id = id
+      newFilesState[fileIndex] = { ...updatingState, ...newState }
       this.setState({ files: newFilesState })
     }
   }

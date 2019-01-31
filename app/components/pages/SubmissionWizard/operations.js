@@ -51,6 +51,7 @@ const manuscriptFragment = gql`
       filename
       type
       status
+      id
     }
     coverLetter
     author {
