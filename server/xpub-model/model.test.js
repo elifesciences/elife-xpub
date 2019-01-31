@@ -12,6 +12,29 @@ describe('related objects behave as we expect', () => {
   })
 
   describe('manuscript <-> file', () => {
+    it('manuscripts are constructed with a created time', async () => {
+      const manuscript = await createInitialManuscript(userId)
+      const now = new Date().toISOString()
+
+      expect(manuscript).toHaveProperty('created')
+      expect(manuscript.created.substring(0, 11)).toBe(now.substring(0, 11))
+    })
+
+    it('manuscripts have their updated time changed', async () => {
+      let manuscript = await createInitialManuscript(userId)
+      const updatedStart = manuscript.updated
+
+      manuscript.submitterSignature = 'flibble'
+      await manuscript.save()
+
+      // In memory
+      expect(updatedStart).not.toEqual(manuscript.updated)
+
+      // In database
+      manuscript = await Manuscript.find(manuscript.id, userId)
+      expect(updatedStart).not.toEqual(manuscript.updated)
+    })
+
     it('is initialised without any files', async () => {
       const manuscript = await createInitialManuscript(userId)
       const files = await File.all()
