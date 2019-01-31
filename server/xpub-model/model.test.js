@@ -35,6 +35,28 @@ describe('related objects behave as we expect', () => {
       expect(updatedStart).not.toEqual(manuscript.updated)
     })
 
+    it('manuscript order test', async () => {
+      // create 9 manuscripts
+      const msList = await batchCreate(userId, 9)
+
+      // reverse the order
+      msList.reverse()
+
+      // change the submitterSignature to be the correct order index
+      await msList.forEach(async (m, index) => {
+        const manuscript = await Manuscript.find(m.id, userId)
+        manuscript.submitterSignature = index.toString()
+        await manuscript.save()
+      })
+
+      // fetch the list of ordered manuscripts and check in the correct order
+      const orderedList = await Manuscript.all(userId)
+
+      orderedList.forEach((manuscript, index) => {
+        expect(manuscript.submitterSignature).toEqual(index.toString())
+      })
+    })
+
     it('is initialised without any files', async () => {
       const manuscript = await createInitialManuscript(userId)
       const files = await File.all()
@@ -229,15 +251,24 @@ async function createManuscriptWithOneFile(userId) {
   return manuscript
 }
 
-async function createInitialManuscript(userId) {
+async function createInitialManuscript(userId, title = 'Alpha') {
   const manuscript = new Manuscript({
     createdBy: userId,
     meta: {
-      title: 'Alpha',
+      title,
     },
     status: 'initial',
     teams: [],
   })
   await manuscript.save()
   return manuscript
+}
+
+async function batchCreate(userId, num) {
+  const results = []
+  for (let i = 0; i < num; i += 1) {
+    // Good: all asynchronous operations are immediately started.
+    results.push(createInitialManuscript(userId, i.toString()))
+  }
+  return Promise.all(results)
 }
