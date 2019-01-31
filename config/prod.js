@@ -17,6 +17,7 @@ module.exports = {
     sftp: {
       disableUpload: true,
     },
+    notificationEmail: 'xpub-alerts@elifesciences.org',
   },
   mailer: {
     from: 'editorial@elifesciences.org',
