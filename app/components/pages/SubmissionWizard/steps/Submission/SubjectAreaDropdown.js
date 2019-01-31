@@ -21,8 +21,15 @@ const StyledCrossIcon = styled(CrossIcon)`
 
 const Root = styled.div``
 
-const SelectLimitMessage = styled.p`
+const Label = styled.label`
+  font-size: 14px;
+`
+
+const SelectLimitMessage = styled.div`
   color: ${th('colorSuccess')};
+  min-height: ${th('lineHeightBaseSmall')};
+  margin-top: ${th('space.1')};
+  font-size: ${th('fontSizeBaseSmall')};
 `
 
 const subjectAreas = config.client.majorSubjectAreas
@@ -50,45 +57,45 @@ class SubjectAreaDropdown extends React.Component {
       isFocused,
     ) =>
       ({
-        error: theme.colorError,
-        success: theme.colorSuccess,
+        error: isFocused ? theme.colorBorder : theme.colorError,
+        success: this.state.hasReachedMultiselectLimit
+          ? theme.colorSuccess
+          : theme.colorBorder,
         warning: theme.colorWarning,
         default: isFocused ? '#2684FF' : theme.colorBorder,
       }[validationStatus])
 
-    const gridUnitValue = parseInt(this.props.theme.gridUnit, 10)
+    const { space } = this.props.theme
 
     this.customReactSelectStyles = {
       valueContainer: (base, state) => ({
         ...base,
-        padding: `${gridUnitValue / 2}px`, // combines with margin on multiValue to achieve gridUnit spacing around tags
+        padding: '0px',
       }),
       placeholder: (base, state) => ({
         ...base,
-        color: this.props.theme.colorText,
-        margin: `${gridUnitValue / 2}px`,
-        padding: `${gridUnitValue / 2}px`,
+        color: this.props.theme.colorTextPlaceholder,
+        padding: '10px',
       }),
       input: (base, state) => ({
         ...base,
-        padding: `${gridUnitValue / 2}px`,
+        marginLeft: '10px',
       }),
       multiValue: (base, state) => ({
         ...base,
         backgroundColor: this.props.theme.colorPrimary,
         color: this.props.theme.colorTextReverse,
-        margin: `${gridUnitValue / 2}px`, // combines with padding on valueContainer to achieve gridUnit spacing around tags
+        margin: '5px 3px 5px 5px',
       }),
       multiValueLabel: (base, state) => ({
         ...base,
         color: this.props.theme.colorTextReverse,
         fontSize: this.props.theme.fontSizeBase,
-        padding: '8px 4px 8px 8px',
-        paddingLeft: '8px',
+        padding: `${space[1]} 3px ${space[1]} ${space[2]}`,
       }),
       multiValueRemove: (base, state) => ({
         ...base,
-        padding: `0 ${this.props.theme.gridUnit} 0 0`,
+        padding: `0 ${space[1]} 0 0`,
         backgroundColor: this.props.theme.colorPrimary,
         ':hover': {
           cursor: 'pointer',
@@ -111,6 +118,9 @@ class SubjectAreaDropdown extends React.Component {
         // leave room for the bottom border of the Control component to be visible on validation/focus
         marginTop: this.props.theme.borderWidth,
       }),
+      indicatorsContainer: () => ({
+        display: 'none',
+      }),
       option: (base, { isSelected, isFocused }) => ({
         ...base,
         backgroundColor:
@@ -121,7 +131,7 @@ class SubjectAreaDropdown extends React.Component {
           isSelected || isFocused
             ? this.props.theme.colorTextReverse
             : this.props.theme.colorText,
-        padding: `${gridUnitValue * 2}px`,
+        padding: space[2],
       }),
       control: (base, { isFocused }) => ({
         ...base,
@@ -142,7 +152,7 @@ class SubjectAreaDropdown extends React.Component {
           ),
         },
         backgroundColor: this.props.theme.backgroundColor,
-        minHeight: this.props.gridUnit,
+        minHeight: space[5],
       }),
     }
   }
@@ -192,7 +202,7 @@ class SubjectAreaDropdown extends React.Component {
       <Root>
         {/* htmlFor matches with react-select's inputId, which applies the correct id to the internal sub-component */}
         {/* eslint-disable-next-line jsx-a11y/label-has-for */}
-        <label htmlFor="subject-area-select">{label}</label>
+        <Label htmlFor="subject-area-select">{label}</Label>
         {!hasReachedMultiselectLimit && <Select {...selectChildProps} />}
         {hasReachedMultiselectLimit && (
           <div>

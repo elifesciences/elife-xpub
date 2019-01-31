@@ -7,13 +7,12 @@ export default {
     transition: none;
     font-size: ${th('gridUnit')};
   `,
-  ArrowContainer: css`
-    border-left: none;
-  `,
   Label: css`
     margin-bottom: ${th('space.1')};
   `,
   Opener: css`
+    padding: 10px;
+    min-height: ${th('space.5')};
     &:hover {
       border-color: ${th('colorBorder')};
     }
@@ -24,7 +23,7 @@ export default {
   Option: css`
     height: ${th('space.5')};
     line-height: ${th('space.5')};
-    padding: 0 ${th('space.2')};
+    padding: 0 10px;
     font-weight: inherit;
 
     &:hover {
@@ -41,9 +40,12 @@ export default {
     &:hover {
       color: ${th('colorText')};
     }
+    border-right: none;
+    padding: 0px;
   `,
   Placeholder: css`
     font-style: normal;
+    padding: 0px;
     &:hover {
       color: ${th('colorTextPlaceholder')};
     }

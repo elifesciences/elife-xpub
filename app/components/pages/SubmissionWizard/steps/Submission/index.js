@@ -14,7 +14,7 @@ const SubmissionPage = ({ values, setFieldValue, setFieldTouched }) => (
       <ValidatedField label="Manuscript title" name="meta.title" />
     </Box>
 
-    <Box mb={3} w={[1, 1 / 2]}>
+    <Box mb={3} width={[1, 1, 1 / 2, 1 / 2]}>
       <ValidatedField
         component={Menu}
         label="Article type"
