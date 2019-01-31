@@ -1,0 +1,5 @@
+ALTER TABLE ejp_name
+    DROP COLUMN id;
+
+ALTER TABLE ejp_name
+    ADD COLUMN id SERIAL PRIMARY KEY;
