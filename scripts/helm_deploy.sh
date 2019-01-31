@@ -17,6 +17,8 @@ if [ ! -d /tmp/elife-xpub-formula ]; then
     cd /tmp/elife-xpub-formula
 else
     cd /tmp/elife-xpub-formula
+    # workaround for https://github.com/elifesciences/issues/issues/4634
+    git reset --hard
     git pull origin master
 fi
 
