@@ -1,4 +1,5 @@
 const BaseModel = require('@pubsweet/base-model')
+const { Manuscript } = require('@elifesciences/xpub-model')
 const AuditLog = require('../auditLog')
 
 class File extends BaseModel {
@@ -28,6 +29,17 @@ class File extends BaseModel {
   async save() {
     await this.$query().upsertGraphAndFetch(this)
 
+    const manuscript = await Manuscript.find(this.manuscriptId)
+
+    if (!manuscript) {
+      throw new Error(
+        `Unable to find Manuscript of ID: ${
+          this.manuscriptId
+        } assigned to File: ${this.id}`,
+      )
+    }
+
+    await manuscript.validate()
     return this
   }
 

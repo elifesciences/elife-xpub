@@ -28,7 +28,7 @@ const emptyManuscript = {
   submitterSignature: '',
   disclosureConsent: false,
   teams: [],
-  filestatus: 'READY',
+  fileStatus: 'READY',
 }
 
 module.exports = emptyManuscript

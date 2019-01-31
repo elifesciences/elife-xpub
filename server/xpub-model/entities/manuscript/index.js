@@ -39,6 +39,11 @@ class Manuscript extends BaseModel {
         createdBy: { type: 'uuid' },
         journalId: { type: 'uuid' },
         status: { type: 'string' },
+        fileStatus: {
+          type: 'string',
+          enum: ['READY', 'CHANGING'],
+          default: 'READY',
+        },
         meta: {
           title: { type: 'string' },
           articleType: { type: 'string' },
@@ -223,6 +228,11 @@ class Manuscript extends BaseModel {
     }).save()
 
     return manuscript.save()
+  }
+
+  async validate() {
+    // To do. Add validation methods here
+    console.log(JSON.stringify(this.files))
   }
 
   applyInput(input) {
