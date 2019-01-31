@@ -5,6 +5,7 @@ export const ALL_MANUSCRIPTS = gql`
     manuscripts {
       id
       created
+      updated
       meta {
         title
       }

@@ -139,7 +139,7 @@ class Manuscript extends BaseModel {
       .where({
         'manuscript.created_by': user,
       })
-      .orderBy('created', 'desc')
+      .orderBy('updated', 'desc')
 
     await Promise.all(
       manuscripts.map(manuscript => manuscript.$loadRelated('[teams, files]')),
