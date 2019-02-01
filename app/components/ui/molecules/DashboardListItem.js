@@ -135,8 +135,8 @@ const DashboardListItem = ({ manuscript }) => {
   const title = manuscript.meta.title || '(Untitled)'
 
   const renderItemContent = () => {
-    const { clientStatus, created } = manuscript
-    const date = new Date(created)
+    const { clientStatus, updated } = manuscript
+    const date = new Date(updated)
     return (
       <ItemContent>
         <TitleBox color={mapColor(clientStatus)} data-test-id="title" mb={3}>

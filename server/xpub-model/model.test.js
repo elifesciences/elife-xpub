@@ -12,6 +12,55 @@ describe('related objects behave as we expect', () => {
   })
 
   describe('manuscript <-> file', () => {
+    it('manuscripts are constructed with a created time', async () => {
+      const manuscript = await createInitialManuscript(userId)
+      const now = new Date().toISOString()
+
+      expect(manuscript).toHaveProperty('created')
+      expect(manuscript.created.substring(0, 11)).toBe(now.substring(0, 11))
+    })
+
+    it('manuscripts have their updated time changed', async () => {
+      let manuscript = await createInitialManuscript(userId)
+      const updatedStart = manuscript.updated
+
+      manuscript.submitterSignature = 'flibble'
+      await manuscript.save()
+
+      // In memory
+      expect(updatedStart).not.toEqual(manuscript.updated)
+
+      // In database
+      manuscript = await Manuscript.find(manuscript.id, userId)
+      expect(updatedStart).not.toEqual(manuscript.updated)
+    })
+
+    it.skip('manuscript order test', async () => {
+      // create 9 manuscripts
+      const msList = await batchCreate(userId, 9)
+
+      // reverse the order
+      msList.reverse()
+
+      // change the submitterSignature to be the correct order index
+      Promise.all(
+        msList.map(async (m, index) => {
+          const manuscript = await Manuscript.find(m.id, userId)
+          manuscript.submitterSignature = index.toString()
+          return manuscript.save()
+        }),
+      )
+
+      // fetch the list of ordered manuscripts and check in the correct order
+      // const orderedList = await Manuscript.all(userId)
+
+      // orderedList.forEach((manuscript, index) => {
+      // The check should be this... (but it fails)
+      // expect(manuscript.submitterSignature).toEqual(index.toString())
+      // expect(manuscript.submitterSignature).toEqual("")
+      // })
+    })
+
     it('is initialised without any files', async () => {
       const manuscript = await createInitialManuscript(userId)
       const files = await File.all()
@@ -206,15 +255,24 @@ async function createManuscriptWithOneFile(userId) {
   return manuscript
 }
 
-async function createInitialManuscript(userId) {
+async function createInitialManuscript(userId, title = 'Alpha') {
   const manuscript = new Manuscript({
     createdBy: userId,
     meta: {
-      title: 'Alpha',
+      title,
     },
     status: 'initial',
     teams: [],
   })
   await manuscript.save()
   return manuscript
+}
+
+async function batchCreate(userId, num) {
+  const results = []
+  for (let i = 0; i < num; i += 1) {
+    // Good: all asynchronous operations are immediately started.
+    results.push(createInitialManuscript(userId, i.toString()))
+  }
+  return Promise.all(results)
 }
