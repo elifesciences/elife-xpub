@@ -231,8 +231,15 @@ class Manuscript extends BaseModel {
   }
 
   async validate() {
-    // To do. Add validation methods here
-    console.log(JSON.stringify(this.files))
+    // Check all files are are stored or correctly cancelled
+    let fileStatusReady = true
+    this.files.forEach(file => {
+      if (file.status !== 'STORED' && file.status !== 'CANCELLED')
+        fileStatusReady = false
+    })
+
+    this.fileStatus = fileStatusReady ? 'READY' : 'CHANGING'
+    this.save()
   }
 
   applyInput(input) {

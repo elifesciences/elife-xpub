@@ -78,7 +78,7 @@ async function uploadManuscript(_, { file, id, fileSize }, { user }) {
       }
     })
   })
-  await fileEntity.updateStatus('UPLOADED')
+  await fileEntity.updateStatus('UPLOADED', userUuid)
 
   logger.info(`Manuscript Upload fileContents::end ${filename} | ${id}`)
 
@@ -89,10 +89,10 @@ async function uploadManuscript(_, { file, id, fileSize }, { user }) {
     await S3Storage.putContent(fileEntity, fileContents, {
       size: fileSize,
     })
-    await fileEntity.updateStatus('STORED')
+    await fileEntity.updateStatus('STORED', userUuid)
   } catch (err) {
     logger.error(`Manuscript was not uploaded to S3: ${err} | ${id}`)
-    await fileEntity.updateStatus('CANCELLED')
+    await fileEntity.updateStatus('CANCELLED', userUuid)
     await fileEntity.delete()
     clearInterval(handle)
     throw err

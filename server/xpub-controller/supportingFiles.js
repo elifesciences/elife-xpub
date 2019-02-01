@@ -24,7 +24,7 @@ class SupportingFiles {
         .forEach(async file => {
           try {
             modified = true
-            await file.updateStatus('CANCELLED')
+            await file.updateStatus('CANCELLED', this.user)
             await this.storage.deleteContent(file)
             await file.delete()
           } catch (err) {

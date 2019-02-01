@@ -1,5 +1,4 @@
-const { Manuscript, User } = require('@elifesciences/xpub-model')
-const { File } = require('@elifesciences/xpub-model')
+const { File, Manuscript, User } = require('@elifesciences/xpub-model')
 const { S3Storage } = require('@elifesciences/xpub-controller')
 
 async function uploadSupportingFile(_, { file, id }, { user }) {
@@ -27,15 +26,15 @@ async function uploadSupportingFile(_, { file, id }, { user }) {
       resolve(Buffer.concat(chunks))
     })
   })
-  await fileEntity.updateStatus('UPLOADED')
+  await fileEntity.updateStatus('UPLOADED', userUuid)
   // This line is necessary while we are using base-model v1.1.0
   fileEntity = await File.find(fileId)
 
   try {
     await S3Storage.putContent(fileEntity, fileContents, {})
-    await fileEntity.updateStatus('STORED')
+    await fileEntity.updateStatus('STORED', userUuid)
   } catch (err) {
-    await fileEntity.updateStatus('CANCELLED')
+    await fileEntity.updateStatus('CANCELLED', userUuid)
     await fileEntity.delete()
     throw err
   }

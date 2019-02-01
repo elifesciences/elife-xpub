@@ -1,5 +1,5 @@
 const BaseModel = require('@pubsweet/base-model')
-const { Manuscript } = require('@elifesciences/xpub-model')
+const Manuscript = require('../manuscript')
 const AuditLog = require('../auditLog')
 
 class File extends BaseModel {
@@ -26,10 +26,23 @@ class File extends BaseModel {
     }
   }
 
-  async save() {
+  async save(userId) {
     await this.$query().upsertGraphAndFetch(this)
 
-    const manuscript = await Manuscript.find(this.manuscriptId)
+    return this
+  }
+
+  async updateStatus(status, userId) {
+    this.status = status
+
+    await new AuditLog({
+      action: 'UPDATED',
+      objectId: this.id,
+      objectType: 'file.status',
+      value: status,
+    }).save()
+
+    const manuscript = await Manuscript.find(this.manuscriptId, userId)
 
     if (!manuscript) {
       throw new Error(
@@ -39,19 +52,8 @@ class File extends BaseModel {
       )
     }
 
+    // TODO: updateStatus isn't called on deleting a file so this needs to happen on delete too.
     await manuscript.validate()
-    return this
-  }
-
-  async updateStatus(status) {
-    this.status = status
-
-    await new AuditLog({
-      action: 'UPDATED',
-      objectId: this.id,
-      objectType: 'file.status',
-      value: status,
-    }).save()
 
     return this.save()
   }
