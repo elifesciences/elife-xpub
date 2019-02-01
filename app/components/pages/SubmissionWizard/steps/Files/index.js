@@ -69,6 +69,14 @@ const DELETE_SUPPORTING_FILES_MUTATION = gql`
     }
   }
 `
+const DELETE_SINGLE_SUPPORTING_FILE = gql`
+  mutation deleteSingleFile($manuscriptId: ID!, $fileId: ID!) {
+    removeSingleSupportingFile(manuscriptId: $manuscriptId, fileId: $fileId) {
+      id
+    }
+  }
+`
+
 
 function getProgress(loading, data) {
   return loading || !data.uploadProgress ? 0 : data.uploadProgress
@@ -190,27 +198,44 @@ const FilesPageContainer = ({
                   {uploadSupportFiles => (
                     <Mutation mutation={DELETE_SUPPORTING_FILES_MUTATION}>
                       {removeSupportFiles => (
-                        <SupportingUpload
-                          data-test-id="supportingFilesUpload"
-                          files={submissionFiles.filter(
-                            file => file.type === SUPPORTING_FILE,
-                          )}
-                          hasManuscript={hasManuscript}
-                          removeFiles={() =>
-                            removeSupportFiles({
-                              variables: { id: values.id },
-                            })
-                          }
-                          uploadFile={file =>
-                            new Promise((resolve, reject) =>
-                              uploadSupportFiles({
-                                variables: { file, id: values.id },
+                      <Mutation mutation={DELETE_SINGLE_SUPPORTING_FILE}>
+                        {removeSingleSupportFile => (
+                          <SupportingUpload
+                            data-test-id="supportingFilesUpload"
+                            files={submissionFiles.filter(
+                              file => file.type === SUPPORTING_FILE,
+                            )}
+                            hasManuscript={hasManuscript}
+                            removeFiles={() =>
+                              removeSupportFiles({
+                                variables: { id: values.id },
                               })
+                            }
+                            removeSingleFile={fileId => {
+                              console.log('removing file ')
+                              console.log(fileId)
+                              console.log('id')
+                              // const stateFile = this.state.files.filter(x => (x.file.filename || x.file.name) === file.filename)[0]
+
+                              return new Promise((resolve, reject) => 
+                                removeSingleSupportFile({
+                                  variables: { fileId, manuscriptId: values.id},
+                                })
                                 .then(data => resolve(data))
-                                .catch(err => reject(err)),
-                            )
-                          }
-                        />
+                                .catch(error => reject(error)))
+                            }}
+                            uploadFile={file =>
+                              new Promise((resolve, reject) =>
+                                uploadSupportFiles({
+                                  variables: { file, id: values.id },
+                                })
+                                  .then(data => resolve(data))
+                                  .catch(err => reject(err)),
+                              )
+                            }
+                          />
+                        )}
+                        </Mutation>    
                       )}
                     </Mutation>
                   )}

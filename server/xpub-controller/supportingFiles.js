@@ -39,6 +39,21 @@ class SupportingFiles {
 
     return manuscript
   }
+
+  async removeFile(manuscriptId, fileId) {
+    const manuscript = await ManuscriptModel.find(this.id, this.user)
+    const file = await FileModel.find(fileId)
+
+    console.log(file)
+    if (manuscript.id === manuscriptId) {
+      await this.storage.deleteContent(file)
+      await file.delete()
+    } else {
+      logger.error(`file ${fileId} does not belongs to manuscript ${manuscriptId}`)
+    }
+
+    return manuscript
+  }
 }
 
 module.exports = SupportingFiles

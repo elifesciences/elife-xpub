@@ -10,6 +10,7 @@ extend type Mutation {
   uploadManuscript(id: ID!, file: Upload!, fileSize: Int!): Manuscript!
   uploadSupportingFile(id: ID!, file: Upload!): Manuscript!
   removeSupportingFiles(id: ID!): Manuscript
+  removeSingleSupportingFile(manuscriptId: ID!, fileId: ID!): Manuscript
   removeUploadedManuscript(id: ID!): Manuscript!
   submitManuscript(data: ManuscriptInput!): Manuscript!
   savePage(url:String!, id:String!):Manuscript!
