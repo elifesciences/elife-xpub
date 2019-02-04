@@ -239,7 +239,7 @@ class Manuscript extends BaseModel {
     })
 
     this.fileStatus = fileStatusReady ? 'READY' : 'CHANGING'
-    this.save()
+    await this.save()
   }
 
   applyInput(input) {

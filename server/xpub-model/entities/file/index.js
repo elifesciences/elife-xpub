@@ -34,14 +34,13 @@ class File extends BaseModel {
 
   async updateStatus(status, userId) {
     this.status = status
-
     await new AuditLog({
       action: 'UPDATED',
       objectId: this.id,
       objectType: 'file.status',
       value: status,
     }).save()
-
+    await this.save()
     const manuscript = await Manuscript.find(this.manuscriptId, userId)
 
     if (!manuscript) {
@@ -52,10 +51,9 @@ class File extends BaseModel {
       )
     }
 
-    // TODO: updateStatus isn't called on deleting a file so this needs to happen on delete too.
     await manuscript.validate()
 
-    return this.save()
+    return this
   }
 
   static async findByManuscriptId(manuscriptId) {
