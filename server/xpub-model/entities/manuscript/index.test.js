@@ -4,6 +4,7 @@ const Team = require('../team')
 const User = require('../user')
 const AuditLog = require('../auditLog')
 const Manuscript = require('.')
+const File = require('../file')
 
 describe('Manuscript', () => {
   let userId
@@ -398,6 +399,72 @@ describe('Manuscript', () => {
 
       const msFinal = await Manuscript.find(ms.v1.id, userId)
       expect(msFinal.meta.title).toBe('Version3')
+    })
+  })
+
+  describe('validate()', () => {
+    it('sets filestatus to READY by default and when file is STORED', async () => {
+      const manuscript = await new Manuscript({ createdBy: userId }).save()
+      expect(manuscript.fileStatus).toEqual('READY')
+      await new File({
+        manuscriptId: manuscript.id,
+        filename: 'file',
+        url: '/',
+        status: 'STORED',
+      }).save()
+      await manuscript.refresh()
+      expect(manuscript.files).toHaveLength(1)
+      await manuscript.validate()
+      expect(manuscript.fileStatus).toEqual('READY')
+    })
+
+    it('sets filestatus to READY when a file is CANCELLED', async () => {
+      const manuscript = await new Manuscript({ createdBy: userId }).save()
+      expect(manuscript.fileStatus).toEqual('READY')
+      await new File({
+        manuscriptId: manuscript.id,
+        filename: 'file',
+        url: '/',
+        status: 'STORED',
+      }).save()
+      await new File({
+        manuscriptId: manuscript.id,
+        filename: 'file',
+        url: '/',
+        status: 'CANCELLED',
+      }).save()
+      await manuscript.refresh()
+      await manuscript.validate()
+      expect(manuscript.files).toHaveLength(2)
+      expect(manuscript.fileStatus).toEqual('READY')
+    })
+
+    it('sets filestatus to CHANGING when a file is not stored', async () => {
+      let manuscript = await new Manuscript({ createdBy: userId }).save()
+      expect(manuscript.fileStatus).toEqual('READY')
+      await new File({
+        manuscriptId: manuscript.id,
+        filename: 'file',
+        url: '/',
+        status: 'STORED',
+      }).save()
+      await manuscript.refresh()
+      await manuscript.validate()
+      expect(manuscript.files).toHaveLength(1)
+      expect(manuscript.fileStatus).toEqual('READY')
+
+      // Do a find to create a new manuscript object. This overcomes pubsweets $$omitFromDatabaseJson schema issue.
+      manuscript = await Manuscript.find(manuscript.id, userId)
+      await new File({
+        manuscriptId: manuscript.id,
+        filename: 'file2',
+        url: '/',
+        status: 'UPLOADED',
+      }).save()
+      await manuscript.refresh()
+      await manuscript.validate()
+      expect(manuscript.files).toHaveLength(2)
+      expect(manuscript.fileStatus).toEqual('CHANGING')
     })
   })
 
