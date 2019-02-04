@@ -3,7 +3,7 @@ const uuid = require('uuid')
 const File = require('.')
 const Manuscript = require('../manuscript')
 
-describe('Manuscript', () => {
+describe('File', () => {
   let userId
 
   beforeEach(async () => {
@@ -11,7 +11,7 @@ describe('Manuscript', () => {
     await createTables(true)
   })
 
-  describe('delete File', () => {
+  describe('delete()', () => {
     it('should fail if id is not provided when deleting the file', async () => {
       const file = new File()
       let response
@@ -35,19 +35,36 @@ describe('Manuscript', () => {
       const response = await file.delete()
       expect(response).toBeTruthy()
     })
+  })
 
+  describe('updateStatus()', () => {
     it('should be initialised in the CREATED state', async () => {
-      const manuscript = new Manuscript({
+      const manuscript = await new Manuscript({
         createdBy: userId,
-      })
-      await manuscript.save()
-      const file = new File({
+      }).save()
+      const file = await new File({
         manuscriptId: manuscript.id,
         filename: 'thisfile.txt',
         url: '/an/url',
-      })
-      await file.save()
+      }).save()
       expect(file.status).toBe('CREATED')
+    })
+    it('sets file status to value passed', async () => {
+      const manuscript = await new Manuscript({
+        createdBy: userId,
+      }).save()
+      let file = await new File({
+        manuscriptId: manuscript.id,
+        filename: 'thisfile.txt',
+        url: '/an/url',
+      }).save()
+      expect(file.status).toBe('CREATED')
+      file = await File.find(file.id)
+      await file.updateStatus('UPLOADED', userId)
+      expect(file.status).toBe('UPLOADED')
+      file = await File.find(file.id)
+      await file.updateStatus('CANCELLED', userId)
+      expect(file.status).toBe('CANCELLED')
     })
   })
 })
