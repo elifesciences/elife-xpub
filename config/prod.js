@@ -14,9 +14,6 @@ module.exports = {
     enableMock: false,
   },
   meca: {
-    sftp: {
-      disableUpload: true,
-    },
     notificationEmail: 'xpub-alerts@elifesciences.org',
   },
   mailer: {
