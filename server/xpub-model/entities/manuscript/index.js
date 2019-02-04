@@ -113,6 +113,10 @@ class Manuscript extends BaseModel {
   }
 
   static async find(id, user) {
+    if (!user) {
+      throw new Error('User ID is required when finding a manuscript')
+    }
+
     const [manuscript] = await this.query().where({
       'manuscript.id': id,
       'manuscript.created_by': user,
