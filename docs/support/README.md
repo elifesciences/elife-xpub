@@ -1,5 +1,5 @@
 ### Deployment steps
-- How do you deploy to production?
+- [How do you deploy to production?](https://github.com/elifesciences/elife-xpub/blob/develop/docs/deploying/environments.md#jenkins)
 - How do you see what’s deployed in production?
 
 ### Migration steps
