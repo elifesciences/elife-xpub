@@ -29,7 +29,8 @@ module.exports = {
     applicationID: '162979288',
   },
   googleAnalytics: {
-    id: 'UA-132441389-2',
+    isPublic: true,
+    trackingId: 'UA-132441389-2',
   },
   hotJar: {
     id: 1131309,
