@@ -10,10 +10,6 @@
 - [How do you do backups? Are they automated?](https://github.com/elifesciences/elife-xpub/blob/develop/docs/deploying/database.md#backup-and-restore)
 - [How do you restore the database?](https://github.com/elifesciences/elife-xpub/blob/develop/docs/deploying/database.md#restoring-from-an-rds-snapshot)
 
-### Contact details
-- EJP
-- Product Owner
-
 ### Support tools and processes
 - How do I monitor errors, response times and traffic?
 - How do I view logs?
@@ -25,3 +21,6 @@
     - Viewing the submission on the database
     - Viewing the audit log of a submission
 
+### Contact details
+- EJP
+- Product Owner
