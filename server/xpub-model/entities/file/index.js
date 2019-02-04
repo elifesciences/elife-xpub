@@ -26,7 +26,7 @@ class File extends BaseModel {
     }
   }
 
-  async save(userId) {
+  async save() {
     await this.$query().upsertGraphAndFetch(this)
 
     return this
