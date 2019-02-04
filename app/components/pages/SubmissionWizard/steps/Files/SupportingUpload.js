@@ -135,14 +135,10 @@ const ErrorMessage = styled.span`
 
 function* fileUploadGenerator(files, uploadFile, removeSingleFile) {
   for (let fileIndex = 0; fileIndex < files.length; ) {
-    console.log('111111111')
-    console.log(files[fileIndex].file)
-    console.log('222222222')
-    console.log(files[fileIndex].file.id)
     yield {
       upload: uploadFile(files[fileIndex].file),
       fileId: files[fileIndex].id,
-      remove: removeSingleFile(files[fileIndex].file),
+      remove: fileId => removeSingleFile(fileId),
       filename: files[fileIndex].file.name,
     }
     fileIndex += 1
@@ -169,82 +165,42 @@ class SupportingUpload extends React.Component {
     const { uploadFile } = this.props
     const { removeSingleFile } = this.props
     const iterator = fileUploadGenerator(files, uploadFile, removeSingleFile)
-    const loop = result => {
+    const loop = async result => {
       if (result.done) {
         this.setState({ uploading: false })
       } else {
-        console.log(this.state.files)
-        
-        const index = this.state.files.findIndex(file => // (file.file.filename || file.file.name) === result.value.fileName)
-        {
-          console.log((file.file.filename || file.file.name))
-          console.log(result.value.filename)
-          return (file.file.filename || file.file.name) === result.value.filename
-        })
+        const index = this.state.files.findIndex(
+          file =>
+            (file.file.filename || file.file.name) === result.value.filename,
+        )
 
-        console.log('index from upload:,', index)
-
-
-        if (index > -1 ) {
-          console.log( 'removing time')
-          console.log(this.state.files[index].id)
-          result.value.remove
-          .then(data => {
-              console.log('now we have to upload the file again!')
-              console.log(result.value)
-              console.log(data)
-              // this.updateFileState(index, {
-              //     success: true,
-              //     loading: false,
-              //   })
-              // result.value.upload
-              //   .then(data2 => {
-              //     console.log('uploading time...')
-              //     console.log(result.value.fileId)
-              //     this.updateFileState(result.value.fileId, {
-              //       success: true,
-              //       loading: false,
-              //     })
-              //   })
-              //   .catch(() => {
-              //     this.updateFileState(result.value.fileId, {
-              //       error: true,
-              //       loading: false,
-              //     })
-              //   })
-              //   .finally(() => loop(iterator.next()))
+        if (index > -1) {
+          await result.value.remove(this.state.files[index].file.id)
+          // TODO: now we have to upload the new one.
+          // console.log('now we have to upload the file again!')
+          // console.log(response)
+        } else {
+          result.value.upload
+            .then(data => {
+              const updatedFile = data.data.uploadSupportingFile.files.filter(
+                file => file.filename === result.value.filename,
+              )[0]
+              this.updateFileState(
+                result.value.fileId,
+                {
+                  success: true,
+                  loading: false,
+                },
+                updatedFile.id,
+              )
             })
-            .catch((error) => {
-              console.log('--------------there was an error')
-              console.log(error)
+            .catch(() => {
               this.updateFileState(result.value.fileId, {
                 error: true,
                 loading: false,
               })
             })
-          .finally(() => loop(iterator.next()))
-      } else {
-        result.value.upload
-          .then(data => {
-            const updatedFile = data.data.uploadSupportingFile.files.filter(
-              file => file.filename === result.value.filename,
-            )[0]
-            this.updateFileState(
-              result.value.fileId,
-              {
-                success: true,
-                loading: false,
-              },
-              updatedFile.id,
-            )
-          })
-          .catch(() => {
-            this.updateFileState(result.value.fileId, {
-              error: true,
-              loading: false,
-            })
-          })
-          .finally(() => loop(iterator.next()))
+            .finally(() => loop(iterator.next()))
         }
       }
     }
@@ -262,7 +218,7 @@ class SupportingUpload extends React.Component {
     }
   }
 
-  onFileDrop = (acceptedFiles, rejectedFiles) => {
+  onFileDrop = async (acceptedFiles, rejectedFiles) => {
     let storageSpace = MAX_SUPPORTING_FILES - this.state.files.length
 
     if (storageSpace > 0) {
@@ -277,7 +233,7 @@ class SupportingUpload extends React.Component {
         this.setState({
           uploading: true,
         })
-        this.synchronouslyUploadFiles(filesToUpload)
+        await this.synchronouslyUploadFiles(filesToUpload)
       }
       storageSpace -= filesToUpload.length
       let rejectedFilesToAdd = []

@@ -41,17 +41,27 @@ class SupportingFiles {
   }
 
   async removeFile(manuscriptId, fileId) {
-    const manuscript = await ManuscriptModel.find(this.id, this.user)
-    const file = await FileModel.find(fileId)
+    let manuscript = await ManuscriptModel.find(this.id, this.user)
+    const supportingFile = await FileModel.find(fileId)
 
-    console.log(file)
+    const filesWithoutSupporting = manuscript.files.filter(
+      file => file.id !== fileId,
+    )
+
     if (manuscript.id === manuscriptId) {
-      await this.storage.deleteContent(file)
-      await file.delete()
+      await this.storage.deleteContent(supportingFile)
+      await supportingFile.delete()
+      logger.info(
+        `supporing file ${fileId} deleted, manuscript ${manuscriptId}`,
+      )
     } else {
-      logger.error(`file ${fileId} does not belongs to manuscript ${manuscriptId}`)
+      logger.error(
+        `file ${fileId} does not belongs to manuscript ${manuscriptId}`,
+      )
     }
 
+    manuscript.files = filesWithoutSupporting
+    manuscript = await manuscript.save()
     return manuscript
   }
 }

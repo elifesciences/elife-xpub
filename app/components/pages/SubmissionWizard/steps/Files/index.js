@@ -77,7 +77,6 @@ const DELETE_SINGLE_SUPPORTING_FILE = gql`
   }
 `
 
-
 function getProgress(loading, data) {
   return loading || !data.uploadProgress ? 0 : data.uploadProgress
 }
@@ -198,44 +197,43 @@ const FilesPageContainer = ({
                   {uploadSupportFiles => (
                     <Mutation mutation={DELETE_SUPPORTING_FILES_MUTATION}>
                       {removeSupportFiles => (
-                      <Mutation mutation={DELETE_SINGLE_SUPPORTING_FILE}>
-                        {removeSingleSupportFile => (
-                          <SupportingUpload
-                            data-test-id="supportingFilesUpload"
-                            files={submissionFiles.filter(
-                              file => file.type === SUPPORTING_FILE,
-                            )}
-                            hasManuscript={hasManuscript}
-                            removeFiles={() =>
-                              removeSupportFiles({
-                                variables: { id: values.id },
-                              })
-                            }
-                            removeSingleFile={fileId => {
-                              console.log('removing file ')
-                              console.log(fileId)
-                              console.log('id')
-                              // const stateFile = this.state.files.filter(x => (x.file.filename || x.file.name) === file.filename)[0]
-
-                              return new Promise((resolve, reject) => 
-                                removeSingleSupportFile({
-                                  variables: { fileId, manuscriptId: values.id},
+                        <Mutation mutation={DELETE_SINGLE_SUPPORTING_FILE}>
+                          {removeSingleSupportFile => (
+                            <SupportingUpload
+                              data-test-id="supportingFilesUpload"
+                              files={submissionFiles.filter(
+                                file => file.type === SUPPORTING_FILE,
+                              )}
+                              hasManuscript={hasManuscript}
+                              removeFiles={() =>
+                                removeSupportFiles({
+                                  variables: { id: values.id },
                                 })
-                                .then(data => resolve(data))
-                                .catch(error => reject(error)))
-                            }}
-                            uploadFile={file =>
-                              new Promise((resolve, reject) =>
-                                uploadSupportFiles({
-                                  variables: { file, id: values.id },
-                                })
-                                  .then(data => resolve(data))
-                                  .catch(err => reject(err)),
-                              )
-                            }
-                          />
-                        )}
-                        </Mutation>    
+                              }
+                              removeSingleFile={fileId =>
+                                new Promise((resolve, reject) =>
+                                  removeSingleSupportFile({
+                                    variables: {
+                                      fileId,
+                                      manuscriptId: values.id,
+                                    },
+                                  })
+                                    .then(data => resolve(data))
+                                    .catch(error => reject(error)),
+                                )
+                              }
+                              uploadFile={file =>
+                                new Promise((resolve, reject) =>
+                                  uploadSupportFiles({
+                                    variables: { file, id: values.id },
+                                  })
+                                    .then(data => resolve(data))
+                                    .catch(err => reject(err)),
+                                )
+                              }
+                            />
+                          )}
+                        </Mutation>
                       )}
                     </Mutation>
                   )}
