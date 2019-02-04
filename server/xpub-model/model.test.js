@@ -34,7 +34,7 @@ describe('related objects behave as we expect', () => {
 
       const file = await File.find(manuscript.files[0].id)
       file.type = 'updated'
-      await file.save()
+      await file.save(userId)
 
       manuscript = await Manuscript.find(manuscript.id, userId)
 
@@ -99,7 +99,7 @@ describe('related objects behave as we expect', () => {
       expect(file.status).toBe('CREATED')
 
       file.status = 'UPLOADED'
-      await file.save()
+      await file.save(userId)
 
       expect(file).toHaveProperty('id')
       expect(file.status).toBe('UPLOADED')
@@ -108,7 +108,7 @@ describe('related objects behave as we expect', () => {
       // saving at this point causes pubsweet to throw a ValidationError
       // This should be fixed the next time we upgrade and so the
       // behaviour will change
-      expect(file.save()).rejects.toThrow()
+      expect(file.save(userId)).rejects.toThrow()
 
       // re-query
       file = await File.find(fileId)
@@ -124,14 +124,14 @@ describe('related objects behave as we expect', () => {
       let file = await File.find(fileId)
 
       file.status = 'UPLOADED'
-      await file.save()
+      await file.save(userId)
 
       file = await File.find(fileId)
       expect(file).toHaveProperty('id')
       expect(file.status).toBe('UPLOADED')
 
       file.status = 'STORED'
-      await file.save()
+      await file.save(userId)
 
       file = await File.find(fileId)
       expect(file).toHaveProperty('id')
@@ -146,7 +146,7 @@ describe('related objects behave as we expect', () => {
       const manuscript = await createManuscriptWithOneFile(userId)
       const file = await File.find(manuscript.files[0].id)
       file.status = 'UPLOADED'
-      await file.save()
+      await file.save(userId)
 
       // in memory
       expect(file).toHaveProperty('id')
@@ -160,7 +160,7 @@ describe('related objects behave as we expect', () => {
       expect(dbFile.status).toBe('UPLOADED')
 
       dbFile.status = 'STORED'
-      await dbFile.save()
+      await dbFile.save(userId)
 
       // in memory
       expect(dbFile).toHaveProperty('id')
@@ -187,7 +187,7 @@ describe('related objects behave as we expect', () => {
         type: 'MANUSCRIPT_SOURCE_PENDING',
         mimeType: 'application/txt',
       })
-      await fileEntity.save()
+      await fileEntity.save(userId)
       expect(fileEntity).toHaveProperty('id')
     })
   })
@@ -201,7 +201,7 @@ async function createManuscriptWithOneFile(userId) {
     url: '-',
     type: 'test_file',
   })
-  await file.save()
+  await file.save(userId)
   manuscript = await Manuscript.find(manuscript.id, userId)
   return manuscript
 }

@@ -46,7 +46,7 @@ describe('File', () => {
         manuscriptId: manuscript.id,
         filename: 'thisfile.txt',
         url: '/an/url',
-      }).save()
+      }).save(userId)
       expect(file.status).toBe('CREATED')
     })
     it('sets file status to value passed', async () => {
@@ -57,7 +57,7 @@ describe('File', () => {
         manuscriptId: manuscript.id,
         filename: 'thisfile.txt',
         url: '/an/url',
-      }).save()
+      }).save(userId)
       expect(file.status).toBe('CREATED')
       file = await File.find(file.id)
       await file.updateStatus('UPLOADED', userId)

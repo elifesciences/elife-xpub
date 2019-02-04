@@ -13,7 +13,7 @@ async function uploadSupportingFile(_, { file, id }, { user }) {
     type: 'SUPPORTING_FILE',
     mimeType,
   })
-  await fileEntity.save()
+  await fileEntity.save(userUuid)
   const fileId = fileEntity.id
 
   const fileContents = await new Promise((resolve, reject) => {

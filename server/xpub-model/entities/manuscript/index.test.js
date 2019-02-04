@@ -411,7 +411,7 @@ describe('Manuscript', () => {
         filename: 'file',
         url: '/',
         status: 'STORED',
-      }).save()
+      }).save(userId)
       await manuscript.refresh()
       expect(manuscript.files).toHaveLength(1)
       await manuscript.validate()
@@ -426,13 +426,13 @@ describe('Manuscript', () => {
         filename: 'file',
         url: '/',
         status: 'STORED',
-      }).save()
+      }).save(userId)
       await new File({
         manuscriptId: manuscript.id,
         filename: 'file',
         url: '/',
         status: 'CANCELLED',
-      }).save()
+      }).save(userId)
       await manuscript.refresh()
       await manuscript.validate()
       expect(manuscript.files).toHaveLength(2)
@@ -447,7 +447,7 @@ describe('Manuscript', () => {
         filename: 'file',
         url: '/',
         status: 'STORED',
-      }).save()
+      }).save(userId)
       await manuscript.refresh()
       await manuscript.validate()
       expect(manuscript.files).toHaveLength(1)
@@ -460,7 +460,7 @@ describe('Manuscript', () => {
         filename: 'file2',
         url: '/',
         status: 'UPLOADED',
-      }).save()
+      }).save(userId)
       await manuscript.refresh()
       await manuscript.validate()
       expect(manuscript.files).toHaveLength(2)

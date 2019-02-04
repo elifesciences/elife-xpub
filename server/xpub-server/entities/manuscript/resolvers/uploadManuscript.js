@@ -39,7 +39,7 @@ async function uploadManuscript(_, { file, id, fileSize }, { user }) {
     type: 'MANUSCRIPT_SOURCE_PENDING',
     mimeType,
   })
-  await fileEntity.save()
+  await fileEntity.save(userUuid)
   const fileId = fileEntity.id
 
   logger.info(`Manuscript Upload Size: ${filename}, ${fileSize} | ${id}`)

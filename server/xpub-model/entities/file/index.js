@@ -26,21 +26,9 @@ class File extends BaseModel {
     }
   }
 
-  async save() {
+  async save(userId) {
     await this.$query().upsertGraphAndFetch(this)
 
-    return this
-  }
-
-  async updateStatus(status, userId) {
-    this.status = status
-    await new AuditLog({
-      action: 'UPDATED',
-      objectId: this.id,
-      objectType: 'file.status',
-      value: status,
-    }).save()
-    await this.save()
     const manuscript = await Manuscript.find(this.manuscriptId, userId)
 
     if (!manuscript) {
@@ -52,7 +40,18 @@ class File extends BaseModel {
     }
 
     await manuscript.validate()
+    return this
+  }
 
+  async updateStatus(status, userId) {
+    this.status = status
+    await new AuditLog({
+      action: 'UPDATED',
+      objectId: this.id,
+      objectType: 'file.status',
+      value: status,
+    }).save()
+    await this.save(userId)
     return this
   }
 
