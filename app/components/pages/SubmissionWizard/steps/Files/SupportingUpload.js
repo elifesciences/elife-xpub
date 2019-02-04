@@ -176,31 +176,27 @@ class SupportingUpload extends React.Component {
 
         if (index > -1) {
           await result.value.remove(this.state.files[index].file.id)
-          // TODO: now we have to upload the new one.
-          // console.log('now we have to upload the file again!')
-          // console.log(response)
-        } else {
-          result.value.upload
-            .then(data => {
-              const updatedFile = data.data.uploadSupportingFile.files.filter(
-                file => file.filename === result.value.filename,
-              )[0]
-              this.updateFileState(
-                result.value.fileId,
-                {
-                  success: true,
-                  loading: false,
-                },
-                updatedFile.id,
-              )
-            })
-            .catch(() => {
-              this.updateFileState(result.value.fileId, {
-                error: true,
-                loading: false,
-              })
-            })
-            .finally(() => loop(iterator.next()))
+        }
+        try {
+          const data = await result.value.upload
+          const updatedFile = data.data.uploadSupportingFile.files.filter(
+            file => file.filename === result.value.filename,
+          )[0]
+          this.updateFileState(
+            result.value.fileId,
+            {
+              success: true,
+              loading: false,
+            },
+            updatedFile.id,
+          )
+        } catch (error) {
+          this.updateFileState(result.value.fileId, {
+            error: true,
+            loading: false,
+          })
+        } finally {
+          loop(iterator.next())
         }
       }
     }
