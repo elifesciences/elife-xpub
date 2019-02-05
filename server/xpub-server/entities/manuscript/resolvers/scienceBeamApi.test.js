@@ -563,7 +563,13 @@ const { extractSemantics } = require('./scienceBeamApi')
 
 describe('scienceBeamApi', () => {
   it('extracts correct data', () => {
-    const title = extractSemantics({}, '', '', '')
+    const config = jest.fn(() => ({
+      get(key) {
+        return ''
+      },
+    }))
+
+    const title = extractSemantics(config, '', '', '')
 
     expect(title).toBe(
       'The Relationship Between Lamport Clocks and Interrupts Using Obi',
