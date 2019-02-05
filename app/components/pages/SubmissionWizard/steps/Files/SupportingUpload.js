@@ -179,7 +179,7 @@ class SupportingUpload extends React.Component {
           const data2 = await result.value.remove(
             this.state.files[index].file.id,
           )
-          this.deleteFileState(this.state.files[index].file.id)
+          this.deleteFileState(this.state.files[index].id)
           console.log('file removed')
           console.log(data2)
         }
@@ -217,6 +217,7 @@ class SupportingUpload extends React.Component {
   updateFileState = (fileId, newState, id) => {
     const newFilesState = [...this.state.files]
 
+    console.log('updating file Index: ', fileId)
     const fileIndex = newFilesState.findIndex(file => file.id === fileId)
     if (fileIndex > -1) {
       const updatingState = { ...newFilesState[fileIndex] }
@@ -229,9 +230,13 @@ class SupportingUpload extends React.Component {
   }
 
   deleteFileState = fileId => {
+    console.log('fileId', fileId)
     const newFilesState = [...this.state.files]
     const fileIndex = newFilesState.findIndex(file => file.id === fileId)
+    console.log(`removing file index: ${fileIndex}`)
+    console.log(`previous state: ${JSON.stringify(newFilesState, null, 4)}`)
     newFilesState.splice(fileIndex, 1)
+    console.log(`new fileState: ${JSON.stringify(newFilesState, null, 4)}`)
     this.setState({ files: newFilesState })
   }
 
@@ -242,7 +247,7 @@ class SupportingUpload extends React.Component {
       const filesToUpload = acceptedFiles
         .slice(0, storageSpace)
         .map((file, index) => ({
-          id: index + this.state.files.length,
+          id: Math.floor(Math.random() * Math.floor(1e10)),
           file,
           loading: true,
         }))
@@ -271,7 +276,6 @@ class SupportingUpload extends React.Component {
       })
     }
   }
-
   render() {
     let dropzoneRef
     const { hasManuscript, removeFiles } = this.props
