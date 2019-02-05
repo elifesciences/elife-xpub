@@ -179,6 +179,7 @@ class SupportingUpload extends React.Component {
           const data2 = await result.value.remove(
             this.state.files[index].file.id,
           )
+          this.deleteFileState(this.state.files[index].file.id)
           console.log('file removed')
           console.log(data2)
         }
@@ -215,13 +216,23 @@ class SupportingUpload extends React.Component {
 
   updateFileState = (fileId, newState, id) => {
     const newFilesState = [...this.state.files]
+
     const fileIndex = newFilesState.findIndex(file => file.id === fileId)
     if (fileIndex > -1) {
       const updatingState = { ...newFilesState[fileIndex] }
+
       updatingState.file.id = id
       newFilesState[fileIndex] = { ...updatingState, ...newState }
-      this.setState({ files: newFilesState })
     }
+
+    this.setState({ files: newFilesState })
+  }
+
+  deleteFileState = fileId => {
+    const newFilesState = [...this.state.files]
+    const fileIndex = newFilesState.findIndex(file => file.id === fileId)
+    newFilesState.splice(fileIndex, 1)
+    this.setState({ files: newFilesState })
   }
 
   onFileDrop = async (acceptedFiles, rejectedFiles) => {
