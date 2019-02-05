@@ -1,5 +1,4 @@
 const BaseModel = require('@pubsweet/base-model')
-const Manuscript = require('../manuscript')
 const AuditLog = require('../auditLog')
 
 class File extends BaseModel {
@@ -26,24 +25,13 @@ class File extends BaseModel {
     }
   }
 
-  async save(userId) {
+  async save() {
     await this.$query().upsertGraphAndFetch(this)
 
-    const manuscript = await Manuscript.find(this.manuscriptId, userId)
-
-    if (!manuscript) {
-      throw new Error(
-        `Unable to find Manuscript of ID: ${
-          this.manuscriptId
-        } assigned to File: ${this.id}`,
-      )
-    }
-
-    await manuscript.validate()
     return this
   }
 
-  async updateStatus(status, userId) {
+  async updateStatus(status) {
     this.status = status
     await new AuditLog({
       action: 'UPDATED',
@@ -51,8 +39,8 @@ class File extends BaseModel {
       objectType: 'file.status',
       value: status,
     }).save()
-    await this.save(userId)
-    return this
+
+    return this.save()
   }
 
   static async findByManuscriptId(manuscriptId) {
