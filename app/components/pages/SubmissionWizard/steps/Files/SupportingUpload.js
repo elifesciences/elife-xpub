@@ -136,7 +136,7 @@ const ErrorMessage = styled.span`
 function* fileUploadGenerator(files, uploadFile, removeSingleFile) {
   for (let fileIndex = 0; fileIndex < files.length; ) {
     yield {
-      upload: uploadFile(files[fileIndex].file),
+      upload: () => uploadFile(files[fileIndex].file),
       fileId: files[fileIndex].id,
       remove: fileId => removeSingleFile(fileId),
       filename: files[fileIndex].file.name,
@@ -162,6 +162,7 @@ class SupportingUpload extends React.Component {
   }
 
   synchronouslyUploadFiles = files => {
+    console.log('starting upload process')
     const { uploadFile } = this.props
     const { removeSingleFile } = this.props
     const iterator = fileUploadGenerator(files, uploadFile, removeSingleFile)
@@ -173,15 +174,22 @@ class SupportingUpload extends React.Component {
           file =>
             (file.file.filename || file.file.name) === result.value.filename,
         )
-
         if (index > -1) {
-          await result.value.remove(this.state.files[index].file.id)
+          console.log('removing file')
+          const data2 = await result.value.remove(
+            this.state.files[index].file.id,
+          )
+          console.log('file removed')
+          console.log(data2)
         }
         try {
-          const data = await result.value.upload
+          console.log('uploading file')
+          const data = await result.value.upload()
+          console.log('new file uploaded.')
           const updatedFile = data.data.uploadSupportingFile.files.filter(
             file => file.filename === result.value.filename,
           )[0]
+
           this.updateFileState(
             result.value.fileId,
             {
@@ -191,6 +199,8 @@ class SupportingUpload extends React.Component {
             updatedFile.id,
           )
         } catch (error) {
+          console.log('error')
+          console.log(error)
           this.updateFileState(result.value.fileId, {
             error: true,
             loading: false,
