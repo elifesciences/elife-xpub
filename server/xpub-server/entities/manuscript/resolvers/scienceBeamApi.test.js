@@ -559,7 +559,7 @@ jest.mock('request-promise-native', () => ({
 }))
 
 require('request-promise-native')
-const extractSemantics = require('./scienceBeamApi')
+const { extractSemantics } = require('./scienceBeamApi')
 
 describe('scienceBeamApi', () => {
   it('extracts correct data', () => {
