@@ -2,6 +2,7 @@ import { cloneDeep } from 'lodash'
 import { graphql, compose } from 'react-apollo'
 import React from 'react'
 import omitDeep from 'omit-deep-lodash'
+import Loading from 'ui/atoms/Loading'
 import ErrorPage from '../Error'
 import { ALL_MANUSCRIPTS } from '../Dashboard/operations'
 import {
@@ -11,7 +12,6 @@ import {
 } from './operations'
 import CosubmissionModifier from './formDataModifiers/CosubmissionModifier'
 import EditorSuggestionsModifier from './formDataModifiers/EditorSuggestionsModifier'
-import Loading from '../../ui/atoms/Loading'
 
 const dataModifiers = [
   new CosubmissionModifier(),

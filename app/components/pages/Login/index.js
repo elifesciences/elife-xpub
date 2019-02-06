@@ -7,10 +7,10 @@ import config from 'config'
 import { H2 } from '@pubsweet/ui'
 import styled from 'styled-components'
 import { th } from '@pubsweet/ui-toolkit'
-import ButtonOrcid from '../../ui/atoms/ButtonOrcid'
-import ButtonLink from '../../ui/atoms/ButtonLink'
-import Paragraph from '../../ui/atoms/Paragraph'
-import NativeLink from '../../ui/atoms/NativeLink'
+import ButtonOrcid from 'ui/atoms/ButtonOrcid'
+import ButtonLink from 'ui/atoms/ButtonLink'
+import Paragraph from 'ui/atoms/Paragraph'
+import NativeLink from 'ui/atoms/NativeLink'
 
 const { url: loginUrl, signupUrl, legacySubmissionUrl } = config.login
 

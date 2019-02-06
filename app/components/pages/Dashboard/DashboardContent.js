@@ -4,9 +4,9 @@ import styled from 'styled-components'
 import { Box } from '@rebass/grid'
 import { th } from '@pubsweet/ui-toolkit'
 
-import media from '../../global/layout/media'
-import NavigationDropdown from '../../ui/atoms/NavigationDropdown'
-import Tabs from '../../ui/molecules/Tabs'
+import media from 'global/layout/media'
+import NavigationDropdown from 'ui/atoms/NavigationDropdown'
+import Tabs from 'ui/molecules/Tabs'
 import EjpLink from './EjpLink'
 
 const MobileOnlySubmissionsContainer = styled(Box).attrs({ mx: -3 })`

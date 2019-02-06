@@ -1,7 +1,7 @@
 import React from 'react'
 import { Query } from 'react-apollo'
+import { CURRENT_USER } from 'global/queries'
 import AuthorPage from './AuthorPage'
-import { CURRENT_USER } from '../../../../global/queries'
 
 const AuthorPageContainer = ({ handleSubmit, setFieldValue }) => (
   <Query query={CURRENT_USER}>

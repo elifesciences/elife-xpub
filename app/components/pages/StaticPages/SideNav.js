@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import { th } from '@pubsweet/ui-toolkit'
 import { Box } from '@rebass/grid'
 
-import NavLink from '../../ui/atoms/NavLink'
+import NavLink from 'ui/atoms/NavLink'
 
 const SideNavLink = styled(NavLink)`
   display: block;
