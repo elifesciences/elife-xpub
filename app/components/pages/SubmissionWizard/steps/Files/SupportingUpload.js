@@ -183,6 +183,7 @@ class SupportingUpload extends React.Component {
   onFileDrop = async (acceptedFiles, rejectedFiles) => {
     let storageSpace = MAX_SUPPORTING_FILES - this.state.files.length
 
+    let rejectedFilesToAdd = []
     if (storageSpace > 0) {
       const filesToUpload = acceptedFiles
         .slice(0, storageSpace)
@@ -195,26 +196,24 @@ class SupportingUpload extends React.Component {
         this.setState({
           uploading: true,
         })
-        let rejectedFilesToAdd = []
-        if (storageSpace > 0) {
-          rejectedFilesToAdd = rejectedFiles
-            .slice(0, storageSpace)
-            .map((file, index) => ({
-              id: index + filesToUpload.length + this.state.files.length,
-              file,
-              loading: false,
-              success: false,
-              rejected: true,
-            }))
-        }
-        this.setState({
-          files: [...this.state.files, ...filesToUpload, ...rejectedFilesToAdd],
-        })
-
-        await this.fileUploader(filesToUpload)
-        this.setState({ uploading: false })
       }
+      rejectedFilesToAdd = rejectedFiles
+        .slice(0, storageSpace)
+        .map((file, index) => ({
+          id: index + filesToUpload.length + this.state.files.length,
+          file,
+          loading: false,
+          success: false,
+          rejected: true,
+        }))
+      this.setState({
+        files: [...this.state.files, ...filesToUpload, ...rejectedFilesToAdd],
+      })
+
       storageSpace -= filesToUpload.length
+      storageSpace -= rejectedFilesToAdd.length
+      await this.fileUploader(filesToUpload)
+      this.setState({ uploading: false })
     }
   }
 
