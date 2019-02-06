@@ -5,7 +5,7 @@ module.exports = {
   alias: {
     joi: 'joi-browser',
     ui: path.resolve(__dirname, '..', 'app', 'components', 'ui'),
+    global: path.resolve(__dirname, '..', 'app', 'components', 'global'),
   },
   extensions: ['.js', '.jsx'],
-  // modules: [path.join(__dirname, 'app', 'components', 'ui'), 'node_modules'],
 }
