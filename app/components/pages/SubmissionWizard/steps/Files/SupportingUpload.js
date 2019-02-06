@@ -133,6 +133,17 @@ const ErrorMessage = styled.span`
   font-size: 12px;
 `
 
+function* fileUploadGenerator(files, uploadFile) {
+  for (let fileIndex = 0; fileIndex < files.length; ) {
+    yield {
+      upload: uploadFile(files[fileIndex].file),
+      fileId: files[fileIndex].id,
+      filename: files[fileIndex].file.name,
+    }
+    fileIndex += 1
+  }
+}
+
 class SupportingUpload extends React.Component {
   constructor(props) {
     super(props)
@@ -149,24 +160,37 @@ class SupportingUpload extends React.Component {
     }
   }
 
-  async fileUploader(files) {
+  synchronouslyUploadFiles = files => {
     const { uploadFile } = this.props
-    return Promise.all(
-      files.map(
-        uploadRequest =>
-          new Promise((resolve, reject) => {
-            uploadFile(uploadRequest.file)
-              .then(data => {
-                this.updateFileState(uploadRequest.id, {
-                  success: true,
-                  loading: false,
-                })
-                resolve(data)
-              })
-              .catch(error => reject(error))
-          }),
-      ),
-    )
+    const iterator = fileUploadGenerator(files, uploadFile)
+    const loop = result => {
+      if (result.done) {
+        this.setState({ uploading: false })
+      } else {
+        result.value.upload
+          .then(data => {
+            const updatedFile = data.data.uploadSupportingFile.files.filter(
+              file => file.filename === result.value.filename,
+            )[0]
+            this.updateFileState(
+              result.value.fileId,
+              {
+                success: true,
+                loading: false,
+              },
+              updatedFile.id,
+            )
+          })
+          .catch(() => {
+            this.updateFileState(result.value.fileId, {
+              error: true,
+              loading: false,
+            })
+          })
+          .finally(() => loop(iterator.next()))
+      }
+    }
+    loop(iterator.next())
   }
 
   updateFileState = (fileId, newState, id) => {
@@ -180,10 +204,9 @@ class SupportingUpload extends React.Component {
     }
   }
 
-  onFileDrop = async (acceptedFiles, rejectedFiles) => {
+  onFileDrop = (acceptedFiles, rejectedFiles) => {
     let storageSpace = MAX_SUPPORTING_FILES - this.state.files.length
 
-    let rejectedFilesToAdd = []
     if (storageSpace > 0) {
       const filesToUpload = acceptedFiles
         .slice(0, storageSpace)
@@ -196,24 +219,25 @@ class SupportingUpload extends React.Component {
         this.setState({
           uploading: true,
         })
+        this.synchronouslyUploadFiles(filesToUpload)
       }
-      rejectedFilesToAdd = rejectedFiles
-        .slice(0, storageSpace)
-        .map((file, index) => ({
-          id: index + filesToUpload.length + this.state.files.length,
-          file,
-          loading: false,
-          success: false,
-          rejected: true,
-        }))
+      storageSpace -= filesToUpload.length
+      let rejectedFilesToAdd = []
+      if (storageSpace > 0) {
+        rejectedFilesToAdd = rejectedFiles
+          .slice(0, storageSpace)
+          .map((file, index) => ({
+            id: index + filesToUpload.length + this.state.files.length,
+            file,
+            loading: false,
+            success: false,
+            rejected: true,
+          }))
+      }
+
       this.setState({
         files: [...this.state.files, ...filesToUpload, ...rejectedFilesToAdd],
       })
-
-      storageSpace -= filesToUpload.length
-      storageSpace -= rejectedFilesToAdd.length
-      await this.fileUploader(filesToUpload)
-      this.setState({ uploading: false })
     }
   }
 
