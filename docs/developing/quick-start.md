@@ -48,6 +48,8 @@ If you do not wish to connect to AWS for access to S3. You can run a fake S3 ser
 - Add the following to `config/local.js`
 
 ```
+  const AWS = require('aws-sdk')
+  .....
   aws: {
     s3: {
       endpoint: new AWS.Endpoint(`http://localhost:4569`),
