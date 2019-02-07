@@ -31,7 +31,7 @@
 ## How do you deploy to production?
 See the docs [here](https://github.com/elifesciences/elife-xpub/blob/develop/docs/deploying/environments.md#jenkins)
 ## How do you see what’s deployed in production?
-You can see the latest build to production [here]. You can also find the commit hash within the `<head>` tags of the page, which can be done for every environment.
+You can see the latest build to production [here](https://alfred.elifesciences.org/job/prod-elife-xpub/lastSuccessfulBuild/). You can also find the commit hash within the `<head>` tags of the page, which can be done for every environment.
 
 
 # Migration steps
