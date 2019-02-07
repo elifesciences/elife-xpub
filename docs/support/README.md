@@ -22,7 +22,7 @@
    * [Contact details](#contact-details)
        * [EJP](#ejp)
        * [Product Owner](#product-owner)
-       * [Head of Engineering](#head-of-engineering)
+       * [Head of Technology](#head-of-technology)
        * [Lead Developer](#lead-developer)
        * [Dev Ops](#dev-ops)
 
@@ -69,8 +69,15 @@ You can request access from the [lead developer](#lead-developer)
 
 
 # Contact details
-## EJP
 ## Product Owner
-## Head of Engineering
+Hannah Drury
+h.drury@elifesciences.org
+## Head of Technology
+Paul Shannon
+p.shannon@elifesciences.org
 ## Lead developer
-## Dev Ops
+Peter Hooper
+p.hooper@elifesciences.org
+## Administrator
+Giorgio Sironi
+g.sironi@elifesciences.org
