@@ -12,11 +12,11 @@ All times UTC.
 
 10:00 standup in which the overwriting file name issues is discussed and parked.
 
-Peter understood that the file uploads issues were all to be parked, in favor of documentation.
+Peter and Hannah understood that the file uploads issues were all to be parked, in favor of documentation.
 
-Peter, Cory and Hannah thought that the work on file uploads will be large and postponed until further discussion.
+Peter, Cory and Hannah thought that the work on refactoring multifile uploads in order to more easily facilitate overwriting filenames would be large and postponed until further discussion.
 
-10:42 ticket created by Hem to make files upload in parallel as a prerequisite for other tickets.
+10:42 ticket created by Hem to make files upload in parallel as a prerequisite for ticket to allow the overwrite of files with the same name.
 
 Inadvertently added in the Todo column
 
@@ -43,7 +43,7 @@ Javier understood this small split task should be picked up immediately
 
 Peter and Cory run more tests, but unclear on what to do, delaying the revert decision until tests are finished
 
-20:39: Hem comes in, and says he didn't know the pull request would be deployed. Think code is production-ready, but not knowing the PR is in production.
+20:39: Hem enters the conversation, and says he didn't know the pull request would be deployed. Believes code to be production-ready, but not knowing the PR is in production.
 
 20:42: Hem raises a PR with the intent of having a revert option
 
@@ -59,8 +59,8 @@ Peter kicks off https://alfred.elifesciences.org/job/prod-elife-xpub/ manually
 
 ## Contributing Factor(s)
 
-- Tech lead and product owner busy all days and not tuning the priorities
-- Not enough review on the PR, 2 approvers was dropped down to 1
+- Tech lead and product manager engaged all day and not tuning the priorities
+- Not enough review on the PR, 2 approvers was dropped down to 1 before product was launched to increase development throughput
 - Pairing leads to review being performed by the navigator, is it bad or good?
 - PR merged out of hours
 - Difficult to automatically test for race conditions, little coverage for it
@@ -77,5 +77,5 @@ MTTR: 1h35m
 
 ## Corrective Actions
 
-- Evaluate: 2 reviewers as a minimum for merge, or dynamic number of reviewers by the requestor
-- Take a decision for "merge your own PRs" vs. "merge other people's PRs"
+- 2 reviewers as a minimum for merge
+- Developer to take respnsibility for merging their own PRs
