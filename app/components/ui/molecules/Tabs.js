@@ -6,7 +6,7 @@ import {
   TabPanel as UnstyledTabPanel,
 } from 'react-tabs'
 import { th } from '@pubsweet/ui-toolkit'
-import media from '../../global/layout/media'
+import media from 'global/layout/media'
 
 const Tabs = styled(UnstyledTabs)``
 

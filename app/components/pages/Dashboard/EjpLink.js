@@ -2,8 +2,8 @@ import React from 'react'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 import { th } from '@pubsweet/ui-toolkit'
-import Paragraph from '../../ui/atoms/Paragraph'
-import NativeLink from '../../ui/atoms/NativeLink'
+import Paragraph from 'ui/atoms/Paragraph'
+import NativeLink from 'ui/atoms/NativeLink'
 
 const CenteredSmallParagraph = styled(Paragraph.Small).attrs({
   secondary: true,

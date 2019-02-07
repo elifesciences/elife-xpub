@@ -1,5 +1,5 @@
 import React from 'react'
-import DashboardList from '../../../../ui/molecules/DashboardList'
+import DashboardList from 'ui/molecules/DashboardList'
 import { ALL_MANUSCRIPTS } from '../../operations'
 import ManuscriptsQuery from '../../ManuscriptsQuery'
 

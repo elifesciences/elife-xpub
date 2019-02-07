@@ -5,11 +5,10 @@ import styled from 'styled-components'
 import Dropzone from 'react-dropzone'
 import { ErrorText } from '@pubsweet/ui'
 import { th } from '@pubsweet/ui-toolkit'
+import Paragraph from 'ui/atoms/Paragraph'
+import ActionText from 'ui/atoms/ActionText'
+import Icon from 'ui/atoms/Icon'
 import { errorMessageMapping, MAX_FILE_SIZE } from './utils'
-import Paragraph from '../../../../ui/atoms/Paragraph'
-import ActionText from '../../../../ui/atoms/ActionText'
-
-import Icon from '../../../../ui/atoms/Icon'
 
 const UploadIcon = props => (
   <Icon

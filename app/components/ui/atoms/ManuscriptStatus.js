@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { Box } from '@rebass/grid'
 import PropTypes from 'prop-types'
-import media from '../../global/layout/media'
+import media from 'global/layout/media'
 
 const StatusBox = styled(Box)`
   color: ${props => props.theme[props.color]};
