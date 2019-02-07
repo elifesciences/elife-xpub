@@ -13,7 +13,8 @@ All times UTC.
 10:00 standup in which the overwriting file name issues is discussed and parked.
 
 Peter understood that the file uploads issues were all to be parked, in favor of documentation.
-Cory (and Hannah) thought that the work on file uploads will be large and postponed until further discussion.
+
+Peter, Cory and Hannah thought that the work on file uploads will be large and postponed until further discussion.
 
 10:42 ticket created by Hem to make files upload in parallel as a prerequisite for other tickets.
 
