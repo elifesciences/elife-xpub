@@ -24,6 +24,8 @@ module.exports = {
   resolve: {
     alias: {
       config: path.join(__dirname, '../styleguide/config.json'),
+      ui: path.resolve(__dirname, '../app/components/ui'),
+      global: path.resolve(__dirname, '../app/components/global'),
     },
   },
   plugins: [new CopyWebpackPlugin([{ from: './assets', to: 'assets' }])],
