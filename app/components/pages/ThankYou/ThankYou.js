@@ -5,9 +5,9 @@ import PropTypes from 'prop-types'
 import { H1 } from '@pubsweet/ui'
 import config from 'config'
 
-import NativeLink from '../../ui/atoms/NativeLink'
-import ButtonLink from '../../ui/atoms/ButtonLink'
-import Paragraph from '../../ui/atoms/Paragraph'
+import NativeLink from 'ui/atoms/NativeLink'
+import ButtonLink from 'ui/atoms/ButtonLink'
+import Paragraph from 'ui/atoms/Paragraph'
 
 const CenteredContent = styled(Box)`
   text-align: center;

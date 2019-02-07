@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { th } from '@pubsweet/ui-toolkit'
 
-import Centerer from '../../global/layout/Centerer'
+import Centerer from 'global/layout/Centerer'
 
 const Root = styled.div`
   position: fixed;

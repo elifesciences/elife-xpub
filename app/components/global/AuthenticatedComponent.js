@@ -1,9 +1,9 @@
 import React from 'react'
 import { Redirect } from 'react-router'
 import { Query } from 'react-apollo'
+import Loading from 'ui/atoms/Loading'
 import { CURRENT_USER } from './queries'
 import ErrorPage from '../pages/Error'
-import Loading from '../ui/atoms/Loading'
 
 const AuthenticatedComponent = ({ children }) => (
   <Query query={CURRENT_USER}>

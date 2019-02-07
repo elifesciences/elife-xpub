@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { Box } from '@rebass/grid'
 import { th } from '@pubsweet/ui-toolkit'
 
-import DashboardListItem from '../../ui/molecules/DashboardListItem'
+import DashboardListItem from 'ui/molecules/DashboardListItem'
 import Paragraph from '../atoms/Paragraph'
 
 const EmptyListMessage = styled(Box)`

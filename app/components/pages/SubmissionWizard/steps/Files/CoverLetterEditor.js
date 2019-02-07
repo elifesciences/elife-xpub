@@ -1,6 +1,6 @@
 import React from 'react'
 import ConfigurableEditor from 'xpub-edit/src/components/configurable/ConfigurableEditor'
-import Icon from '../../../../ui/atoms/Icon'
+import Icon from 'ui/atoms/Icon'
 
 const FormatBoldIcon = props => (
   <Icon
