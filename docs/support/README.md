@@ -22,12 +22,17 @@
    * [Contact details](#contact-details)
        * [EJP](#ejp)
        * [Product Owner](#product-owner)
+       * [Head of Engineering](#head-of-engineering)
+       * [Lead Developer](#lead-developer)
+       * [Dev Ops](#dev-ops)
+
 
 # Deployment steps
-
 ## How do you deploy to production?
 See the docs [here](https://github.com/elifesciences/elife-xpub/blob/develop/docs/deploying/environments.md#jenkins)
 ## How do you see what’s deployed in production?
+You can see the latest build to production [here]. You can also find the commit hash within the `<head>` tags of the page, which can be done for every environment.
+
 
 # Migration steps
 ## How do you add a migration?
@@ -35,24 +40,37 @@ See the docs [here](https://github.com/elifesciences/elife-xpub/blob/develop/doc
 ## How do you rollback a migration?
 See the docs [here](https://github.com/elifesciences/elife-xpub/blob/develop/docs/deploying/database.md#migrations)
 
+
 # Database restore and backup
 ## How do you do backups? Are they automated?
 See the docs [here](https://github.com/elifesciences/elife-xpub/blob/develop/docs/deploying/database.md#backup-and-restore)
 ## How do you restore the database?
 See the docs [here](https://github.com/elifesciences/elife-xpub/blob/develop/docs/deploying/database.md#restoring-from-an-rds-snapshot)
 
+
 # Support tools and processes
 ## How do I monitor errors, response times and traffic?
+We use NewRelic to monitor the application. You can request access from the [Head of Engineering](#head-of-engineering)
 ## How do I view logs?
+You can view logs by using Builder, SSHing into the application servers, or by using Logly.
 ## How do I access the application servers?
+[Follow these instructions](https://github.com/elifesciences/bastion-formula) to access the bastion. You can then access the application servers with the following command, _ssh environment--xpub--instance_, for example:
+```
+ssh prod--xpub--1
+```
 ## How do I access the database?
 See the docs [here](https://github.com/elifesciences/elife-xpub/blob/develop/docs/deploying/database.md#access)
 ## How do I access EJP’s SFTP server?
+You can request access from the [lead developer](#lead-developer)
 ## How do I find and investigate a submission
 ### Accessing the uploaded files on S3
 ### Viewing the submission on the database
 ### Viewing the audit log of a submission
 
+
 # Contact details
 ## EJP
 ## Product Owner
+## Head of Engineering
+## Lead developer
+## Dev Ops
