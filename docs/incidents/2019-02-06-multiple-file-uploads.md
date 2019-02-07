@@ -12,7 +12,9 @@ All times UTC.
 
 10:00 standup in which the overwriting file name issues is discussed and parked in favor of parallel file uploads
 
-10:42 ticket created by Hem to make files upload in parallel as a prerequisite for other tickets, in the Todo column
+10:42 ticket created by Hem to make files upload in parallel as a prerequisite for other tickets.
+
+Inadvertently added in the Todo column
 
 Peter understood that the file uploads issues were all to be parked, in favor of documentation
 
