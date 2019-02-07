@@ -52,7 +52,7 @@ class SupportingFiles {
       throw err
     }
 
-    return manuscript
+    return fileEntity
   }
 
   async removeAll() {
