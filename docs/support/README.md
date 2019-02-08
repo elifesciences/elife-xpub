@@ -83,10 +83,16 @@ MECA_SFTP_USERNAME=...
 ```
 
 ## How do I find and investigate a submission
-### Accessing the uploaded files on S3
+### Accessing the uploaded files for submissions
+Uploaded files are pushed to the following two locations:
+- AWS S3, which can be found [here](https://512686554592.signin.aws.amazon.com/console). To gain access, contact the [administrator](#administrator).
+- EJP's SFTP Server. To gain access, see the docs [here](#how-do-i-access-ejps-sftp-server).
 ### Viewing the submission on the database
+Once you have the submission ID, the submission can be found on the `manuscript` table. You can use the following query to see the database entry for the submission:
+`select * from manuscript where id='some-UUID';`
 ### Viewing the audit log of a submission
-
+A submission can be updated by both the user and EJP. To track these changes, the database stores an audit log. You can view the audit log of a submission using the following query:
+`select * from audit_log where object_type like 'manuscript%' and id='some-UUID';`
 
 # Contact details
 ## Product Owner
