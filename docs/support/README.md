@@ -73,7 +73,15 @@ ssh prod--xpub--1
 ## How do I access the database?
 See the docs [here](https://github.com/elifesciences/elife-xpub/blob/develop/docs/deploying/database.md#access)
 ## How do I access EJP’s SFTP server?
-You can request access from the [lead developer](#lead-developer)
+The credentials for EJP's SFTP server can be found on the [application servers](#how-do-i-access-the-application-servers). The following environment variables will contain the credentials, which can be used by any SFTP client:
+```
+MECA_SFTP_PORT=22
+MECA_SFTP_REMOTEPATH=
+MECA_SFTP_HOST=...
+MECA_SFTP_PASSWORD=...
+MECA_SFTP_USERNAME=...
+```
+
 ## How do I find and investigate a submission
 ### Accessing the uploaded files on S3
 ### Viewing the submission on the database
