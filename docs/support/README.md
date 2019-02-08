@@ -62,7 +62,11 @@ You can view logs by using one of the following methods:
 1. You can view the logs directly within the [application servers](#how-do-i-access-the-application-servers). The logs can be found within the `/srv/elife-xpub/var/logs/` directory on the server.
 2. Using [Logly](https://elifesciences.loggly.com/).
 ## How do I access the application servers?
-[Follow these instructions](https://github.com/elifesciences/bastion-formula) to access the bastion. You can then access the application servers with the following command, _ssh environment--xpub--instance_, for example:
+To SSH into application servers, you will need to perform the following setup:
+1. [Follow these instructions](https://github.com/elifesciences/bastion-formula) to access the bastion. From the bastion, you can easily SSH into other environments, once access has been granted.
+2. Your public key does needs to be added to [elifesciences/builder-configuration](https://github.com/elifesciences/builder-configuration/blob/master/pillar/elife-public.sls#L67-L75). A build has to be run by the [Administrator](#administrator) to apply it to that particular environment. This allows you to access `elife-xpub` environments from either the bastion or directly.
+
+You can then access the application servers with the following command, _ssh environment--xpub--instance_, for example:
 ```
 ssh prod--xpub--1
 ```
