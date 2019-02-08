@@ -1,7 +1,7 @@
 const config = require('config')
 const pubsubManager = require('pubsweet-server/src/graphql/pubsub')
 const logger = require('@pubsweet/logger')
-const scienceBeamApi = require('./scienceBeamApi')
+const scienceBeamApi = require('../../../../xpub-controller/client/scienceBeamApi')
 
 const { ON_UPLOAD_PROGRESS } = pubsubManager.asyncIterators
 
