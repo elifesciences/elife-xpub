@@ -59,7 +59,7 @@ You can request access from the [Administrator](#administrator) or the [Head of 
 ## How do I view logs?
 You can view logs by using one of the following methods:
 1. You can view the logs directly within the [application servers](#how-do-i-access-the-application-servers). The logs can be found within the `/srv/elife-xpub/var/logs/` directory on the server.
-2. Using [Logly](https://elifesciences.loggly.com/).
+2. Using [Loggly](https://elifesciences.loggly.com/).
 ## How do I access the application servers?
 To SSH into application servers, you will need to perform the following setup:
 1. [Follow these instructions](https://github.com/elifesciences/bastion-formula) to access the bastion. From the bastion, you can easily SSH into other environments, once access has been granted.
