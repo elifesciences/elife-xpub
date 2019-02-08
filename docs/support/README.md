@@ -24,7 +24,7 @@
        * [Product Owner](#product-owner)
        * [Head of Technology](#head-of-technology)
        * [Lead Developer](#lead-developer)
-       * [Dev Ops](#dev-ops)
+       * [Administrator](#administrator)
 
 
 # Deployment steps
@@ -88,4 +88,4 @@ Peter Hooper
 p.hooper@elifesciences.org
 ## Administrator
 Giorgio Sironi
-g.sironi@elifesciences.org
+it-admin@elifesciences.org
