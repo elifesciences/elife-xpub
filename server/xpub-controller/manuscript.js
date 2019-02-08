@@ -1,6 +1,7 @@
 const logger = require('@pubsweet/logger')
 const ManuscriptModel = require('@elifesciences/xpub-model').Manuscript
 const FileModel = require('@elifesciences/xpub-model').File
+const UserModel = require('@elifesciences/xpub-model').User
 
 const Notification = require('./notification')
 
@@ -13,8 +14,10 @@ class Manuscript {
     this.pubsubManager = pubsubManager
   }
 
-  async upload(manuscriptId, file, fileSize, userId) {
+  async upload(manuscriptId, file, fileSize) {
     const { ON_UPLOAD_PROGRESS } = this.pubsubManager.asyncIterators
+
+    const userId = await UserModel.getProfileForUuid(this.user)
 
     if (fileSize > this.config.get('fileUpload.maxSizeMB') * 1e6) {
       throw new Error(

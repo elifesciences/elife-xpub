@@ -13,7 +13,7 @@ async function uploadManuscript(_, { file, id, fileSize }, { user }) {
     ScienceBeamApi,
     pubsubManager,
   )
-  return ms.upload(id, file, fileSize, user)
+  return ms.upload(id, file, fileSize)
 }
 
 module.exports = uploadManuscript
