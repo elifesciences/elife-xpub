@@ -60,28 +60,11 @@ describe('File', () => {
       }).save()
       expect(file.status).toBe('CREATED')
       file = await File.find(file.id)
-      await file.updateStatus('UPLOADED', userId)
+      await file.updateStatus('UPLOADED')
       expect(file.status).toBe('UPLOADED')
       file = await File.find(file.id)
-      await file.updateStatus('CANCELLED', userId)
+      await file.updateStatus('CANCELLED')
       expect(file.status).toBe('CANCELLED')
-    })
-  })
-
-  describe('save()', () => {
-    it('calls validate() on related manuscript', async () => {
-      const manuscript = await new Manuscript({
-        createdBy: userId,
-      }).save()
-      expect(manuscript.fileStatus).toEqual('READY')
-      const file = await new File({
-        manuscriptId: manuscript.id,
-        filename: 'thisfile.txt',
-        url: '/an/url',
-      }).save(userId)
-      await manuscript.refresh()
-      expect(file.status).toBe('CREATED')
-      expect(manuscript.fileStatus).toEqual('CHANGING')
     })
   })
 })
