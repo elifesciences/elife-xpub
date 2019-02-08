@@ -52,7 +52,11 @@ See the docs [here](https://github.com/elifesciences/elife-xpub/blob/develop/doc
 
 # Support tools and processes
 ## How do I monitor errors, response times and traffic?
-We use NewRelic to monitor the application. You can request access from the [Head of Engineering](#head-of-engineering)
+We use NewRelic to monitor the application. NewRelic is available for the following environments:
+- Production: https://rpm.newrelic.com/accounts/1451451/applications/162983119
+- Staging: https://rpm.newrelic.com/accounts/1707959/applications/162979288
+
+You can request access from the [Administrator](#administrator) or the [Head of Engineering](#head-of-engineering).
 ## How do I view logs?
 You can view logs by using Builder, SSHing into the application servers, or by using Logly.
 ## How do I access the application servers?
