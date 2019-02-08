@@ -58,7 +58,9 @@ We use NewRelic to monitor the application. NewRelic is available for the follow
 
 You can request access from the [Administrator](#administrator) or the [Head of Technology](#head-of-technology).
 ## How do I view logs?
-You can view logs by using Builder, SSHing into the application servers, or by using Logly.
+You can view logs by using one of the following methods:
+1. You can view the logs directly within the [application servers](#how-do-i-access-the-application-servers). The logs can be found within the `/srv/elife-xpub/var/logs/` directory on the server.
+2. Using [Logly](https://elifesciences.loggly.com/).
 ## How do I access the application servers?
 [Follow these instructions](https://github.com/elifesciences/bastion-formula) to access the bastion. You can then access the application servers with the following command, _ssh environment--xpub--instance_, for example:
 ```
