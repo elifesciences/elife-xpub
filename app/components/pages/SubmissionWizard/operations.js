@@ -114,6 +114,9 @@ export const DELETE_MANUSCRIPT = gql`
 
 export const ON_UPLOAD_PROGRESS = gql`
   subscription {
-    uploadProgress
+    manuscriptUploadProgress {
+      manuscriptId
+      progress
+    }
   }
 `

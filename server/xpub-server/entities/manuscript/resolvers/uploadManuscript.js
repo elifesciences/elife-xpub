@@ -56,7 +56,7 @@ async function uploadManuscript(_, { file, id, fileSize }, { user }) {
     // don't let the prediction complete the upload
     if (progress > 99) progress = 99
     pubsub.publish(`${ON_UPLOAD_PROGRESS}.${user}`, {
-      uploadProgress: progress,
+      manuscriptUploadProgress: { manuscriptId: id, progress },
     })
   }, 200)
 
@@ -168,7 +168,7 @@ async function uploadManuscript(_, { file, id, fileSize }, { user }) {
 
   clearInterval(handle)
   pubsub.publish(`${ON_UPLOAD_PROGRESS}.${user}`, {
-    uploadProgress: 100,
+    manuscriptUploadProgress: { manuscriptId: id, progress: 100 },
   })
   const actualTime = (Date.now() - startedTime) / 1000
   logger.info(

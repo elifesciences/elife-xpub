@@ -2,6 +2,10 @@ const logger = require('@pubsweet/logger')
 const { Manuscript, User, File } = require('@elifesciences/xpub-model')
 const elifeApi = require('@elifesciences/xpub-model/entities/user/helpers/elife-api')
 const { S3Storage } = require('@elifesciences/xpub-controller')
+const {
+  getPubsub,
+  asyncIterators,
+} = require('pubsweet-server/src/graphql/pubsub')
 
 const removeUploadedManuscript = require('./removeUploadedManuscript')
 const submitManuscript = require('./submitManuscript')
@@ -9,6 +13,8 @@ const updateManuscript = require('./updateManuscript')
 const uploadManuscript = require('./uploadManuscript')
 const uploadSupportingFile = require('./uploadSupportingFile')
 const removeSupportingFiles = require('./removeSupportingFiles')
+
+const { ON_UPLOAD_PROGRESS } = asyncIterators
 
 const resolvers = {
   Query: {
@@ -77,6 +83,15 @@ const resolvers = {
       })
 
       return manuscript
+    },
+  },
+
+  Subscription: {
+    manuscriptUploadProgress: {
+      subscribe: async (_, vars, context) => {
+        const pubsub = await getPubsub()
+        return pubsub.asyncIterator(`${ON_UPLOAD_PROGRESS}.${context.user}`)
+      },
     },
   },
 

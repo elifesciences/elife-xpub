@@ -15,6 +15,14 @@ extend type Mutation {
   savePage(url:String!, id:String!):Manuscript!
 }
 
+extend type Subscription {
+  manuscriptUploadProgress: UploadProgress!
+}
+type UploadProgress {
+  manuscriptId: ID!
+  progress: Int!
+}
+
 extend type Manuscript {
   # todo: these should be handled through teams
   author: Alias
