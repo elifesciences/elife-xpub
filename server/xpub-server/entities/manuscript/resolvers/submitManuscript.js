@@ -43,14 +43,12 @@ async function submitManuscript(_, { data }, { user, ip }) {
   mecaExport(manuscript, S3Storage.getContent, ip)
     .then(() => {
       logger.info(`Manuscript ${manuscript.id} successfully exported`)
-      // return Manuscript.updateStatus(
-      //   manuscript.id,
-      //   Manuscript.statuses.MECA_EXPORT_SUCCEEDED,
-      // )
-      throw new Error('error, to test meca export')
+      return Manuscript.updateStatus(
+        manuscript.id,
+        Manuscript.statuses.MECA_EXPORT_SUCCEEDED,
+      )
     })
     .catch(async err => {
-      console.log('sending new error, with meca export.')
       logger.error('MECA export failed', err)
       await Manuscript.updateStatus(
         manuscript.id,
