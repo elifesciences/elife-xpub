@@ -3,9 +3,9 @@ const FileModel = require('@elifesciences/xpub-model').File
 const logger = require('@pubsweet/logger')
 
 class SupportingFiles {
-  constructor(storage, id, user) {
+  constructor(storage, manuscriptId, user) {
     this.storage = storage
-    this.id = id
+    this.manuscriptId = manuscriptId
     this.user = user
   }
 
