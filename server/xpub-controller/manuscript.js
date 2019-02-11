@@ -7,7 +7,7 @@ const Notification = require('./notification')
 
 class Manuscript {
   constructor(config, user, storage, scienceBeamApi, pubsubManager) {
-    this.user = user
+    this.userId = user
     this.config = config
     this.storage = storage
     this.scienceBeamApi = scienceBeamApi
@@ -17,7 +17,7 @@ class Manuscript {
   async upload(manuscriptId, file, fileSize) {
     const { ON_UPLOAD_PROGRESS } = this.pubsubManager.asyncIterators
 
-    const userId = await UserModel.getProfileForUuid(this.user)
+    const profileId = await UserModel.getProfileForUuid(this.userId)
 
     if (fileSize > this.config.get('fileUpload.maxSizeMB') * 1e6) {
       throw new Error(
@@ -27,7 +27,7 @@ class Manuscript {
       )
     }
     // ensure user can view manuscript
-    let manuscript = await ManuscriptModel.find(manuscriptId, this.user)
+    let manuscript = await ManuscriptModel.find(manuscriptId, this.userId)
 
     const { stream, filename, mimetype: mimeType } = await file
     let fileEntity = await new FileModel({
@@ -55,7 +55,7 @@ class Manuscript {
       let progress = parseInt((100 * elapsed) / 1000 / predictedTime, 10)
       // don't let the prediction complete the upload
       if (progress > 99) progress = 99
-      pubsub.publish(`${ON_UPLOAD_PROGRESS}.${userId}`, {
+      pubsub.publish(`${ON_UPLOAD_PROGRESS}.${profileId}`, {
         uploadProgress: progress,
       })
     }, 200)
@@ -132,7 +132,7 @@ class Manuscript {
     }
 
     // After the length file operations above - now update the manuscript...
-    manuscript = await ManuscriptModel.find(manuscriptId, this.user)
+    manuscript = await ManuscriptModel.find(manuscriptId, this.userId)
     const oldFileIndex = manuscript.files.findIndex(
       element => element.type === 'MANUSCRIPT_SOURCE',
     )
@@ -177,7 +177,7 @@ class Manuscript {
     )
 
     clearInterval(handle)
-    pubsub.publish(`${ON_UPLOAD_PROGRESS}.${userId}`, {
+    pubsub.publish(`${ON_UPLOAD_PROGRESS}.${profileId}`, {
       uploadProgress: 100,
     })
     const actualTime = (Date.now() - startedTime) / 1000
@@ -185,11 +185,11 @@ class Manuscript {
       `Manuscript Upload Time, Actual (${actualTime}) , Predicted (${predictedTime}) | ${manuscriptId}`,
     )
 
-    return ManuscriptModel.find(manuscriptId, this.user)
+    return ManuscriptModel.find(manuscriptId, this.userId)
   }
 
   async update(data) {
-    const manuscript = await ManuscriptModel.find(data.id, this.user)
+    const manuscript = await ManuscriptModel.find(data.id, this.userId)
     if (manuscript.status !== ManuscriptModel.statuses.INITIAL) {
       throw new Error(
         `Cannot update manuscript with status of ${manuscript.status}`,
@@ -218,7 +218,7 @@ class Manuscript {
     await manuscript.save()
     logger.debug(`Updated manuscript`, {
       manuscriptId: data.id,
-      userId: this.user,
+      userId: this.userId,
     })
 
     return manuscript
