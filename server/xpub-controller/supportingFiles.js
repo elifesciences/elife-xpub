@@ -3,10 +3,10 @@ const FileModel = require('@elifesciences/xpub-model').File
 const logger = require('@pubsweet/logger')
 
 class SupportingFiles {
-  constructor(storage, manuscriptId, user) {
+  constructor(storage, manuscriptId, userId) {
     this.storage = storage
     this.manuscriptId = manuscriptId
-    this.user = user
+    this.userId = userId
   }
 
   async upload(file) {
@@ -47,7 +47,7 @@ class SupportingFiles {
   }
 
   async removeAll() {
-    let manuscript = await ManuscriptModel.find(this.manuscriptId, this.user)
+    let manuscript = await ManuscriptModel.find(this.manuscriptId, this.userId)
     const filesWithoutSupporting = manuscript.files.filter(
       file => file.type !== 'SUPPORTING_FILE',
     )
