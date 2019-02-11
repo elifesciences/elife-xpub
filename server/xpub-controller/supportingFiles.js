@@ -3,19 +3,56 @@ const FileModel = require('@elifesciences/xpub-model').File
 const logger = require('@pubsweet/logger')
 
 class SupportingFiles {
-  constructor(storage, id, user) {
+  constructor(storage, manuscriptId, userId) {
     this.storage = storage
-    this.id = id
-    this.user = user
+    this.manuscriptId = manuscriptId
+    this.userId = userId
+  }
+
+  async upload(file) {
+    const { stream, filename, mimetype: mimeType } = await file
+    let fileEntity = new FileModel({
+      manuscriptId: this.manuscriptId,
+      url: `supporting/${this.manuscriptId}`,
+      filename,
+      type: 'SUPPORTING_FILE',
+      mimeType,
+    })
+    await fileEntity.save()
+    const fileId = fileEntity.id
+
+    const fileContents = await new Promise((resolve, reject) => {
+      const chunks = []
+      stream.on('data', chunk => {
+        chunks.push(chunk)
+      })
+      stream.on('error', reject)
+      stream.on('end', () => {
+        resolve(Buffer.concat(chunks))
+      })
+    })
+    await fileEntity.updateStatus('UPLOADED')
+    fileEntity = await FileModel.find(fileId)
+
+    try {
+      await this.storage.putContent(fileEntity, fileContents, {})
+      await fileEntity.updateStatus('STORED')
+    } catch (err) {
+      await fileEntity.updateStatus('CANCELLED')
+      await fileEntity.delete()
+      throw err
+    }
+
+    return fileEntity
   }
 
   async removeAll() {
-    let manuscript = await ManuscriptModel.find(this.id, this.user)
+    let manuscript = await ManuscriptModel.find(this.manuscriptId, this.userId)
     const filesWithoutSupporting = manuscript.files.filter(
       file => file.type !== 'SUPPORTING_FILE',
     )
 
-    const files = await FileModel.findByManuscriptId(this.id)
+    const files = await FileModel.findByManuscriptId(this.manuscriptId)
 
     if (files && files.length > 0) {
       let modified = false
