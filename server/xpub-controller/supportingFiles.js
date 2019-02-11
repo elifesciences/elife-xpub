@@ -19,8 +19,6 @@ class SupportingFiles {
       mimeType,
     })
     await fileEntity.save()
-    let manuscript = await ManuscriptModel.find(this.manuscriptId, this.user)
-    await manuscript.validate()
     const fileId = fileEntity.id
 
     const fileContents = await new Promise((resolve, reject) => {
@@ -34,20 +32,13 @@ class SupportingFiles {
       })
     })
     await fileEntity.updateStatus('UPLOADED')
-    // *unnessicary entity .find()'s after here are required while we are using base-model v1.1.0
-    manuscript = await ManuscriptModel.find(this.manuscriptId, this.user)
-    await manuscript.validate()
     fileEntity = await FileModel.find(fileId)
 
     try {
       await this.storage.putContent(fileEntity, fileContents, {})
       await fileEntity.updateStatus('STORED')
-      manuscript = await ManuscriptModel.find(this.manuscriptId, this.user)
-      await manuscript.validate()
     } catch (err) {
       await fileEntity.updateStatus('CANCELLED')
-      manuscript = await ManuscriptModel.find(this.manuscriptId, this.user)
-      await manuscript.validate()
       await fileEntity.delete()
       throw err
     }
@@ -80,9 +71,6 @@ class SupportingFiles {
       if (modified) {
         manuscript.files = filesWithoutSupporting
         manuscript = await manuscript.save()
-        // Required due to pubsweet base-model v1.1.0
-        manuscript = await ManuscriptModel.find(this.manuscriptId, this.user)
-        await manuscript.validate()
       }
     }
 
