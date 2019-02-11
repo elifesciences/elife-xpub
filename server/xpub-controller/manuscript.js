@@ -17,6 +17,8 @@ class Manuscript {
   async upload(manuscriptId, file, fileSize) {
     const { ON_UPLOAD_PROGRESS } = this.pubsubManager.asyncIterators
 
+    // This is necessary as the config of the pubsub connection relies on the
+    // profileId being used. Should be revisted as part of #1493
     const profileId = await UserModel.getProfileForUuid(this.userId)
 
     if (fileSize > this.config.get('fileUpload.maxSizeMB') * 1e6) {
