@@ -45,6 +45,16 @@ class User extends BaseModel {
     return user
   }
 
+  static async getProfileForUuid(uuid, idType = 'elife') {
+    const [user] = await User.query().where('user.id', uuid)
+    await user.$loadRelated('identities')
+    let foundIdent = null
+    if (user.identities) {
+      foundIdent = user.identities.filter(ident => ident.type === idType)
+    }
+    return foundIdent ? foundIdent[0].identifier : null
+  }
+
   static async getUuidForProfile(profileId) {
     const [user] = await User.query()
       .joinRelation('identities')
