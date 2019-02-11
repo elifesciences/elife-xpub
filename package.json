@@ -74,6 +74,9 @@
     "client/*",
     "server/*"
   ],
+  "resolutions": {
+    "lodash": ">=4.17.11"
+  },
   "dependencies": {
     "@elifesciences/elife-theme": "^1.0.0",
     "@pubsweet/ui": "^9.0.3",
