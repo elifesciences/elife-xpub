@@ -90,7 +90,7 @@ const resolvers = {
     manuscriptUploadProgress: {
       subscribe: async (_, vars, context) => {
         const pubsub = await getPubsub()
-        return pubsub.asyncIterator(`${ON_UPLOAD_PROGRESS}.${context.user}`)
+        return pubsub.asyncIterator(`${ON_UPLOAD_PROGRESS}.${vars.id}`)
       },
     },
   },

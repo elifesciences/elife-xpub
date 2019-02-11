@@ -16,11 +16,7 @@ extend type Mutation {
 }
 
 extend type Subscription {
-  manuscriptUploadProgress: UploadProgress!
-}
-type UploadProgress {
-  manuscriptId: ID!
-  progress: Int!
+  manuscriptUploadProgress(id: ID!): Int!
 }
 
 extend type Manuscript {

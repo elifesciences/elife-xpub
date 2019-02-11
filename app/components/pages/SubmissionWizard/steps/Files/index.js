@@ -146,11 +146,6 @@ const FilesPageContainer = ({
         manuscriptFile = submissionFiles[manuscriptFileIndex]
       }
 
-      console.log(uploadData)
-      const uploadProgress = uploadData.manuscriptUploadProgress
-        ? uploadData.manuscriptUploadProgress.progress
-        : null
-
       return (
         <Mutation mutation={DELETE_MANUSCRIPT_MUTATION}>
           {deleteFile => (
@@ -168,9 +163,14 @@ const FilesPageContainer = ({
                 <ManuscriptUpload
                   conversion={{
                     converting:
-                      loading || (uploadProgress && uploadProgress < 100),
+                      loading ||
+                      (uploadData.manuscriptUploadProgress &&
+                        uploadData.manuscriptUploadProgress < 100),
                     completed: hasManuscript,
-                    progress: getProgress(uploadLoading, uploadProgress),
+                    progress: getProgress(
+                      uploadLoading,
+                      uploadData.manuscriptUploadProgress,
+                    ),
                     error: uploadError,
                   }}
                   data-test-id="upload"
