@@ -1,6 +1,7 @@
 const { createTables } = require('@pubsweet/db-manager')
 const config = require('config')
 const logger = require('@pubsweet/logger')
+const mailer = require('@pubsweet/component-send-email')
 const express = require('express')
 const bodyParser = require('body-parser')
 const supertest = require('supertest')
@@ -77,6 +78,22 @@ describe('MECA HTTP callback handler', () => {
     expect(updatedManuscript.status).toBe(
       Manuscript.statuses.MECA_IMPORT_FAILED,
     )
+  })
+
+  it('sends an email on failure', async () => {
+    const manuscript = await new Manuscript({ createdBy: userId }).save()
+    const request = makeApp()
+    expect(manuscript.status).toBe(Manuscript.statuses.INITIAL)
+    await request
+      .post(`/meca-result/${manuscript.id}`)
+      .set('Authorization', `Bearer ${apiKey}`)
+      .send({ result: 'failure' })
+      .expect(204)
+    await mailer._sendPromise
+    expect(mailer.getMails()).toHaveLength(1)
+    expect(mailer.getMails()[0]).toMatchObject({
+      text: expect.stringContaining(manuscript.id)
+    })
   })
 
   it('fails for invalid manuscript ID', async () => {
