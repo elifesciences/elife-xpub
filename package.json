@@ -70,6 +70,9 @@
       "<rootDir>/server"
     ]
   },
+  "resolutions": {
+    "lodash": ">=4.17.11"
+  },
   "workspaces": [
     "client/*",
     "server/*"
