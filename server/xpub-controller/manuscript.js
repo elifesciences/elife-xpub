@@ -4,6 +4,7 @@ const FileModel = require('@elifesciences/xpub-model').File
 const UserModel = require('@elifesciences/xpub-model').User
 
 const Notification = require('./notification')
+const { validateFileSize } = require('./helpers')
 
 class Manuscript {
   constructor(config, user, storage, scienceBeamApi, pubsubManager) {
@@ -20,17 +21,12 @@ class Manuscript {
     // This is necessary as the config of the pubsub connection relies on the
     // profileId being used. Should be revisited as part of #1493
     const profileId = await UserModel.getProfileForUuid(this.userId)
+    validateFileSize(fileSize)
 
-    if (fileSize > this.config.get('fileUpload.maxSizeMB') * 1e6) {
-      throw new Error(
-        `File size shouldn't exceed ${this.config.get(
-          'fileUpload.maxSizeMB',
-        )}MB`,
-      )
-    }
     // ensure user can view manuscript
     let manuscript = await ManuscriptModel.find(manuscriptId, this.userId)
 
+    // --> CREATING FILE ENTITY
     const { stream, filename, mimetype: mimeType } = await file
     let fileEntity = await new FileModel({
       manuscriptId,
@@ -39,19 +35,20 @@ class Manuscript {
       type: 'MANUSCRIPT_SOURCE_PENDING',
       mimeType,
     }).save()
-
+    // <--
     const fileId = fileEntity.id
 
     logger.info(
       `Manuscript Upload Size: ${filename}, ${fileSize} | ${manuscriptId}`,
     )
 
-    const pubsub = await this.pubsubManager.getPubsub()
+    const pubsub = await this.pubsubManager.getPubsub() // --> sets up a event string | to be able to post
 
     // Predict upload time - The analysis was done on #839
     const predictedTime = 5 + 4.67e-6 * fileSize
     const startedTime = Date.now()
 
+    // --> THE SPINNER START | IN PROGRESS
     const handle = setInterval(() => {
       const elapsed = Date.now() - startedTime
       let progress = parseInt((100 * elapsed) / 1000 / predictedTime, 10)
@@ -61,10 +58,13 @@ class Manuscript {
         uploadProgress: progress,
       })
     }, 200)
+    // <--
 
     logger.info(
       `Manuscript Upload fileContents::start ${filename} | ${manuscriptId}`,
     )
+
+    // --> UPLOAD TO SERVER
     const fileContents = await new Promise((resolve, reject) => {
       let uploadedSize = 0
       const chunks = []
@@ -82,6 +82,8 @@ class Manuscript {
         }
       })
     })
+    // <--
+
     fileEntity = await FileModel.find(fileId)
     await fileEntity.updateStatus('UPLOADED')
 
@@ -104,12 +106,13 @@ class Manuscript {
       )
       await fileEntity.updateStatus('CANCELLED')
       await fileEntity.delete()
-      clearInterval(handle)
+      clearInterval(handle) // --> THE SPINNER END IF ERROR
       throw err
     }
 
     logger.info(`Manuscript Upload S3::end ${filename} | ${manuscriptId}`)
 
+    // --> SCIENCEBEAM TITLE EXTRACTION
     let title = ''
     try {
       // also send source file to conversion service
@@ -132,7 +135,9 @@ class Manuscript {
         filename,
       })
     }
+    // <-- SCIENCEBEAM TITLE EXTRACTION
 
+    // --> MANUSCRIPT UPDATE
     // After the length file operations above - now update the manuscript...
     manuscript = await ManuscriptModel.find(manuscriptId, this.userId)
     const oldFileIndex = manuscript.files.findIndex(
@@ -151,6 +156,8 @@ class Manuscript {
       await oldFile.delete()
     }
 
+    // <-- MANUSCRIPT UPDATE
+
     const pendingFileIndex = manuscript.files.findIndex(
       element => element.type === 'MANUSCRIPT_SOURCE_PENDING',
     )
@@ -167,10 +174,12 @@ class Manuscript {
     const pendingList = manuscript.files.filter(
       f => f.type === 'MANUSCRIPT_SOURCE_PENDING',
     )
+    // -->
     if (sourceList.length !== 1 || pendingList.length !== 0) {
       logger.error(`Validation failed ${JSON.stringify(manuscript, null, 4)}`)
       throw new Error(`Validation Failure on ${manuscript.id}`)
     }
+    // <--
 
     logger.info(
       `Manuscript Upload Manuscript::saved ${
@@ -178,14 +187,17 @@ class Manuscript {
       } | ${manuscriptId}`,
     )
 
-    clearInterval(handle)
+    clearInterval(handle) // --> THE SPINNER END
     pubsub.publish(`${ON_UPLOAD_PROGRESS}.${profileId}`, {
       uploadProgress: 100,
     })
+
+    // -->
     const actualTime = (Date.now() - startedTime) / 1000
     logger.info(
       `Manuscript Upload Time, Actual (${actualTime}) , Predicted (${predictedTime}) | ${manuscriptId}`,
     )
+    // <--
 
     return ManuscriptModel.find(manuscriptId, this.userId)
   }
