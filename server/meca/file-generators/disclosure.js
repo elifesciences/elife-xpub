@@ -12,13 +12,15 @@ const privacyPolicy =
   'Without this consent we will not be able to evaluate your submission.'
 
 function generateDisclosurePdf(manuscript, clientIp) {
+  // TODO: this role should be `submitter`
   const author = manuscript.teams.find(team => team.role === 'author')
     .teamMembers[0]
   const header = {
     Journal: 'eLife',
     'Manuscript #': manuscript.id,
     Title: manuscript.meta.title,
-    Authors: `${author.alias.givenNames} ${author.alias.surname}`,
+    Submitter: `${author.alias.firstName} ${author.alias.lastName}`,
+    Signature: `${manuscript.submitterSignature}`,
     Date: new Date(),
     'IP Address': clientIp,
   }
@@ -66,7 +68,7 @@ function generateDisclosurePdf(manuscript, clientIp) {
   const promise = new Promise((resolve, reject) => {
     const chunks = []
     doc.on('data', chunk => chunks.push(chunk))
-    doc.on('end', () => resolve(Buffer.concat(chunks).toString()))
+    doc.on('end', () => resolve(Buffer.concat(chunks)))
     doc.on('error', reject)
   })
 

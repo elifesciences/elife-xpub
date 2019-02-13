@@ -35,7 +35,10 @@ async function submitManuscript(_, { data }, { user, ip }) {
   }
 
   await manuscript.save()
-  manuscript = await Manuscript.updateStatus(manuscript.id, Manuscript.statuses.MECA_EXPORT_PENDING)
+  manuscript = await Manuscript.updateStatus(
+    manuscript.id,
+    Manuscript.statuses.MECA_EXPORT_PENDING,
+  )
 
   mecaExport(manuscript, S3Storage.getContent, ip)
     .then(() => {
@@ -53,6 +56,7 @@ async function submitManuscript(_, { data }, { user, ip }) {
       )
       return mailer.send({
         to: config.get('meca.notificationEmail'),
+        from: config.get('meca.fromAddressEmail'),
         subject: 'MECA export failed',
         text: `Manuscript ID: ${manuscript.id}
 Manuscript title: ${manuscript.meta.title}

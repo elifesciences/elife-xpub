@@ -70,8 +70,8 @@ const DELETE_SUPPORTING_FILES_MUTATION = gql`
   }
 `
 
-function getProgress(loading, data) {
-  return loading || !data.uploadProgress ? 0 : data.uploadProgress
+function getProgress(loading, uploadProgress) {
+  return loading || !uploadProgress ? 0 : uploadProgress
 }
 
 const onUploadValidationError = (
@@ -162,9 +162,15 @@ const FilesPageContainer = ({
               <Box mb={3} width={1}>
                 <ManuscriptUpload
                   conversion={{
-                    converting: loading || uploadData.uploadProgress < 100,
+                    converting:
+                      loading ||
+                      (uploadData.manuscriptUploadProgress &&
+                        uploadData.manuscriptUploadProgress < 100),
                     completed: hasManuscript,
-                    progress: getProgress(uploadLoading, uploadData),
+                    progress: getProgress(
+                      uploadLoading,
+                      uploadData.manuscriptUploadProgress,
+                    ),
                     error: uploadError,
                   }}
                   data-test-id="upload"

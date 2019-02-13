@@ -1,7 +1,6 @@
 const logger = require('@pubsweet/logger')
 const ManuscriptModel = require('@elifesciences/xpub-model').Manuscript
 const FileModel = require('@elifesciences/xpub-model').File
-const UserModel = require('@elifesciences/xpub-model').User
 
 const Notification = require('./notification')
 const { validateFileSize, generateFileEntity } = require('./helpers')
@@ -18,18 +17,15 @@ class Manuscript {
   async upload(manuscriptId, file, fileSize) {
     const { ON_UPLOAD_PROGRESS } = this.pubsubManager.asyncIterators
 
-    // This is necessary as the config of the pubsub connection relies on the
-    // profileId being used. Should be revisited as part of #1493
-    const profileId = await UserModel.getProfileForUuid(this.userId)
     validateFileSize(fileSize)
 
     // ensure user can view manuscript
     let manuscript = await ManuscriptModel.find(manuscriptId, this.userId)
 
-    const fileData = generateFileEntity(file, manuscriptId)
+    const fileData = await generateFileEntity(file, manuscriptId)
     const { stream } = fileData
     let { fileEntity } = fileData
-    const { id: fileId, filename, mimetype: mimeType } = fileEntity
+    const { id: fileId, filename, mimeType } = fileEntity
 
     logger.info(
       `Manuscript Upload Size: ${filename}, ${fileSize} | ${manuscriptId}`,
@@ -47,8 +43,8 @@ class Manuscript {
       let progress = parseInt((100 * elapsed) / 1000 / predictedTime, 10)
       // don't let the prediction complete the upload
       if (progress > 99) progress = 99
-      pubsub.publish(`${ON_UPLOAD_PROGRESS}.${profileId}`, {
-        uploadProgress: progress,
+      pubsub.publish(`${ON_UPLOAD_PROGRESS}.${manuscriptId}`, {
+        manuscriptUploadProgress: progress,
       })
     }, 200)
     // <--
@@ -180,9 +176,9 @@ class Manuscript {
       } | ${manuscriptId}`,
     )
 
-    clearInterval(handle) // --> THE SPINNER END
-    pubsub.publish(`${ON_UPLOAD_PROGRESS}.${profileId}`, {
-      uploadProgress: 100,
+    clearInterval(handle)
+    pubsub.publish(`${ON_UPLOAD_PROGRESS}.${manuscriptId}`, {
+      manuscriptUploadProgress: 100,
     })
 
     // -->
