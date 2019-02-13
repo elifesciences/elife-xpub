@@ -1,25 +1,10 @@
 const PDFParser = require('pdf2json')
 const generatePdf = require('./disclosure')
+const manuscript = require('./article.test.data.json')
 
 describe('Disclosure PDF generator', () => {
   it('returns a string of a PDF', async () => {
-    const document = await generatePdf({
-      meta: {},
-      submitterSignature: 'Roland Rat',
-      teams: [
-        {
-          role: 'author',
-          teamMembers: [
-            {
-              alias: {
-                givenNames: 'J. Edward',
-                surname: 'XXYYZZ',
-              },
-            },
-          ],
-        },
-      ],
-    })
+    const document = await generatePdf(manuscript)
 
     const pdfParser = new PDFParser()
     let errors = 0
@@ -35,9 +20,8 @@ describe('Disclosure PDF generator', () => {
       const jsonData = JSON.stringify(pdfParser.data)
 
       expect(jsonData.includes('Our%20privacy%20policy')).toBe(true)
-      expect(jsonData.includes('Edward')).toBe(true)
-      expect(jsonData.includes('XXYYZZ')).toBe(true)
-      expect(jsonData.includes('Roland%20Rat')).toBe(true)
+      expect(jsonData.includes('Test%20User')).toBe(true)
+      expect(jsonData.includes('A.Scientist')).toBe(true)
     })
   })
 })
