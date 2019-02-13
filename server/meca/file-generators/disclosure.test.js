@@ -5,6 +5,7 @@ describe('Disclosure PDF generator', () => {
   it('returns a string of a PDF', async () => {
     const document = await generatePdf({
       meta: {},
+      submitterSignature: 'Roland Rat',
       teams: [
         {
           role: 'author',
@@ -36,6 +37,7 @@ describe('Disclosure PDF generator', () => {
       expect(jsonData.includes('Our%20privacy%20policy')).toBe(true)
       expect(jsonData.includes('Edward')).toBe(true)
       expect(jsonData.includes('XXYYZZ')).toBe(true)
+      expect(jsonData.includes('Roland%20Rat')).toBe(true)
     })
   })
 })
