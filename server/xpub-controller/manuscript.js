@@ -1,7 +1,6 @@
 const logger = require('@pubsweet/logger')
 const ManuscriptModel = require('@elifesciences/xpub-model').Manuscript
 const FileModel = require('@elifesciences/xpub-model').File
-const UserModel = require('@elifesciences/xpub-model').User
 
 const Notification = require('./notification')
 
@@ -16,10 +15,6 @@ class Manuscript {
 
   async upload(manuscriptId, file, fileSize) {
     const { ON_UPLOAD_PROGRESS } = this.pubsubManager.asyncIterators
-
-    // This is necessary as the config of the pubsub connection relies on the
-    // profileId being used. Should be revisited as part of #1493
-    const profileId = await UserModel.getProfileForUuid(this.userId)
 
     if (fileSize > this.config.get('fileUpload.maxSizeMB') * 1e6) {
       throw new Error(
@@ -57,8 +52,8 @@ class Manuscript {
       let progress = parseInt((100 * elapsed) / 1000 / predictedTime, 10)
       // don't let the prediction complete the upload
       if (progress > 99) progress = 99
-      pubsub.publish(`${ON_UPLOAD_PROGRESS}.${profileId}`, {
-        uploadProgress: progress,
+      pubsub.publish(`${ON_UPLOAD_PROGRESS}.${manuscriptId}`, {
+        manuscriptUploadProgress: progress,
       })
     }, 200)
 
@@ -179,8 +174,8 @@ class Manuscript {
     )
 
     clearInterval(handle)
-    pubsub.publish(`${ON_UPLOAD_PROGRESS}.${profileId}`, {
-      uploadProgress: 100,
+    pubsub.publish(`${ON_UPLOAD_PROGRESS}.${manuscriptId}`, {
+      manuscriptUploadProgress: 100,
     })
     const actualTime = (Date.now() - startedTime) / 1000
     logger.info(
