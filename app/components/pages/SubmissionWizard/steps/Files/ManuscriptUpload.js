@@ -89,21 +89,6 @@ const DropzoneContent = ({
   dropzoneOpen,
   fileName,
 }) => {
-  if (conversion.converting) {
-    return (
-      <React.Fragment>
-        <StyledUploadIcon percentage={conversion.progress} />
-        <FileName>{fileName}</FileName>
-        <UploadInstruction
-          data-test-conversion="converting"
-          data-test-id="dropzoneMessage"
-        >
-          Manuscript is uploading {conversion.progress}%
-        </UploadInstruction>
-      </React.Fragment>
-    )
-  }
-
   if (errorMessage) {
     return (
       <React.Fragment>
@@ -122,6 +107,22 @@ const DropzoneContent = ({
       </React.Fragment>
     )
   }
+
+  if (conversion.converting) {
+    return (
+      <React.Fragment>
+        <StyledUploadIcon percentage={conversion.progress} />
+        <FileName>{fileName}</FileName>
+        <UploadInstruction
+          data-test-conversion="converting"
+          data-test-id="dropzoneMessage"
+        >
+          Manuscript is uploading {conversion.progress}%
+        </UploadInstruction>
+      </React.Fragment>
+    )
+  }
+
   if (conversion.completed) {
     return (
       <React.Fragment>
