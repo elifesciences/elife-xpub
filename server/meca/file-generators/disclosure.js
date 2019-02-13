@@ -19,6 +19,7 @@ function generateDisclosurePdf(manuscript, clientIp) {
     'Manuscript #': manuscript.id,
     Title: manuscript.meta.title,
     Authors: `${author.alias.givenNames} ${author.alias.surname}`,
+    Signature: `${manuscript.submitterSignature}`,
     Date: new Date(),
     'IP Address': clientIp,
   }
