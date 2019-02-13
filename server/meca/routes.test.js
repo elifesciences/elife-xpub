@@ -26,6 +26,7 @@ describe('MECA HTTP callback handler', () => {
     const identities = [{ type: 'elife', identifier: profileId }]
     const user = await new User({ identities }).save()
     userId = user.id
+    mailer.clearMails()
   })
 
   it('rejects wrong API key', async () => {
