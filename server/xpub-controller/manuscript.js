@@ -4,7 +4,7 @@ const FileModel = require('@elifesciences/xpub-model').File
 const UserModel = require('@elifesciences/xpub-model').User
 
 const Notification = require('./notification')
-const { validateFileSize } = require('./helpers')
+const { validateFileSize, generateFileEntity } = require('./helpers')
 
 class Manuscript {
   constructor(config, user, storage, scienceBeamApi, pubsubManager) {
@@ -26,17 +26,10 @@ class Manuscript {
     // ensure user can view manuscript
     let manuscript = await ManuscriptModel.find(manuscriptId, this.userId)
 
-    // --> CREATING FILE ENTITY
-    const { stream, filename, mimetype: mimeType } = await file
-    let fileEntity = await new FileModel({
-      manuscriptId,
-      url: `manuscripts/${manuscriptId}`,
-      filename,
-      type: 'MANUSCRIPT_SOURCE_PENDING',
-      mimeType,
-    }).save()
-    // <--
-    const fileId = fileEntity.id
+    const fileData = generateFileEntity(file, manuscriptId)
+    const { stream } = fileData
+    let { fileEntity } = fileData
+    const { id: fileId, filename, mimetype: mimeType } = fileEntity
 
     logger.info(
       `Manuscript Upload Size: ${filename}, ${fileSize} | ${manuscriptId}`,
