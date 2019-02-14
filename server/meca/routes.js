@@ -37,7 +37,14 @@ module.exports = app => {
 
     Manuscript.updateStatus(manuscriptId, status)
       .then(() => res.sendStatus(204))
-      .then(() => {
+      .catch(err => {
+        logger.error('Failed to process MECA callback', {
+          manuscriptId,
+          error: err.message,
+        })
+        res.status(500).send({ error: err.message })
+      })
+      .finally(() => {
         if (status === Manuscript.statuses.MECA_IMPORT_FAILED) {
           return mailer.send({
             to: config.get('meca.notificationEmail'),
@@ -51,12 +58,6 @@ Manuscript ID: ${manuscriptId}
         }
         return Promise.resolve()
       })
-      .catch(err => {
-        logger.error('Failed to process MECA callback', {
-          manuscriptId,
-          error: err.message,
-        })
-        res.status(500).send({ error: err.message })
-      })
+
   })
 }
