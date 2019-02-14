@@ -39,4 +39,22 @@ module.exports = {
       })
     }, 200),
   endFileProgress: progress => clearInterval(progress),
+  uploadFileToServer: async (stream, fileSize, logger) =>
+    new Promise((resolve, reject) => {
+      let uploadedSize = 0
+      const chunks = []
+      stream.on('data', chunk => {
+        uploadedSize += chunk.length
+        chunks.push(chunk)
+      })
+      stream.on('error', reject)
+      stream.on('end', () => {
+        resolve(Buffer.concat(chunks))
+        if (uploadedSize !== fileSize) {
+          logger.warn(
+            'Reported file size for manuscript is different than the actual file size',
+          )
+        }
+      })
+    }),
 }

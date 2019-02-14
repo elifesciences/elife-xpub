@@ -8,6 +8,7 @@ const {
   generateFileEntity,
   startFileProgress,
   endFileProgress,
+  uploadFileToServer,
 } = require('./helpers/files')
 
 class Manuscript {
@@ -41,31 +42,19 @@ class Manuscript {
     // Predict upload time - The analysis was done on #839
     const predictedTime = 5 + 4.67e-6 * fileSize
     const startedTime = Date.now()
-    const progress = startFileProgress()
+    const progress = startFileProgress(
+      pubsub,
+      ON_UPLOAD_PROGRESS,
+      startedTime,
+      predictedTime,
+      manuscriptId,
+    )
 
     logger.info(
       `Manuscript Upload fileContents::start ${filename} | ${manuscriptId}`,
     )
 
-    // --> UPLOAD TO SERVER
-    const fileContents = await new Promise((resolve, reject) => {
-      let uploadedSize = 0
-      const chunks = []
-      stream.on('data', chunk => {
-        uploadedSize += chunk.length
-        chunks.push(chunk)
-      })
-      stream.on('error', reject)
-      stream.on('end', () => {
-        resolve(Buffer.concat(chunks))
-        if (uploadedSize !== fileSize) {
-          logger.warn(
-            'Reported file size for manuscript is different than the actual file size',
-          )
-        }
-      })
-    })
-    // <--
+    const fileContent = await uploadFileToServer(stream, fileSize, logger)
 
     fileEntity = await FileModel.find(fileId)
     await fileEntity.updateStatus('UPLOADED')
@@ -79,7 +68,7 @@ class Manuscript {
     fileEntity = await FileModel.find(fileId)
 
     try {
-      await this.storage.putContent(fileEntity, fileContents, {
+      await this.storage.putContent(fileEntity, fileContent, {
         size: fileSize,
       })
       await fileEntity.updateStatus('STORED')
@@ -101,7 +90,7 @@ class Manuscript {
       // also send source file to conversion service
       title = await this.scienceBeamApi.extractSemantics(
         this.config,
-        fileContents,
+        fileContent,
         filename,
         mimeType,
       )
