@@ -10,6 +10,7 @@ const {
   endFileProgress,
   uploadFileToServer,
   extractFileTitle,
+  cleanOldManuscript,
 } = require('./helpers/files')
 
 class Manuscript {
@@ -93,27 +94,8 @@ class Manuscript {
       mimeType,
       manuscriptId,
     )
-
-    // --> MANUSCRIPT UPDATE
-    // After the length file operations above - now update the manuscript...
     manuscript = await ManuscriptModel.find(manuscriptId, this.userId)
-    const oldFileIndex = manuscript.files.findIndex(
-      element => element.type === 'MANUSCRIPT_SOURCE',
-    )
-
-    logger.info(
-      `Manuscript Upload found index ${oldFileIndex} ${
-        fileEntity.filename
-      } | ${manuscriptId}`,
-    )
-
-    if (oldFileIndex >= 0) {
-      const oldFile = await FileModel.find(manuscript.files[oldFileIndex].id)
-      manuscript.files.splice(oldFileIndex, 1)
-      await oldFile.delete()
-    }
-
-    // <-- MANUSCRIPT UPDATE
+    cleanOldManuscript(manuscript)
 
     const pendingFileIndex = manuscript.files.findIndex(
       element => element.type === 'MANUSCRIPT_SOURCE_PENDING',

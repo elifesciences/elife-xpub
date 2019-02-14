@@ -20,7 +20,10 @@ module.exports = {
       type: 'MANUSCRIPT_SOURCE_PENDING',
       mimeType,
     }).save()
-    return { stream, fileEntity }
+    return {
+      stream,
+      fileEntity,
+    }
   },
 
   startFileProgress: (
@@ -92,5 +95,21 @@ module.exports = {
       })
     }
     return title
+  },
+  cleanOldManuscript: async manuscript => {
+    const oldFileIndex = manuscript.files.findIndex(
+      element => element.type === 'MANUSCRIPT_SOURCE',
+    )
+
+    if (oldFileIndex >= 0) {
+      logger.info(
+        `Manuscript Upload found index ${oldFileIndex} ${
+          manuscript.files[oldFileIndex].filename
+        } | ${manuscript.id}`,
+      )
+      const oldFile = await FileModel.find(manuscript.files[oldFileIndex].id)
+      manuscript.files.splice(oldFileIndex, 1)
+      await oldFile.delete()
+    }
   },
 }
