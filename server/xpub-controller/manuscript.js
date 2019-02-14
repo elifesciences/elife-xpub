@@ -3,7 +3,12 @@ const ManuscriptModel = require('@elifesciences/xpub-model').Manuscript
 const FileModel = require('@elifesciences/xpub-model').File
 
 const Notification = require('./notification')
-const { validateFileSize, generateFileEntity } = require('./helpers')
+const {
+  validateFileSize,
+  generateFileEntity,
+  startFileProgress,
+  endFileProgress,
+} = require('./helpers/files')
 
 class Manuscript {
   constructor(config, user, storage, scienceBeamApi, pubsubManager) {
@@ -31,23 +36,12 @@ class Manuscript {
       `Manuscript Upload Size: ${filename}, ${fileSize} | ${manuscriptId}`,
     )
 
-    const pubsub = await this.pubsubManager.getPubsub() // --> sets up a event string | to be able to post
+    const pubsub = await this.pubsubManager.getPubsub()
 
     // Predict upload time - The analysis was done on #839
     const predictedTime = 5 + 4.67e-6 * fileSize
     const startedTime = Date.now()
-
-    // --> THE SPINNER START | IN PROGRESS
-    const handle = setInterval(() => {
-      const elapsed = Date.now() - startedTime
-      let progress = parseInt((100 * elapsed) / 1000 / predictedTime, 10)
-      // don't let the prediction complete the upload
-      if (progress > 99) progress = 99
-      pubsub.publish(`${ON_UPLOAD_PROGRESS}.${manuscriptId}`, {
-        manuscriptUploadProgress: progress,
-      })
-    }, 200)
-    // <--
+    const progress = startFileProgress()
 
     logger.info(
       `Manuscript Upload fileContents::start ${filename} | ${manuscriptId}`,
@@ -95,7 +89,7 @@ class Manuscript {
       )
       await fileEntity.updateStatus('CANCELLED')
       await fileEntity.delete()
-      clearInterval(handle) // --> THE SPINNER END IF ERROR
+      endFileProgress(progress)
       throw err
     }
 
@@ -176,7 +170,7 @@ class Manuscript {
       } | ${manuscriptId}`,
     )
 
-    clearInterval(handle)
+    endFileProgress(progress)
     pubsub.publish(`${ON_UPLOAD_PROGRESS}.${manuscriptId}`, {
       manuscriptUploadProgress: 100,
     })

@@ -22,4 +22,21 @@ module.exports = {
     }).save()
     return { stream, fileEntity }
   },
+  startFileProgress: (
+    pubsub,
+    ON_UPLOAD_PROGRESS,
+    startedTime,
+    predictedTime,
+    manuscriptId,
+  ) =>
+    setInterval(() => {
+      const elapsed = Date.now() - startedTime
+      let progress = parseInt((100 * elapsed) / 1000 / predictedTime, 10)
+      // don't let the prediction complete the upload
+      if (progress > 99) progress = 99
+      pubsub.publish(`${ON_UPLOAD_PROGRESS}.${manuscriptId}`, {
+        manuscriptUploadProgress: progress,
+      })
+    }, 200),
+  endFileProgress: progress => clearInterval(progress),
 }
