@@ -126,4 +126,16 @@ module.exports = {
       await manuscript.save()
       resolve(manuscript)
     }),
+  validateManuscriptSource: manuscript => {
+    const sourceList = manuscript.files.filter(
+      f => f.type === 'MANUSCRIPT_SOURCE',
+    )
+    const pendingList = manuscript.files.filter(
+      f => f.type === 'MANUSCRIPT_SOURCE_PENDING',
+    )
+    if (sourceList.length !== 1 || pendingList.length !== 0) {
+      logger.error(`Validation failed ${JSON.stringify(manuscript, null, 4)}`)
+      throw new Error(`Validation Failure on ${manuscript.id}`)
+    }
+  },
 }

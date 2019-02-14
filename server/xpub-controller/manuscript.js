@@ -12,6 +12,7 @@ const {
   extractFileTitle,
   cleanOldManuscript,
   setManuscriptMetadata,
+  validateManuscriptSource,
 } = require('./helpers/files')
 
 class Manuscript {
@@ -100,19 +101,7 @@ class Manuscript {
 
     manuscript = await setManuscriptMetadata(manuscript, title)
 
-    const sourceList = manuscript.files.filter(
-      f => f.type === 'MANUSCRIPT_SOURCE',
-    )
-    const pendingList = manuscript.files.filter(
-      f => f.type === 'MANUSCRIPT_SOURCE_PENDING',
-    )
-
-    // -->
-    if (sourceList.length !== 1 || pendingList.length !== 0) {
-      logger.error(`Validation failed ${JSON.stringify(manuscript, null, 4)}`)
-      throw new Error(`Validation Failure on ${manuscript.id}`)
-    }
-    // <--
+    validateManuscriptSource(manuscript)
 
     logger.info(
       `Manuscript Upload Manuscript::saved ${
