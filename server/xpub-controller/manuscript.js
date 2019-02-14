@@ -11,6 +11,7 @@ const {
   uploadFileToServer,
   extractFileTitle,
   cleanOldManuscript,
+  setManuscriptMetadata,
 } = require('./helpers/files')
 
 class Manuscript {
@@ -97,15 +98,7 @@ class Manuscript {
     manuscript = await ManuscriptModel.find(manuscriptId, this.userId)
     cleanOldManuscript(manuscript)
 
-    const pendingFileIndex = manuscript.files.findIndex(
-      element => element.type === 'MANUSCRIPT_SOURCE_PENDING',
-    )
-
-    manuscript.files[pendingFileIndex].type = 'MANUSCRIPT_SOURCE'
-
-    logger.info(`Manuscript Upload Manuscript::save ${title} | ${manuscriptId}`)
-    manuscript.meta.title = title
-    await manuscript.save()
+    manuscript = await setManuscriptMetadata(manuscript, title)
 
     const sourceList = manuscript.files.filter(
       f => f.type === 'MANUSCRIPT_SOURCE',

@@ -112,4 +112,18 @@ module.exports = {
       await oldFile.delete()
     }
   },
+  setManuscriptMetadata: async (initialManuscript, title) =>
+    new Promise(async resolve => {
+      const manuscript = initialManuscript
+      const pendingFileIndex = manuscript.files.findIndex(
+        element => element.type === 'MANUSCRIPT_SOURCE_PENDING',
+      )
+      manuscript.files[pendingFileIndex].type = 'MANUSCRIPT_SOURCE'
+      logger.info(
+        `Manuscript Upload Manuscript::save ${title} | ${manuscript.id}`,
+      )
+      manuscript.meta.title = title
+      await manuscript.save()
+      resolve(manuscript)
+    }),
 }
