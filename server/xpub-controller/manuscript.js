@@ -9,6 +9,7 @@ const {
   startFileProgress,
   endFileProgress,
   uploadFileToServer,
+  extractFileTitle,
 } = require('./helpers/files')
 
 class Manuscript {
@@ -23,7 +24,7 @@ class Manuscript {
   async upload(manuscriptId, file, fileSize) {
     const { ON_UPLOAD_PROGRESS } = this.pubsubManager.asyncIterators
 
-    validateFileSize(fileSize)
+    validateFileSize(fileSize, this.config)
 
     // ensure user can view manuscript
     let manuscript = await ManuscriptModel.find(manuscriptId, this.userId)
@@ -54,7 +55,7 @@ class Manuscript {
       `Manuscript Upload fileContents::start ${filename} | ${manuscriptId}`,
     )
 
-    const fileContent = await uploadFileToServer(stream, fileSize, logger)
+    const fileContent = await uploadFileToServer(stream, fileSize)
 
     fileEntity = await FileModel.find(fileId)
     await fileEntity.updateStatus('UPLOADED')
@@ -84,30 +85,14 @@ class Manuscript {
 
     logger.info(`Manuscript Upload S3::end ${filename} | ${manuscriptId}`)
 
-    // --> SCIENCEBEAM TITLE EXTRACTION
-    let title = ''
-    try {
-      // also send source file to conversion service
-      title = await this.scienceBeamApi.extractSemantics(
-        this.config,
-        fileContent,
-        filename,
-        mimeType,
-      )
-    } catch (error) {
-      let errorMessage = ''
-      if (error.error.code === 'ETIMEDOUT' || error.error.connect === false) {
-        errorMessage = 'Request to science beam timed out'
-      } else {
-        errorMessage = error.message
-      }
-      logger.warn('Manuscript conversion failed', {
-        error: errorMessage,
-        manuscriptId,
-        filename,
-      })
-    }
-    // <-- SCIENCEBEAM TITLE EXTRACTION
+    const title = await extractFileTitle(
+      this.config,
+      this.scienceBeamApi,
+      fileContent,
+      filename,
+      mimeType,
+      manuscriptId,
+    )
 
     // --> MANUSCRIPT UPDATE
     // After the length file operations above - now update the manuscript...
@@ -146,6 +131,7 @@ class Manuscript {
     const pendingList = manuscript.files.filter(
       f => f.type === 'MANUSCRIPT_SOURCE_PENDING',
     )
+
     // -->
     if (sourceList.length !== 1 || pendingList.length !== 0) {
       logger.error(`Validation failed ${JSON.stringify(manuscript, null, 4)}`)

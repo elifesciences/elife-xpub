@@ -1,8 +1,8 @@
-const config = require('config')
+const logger = require('@pubsweet/logger')
 const FileModel = require('@elifesciences/xpub-model').File
 
 module.exports = {
-  validateFileSize: fileSize => {
+  validateFileSize: (fileSize, config) => {
     if (fileSize > config.get('fileUpload.maxSizeMB') * 1e6) {
       throw new Error(
         `File size shouldn't exceed ${config.get('fileUpload.maxSizeMB')}MB`,
@@ -22,6 +22,7 @@ module.exports = {
     }).save()
     return { stream, fileEntity }
   },
+
   startFileProgress: (
     pubsub,
     ON_UPLOAD_PROGRESS,
@@ -38,8 +39,10 @@ module.exports = {
         manuscriptUploadProgress: progress,
       })
     }, 200),
+
   endFileProgress: progress => clearInterval(progress),
-  uploadFileToServer: async (stream, fileSize, logger) =>
+
+  uploadFileToServer: async (stream, fileSize) =>
     new Promise((resolve, reject) => {
       let uploadedSize = 0
       const chunks = []
@@ -57,4 +60,37 @@ module.exports = {
         }
       })
     }),
+
+  extractFileTitle: async (
+    config,
+    scienceBeamApi,
+    fileContent,
+    filename,
+    mimeType,
+    manuscriptId,
+  ) => {
+    let title = ''
+    try {
+      // also send source file to conversion service
+      title = await scienceBeamApi.extractSemantics(
+        config,
+        fileContent,
+        filename,
+        mimeType,
+      )
+    } catch (error) {
+      let errorMessage = ''
+      if (error.error.code === 'ETIMEDOUT' || error.error.connect === false) {
+        errorMessage = 'Request to science beam timed out'
+      } else {
+        errorMessage = error.message
+      }
+      logger.warn('Manuscript conversion failed', {
+        error: errorMessage,
+        manuscriptId,
+        filename,
+      })
+    }
+    return title
+  },
 }
