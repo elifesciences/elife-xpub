@@ -23,7 +23,7 @@ class Manuscript {
   async upload(manuscriptId, file, fileSize) {
     const { ON_UPLOAD_PROGRESS } = this.pubsubManager.asyncIterators
 
-    this.filesHelper.validateFileSize(fileSize, this.config)
+    this.filesHelper.validateFileSize(fileSize)
 
     // ensure user can view manuscript
     const manuscript = await ManuscriptModel.find(manuscriptId, this.userId)
@@ -38,7 +38,6 @@ class Manuscript {
     const progress = FilesHelper.startFileProgress(
       pubsub,
       ON_UPLOAD_PROGRESS,
-      fileSize,
       startedTime,
       predictedTime,
       manuscriptId,
