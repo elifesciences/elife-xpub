@@ -43,18 +43,14 @@ class Manuscript {
       manuscriptId,
     )
 
-    try {
-      await this.manuscriptHelper.uploadManuscriptFile(
-        pubsub,
-        ON_UPLOAD_PROGRESS,
-        fileData,
-        fileSize,
-        manuscript.id,
-        progress,
-      )
-    } catch (error) {
-      throw error
-    }
+    await this.manuscriptHelper.uploadManuscriptFile(
+      pubsub,
+      ON_UPLOAD_PROGRESS,
+      fileData,
+      fileSize,
+      manuscript.id,
+      progress,
+    )
 
     FilesHelper.endFileProgress(
       pubsub,
