@@ -38,7 +38,7 @@ module.exports = app => {
     const updateStatus = () => Manuscript.updateStatus(manuscriptId, status)
 
     const sendEmail = () => mailer.send({
-      to: config.get('meca.notificationEmail'),
+      to: config.get('meca.recipientEmail'),
       from: config.get('meca.fromAddressEmail'),
       subject: config.get('meca.subjectEmail'),
       text: `
@@ -48,7 +48,7 @@ Manuscript ID: ${manuscriptId}
     }).catch((err) => {
       throw new Error(`MECA import failure email failed to send. ${err}`)
     })
-      
+
     updateStatus()
       .then(() => {
         if (status === Manuscript.statuses.MECA_IMPORT_FAILED) {

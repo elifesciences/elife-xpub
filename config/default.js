@@ -114,7 +114,7 @@ module.exports = {
       disableUpload: false,
     },
     apiKey: '',
-    notificationEmail: '',
+    recipientEmail: '',
     fromAddressEmail: 'errors@elifesciences.org',
   },
   scienceBeam: {
