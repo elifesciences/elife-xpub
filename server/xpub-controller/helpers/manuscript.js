@@ -11,7 +11,14 @@ class ManuscriptHelper {
     this.filesHelper = filesHelper
   }
 
-  async uploadManuscriptFile(fileData, fileSize, manuscriptId, progress) {
+  async uploadManuscriptFile(
+    pubsub,
+    ON_UPLOAD_PROGRESS,
+    fileData,
+    fileSize,
+    manuscriptId,
+    progress,
+  ) {
     return new Promise(async (resolve, reject) => {
       const { stream } = fileData
       let { fileEntity } = fileData
@@ -47,7 +54,12 @@ class ManuscriptHelper {
           `Manuscript was not uploaded to S3: ${err} | ${manuscriptId}`,
         )
         await fileEntity.delete()
-        FilesHelper.endFileProgress(progress)
+        FilesHelper.endFileProgress(
+          pubsub,
+          ON_UPLOAD_PROGRESS,
+          progress,
+          manuscriptId,
+        )
         return reject(err)
       }
 

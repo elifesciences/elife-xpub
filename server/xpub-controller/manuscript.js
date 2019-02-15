@@ -46,6 +46,8 @@ class Manuscript {
 
     try {
       await this.manuscriptHelper.uploadManuscriptFile(
+        pubsub,
+        ON_UPLOAD_PROGRESS,
         fileData,
         fileSize,
         manuscript.id,
@@ -55,10 +57,12 @@ class Manuscript {
       throw error
     }
 
-    FilesHelper.endFileProgress(progress)
-    pubsub.publish(`${ON_UPLOAD_PROGRESS}.${manuscriptId}`, {
-      manuscriptUploadProgress: 100,
-    })
+    FilesHelper.endFileProgress(
+      pubsub,
+      ON_UPLOAD_PROGRESS,
+      progress,
+      manuscriptId,
+    )
 
     const actualTime = (Date.now() - startedTime) / 1000
     logger.info(

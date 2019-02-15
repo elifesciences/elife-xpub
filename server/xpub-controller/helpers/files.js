@@ -51,7 +51,10 @@ class FilesHelper {
     }, 200)
   }
 
-  static endFileProgress(progress) {
+  static endFileProgress(pubsub, ON_UPLOAD_PROGRESS, progress, manuscriptId) {
+    pubsub.publish(`${ON_UPLOAD_PROGRESS}.${manuscriptId}`, {
+      manuscriptUploadProgress: 100,
+    })
     return clearInterval(progress)
   }
 
