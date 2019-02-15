@@ -15,7 +15,7 @@ module.exports = {
   },
   meca: {
     email: {
-      recipient: 'xpub-alerts@elifesciences.org',
+      recipient: 'xpub-tech-alerts@elifesciences.org',
       subjectPrefix: '[Production] '
     }
   },
