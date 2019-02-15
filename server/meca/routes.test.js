@@ -93,7 +93,7 @@ describe('MECA HTTP callback handler', () => {
     await mailer._sendPromise
     expect(mailer.getMails()).toHaveLength(1)
     expect(mailer.getMails()[0]).toMatchObject({
-      text: expect.stringContaining(manuscript.id)
+      text: expect.stringContaining(manuscript.id),
     })
   })
 
