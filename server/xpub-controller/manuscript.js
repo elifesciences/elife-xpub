@@ -1,8 +1,8 @@
 const logger = require('@pubsweet/logger')
 const ManuscriptModel = require('@elifesciences/xpub-model').Manuscript
-const FileModel = require('@elifesciences/xpub-model').File
+
 const Notification = require('./notification')
-const FilesHelper = require('./helpers/files')
+const { FilesHelper, ManuscriptHelper } = require('./helpers')
 
 class Manuscript {
   constructor(config, user, storage, scienceBeamApi, pubsubManager) {
@@ -12,6 +12,12 @@ class Manuscript {
     this.scienceBeamApi = scienceBeamApi
     this.pubsubManager = pubsubManager
     this.filesHelper = new FilesHelper(this.config, this.scienceBeamApi)
+    this.manuscriptHelper = new ManuscriptHelper(
+      this.config,
+      this.userId,
+      this.storage,
+      this.filesHelper,
+    )
   }
 
   async upload(manuscriptId, file, fileSize) {
@@ -20,16 +26,9 @@ class Manuscript {
     this.filesHelper.validateFileSize(fileSize, this.config)
 
     // ensure user can view manuscript
-    let manuscript = await ManuscriptModel.find(manuscriptId, this.userId)
+    const manuscript = await ManuscriptModel.find(manuscriptId, this.userId)
 
     const fileData = await FilesHelper.generateFileEntity(file, manuscriptId)
-    const { stream } = fileData
-    let { fileEntity } = fileData
-    const { id: fileId, filename, mimeType } = fileEntity
-
-    logger.info(
-      `Manuscript Upload Size: ${filename}, ${fileSize} | ${manuscriptId}`,
-    )
 
     const pubsub = await this.pubsubManager.getPubsub()
 
@@ -45,58 +44,16 @@ class Manuscript {
       manuscriptId,
     )
 
-    logger.info(
-      `Manuscript Upload fileContents::start ${filename} | ${manuscriptId}`,
-    )
-
-    const fileContent = await FilesHelper.uploadFileToServer(stream, fileSize)
-
-    fileEntity = await FileModel.find(fileId)
-    await fileEntity.updateStatus('UPLOADED')
-
-    logger.info(
-      `Manuscript Upload fileContents::end ${filename} | ${manuscriptId}`,
-    )
-
-    logger.info(`Manuscript Upload S3::start ${filename} | ${manuscriptId}`)
-
-    fileEntity = await FileModel.find(fileId)
-
     try {
-      await this.storage.putContent(fileEntity, fileContent, {
-        size: fileSize,
-      })
-      await fileEntity.updateStatus('STORED')
-    } catch (err) {
-      logger.error(
-        `Manuscript was not uploaded to S3: ${err} | ${manuscriptId}`,
+      await this.manuscriptHelper.uploadManuscriptFile(
+        fileData,
+        fileSize,
+        manuscript.id,
+        progress,
       )
-      await fileEntity.updateStatus('CANCELLED')
-      await fileEntity.delete()
-      FilesHelper.endFileProgress(progress)
-      throw err
+    } catch (error) {
+      throw error
     }
-
-    logger.info(`Manuscript Upload S3::end ${filename} | ${manuscriptId}`)
-
-    const title = await this.filesHelper.extractFileTitle(
-      fileContent,
-      filename,
-      mimeType,
-      manuscriptId,
-    )
-    manuscript = await ManuscriptModel.find(manuscriptId, this.userId)
-    FilesHelper.cleanOldManuscript(manuscript)
-
-    manuscript = await FilesHelper.setManuscriptMetadata(manuscript, title)
-
-    FilesHelper.validateManuscriptSource(manuscript)
-
-    logger.info(
-      `Manuscript Upload Manuscript::saved ${
-        manuscript.meta.title
-      } | ${manuscriptId}`,
-    )
 
     FilesHelper.endFileProgress(progress)
     pubsub.publish(`${ON_UPLOAD_PROGRESS}.${manuscriptId}`, {
