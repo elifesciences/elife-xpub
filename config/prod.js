@@ -15,6 +15,7 @@ module.exports = {
   },
   meca: {
     notificationEmail: 'xpub-alerts@elifesciences.org',
+    subjectEmail: '[Staging] MECA import failed'
   },
   mailer: {
     from: 'editorial@elifesciences.org',

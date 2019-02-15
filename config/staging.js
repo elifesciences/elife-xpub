@@ -17,6 +17,10 @@ module.exports = {
     from: 'editorial-staging@elifesciences.org',
     path: `${__dirname}/non-serializable/mailer`,
   },
+  meca: {
+    notificationEmail: 'xpub-alerts@elifesciences.org',
+    subjectEmail: '[Staging] MECA import failed'
+  },
   aws: {
     s3: {
       params: {
