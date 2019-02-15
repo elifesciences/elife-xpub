@@ -19,72 +19,69 @@ class ManuscriptHelper {
     manuscriptId,
     progress,
   ) {
-    return new Promise(async (resolve, reject) => {
-      const { stream } = fileData
-      let { fileEntity } = fileData
-      const { id: fileId, filename, mimeType } = fileEntity
+    const { stream } = fileData
+    let { fileEntity } = fileData
+    const { id: fileId, filename, mimeType } = fileEntity
 
-      logger.info(
-        `Manuscript Upload Size: ${filename}, ${fileSize} | ${manuscriptId}`,
+    logger.info(
+      `Manuscript Upload Size: ${filename}, ${fileSize} | ${manuscriptId}`,
+    )
+
+    logger.info(
+      `Manuscript Upload fileContents::start ${filename} | ${manuscriptId}`,
+    )
+    const fileContent = await FilesHelper.uploadFileToServer(stream, fileSize)
+
+    fileEntity = await FileModel.find(fileId)
+    await fileEntity.updateStatus('UPLOADED')
+
+    logger.info(
+      `Manuscript Upload fileContents::end ${filename} | ${manuscriptId}`,
+    )
+
+    logger.info(`Manuscript Upload S3::start ${filename} | ${manuscriptId}`)
+
+    fileEntity = await FileModel.find(fileId)
+
+    try {
+      await this.storage.putContent(fileEntity, fileContent, {
+        size: fileSize,
+      })
+      await fileEntity.updateStatus('STORED')
+    } catch (err) {
+      logger.error(
+        `Manuscript was not uploaded to S3: ${err} | ${manuscriptId}`,
       )
-
-      logger.info(
-        `Manuscript Upload fileContents::start ${filename} | ${manuscriptId}`,
-      )
-      const fileContent = await FilesHelper.uploadFileToServer(stream, fileSize)
-
-      fileEntity = await FileModel.find(fileId)
-      await fileEntity.updateStatus('UPLOADED')
-
-      logger.info(
-        `Manuscript Upload fileContents::end ${filename} | ${manuscriptId}`,
-      )
-
-      logger.info(`Manuscript Upload S3::start ${filename} | ${manuscriptId}`)
-
-      fileEntity = await FileModel.find(fileId)
-
-      try {
-        await this.storage.putContent(fileEntity, fileContent, {
-          size: fileSize,
-        })
-        await fileEntity.updateStatus('STORED')
-      } catch (err) {
-        logger.error(
-          `Manuscript was not uploaded to S3: ${err} | ${manuscriptId}`,
-        )
-        await fileEntity.delete()
-        FilesHelper.endFileProgress(
-          pubsub,
-          ON_UPLOAD_PROGRESS,
-          progress,
-          manuscriptId,
-        )
-        return reject(err)
-      }
-
-      logger.info(`Manuscript Upload S3::end ${filename} | ${manuscriptId}`)
-
-      const title = await this.filesHelper.extractFileTitle(
-        fileContent,
-        filename,
-        mimeType,
+      await fileEntity.delete()
+      FilesHelper.endFileProgress(
+        pubsub,
+        ON_UPLOAD_PROGRESS,
+        progress,
         manuscriptId,
       )
-      let manuscript = await ManuscriptModel.find(manuscriptId, this.userId)
-      FilesHelper.cleanOldManuscript(manuscript)
+      throw err
+    }
 
-      manuscript = await FilesHelper.setManuscriptMetadata(manuscript, title)
+    logger.info(`Manuscript Upload S3::end ${filename} | ${manuscriptId}`)
 
-      FilesHelper.validateManuscriptSource(manuscript)
+    const title = await this.filesHelper.extractFileTitle(
+      fileContent,
+      filename,
+      mimeType,
+      manuscriptId,
+    )
+    let manuscript = await ManuscriptModel.find(manuscriptId, this.userId)
+    FilesHelper.cleanOldManuscript(manuscript)
 
-      logger.info(
-        `Manuscript Upload Manuscript::saved ${
-          manuscript.meta.title
-        } | ${manuscriptId}`,
-      )
-      return resolve(manuscript)
-    })
+    manuscript = await FilesHelper.setManuscriptMetadata(manuscript, title)
+
+    FilesHelper.validateManuscriptSource(manuscript)
+
+    logger.info(
+      `Manuscript Upload Manuscript::saved ${
+        manuscript.meta.title
+      } | ${manuscriptId}`,
+    )
   }
 }
 
