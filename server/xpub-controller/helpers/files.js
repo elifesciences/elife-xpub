@@ -1,16 +1,23 @@
 const logger = require('@pubsweet/logger')
 const FileModel = require('@elifesciences/xpub-model').File
 
-module.exports = {
-  validateFileSize: (fileSize, config) => {
-    if (fileSize > config.get('fileUpload.maxSizeMB') * 1e6) {
+class FilesHelper {
+  constructor(config, scienceBeamApi) {
+    this.config = config
+    this.scienceBeamApi = scienceBeamApi
+  }
+
+  validateFileSize(fileSize) {
+    if (fileSize > this.config.get('fileUpload.maxSizeMB') * 1e6) {
       throw new Error(
-        `File size shouldn't exceed ${config.get('fileUpload.maxSizeMB')}MB`,
+        `File size shouldn't exceed ${this.config.get(
+          'fileUpload.maxSizeMB',
+        )}MB`,
       )
     }
-  },
+  }
 
-  generateFileEntity: async (file, manuscriptId) => {
+  static async generateFileEntity(file, manuscriptId) {
     const { stream, filename, mimetype: mimeType } = await file
 
     const fileEntity = await new FileModel({
@@ -24,16 +31,16 @@ module.exports = {
       stream,
       fileEntity,
     }
-  },
+  }
 
-  startFileProgress: (
+  static startFileProgress(
     pubsub,
     ON_UPLOAD_PROGRESS,
     startedTime,
     predictedTime,
     manuscriptId,
-  ) =>
-    setInterval(() => {
+  ) {
+    return setInterval(() => {
       const elapsed = Date.now() - startedTime
       let progress = parseInt((100 * elapsed) / 1000 / predictedTime, 10)
       // don't let the prediction complete the upload
@@ -41,12 +48,15 @@ module.exports = {
       pubsub.publish(`${ON_UPLOAD_PROGRESS}.${manuscriptId}`, {
         manuscriptUploadProgress: progress,
       })
-    }, 200),
+    }, 200)
+  }
 
-  endFileProgress: progress => clearInterval(progress),
+  static endFileProgress(progress) {
+    return clearInterval(progress)
+  }
 
-  uploadFileToServer: async (stream, fileSize) =>
-    new Promise((resolve, reject) => {
+  static async uploadFileToServer(stream, fileSize) {
+    return new Promise((resolve, reject) => {
       let uploadedSize = 0
       const chunks = []
       stream.on('data', chunk => {
@@ -62,21 +72,15 @@ module.exports = {
           )
         }
       })
-    }),
+    })
+  }
 
-  extractFileTitle: async (
-    config,
-    scienceBeamApi,
-    fileContent,
-    filename,
-    mimeType,
-    manuscriptId,
-  ) => {
+  async extractFileTitle(fileContent, filename, mimeType, manuscriptId) {
     let title = ''
     try {
       // also send source file to conversion service
-      title = await scienceBeamApi.extractSemantics(
-        config,
+      title = await this.scienceBeamApi.extractSemantics(
+        this.config,
         fileContent,
         filename,
         mimeType,
@@ -95,8 +99,9 @@ module.exports = {
       })
     }
     return title
-  },
-  cleanOldManuscript: async manuscript => {
+  }
+
+  static async cleanOldManuscript(manuscript) {
     const oldFileIndex = manuscript.files.findIndex(
       element => element.type === 'MANUSCRIPT_SOURCE',
     )
@@ -111,9 +116,10 @@ module.exports = {
       manuscript.files.splice(oldFileIndex, 1)
       await oldFile.delete()
     }
-  },
-  setManuscriptMetadata: async (initialManuscript, title) =>
-    new Promise(async resolve => {
+  }
+
+  static async setManuscriptMetadata(initialManuscript, title) {
+    return new Promise(async resolve => {
       const manuscript = initialManuscript
       const pendingFileIndex = manuscript.files.findIndex(
         element => element.type === 'MANUSCRIPT_SOURCE_PENDING',
@@ -125,8 +131,10 @@ module.exports = {
       manuscript.meta.title = title
       await manuscript.save()
       resolve(manuscript)
-    }),
-  validateManuscriptSource: manuscript => {
+    })
+  }
+
+  static validateManuscriptSource(manuscript) {
     const sourceList = manuscript.files.filter(
       f => f.type === 'MANUSCRIPT_SOURCE',
     )
@@ -137,5 +145,7 @@ module.exports = {
       logger.error(`Validation failed ${JSON.stringify(manuscript, null, 4)}`)
       throw new Error(`Validation Failure on ${manuscript.id}`)
     }
-  },
+  }
 }
+
+module.exports = FilesHelper

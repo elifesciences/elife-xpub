@@ -1,19 +1,8 @@
 const logger = require('@pubsweet/logger')
 const ManuscriptModel = require('@elifesciences/xpub-model').Manuscript
 const FileModel = require('@elifesciences/xpub-model').File
-
 const Notification = require('./notification')
-const {
-  validateFileSize,
-  generateFileEntity,
-  startFileProgress,
-  endFileProgress,
-  uploadFileToServer,
-  extractFileTitle,
-  cleanOldManuscript,
-  setManuscriptMetadata,
-  validateManuscriptSource,
-} = require('./helpers/files')
+const FilesHelper = require('./helpers/files')
 
 class Manuscript {
   constructor(config, user, storage, scienceBeamApi, pubsubManager) {
@@ -22,17 +11,18 @@ class Manuscript {
     this.storage = storage
     this.scienceBeamApi = scienceBeamApi
     this.pubsubManager = pubsubManager
+    this.filesHelper = new FilesHelper(this.config, this.scienceBeamApi)
   }
 
   async upload(manuscriptId, file, fileSize) {
     const { ON_UPLOAD_PROGRESS } = this.pubsubManager.asyncIterators
 
-    validateFileSize(fileSize, this.config)
+    this.filesHelper.validateFileSize(fileSize, this.config)
 
     // ensure user can view manuscript
     let manuscript = await ManuscriptModel.find(manuscriptId, this.userId)
 
-    const fileData = await generateFileEntity(file, manuscriptId)
+    const fileData = await FilesHelper.generateFileEntity(file, manuscriptId)
     const { stream } = fileData
     let { fileEntity } = fileData
     const { id: fileId, filename, mimeType } = fileEntity
@@ -46,9 +36,10 @@ class Manuscript {
     // Predict upload time - The analysis was done on #839
     const predictedTime = 5 + 4.67e-6 * fileSize
     const startedTime = Date.now()
-    const progress = startFileProgress(
+    const progress = FilesHelper.startFileProgress(
       pubsub,
       ON_UPLOAD_PROGRESS,
+      fileSize,
       startedTime,
       predictedTime,
       manuscriptId,
@@ -58,7 +49,7 @@ class Manuscript {
       `Manuscript Upload fileContents::start ${filename} | ${manuscriptId}`,
     )
 
-    const fileContent = await uploadFileToServer(stream, fileSize)
+    const fileContent = await FilesHelper.uploadFileToServer(stream, fileSize)
 
     fileEntity = await FileModel.find(fileId)
     await fileEntity.updateStatus('UPLOADED')
@@ -82,26 +73,24 @@ class Manuscript {
       )
       await fileEntity.updateStatus('CANCELLED')
       await fileEntity.delete()
-      endFileProgress(progress)
+      FilesHelper.endFileProgress(progress)
       throw err
     }
 
     logger.info(`Manuscript Upload S3::end ${filename} | ${manuscriptId}`)
 
-    const title = await extractFileTitle(
-      this.config,
-      this.scienceBeamApi,
+    const title = await this.filesHelper.extractFileTitle(
       fileContent,
       filename,
       mimeType,
       manuscriptId,
     )
     manuscript = await ManuscriptModel.find(manuscriptId, this.userId)
-    cleanOldManuscript(manuscript)
+    FilesHelper.cleanOldManuscript(manuscript)
 
-    manuscript = await setManuscriptMetadata(manuscript, title)
+    manuscript = await FilesHelper.setManuscriptMetadata(manuscript, title)
 
-    validateManuscriptSource(manuscript)
+    FilesHelper.validateManuscriptSource(manuscript)
 
     logger.info(
       `Manuscript Upload Manuscript::saved ${
@@ -109,17 +98,15 @@ class Manuscript {
       } | ${manuscriptId}`,
     )
 
-    endFileProgress(progress)
+    FilesHelper.endFileProgress(progress)
     pubsub.publish(`${ON_UPLOAD_PROGRESS}.${manuscriptId}`, {
       manuscriptUploadProgress: 100,
     })
 
-    // -->
     const actualTime = (Date.now() - startedTime) / 1000
     logger.info(
       `Manuscript Upload Time, Actual (${actualTime}) , Predicted (${predictedTime}) | ${manuscriptId}`,
     )
-    // <--
 
     return ManuscriptModel.find(manuscriptId, this.userId)
   }
