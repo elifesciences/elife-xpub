@@ -115,7 +115,7 @@ module.exports = {
     },
     apiKey: '',
     recipientEmail: '',
-    fromAddressEmail: 'errors@elifesciences.org',
+    senderEmail: 'errors@elifesciences.org',
   },
   scienceBeam: {
     url: 'https://sciencebeam-texture.elifesciences.org/api/convert',
