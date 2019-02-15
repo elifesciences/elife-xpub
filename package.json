@@ -64,6 +64,14 @@
       "<rootDir>/{client,app,server}/**/*.js",
       "!**/*.{config,test}.js"
     ],
+    "coverageThreshold": {
+      "global": {
+        "branches": 60,
+        "functions": 61,
+        "lines": 65,
+        "statements": -1000
+      }
+    },
     "projects": [
       "<rootDir>/client",
       "<rootDir>/app",
