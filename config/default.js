@@ -117,6 +117,7 @@ module.exports = {
     email: {
       recipient: '',
       sender: 'errors@elifesciences.org',
+      subjectPrefix: '',
     }
   },
   scienceBeam: {
