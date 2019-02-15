@@ -50,7 +50,9 @@ module.exports = {
       remotePath: '/test',
     },
     apiKey: 'abcd1234',
-    recipientEmail: 'test@example.com',
+    email: {
+      recipient: 'test@example.com',
+    }
   },
   mailer: {
     transport: {

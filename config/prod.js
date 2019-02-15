@@ -14,8 +14,10 @@ module.exports = {
     enableMock: false,
   },
   meca: {
-    recipientEmail: 'xpub-alerts@elifesciences.org',
-    subjectEmail: '[Production] MECA import failed'
+    email: {
+      recipient: 'xpub-alerts@elifesciences.org',
+      subject: '[Production] MECA import failed'
+    }
   },
   mailer: {
     from: 'editorial@elifesciences.org',

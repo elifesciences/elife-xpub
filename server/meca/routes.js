@@ -38,9 +38,9 @@ module.exports = app => {
     const updateStatus = () => Manuscript.updateStatus(manuscriptId, status)
 
     const sendEmail = () => mailer.send({
-      to: config.get('meca.recipientEmail'),
-      from: config.get('meca.senderEmail'),
-      subject: config.get('meca.subjectEmail'),
+      to: config.get('meca.email.recipient'),
+      from: config.get('meca.email.sender'),
+      subject: config.get('meca.email.subject'),
       text: `
 EJP failed to import MECA package.
 Manuscript ID: ${manuscriptId}
