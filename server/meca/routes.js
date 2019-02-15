@@ -40,7 +40,7 @@ module.exports = app => {
     const sendEmail = () => mailer.send({
       to: config.get('meca.email.recipient'),
       from: config.get('meca.email.sender'),
-      subject: config.get('meca.email.subject'),
+      subject: `${config.get('meca.email.subjectPrefix')} MECA import failed`,
       text: `
 EJP failed to import MECA package.
 Manuscript ID: ${manuscriptId}

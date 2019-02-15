@@ -16,7 +16,7 @@ module.exports = {
   meca: {
     email: {
       recipient: 'xpub-alerts@elifesciences.org',
-      subject: '[Production] MECA import failed'
+      subjectPrefix: '[Production]'
     }
   },
   mailer: {

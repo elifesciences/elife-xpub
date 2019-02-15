@@ -20,7 +20,7 @@ module.exports = {
   meca: {
     email: {
       recipient: 'xpub-alerts@elifesciences.org',
-      subject: '[Staging] MECA import failed'
+      subjectPrefix: '[Staging]'
     }
   },
   aws: {
