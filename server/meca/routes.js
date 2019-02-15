@@ -35,7 +35,27 @@ module.exports = app => {
         ? Manuscript.statuses.MECA_IMPORT_SUCCEEDED
         : Manuscript.statuses.MECA_IMPORT_FAILED
 
-    Manuscript.updateStatus(manuscriptId, status)
+    const updateStatus = () => Manuscript.updateStatus(manuscriptId, status)
+
+    const sendEmail = () => mailer.send({
+      to: config.get('meca.notificationEmail'),
+      from: config.get('meca.fromAddressEmail'),
+      subject: 'MECA import failed',
+      text: `
+EJP failed to import MECA package.
+Manuscript ID: ${manuscriptId}
+      `,
+    }).catch((err) => {
+      throw new Error(`MECA import failure email failed to send. ${err}`)
+    })
+      
+    updateStatus()
+      .then(() => {
+        if (status === Manuscript.statuses.MECA_IMPORT_FAILED) {
+          return sendEmail()
+        }
+        return Promise.resolve()
+      })
       .then(() => res.sendStatus(204))
       .catch(err => {
         logger.error('Failed to process MECA callback', {
@@ -43,20 +63,6 @@ module.exports = app => {
           error: err.message,
         })
         res.status(500).send({ error: err.message })
-      })
-      .finally(() => {
-        if (status === Manuscript.statuses.MECA_IMPORT_FAILED) {
-          return mailer.send({
-            to: config.get('meca.notificationEmail'),
-            from: config.get('meca.fromAddressEmail'),
-            subject: 'MECA import failed',
-            text: `
-EJP failed to import MECA package.
-Manuscript ID: ${manuscriptId}
-            `,
-          })
-        }
-        return Promise.resolve()
       })
 
   })
