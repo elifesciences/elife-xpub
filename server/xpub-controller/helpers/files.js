@@ -33,14 +33,14 @@ class FilesHelper {
     }
   }
 
-  static startFileProgress(
+  static publishPredictedProgress(
     pubsub,
     ON_UPLOAD_PROGRESS,
     startedTime,
     predictedTime,
     manuscriptId,
   ) {
-    return setInterval(() => {
+    return () => {
       const elapsed = Date.now() - startedTime
       let progress = parseInt((100 * elapsed) / 1000 / predictedTime, 10)
       // don't let the prediction complete the upload
@@ -48,7 +48,7 @@ class FilesHelper {
       pubsub.publish(`${ON_UPLOAD_PROGRESS}.${manuscriptId}`, {
         manuscriptUploadProgress: progress,
       })
-    }, 200)
+    }
   }
 
   static endFileProgress(pubsub, ON_UPLOAD_PROGRESS, progress, manuscriptId) {
