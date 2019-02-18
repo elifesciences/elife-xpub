@@ -59,5 +59,31 @@ describe('FilesHelper Test', () => {
         global.Date = originalDate
       })
     })
+
+    it('calling function should validate parameters ', () => {
+      const progressFunc = FilesHelper.publishPredictedProgress(
+        { publish: () => console.log('publish') },
+        'ON_UPLOAD_PROGRESS',
+        new Date(),
+        3,
+        '4512fc2f-85bc-4032-97da-c63f8fefec61',
+      )
+      expect(progressFunc).not.toThrow()
+    })
+
+    it('calling function should throw error with an invalid parameters ', () => {
+      const progressFunc = () =>
+        FilesHelper.publishPredictedProgress(
+          {},
+          'ON_UPLOAD_PROGRESS',
+          new Date(),
+          0,
+          '4512fc2f-85bc-4032-97da-c63f8fefec61',
+        )
+      expect(progressFunc).toThrow()
+      expect(progressFunc).toThrowError(
+        new Error('Invalid parameters to calculate the upload file progress.'),
+      )
+    })
   })
 })

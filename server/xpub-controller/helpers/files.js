@@ -40,15 +40,22 @@ class FilesHelper {
     predictedTime,
     manuscriptId,
   ) {
-    return () => {
-      const elapsed = Date.now() - startedTime
-      let progress = parseInt((100 * elapsed) / 1000 / predictedTime, 10)
-      // don't let the prediction complete the upload
-      if (progress > 99) progress = 99
-      pubsub.publish(`${ON_UPLOAD_PROGRESS}.${manuscriptId}`, {
-        manuscriptUploadProgress: progress,
-      })
+    if (
+      typeof pubsub.publish === 'function' &&
+      manuscriptId.length === 36 &&
+      predictedTime > 0
+    ) {
+      return () => {
+        const elapsed = Date.now() - startedTime
+        let progress = parseInt((100 * elapsed) / 1000 / predictedTime, 10)
+        // don't let the prediction complete the upload
+        if (progress > 99) progress = 99
+        pubsub.publish(`${ON_UPLOAD_PROGRESS}.${manuscriptId}`, {
+          manuscriptUploadProgress: progress,
+        })
+      }
     }
+    throw new Error('Invalid parameters to calculate the upload file progress.')
   }
 
   static endFileProgress(pubsub, ON_UPLOAD_PROGRESS, progress, manuscriptId) {
