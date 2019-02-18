@@ -17,6 +17,12 @@ module.exports = {
     from: 'editorial-staging@elifesciences.org',
     path: `${__dirname}/non-serializable/mailer`,
   },
+  meca: {
+    email: {
+      recipient: 'xpub-tech-alerts@elifesciences.org',
+      subjectPrefix: '[Staging] '
+    }
+  },
   aws: {
     s3: {
       params: {
