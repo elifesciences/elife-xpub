@@ -1,6 +1,24 @@
 const FilesHelper = require('./files')
+const config = require('config')
 
-describe('FilesHelper Test', () => {
+const filesHelper = new FilesHelper(config)
+
+describe('FilesHelper', () => {
+  describe('validateFileSize', () => {
+    const maxSize = config.get('fileUpload.maxSizeMB')
+    const invalidFileSize = (maxSize + 1) * 1e6
+    const validFileSize = (maxSize - 1) * 1e6
+
+    it('throws an error if the file size is larger than maximum size', () => {
+      expect(() => filesHelper.validateFileSize(invalidFileSize)).toThrow(
+        `File size shouldn't exceed ${maxSize}MB`,
+      )
+    })
+    it('does not throw if the file size is less than MaxSize', () => {
+      expect(() => filesHelper.validateFileSize(validFileSize)).not.toThrow()
+    })
+  })
+
   describe('publishPredictedProgress', () => {
     const timeData = [
       {
