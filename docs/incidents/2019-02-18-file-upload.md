@@ -69,6 +69,10 @@ The job was for the change which introduced the revert fix, which Peter confirme
 
 ## Impact
 
+MTTD: 36m
+
+MTTR: 18h25m
+
 - Caused a bad UX where user would not know whether there file was uploading, and could have concluded that the app was broken.
 
 ## Corrective Actions
