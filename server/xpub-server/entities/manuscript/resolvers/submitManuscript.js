@@ -55,9 +55,9 @@ async function submitManuscript(_, { data }, { user, ip }) {
         Manuscript.statuses.MECA_EXPORT_FAILED,
       )
       return mailer.send({
-        to: config.get('meca.notificationEmail'),
-        from: config.get('meca.fromAddressEmail'),
-        subject: 'MECA export failed',
+        to: config.get('meca.email.recipient'),
+        from: config.get('meca.email.sender'),
+        subject: `${config.get('meca.email.subjectPrefix')}MECA export failed`,
         text: `Manuscript ID: ${manuscript.id}
 Manuscript title: ${manuscript.meta.title}
 Error:

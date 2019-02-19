@@ -14,7 +14,10 @@ module.exports = {
     enableMock: false,
   },
   meca: {
-    notificationEmail: 'xpub-alerts@elifesciences.org',
+    email: {
+      recipient: 'xpub-tech-alerts@elifesciences.org',
+      subjectPrefix: '[Production] '
+    }
   },
   mailer: {
     from: 'editorial@elifesciences.org',
