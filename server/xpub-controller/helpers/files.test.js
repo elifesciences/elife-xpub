@@ -7,11 +7,6 @@ const ManuscriptModel = require('@elifesciences/xpub-model').Manuscript
 const filesHelper = new FilesHelper(config)
 
 describe('FilesHelper', () => {
-  // beforeEach(async () => {
-  //   manuscriptId = uuid()
-  //   await createTables(true)
-  // })
-
   describe('validateFileSize', () => {
     const maxSize = config.get('fileUpload.maxSizeMB')
     const invalidFileSize = (maxSize + 1) * 1e6
