@@ -26,7 +26,7 @@ class Manuscript {
     this.filesHelper.validateFileSize(fileSize)
 
     // ensure user can view manuscript
-    const manuscript = await ManuscriptModel.find(manuscriptId, this.userId)
+    await ManuscriptModel.find(manuscriptId, this.userId)
 
     const fileData = await FilesHelper.generateFileEntity(file, manuscriptId)
 
@@ -50,7 +50,7 @@ class Manuscript {
       await this.manuscriptHelper.uploadManuscriptFile(
         fileData,
         fileSize,
-        manuscript.id,
+        manuscriptId,
       )
     } catch (error) {
       FilesHelper.endFileProgress(
