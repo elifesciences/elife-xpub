@@ -142,10 +142,12 @@ describe('FilesHelper', () => {
   })
 
   describe('endFileProgress', () => {
+    const manuscriptId = uuid()
+    const ON_UPLOAD_PROGRESS = 'ON_UPLOAD_PROGRESS'
+    jest.useFakeTimers()
     it('publishes progress as a 100 percent', () => {
-      const ON_UPLOAD_PROGRESS = 'ON_UPLOAD_PROGRESS'
-      const manuscriptId = uuid()
       const pubsubMock = {
+        // TODO use jest mocks
         publish: (target, message) => {
           expect(target).toBe(`${ON_UPLOAD_PROGRESS}.${manuscriptId}`)
           expect(message.manuscriptUploadProgress).toEqual(100)
@@ -159,6 +161,20 @@ describe('FilesHelper', () => {
         progress,
         manuscriptId,
       )
+    })
+    it('clears the progress interval', () => {
+      const pubsubMock = {
+        publish: () => {},
+      }
+      const progress = setInterval(() => {}, 10)
+
+      FilesHelper.endFileProgress(
+        pubsubMock,
+        ON_UPLOAD_PROGRESS,
+        progress,
+        manuscriptId,
+      )
+      expect(clearInterval).toHaveBeenCalledWith(progress)
     })
   })
 })
