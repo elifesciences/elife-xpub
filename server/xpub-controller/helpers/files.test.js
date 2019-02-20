@@ -140,4 +140,25 @@ describe('FilesHelper', () => {
       )
     })
   })
+
+  describe('endFileProgress', () => {
+    it('publishes progress as a 100 percent', () => {
+      const ON_UPLOAD_PROGRESS = 'ON_UPLOAD_PROGRESS'
+      const manuscriptId = uuid()
+      const pubsubMock = {
+        publish: (target, message) => {
+          expect(target).toBe(`${ON_UPLOAD_PROGRESS}.${manuscriptId}`)
+          expect(message.manuscriptUploadProgress).toEqual(100)
+        },
+      }
+      const progress = setInterval(() => {}, 10)
+
+      FilesHelper.endFileProgress(
+        pubsubMock,
+        ON_UPLOAD_PROGRESS,
+        progress,
+        manuscriptId,
+      )
+    })
+  })
 })
