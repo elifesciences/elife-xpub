@@ -57,19 +57,19 @@ describe('FilesHelper', () => {
         now: 1550498450221,
         startDate: 1550498450014,
         predictedTime: 5.04049824,
-        progress: 4,
+        expectedProgress: 4,
       },
       {
         now: 1550498450424,
         startDate: 1550498450014,
         predictedTime: 5.04049824,
-        progress: 8,
+        expectedProgress: 8,
       },
       {
         now: 1550498450629,
         startDate: 1550498450014,
         predictedTime: 5.04049824,
-        progress: 12,
+        expectedProgress: 12,
       },
     ]
 
@@ -78,20 +78,16 @@ describe('FilesHelper', () => {
       global.Date = jest.fn(() => mockDate)
       global.Date.now = () => mockDate
     }
+    const pubsubMock = {
+      publish: jest.fn(),
+    }
 
     const ON_UPLOAD_PROGRESS = 'ON_UPLOAD_PROGRESS'
     const manuscriptId = '4512fc2f-85bc-4032-97da-c63f8fefec61'
 
     it('calculates the progress correctly', () => {
-      const pubsubMock = expectedProgress => ({
-        publish: (param1, param2) => {
-          expect(param1).toBe(`${ON_UPLOAD_PROGRESS}.${manuscriptId}`)
-          expect(param2.manuscriptUploadProgress).toEqual(expectedProgress)
-        },
-      })
-
       // test over differen times to observe the progress is the correct one.
-      // | now            |   startdate      |  predictedTime   |   progress
+      // | now            |   startdate      |  predictedTime   |   expectedProgress
       // | 1550498450221  |  1550498450014   | 5.04049824       |   4
       // | 1550498450424  |  1550498450014   | 5.04049824       |   8
       // | 1550498450629  |  1550498450014   | 5.04049824       |   12
@@ -99,14 +95,21 @@ describe('FilesHelper', () => {
       timeData.forEach(currentTimeData => {
         const originalDate = Date
         mockTimes(currentTimeData)
+
         const publishPredictedProgress = FilesHelper.publishPredictedProgress(
-          pubsubMock(currentTimeData.progress),
+          pubsubMock(currentTimeData.expectedProgress),
           ON_UPLOAD_PROGRESS,
           currentTimeData.startDate,
           currentTimeData.predictedTime,
           manuscriptId,
         )
         publishPredictedProgress()
+
+        expect(pubsubMock.publish).toHaveBeenCalledWith(
+          `${ON_UPLOAD_PROGRESS}.${manuscriptId}`,
+          { manuscriptUploadProgress: currentTimeData.expectedProgress },
+        )
+
         global.Date = originalDate
       })
     })
