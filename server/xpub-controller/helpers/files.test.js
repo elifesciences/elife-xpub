@@ -97,7 +97,7 @@ describe('FilesHelper', () => {
         mockTimes(currentTimeData)
 
         const publishPredictedProgress = FilesHelper.publishPredictedProgress(
-          pubsubMock(currentTimeData.expectedProgress),
+          pubsubMock,
           ON_UPLOAD_PROGRESS,
           currentTimeData.startDate,
           currentTimeData.predictedTime,
