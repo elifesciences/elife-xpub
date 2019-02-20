@@ -23,3 +23,8 @@ The format of the secrets uses `.`-separated keys pointing to values, which foll
 - https://github.com/elifesciences/builder-configuration/blob/master/pillar/environment-end2end-public.sls
 - https://github.com/elifesciences/builder-configuration/blob/master/pillar/environment-staging-public.sls
 - https://github.com/elifesciences/builder-configuration/blob/master/pillar/environment-prod-public.sls
+
+### CLI and UI
+
+- On the command line, you will need to configure your `~/.vault-token` file, see: https://www.vaultproject.io/docs/commands/
+- With a UI, just visit one of the above URLs and pop in your token, for example if you want to see the secrets on staging visit: https://master-server.elifesciences.org:8200/ui/vault/secrets/secret/show/projects/elife-xpub/staging
