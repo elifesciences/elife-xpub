@@ -1,5 +1,7 @@
-const FilesHelper = require('./files')
+const uuid = require('uuid')
 const config = require('config')
+const FileModel = require('@elifesciences/xpub-model').File
+const FilesHelper = require('./files')
 
 const filesHelper = new FilesHelper(config)
 
@@ -16,6 +18,36 @@ describe('FilesHelper', () => {
     })
     it('does not throw if the file size is less than MaxSize', () => {
       expect(() => filesHelper.validateFileSize(validFileSize)).not.toThrow()
+    })
+  })
+
+  describe('generateFileEntity', () => {
+    it('returns the file stream and file entity', async () => {
+      const manuscriptId = uuid()
+      const file = new Promise(resolve =>
+        setTimeout(
+          () =>
+            resolve({
+              stream: {},
+              filename: 'filename',
+              mimetype: 'mimetype',
+            }),
+          5,
+        ),
+      )
+      const { stream, filename, mimetype: mimeType } = await file
+      const fileEntity = await new FileModel({
+        manuscriptId,
+        url: 'url',
+        filename,
+        mimeType,
+      })
+      expect(
+        await FilesHelper.generateFileEntity(file, manuscriptId),
+      ).toBeCalledWith({
+        stream,
+        fileEntity,
+      })
     })
   })
 
