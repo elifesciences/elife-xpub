@@ -48,12 +48,9 @@ class Manuscript {
 
     try {
       await this.manuscriptHelper.uploadManuscriptFile(
-        pubsub,
-        ON_UPLOAD_PROGRESS,
         fileData,
         fileSize,
         manuscript.id,
-        progress,
       )
     } catch (error) {
       FilesHelper.endFileProgress(
