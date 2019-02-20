@@ -1,11 +1,17 @@
-const uuid = require('uuid')
 const config = require('config')
-const FileModel = require('@elifesciences/xpub-model').File
+const uuid = require('uuid')
+const { createTables } = require('@pubsweet/db-manager')
 const FilesHelper = require('./files')
+const ManuscriptModel = require('@elifesciences/xpub-model').Manuscript
 
 const filesHelper = new FilesHelper(config)
 
 describe('FilesHelper', () => {
+  // beforeEach(async () => {
+  //   manuscriptId = uuid()
+  //   await createTables(true)
+  // })
+
   describe('validateFileSize', () => {
     const maxSize = config.get('fileUpload.maxSizeMB')
     const invalidFileSize = (maxSize + 1) * 1e6
@@ -23,30 +29,22 @@ describe('FilesHelper', () => {
 
   describe('generateFileEntity', () => {
     it('returns the file stream and file entity', async () => {
-      const manuscriptId = uuid()
-      const file = new Promise(resolve =>
-        setTimeout(
-          () =>
-            resolve({
-              stream: {},
-              filename: 'filename',
-              mimetype: 'mimetype',
-            }),
-          5,
-        ),
-      )
-      const { stream, filename, mimetype: mimeType } = await file
-      const fileEntity = await new FileModel({
-        manuscriptId,
-        url: 'url',
-        filename,
-        mimeType,
-      })
-      expect(
-        await FilesHelper.generateFileEntity(file, manuscriptId),
-      ).toBeCalledWith({
-        stream,
-        fileEntity,
+      const userId = uuid()
+      await createTables(true)
+      const { id } = await new ManuscriptModel({ createdBy: userId }).save()
+      const file = {
+        stream: {},
+        filename: 'filename',
+        mimetype: 'mimetype',
+      }
+      const filePromise = Promise.resolve(file)
+
+      const { stream } = file
+      const fileData = await FilesHelper.generateFileEntity(filePromise, id)
+      expect(fileData.stream).toEqual(stream)
+      expect(fileData.fileEntity).toMatchObject({
+        manuscriptId: id,
+        id: expect.any(String),
       })
     })
   })
