@@ -24,7 +24,7 @@ class FilesHelper {
       manuscriptId,
       url: `manuscripts/${manuscriptId}`,
       filename,
-      type: 'MANUSCRIPT_SOURCE_PENDING',
+      type: 'MANUSCRIPT_SOURCE_PENDING', // TODO figure out what this is for
       mimeType,
     }).save()
     return {

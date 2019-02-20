@@ -29,9 +29,9 @@ describe('FilesHelper', () => {
 
   describe('generateFileEntity', () => {
     it('returns the file stream and file entity', async () => {
-      const userId = uuid()
-      await createTables(true)
-      const { id } = await new ManuscriptModel({ createdBy: userId }).save()
+      const userId = uuid() // TODO avoid using actual models
+      await createTables(true) // TODO avoid using actual models
+      const { id } = await new ManuscriptModel({ createdBy: userId }).save() // TODO avoid using actual models
       const file = {
         stream: {},
         filename: 'filename',
@@ -44,7 +44,9 @@ describe('FilesHelper', () => {
       expect(fileData.stream).toEqual(stream)
       expect(fileData.fileEntity).toMatchObject({
         manuscriptId: id,
-        id: expect.any(String),
+        id: expect.any(String), // TODO check if correct id
+        url: `manuscripts/${id}`,
+        type: 'MANUSCRIPT_SOURCE_PENDING',
       })
     })
   })
