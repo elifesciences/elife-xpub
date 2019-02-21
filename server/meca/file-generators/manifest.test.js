@@ -27,7 +27,7 @@ describe('Manifest XML generator', () => {
 
     // has cover letter
     expect(xml).toContain(
-      '<instance media-type="text/html" href="cover_letter.html"/>',
+      '<instance media-type="application/pdf" href="cover_letter.pdf"/>',
     )
 
     // has supplementary file 1

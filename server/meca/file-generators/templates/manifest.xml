@@ -33,9 +33,9 @@
     <item id="xpub-125" type="coverletter" submission-item-id="custom005" version="0">
         <title>Cover Letter</title>
         <description>The cover letter supplied by the submitter.</description>
-        <filename>cover_letter.html</filename>
+        <filename>cover_letter.pdf</filename>
         <file-order>1</file-order>
-        <instance media-type="text/html" href="cover_letter.html"/>
+        <instance media-type="application/pdf" href="cover_letter.pdf"/>
     </item>
 
     {supplementaryFiles}

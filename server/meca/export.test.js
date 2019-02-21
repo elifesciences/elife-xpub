@@ -83,7 +83,7 @@ describe('MECA integration test', () => {
         '00000002.pdf',
         '7de61e41-b163-4108-9198-1492e2b54a1f.pdf',
         'article.xml',
-        'cover_letter.html',
+        'cover_letter.pdf',
         'disclosure.pdf',
         'manifest.xml',
         'transfer.xml',

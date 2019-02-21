@@ -59,11 +59,11 @@ Object {
       Object {
         "description": "The cover letter supplied by the submitter.",
         "file-order": "1",
-        "filename": "cover_letter.html",
+        "filename": "cover_letter.pdf",
         "id": "xpub-125",
         "instance": Object {
-          "href": "cover_letter.html",
-          "media-type": "text/html",
+          "href": "cover_letter.pdf",
+          "media-type": "application/pdf",
         },
         "submission-item-id": "custom005",
         "title": "Cover Letter",
@@ -111,9 +111,9 @@ Object {
   "00000002.pdf": 14,
   "7de61e41-b163-4108-9198-1492e2b54a1f.pdf": 14,
   "article.xml": Any<Number>,
-  "cover_letter.html": 533,
+  "cover_letter.pdf": 9823,
   "disclosure.pdf": Any<Number>,
-  "manifest.xml": 2600,
+  "manifest.xml": 2605,
   "transfer.xml": 1951,
 }
 `;
