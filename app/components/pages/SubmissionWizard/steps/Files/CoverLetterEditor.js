@@ -50,6 +50,7 @@ const FormatSuperscriptIcon = props => (
 const CoverLetterEditor = ({ validationStatus, ...props }) => (
   <ConfigurableEditor
     bold={{ icon: <FormatBoldIcon /> }}
+    data-hj-suppress=""
     italic={{ icon: <FormatItalicIcon /> }}
     subscript={{ icon: <FormatSubscriptIcon /> }}
     superscript={{ icon: <FormatSuperscriptIcon /> }}
