@@ -26,7 +26,7 @@ class Manuscript {
     this.filesHelper.validateFileSize(fileSize)
 
     // ensure user can view manuscript
-    const manuscript = await ManuscriptModel.find(manuscriptId, this.userId)
+    await ManuscriptModel.find(manuscriptId, this.userId)
 
     const fileData = await FilesHelper.generateFileEntity(file, manuscriptId)
 
@@ -35,25 +35,29 @@ class Manuscript {
     // Predict upload time - The analysis was done on #839
     const predictedTime = 5 + 4.67e-6 * fileSize
     const startedTime = Date.now()
-    const progress = setInterval(
-      FilesHelper.publishPredictedProgress(
-        pubsub,
-        ON_UPLOAD_PROGRESS,
-        startedTime,
-        predictedTime,
-        manuscriptId,
-      ),
-      200,
-    )
-
-    await this.manuscriptHelper.uploadManuscriptFile(
+    const progress = FilesHelper.startFileProgress(
       pubsub,
       ON_UPLOAD_PROGRESS,
-      fileData,
-      fileSize,
-      manuscript.id,
-      progress,
+      startedTime,
+      predictedTime,
+      manuscriptId,
+      200,
     )
+    try {
+      await this.manuscriptHelper.uploadManuscriptFile(
+        fileData,
+        fileSize,
+        manuscriptId,
+      )
+    } catch (error) {
+      FilesHelper.endFileProgress(
+        pubsub,
+        ON_UPLOAD_PROGRESS,
+        progress,
+        manuscriptId,
+      )
+      throw error
+    }
 
     FilesHelper.endFileProgress(
       pubsub,

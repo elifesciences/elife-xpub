@@ -58,6 +58,26 @@ class FilesHelper {
     throw new Error('Invalid parameters to calculate the upload file progress.')
   }
 
+  static startFileProgress(
+    pubsub,
+    ON_UPLOAD_PROGRESS,
+    startedTime,
+    predictedTime,
+    manuscriptId,
+    interval,
+  ) {
+    return setInterval(
+      FilesHelper.publishPredictedProgress(
+        pubsub,
+        ON_UPLOAD_PROGRESS,
+        startedTime,
+        predictedTime,
+        manuscriptId,
+      ),
+      interval,
+    )
+  }
+
   static endFileProgress(pubsub, ON_UPLOAD_PROGRESS, progress, manuscriptId) {
     pubsub.publish(`${ON_UPLOAD_PROGRESS}.${manuscriptId}`, {
       manuscriptUploadProgress: 100,
