@@ -35,17 +35,14 @@ class Manuscript {
     // Predict upload time - The analysis was done on #839
     const predictedTime = 5 + 4.67e-6 * fileSize
     const startedTime = Date.now()
-    const progress = setInterval(
-      FilesHelper.publishPredictedProgress(
-        pubsub,
-        ON_UPLOAD_PROGRESS,
-        startedTime,
-        predictedTime,
-        manuscriptId,
-      ),
+    const progress = FilesHelper.startFileProgress(
+      pubsub,
+      ON_UPLOAD_PROGRESS,
+      startedTime,
+      predictedTime,
+      manuscriptId,
       200,
     )
-
     try {
       await this.manuscriptHelper.uploadManuscriptFile(
         fileData,
