@@ -3,6 +3,8 @@ const uuid = require('uuid')
 const { createTables } = require('@pubsweet/db-manager')
 const FilesHelper = require('./files')
 const ManuscriptModel = require('@elifesciences/xpub-model').Manuscript
+const stream = require('stream')
+const logger = require('@pubsweet/logger')
 
 const filesHelper = new FilesHelper(config)
 
@@ -34,9 +36,8 @@ describe('FilesHelper', () => {
       }
       const filePromise = Promise.resolve(file)
 
-      const { stream } = file
       const fileData = await FilesHelper.generateFileEntity(filePromise, id)
-      expect(fileData.stream).toEqual(stream)
+      expect(fileData.stream).toEqual(file.stream)
       expect(fileData.fileEntity).toMatchObject({
         manuscriptId: id,
         id: expect.any(String),
@@ -171,6 +172,19 @@ describe('FilesHelper', () => {
         manuscriptId,
       )
       expect(clearInterval).toHaveBeenCalledWith(progress)
+    })
+  })
+  describe('uploadFilesToServer', () => {
+    it('warns if the uploaded size is not the same as the fileSize', async () => {
+      const fileSize = 100
+      const wrongFileSize = 110
+      const bufferStream = new stream.PassThrough()
+      bufferStream.end(Buffer.alloc(wrongFileSize))
+      jest.spyOn(logger, 'warn').mockImplementationOnce(() => {})
+      await FilesHelper.uploadFileToServer(bufferStream, fileSize)
+      expect(logger.warn).toHaveBeenCalledWith(
+        'Reported file size for manuscript is different than the actual file size',
+      )
     })
   })
 })
