@@ -111,7 +111,7 @@ Object {
   "00000002.pdf": 14,
   "7de61e41-b163-4108-9198-1492e2b54a1f.pdf": 14,
   "article.xml": Any<Number>,
-  "cover_letter.pdf": 9823,
+  "cover_letter.pdf": Any<Number>,
   "disclosure.pdf": Any<Number>,
   "manifest.xml": 2605,
   "transfer.xml": 1951,
