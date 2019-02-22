@@ -51,6 +51,7 @@ const CoverLetterEditor = ({ validationStatus, ...props }) => (
   <ConfigurableEditor
     bold={{ icon: <FormatBoldIcon /> }}
     data-hj-suppress=""
+    data-test-id="coverletterEditor"
     italic={{ icon: <FormatItalicIcon /> }}
     subscript={{ icon: <FormatSubscriptIcon /> }}
     superscript={{ icon: <FormatSuperscriptIcon /> }}

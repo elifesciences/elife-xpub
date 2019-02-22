@@ -144,7 +144,7 @@ class ProfileMenu extends React.Component {
             <PopOverPanel>
               <Menu>
                 <MenuItem>
-                  <MenuHeading data-hj-suppress="">
+                  <MenuHeading data-hj-suppress="" data-test-id="profile-name">
                     {user.identities[0].name}
                   </MenuHeading>
                 </MenuItem>
