@@ -1,3 +1,4 @@
+const { createTables } = require('@pubsweet/db-manager')
 const JsZip = require('jszip')
 const config = require('config')
 const Replay = require('replay')
@@ -39,6 +40,7 @@ describe('MECA integration test', () => {
     })
     s3Server = server.instance
     s3 = server.s3
+    await createTables(true)
   })
 
   afterEach(done => {
