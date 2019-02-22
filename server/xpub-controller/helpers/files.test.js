@@ -178,9 +178,9 @@ describe('FilesHelper', () => {
   describe('uploadFilesToServer', () => {
     it('warns if the uploaded size is not the same as the fileSize', async () => {
       const fileSize = 100
-      const wrongFileSize = 110
+      const uploadedSize = 110
       const bufferStream = new stream.PassThrough()
-      bufferStream.end(Buffer.alloc(wrongFileSize))
+      bufferStream.end(Buffer.alloc(uploadedSize))
       jest.spyOn(logger, 'warn').mockImplementationOnce(() => {})
       await FilesHelper.uploadFileToServer(bufferStream, fileSize)
       expect(logger.warn).toHaveBeenCalledWith(
