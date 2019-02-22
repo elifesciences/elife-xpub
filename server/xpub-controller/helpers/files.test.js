@@ -1,17 +1,10 @@
 const config = require('config')
 const uuid = require('uuid')
-const fs = require('fs-extra')
+const stream = require('stream')
 const { createTables } = require('@pubsweet/db-manager')
 const logger = require('@pubsweet/logger')
 const ManuscriptModel = require('@elifesciences/xpub-model').Manuscript
-const UserModel = require('@elifesciences/xpub-model').User
-const stream = require('stream')
-const mailer = require('@pubsweet/component-send-email')
 const FilesHelper = require('./files')
-const { Mutation } = require('../../xpub-server/entities/manuscript/resolvers')
-const {
-  userData,
-} = require('../../xpub-server/entities/manuscript/resolvers/index.test.data')
 
 const filesHelper = new FilesHelper(config)
 
@@ -181,6 +174,7 @@ describe('FilesHelper', () => {
       expect(clearInterval).toHaveBeenCalledWith(progress)
     })
   })
+
   describe('uploadFilesToServer', () => {
     it('warns if the uploaded size is not the same as the fileSize', async () => {
       const fileSize = 100
@@ -192,37 +186,6 @@ describe('FilesHelper', () => {
       expect(logger.warn).toHaveBeenCalledWith(
         'Reported file size for manuscript is different than the actual file size',
       )
-    })
-  })
-  describe('extractFileTitle', () => {
-    it('extracts title from PDF', async () => {
-      await createTables(true)
-      const [user] = await Promise.all([new UserModel(userData).save()])
-      const userId = user.id
-      const profileId = userData.identities[0].identifier
-      mailer.clearMails()
-      const blankManuscript = new ManuscriptModel({ createdBy: userId })
-      const { id } = await blankManuscript.save()
-      const file = {
-        filename: 'manuscript.pdf',
-        stream: fs.createReadStream(
-          `${__dirname}/../../../test/fixtures/dummy-manuscript-2.pdf`,
-        ),
-        mimetype: 'application/pdf',
-      }
-      const manuscript = await Mutation.uploadManuscript(
-        {},
-        { id, file, fileSize: 73947 },
-        { user: profileId },
-      )
-      expect(manuscript).toMatchObject({
-        id,
-        meta: {
-          title:
-            'The Relationship Between Lamport Clocks and Interrupts Using Obi',
-        },
-        files: [{ filename: 'manuscript.pdf' }],
-      })
     })
   })
 })
