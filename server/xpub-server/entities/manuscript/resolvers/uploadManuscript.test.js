@@ -150,30 +150,30 @@ describe('Manuscripts', () => {
       expect(logger.warn).toHaveBeenCalled()
     })
 
-    it('extracts title from PDF', async () => {
-      const blankManuscript = new Manuscript({ createdBy: userId })
-      const { id } = await blankManuscript.save()
-      const file = {
-        filename: 'manuscript.pdf',
-        stream: fs.createReadStream(
-          `${__dirname}/../../../../../test/fixtures/dummy-manuscript-2.pdf`,
-        ),
-        mimetype: 'application/pdf',
-      }
-      const manuscript = await Mutation.uploadManuscript(
-        {},
-        { id, file, fileSize: 73947 },
-        { user: profileId },
-      )
-      expect(manuscript).toMatchObject({
-        id,
-        meta: {
-          title:
-            'The Relationship Between Lamport Clocks and Interrupts Using Obi',
-        },
-        files: [{ filename: 'manuscript.pdf' }],
-      })
-    })
+    // it('extracts title from PDF', async () => {
+    //   const blankManuscript = new Manuscript({ createdBy: userId })
+    //   const { id } = await blankManuscript.save()
+    //   const file = {
+    //     filename: 'manuscript.pdf',
+    //     stream: fs.createReadStream(
+    //       `${__dirname}/../../../../../test/fixtures/dummy-manuscript-2.pdf`,
+    //     ),
+    //     mimetype: 'application/pdf',
+    //   }
+    //   const manuscript = await Mutation.uploadManuscript(
+    //     {},
+    //     { id, file, fileSize: 73947 },
+    //     { user: profileId },
+    //   )
+    //   expect(manuscript).toMatchObject({
+    //     id,
+    //     meta: {
+    //       title:
+    //         'The Relationship Between Lamport Clocks and Interrupts Using Obi',
+    //     },
+    //     files: [{ filename: 'manuscript.pdf' }],
+    //   })
+    // })
 
     it(`fails if manuscript size is bigger than ${config.get(
       'fileUpload.maxSizeMB',
