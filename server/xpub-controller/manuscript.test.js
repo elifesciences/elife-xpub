@@ -95,8 +95,7 @@ describe('clearPendingFile', () => {
     manuscript = await Manuscript.find(id, userId)
     expect(manuscript.files).toHaveLength(2)
 
-    const manuscriptController = new ManuscriptController()
-    await manuscriptController.clearPendingFile(manuscript)
+    await ManuscriptController.clearPendingFile(manuscript)
     manuscript = await Manuscript.find(id, userId)
 
     expect(manuscript.files).toHaveLength(1)
