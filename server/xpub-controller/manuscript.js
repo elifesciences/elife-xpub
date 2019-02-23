@@ -1,6 +1,6 @@
 const logger = require('@pubsweet/logger')
 const ManuscriptModel = require('@elifesciences/xpub-model').Manuscript
-
+const FileModel = require('@elifesciences/xpub-model').File
 const Notification = require('./notification')
 const { FilesHelper, ManuscriptHelper } = require('./helpers')
 
@@ -18,6 +18,24 @@ class Manuscript {
       this.storage,
       this.filesHelper,
     )
+  }
+
+  static async clearPendingFile(manuscript) {
+    const pendingFileIndex = manuscript.files.findIndex(
+      element => element.type === 'MANUSCRIPT_SOURCE_PENDING',
+    )
+
+    if (pendingFileIndex >= 0) {
+      const pendingFile = await FileModel.find(
+        manuscript.files[pendingFileIndex].id,
+      )
+      await pendingFile.delete()
+      logger.info(
+        `Pending file removed ${pendingFileIndex} ${
+          manuscript.files[pendingFileIndex].filename
+        } | ${manuscript.id}`,
+      )
+    }
   }
 
   async upload(manuscriptId, file, fileSize) {

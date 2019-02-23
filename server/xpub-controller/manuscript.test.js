@@ -1,6 +1,7 @@
 const { createTables } = require('@pubsweet/db-manager')
 const User = require('../xpub-model/entities/user')
 const Manuscript = require('../xpub-model/entities/manuscript')
+const File = require('../xpub-model/entities/file')
 const ManuscriptController = require('./manuscript')
 const { FilesHelper } = require('./helpers')
 
@@ -60,5 +61,44 @@ describe('upload', () => {
       ).toBeCalledTimes(1)
       expect(FilesHelper.endFileProgress).toBeCalled()
     }
+  })
+})
+
+describe('clearPendingFile', () => {
+  let userId
+
+  beforeEach(async () => {
+    await createTables(true)
+    const profileId = 'ewwboc7m'
+    const identities = [{ type: 'elife', identifier: profileId }]
+    const user = await new User({ identities }).save()
+    userId = user.id
+  })
+
+  it('removes any file with type MANUSCRIPT_SOURCE_PENDING related to this manuscript', async () => {
+    let manuscript = new Manuscript({ createdBy: userId })
+    const { id } = await manuscript.save()
+    const fileEntity = new File({
+      manuscriptId: id,
+      type: 'MANUSCRIPT_SOURCE_PENDING',
+      filename: 'foo.jpg',
+      url: '/',
+    })
+    const fileEntity2 = new File({
+      manuscriptId: id,
+      type: 'MANUSCRIPT_SOURCE',
+      filename: 'bar.jpg',
+      url: '/',
+    })
+    await fileEntity.save()
+    await fileEntity2.save()
+    manuscript = await Manuscript.find(id, userId)
+    expect(manuscript.files).toHaveLength(2)
+
+    const manuscriptController = new ManuscriptController()
+    await manuscriptController.clearPendingFile(manuscript)
+    manuscript = await Manuscript.find(id, userId)
+
+    expect(manuscript.files).toHaveLength(1)
   })
 })
