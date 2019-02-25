@@ -29,7 +29,7 @@ describe('clearPendingFile()', () => {
       url: '/',
     })
     await fileEntity.save()
-    await fileEntity2.save()
+    const sourceFile = await fileEntity2.save()
     manuscript = await Manuscript.find(id, userId)
     expect(manuscript.files).toHaveLength(2)
 
@@ -37,5 +37,7 @@ describe('clearPendingFile()', () => {
     manuscript = await Manuscript.find(id, userId)
 
     expect(manuscript.files).toHaveLength(1)
+    expect(manuscript.files[0].id).toEqual(sourceFile.id)
+    expect(manuscript.files[0].type).not.toEqual('MANUSCRIPT_SOURCE_PENDING')
   })
 })
