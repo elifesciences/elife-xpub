@@ -1,10 +1,25 @@
 const { createTables } = require('@pubsweet/db-manager')
 const User = require('../xpub-model/entities/user')
 const Manuscript = require('../xpub-model/entities/manuscript')
-const File = require('../xpub-model/entities/file')
 const ManuscriptController = require('./manuscript')
-const { FilesHelper } = require('./helpers')
+const { FilesHelper, ManuscriptHelper } = require('./helpers')
 
+const createMockController = userId => {
+  const config = { get: () => 0 }
+  const ON_UPLOAD_PROGRESS = 'ON_UPLOAD_PROGRESS'
+
+  // create instance of controller with mock params
+  return new ManuscriptController(
+    config,
+    userId,
+    {},
+    {},
+    {
+      asyncIterators: { ON_UPLOAD_PROGRESS },
+      getPubsub: () => ({ publish: () => {} }),
+    },
+  )
+}
 describe('upload', () => {
   let userId
 
@@ -19,25 +34,12 @@ describe('upload', () => {
   it('stops sending progress updates if error is thrown when uplaoding file', async () => {
     // Mock uneeded creation of file
     FilesHelper.generateFileEntity = jest.fn()
-
     // Mock functions that use timers
     FilesHelper.startFileProgress = jest.fn()
     FilesHelper.endFileProgress = jest.fn()
 
-    const config = { get: () => 0 }
-    const ON_UPLOAD_PROGRESS = 'ON_UPLOAD_PROGRESS'
-
     // create instance of controller with mock params
-    const manuscriptController = new ManuscriptController(
-      config,
-      userId,
-      {},
-      {},
-      {
-        asyncIterators: { ON_UPLOAD_PROGRESS },
-        getPubsub: () => ({ publish: () => {} }),
-      },
-    )
+    const manuscriptController = createMockController(userId)
 
     // Mocks internally stored helper object.
     // Can be refactored as part of #1551
@@ -62,42 +64,28 @@ describe('upload', () => {
       expect(FilesHelper.endFileProgress).toBeCalled()
     }
   })
-})
+  it('Clears any pending files remaining if the uplaod process fails', async () => {
+    ManuscriptHelper.clearPendingFile = jest.fn()
+    // create instance of controller with mock params
+    const manuscriptController = createMockController(userId)
 
-describe('clearPendingFile', () => {
-  let userId
+    // Mocks internally stored helper object.
+    // Can be refactored as part of #1551
+    manuscriptController.manuscriptHelper.uploadManuscriptFile = jest.fn(
+      () =>
+        new Promise((resolve, reject) => {
+          reject(new Error('Error'))
+        }),
+    )
 
-  beforeEach(async () => {
-    await createTables(true)
-    const profileId = 'ewwboc7m'
-    const identities = [{ type: 'elife', identifier: profileId }]
-    const user = await new User({ identities }).save()
-    userId = user.id
-  })
+    const manuscript = new Manuscript({ createdBy: userId })
+    const { id: manuscriptId } = await manuscript.save()
 
-  it('removes any file with type MANUSCRIPT_SOURCE_PENDING related to this manuscript', async () => {
-    let manuscript = new Manuscript({ createdBy: userId })
-    const { id } = await manuscript.save()
-    const fileEntity = new File({
-      manuscriptId: id,
-      type: 'MANUSCRIPT_SOURCE_PENDING',
-      filename: 'foo.jpg',
-      url: '/',
-    })
-    const fileEntity2 = new File({
-      manuscriptId: id,
-      type: 'MANUSCRIPT_SOURCE',
-      filename: 'bar.jpg',
-      url: '/',
-    })
-    await fileEntity.save()
-    await fileEntity2.save()
-    manuscript = await Manuscript.find(id, userId)
-    expect(manuscript.files).toHaveLength(2)
-
-    await ManuscriptController.clearPendingFile(manuscript)
-    manuscript = await Manuscript.find(id, userId)
-
-    expect(manuscript.files).toHaveLength(1)
+    expect.assertions(1)
+    try {
+      await manuscriptController.upload(manuscriptId, {}, 0)
+    } catch (e) {
+      expect(ManuscriptHelper.clearPendingFile).toBeCalled()
+    }
   })
 })

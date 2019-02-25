@@ -11,6 +11,24 @@ class ManuscriptHelper {
     this.filesHelper = filesHelper
   }
 
+  static async clearPendingFile(manuscript) {
+    const pendingFileIndex = manuscript.files.findIndex(
+      element => element.type === 'MANUSCRIPT_SOURCE_PENDING',
+    )
+
+    if (pendingFileIndex >= 0) {
+      const pendingFile = await FileModel.find(
+        manuscript.files[pendingFileIndex].id,
+      )
+      await pendingFile.delete()
+      logger.info(
+        `Pending file removed ${pendingFileIndex} ${
+          manuscript.files[pendingFileIndex].filename
+        } | ${manuscript.id}`,
+      )
+    }
+  }
+
   async uploadManuscriptFile(fileData, fileSize, manuscriptId) {
     const { stream } = fileData
     let { fileEntity } = fileData
