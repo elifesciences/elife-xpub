@@ -74,6 +74,6 @@ describe('ProfileMenu', () => {
   it('does exclude the name from the hotjar render', () => {
     const wrapper = makeWrapper()
     wrapper.find('button[data-test-id="profile-menu"]').simulate('click')
-    expect(wrapper.find('div[data-test-id="profile-name"]')).toHaveLength(1)
+    expect(wrapper.find('div[data-hj-suppress=""]')).toHaveLength(1)
   })
 })
