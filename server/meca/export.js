@@ -14,20 +14,25 @@ const upload = require('./services/upload')
 
 async function generate(manuscript, getContent, clientIp) {
   const uploadedFiles = manuscript.files.map(file => ({
-    name: removeUnicode(file.filename),
+    id: file.id,
+    filename: removeUnicode(file.filename),
     content: getContent(file),
     type: file.type,
+    mimeType: file.mimeType,
   }))
 
   const manditoryFiles = [
-    { name: 'article.xml', content: articleGenerator(manuscript) },
-    { name: 'cover_letter.html', content: coverLetterGenerator(manuscript) },
+    { filename: 'article.xml', content: articleGenerator(manuscript) },
     {
-      name: 'disclosure.pdf',
+      filename: 'cover_letter.html',
+      content: coverLetterGenerator(manuscript),
+    },
+    {
+      filename: 'disclosure.pdf',
       content: disclosureGenerator(manuscript, clientIp),
     },
-    { name: 'manifest.xml', content: manifestGenerator(uploadedFiles) },
-    { name: 'transfer.xml', content: transferGenerator('') },
+    { filename: 'manifest.xml', content: manifestGenerator(uploadedFiles) },
+    { filename: 'transfer.xml', content: transferGenerator('') },
   ]
 
   const allFiles = manditoryFiles.concat(uploadedFiles)

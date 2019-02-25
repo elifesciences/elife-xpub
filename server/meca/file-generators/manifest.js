@@ -48,9 +48,11 @@ function manifestGenerator(files) {
     .replace('{supplementaryFiles}', supplementaryXml(files))
     .replace('{manuscript.mimeType}', manuscript.mimeType)
 
-  const name = manuscript.name || manuscript.filename
-
-  return replaceAll(result, 'manuscript.filename', removeUnicode(name))
+  return replaceAll(
+    result,
+    'manuscript.filename',
+    removeUnicode(manuscript.filename),
+  )
 }
 
 module.exports = {
