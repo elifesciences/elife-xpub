@@ -1,6 +1,5 @@
 const logger = require('@pubsweet/logger')
 const ManuscriptModel = require('@elifesciences/xpub-model').Manuscript
-
 const Notification = require('./notification')
 const { FilesHelper, ManuscriptHelper } = require('./helpers')
 
@@ -56,6 +55,8 @@ class Manuscript {
         progress,
         manuscriptId,
       )
+      const manuscript = await ManuscriptModel.find(manuscriptId, this.userId)
+      await ManuscriptHelper.clearPendingFile(manuscript)
       throw error
     }
 
