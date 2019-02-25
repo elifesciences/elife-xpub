@@ -1,5 +1,110 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`MECA integration test when generating an archive manifest file is good 1`] = `
+Object {
+  "manifest": Object {
+    "item": Array [
+      Object {
+        "description": "Contains the submission metadata",
+        "file-order": "1",
+        "id": "xpub-121",
+        "instance": Object {
+          "href": "article.xml",
+          "media-type": "application/xml",
+        },
+        "submission-item-id": "custom001",
+        "type": "article-metadata",
+        "version": "0",
+      },
+      Object {
+        "description": "Contains information about the source and destination of the transfer",
+        "file-order": "1",
+        "id": "xpub-122",
+        "instance": Object {
+          "href": "transfer.xml",
+          "media-type": "application/xml",
+        },
+        "submission-item-id": "custom002",
+        "type": "transfer-metadata",
+        "version": "0",
+      },
+      Object {
+        "description": "Article File",
+        "file-order": "1",
+        "filename": "7de61e41-b163-4108-9198-1492e2b54a1f.pdf",
+        "id": "xpub-123",
+        "instance": Object {
+          "href": "7de61e41-b163-4108-9198-1492e2b54a1f.pdf",
+          "media-type": "undefined",
+        },
+        "submission-item-id": "custom003",
+        "title": "Article File",
+        "type": "manuscript",
+        "version": "0",
+      },
+      Object {
+        "description": "The auto-generated disclosure from xPub.",
+        "file-order": "1",
+        "filename": "disclosure.pdf",
+        "id": "xpub-124",
+        "instance": Object {
+          "href": "disclosure.pdf",
+          "media-type": "application/pdf",
+        },
+        "submission-item-id": "custom004",
+        "title": "Disclosure",
+        "type": "disclosure",
+        "version": "0",
+      },
+      Object {
+        "description": "The cover letter supplied by the submitter.",
+        "file-order": "1",
+        "filename": "cover_letter.html",
+        "id": "xpub-125",
+        "instance": Object {
+          "href": "cover_letter.html",
+          "media-type": "text/html",
+        },
+        "submission-item-id": "custom005",
+        "title": "Cover Letter",
+        "type": "coverletter",
+        "version": "0",
+      },
+      Object {
+        "description": "undefined",
+        "file-order": "1",
+        "filename": "undefined",
+        "id": "undefined",
+        "instance": Object {
+          "href": "undefined",
+          "media-type": "undefined",
+        },
+        "submission-item-id": "undefined",
+        "title": "undefined",
+        "type": "supplemental",
+        "version": "0",
+      },
+      Object {
+        "description": "undefined",
+        "file-order": "1",
+        "filename": "undefined",
+        "id": "undefined",
+        "instance": Object {
+          "href": "undefined",
+          "media-type": "undefined",
+        },
+        "submission-item-id": "undefined",
+        "title": "undefined",
+        "type": "supplemental",
+        "version": "0",
+      },
+    ],
+    "version": "1",
+    "xmlns": "",
+  },
+}
+`;
+
 exports[`MECA integration test when generating an archive should contain the correct files 1`] = `
 Object {
   "00000001.pdf": 14,
