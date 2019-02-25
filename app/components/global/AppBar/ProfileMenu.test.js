@@ -70,4 +70,10 @@ describe('ProfileMenu', () => {
     expect(wrapper.find('a[data-test-id="logout"]')).toHaveLength(0)
     expect(wrapper.find('a[data-test-id="manage-orcid"]')).toHaveLength(0)
   })
+
+  it('does exclude the name from the hotjar render', () => {
+    const wrapper = makeWrapper()
+    wrapper.find('button[data-test-id="profile-menu"]').simulate('click')
+    expect(wrapper.find('div[data-test-id="profile-name"]')).toHaveLength(1)
+  })
 })
