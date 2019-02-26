@@ -1,8 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
+import TwoColumnLayout from 'global/layout/TwoColumnLayout'
 import { peoplePropType } from './types'
-import TwoColumnLayout from '../../global/layout/TwoColumnLayout'
 import PersonPod from './PersonPod'
 import Loading from '../atoms/Loading'
 

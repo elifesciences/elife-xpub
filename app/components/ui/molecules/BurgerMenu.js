@@ -3,12 +3,12 @@ import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { Box, Flex } from '@rebass/grid'
 import { th } from '@pubsweet/ui-toolkit'
+import NavLink from 'ui/atoms/NavLink'
+import media from 'global/layout/media'
 import Icon from '../atoms/Icon'
 import ButtonAsIconWrapper from '../atoms/ButtonAsIconWrapper'
 import CrossIconButton from '../atoms/CrossIconButton'
-import NavLink from '../../ui/atoms/NavLink'
 import ModalOverlay from '../molecules/ModalOverlay'
-import media from '../../global/layout/media'
 
 const MenuPanel = styled.div`
     max-width: 240px;

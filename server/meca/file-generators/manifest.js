@@ -1,6 +1,8 @@
 const fs = require('fs-extra')
 
-const replaceAll = (template, key, value) => template.replace(new RegExp(`{${key}}`, 'g'), value)
+const replaceAll = (template, key, value) =>
+  template.replace(new RegExp(`{${key}}`, 'g'), value)
+const removeUnicode = str => str.replace(/[^\x00-\x7F]/g, '')
 
 function supplementaryXml(files) {
   const keyList = ['id', 'mimeType', 'filename']
@@ -24,7 +26,7 @@ function supplementaryXml(files) {
   return supplementaryFileXml
 }
 
-function generateManifest(files) {
+function manifestGenerator(files) {
   if (!Array.isArray(files)) {
     throw new TypeError(`Expecting array: ${typeof files}`)
   }
@@ -46,7 +48,14 @@ function generateManifest(files) {
     .replace('{supplementaryFiles}', supplementaryXml(files))
     .replace('{manuscript.mimeType}', manuscript.mimeType)
 
-  return replaceAll(result, 'manuscript.filename', manuscript.filename)
+  return replaceAll(
+    result,
+    'manuscript.filename',
+    removeUnicode(manuscript.filename),
+  )
 }
 
-module.exports = generateManifest
+module.exports = {
+  manifestGenerator,
+  removeUnicode,
+}

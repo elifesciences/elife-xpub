@@ -9,8 +9,8 @@ describe('Generate ZIP archive', () => {
 
   it('contains all files', async () => {
     const buffer = await archive([
-      { name: 'test.txt', content: 'This is a test' },
-      { name: 'other.pdf', content: 'PDF-1.3%' },
+      { filename: 'test.txt', content: 'This is a test' },
+      { filename: 'other.pdf', content: 'PDF-1.3%' },
     ])
     const zip = await JsZip.loadAsync(buffer)
     expect(zip.filter(() => true).map(file => file.name)).toEqual([
@@ -22,7 +22,7 @@ describe('Generate ZIP archive', () => {
   it('adds promises', async () => {
     const buffer = await archive([
       {
-        name: 'async.txt',
+        filename: 'async.txt',
         content: new Promise(resolve =>
           setTimeout(() => resolve('some content'), 5),
         ),

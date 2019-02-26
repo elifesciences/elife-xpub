@@ -9,6 +9,20 @@ describe('User manager', () => {
 
   beforeEach(() => createTables(true))
 
+  describe('Identifiers', () => {
+    it('can find a userId given a profile Id', async () => {
+      const user = await User.findOrCreate(profileId)
+      const userId = await User.getUuidForProfile(profileId)
+      expect(userId).toBe(user.id)
+    })
+
+    it('can find a profileId given a userId', async () => {
+      const user = await User.findOrCreate(profileId)
+      const foundId = await User.getProfileForUuid(user.id)
+      expect(foundId).toBe(profileId)
+    })
+  })
+
   describe('findOrCreate()', () => {
     it('creates a new user if it does not exist', async () => {
       const user = await User.findOrCreate(profileId)

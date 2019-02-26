@@ -2,9 +2,9 @@ import React from 'react'
 import { Menu } from '@pubsweet/ui'
 import { Box } from '@rebass/grid'
 
-import ValidatedField from '../../../../ui/atoms/ValidatedField'
-import ActionText from '../../../../ui/atoms/ActionText'
-import Textarea from '../../../../ui/atoms/Textarea'
+import ValidatedField from 'ui/atoms/ValidatedField'
+import ActionText from 'ui/atoms/ActionText'
+import Textarea from 'ui/atoms/Textarea'
 import SubjectAreaDropdown from './SubjectAreaDropdown'
 import OptionalSection from './OptionalSection'
 
@@ -71,7 +71,7 @@ const SubmissionPage = ({ values, setFieldValue, setFieldTouched }) => (
       value={values.previouslySubmitted.length}
     >
       <ValidatedField
-        label="Please give details"
+        label="Please give details (including previous article title and tracking number)"
         name="previouslySubmitted.0"
       />
     </OptionalSection>

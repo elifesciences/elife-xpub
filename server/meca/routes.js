@@ -1,4 +1,5 @@
 const logger = require('@pubsweet/logger')
+const mailer = require('@pubsweet/component-send-email')
 const config = require('config')
 const { Manuscript } = require('@elifesciences/xpub-model')
 
@@ -34,7 +35,27 @@ module.exports = app => {
         ? Manuscript.statuses.MECA_IMPORT_SUCCEEDED
         : Manuscript.statuses.MECA_IMPORT_FAILED
 
-    Manuscript.updateStatus(manuscriptId, status)
+    const updateStatus = () => Manuscript.updateStatus(manuscriptId, status)
+
+    const sendEmail = () => mailer.send({
+      to: config.get('meca.email.recipient'),
+      from: config.get('meca.email.sender'),
+      subject: `${config.get('meca.email.subjectPrefix')}MECA import failed`,
+      text: `
+EJP failed to import MECA package.
+Manuscript ID: ${manuscriptId}
+      `,
+    }).catch((err) => {
+      throw new Error(`MECA import failure email failed to send. ${err}`)
+    })
+
+    updateStatus()
+      .then(() => {
+        if (status === Manuscript.statuses.MECA_IMPORT_FAILED) {
+          return sendEmail()
+        }
+        return Promise.resolve()
+      })
       .then(() => res.sendStatus(204))
       .catch(err => {
         logger.error('Failed to process MECA callback', {
@@ -43,5 +64,6 @@ module.exports = app => {
         })
         res.status(500).send({ error: err.message })
       })
+
   })
 }

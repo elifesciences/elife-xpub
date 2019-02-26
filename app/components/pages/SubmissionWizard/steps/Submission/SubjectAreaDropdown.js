@@ -5,7 +5,7 @@ import { th } from '@pubsweet/ui-toolkit'
 import Select, { createFilter, components } from 'react-select'
 import config from 'config'
 
-import Icon from '../../../../ui/atoms/Icon'
+import Icon from 'ui/atoms/Icon'
 
 const CrossIcon = props => (
   <Icon

@@ -5,7 +5,7 @@ async function makeZip(files) {
 
   await Promise.all(
     Object.entries(files).map(async ([, file]) => {
-      zip.file(file.name, await file.content)
+      zip.file(file.filename, await file.content)
     }),
   )
 

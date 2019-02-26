@@ -3,10 +3,10 @@ import styled from 'styled-components'
 import PropTypes from 'prop-types'
 import { Flex, Box } from '@rebass/grid'
 import { th } from '@pubsweet/ui-toolkit'
+import NavLink from 'ui/atoms/NavLink'
+import media from 'global/layout/media'
+import BurgerMenu from 'ui/molecules/BurgerMenu'
 import ProfileMenu from './ProfileMenu'
-import NavLink from '../../ui/atoms/NavLink'
-import media from '../../global/layout/media'
-import BurgerMenu from '../../ui/molecules/BurgerMenu'
 
 const AppBarContainer = styled(Flex)`
   align-items: center;

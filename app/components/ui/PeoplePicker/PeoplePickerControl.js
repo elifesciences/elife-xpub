@@ -1,12 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
+import TwoColumnLayout from 'global/layout/TwoColumnLayout'
 import { peoplePropType } from './types'
 import PersonPod from './PersonPod'
 import ChooserPod from './ChooserPod'
 import PeoplePickerLayout from './PeoplePickerLayout'
 import ModalOverlay from '../molecules/ModalOverlay'
-import TwoColumnLayout from '../../global/layout/TwoColumnLayout'
 import ModalHistoryState from '../molecules/ModalHistoryState'
 
 const PeoplePickerControl = ({

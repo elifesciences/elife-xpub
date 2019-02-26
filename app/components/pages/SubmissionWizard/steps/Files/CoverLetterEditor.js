@@ -1,6 +1,6 @@
 import React from 'react'
 import ConfigurableEditor from 'xpub-edit/src/components/configurable/ConfigurableEditor'
-import Icon from '../../../../ui/atoms/Icon'
+import Icon from 'ui/atoms/Icon'
 
 const FormatBoldIcon = props => (
   <Icon
@@ -50,6 +50,8 @@ const FormatSuperscriptIcon = props => (
 const CoverLetterEditor = ({ validationStatus, ...props }) => (
   <ConfigurableEditor
     bold={{ icon: <FormatBoldIcon /> }}
+    data-hj-suppress=""
+    data-test-id="coverletterEditor"
     italic={{ icon: <FormatItalicIcon /> }}
     subscript={{ icon: <FormatSubscriptIcon /> }}
     superscript={{ icon: <FormatSuperscriptIcon /> }}

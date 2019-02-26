@@ -1,8 +1,8 @@
 import React from 'react'
 import { H1, H2, H3, Link } from '@pubsweet/ui'
 
-import Paragraph from '../../../ui/atoms/Paragraph'
-import NativeLink from '../../../ui/atoms/NativeLink'
+import Paragraph from 'ui/atoms/Paragraph'
+import NativeLink from 'ui/atoms/NativeLink'
 
 const Revised = props => (
   <React.Fragment>

@@ -17,6 +17,12 @@ module.exports = {
     from: 'editorial-staging@elifesciences.org',
     path: `${__dirname}/non-serializable/mailer`,
   },
+  meca: {
+    email: {
+      recipient: 'xpub-tech-alerts@elifesciences.org',
+      subjectPrefix: '[Staging] '
+    }
+  },
   aws: {
     s3: {
       params: {
@@ -29,7 +35,8 @@ module.exports = {
     applicationID: '162979288',
   },
   googleAnalytics: {
-    id: 'UA-132441389-2',
+    isPublic: true,
+    trackingId: 'UA-132441389-2',
   },
   hotJar: {
     id: 1131309,

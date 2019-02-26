@@ -5,10 +5,10 @@ import styled from 'styled-components'
 import { Box, Flex } from '@rebass/grid'
 import { th } from '@pubsweet/ui-toolkit'
 
-import ErrorBoundary from '../../global/ErrorBoundary'
-import media from '../../global/layout/media'
+import ErrorBoundary from 'global/ErrorBoundary'
+import media from 'global/layout/media'
+import NavigationDropdown from 'ui/atoms/NavigationDropdown'
 import SideNav from './SideNav'
-import NavigationDropdown from '../../ui/atoms/NavigationDropdown'
 import ScrollToTop from './ScrollToTop'
 
 const TopNavContainer = styled(Box).attrs({ mx: -3 })`

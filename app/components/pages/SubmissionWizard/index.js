@@ -20,7 +20,10 @@ import TrackedRoute from '../../../trackedRoute'
 const SubmissionWizard = ({ match, history }) => (
   <SubmissionOperations manuscriptId={match.params.id}>
     {({ initialValues, updateManuscript, submitManuscript }) => (
-      <Subscription subscription={ON_UPLOAD_PROGRESS}>
+      <Subscription
+        subscription={ON_UPLOAD_PROGRESS}
+        variables={{ id: match.params.id }}
+      >
         {({ data: uploadData, loading: uploadLoading }) => (
           <Switch>
             <TrackedRoute
