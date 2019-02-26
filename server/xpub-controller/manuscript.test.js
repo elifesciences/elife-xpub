@@ -33,7 +33,7 @@ describe('upload', () => {
 
   it('stops sending progress updates if error is thrown when uplaoding file', async () => {
     // Mock uneeded creation of file
-    FilesHelper.generateFileEntity = jest.fn()
+    FilesHelper.getFileData = jest.fn()
     // Mock functions that use timers
     FilesHelper.startFileProgress = jest.fn()
     FilesHelper.endFileProgress = jest.fn()

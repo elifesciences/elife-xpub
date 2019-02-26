@@ -27,7 +27,7 @@ class Manuscript {
     // ensure user can view manuscript
     await ManuscriptModel.find(manuscriptId, this.userId)
 
-    const fileData = await FilesHelper.generateFileEntity(file, manuscriptId)
+    const fileData = await FilesHelper.getFileData(file, manuscriptId)
 
     const pubsub = await this.pubsubManager.getPubsub()
 
