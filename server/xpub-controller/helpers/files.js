@@ -17,7 +17,7 @@ class FilesHelper {
     }
   }
 
-  static async generateFileEntity(file, manuscriptId) {
+  static async getFileData(file, manuscriptId) {
     const { stream, filename, mimetype: mimeType } = await file
 
     const fileEntity = await new FileModel({

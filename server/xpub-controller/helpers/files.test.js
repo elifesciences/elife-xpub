@@ -24,7 +24,7 @@ describe('FilesHelper', () => {
     })
   })
 
-  describe('generateFileEntity', () => {
+  describe('getFileData', () => {
     it('returns the file stream and file entity', async () => {
       const userId = uuid()
       await createTables(true)
@@ -36,7 +36,7 @@ describe('FilesHelper', () => {
       }
       const filePromise = Promise.resolve(file)
 
-      const fileData = await FilesHelper.generateFileEntity(filePromise, id)
+      const fileData = await FilesHelper.getFileData(filePromise, id)
       expect(fileData.stream).toEqual(file.stream)
       expect(fileData.fileEntity).toMatchObject({
         manuscriptId: id,
