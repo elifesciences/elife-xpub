@@ -41,7 +41,6 @@ class FilesHelper {
     manuscriptId,
   ) {
     if (
-      typeof pubsub.publish === 'function' &&
       manuscriptId.length === 36 &&
       predictedTime > 0
     ) {
