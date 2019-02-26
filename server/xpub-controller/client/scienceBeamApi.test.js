@@ -2,7 +2,7 @@ const fs = require('fs')
 
 jest.mock('request-promise-native', () => ({
   post: (url, obj) => {
-    const fileContents = fs.readFileSync(`${__dirname}/article.xml`)
+    const fileContents = fs.readFileSync(`${__dirname}/article.test.data.xml`)
     return fileContents
   },
 }))
