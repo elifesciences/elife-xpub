@@ -7,6 +7,8 @@ const disclosure = {
   ),
   submitterName: Selector('[name="submitterSignature"]'),
   consentCheckbox: Selector('[name="disclosureConsent"]').parent(),
+  title: Selector('[data-test-id=disclosure-title]'),
+  name: Selector('[data-test-id=disclosure-name]'),
 }
 
 export default disclosure

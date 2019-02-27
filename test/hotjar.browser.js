@@ -1,7 +1,7 @@
 import { Selector } from 'testcafe'
 import config from 'config'
 import startSshServer from '@elifesciences/xpub-meca-export/test/mock-sftp-server'
-import { editors, profile } from './pageObjects'
+import { editors, profile, disclosure } from './pageObjects'
 import setFixtureHooks from './helpers/set-fixture-hooks'
 import NavigationHelper from './helpers/navigationHelper'
 
@@ -91,11 +91,11 @@ test('test disclousure is suppressing name', async t => {
 
   // disclosure's page
   await t
-    .expect(Selector('[data-test-id=disclosure-name]'), {
+    .expect(disclosure.name, {
       'data-hj-suppress': '',
     })
     .ok()
-    .expect(Selector('[data-test-id=disclosure-title]'), {
+    .expect(disclosure.title, {
       'data-hj-suppress': '',
     })
     .ok()
