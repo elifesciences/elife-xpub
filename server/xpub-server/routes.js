@@ -64,8 +64,4 @@ module.exports = app => {
   app.get('/status', nocache, async (req, res) => {
     res.status(200).send({})
   })
-
-  app.get('/redirect', nocache, async (req, res) => {
-    res.status(200).send({})
-  })
 }

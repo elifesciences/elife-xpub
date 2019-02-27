@@ -114,22 +114,3 @@ describe('status route test', () => {
     await request.get('/status').expect(200)
   })
 })
-
-describe('redirect route', () => {
-  let routes
-
-  const makeApp = () => {
-    const app = express()
-    routes(app)
-    return supertest(app)
-  }
-
-  beforeEach(() => {
-    routes = require('./routes')
-  })
-
-  it('returns success', async () => {
-    const request = makeApp()
-    await request.get('/redirect').expect(200)
-  })
-})
