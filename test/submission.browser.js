@@ -3,18 +3,9 @@ import config from 'config'
 import assert from 'assert'
 import logger from '@pubsweet/logger'
 import startSshServer from '@elifesciences/xpub-meca-export/test/mock-sftp-server'
-import {
-  author,
-  dashboard,
-  disclosure,
-  editors,
-  files,
-  login,
-  submission,
-  thankyou,
-  wizardStep,
-} from './pageObjects'
+import { author, dashboard, editors, files, submission } from './pageObjects'
 import setFixtureHooks from './helpers/set-fixture-hooks'
+import NavigationHelper from './helpers/navigationHelper'
 
 const f = fixture('Submission')
 setFixtureHooks(f)
@@ -54,10 +45,10 @@ test('Happy path', async t => {
     config.get('meca.sftp.connectionOptions.port'),
   )
 
-  await t
-    .navigateTo(login.url)
-    .click(login.button)
-    .click(dashboard.desktopNewSubmission)
+  const navigationHelper = new NavigationHelper(t)
+
+  navigationHelper.login()
+  navigationHelper.newSubmission()
 
   // author details initially empty
   await t
@@ -70,9 +61,8 @@ test('Happy path', async t => {
     .expect(author.institutionField.value)
     .eql('')
 
-  // author details pre-populated using Orcid API
+  navigationHelper.preFillAuthorDetailsWithOrcid()
   await t
-    .click(author.orcidPrefill)
     .expect(author.firstNameField.value)
     .eql('Tamlyn')
     .expect(author.secondNameField.value)
@@ -81,73 +71,47 @@ test('Happy path', async t => {
     .eql('f72c502e0d657f363b5f2dc79dd8ceea')
     .expect(author.institutionField.value)
     .eql('Tech team, University of eLife')
-    .selectText(author.emailField)
-    .typeText(author.emailField, 'example@example.org')
-    .click(wizardStep.next)
+  navigationHelper.setAuthorEmail('example@example.org')
+  navigationHelper.navigateForward()
 
   // uploading files - manuscript and cover letter
+  navigationHelper.fillCoverletter('\nPlease consider this for publication')
+  navigationHelper.uploadManuscript(manuscript)
+  navigationHelper.wait(1000)
+  navigationHelper.uploadSupportingFiles(manuscript.supportingFiles[0])
+
   await t
-    .typeText(files.editor, '\nPlease consider this for publication')
-    .setFilesToUpload(files.manuscriptUpload, manuscript.file)
-    // wait for editor onChange
-    .wait(1000)
-    .setFilesToUpload(files.supportingFilesUpload, [
-      manuscript.supportingFiles[0],
-    ])
     .expect(files.supportingFile.count)
     .eql(1)
     .click(files.supportingFilesRemove)
-    .setFilesToUpload(files.supportingFilesUpload, manuscript.supportingFiles)
-    .expect(files.supportingFile.count)
-    .eql(2)
+
+  navigationHelper.uploadSupportingFiles(manuscript.supportingFiles)
+  await t.expect(files.supportingFile.count).eql(2)
 
   // uploading supporting large files - should display an error
+  navigationHelper.uploadSupportingFiles(supportingFileLarge)
   await t
-    .setFilesToUpload(files.supportingFilesUpload, [supportingFileLarge])
     .expect(files.supportingFile.count)
     .eql(3)
     .expect(files.supportingFileError.count)
     .eql(1)
-    .click(wizardStep.next)
+  navigationHelper.navigateForward()
 
   // adding manuscript metadata
-  await t
-    .expect(submission.title.value)
-    .eql(manuscript.title)
-    .click(submission.articleType)
-    .click(submission.articleTypes.nth(0))
-    .click(submission.subjectAreaLabel)
-    .pressKey('enter')
-    .pressKey('down')
-    .pressKey('enter')
-    .click(submission.discussionCheckbox)
-    .typeText(submission.discussionText, 'Spoke to Bob about another article')
-    .click(submission.previousArticleCheckbox)
-    .typeText(submission.previousArticleText, 'A title')
-    .click(submission.cosubmissionCheckbox)
-    .typeText(submission.firstCosubmissionTitle, 'Another title')
-    .click(submission.moreSubmission)
-    .typeText(submission.secondCosubmissionTitle, 'Yet another title')
-    .click(wizardStep.next)
+  await t.expect(submission.title.value).eql(manuscript.title)
+  navigationHelper.addManuscriptMetadata()
+  navigationHelper.navigateForward()
 
   // selecting suggested and excluded editors & reviewers
+  navigationHelper.openEditorsPicker()
+  navigationHelper.selectPeople([0, 2, 3, 5, 7, 9])
+  navigationHelper.closePeoplePicker()
+
+  navigationHelper.openReviewerPicker()
+  navigationHelper.selectPeople([1, 4, 6, 8, 10, 11])
+  navigationHelper.closePeoplePicker()
+
   await t
-    .click(editors.suggestedSeniorEditorSelection)
-    .click(editors.peoplePickerOptions.nth(0))
-    .click(editors.peoplePickerOptions.nth(2))
-    .click(editors.peoplePickerOptions.nth(3))
-    .click(editors.peoplePickerOptions.nth(5))
-    .click(editors.peoplePickerOptions.nth(7))
-    .click(editors.peoplePickerOptions.nth(9))
-    .click(editors.peoplePickerSubmit)
-    .click(editors.suggestedReviewingEditorSelection)
-    .click(editors.peoplePickerOptions.nth(1))
-    .click(editors.peoplePickerOptions.nth(4))
-    .click(editors.peoplePickerOptions.nth(6))
-    .click(editors.peoplePickerOptions.nth(8))
-    .click(editors.peoplePickerOptions.nth(10))
-    .click(editors.peoplePickerOptions.nth(11))
-    .click(editors.peoplePickerSubmit)
     .expect(editors.validationErrors.withText(/./).count)
     .eql(0)
     .typeText(editors.firstReviewerName, 'Edward')
@@ -162,17 +126,14 @@ test('Happy path', async t => {
     .typeText(editors.fifthReviewerEmail, 'sneha@example.net')
     .typeText(editors.sixthReviewerName, 'Emily')
     .typeText(editors.sixthReviewerEmail, 'emily@example.org')
-    .click(wizardStep.next)
+
+  navigationHelper.navigateForward()
 
   // consenting to data disclosure
-  await t
-    .typeText(disclosure.submitterName, 'Joe Bloggs')
-    .click(disclosure.consentCheckbox)
-    .click(wizardStep.submit)
-    .click(wizardStep.accept)
-
-  // thank you page
-  await t.click(thankyou.finish)
+  navigationHelper.consentDisclosure()
+  navigationHelper.submit()
+  navigationHelper.accept()
+  navigationHelper.thankyou()
 
   // dashboard
   await t
@@ -193,49 +154,53 @@ test('Happy path', async t => {
 })
 
 test('Ability to progress through the wizard is tied to validation', async t => {
-  await t
-    .navigateTo(login.url)
-    .click(login.button)
-    .click(dashboard.desktopNewSubmission)
+  const navigationHelper = new NavigationHelper(t)
+
+  navigationHelper.login()
+  navigationHelper.newSubmission()
 
   // set author details
+  navigationHelper.setAuthorName('Anne')
+  navigationHelper.setAuthorSurname('Author')
+  navigationHelper.setAuthorEmail('anne.author@life')
+  navigationHelper.setAuthorInstitution('University of eLife')
   await t
-    .typeText(author.firstNameField, 'Anne')
-    .typeText(author.secondNameField, 'Author')
-    .typeText(author.emailField, 'anne.author@life')
-    .typeText(author.institutionField, 'University of eLife')
     .expect(Selector(author.emailValidationMessage).textContent)
     .eql(
       'Must be a valid email address',
       'Error is displayed when user enters invalid email',
     )
-    .click(wizardStep.next)
-    // without this wait the tests sometimes fail on CI ¯\_(ツ)_/¯
-    .wait(1000)
+
+  navigationHelper.navigateForward()
+  // without this wait the tests sometimes fail on CI ¯\_(ツ)_/¯
+  navigationHelper.wait(1000)
+
+  await t
     .expect(getPageUrl())
     .match(author.url, 'Validation errors prevent progress to the next page')
-    .typeText(author.emailField, '.ac.uk')
-    .click(wizardStep.next)
+
+  navigationHelper.setAuthorEmail('anne.author@life.ac.uk')
+  navigationHelper.navigateForward()
+  await t
     .expect(getPageUrl())
     .match(files.url, 'Entering valid inputs enables progress to the next page')
 })
 
 test('Form entries are saved when a user navigates to the next page of the wizard', async t => {
-  await t
-    .navigateTo(login.url)
-    .click(login.button)
-    .click(dashboard.desktopNewSubmission)
+  const navigationHelper = new NavigationHelper(t)
 
-  await t
-    .typeText(author.firstNameField, 'Meghan')
-    .typeText(author.secondNameField, 'Moggy')
-    .typeText(author.emailField, 'meghan@example.com')
-    .typeText(author.institutionField, 'iTunes U')
-    .click(wizardStep.next)
+  navigationHelper.login()
+  navigationHelper.newSubmission()
+
+  navigationHelper.setAuthorName('Meghan')
+  navigationHelper.setAuthorSurname('Moggy')
+  navigationHelper.setAuthorEmail('meghan@example.com')
+  navigationHelper.setAuthorInstitution('iTunes U')
+  navigationHelper.navigateForward()
 
   // ensure save completed before reloading
   await files.editor
-  await t.click(wizardStep.back)
+  navigationHelper.navigateBack()
 
   await t
     .expect(author.firstNameField.value)
