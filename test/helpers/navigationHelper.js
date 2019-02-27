@@ -19,6 +19,10 @@ class NavigationHelper {
     await this.t.click(wizardStep.next)
   }
 
+  async navigateBack() {
+    await this.t.click(wizardStep.back)
+  }
+
   async wait(time) {
     await this.t.wait(time)
   }
@@ -35,10 +39,28 @@ class NavigationHelper {
     await this.t.click(author.orcidPrefill)
   }
 
+  async setAuthorName(name) {
+    await this.t
+      .selectText(author.firstNameField)
+      .typeText(author.firstNameField, name)
+  }
+
+  async setAuthorSurname(surname) {
+    await this.t
+      .selectText(author.secondNameField)
+      .typeText(author.secondNameField, surname)
+  }
+
   async setAuthorEmail(email) {
     await this.t
       .selectText(author.emailField)
       .typeText(author.emailField, email)
+  }
+
+  async setAuthorInstitution(institution) {
+    await this.t
+      .selectText(author.institutionField)
+      .typeText(author.institutionField, institution)
   }
 
   async fillCoverletter(text) {
