@@ -1,3 +1,3 @@
-import LandingRedirect from '.'
+import LandingRedirect from './LandingRedirect'
 
 export default LandingRedirect
