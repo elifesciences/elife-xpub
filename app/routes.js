@@ -4,6 +4,7 @@ import { Route, Switch } from 'react-router-dom'
 import { AuthenticatedComponent, Layout } from './components/global'
 import ErrorBoundary from './components/global/ErrorBoundary'
 
+import LandingRedirect from './components/pages/LandingRedirect'
 import LoginPage from './components/pages/Login'
 import LogoutPage from './components/pages/Logout/index'
 import DashboardPage from './components/pages/Dashboard'
@@ -20,6 +21,7 @@ const Routes = () => (
   <Layout>
     <ErrorBoundary>
       <Switch>
+        <TrackedRoute component={LandingRedirect} exact path="/redirect" />
         <TrackedRoute component={LoginPage} exact path="/login" />
         <TrackedRoute component={LogoutPage} exact path="/logout" />
         <TrackedRoute component={AuthorGuide} path="/author-guide" />
