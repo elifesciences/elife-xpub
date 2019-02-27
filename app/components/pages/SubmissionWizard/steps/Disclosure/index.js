@@ -19,7 +19,9 @@ const DisclosurePage = ({ values }) => {
   return (
     <React.Fragment>
       <Box mb={4}>
-        <FormH3>{values.meta.title}</FormH3>
+        <FormH3 data-hj-suppress="" data-test-id="disclosure-title">
+          {values.meta.title}
+        </FormH3>
         <Paragraph.Reading data-hj-suppress="" data-test-id="disclosure-name">
           {values.author.firstName} {values.author.lastName}
         </Paragraph.Reading>

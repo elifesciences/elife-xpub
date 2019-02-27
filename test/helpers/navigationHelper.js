@@ -8,6 +8,7 @@ import {
   submission,
   thankyou,
   wizardStep,
+  profile,
 } from '../pageObjects'
 
 class NavigationHelper {
@@ -29,6 +30,10 @@ class NavigationHelper {
 
   async login() {
     await this.t.navigateTo(login.url).click(login.button)
+  }
+
+  async openProfile() {
+    await this.t.click(profile.open)
   }
 
   async newSubmission() {
