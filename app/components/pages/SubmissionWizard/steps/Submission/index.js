@@ -71,6 +71,7 @@ const SubmissionPage = ({ values, setFieldValue, setFieldTouched }) => (
       value={values.previouslySubmitted.length}
     >
       <ValidatedField
+        component={Textarea}
         label="Please give details (including previous article title and tracking number)"
         name="previouslySubmitted.0"
       />
