@@ -15,29 +15,6 @@ describe('ping route test', () => {
   }
 
   beforeEach(() => {
-    jest.mock('config', () => ({
-      publicConfig: {
-        isPublic: true,
-        key: 'value',
-      },
-      privateConfig: {
-        secret: 'password',
-      },
-      aws: {
-        credentials: {
-          region: '',
-          accessKeyId: '',
-          secretAccessKey: '',
-        },
-        s3: {
-          s3ForcePathStyle: true,
-          params: {
-            Bucket: 'dev-elife-xpub',
-          },
-        },
-      },
-    }))
-
     routes = require('./routes')
     health.checkDataBase.mockResolvedValue(14)
     setS3Success(1)
@@ -129,29 +106,6 @@ describe('status route test', () => {
   }
 
   beforeEach(() => {
-    jest.mock('config', () => ({
-      publicConfig: {
-        isPublic: true,
-        key: 'value',
-      },
-      privateConfig: {
-        secret: 'password',
-      },
-      aws: {
-        credentials: {
-          region: '',
-          accessKeyId: '',
-          secretAccessKey: '',
-        },
-        s3: {
-          s3ForcePathStyle: true,
-          params: {
-            Bucket: 'dev-elife-xpub',
-          },
-        },
-      },
-    }))
-
     routes = require('./routes')
   })
 
