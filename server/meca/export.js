@@ -24,7 +24,7 @@ async function generate(manuscript, getContent, clientIp) {
   const manditoryFiles = [
     { filename: 'article.xml', content: articleGenerator(manuscript) },
     {
-      filename: 'cover_letter.html',
+      filename: 'cover_letter.pdf',
       content: coverLetterGenerator(manuscript),
     },
     {
