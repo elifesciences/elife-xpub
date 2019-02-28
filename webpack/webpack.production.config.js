@@ -35,7 +35,7 @@ module.exports = [
         root: path.join(__dirname, '..', '_build'),
       }),
       new HtmlWebpackPlugin({
-        title: 'xpub',
+        title: '',
         template: '../app/index-production.html',
         inject: 'body',
         packageVersion: require('../package.json').version,
