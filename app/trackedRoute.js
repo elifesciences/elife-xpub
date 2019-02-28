@@ -14,7 +14,11 @@ export default class TrackedRoute extends React.Component {
 
   render() {
     const { path } = this.props
-    document.title = config.titles[path.split('/')[1]] || 'eLife'
+    try {
+      document.title = config.titles[path.split('/')[1]] || 'eLife'
+    } catch (error) {
+      document.title = 'eLife'
+    }
     if (path !== this.lastTracked) {
       this.trackPage(path)
     }
