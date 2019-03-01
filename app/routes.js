@@ -1,7 +1,11 @@
 import React from 'react'
 import { Route, Switch } from 'react-router-dom'
 
-import { AuthenticatedComponent, Layout } from './components/global'
+import {
+  AuthenticatedComponent,
+  Layout,
+  RedirectLayout,
+} from './components/global'
 import ErrorBoundary from './components/global/ErrorBoundary'
 
 import LandingRedirect from './components/pages/LandingRedirect'
@@ -19,7 +23,9 @@ import TrackedRoute from './trackedRoute'
 
 const Routes = () => (
   <Switch>
-    <TrackedRoute component={LandingRedirect} exact path="/redirect" />
+    <RedirectLayout>
+      <TrackedRoute component={LandingRedirect} exact path="/redirect" />
+    </RedirectLayout>
     <Layout>
       <ErrorBoundary>
         <Switch>
