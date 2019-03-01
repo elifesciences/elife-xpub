@@ -118,7 +118,7 @@ module.exports = {
       recipient: '',
       sender: 'errors@elifesciences.org',
       subjectPrefix: '',
-    }
+    },
   },
   scienceBeam: {
     url: 'https://sciencebeam-texture.elifesciences.org/api/convert',
@@ -142,5 +142,14 @@ module.exports = {
     isPublic: true,
     enabled: true,
     snippetVersion: 6,
+  },
+  titles: {
+    isPublic: true,
+    '': 'Dashboard | eLife',
+    'author-guide': 'Author guide | eLife',
+    'reviewer-guide': 'Reviewer guide | eLife',
+    'contact-us': 'Contact us | eLife',
+    login: 'Login | eLife',
+    submit: 'Submit | eLife',
   },
 }
