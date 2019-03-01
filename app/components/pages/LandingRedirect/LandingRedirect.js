@@ -7,9 +7,11 @@ import ButtonLink from 'ui/atoms/ButtonLink'
 import { RedirectLayout, TwoColumnLayout } from '../../global'
 
 const ImageBlock = styled(Box)`
-  width:100%
+  width:75%
   height: 100%;
   background-image: url("/assets/redirect.png");
+  background-size: cover;
+  background-position: center;
 `
 
 const LandingRedirect = () => (
@@ -36,7 +38,7 @@ const LandingRedirect = () => (
           CONTINUE
         </ButtonLink>
       </Box>
-      <ImageBlock />
+      <ImageBlock ml="auto" />
     </TwoColumnLayout>
   </RedirectLayout>
 )
