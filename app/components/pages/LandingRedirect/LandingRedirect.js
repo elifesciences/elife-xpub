@@ -1,8 +1,10 @@
 import React from 'react'
-import { H1 } from '@pubsweet/ui'
+import { RedirectLayout } from '../../global'
 
 const LandingRedirect = () => (
-  <H1>We&#39;re redirecting you</H1>
+  <RedirectLayout>
+    <span>Hello World</span>
+  </RedirectLayout>
 )
 
 export default LandingRedirect
