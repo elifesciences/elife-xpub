@@ -42,7 +42,7 @@ module.exports = app => {
         action: 'UPDATED',
         objectId: manuscriptId,
         objectType: 'ejp.id',
-        value: status,
+        value: body.id,
       }).save()
 
     const sendEmail = () =>
