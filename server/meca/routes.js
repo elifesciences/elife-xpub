@@ -1,7 +1,7 @@
 const logger = require('@pubsweet/logger')
 const mailer = require('@pubsweet/component-send-email')
 const config = require('config')
-const { Manuscript } = require('@elifesciences/xpub-model')
+const { Manuscript, AuditLog } = require('@elifesciences/xpub-model')
 
 module.exports = app => {
   const apiKey = config.get('meca.apiKey')
@@ -37,23 +37,37 @@ module.exports = app => {
 
     const updateStatus = () => Manuscript.updateStatus(manuscriptId, status)
 
-    const sendEmail = () => mailer.send({
-      to: config.get('meca.email.recipient'),
-      from: config.get('meca.email.sender'),
-      subject: `${config.get('meca.email.subjectPrefix')}MECA import failed`,
-      text: `
+    const auditlog = () =>
+      new AuditLog({
+        action: 'UPDATED',
+        objectId: manuscriptId,
+        objectType: 'ejp.id',
+        value: status,
+      }).save()
+
+    const sendEmail = () =>
+      mailer
+        .send({
+          to: config.get('meca.email.recipient'),
+          from: config.get('meca.email.sender'),
+          subject: `${config.get(
+            'meca.email.subjectPrefix',
+          )}MECA import failed`,
+          text: `
 EJP failed to import MECA package.
 Manuscript ID: ${manuscriptId}
       `,
-    }).catch((err) => {
-      throw new Error(`MECA import failure email failed to send. ${err}`)
-    })
+        })
+        .catch(err => {
+          throw new Error(`MECA import failure email failed to send. ${err}`)
+        })
 
     updateStatus()
       .then(() => {
         if (status === Manuscript.statuses.MECA_IMPORT_FAILED) {
           return sendEmail()
         }
+        auditlog()
         return Promise.resolve()
       })
       .then(() => res.sendStatus(204))
@@ -64,6 +78,5 @@ Manuscript ID: ${manuscriptId}
         })
         res.status(500).send({ error: err.message })
       })
-
   })
 }
