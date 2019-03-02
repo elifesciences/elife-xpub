@@ -1,7 +1,11 @@
 const fs = require('fs-extra')
+const entities = require('entities')
 
-const replaceAll = (template, key, value) =>
-  template.replace(new RegExp(`{${key}}`, 'g'), value)
+const replaceAll = (template, key, value) => {
+  const encodedValue = entities.encodeXML(value)
+  return template.replace(new RegExp(`{${key}}`, 'g'), encodedValue)
+}
+
 const removeUnicode = str => str.replace(/[^\x00-\x7F]/g, '')
 
 function supplementaryXml(files) {
@@ -18,7 +22,7 @@ function supplementaryXml(files) {
 
   fileList.forEach(file => {
     supplementaryFileXml += keyList.reduce(
-      (xml, key) => replaceAll(xml, key, file[key]),
+      (xml, key) => replaceAll(xml, key, removeUnicode(file[key])),
       template,
     )
   })
@@ -55,7 +59,4 @@ function manifestGenerator(files) {
   )
 }
 
-module.exports = {
-  manifestGenerator,
-  removeUnicode,
-}
+module.exports = manifestGenerator
