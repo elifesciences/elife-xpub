@@ -63,8 +63,8 @@ Manuscript ID: ${manuscriptId}
         })
 
     updateStatus()
+      .then(auditlog)
       .then(() => {
-        auditlog()
         if (status === Manuscript.statuses.MECA_IMPORT_FAILED) {
           return sendEmail()
         }
