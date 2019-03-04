@@ -37,12 +37,12 @@ const LandingRedirect = () => (
           </Paragraph.Writing>
         </Box>
         <ButtonLink primary to="/">
-          CONTINUE
+          continue
         </ButtonLink>
       </Box>
       <ImageBlock ml="auto" />
     </TwoColumnLayout>
-    <FooterText>
+    <FooterText onlyCenterDesktop>
       Read our{' '}
       <NativeLink href="https://elifesciences.org/terms" target="_blank">
         Terms and conditions
