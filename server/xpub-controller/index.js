@@ -1,6 +1,6 @@
 const SupportingFiles = require('./supportingFiles')
 const Manuscript = require('./manuscript')
-const S3Storage = require('./client/s3Storage')
+const S3Storage = require('../xpub-client/s3Storage')
 const ScienceBeamApi = require('../xpub-client/scienceBeamApi')
 
 module.exports = {
