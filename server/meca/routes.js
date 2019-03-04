@@ -37,17 +37,23 @@ module.exports = app => {
 
     const updateStatus = () => Manuscript.updateStatus(manuscriptId, status)
 
-    const sendEmail = () => mailer.send({
-      to: config.get('meca.email.recipient'),
-      from: config.get('meca.email.sender'),
-      subject: `${config.get('meca.email.subjectPrefix')}MECA import failed`,
-      text: `
+    const sendEmail = () =>
+      mailer
+        .send({
+          to: config.get('meca.email.recipient'),
+          from: config.get('meca.email.sender'),
+          subject: `${config.get(
+            'meca.email.subjectPrefix',
+          )}MECA import failed`,
+          text: `
 EJP failed to import MECA package.
 Manuscript ID: ${manuscriptId}
+EJP Body: ${body}
       `,
-    }).catch((err) => {
-      throw new Error(`MECA import failure email failed to send. ${err}`)
-    })
+        })
+        .catch(err => {
+          throw new Error(`MECA import failure email failed to send. ${err}`)
+        })
 
     updateStatus()
       .then(() => {
@@ -64,6 +70,5 @@ Manuscript ID: ${manuscriptId}
         })
         res.status(500).send({ error: err.message })
       })
-
   })
 }
