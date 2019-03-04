@@ -46,7 +46,6 @@ test('Happy path', async t => {
   )
 
   const navigationHelper = new NavigationHelper(t)
-
   navigationHelper.login()
   navigationHelper.newSubmission()
 
@@ -211,4 +210,9 @@ test('Form entries are saved when a user navigates to the next page of the wizar
     .eql('meghan@example.com', 'Email has been saved')
     .expect(author.institutionField.value)
     .eql('iTunes U', 'Institution has been saved')
+})
+
+test('redirect page allows you to continue through app', async t => {
+  const navigationHelper = new NavigationHelper(t)
+  navigationHelper.startAtRedirectAndLogin()
 })
