@@ -3,11 +3,13 @@ import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { Box } from '@rebass/grid'
 import { th } from '@pubsweet/ui-toolkit'
+import { Link } from 'react-router-dom'
 
 import media from 'global/layout/media'
 import NavigationDropdown from 'ui/atoms/NavigationDropdown'
 import Tabs from 'ui/molecules/Tabs'
-import EjpLink from './EjpLink'
+import NativeLink from 'ui/atoms/NativeLink'
+import FooterText from 'ui/atoms/FooterText'
 
 const MobileOnlySubmissionsContainer = styled(Box).attrs({ mx: -3 })`
   border-bottom: ${th('borderWidth')} ${th('borderStyle')} ${th('colorBorder')};
@@ -35,7 +37,6 @@ class DashboardContent extends React.Component {
 
   render() {
     const { submissionViewStates } = this.props
-
     return (
       <React.Fragment>
         <MobileOnlySubmissionsContainer>
@@ -66,7 +67,14 @@ class DashboardContent extends React.Component {
             </Tabs.Panel>
           ))}
         </TabbedSubmissions>
-        <EjpLink />
+        <FooterText>
+          To find existing submissions or to submit a{' '}
+          <Link to="/author-guide/types">Research Advance</Link> please visit
+          our{' '}
+          <NativeLink href="https://submit.elifesciences.org">
+            full peer review and submissions system
+          </NativeLink>{' '}
+        </FooterText>
       </React.Fragment>
     )
   }

@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { Box } from '@rebass/grid'
 import { th } from '@pubsweet/ui-toolkit'
+import media from 'global/layout/media'
 import AppBarContainer from 'ui/atoms/AppBarContainer'
 
 const LogoWrapper = styled.span`
@@ -10,10 +11,14 @@ const LogoWrapper = styled.span`
 
 const SmallCenterer = styled(Box).attrs({
   mx: 'auto',
-  px: 3,
+  mt: 5,
+  px: 5,
   width: [1, 1, 1, 1000],
 })`
   min-width: 0;
+  ${media.tabletPortraitUp`
+  margin-top: 0;
+`};
 `
 
 const RedirectLayout = ({ children }) => (
