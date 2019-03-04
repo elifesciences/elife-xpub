@@ -1,10 +1,7 @@
 const config = require('config')
 const { User } = require('@elifesciences/xpub-model')
-const {
-  Manuscript,
-  S3Storage,
-  ScienceBeamApi,
-} = require('@elifesciences/xpub-controller')
+const { Manuscript } = require('@elifesciences/xpub-controller')
+const { S3Storage, ScienceBeamApi } = require('@elifesciences/xpub-client')
 const pubsubManager = require('pubsweet-server/src/graphql/pubsub')
 
 async function uploadManuscript(_, { file, id, fileSize }, { user }) {

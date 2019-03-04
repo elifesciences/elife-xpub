@@ -1,7 +1,7 @@
 const logger = require('@pubsweet/logger')
 const { Manuscript, User, File } = require('@elifesciences/xpub-model')
 const elifeApi = require('@elifesciences/xpub-model/entities/user/helpers/elife-api')
-const { S3Storage } = require('@elifesciences/xpub-controller')
+const { S3Storage } = require('@elifesciences/xpub-client')
 const {
   getPubsub,
   asyncIterators,

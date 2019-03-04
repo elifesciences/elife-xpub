@@ -9,7 +9,7 @@ const { createTables } = require('@pubsweet/db-manager')
 const mailer = require('@pubsweet/component-send-email')
 const { mecaExport } = require('@elifesciences/xpub-meca-export')
 const { User, Manuscript } = require('@elifesciences/xpub-model')
-const { S3Storage } = require('@elifesciences/xpub-controller')
+const { S3Storage } = require('@elifesciences/xpub-client')
 
 const { Mutation } = require('.')
 const {

@@ -1,4 +1,5 @@
-const { SupportingFiles, S3Storage } = require('@elifesciences/xpub-controller')
+const { SupportingFiles } = require('@elifesciences/xpub-controller')
+const { S3Storage } = require('@elifesciences/xpub-client')
 const { User } = require('@elifesciences/xpub-model')
 
 async function removeSupportingFiles(_, { id }, { user }) {
