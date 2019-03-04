@@ -5,7 +5,7 @@ const mailer = require('@pubsweet/component-send-email')
 const express = require('express')
 const bodyParser = require('body-parser')
 const supertest = require('supertest')
-const { Manuscript, User } = require('@elifesciences/xpub-model')
+const { Manuscript, User, AuditLog } = require('@elifesciences/xpub-model')
 const routes = require('./routes')
 
 const makeApp = () => {
@@ -106,5 +106,25 @@ describe('MECA HTTP callback handler', () => {
       .send({ result: 'success' })
       .expect(500, { error: 'Manuscript not found' })
     expect(logger.error).toHaveBeenCalled()
+  })
+
+  it('triggers the auditLog.save', async () => {
+    const manuscript = await new Manuscript({ createdBy: userId }).save()
+    const request = makeApp()
+    expect(manuscript.status).toBe(Manuscript.statuses.INITIAL)
+    await request
+      .post(`/meca-result/${manuscript.id}`)
+      .set('Authorization', `Bearer ${apiKey}`)
+      .send({ result: 'success' })
+      .expect(204)
+    const updatedManuscript = await Manuscript.find(manuscript.id, userId)
+    expect(updatedManuscript.status).toBe(
+      Manuscript.statuses.MECA_IMPORT_SUCCEEDED,
+    )
+    const audits = await AuditLog.all()
+    expect(audits).toHaveLength(2)
+    expect(audits[0].value).toBe('MECA_IMPORT_SUCCEEDED')
+    expect(audits[1].objectType).toBe('ejp.id')
+    expect(audits[1].objectId).toBe(manuscript.id)
   })
 })
