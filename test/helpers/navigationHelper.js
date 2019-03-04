@@ -9,6 +9,7 @@ import {
   thankyou,
   wizardStep,
   profile,
+  redirect,
 } from '../pageObjects'
 
 class NavigationHelper {
@@ -26,6 +27,13 @@ class NavigationHelper {
 
   async wait(time) {
     await this.t.wait(time)
+  }
+
+  async startAtRedirectAndLogin() {
+    await this.t
+      .navigateTo(redirect.url)
+      .click(redirect.button)
+      .click(login.button)
   }
 
   async login() {

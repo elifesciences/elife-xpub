@@ -6,20 +6,8 @@ import { th } from '@pubsweet/ui-toolkit'
 import NavLink from 'ui/atoms/NavLink'
 import media from 'global/layout/media'
 import BurgerMenu from 'ui/molecules/BurgerMenu'
+import AppBarContainer from 'ui/atoms/AppBarContainer'
 import ProfileMenu from './ProfileMenu'
-
-const AppBarContainer = styled(Flex)`
-  align-items: center;
-  height: ${th('space.6')};
-  border-bottom: 1px solid ${th('colorBorder')};
-  margin-bottom: 0;
-  justify-content: space-between;
-
-  ${media.tabletPortraitUp`
-    margin-bottom: ${th('space.6')};
-    justify-content: left;
-  `};
-`
 
 export const AppBarLink = styled(NavLink)`
   display: inline-block;
@@ -27,13 +15,7 @@ export const AppBarLink = styled(NavLink)`
 `
 
 const LogoLink = styled.a`
-  height: calc(9 * ${th('gridUnit')});
-  padding: ${th('space.2')};
-  margin: 0 ${th('space.2')};
-
-  img {
-    height: 100%;
-  }
+  ${th('customMixins.logoHolder')};
 `
 
 const Separator = styled.div`
