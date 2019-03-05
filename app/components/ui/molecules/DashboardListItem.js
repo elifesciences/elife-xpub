@@ -139,7 +139,12 @@ const DashboardListItem = ({ manuscript }) => {
     const date = new Date(updated)
     return (
       <ItemContent>
-        <TitleBox color={mapColor(clientStatus)} data-test-id="title" mb={3}>
+        <TitleBox
+          color={mapColor(clientStatus)}
+          data-hj-suppress=""
+          data-test-id="title"
+          mb={3}
+        >
           {title}
         </TitleBox>
         <ManuscriptStatus statusCode={clientStatus} />

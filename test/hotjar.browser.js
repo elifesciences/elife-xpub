@@ -1,7 +1,7 @@
 import { Selector } from 'testcafe'
 import config from 'config'
 import startSshServer from '@elifesciences/xpub-meca-export/test/mock-sftp-server'
-import { editors, profile, disclosure } from './pageObjects'
+import { editors, profile, disclosure, dashboard } from './pageObjects'
 import setFixtureHooks from './helpers/set-fixture-hooks'
 import NavigationHelper from './helpers/navigationHelper'
 
@@ -103,4 +103,15 @@ test('test disclousure is suppressing name', async t => {
   await new Promise((resolve, reject) =>
     server.close(err => (err ? reject(err) : resolve())),
   )
+})
+
+test('checking suppresion on dashboard once a submission has finished', async t => {
+  const navigationHelper = new NavigationHelper(t)
+  await navigationHelper.fullSubmission(manuscript)
+  await navigationHelper.wait(1000)
+  await t
+    .expect(dashboard.titles, {
+      'data-hj-suppress': '',
+    })
+    .ok()
 })
