@@ -36,7 +36,7 @@ const LandingRedirect = () => (
             You may be asked to login using ORCID.
           </Paragraph.Writing>
         </Box>
-        <ButtonLink primary to="/">
+        <ButtonLink data-test-id="redirect-continue" primary to="/">
           continue
         </ButtonLink>
       </Box>

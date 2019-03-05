@@ -214,5 +214,6 @@ test('Form entries are saved when a user navigates to the next page of the wizar
 
 test('redirect page allows you to continue through app', async t => {
   const navigationHelper = new NavigationHelper(t)
-  navigationHelper.startAtRedirectAndLogin()
+  navigationHelper.startAtRedirect()
+  await t.expect(getPageUrl()).contains('/login')
 })
