@@ -1,12 +1,12 @@
 const logger = require('@pubsweet/logger')
 const mailer = require('@pubsweet/component-send-email')
 const config = require('config')
-const { Manuscript } = require('@elifesciences/xpub-model')
+const { Manuscript, AuditLog } = require('@elifesciences/xpub-model')
 
 module.exports = app => {
   const apiKey = config.get('meca.apiKey')
 
-  app.post('/meca-result/:id', (req, res) => {
+  app.post('/meca-result/:id', async (req, res) => {
     const manuscriptId = req.params.id
     const authHeader = req.get('authorization')
     const token = authHeader && authHeader.match(/Bearer (.+)/) && RegExp.$1
@@ -27,6 +27,17 @@ module.exports = app => {
       })
       res.status(400).send({ error: 'Invalid request body' })
       return
+    }
+
+    try {
+      await new AuditLog({
+        action: 'MECA_RESULT',
+        objectId: manuscriptId,
+        objectType: 'manuscript',
+        value: JSON.stringify(body, null, 4),
+      }).save()
+    } catch (error) {
+      logger.error(`error saving audit log ${error}`)
     }
 
     logger.info('MECA callback received', { manuscriptId, body })

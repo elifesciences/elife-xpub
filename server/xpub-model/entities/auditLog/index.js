@@ -12,11 +12,11 @@ class AuditLog extends BaseModel {
         userId: { type: 'uuid' }, // Currently not used
         action: {
           type: 'string',
-          enum: ['CREATED', 'UPDATED', 'DELETED'],
+          enum: ['CREATED', 'UPDATED', 'DELETED', 'MECA_RESULT'],
         },
         value: { type: ['string', 'null'] },
         objectId: { type: 'uuid' },
-        objectType: { type: ['string', 'null'] }
+        objectType: { type: ['string', 'null'] },
       },
     }
   }
@@ -24,8 +24,6 @@ class AuditLog extends BaseModel {
   async delete() {
     throw new Error('Unsupported operation')
   }
-
 }
 
 module.exports = AuditLog
-
