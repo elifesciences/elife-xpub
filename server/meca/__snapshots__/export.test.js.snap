@@ -3,12 +3,12 @@
 exports[`MECA integration test when generating an archive should contain the correct files 1`] = `
 Object {
   "00000001.pdf": 14,
-  "00000002.pdf": 14,
-  "7de61e41-b163-4108-9198-1492e2b54a1f.pdf": 14,
+  "0_7de61e41-b163-4108-9198-1492e2b54a1f.pdf": 14,
+  "2_00000002.pdf": 14,
   "article.xml": Any<Number>,
   "cover_letter.pdf": Any<Number>,
   "disclosure.pdf": Any<Number>,
-  "manifest.xml": 2605,
+  "manifest.xml": 2617,
   "transfer.xml": 1951,
 }
 `;

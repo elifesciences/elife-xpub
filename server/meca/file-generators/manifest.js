@@ -1,12 +1,11 @@
 const fs = require('fs-extra')
 const entities = require('entities')
+const removeUnicode = require('./removeUnicode')
 
 const replaceAll = (template, key, value) => {
   const encodedValue = entities.encodeXML(value)
   return template.replace(new RegExp(`{${key}}`, 'g'), encodedValue)
 }
-
-const removeUnicode = str => str.replace(/[^\x00-\x7F]/g, '')
 
 function supplementaryXml(files) {
   const keyList = ['id', 'mimeType', 'filename']
@@ -21,10 +20,11 @@ function supplementaryXml(files) {
   )
 
   fileList.forEach(file => {
-    supplementaryFileXml += keyList.reduce(
-      (xml, key) => replaceAll(xml, key, removeUnicode(file[key])),
-      template,
-    )
+    supplementaryFileXml += keyList.reduce((xml, key) => {
+      let value = file[key]
+      if (key === 'filename') value = removeUnicode(file[key], file.index)
+      return replaceAll(xml, key, value)
+    }, template)
   })
 
   return supplementaryFileXml
@@ -47,16 +47,16 @@ function manifestGenerator(files) {
     `${__dirname}/templates/manifest.xml`,
     'utf8',
   )
+  const manuscriptFilename = removeUnicode(
+    manuscript.filename,
+    manuscript.index,
+  )
 
   const result = template
     .replace('{supplementaryFiles}', supplementaryXml(files))
     .replace('{manuscript.mimeType}', manuscript.mimeType)
 
-  return replaceAll(
-    result,
-    'manuscript.filename',
-    removeUnicode(manuscript.filename),
-  )
+  return replaceAll(result, 'manuscript.filename', manuscriptFilename)
 }
 
 module.exports = manifestGenerator

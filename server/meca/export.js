@@ -10,12 +10,13 @@ const manifestGenerator = require('./file-generators/manifest')
 const upload = require('./services/upload')
 
 async function generate(manuscript, getContent, clientIp) {
-  const uploadedFiles = manuscript.files.map(file => ({
+  const uploadedFiles = manuscript.files.map((file, index) => ({
     id: file.id,
     filename: file.filename,
     content: getContent(file),
     type: file.type,
     mimeType: file.mimeType,
+    index,
   }))
 
   const manditoryFiles = [
