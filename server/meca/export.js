@@ -5,17 +5,14 @@ const coverLetterGenerator = require('./file-generators/coverLetter')
 const disclosureGenerator = require('./file-generators/disclosure')
 const transferGenerator = require('./file-generators/transfer')
 const archiveGenerator = require('./file-generators/archive')
-const {
-  manifestGenerator,
-  removeUnicode,
-} = require('./file-generators/manifest')
+const manifestGenerator = require('./file-generators/manifest')
 
 const upload = require('./services/upload')
 
 async function generate(manuscript, getContent, clientIp) {
   const uploadedFiles = manuscript.files.map(file => ({
     id: file.id,
-    filename: removeUnicode(file.filename),
+    filename: file.filename,
     content: getContent(file),
     type: file.type,
     mimeType: file.mimeType,

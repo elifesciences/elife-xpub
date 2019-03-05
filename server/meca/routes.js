@@ -56,6 +56,7 @@ module.exports = app => {
           text: `
 EJP failed to import MECA package.
 Manuscript ID: ${manuscriptId}
+EJP Body: ${body}
       `,
         })
         .catch(err => {

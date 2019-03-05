@@ -1,6 +1,7 @@
 /* eslint-disable import/extensions */
 import * as elements from './elements'
 import * as icons from './icons'
+import * as customMixins from './customMixins'
 
 const gridUnit = 6
 
@@ -80,6 +81,7 @@ export default {
     'xpub-edit': elements.xpubEdit,
   },
 
+  customMixins,
   icons: {
     '@pubsweet-pending.PeoplePicker.PersonPod.Add': icons.Add,
     '@pubsweet-pending.PeoplePicker.PersonPod.Remove': icons.Trash,
@@ -99,4 +101,3 @@ export default {
     cross: icons.Cross,
   },
 }
-

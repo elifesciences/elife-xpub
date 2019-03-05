@@ -1,5 +1,4 @@
 const { createTables } = require('@pubsweet/db-manager')
-const xml2json = require('xml2json')
 const JsZip = require('jszip')
 const config = require('config')
 const Replay = require('replay')
@@ -51,20 +50,6 @@ describe('MECA integration test', () => {
   })
 
   describe('when generating an archive', () => {
-    it('manifest file is good', async () => {
-      await mecaExport(sampleManuscript, file => 'This is a test')
-
-      const finalName = `${sampleManuscript.id}${mecaPostfix}`
-      const zip = await JsZip.loadAsync(
-        sftp.mockFs.readFileSync(`/test/${finalName}`),
-      )
-
-      const manifest = await zip.files['manifest.xml'].async('string')
-      const manifestJson = JSON.parse(xml2json.toJson(manifest))
-
-      expect(manifestJson).toMatchSnapshot()
-    })
-
     it('should contain the correct files', async () => {
       await mecaExport(sampleManuscript, file => 'This is a test')
 
