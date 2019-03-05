@@ -73,6 +73,14 @@ const StyledPod = styled(Flex)`
   height: 120px;
 `
 
+// This is needed for legacy safari support
+const ButtonContainer = styled(Flex).attrs({
+  flexDirection: 'column',
+  justifyContent: 'center',
+})`
+  height: 100%;
+`
+
 const PodContainer = ({
   isSelectButtonClickable,
   togglePersonSelection,
@@ -82,7 +90,7 @@ const PodContainer = ({
 }) => (
   <StyledPod justifyContent="space-between">
     {children}
-    <Flex flexDirection="column" justifyContent="center">
+    <ButtonContainer>
       {selectButtonType === 'remove' && (
         <StyledButton
           data-test-id="person-pod-button"
@@ -113,7 +121,7 @@ const PodContainer = ({
           <StyledAddIcon />
         </StyledButton>
       )}
-    </Flex>
+    </ButtonContainer>
   </StyledPod>
 )
 
