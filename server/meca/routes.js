@@ -6,7 +6,7 @@ const { Manuscript, AuditLog } = require('@elifesciences/xpub-model')
 module.exports = app => {
   const apiKey = config.get('meca.apiKey')
 
-  app.post('/meca-result/:id', (req, res) => {
+  app.post('/meca-result/:id', async (req, res) => {
     const manuscriptId = req.params.id
     const authHeader = req.get('authorization')
     const token = authHeader && authHeader.match(/Bearer (.+)/) && RegExp.$1
@@ -29,6 +29,17 @@ module.exports = app => {
       return
     }
 
+    try {
+      await new AuditLog({
+        action: 'RECORD',
+        objectId: manuscriptId,
+        objectType: 'ejp',
+        value: JSON.stringify(body, null, 4),
+      }).save()
+    } catch (error) {
+      console.log(error)
+    }
+
     logger.info('MECA callback received', { manuscriptId, body })
     const status =
       body.result === 'success'
@@ -36,14 +47,6 @@ module.exports = app => {
         : Manuscript.statuses.MECA_IMPORT_FAILED
 
     const updateStatus = () => Manuscript.updateStatus(manuscriptId, status)
-
-    const auditlog = () =>
-      new AuditLog({
-        action: 'UPDATED',
-        objectId: manuscriptId,
-        objectType: 'ejp.id',
-        value: body.id,
-      }).save()
 
     const sendEmail = () =>
       mailer
@@ -64,7 +67,6 @@ EJP Body: ${body}
         })
 
     updateStatus()
-      .then(auditlog)
       .then(() => {
         if (status === Manuscript.statuses.MECA_IMPORT_FAILED) {
           return sendEmail()
