@@ -29,11 +29,8 @@ class NavigationHelper {
     await this.t.wait(time)
   }
 
-  async startAtRedirectAndLogin() {
-    await this.t
-      .navigateTo(redirect.url)
-      .click(redirect.button)
-      .click(login.button)
+  async startAtRedirect() {
+    await this.t.navigateTo(redirect.url).click(redirect.button)
   }
 
   async login() {
