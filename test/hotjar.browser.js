@@ -1,7 +1,13 @@
 import { Selector } from 'testcafe'
 import config from 'config'
 import startSshServer from '@elifesciences/xpub-meca-export/test/mock-sftp-server'
-import { editors, profile, disclosure, dashboard } from './pageObjects'
+import {
+  editors,
+  profile,
+  disclosure,
+  dashboard,
+  thankyou,
+} from './pageObjects'
 import setFixtureHooks from './helpers/set-fixture-hooks'
 import NavigationHelper from './helpers/navigationHelper'
 
@@ -111,6 +117,19 @@ test('checking suppresion on dashboard once a submission has finished', async t 
   await navigationHelper.wait(1000)
   await t
     .expect(dashboard.titles, {
+      'data-hj-suppress': '',
+    })
+    .ok()
+})
+
+test('checking suppresion on the thankyou page', async t => {
+  const navigationHelper = new NavigationHelper(t)
+  await navigationHelper.paricialSubmissionThankyou(manuscript)
+  await navigationHelper.consentDisclosure()
+  await navigationHelper.submit()
+  await navigationHelper.accept()
+  await t
+    .expect(thankyou.title, {
       'data-hj-suppress': '',
     })
     .ok()
