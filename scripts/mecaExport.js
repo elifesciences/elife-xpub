@@ -1,6 +1,6 @@
 const { db } = require('pubsweet-server')
 const { mecaExport } = require('@elifesciences/xpub-meca-export')
-const { S3Storage } = require('@elifesciences/xpub-controller')
+const { S3Storage } = require('@elifesciences/xpub-client')
 const { Manuscript } = require('@elifesciences/xpub-model')
 
 const doExport = async (id, getContent, ip) => {
