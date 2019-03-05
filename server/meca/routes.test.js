@@ -124,6 +124,6 @@ describe('MECA HTTP callback handler', () => {
     const audits = await AuditLog.all()
     expect(audits).toHaveLength(2)
     expect(audits[0].objectType).toBe('ejp')
-    expect(audits[0].action).toBe('RECORD')
+    expect(audits[0].action).toBe('MECA_RESULT')
   })
 })

@@ -31,13 +31,13 @@ module.exports = app => {
 
     try {
       await new AuditLog({
-        action: 'RECORD',
+        action: 'MECA_RESULT',
         objectId: manuscriptId,
-        objectType: 'ejp',
+        objectType: 'manuscript',
         value: JSON.stringify(body, null, 4),
       }).save()
     } catch (error) {
-      console.log(error)
+      logger.error(`error saving audit log ${error}`)
     }
 
     logger.info('MECA callback received', { manuscriptId, body })
