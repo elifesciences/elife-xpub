@@ -59,7 +59,7 @@
     ]
   },
   "jest": {
-    "collectCoverage": true,
+    "collectCoverage": false,
     "collectCoverageFrom": [
       "<rootDir>/{client,app,server}/**/*.js",
       "!**/*.{config,test}.js"
