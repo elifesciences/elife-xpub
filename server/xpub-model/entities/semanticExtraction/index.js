@@ -16,6 +16,14 @@ class SemanticExtraction extends BaseModel {
     }
   }
 
+  static createTitleEntity(manuscriptId, value) {
+    return new SemanticExtraction({
+      manuscriptId,
+      fieldName: 'title',
+      value,
+    })
+  }
+
   async delete() {
     throw new Error('Unsupported operation')
   }

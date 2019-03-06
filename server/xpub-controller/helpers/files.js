@@ -127,11 +127,10 @@ class FilesHelper {
       })
     }
 
-    const semanticExtractionEntity = new SemanticExtractionModel({
+    const semanticExtractionEntity = SemanticExtractionModel.createTitleEntity(
       manuscriptId,
-      fieldName: 'title',
-      value: title,
-    })
+      title,
+    )
     await semanticExtractionEntity.save()
 
     return title
