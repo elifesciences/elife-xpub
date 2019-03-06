@@ -141,8 +141,14 @@ describe('Manuscript', () => {
   })
 
   describe('get fileStatus()', () => {
-    describe.skip('given there are no files', () => {
-      it('returns READY')
+    describe('given there are no files', () => {
+      it('returns READY', () => {
+        const manuscript = new Manuscript({
+          createdBy: userId,
+        })
+        manuscript.files = []
+        expect(manuscript.fileStatus).toEqual('READY')
+      })
     })
 
     describe.skip('given there is a single manuscript file', () => {

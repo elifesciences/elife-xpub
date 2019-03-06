@@ -93,7 +93,7 @@ class Manuscript extends BaseModel {
   }
 
   get fileStatus() {
-    return 'READY'
+    if(this.files.length === 0) return 'READY'
   }
 
   static get statuses() {
