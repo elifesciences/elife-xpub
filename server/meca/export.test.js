@@ -1,4 +1,5 @@
 const { createTables } = require('@pubsweet/db-manager')
+const xml2json = require('xml2json')
 const JsZip = require('jszip')
 const config = require('config')
 const Replay = require('replay')
@@ -57,6 +58,9 @@ describe('MECA integration test', () => {
       const zip = await JsZip.loadAsync(
         sftp.mockFs.readFileSync(`/test/${finalName}`),
       )
+      const manifest = await zip.files['manifest.xml'].async('string')
+      const manifestJson = JSON.parse(xml2json.toJson(manifest))
+      const mfFiles = manifestJson.manifest.item.map(item => item.instance.href)
 
       expect(getFileSizes(zip)).toMatchSnapshot({
         'article.xml': expect.any(Number),
@@ -64,16 +68,23 @@ describe('MECA integration test', () => {
         'disclosure.pdf': expect.any(Number),
       })
 
-      expect(getFilenames(zip)).toEqual([
+      const expectedFiles = [
         '00000001.pdf',
-        '00000002.pdf',
-        '7de61e41-b163-4108-9198-1492e2b54a1f.pdf',
+        '0_7de61e41-b163-4108-9198-1492e2b54a1f.pdf',
+        '2_00000002.pdf',
         'article.xml',
         'cover_letter.pdf',
         'disclosure.pdf',
         'manifest.xml',
         'transfer.xml',
-      ])
+      ]
+
+      expectedFiles.forEach(expectedFile => {
+        if (expectedFile !== 'manifest.xml')
+          expect(mfFiles).toContain(expectedFile)
+      })
+
+      expect(getFilenames(zip)).toEqual(expectedFiles)
     })
   })
 

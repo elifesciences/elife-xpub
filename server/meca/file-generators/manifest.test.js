@@ -4,7 +4,13 @@ const sampleManuscript = require('./article.test.data')
 
 describe('Manifest XML generator', () => {
   it('returns required items', () => {
-    const xml = manifestGenerator(sampleManuscript.files)
+    // simulate what export does - append the index property to the file objects
+    // that are passed into manifestGenerator.
+    const files = sampleManuscript.files.map((file, index) => ({
+      ...file,
+      index,
+    }))
+    const xml = manifestGenerator(files)
 
     // has article xml
     expect(xml).toContain(
