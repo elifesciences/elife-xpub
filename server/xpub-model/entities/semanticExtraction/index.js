@@ -1,6 +1,6 @@
 const BaseModel = require('@pubsweet/base-model')
 
-class AuditLog extends BaseModel {
+class SemanticExtraction extends BaseModel {
   static get tableName() {
     return 'semantic_extraction'
   }
@@ -21,4 +21,4 @@ class AuditLog extends BaseModel {
   }
 }
 
-module.exports = AuditLog
+module.exports = SemanticExtraction
