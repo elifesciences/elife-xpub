@@ -140,10 +140,13 @@ describe('Manuscript', () => {
     })
   })
 
-  describe('fileStatus()', () => {
-    it('is a virtual attribute', () => {
-      const manuscript = new Manuscript({})
-      expect(manuscript).toHaveProperty(fileStatus)
+  describe('get fileStatus()', () => {
+    it('can be saved', async () => {
+      const manuscript = new Manuscript({
+        createdBy: userId,
+      })
+      expect(manuscript.fileStatus).toBe('READY')
+      await manuscript.save()
     })
   })
 
