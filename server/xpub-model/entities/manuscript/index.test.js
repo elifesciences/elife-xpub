@@ -140,6 +140,13 @@ describe('Manuscript', () => {
     })
   })
 
+  describe('fileStatus()', () => {
+    it('is a virtual attribute', () => {
+      const manuscript = new Manuscript({})
+      expect(manuscript).toHaveProperty(fileStatus)
+    })
+  })
+
   describe('addTeam()', () => {
     it('adds team', () => {
       const team = {

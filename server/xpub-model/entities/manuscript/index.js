@@ -92,6 +92,14 @@ class Manuscript extends BaseModel {
     }
   }
 
+  static get virtualAttributes() {
+    return ['fileStatus'];
+  }
+
+  fileStatus() {
+    return null
+  }
+
   static get statuses() {
     return {
       INITIAL: 'INITIAL',
