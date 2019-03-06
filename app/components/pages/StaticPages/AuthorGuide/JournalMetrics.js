@@ -13,7 +13,7 @@ const JournalMetrics = () => (
       We provide the charts below to offer greater transparency about our
       submission volumes and decision times.
     </Paragraph.Reading>
-    <Paragraph.Reading>Last updated: August 20, 2018</Paragraph.Reading>
+    <Paragraph.Reading>Last updated: March 6, 2019</Paragraph.Reading>
 
     <H2>1. Number of eLife submissions</H2>
     <Paragraph.Reading>
