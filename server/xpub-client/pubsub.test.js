@@ -1,5 +1,5 @@
 jest.useFakeTimers()
-const PubsubClient = require('.')
+const PubsubClient = require('./pubsub.js')
 
 const createPubsubManager = mockGet => ({ getPubsub: mockGet })
 const createPubsub = (mockGetPubsub, mockPubsub = {}) => {
