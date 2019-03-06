@@ -141,18 +141,18 @@ describe('Manuscript', () => {
   })
 
   describe('get fileStatus()', () => {
-    describe('given there are no files', () => {
+    describe.skip('given there are no files', () => {
       it('returns READY')
     })
 
-    describe('given there is a single manuscript file', () => {
+    describe.skip('given there is a single manuscript file', () => {
       it('returns READY when the file is stored')
       it('returns READY when the file upload was cancelled')
       it('returns CHANGING when the file has been uploaded to the app server')
       it('returns CHANGING when the file has been created in the database')
     })
 
-    describe('given there is a manuscript file and a supporting file', () => {
+    describe.skip('given there is a manuscript file and a supporting file', () => {
       it('returns READY when both files are stored')
       it('returns READY when both files are cancelled')
       it('returns READY when one file is stored and once is cancelled')
@@ -162,7 +162,7 @@ describe('Manuscript', () => {
       it('returns CHANGING when both files have been created in the database')
     })
 
-    describe('given there is a manuscript file and multiple supporting files', () => {
+    describe.skip('given there is a manuscript file and multiple supporting files', () => {
       it('returns READY when all files are stored')
       it('returns READY when all files are cancelled')
       it('returns CHANGING when all files have been uploaded to the app server')
