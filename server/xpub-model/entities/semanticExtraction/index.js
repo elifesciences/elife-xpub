@@ -7,7 +7,7 @@ class AuditLog extends BaseModel {
 
   static get schema() {
     return {
-      required: ['manuscriptId', 'fieldName', 'value'],
+      required: ['manuscriptId', 'fieldName'],
       properties: {
         manuscriptId: { type: 'uuid' },
         fieldName: { type: 'string' },
