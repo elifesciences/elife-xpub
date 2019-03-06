@@ -1,5 +1,7 @@
 const logger = require('@pubsweet/logger')
 const FileModel = require('@elifesciences/xpub-model').File
+const SemanticExtractionModel = require('@elifesciences/xpub-model')
+  .SemanticExtraction
 
 class FilesHelper {
   constructor(config, scienceBeamApi) {
@@ -40,10 +42,7 @@ class FilesHelper {
     predictedTime,
     manuscriptId,
   ) {
-    if (
-      manuscriptId.length === 36 &&
-      predictedTime > 0
-    ) {
+    if (manuscriptId.length === 36 && predictedTime > 0) {
       return () => {
         const elapsed = Date.now() - startedTime
         let progress = parseInt((100 * elapsed) / 1000 / predictedTime, 10)
@@ -127,6 +126,14 @@ class FilesHelper {
         filename,
       })
     }
+
+    const semanticExtractionEntity = new SemanticExtractionModel({
+      manuscriptId,
+      fieldName: 'title',
+      value: title,
+    })
+    await semanticExtractionEntity.save()
+
     return title
   }
 
