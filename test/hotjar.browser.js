@@ -1,7 +1,13 @@
 import { Selector } from 'testcafe'
 import config from 'config'
 import startSshServer from '@elifesciences/xpub-meca-export/test/mock-sftp-server'
-import { editors, profile, disclosure } from './pageObjects'
+import {
+  editors,
+  profile,
+  disclosure,
+  dashboard,
+  thankyou,
+} from './pageObjects'
 import setFixtureHooks from './helpers/set-fixture-hooks'
 import NavigationHelper from './helpers/navigationHelper'
 
@@ -17,20 +23,17 @@ const manuscript = {
   ],
 }
 
-test('test suppression is in place for the name', async t => {
+test('test suppressions', async t => {
+  const { server } = await startSshServer(
+    config.get('meca.sftp.connectionOptions.port'),
+  )
+
   const navigationHelper = new NavigationHelper(t)
 
   navigationHelper.login()
-  navigationHelper.wait(1000)
   navigationHelper.openProfile()
 
   await t.expect(profile.name, { 'data-hj-suppress': '' }).ok()
-})
-
-test('test suppression is in place for the coverletter', async t => {
-  const navigationHelper = new NavigationHelper(t)
-
-  navigationHelper.login()
   navigationHelper.newSubmission()
 
   // author's page
@@ -44,24 +47,6 @@ test('test suppression is in place for the coverletter', async t => {
       'data-hj-suppress': '',
     })
     .ok()
-})
-
-test('test disclousure is suppressing name', async t => {
-  const { server } = await startSshServer(
-    config.get('meca.sftp.connectionOptions.port'),
-  )
-
-  const navigationHelper = new NavigationHelper(t)
-
-  navigationHelper.login()
-  navigationHelper.newSubmission()
-
-  // author's page
-  navigationHelper.preFillAuthorDetailsWithOrcid()
-  navigationHelper.setAuthorEmail('example@example.org')
-  navigationHelper.navigateForward()
-
-  // files' page
   navigationHelper.fillCoverletter('\nPlease consider this for publication')
   navigationHelper.uploadManuscript(manuscript)
   navigationHelper.wait(1000)
@@ -96,6 +81,21 @@ test('test disclousure is suppressing name', async t => {
     })
     .ok()
     .expect(disclosure.title, {
+      'data-hj-suppress': '',
+    })
+    .ok()
+  navigationHelper.consentDisclosure()
+  navigationHelper.submit()
+  navigationHelper.accept()
+  await t
+    .expect(thankyou.title, {
+      'data-hj-suppress': '',
+    })
+    .ok()
+
+  navigationHelper.thankyou()
+  await t
+    .expect(dashboard.titles, {
       'data-hj-suppress': '',
     })
     .ok()

@@ -31,7 +31,7 @@ class ThankYou extends React.Component {
     return (
       <CenteredContent mx="auto" width={[1, 1, 1, 600]}>
         <H1>Thank you</H1>
-        <Paragraph.Reading>
+        <Paragraph.Reading data-hj-suppress="" data-test-id="title">
           Your submission, &quot;
           {title}
           &quot; has been received.

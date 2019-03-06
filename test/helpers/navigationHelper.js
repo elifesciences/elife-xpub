@@ -138,6 +138,52 @@ class NavigationHelper {
   async thankyou() {
     await this.t.click(thankyou.finish)
   }
+
+  async paricialSubmissionThankyou(manuscript) {
+    this.login()
+    this.newSubmission()
+
+    // author's page
+    this.preFillAuthorDetailsWithOrcid()
+    this.setAuthorEmail('example@example.org')
+    this.navigateForward()
+
+    // files' page
+    this.fillCoverletter('\nPlease consider this for publication')
+    this.uploadManuscript(manuscript)
+    this.wait(1000)
+    this.navigateForward()
+
+    // submission metadata
+    this.addManuscriptMetadata()
+    this.navigateForward()
+
+    // editor's page
+    this.openEditorsPicker()
+    this.selectPeople([0, 2, 3])
+    this.closePeoplePicker()
+
+    this.openReviewerPicker()
+    this.selectPeople([1, 4, 6])
+    this.closePeoplePicker()
+
+    await this.t
+      .typeText(editors.firstReviewerName, 'Edward')
+      .typeText(editors.firstReviewerEmail, 'edward@example.com')
+      .typeText(editors.secondReviewerName, 'Frances')
+      .typeText(editors.secondReviewerEmail, 'frances@example.net')
+      .typeText(editors.thirdReviewerName, 'George')
+      .typeText(editors.thirdReviewerEmail, 'george@example.org')
+    this.navigateForward()
+  }
+
+  async fullSubmission(manuscript) {
+    await this.paricialSubmissionThankyou(manuscript)
+    await this.consentDisclosure()
+    await this.submit()
+    await this.accept()
+    await this.thankyou()
+  }
 }
 
 export default NavigationHelper
