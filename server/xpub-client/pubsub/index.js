@@ -9,6 +9,10 @@ class PubsubClient {
     this.pubsub = await this.manager.getPubsub()
   }
 
+  publish(message, dataCallback) {
+    this.pubsub.publish(message, dataCallback())
+  }
+
   startPublishingOnInterval(message, dataCallback, interval) {
     this.publishingInterval = setInterval(
       () => this.pubsub.publish(message, dataCallback()),
