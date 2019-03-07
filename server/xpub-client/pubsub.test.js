@@ -32,36 +32,9 @@ describe('PubsubClient', () => {
       const pubsub = createPubsub(null, mockPubsub)
       await pubsub.initialize()
 
-      pubsub.startPublishingOnInterval(UPLOAD_MESSAGE, () => mockMessage, 1000)
-      expect(mockPublish).toHaveBeenCalledTimes(0)
-
-      jest.advanceTimersByTime(1000)
-
+      pubsub.publish(UPLOAD_MESSAGE, () => mockMessage, 1000)
       expect(mockPublish).toHaveBeenCalledTimes(1)
       expect(mockPublish).toBeCalledWith(UPLOAD_MESSAGE, mockMessage)
-    })
-
-    it('publishes a final message if a message and dataCallback are passed', async () => {
-      const mockPublish = jest.fn()
-      const mockPubsub = { publish: mockPublish }
-      const pubsub = createPubsub(null, mockPubsub)
-      await pubsub.initialize()
-
-      const startIntervalAndStopWithArguments = (message, data) => {
-        pubsub.startPublishingOnInterval('', () => {}, 1000)
-        expect(mockPublish).toHaveBeenCalledTimes(0)
-        pubsub.stopPublishingOnInterval(message, data)
-      }
-
-      startIntervalAndStopWithArguments()
-      expect(mockPublish).toHaveBeenCalledTimes(0)
-
-      startIntervalAndStopWithArguments('foo')
-      expect(mockPublish).toHaveBeenCalledTimes(0)
-
-      // Must be passed both params
-      startIntervalAndStopWithArguments('foo', () => {})
-      expect(mockPublish).toHaveBeenCalledTimes(1)
     })
   })
 
@@ -79,6 +52,23 @@ describe('PubsubClient', () => {
         expect.any(Function),
         intervalTime,
       )
+    })
+
+    it('calls pubsub.publish and uses the callback to get the message value', async () => {
+      const UPLOAD_MESSAGE = 'UPLOAD_MESSAGE'
+      const mockMessage = { foo: 'bar' }
+      const mockPublish = jest.fn()
+
+      const mockPubsub = { publish: mockPublish }
+      const pubsub = createPubsub(null, mockPubsub)
+      await pubsub.initialize()
+
+      pubsub.startPublishingOnInterval(UPLOAD_MESSAGE, () => mockMessage, 1000)
+      expect(mockPublish).toHaveBeenCalledTimes(0)
+
+      jest.advanceTimersByTime(1000)
+
+      expect(mockPublish).toHaveBeenCalledTimes(1)
     })
 
     it('stores the interval as an object property', async () => {
@@ -112,6 +102,29 @@ describe('PubsubClient', () => {
 
       jest.advanceTimersByTime(1000)
 
+      expect(mockPublish).toHaveBeenCalledTimes(1)
+    })
+
+    it('publishes a final message if a message and dataCallback are passed', async () => {
+      const mockPublish = jest.fn()
+      const mockPubsub = { publish: mockPublish }
+      const pubsub = createPubsub(null, mockPubsub)
+      await pubsub.initialize()
+
+      const startIntervalAndStopWithArguments = (message, data) => {
+        pubsub.startPublishingOnInterval('', () => {}, 1000)
+        expect(mockPublish).toHaveBeenCalledTimes(0)
+        pubsub.stopPublishingOnInterval(message, data)
+      }
+
+      startIntervalAndStopWithArguments()
+      expect(mockPublish).toHaveBeenCalledTimes(0)
+
+      startIntervalAndStopWithArguments('foo')
+      expect(mockPublish).toHaveBeenCalledTimes(0)
+
+      // Must be passed both params
+      startIntervalAndStopWithArguments('foo', () => {})
       expect(mockPublish).toHaveBeenCalledTimes(1)
     })
   })

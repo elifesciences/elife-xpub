@@ -15,7 +15,7 @@ class PubsubClient {
 
   startPublishingOnInterval(message, dataCallback, interval) {
     this.publishingInterval = setInterval(
-      () => this.publish(message, dataCallback),
+      () => this.pubsub.publish(message, dataCallback()),
       interval,
     )
   }
@@ -25,7 +25,7 @@ class PubsubClient {
     this.publishingInterval = null
 
     if (message && dataCallback) {
-      this.publish(message, dataCallback)
+      this.pubsub.publish(message, dataCallback())
     }
   }
 }
