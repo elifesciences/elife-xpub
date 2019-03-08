@@ -3,16 +3,21 @@ const uuid = require('uuid')
 const stream = require('stream')
 const { createTables } = require('@pubsweet/db-manager')
 const logger = require('@pubsweet/logger')
-const ManuscriptModel = require('@elifesciences/xpub-model').Manuscript
+const {
+  SemanticExtraction,
+  Manuscript: ManuscriptModel,
+} = require('@elifesciences/xpub-model')
 const FilesHelper = require('./files')
 
-const filesHelper = new FilesHelper(config)
+const getFilesHelper = scienceBeamApi => new FilesHelper(config, scienceBeamApi)
 
 describe('FilesHelper', () => {
   describe('validateFileSize', () => {
     const maxSize = config.get('fileUpload.maxSizeMB')
     const invalidFileSize = (maxSize + 1) * 1e6
     const validFileSize = (maxSize - 1) * 1e6
+
+    const filesHelper = getFilesHelper()
 
     it('throws an error if the file size is larger than maximum size', () => {
       expect(() => filesHelper.validateFileSize(invalidFileSize)).toThrow(
@@ -186,6 +191,29 @@ describe('FilesHelper', () => {
       expect(logger.warn).toHaveBeenCalledWith(
         'Reported file size for manuscript is different than the actual file size',
       )
+    })
+  })
+
+  describe('extractFileTitle', () => {
+    it('creates a semantic extraction entry when extracting the file title', async () => {
+      const fileTitle = 'Mock File Title'
+      const mockScienceBeamApi = { extractSemantics: () => fileTitle }
+      const filesHelper = getFilesHelper(mockScienceBeamApi)
+      const userId = uuid()
+      await createTables(true)
+
+      const { id } = await new ManuscriptModel({ createdBy: userId }).save()
+
+      await filesHelper.extractFileTitle(null, null, null, id)
+
+      const semanticExtractions = await SemanticExtraction.all()
+
+      expect(semanticExtractions).toHaveLength(1)
+      expect(semanticExtractions[0]).toMatchObject({
+        manuscriptId: id,
+        fieldName: 'title',
+        value: fileTitle,
+      })
     })
   })
 })

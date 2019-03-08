@@ -4,6 +4,7 @@ const Manuscript = require('./entities/manuscript')
 const Team = require('./entities/team')
 const User = require('./entities/user')
 const AuditLog = require('./entities/auditLog')
+const SemanticExtraction = require('./entities/semanticExtraction')
 
 module.exports = {
   File,
@@ -11,5 +12,6 @@ module.exports = {
   Manuscript,
   Team,
   User,
-  AuditLog
+  AuditLog,
+  SemanticExtraction,
 }
