@@ -38,7 +38,6 @@
     "styleguide": "styleguidist server",
     "test": "NODE_CONFIG_ENV=test jest --runInBand",
     "test:browser": "NODE_CONFIG_ENV=test NODE_ENV=production DEBUG=replay testcafe --concurrency 1 \"${BROWSER:-chrome}\" 'test/**/*.browser.js'",
-    "test:ci": "NODE_CONFIG_ENV=test jest --runInBand --coverage",
     "test:dependencies": "check-yarn-dupes react react-dom styled-components pubsweet-server",
     "update": "yarn upgrade-interactive --latest"
   },
@@ -60,7 +59,7 @@
     ]
   },
   "jest": {
-    "collectCoverage": false,
+    "collectCoverage": true,
     "collectCoverageFrom": [
       "<rootDir>/{client,app,server}/**/*.js",
       "!**/*.{config,test}.js"
