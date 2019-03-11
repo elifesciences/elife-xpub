@@ -23,10 +23,8 @@ elifePipeline {
                 },
                 'test': {
                     withCommitStatus({
-                        sh "IMAGE_TAG=${commit} docker-compose -f docker-compose.yml -f docker-compose.ci.yml run --rm --name elife-xpub_app_test app npm test"
                         sh "vault.sh kv get -field token secret/containers/elife-xpub/codecov > .codecov-token"
-                        sh "ls -l .codecov-token"
-                        sh "curl -s https://codecov.collibra.com/bash | bash -s elife-xpub/coverage -- -t @.codecov-token"
+                        sh "IMAGE_TAG=${commit} docker-compose -f docker-compose.yml -f docker-compose.ci.yml run -e CODECOV_TOKEN=$(cat .codecov-token) --rm --name elife-xpub_app_test app npm run test-ci"
                     }, 'test', commit)
                 },
                 'test:dependencies': {
