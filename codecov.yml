@@ -8,7 +8,12 @@ codecov:
   range: '70...100'
 
    status:
-    project: yes
+    project:
+       default:
+        # basic
+        target: auto
+        threshold: null
+        base: auto 
     patch: yes
     changes: no
 
