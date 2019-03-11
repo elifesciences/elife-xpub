@@ -130,4 +130,4 @@ MTTR: 02:40
 - Make fallback more specific in cases where it should hard fail and where it shouldn't e.g. `master-server` boostrap, `elife-xpub-formula` testing environments
 - [New Relic client side monitoring](https://github.com/elifesciences/elife-xpub/issues/1464)
 - [New Relic server side monitoring](https://rpm.newrelic.com/accounts/1451451/applications/162983119/filterable_errors#/table?top_facet=transactionUiName&barchart=barchart) is under-reporting errors
-- xpub UI should show an error (issue already raised, but to be linked here)
+- [User sees both interstitial pages](https://github.com/elifesciences/elife-xpub/issues/1652)
