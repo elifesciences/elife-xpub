@@ -24,7 +24,7 @@ elifePipeline {
                 'test': {
                     withCommitStatus({
                         sh "vault.sh kv get -field token secret/containers/elife-xpub/codecov > .codecov-token"
-                        sh "IMAGE_TAG=${commit} docker-compose -f docker-compose.yml -f docker-compose.ci.yml run -e CODECOV_TOKEN=$(cat .codecov-token) --rm --name elife-xpub_app_test app npm run test-ci"
+                        sh "IMAGE_TAG=${commit} docker-compose -f docker-compose.yml -f docker-compose.ci.yml run -e CODECOV_TOKEN=\$(cat .codecov-token) --rm --name elife-xpub_app_test app npm run test-ci"
                     }, 'test', commit)
                 },
                 'test:dependencies': {
