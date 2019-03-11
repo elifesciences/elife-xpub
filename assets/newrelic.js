@@ -5,39 +5,37 @@
  */
 
 window.NREUM || (NREUM = {}),
-  (__nr_require = (function(t, n, e) {
-    function r(e) {
-      if (!n[e]) {
-        var o = (n[e] = {
-          exports: {},
-        })
-        t[e][0].call(
+  (__nr_require = (function(t, e, n) {
+    function r(n) {
+      if (!e[n]) {
+        var o = (e[n] = { exports: {} })
+        t[n][0].call(
           o.exports,
-          function(n) {
-            var o = t[e][1][n]
-            return r(o || n)
+          function(e) {
+            var o = t[n][1][e]
+            return r(o || e)
           },
           o,
           o.exports,
         )
       }
-      return n[e].exports
+      return e[n].exports
     }
     if ('function' == typeof __nr_require) return __nr_require
-    for (var o = 0; o < e.length; o++) r(e[o])
+    for (var o = 0; o < n.length; o++) r(n[o])
     return r
   })(
     {
       1: [
-        function(t, n, e) {
+        function(t, e, n) {
           function r(t) {
             try {
               s.console && console.log(t)
-            } catch (n) {}
+            } catch (e) {}
           }
           var o,
             i = t('ee'),
-            a = t(16),
+            a = t(21),
             s = {}
           try {
             ;(o = localStorage.getItem('__nr_flags').split(',')),
@@ -52,14 +50,14 @@ window.NREUM || (NREUM = {}),
               r(t.stack)
             }),
             s.dev &&
-              i.on('fn-err', function(t, n, e) {
-                r(e.stack)
+              i.on('fn-err', function(t, e, n) {
+                r(n.stack)
               }),
             s.dev &&
               (r('NR AGENT IN DEVELOPMENT MODE'),
               r(
                 'flags: ' +
-                  a(s, function(t, n) {
+                  a(s, function(t, e) {
                     return t
                   }).join(', '),
               ))
@@ -67,10 +65,10 @@ window.NREUM || (NREUM = {}),
         {},
       ],
       2: [
-        function(t, n, e) {
-          function r(t, n, e, r, s) {
+        function(t, e, n) {
+          function r(t, e, n, r, s) {
             try {
-              p ? (p -= 1) : o(s || new UncaughtException(t, n, e), !0)
+              l ? (l -= 1) : o(s || new UncaughtException(t, e, n), !0)
             } catch (f) {
               try {
                 i('ierr', [f, c.now(), !0])
@@ -78,52 +76,50 @@ window.NREUM || (NREUM = {}),
             }
             return 'function' == typeof u && u.apply(this, a(arguments))
           }
-
-          function UncaughtException(t, n, e) {
+          function UncaughtException(t, e, n) {
             ;(this.message =
               t || 'Uncaught error with no additional information'),
-              (this.sourceURL = n),
-              (this.line = e)
+              (this.sourceURL = e),
+              (this.line = n)
           }
-
-          function o(t, n) {
-            var e = n ? null : c.now()
-            i('err', [t, e])
+          function o(t, e) {
+            var n = e ? null : c.now()
+            i('err', [t, n])
           }
           var i = t('handle'),
-            a = t(17),
+            a = t(22),
             s = t('ee'),
             c = t('loader'),
             f = t('gos'),
             u = window.onerror,
             d = !1,
-            l = 'nr@seenError',
-            p = 0
+            p = 'nr@seenError',
+            l = 0
           ;(c.features.err = !0), t(1), (window.onerror = r)
           try {
             throw new Error()
           } catch (h) {
             'stack' in h &&
-              (t(8),
-              t(7),
-              'addEventListener' in window && t(5),
-              c.xhrWrappable && t(9),
+              (t(13),
+              t(12),
+              'addEventListener' in window && t(6),
+              c.xhrWrappable && t(14),
               (d = !0))
           }
-          s.on('fn-start', function(t, n, e) {
-            d && (p += 1)
+          s.on('fn-start', function(t, e, n) {
+            d && (l += 1)
           }),
-            s.on('fn-err', function(t, n, e) {
+            s.on('fn-err', function(t, e, n) {
               d &&
-                !e[l] &&
-                (f(e, l, function() {
+                !n[p] &&
+                (f(n, p, function() {
                   return !0
                 }),
                 (this.thrown = !0),
-                o(e))
+                o(n))
             }),
             s.on('fn-end', function() {
-              d && !this.thrown && p > 0 && (p -= 1)
+              d && !this.thrown && l > 0 && (l -= 1)
             }),
             s.on('internal-error', function(t) {
               i('ierr', [t, c.now(), !0])
@@ -132,13 +128,95 @@ window.NREUM || (NREUM = {}),
         {},
       ],
       3: [
-        function(t, n, e) {
+        function(t, e, n) {
           t('loader').features.ins = !0
         },
         {},
       ],
       4: [
-        function(t, n, e) {
+        function(t, e, n) {
+          function r() {
+            M++, (N = y.hash), (this[u] = g.now())
+          }
+          function o() {
+            M--, y.hash !== N && i(0, !0)
+            var t = g.now()
+            ;(this[h] = ~~this[h] + t - this[u]), (this[d] = t)
+          }
+          function i(t, e) {
+            E.emit('newURL', ['' + y, e])
+          }
+          function a(t, e) {
+            t.on(e, function() {
+              this[e] = g.now()
+            })
+          }
+          var s = '-start',
+            c = '-end',
+            f = '-body',
+            u = 'fn' + s,
+            d = 'fn' + c,
+            p = 'cb' + s,
+            l = 'cb' + c,
+            h = 'jsTime',
+            m = 'fetch',
+            v = 'addEventListener',
+            w = window,
+            y = w.location,
+            g = t('loader')
+          if (w[v] && g.xhrWrappable) {
+            var b = t(10),
+              x = t(11),
+              E = t(8),
+              O = t(6),
+              P = t(13),
+              R = t(7),
+              T = t(14),
+              L = t(9),
+              j = t('ee'),
+              S = j.get('tracer')
+            t(15), (g.features.spa = !0)
+            var N,
+              M = 0
+            j.on(u, r),
+              j.on(p, r),
+              j.on(d, o),
+              j.on(l, o),
+              j.buffer([u, d, 'xhr-done', 'xhr-resolved']),
+              O.buffer([u]),
+              P.buffer(['setTimeout' + c, 'clearTimeout' + s, u]),
+              T.buffer([u, 'new-xhr', 'send-xhr' + s]),
+              R.buffer([m + s, m + '-done', m + f + s, m + f + c]),
+              E.buffer(['newURL']),
+              b.buffer([u]),
+              x.buffer(['propagate', p, l, 'executor-err', 'resolve' + s]),
+              S.buffer([u, 'no-' + u]),
+              L.buffer(['new-jsonp', 'cb-start', 'jsonp-error', 'jsonp-end']),
+              a(T, 'send-xhr' + s),
+              a(j, 'xhr-resolved'),
+              a(j, 'xhr-done'),
+              a(R, m + s),
+              a(R, m + '-done'),
+              a(L, 'new-jsonp'),
+              a(L, 'jsonp-end'),
+              a(L, 'cb-start'),
+              E.on('pushState-end', i),
+              E.on('replaceState-end', i),
+              w[v]('hashchange', i, !0),
+              w[v]('load', i, !0),
+              w[v](
+                'popstate',
+                function() {
+                  i(0, M > 1)
+                },
+                !0,
+              )
+          }
+        },
+        {},
+      ],
+      5: [
+        function(t, e, n) {
           function r(t) {}
           if (
             window.performance &&
@@ -147,43 +225,43 @@ window.NREUM || (NREUM = {}),
           ) {
             var o = t('ee'),
               i = t('handle'),
-              a = t(8),
-              s = t(7),
+              a = t(13),
+              s = t(12),
               c = 'learResourceTimings',
               f = 'addEventListener',
               u = 'resourcetimingbufferfull',
               d = 'bstResource',
-              l = 'resource',
-              p = '-start',
+              p = 'resource',
+              l = '-start',
               h = '-end',
-              m = 'fn' + p,
+              m = 'fn' + l,
               v = 'fn' + h,
               w = 'bstTimer',
               y = 'pushState',
               g = t('loader')
-            ;(g.features.stn = !0), t(6)
+            ;(g.features.stn = !0), t(8)
             var b = NREUM.o.EV
-            o.on(m, function(t, n) {
-              var e = t[0]
-              e instanceof b && (this.bstStart = g.now())
+            o.on(m, function(t, e) {
+              var n = t[0]
+              n instanceof b && (this.bstStart = g.now())
             }),
-              o.on(v, function(t, n) {
-                var e = t[0]
-                e instanceof b && i('bst', [e, n, this.bstStart, g.now()])
+              o.on(v, function(t, e) {
+                var n = t[0]
+                n instanceof b && i('bst', [n, e, this.bstStart, g.now()])
               }),
-              a.on(m, function(t, n, e) {
-                ;(this.bstStart = g.now()), (this.bstType = e)
+              a.on(m, function(t, e, n) {
+                ;(this.bstStart = g.now()), (this.bstType = n)
               }),
-              a.on(v, function(t, n) {
-                i(w, [n, this.bstStart, g.now(), this.bstType])
+              a.on(v, function(t, e) {
+                i(w, [e, this.bstStart, g.now(), this.bstType])
               }),
               s.on(m, function() {
                 this.bstStart = g.now()
               }),
-              s.on(v, function(t, n) {
-                i(w, [n, this.bstStart, g.now(), 'requestAnimationFrame'])
+              s.on(v, function(t, e) {
+                i(w, [e, this.bstStart, g.now(), 'requestAnimationFrame'])
               }),
-              o.on(y + p, function(t) {
+              o.on(y + l, function(t) {
                 ;(this.time = g.now()),
                   (this.startPath = location.pathname + location.hash)
               }),
@@ -199,7 +277,7 @@ window.NREUM || (NREUM = {}),
                   ? window.performance[f](
                       u,
                       function(t) {
-                        i(d, [window.performance.getEntriesByType(l)]),
+                        i(d, [window.performance.getEntriesByType(p)]),
                           window.performance['c' + c]()
                       },
                       !1,
@@ -207,57 +285,50 @@ window.NREUM || (NREUM = {}),
                   : window.performance[f](
                       'webkit' + u,
                       function(t) {
-                        i(d, [window.performance.getEntriesByType(l)]),
+                        i(d, [window.performance.getEntriesByType(p)]),
                           window.performance['webkitC' + c]()
                       },
                       !1,
                     )),
-              document[f]('scroll', r, {
-                passive: !0,
-              }),
+              document[f]('scroll', r, { passive: !0 }),
               document[f]('keypress', r, !1),
               document[f]('click', r, !1)
           }
         },
         {},
       ],
-      5: [
-        function(t, n, e) {
+      6: [
+        function(t, e, n) {
           function r(t) {
-            for (var n = t; n && !n.hasOwnProperty(u); )
-              n = Object.getPrototypeOf(n)
-            n && o(n)
+            for (var e = t; e && !e.hasOwnProperty(u); )
+              e = Object.getPrototypeOf(e)
+            e && o(e)
           }
-
           function o(t) {
             s.inPlace(t, [u, d], '-', i)
           }
-
-          function i(t, n) {
+          function i(t, e) {
             return t[1]
           }
           var a = t('ee').get('events'),
-            s = t(19)(a, !0),
+            s = t(24)(a, !0),
             c = t('gos'),
             f = XMLHttpRequest,
             u = 'addEventListener',
             d = 'removeEventListener'
-          ;(n.exports = a),
+          ;(e.exports = a),
             'getPrototypeOf' in Object
               ? (r(document), r(window), r(f.prototype))
               : f.prototype.hasOwnProperty(u) && (o(window), o(f.prototype)),
-            a.on(u + '-start', function(t, n) {
-              var e = t[1],
-                r = c(e, 'nr@wrapped', function() {
+            a.on(u + '-start', function(t, e) {
+              var n = t[1],
+                r = c(n, 'nr@wrapped', function() {
                   function t() {
-                    if ('function' == typeof e.handleEvent)
-                      return e.handleEvent.apply(e, arguments)
+                    if ('function' == typeof n.handleEvent)
+                      return n.handleEvent.apply(n, arguments)
                   }
-                  var n = {
-                    object: t,
-                    function: e,
-                  }[typeof e]
-                  return n ? s(n, 'fn-', null, n.name || 'anonymous') : e
+                  var e = { object: t, function: n }[typeof n]
+                  return e ? s(e, 'fn-', null, e.name || 'anonymous') : n
                 })
               this.wrapped = t[1] = r
             }),
@@ -267,21 +338,251 @@ window.NREUM || (NREUM = {}),
         },
         {},
       ],
-      6: [
-        function(t, n, e) {
+      7: [
+        function(t, e, n) {
+          function r(t, e, n) {
+            var r = t[e]
+            'function' == typeof r &&
+              (t[e] = function() {
+                var t = r.apply(this, arguments)
+                return (
+                  o.emit(n + 'start', arguments, t),
+                  t.then(
+                    function(e) {
+                      return o.emit(n + 'end', [null, e], t), e
+                    },
+                    function(e) {
+                      throw (o.emit(n + 'end', [e], t), e)
+                    },
+                  )
+                )
+              })
+          }
+          var o = t('ee').get('fetch'),
+            i = t(21)
+          e.exports = o
+          var a = window,
+            s = 'fetch-',
+            c = s + 'body-',
+            f = ['arrayBuffer', 'blob', 'json', 'text', 'formData'],
+            u = a.Request,
+            d = a.Response,
+            p = a.fetch,
+            l = 'prototype'
+          u &&
+            d &&
+            p &&
+            (i(f, function(t, e) {
+              r(u[l], e, c), r(d[l], e, c)
+            }),
+            r(a, 'fetch', s),
+            o.on(s + 'end', function(t, e) {
+              var n = this
+              if (e) {
+                var r = e.headers.get('content-length')
+                null !== r && (n.rxSize = r), o.emit(s + 'done', [null, e], n)
+              } else o.emit(s + 'done', [t], n)
+            }))
+        },
+        {},
+      ],
+      8: [
+        function(t, e, n) {
           var r = t('ee').get('history'),
-            o = t(19)(r)
-          ;(n.exports = r),
+            o = t(24)(r)
+          ;(e.exports = r),
             o.inPlace(window.history, ['pushState', 'replaceState'], '-')
         },
         {},
       ],
-      7: [
-        function(t, n, e) {
+      9: [
+        function(t, e, n) {
+          function r(t) {
+            function e() {
+              c.emit('jsonp-end', [], p),
+                t.removeEventListener('load', e, !1),
+                t.removeEventListener('error', n, !1)
+            }
+            function n() {
+              c.emit('jsonp-error', [], p),
+                c.emit('jsonp-end', [], p),
+                t.removeEventListener('load', e, !1),
+                t.removeEventListener('error', n, !1)
+            }
+            var r =
+              t &&
+              'string' == typeof t.nodeName &&
+              'script' === t.nodeName.toLowerCase()
+            if (r) {
+              var o = 'function' == typeof t.addEventListener
+              if (o) {
+                var a = i(t.src)
+                if (a) {
+                  var u = s(a),
+                    d = 'function' == typeof u.parent[u.key]
+                  if (d) {
+                    var p = {}
+                    f.inPlace(u.parent, [u.key], 'cb-', p),
+                      t.addEventListener('load', e, !1),
+                      t.addEventListener('error', n, !1),
+                      c.emit('new-jsonp', [t.src], p)
+                  }
+                }
+              }
+            }
+          }
+          function o() {
+            return 'addEventListener' in window
+          }
+          function i(t) {
+            var e = t.match(u)
+            return e ? e[1] : null
+          }
+          function a(t, e) {
+            var n = t.match(p),
+              r = n[1],
+              o = n[3]
+            return o ? a(o, e[r]) : e[r]
+          }
+          function s(t) {
+            var e = t.match(d)
+            return e && e.length >= 3
+              ? { key: e[2], parent: a(e[1], window) }
+              : { key: t, parent: window }
+          }
+          var c = t('ee').get('jsonp'),
+            f = t(24)(c)
+          if (((e.exports = c), o())) {
+            var u = /[?&](?:callback|cb)=([^&#]+)/,
+              d = /(.*)\.([^.]+)/,
+              p = /^(\w+)(\.|$)(.*)$/,
+              l = ['appendChild', 'insertBefore', 'replaceChild']
+            f.inPlace(HTMLElement.prototype, l, 'dom-'),
+              f.inPlace(HTMLHeadElement.prototype, l, 'dom-'),
+              f.inPlace(HTMLBodyElement.prototype, l, 'dom-'),
+              c.on('dom-start', function(t) {
+                r(t[0])
+              })
+          }
+        },
+        {},
+      ],
+      10: [
+        function(t, e, n) {
+          var r = t('ee').get('mutation'),
+            o = t(24)(r),
+            i = NREUM.o.MO
+          ;(e.exports = r),
+            i &&
+              ((window.MutationObserver = function(t) {
+                return this instanceof i
+                  ? new i(o(t, 'fn-'))
+                  : i.apply(this, arguments)
+              }),
+              (MutationObserver.prototype = i.prototype))
+        },
+        {},
+      ],
+      11: [
+        function(t, e, n) {
+          function r(t) {
+            var e = a.context(),
+              n = s(t, 'executor-', e),
+              r = new f(n)
+            return (
+              (a.context(r).getCtx = function() {
+                return e
+              }),
+              a.emit('new-promise', [r, e], e),
+              r
+            )
+          }
+          function o(t, e) {
+            return e
+          }
+          var i = t(24),
+            a = t('ee').get('promise'),
+            s = i(a),
+            c = t(21),
+            f = NREUM.o.PR
+          ;(e.exports = a),
+            f &&
+              ((window.Promise = r),
+              ['all', 'race'].forEach(function(t) {
+                var e = f[t]
+                f[t] = function(n) {
+                  function r(t) {
+                    return function() {
+                      a.emit('propagate', [null, !o], i), (o = o || !t)
+                    }
+                  }
+                  var o = !1
+                  c(n, function(e, n) {
+                    Promise.resolve(n).then(r('all' === t), r(!1))
+                  })
+                  var i = e.apply(f, arguments),
+                    s = f.resolve(i)
+                  return s
+                }
+              }),
+              ['resolve', 'reject'].forEach(function(t) {
+                var e = f[t]
+                f[t] = function(t) {
+                  var n = e.apply(f, arguments)
+                  return t !== n && a.emit('propagate', [t, !0], n), n
+                }
+              }),
+              (f.prototype['catch'] = function(t) {
+                return this.then(null, t)
+              }),
+              (f.prototype = Object.create(f.prototype, {
+                constructor: { value: r },
+              })),
+              c(Object.getOwnPropertyNames(f), function(t, e) {
+                try {
+                  r[e] = f[e]
+                } catch (n) {}
+              }),
+              a.on('executor-start', function(t) {
+                ;(t[0] = s(t[0], 'resolve-', this)),
+                  (t[1] = s(t[1], 'resolve-', this))
+              }),
+              a.on('executor-err', function(t, e, n) {
+                t[1](n)
+              }),
+              s.inPlace(f.prototype, ['then'], 'then-', o),
+              a.on('then-start', function(t, e) {
+                ;(this.promise = e),
+                  (t[0] = s(t[0], 'cb-', this)),
+                  (t[1] = s(t[1], 'cb-', this))
+              }),
+              a.on('then-end', function(t, e, n) {
+                this.nextPromise = n
+                var r = this.promise
+                a.emit('propagate', [r, !0], n)
+              }),
+              a.on('cb-end', function(t, e, n) {
+                a.emit('propagate', [n, !0], this.nextPromise)
+              }),
+              a.on('propagate', function(t, e, n) {
+                ;(this.getCtx && !e) ||
+                  (this.getCtx = function() {
+                    if (t instanceof Promise) var e = a.context(t)
+                    return e && e.getCtx ? e.getCtx() : this
+                  })
+              }),
+              (r.toString = function() {
+                return '' + f
+              }))
+        },
+        {},
+      ],
+      12: [
+        function(t, e, n) {
           var r = t('ee').get('raf'),
-            o = t(19)(r),
+            o = t(24)(r),
             i = 'equestAnimationFrame'
-          ;(n.exports = r),
+          ;(e.exports = r),
             o.inPlace(
               window,
               ['r' + i, 'mozR' + i, 'webkitR' + i, 'msR' + i],
@@ -293,25 +594,24 @@ window.NREUM || (NREUM = {}),
         },
         {},
       ],
-      8: [
-        function(t, n, e) {
-          function r(t, n, e) {
-            t[0] = a(t[0], 'fn-', null, e)
+      13: [
+        function(t, e, n) {
+          function r(t, e, n) {
+            t[0] = a(t[0], 'fn-', null, n)
           }
-
-          function o(t, n, e) {
-            ;(this.method = e),
+          function o(t, e, n) {
+            ;(this.method = n),
               (this.timerDuration = isNaN(t[1]) ? 0 : +t[1]),
-              (t[0] = a(t[0], 'fn-', this, e))
+              (t[0] = a(t[0], 'fn-', this, n))
           }
           var i = t('ee').get('timer'),
-            a = t(19)(i),
+            a = t(24)(i),
             s = 'setTimeout',
             c = 'setInterval',
             f = 'clearTimeout',
             u = '-start',
             d = '-'
-          ;(n.exports = i),
+          ;(e.exports = i),
             a.inPlace(window, [s, 'setImmediate'], s + d),
             a.inPlace(window, [c], c + d),
             a.inPlace(window, [f, 'clearImmediate'], f + d),
@@ -320,48 +620,43 @@ window.NREUM || (NREUM = {}),
         },
         {},
       ],
-      9: [
-        function(t, n, e) {
-          function r(t, n) {
-            d.inPlace(n, ['onreadystatechange'], 'fn-', s)
+      14: [
+        function(t, e, n) {
+          function r(t, e) {
+            d.inPlace(e, ['onreadystatechange'], 'fn-', s)
           }
-
           function o() {
             var t = this,
-              n = u.context(t)
+              e = u.context(t)
             t.readyState > 3 &&
-              !n.resolved &&
-              ((n.resolved = !0), u.emit('xhr-resolved', [], t)),
+              !e.resolved &&
+              ((e.resolved = !0), u.emit('xhr-resolved', [], t)),
               d.inPlace(t, y, 'fn-', s)
           }
-
           function i(t) {
             g.push(t),
               h && (x ? x.then(a) : v ? v(a) : ((E = -E), (O.data = E)))
           }
-
           function a() {
             for (var t = 0; t < g.length; t++) r([], g[t])
             g.length && (g = [])
           }
-
-          function s(t, n) {
-            return n
+          function s(t, e) {
+            return e
           }
-
-          function c(t, n) {
-            for (var e in t) n[e] = t[e]
-            return n
+          function c(t, e) {
+            for (var n in t) e[n] = t[n]
+            return e
           }
-          t(5)
+          t(6)
           var f = t('ee'),
             u = f.get('xhr'),
-            d = t(19)(u),
-            l = NREUM.o,
-            p = l.XHR,
-            h = l.MO,
-            m = l.PR,
-            v = l.SI,
+            d = t(24)(u),
+            p = NREUM.o,
+            l = p.XHR,
+            h = p.MO,
+            m = p.PR,
+            v = p.SI,
             w = 'readystatechange',
             y = [
               'onload',
@@ -373,24 +668,24 @@ window.NREUM || (NREUM = {}),
               'ontimeout',
             ],
             g = []
-          n.exports = u
+          e.exports = u
           var b = (window.XMLHttpRequest = function(t) {
-            var n = new p(t)
+            var e = new l(t)
             try {
-              u.emit('new-xhr', [n], n), n.addEventListener(w, o, !1)
-            } catch (e) {
+              u.emit('new-xhr', [e], e), e.addEventListener(w, o, !1)
+            } catch (n) {
               try {
-                u.emit('internal-error', [e])
+                u.emit('internal-error', [n])
               } catch (r) {}
             }
-            return n
+            return e
           })
           if (
-            (c(p, b),
-            (b.prototype = p.prototype),
+            (c(l, b),
+            (b.prototype = l.prototype),
             d.inPlace(b.prototype, ['open', 'send'], '-xhr-', s),
-            u.on('send-xhr-start', function(t, n) {
-              r(t, n), i(n)
+            u.on('send-xhr-start', function(t, e) {
+              r(t, e), i(e)
             }),
             u.on('open-xhr-start', r),
             h)
@@ -399,9 +694,7 @@ window.NREUM || (NREUM = {}),
             if (!v && !m) {
               var E = 1,
                 O = document.createTextNode(E)
-              new h(a).observe(O, {
-                characterData: !0,
-              })
+              new h(a).observe(O, { characterData: !0 })
             }
           } else
             f.on('fn-end', function(t) {
@@ -410,102 +703,98 @@ window.NREUM || (NREUM = {}),
         },
         {},
       ],
-      10: [
-        function(t, n, e) {
+      15: [
+        function(t, e, n) {
           function r(t) {
-            var n = this.params,
-              e = this.metrics
+            var e = this.params,
+              n = this.metrics
             if (!this.ended) {
               this.ended = !0
               for (var r = 0; r < d; r++)
                 t.removeEventListener(u[r], this.listener, !1)
-              if (!n.aborted) {
+              if (!e.aborted) {
                 if (
-                  ((e.duration = a.now() - this.startTime), 4 === t.readyState)
+                  ((n.duration = a.now() - this.startTime), 4 === t.readyState)
                 ) {
-                  n.status = t.status
+                  e.status = t.status
                   var i = o(t, this.lastSize)
-                  if ((i && (e.rxSize = i), this.sameOrigin)) {
+                  if ((i && (n.rxSize = i), this.sameOrigin)) {
                     var c = t.getResponseHeader('X-NewRelic-App-Data')
-                    c && (n.cat = c.split(', ').pop())
+                    c && (e.cat = c.split(', ').pop())
                   }
-                } else n.status = 0
-                ;(e.cbTime = this.cbTime),
+                } else e.status = 0
+                ;(n.cbTime = this.cbTime),
                   f.emit('xhr-done', [t], t),
-                  s('xhr', [n, e, this.startTime])
+                  s('xhr', [e, n, this.startTime])
               }
             }
           }
-
-          function o(t, n) {
-            var e = t.responseType
-            if ('json' === e && null !== n) return n
+          function o(t, e) {
+            var n = t.responseType
+            if ('json' === n && null !== e) return e
             var r =
-              'arraybuffer' === e || 'blob' === e || 'json' === e
+              'arraybuffer' === n || 'blob' === n || 'json' === n
                 ? t.response
                 : t.responseText
             return h(r)
           }
-
-          function i(t, n) {
-            var e = c(n),
+          function i(t, e) {
+            var n = c(e),
               r = t.params
-            ;(r.host = e.hostname + ':' + e.port),
-              (r.pathname = e.pathname),
-              (t.sameOrigin = e.sameOrigin)
+            ;(r.host = n.hostname + ':' + n.port),
+              (r.pathname = n.pathname),
+              (t.sameOrigin = n.sameOrigin)
           }
           var a = t('loader')
           if (a.xhrWrappable) {
             var s = t('handle'),
-              c = t(11),
+              c = t(16),
               f = t('ee'),
               u = ['load', 'error', 'abort', 'timeout'],
               d = u.length,
-              l = t('id'),
-              p = t(14),
-              h = t(13),
+              p = t('id'),
+              l = t(19),
+              h = t(18),
               m = window.XMLHttpRequest
             ;(a.features.xhr = !0),
-              t(9),
+              t(14),
               f.on('new-xhr', function(t) {
-                var n = this
-                ;(n.totalCbs = 0),
-                  (n.called = 0),
-                  (n.cbTime = 0),
-                  (n.end = r),
-                  (n.ended = !1),
-                  (n.xhrGuids = {}),
-                  (n.lastSize = null),
-                  (p && (p > 34 || p < 10)) ||
+                var e = this
+                ;(e.totalCbs = 0),
+                  (e.called = 0),
+                  (e.cbTime = 0),
+                  (e.end = r),
+                  (e.ended = !1),
+                  (e.xhrGuids = {}),
+                  (e.lastSize = null),
+                  (l && (l > 34 || l < 10)) ||
                     window.opera ||
                     t.addEventListener(
                       'progress',
                       function(t) {
-                        n.lastSize = t.loaded
+                        e.lastSize = t.loaded
                       },
                       !1,
                     )
               }),
               f.on('open-xhr-start', function(t) {
-                ;(this.params = {
-                  method: t[0],
-                }),
+                ;(this.params = { method: t[0] }),
                   i(this, t[1]),
                   (this.metrics = {})
               }),
-              f.on('open-xhr-end', function(t, n) {
+              f.on('open-xhr-end', function(t, e) {
                 'loader_config' in NREUM &&
                   'xpid' in NREUM.loader_config &&
                   this.sameOrigin &&
-                  n.setRequestHeader('X-NewRelic-ID', NREUM.loader_config.xpid)
+                  e.setRequestHeader('X-NewRelic-ID', NREUM.loader_config.xpid)
               }),
-              f.on('send-xhr-start', function(t, n) {
-                var e = this.metrics,
+              f.on('send-xhr-start', function(t, e) {
+                var n = this.metrics,
                   r = t[0],
                   o = this
-                if (e && r) {
+                if (n && r) {
                   var i = h(r)
-                  i && (e.txSize = i)
+                  i && (n.txSize = i)
                 }
                 ;(this.startTime = a.now()),
                   (this.listener = function(t) {
@@ -514,72 +803,72 @@ window.NREUM || (NREUM = {}),
                         ('load' !== t.type ||
                           (o.called === o.totalCbs &&
                             (o.onloadCalled ||
-                              'function' != typeof n.onload))) &&
-                          o.end(n)
-                    } catch (e) {
+                              'function' != typeof e.onload))) &&
+                          o.end(e)
+                    } catch (n) {
                       try {
-                        f.emit('internal-error', [e])
+                        f.emit('internal-error', [n])
                       } catch (r) {}
                     }
                   })
                 for (var s = 0; s < d; s++)
-                  n.addEventListener(u[s], this.listener, !1)
+                  e.addEventListener(u[s], this.listener, !1)
               }),
-              f.on('xhr-cb-time', function(t, n, e) {
+              f.on('xhr-cb-time', function(t, e, n) {
                 ;(this.cbTime += t),
-                  n ? (this.onloadCalled = !0) : (this.called += 1),
+                  e ? (this.onloadCalled = !0) : (this.called += 1),
                   this.called !== this.totalCbs ||
-                    (!this.onloadCalled && 'function' == typeof e.onload) ||
-                    this.end(e)
+                    (!this.onloadCalled && 'function' == typeof n.onload) ||
+                    this.end(n)
               }),
-              f.on('xhr-load-added', function(t, n) {
-                var e = '' + l(t) + !!n
+              f.on('xhr-load-added', function(t, e) {
+                var n = '' + p(t) + !!e
                 this.xhrGuids &&
-                  !this.xhrGuids[e] &&
-                  ((this.xhrGuids[e] = !0), (this.totalCbs += 1))
+                  !this.xhrGuids[n] &&
+                  ((this.xhrGuids[n] = !0), (this.totalCbs += 1))
               }),
-              f.on('xhr-load-removed', function(t, n) {
-                var e = '' + l(t) + !!n
+              f.on('xhr-load-removed', function(t, e) {
+                var n = '' + p(t) + !!e
                 this.xhrGuids &&
-                  this.xhrGuids[e] &&
-                  (delete this.xhrGuids[e], (this.totalCbs -= 1))
+                  this.xhrGuids[n] &&
+                  (delete this.xhrGuids[n], (this.totalCbs -= 1))
               }),
-              f.on('addEventListener-end', function(t, n) {
-                n instanceof m &&
+              f.on('addEventListener-end', function(t, e) {
+                e instanceof m &&
                   'load' === t[0] &&
-                  f.emit('xhr-load-added', [t[1], t[2]], n)
+                  f.emit('xhr-load-added', [t[1], t[2]], e)
               }),
-              f.on('removeEventListener-end', function(t, n) {
-                n instanceof m &&
+              f.on('removeEventListener-end', function(t, e) {
+                e instanceof m &&
                   'load' === t[0] &&
-                  f.emit('xhr-load-removed', [t[1], t[2]], n)
+                  f.emit('xhr-load-removed', [t[1], t[2]], e)
               }),
-              f.on('fn-start', function(t, n, e) {
-                n instanceof m &&
-                  ('onload' === e && (this.onload = !0),
+              f.on('fn-start', function(t, e, n) {
+                e instanceof m &&
+                  ('onload' === n && (this.onload = !0),
                   ('load' === (t[0] && t[0].type) || this.onload) &&
                     (this.xhrCbStart = a.now()))
               }),
-              f.on('fn-end', function(t, n) {
+              f.on('fn-end', function(t, e) {
                 this.xhrCbStart &&
                   f.emit(
                     'xhr-cb-time',
-                    [a.now() - this.xhrCbStart, this.onload, n],
-                    n,
+                    [a.now() - this.xhrCbStart, this.onload, e],
+                    e,
                   )
               })
           }
         },
         {},
       ],
-      11: [
-        function(t, n, e) {
-          n.exports = function(t) {
-            var n = document.createElement('a'),
-              e = window.location,
+      16: [
+        function(t, e, n) {
+          e.exports = function(t) {
+            var e = document.createElement('a'),
+              n = window.location,
               r = {}
-            ;(n.href = t), (r.port = n.port)
-            var o = n.href.split('://')
+            ;(e.href = t), (r.port = e.port)
+            var o = e.href.split('://')
             !r.port &&
               o[1] &&
               (r.port = o[1]
@@ -589,33 +878,32 @@ window.NREUM || (NREUM = {}),
                 .split(':')[1]),
               (r.port && '0' !== r.port) ||
                 (r.port = 'https' === o[0] ? '443' : '80'),
-              (r.hostname = n.hostname || e.hostname),
-              (r.pathname = n.pathname),
+              (r.hostname = e.hostname || n.hostname),
+              (r.pathname = e.pathname),
               (r.protocol = o[0]),
               '/' !== r.pathname.charAt(0) && (r.pathname = '/' + r.pathname)
             var i =
-                !n.protocol || ':' === n.protocol || n.protocol === e.protocol,
-              a = n.hostname === document.domain && n.port === e.port
-            return (r.sameOrigin = i && (!n.hostname || a)), r
+                !e.protocol || ':' === e.protocol || e.protocol === n.protocol,
+              a = e.hostname === document.domain && e.port === n.port
+            return (r.sameOrigin = i && (!e.hostname || a)), r
           }
         },
         {},
       ],
-      12: [
-        function(t, n, e) {
+      17: [
+        function(t, e, n) {
           function r() {}
-
-          function o(t, n, e) {
+          function o(t, e, n) {
             return function() {
               return (
-                i(t, [f.now()].concat(s(arguments)), n ? null : this, e),
-                n ? void 0 : this
+                i(t, [f.now()].concat(s(arguments)), e ? null : this, n),
+                e ? void 0 : this
               )
             }
           }
           var i = t('handle'),
-            a = t(16),
-            s = t(17),
+            a = t(21),
+            s = t(22),
             c = t('ee').get('tracer'),
             f = t('loader'),
             u = NREUM
@@ -629,35 +917,35 @@ window.NREUM || (NREUM = {}),
               'inlineHit',
               'addRelease',
             ],
-            l = 'api-',
-            p = l + 'ixn-'
-          a(d, function(t, n) {
-            u[n] = o(l + n, !0, 'api')
+            p = 'api-',
+            l = p + 'ixn-'
+          a(d, function(t, e) {
+            u[e] = o(p + e, !0, 'api')
           }),
-            (u.addPageAction = o(l + 'addPageAction', !0)),
-            (u.setCurrentRouteName = o(l + 'routeName', !0)),
-            (n.exports = newrelic),
+            (u.addPageAction = o(p + 'addPageAction', !0)),
+            (u.setCurrentRouteName = o(p + 'routeName', !0)),
+            (e.exports = newrelic),
             (u.interaction = function() {
               return new r().get()
             })
           var h = (r.prototype = {
-            createTracer: function(t, n) {
-              var e = {},
+            createTracer: function(t, e) {
+              var n = {},
                 r = this,
-                o = 'function' == typeof n
+                o = 'function' == typeof e
               return (
-                i(p + 'tracer', [f.now(), t, e], r),
+                i(l + 'tracer', [f.now(), t, n], r),
                 function() {
                   if (
-                    (c.emit((o ? '' : 'no-') + 'fn-start', [f.now(), r, o], e),
+                    (c.emit((o ? '' : 'no-') + 'fn-start', [f.now(), r, o], n),
                     o)
                   )
                     try {
-                      return n.apply(this, arguments)
+                      return e.apply(this, arguments)
                     } catch (t) {
-                      throw (c.emit('fn-err', [arguments, this, t], e), t)
+                      throw (c.emit('fn-err', [arguments, this, t], n), t)
                     } finally {
-                      c.emit('fn-end', [f.now()], e)
+                      c.emit('fn-end', [f.now()], n)
                     }
                 }
               )
@@ -667,19 +955,20 @@ window.NREUM || (NREUM = {}),
             'actionText,setName,setAttribute,save,ignore,onEnd,getContext,end,get'.split(
               ',',
             ),
-            function(t, n) {
-              h[n] = o(p + n)
+            function(t, e) {
+              h[e] = o(l + e)
             },
           ),
-            (newrelic.noticeError = function(t) {
-              'string' == typeof t && (t = new Error(t)), i('err', [t, f.now()])
+            (newrelic.noticeError = function(t, e) {
+              'string' == typeof t && (t = new Error(t)),
+                i('err', [t, f.now(), !1, e])
             })
         },
         {},
       ],
-      13: [
-        function(t, n, e) {
-          n.exports = function(t) {
+      18: [
+        function(t, e, n) {
+          e.exports = function(t) {
             if ('string' == typeof t && t.length) return t.length
             if ('object' == typeof t) {
               if (
@@ -693,7 +982,7 @@ window.NREUM || (NREUM = {}),
               if (!('undefined' != typeof FormData && t instanceof FormData))
                 try {
                   return JSON.stringify(t).length
-                } catch (n) {
+                } catch (e) {
                   return
                 }
             }
@@ -701,27 +990,27 @@ window.NREUM || (NREUM = {}),
         },
         {},
       ],
-      14: [
-        function(t, n, e) {
+      19: [
+        function(t, e, n) {
           var r = 0,
             o = navigator.userAgent.match(/Firefox[\/\s](\d+\.\d+)/)
-          o && (r = +o[1]), (n.exports = r)
+          o && (r = +o[1]), (e.exports = r)
         },
         {},
       ],
-      15: [
-        function(t, n, e) {
-          function r(t, n) {
+      20: [
+        function(t, e, n) {
+          function r(t, e) {
             if (!o) return !1
             if (t !== o) return !1
-            if (!n) return !0
+            if (!e) return !0
             if (!i) return !1
             for (
-              var e = i.split('.'), r = n.split('.'), a = 0;
+              var n = i.split('.'), r = e.split('.'), a = 0;
               a < r.length;
               a++
             )
-              if (r[a] !== e[a]) return !1
+              if (r[a] !== n[a]) return !1
             return !0
           }
           var o = null,
@@ -735,47 +1024,43 @@ window.NREUM || (NREUM = {}),
               s.indexOf('Chromium') === -1 &&
               ((o = 'Safari'), (i = c[1]))
           }
-          n.exports = {
-            agent: o,
-            version: i,
-            match: r,
-          }
+          e.exports = { agent: o, version: i, match: r }
         },
         {},
       ],
-      16: [
-        function(t, n, e) {
-          function r(t, n) {
-            var e = [],
+      21: [
+        function(t, e, n) {
+          function r(t, e) {
+            var n = [],
               r = '',
               i = 0
-            for (r in t) o.call(t, r) && ((e[i] = n(r, t[r])), (i += 1))
-            return e
+            for (r in t) o.call(t, r) && ((n[i] = e(r, t[r])), (i += 1))
+            return n
           }
           var o = Object.prototype.hasOwnProperty
-          n.exports = r
+          e.exports = r
         },
         {},
       ],
-      17: [
-        function(t, n, e) {
-          function r(t, n, e) {
-            n || (n = 0), 'undefined' == typeof e && (e = t ? t.length : 0)
+      22: [
+        function(t, e, n) {
+          function r(t, e, n) {
+            e || (e = 0), 'undefined' == typeof n && (n = t ? t.length : 0)
             for (
-              var r = -1, o = e - n || 0, i = Array(o < 0 ? 0 : o);
+              var r = -1, o = n - e || 0, i = Array(o < 0 ? 0 : o);
               ++r < o;
 
             )
-              i[r] = t[n + r]
+              i[r] = t[e + r]
             return i
           }
-          n.exports = r
+          e.exports = r
         },
         {},
       ],
-      18: [
-        function(t, n, e) {
-          n.exports = {
+      23: [
+        function(t, e, n) {
+          e.exports = {
             exists:
               'undefined' != typeof window.performance &&
               window.performance.timing &&
@@ -784,188 +1069,175 @@ window.NREUM || (NREUM = {}),
         },
         {},
       ],
-      19: [
-        function(t, n, e) {
+      24: [
+        function(t, e, n) {
           function r(t) {
             return !(t && t instanceof Function && t.apply && !t[a])
           }
           var o = t('ee'),
-            i = t(17),
+            i = t(22),
             a = 'nr@original',
             s = Object.prototype.hasOwnProperty,
             c = !1
-          n.exports = function(t, n) {
-            function e(t, n, e, o) {
+          e.exports = function(t, e) {
+            function n(t, e, n, o) {
               function nrWrapper() {
                 var r, a, s, c
                 try {
                   ;(a = this),
                     (r = i(arguments)),
-                    (s = 'function' == typeof e ? e(r, a) : e || {})
+                    (s = 'function' == typeof n ? n(r, a) : n || {})
                 } catch (f) {
-                  l([f, '', [r, a, o], s])
+                  p([f, '', [r, a, o], s])
                 }
-                u(n + 'start', [r, a, o], s)
+                u(e + 'start', [r, a, o], s)
                 try {
                   return (c = t.apply(a, r))
                 } catch (d) {
-                  throw (u(n + 'err', [r, a, d], s), d)
+                  throw (u(e + 'err', [r, a, d], s), d)
                 } finally {
-                  u(n + 'end', [r, a, c], s)
+                  u(e + 'end', [r, a, c], s)
                 }
               }
               return r(t)
                 ? t
-                : (n || (n = ''),
+                : (e || (e = ''),
                   (nrWrapper[a] = t),
                   d(t, nrWrapper),
                   nrWrapper)
             }
-
-            function f(t, n, o, i) {
+            function f(t, e, o, i) {
               o || (o = '')
               var a,
                 s,
                 c,
                 f = '-' === o.charAt(0)
-              for (c = 0; c < n.length; c++)
-                (s = n[c]),
+              for (c = 0; c < e.length; c++)
+                (s = e[c]),
                   (a = t[s]),
-                  r(a) || (t[s] = e(a, f ? s + o : o, i, s))
+                  r(a) || (t[s] = n(a, f ? s + o : o, i, s))
             }
-
-            function u(e, r, o) {
-              if (!c || n) {
+            function u(n, r, o) {
+              if (!c || e) {
                 var i = c
                 c = !0
                 try {
-                  t.emit(e, r, o, n)
+                  t.emit(n, r, o, e)
                 } catch (a) {
-                  l([a, e, r, o])
+                  p([a, n, r, o])
                 }
                 c = i
               }
             }
-
-            function d(t, n) {
+            function d(t, e) {
               if (Object.defineProperty && Object.keys)
                 try {
-                  var e = Object.keys(t)
+                  var n = Object.keys(t)
                   return (
-                    e.forEach(function(e) {
-                      Object.defineProperty(n, e, {
+                    n.forEach(function(n) {
+                      Object.defineProperty(e, n, {
                         get: function() {
-                          return t[e]
+                          return t[n]
                         },
-                        set: function(n) {
-                          return (t[e] = n), n
+                        set: function(e) {
+                          return (t[n] = e), e
                         },
                       })
                     }),
-                    n
+                    e
                   )
                 } catch (r) {
-                  l([r])
+                  p([r])
                 }
-              for (var o in t) s.call(t, o) && (n[o] = t[o])
-              return n
+              for (var o in t) s.call(t, o) && (e[o] = t[o])
+              return e
             }
-
-            function l(n) {
+            function p(e) {
               try {
-                t.emit('internal-error', n)
-              } catch (e) {}
+                t.emit('internal-error', e)
+              } catch (n) {}
             }
-            return t || (t = o), (e.inPlace = f), (e.flag = a), e
+            return t || (t = o), (n.inPlace = f), (n.flag = a), n
           }
         },
         {},
       ],
       ee: [
-        function(t, n, e) {
+        function(t, e, n) {
           function r() {}
-
           function o(t) {
-            function n(t) {
+            function e(t) {
               return t && t instanceof r ? t : t ? c(t, s, i) : i()
             }
-
-            function e(e, r, o, i) {
-              if (!l.aborted || i) {
-                t && t(e, r, o)
-                for (var a = n(o), s = m(e), c = s.length, f = 0; f < c; f++)
+            function n(n, r, o, i) {
+              if (!p.aborted || i) {
+                t && t(n, r, o)
+                for (var a = e(o), s = m(n), c = s.length, f = 0; f < c; f++)
                   s[f].apply(a, r)
-                var d = u[g[e]]
-                return d && d.push([b, e, r, a]), a
+                var d = u[g[n]]
+                return d && d.push([b, n, r, a]), a
               }
             }
-
-            function p(t, n) {
-              y[t] = m(t).concat(n)
+            function l(t, e) {
+              y[t] = m(t).concat(e)
             }
-
-            function h(t, n) {
-              var e = y[t]
-              if (e)
-                for (var r = 0; r < e.length; r++) e[r] === n && e.splice(r, 1)
+            function h(t, e) {
+              var n = y[t]
+              if (n)
+                for (var r = 0; r < n.length; r++) n[r] === e && n.splice(r, 1)
             }
-
             function m(t) {
               return y[t] || []
             }
-
             function v(t) {
-              return (d[t] = d[t] || o(e))
+              return (d[t] = d[t] || o(n))
             }
-
-            function w(t, n) {
-              f(t, function(t, e) {
-                ;(n = n || 'feature'), (g[e] = n), n in u || (u[n] = [])
+            function w(t, e) {
+              f(t, function(t, n) {
+                ;(e = e || 'feature'), (g[n] = e), e in u || (u[e] = [])
               })
             }
             var y = {},
               g = {},
               b = {
-                on: p,
-                addEventListener: p,
+                on: l,
+                addEventListener: l,
                 removeEventListener: h,
-                emit: e,
+                emit: n,
                 get: v,
                 listeners: m,
-                context: n,
+                context: e,
                 buffer: w,
                 abort: a,
                 aborted: !1,
               }
             return b
           }
-
           function i() {
             return new r()
           }
-
           function a() {
-            ;(u.api || u.feature) && ((l.aborted = !0), (u = l.backlog = {}))
+            ;(u.api || u.feature) && ((p.aborted = !0), (u = p.backlog = {}))
           }
           var s = 'nr@context',
             c = t('gos'),
-            f = t(16),
+            f = t(21),
             u = {},
             d = {},
-            l = (n.exports = o())
-          l.backlog = u
+            p = (e.exports = o())
+          p.backlog = u
         },
         {},
       ],
       gos: [
-        function(t, n, e) {
-          function r(t, n, e) {
-            if (o.call(t, n)) return t[n]
-            var r = e()
+        function(t, e, n) {
+          function r(t, e, n) {
+            if (o.call(t, e)) return t[e]
+            var r = n()
             if (Object.defineProperty && Object.keys)
               try {
                 return (
-                  Object.defineProperty(t, n, {
+                  Object.defineProperty(t, e, {
                     value: r,
                     writable: !0,
                     enumerable: !1,
@@ -973,28 +1245,28 @@ window.NREUM || (NREUM = {}),
                   r
                 )
               } catch (i) {}
-            return (t[n] = r), r
+            return (t[e] = r), r
           }
           var o = Object.prototype.hasOwnProperty
-          n.exports = r
+          e.exports = r
         },
         {},
       ],
       handle: [
-        function(t, n, e) {
-          function r(t, n, e, r) {
-            o.buffer([t], r), o.emit(t, n, e)
+        function(t, e, n) {
+          function r(t, e, n, r) {
+            o.buffer([t], r), o.emit(t, e, n)
           }
           var o = t('ee').get('handle')
-          ;(n.exports = r), (r.ee = o)
+          ;(e.exports = r), (r.ee = o)
         },
         {},
       ],
       id: [
-        function(t, n, e) {
+        function(t, e, n) {
           function r(t) {
-            var n = typeof t
-            return !t || ('object' !== n && 'function' !== n)
+            var e = typeof t
+            return !t || ('object' !== e && 'function' !== e)
               ? -1
               : t === window
                 ? 0
@@ -1005,38 +1277,35 @@ window.NREUM || (NREUM = {}),
           var o = 1,
             i = 'nr@id',
             a = t('gos')
-          n.exports = r
+          e.exports = r
         },
         {},
       ],
       loader: [
-        function(t, n, e) {
+        function(t, e, n) {
           function r() {
             if (!E++) {
               var t = (x.info = NREUM.info),
-                n = p.getElementsByTagName('script')[0]
+                e = l.getElementsByTagName('script')[0]
               if (
                 (setTimeout(u.abort, 3e4),
-                !(t && t.licenseKey && t.applicationID && n))
+                !(t && t.licenseKey && t.applicationID && e))
               )
                 return u.abort()
-              f(g, function(n, e) {
-                t[n] || (t[n] = e)
+              f(g, function(e, n) {
+                t[e] || (t[e] = n)
               }),
                 c('mark', ['onload', a() + x.offset], null, 'api')
-              var e = p.createElement('script')
-              ;(e.src = 'https://' + t.agent), n.parentNode.insertBefore(e, n)
+              var n = l.createElement('script')
+              ;(n.src = 'https://' + t.agent), e.parentNode.insertBefore(n, e)
             }
           }
-
           function o() {
-            'complete' === p.readyState && i()
+            'complete' === l.readyState && i()
           }
-
           function i() {
             c('mark', ['domContent', a() + x.offset], null, 'api')
           }
-
           function a() {
             return O.exists && performance.now
               ? Math.round(performance.now())
@@ -1044,33 +1313,33 @@ window.NREUM || (NREUM = {}),
           }
           var s = new Date().getTime(),
             c = t('handle'),
-            f = t(16),
+            f = t(21),
             u = t('ee'),
-            d = t(15),
-            l = window,
-            p = l.document,
+            d = t(20),
+            p = window,
+            l = p.document,
             h = 'addEventListener',
             m = 'attachEvent',
-            v = l.XMLHttpRequest,
+            v = p.XMLHttpRequest,
             w = v && v.prototype
           NREUM.o = {
             ST: setTimeout,
-            SI: l.setImmediate,
+            SI: p.setImmediate,
             CT: clearTimeout,
             XHR: v,
-            REQ: l.Request,
-            EV: l.Event,
-            PR: l.Promise,
-            MO: l.MutationObserver,
+            REQ: p.Request,
+            EV: p.Event,
+            PR: p.Promise,
+            MO: p.MutationObserver,
           }
           var y = '' + location,
             g = {
               beacon: 'bam.nr-data.net',
               errorBeacon: 'bam.nr-data.net',
-              agent: 'js-agent.newrelic.com/nr-1099.min.js',
+              agent: 'js-agent.newrelic.com/nr-spa-1118.min.js',
             },
             b = v && w && w[h] && !/CriOS/.test(navigator.userAgent),
-            x = (n.exports = {
+            x = (e.exports = {
               offset: s,
               now: a,
               origin: y,
@@ -1078,20 +1347,21 @@ window.NREUM || (NREUM = {}),
               xhrWrappable: b,
               userAgent: d,
             })
-          t(12),
-            p[h]
-              ? (p[h]('DOMContentLoaded', i, !1), l[h]('load', r, !1))
-              : (p[m]('onreadystatechange', o), l[m]('onload', r)),
+          t(17),
+            l[h]
+              ? (l[h]('DOMContentLoaded', i, !1), p[h]('load', r, !1))
+              : (l[m]('onreadystatechange', o), p[m]('onload', r)),
             c('mark', ['firstbyte', s], null, 'api')
           var E = 0,
-            O = t(18)
+            O = t(23)
         },
         {},
       ],
     },
     {},
-    ['loader', 2, 10, 4, 3],
+    ['loader', 2, 15, 5, 3, 4],
   ))
+
 NREUM.info = {
   beacon: 'bam.nr-data.net',
   errorBeacon: 'bam.nr-data.net',
