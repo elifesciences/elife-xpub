@@ -26,6 +26,7 @@ const WizardStep = ({
   title,
   step,
   validationSchema,
+  uploadData,
   ...wizardProps
 }) => (
   <Formik
@@ -77,7 +78,14 @@ const WizardStep = ({
                     validateForm={validateForm}
                   />
                 ) : (
-                  <Button data-test-id="next" primary type="submit">
+                  <Button
+                    data-test-id="next"
+                    disabled={
+                      uploadData && uploadData.manuscriptUploadProgress < 100
+                    }
+                    primary
+                    type="submit"
+                  >
                     Next
                   </Button>
                 )}
