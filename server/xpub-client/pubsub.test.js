@@ -32,7 +32,7 @@ describe('PubsubClient', () => {
       const pubsub = createPubsub(null, mockPubsub)
       await pubsub.initialize()
 
-      pubsub.publish(UPLOAD_MESSAGE, () => mockMessage, 1000)
+      pubsub.publish(UPLOAD_MESSAGE, mockMessage, 1000)
       expect(mockPublish).toHaveBeenCalledTimes(1)
       expect(mockPublish).toBeCalledWith(UPLOAD_MESSAGE, mockMessage)
     })
@@ -112,7 +112,7 @@ describe('PubsubClient', () => {
       await pubsub.initialize()
 
       const startIntervalAndStopWithArguments = (message, data) => {
-        pubsub.startPublishingOnInterval('', () => {}, 1000)
+        pubsub.startPublishingOnInterval('', 'Bar', 1000)
         expect(mockPublish).toHaveBeenCalledTimes(0)
         pubsub.stopPublishingOnInterval(message, data)
       }
@@ -124,7 +124,7 @@ describe('PubsubClient', () => {
       expect(mockPublish).toHaveBeenCalledTimes(0)
 
       // Must be passed both params
-      startIntervalAndStopWithArguments('foo', () => {})
+      startIntervalAndStopWithArguments('foo', 'Bar')
       expect(mockPublish).toHaveBeenCalledTimes(1)
     })
   })
