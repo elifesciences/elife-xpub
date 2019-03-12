@@ -5,7 +5,7 @@ const File = require('./entities/file')
 
 describe('creating getters still allows models to be saved', () => {
   class ModelWithGetter extends Manuscript {
-    get someGetter() {
+    get someGetter() { // eslint-disable-line class-methods-use-this
       return true
     }
   }
