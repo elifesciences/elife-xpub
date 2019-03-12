@@ -93,7 +93,21 @@ class Manuscript extends BaseModel {
   }
 
   get fileStatus() {
+    const fileStatuses = [
+      {
+        uploadStatuses: ['STORED', 'CANCELLED'],
+        fileStatus: 'READY'
+      },
+      {
+        uploadStatuses: ['UPLOADED', 'CREATED'],
+        fileStatus: 'CHANGING'
+      }
+    ]
     if(this.files.length === 0) return 'READY'
+    const file = this.files[0]
+    return fileStatuses
+      .find(f => (f.uploadStatuses.includes(file.status)))
+      .fileStatus
   }
 
   static get statuses() {

@@ -2,6 +2,7 @@ const { createTables } = require('@pubsweet/db-manager')
 const uuid = require('uuid')
 const Team = require('../team')
 const User = require('../user')
+const File = require('../file')
 const AuditLog = require('../auditLog')
 const Manuscript = require('.')
 
@@ -152,10 +153,52 @@ describe('Manuscript', () => {
     })
 
     describe('given there is a single manuscript file', () => {
-      it.skip('returns READY when the file is stored', () => {})
-      it.skip('returns READY when the file upload was cancelled', () => {})
-      it.skip('returns CHANGING when the file has been uploaded to the app server', () => {})
-      it.skip('returns CHANGING when the file has been created in the database', () => {})
+      let manuscript
+      let file
+
+      beforeEach(async () => {
+        manuscript = new Manuscript({
+          createdBy: userId,
+        })
+        await manuscript.save()
+        file = new File({
+          manuscriptId: manuscript.id,
+          filename: 'test.txt',
+          url: '-',
+          type: 'MANUSCRIPT_SOURCE',
+        })
+        await file.save()
+        manuscript = await Manuscript.find(manuscript.id, userId)
+        expect(manuscript.files[0].type).toEqual('MANUSCRIPT_SOURCE')
+      })
+
+      it('returns READY when the file is stored', async () => {
+        file.status = 'STORED'
+        await file.save()
+        manuscript = await Manuscript.find(manuscript.id, userId)
+        expect(manuscript.fileStatus).toEqual('READY')
+      })
+
+      it('returns READY when the file upload was cancelled', async () => {
+        file.status = 'CANCELLED'
+        await file.save()
+        manuscript = await Manuscript.find(manuscript.id, userId)
+        expect(manuscript.fileStatus).toEqual('READY')
+      })
+
+      it('returns CHANGING when the file has been uploaded to the app server', async () => {
+        file.status = 'UPLOADED'
+        await file.save()
+        manuscript = await Manuscript.find(manuscript.id, userId)
+        expect(manuscript.fileStatus).toEqual('CHANGING')
+      })
+
+      it('returns CHANGING when the file has been created in the database', async () => {
+        file.status = 'CREATED'
+        await file.save()
+        manuscript = await Manuscript.find(manuscript.id, userId)
+        expect(manuscript.fileStatus).toEqual('CHANGING')
+      })
     })
 
     describe.skip('given there is a manuscript file and a supporting file', () => {
