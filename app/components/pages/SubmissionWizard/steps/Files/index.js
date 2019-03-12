@@ -222,6 +222,11 @@ const FilesPageContainer = ({
                   )}
                 </Mutation>
               </Box>
+              <ValidatedField
+                name="files.fileStatus"
+                type="hidden"
+                value="READY"
+              />
             </React.Fragment>
           )}
         </Mutation>
