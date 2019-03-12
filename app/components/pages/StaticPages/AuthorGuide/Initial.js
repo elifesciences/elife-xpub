@@ -10,54 +10,22 @@ const Initial = props => (
   <React.Fragment>
     <H1>Initial submissions</H1>
 
-    <H2>Cover Letter</H2>
-
-    <Paragraph.Reading>
-      To help with the initial evaluation of your submission, please briefly
-      answer the following questions in your cover letter:
-    </Paragraph.Reading>
-
-    <List.Unordered>
-      <li>
-        How will your work make others in the field think differently and move
-        the field forward?
-      </li>
-      <li>How does your work relate to the current literature on the topic?</li>
-      <li>
-        Who do you consider to be the most relevant audience for this work?
-      </li>
-      <li>
-        Have you made clear in the letter what the work has and has not
-        achieved?
-      </li>
-    </List.Unordered>
-
-    <Paragraph.Reading>
-      In addition, please upload any related studies that you have published
-      recently or have under consideration elsewhere as related manuscript files
-      and describe them in your cover letter.
-    </Paragraph.Reading>
-
     <H2>Single Manuscript PDF</H2>
 
-    <List.Unordered>
-      <li>
-        Authors should start by submitting their manuscript text and figures as
-        a single PDF (smaller than 15MB, using the article file type), organised
-        with easy readability in mind (please upload one article file only).
-        Please include page and line numbers, and a legible font size for the
-        main text and figure legends. We encourage authors to embed figures and
-        tables at appropriate places within the main text for the initial
-        submission.
-      </li>
-      <li>
-        To facilitate the evaluation of the submission, we highly recommend
-        including all authors for each reference in the reference list (e.g.
-        John Smith, Anthony Murray and Peter Castle rather than John Smith et
-        al.), although discretion can be used to truncate very long lists of
-        authors.
-      </li>
-    </List.Unordered>
+    <Paragraph.Reading>
+      Authors should start by uploading their manuscript text and figures as a
+      single PDF (ideally smaller than 15MB), organised with easy readability in
+      mind. Please include page and line numbers, and a legible font size for
+      the main text and figure legends. We encourage authors to embed figures
+      and tables at appropriate places within the main text.
+    </Paragraph.Reading>
+
+    <Paragraph.Reading>
+      To facilitate the evaluation of the submission, we highly recommend
+      including all authors for each reference in the reference list (e.g. John
+      Smith, Anthony Murray and Peter Castle rather than John Smith et al.),
+      although discretion can be used to truncate very long lists of authors.
+    </Paragraph.Reading>
 
     <Paragraph.Reading>
       The manuscript should include the following components:
@@ -78,11 +46,13 @@ const Initial = props => (
         authors and affiliations should be provided in the paper itself.
       </li>
       <li>
-        <strong>Abstract: </strong> The abstract should be fewer than 150 words
-        and should not contain subheadings. It should provide a clear, measured,
-        and concise summary of the work. If the biological system (species names
-        or broader taxonomic groups if appropriate) is not mentioned in the
-        title, it must be included in the abstract.
+        <strong>Abstract: </strong>
+        The abstract should be fewer than 150 words and should not contain
+        subheadings (except for papers following the CONSORT checklist). It
+        should provide a clear, measured, and concise summary of the work. If
+        the biological system (species names or broader taxonomic groups if
+        appropriate) is not mentioned in the title, it must be included in the
+        abstract.
       </li>
       <li>
         <strong>
@@ -191,8 +161,7 @@ const Initial = props => (
       upload such files during the Initial Submission process if they will
       assist in the initial assessment but otherwise they can be uploaded if a
       Full Submission is requested. Anything crucial for the initial evaluation
-      should be uploaded at the Initial Submission stage (either as rich media
-      or supplementary files).
+      should be uploaded at the Initial Submission stage as a supporting file.
     </Paragraph.Reading>
 
     <Paragraph.Reading>
@@ -224,25 +193,53 @@ const Initial = props => (
     <H2>Limited Metadata</H2>
 
     <Paragraph.Reading>
-      You will be asked to enter the following information in the submission
-      system:
+      You will be asked to enter the following information when completing the
+      submission form:
     </Paragraph.Reading>
 
     <List.Ordered>
       <li>
-        <strong>Title</strong>
-      </li>
-      <li>
-        <strong>Abstract</strong>
-      </li>
-      <li>
         <strong>Corresponding Author: </strong>
-        On the submission form, we only need the name, address (department,
-        institution, city, and country), telephone number, and email address of
+        At this stage, we only need the name, institution, and email address of
         the corresponding author.
       </li>
       <li>
-        <strong>Major Subject Area(s): </strong>
+        <strong>Cover Letter: </strong>
+        <Paragraph.Reading>
+          To help with the initial evaluation of your submission, you will be
+          asked to briefly answer the following questions in a cover letter:
+        </Paragraph.Reading>
+        <List.Unordered>
+          <li>
+            How will your work make others in the field think differently and
+            move the field forward?
+          </li>
+          <li>
+            How does your work relate to the current literature on the topic?
+          </li>
+          <li>
+            Who do you consider to be the most relevant audience for this work?
+          </li>
+          <li>
+            Have you made clear in the letter what the work has and has not
+            achieved?
+          </li>
+        </List.Unordered>
+        <Paragraph.Reading>
+          In addition, please upload any related studies that you have published
+          recently or have under consideration elsewhere as supporting files and
+          describe them in your cover letter.
+        </Paragraph.Reading>
+      </li>
+      <li>
+        <strong>Manuscript Title</strong>
+      </li>
+      <li>
+        <strong>Article Type: </strong> Information on the articles we publish
+        can be found <Link to="/author-guide/types">here</Link>.
+      </li>
+      <li>
+        <strong>Subject Area(s): </strong>
         <Paragraph.Reading>
           A list of major subject areas is provided from which authors should
           select one or two (choosing from:{' '}
@@ -250,14 +247,7 @@ const Initial = props => (
             href="https://elifesciences.org/about/people/biochemistry-chemical-biology"
             target="_blank"
           >
-            Biochemistry
-          </NativeLink>
-          ,{' '}
-          <NativeLink
-            href="https://elifesciences.org/about/people/structural-biology-molecular-biophysics"
-            target="_blank"
-          >
-            Biophysics & Structural biology
+            Biochemistry and Chemical Biology
           </NativeLink>
           ,{' '}
           <NativeLink
@@ -275,17 +265,24 @@ const Initial = props => (
           </NativeLink>
           ,{' '}
           <NativeLink
-            href="https://elifesciences.org/about/people/developmental-biology-stem-cells"
+            href="https://elifesciences.org/about/people/chromosomes-gene-expression"
             target="_blank"
           >
-            Developmental Biology & Stem Cells
+            Chromosome and Gene Expression
           </NativeLink>
           ,{' '}
           <NativeLink
             href="https://elifesciences.org/about/people/computational-systems-biology"
             target="_blank"
           >
-            Computational & Systems Biology
+            Computational and Systems Biology
+          </NativeLink>
+          ,{' '}
+          <NativeLink
+            href="https://elifesciences.org/about/people/developmental-biology"
+            target="_blank"
+          >
+            Developmental Biology
           </NativeLink>
           ,{' '}
           <NativeLink
@@ -299,42 +296,42 @@ const Initial = props => (
             href="https://elifesciences.org/about/people/epidemiology-global-health"
             target="_blank"
           >
-            Epidemiology & Global Health
+            Epidemiology and Global Health
           </NativeLink>
           ,{' '}
           <NativeLink
-            href="https://elifesciences.org/about/people/genes-chromosomes"
+            href="https://elifesciences.org/about/people/evolutionary-biology"
             target="_blank"
           >
-            Genes & Chromosomes
+            Evolutionary Biology
           </NativeLink>
           ,{' '}
           <NativeLink
-            href="https://elifesciences.org/about/people/genomics-evolutionary-biology"
+            href="https://elifesciences.org/about/people/genetics-and-genomics"
             target="_blank"
           >
-            Genomics & Evolutionary Biology
+            Genetics and Genomics
           </NativeLink>
           ,{' '}
           <NativeLink
             href="https://elifesciences.org/about/people/human-biology-medicine"
             target="_blank"
           >
-            Human Biology & Medicine
+            Human Biology and Medicine
           </NativeLink>
           ,{' '}
           <NativeLink
-            href="https://elifesciences.org/about/people/immunology"
+            href="https://elifesciences.org/about/people/immunology-inflammation"
             target="_blank"
           >
-            Immunology
+            Immunology and Inflammation
           </NativeLink>
           ,{' '}
           <NativeLink
             href="https://elifesciences.org/about/people/microbiology-infectious-disease"
             target="_blank"
           >
-            Microbiology & Infectious Disease
+            Microbiology and Infectious Disease
           </NativeLink>
           ,{' '}
           <NativeLink
@@ -345,18 +342,34 @@ const Initial = props => (
           </NativeLink>
           ,{' '}
           <NativeLink
+            href="https://elifesciences.org/about/people/physics-living-systems"
+            target="_blank"
+          >
+            Physics of Living Systems
+          </NativeLink>
+          ,{' '}
+          <NativeLink
             href="http://elifesciences.org/about/people/plant-biology"
             target="_blank"
           >
             Plant Biology
           </NativeLink>
+          ,{' '}
+          <NativeLink
+            href="https://elifesciences.org/about/people/stem-cells-regenerative-medicine"
+            target="_blank"
+          >
+            Stem Cells and Regenerative Medicine
+          </NativeLink>
+          ,{' '}
+          <NativeLink
+            href="https://elifesciences.org/about/people/structural-biology-molecular-biophysics"
+            target="_blank"
+          >
+            Structural Biology and Molecular Physics
+          </NativeLink>
           ).
         </Paragraph.Reading>
-      </li>
-      <li>
-        <strong>Funding information: </strong>
-        All financial support should be included. At this stage only the funder
-        names are required.
       </li>
       <li>
         <strong>Editor suggestions: </strong>
@@ -370,6 +383,13 @@ const Initial = props => (
         individuals. Please note that any requests to exclude Senior Editors or
         Reviewing Editors should be explained briefly in the accompanying cover
         letter.
+      </li>
+      <li>
+        <strong>Reviewer suggestions: </strong>
+        Authors can optionally suggest potential reviewers for their work at the
+        Initial Submission stage. Requests to exclude individuals can also be
+        made and must be accompanied with a brief explanation. We will make
+        every effort to follow author requests for excluded individuals.
       </li>
     </List.Ordered>
 
