@@ -179,10 +179,10 @@ const Types = props => (
     </Paragraph.Reading>
 
     <Paragraph.Reading>
-      The title of the manuscript should be &apos;Comment on &quot;Title of
-      original article&quot;&apos;, and it should be written in a measured tone;
-      manuscripts not written in measured tone will be sent back to the authors
-      for revision: please read{' '}
+      The title of the manuscript should be &apos;Comment on &apos;Title of
+      original article&apos; &apos;, and it should be written in a measured
+      tone; manuscripts not written in measured tone will be sent back to the
+      authors for revision: please read{' '}
       <NativeLink
         href="https://elifesciences.org/inside-elife/08093bce/elife-latest-introducing-scientific-correspondence-at-elife?_ga=2.134784754.2069272108.1540132848-2034406101.1537543708"
         target="_blank"
@@ -200,17 +200,19 @@ const Types = props => (
       original article: if a correction is required, the corresponding author of
       the original paper will be contacted and the Scientific Correspondence
       will be put on hold until the Correction has been finalized. If a
-      Correction is published, the authors of the Scientific Correspondence will
-      be asked to revise their submission accordingly.
+      Correction is published and discrepancies between the original paper and
+      the challenge remain, the authors of the Scientific Correspondence will be
+      asked to revise their submission accordingly.
     </Paragraph.Reading>
 
     <Paragraph.Reading>
       If the Editors agree that the initial submission represents a credible
       challenge to the central findings of the original paper, a full submission
       is invited; the initial submission is also sent to the authors of the
-      original paper and they are given 14 days to submit a formal response. If
-      the initial submission does not represent a credible challenge to the
-      original paper, it is declined.
+      original paper and they are given 14 days to submit a formal response
+      (which may be shared with the authors of the challenge at some stage in
+      the process). If the initial submission does not represent a credible
+      challenge to the original paper, it is declined.
     </Paragraph.Reading>
 
     <Paragraph.Reading>
@@ -234,8 +236,10 @@ const Types = props => (
       Full submissions and formal responses should not usually exceed 1,500
       words in the main text, excluding the Materials and methods, References,
       and Figure legends, and should have no more than four main display items
-      (figures, tables, videos). Both the challenge and the response can contain
-      original data.
+      (figures, tables, videos). Authors should follow the format for Research
+      Articles or Short Reports, as appropriate; the Results and/or Discussion
+      section should contain separate subsections for each element of the
+      challenge. Both the challenge and the response can contain original data.
     </Paragraph.Reading>
 
     <Paragraph.Reading>
