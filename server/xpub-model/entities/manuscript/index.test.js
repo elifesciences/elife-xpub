@@ -155,48 +155,35 @@ describe('Manuscript', () => {
     describe('given there is a single manuscript file', () => {
       let manuscript
       let file
+      let setStatusOfManuscriptFile
 
       beforeEach(async () => {
-        manuscript = new Manuscript({
-          createdBy: userId,
-        })
-        await manuscript.save()
-        file = new File({
-          manuscriptId: manuscript.id,
-          filename: 'test.txt',
-          url: '-',
-          type: 'MANUSCRIPT_SOURCE',
-        })
+        manuscript = await createManuscriptWithOneFile(userId)
+        file = await File.find(manuscript.files[0].id)
+        file.type = 'MANUSCRIPT_SOURCE'
         await file.save()
-        manuscript = await Manuscript.find(manuscript.id, userId)
-        expect(manuscript.files[0].type).toEqual('MANUSCRIPT_SOURCE')
+        setStatusOfManuscriptFile = setStatusOfFile.bind(null,
+          file.id, manuscript.id, userId
+        )
       })
 
       it('returns READY when the file is stored', async () => {
-        file.status = 'STORED'
-        await file.save()
-        manuscript = await Manuscript.find(manuscript.id, userId)
+        manuscript = await setStatusOfManuscriptFile('STORED')
         expect(manuscript.fileStatus).toEqual('READY')
       })
 
       it('returns READY when the file upload was cancelled', async () => {
-        file.status = 'CANCELLED'
-        await file.save()
-        manuscript = await Manuscript.find(manuscript.id, userId)
+        manuscript = await setStatusOfManuscriptFile('CANCELLED')
         expect(manuscript.fileStatus).toEqual('READY')
       })
 
       it('returns CHANGING when the file has been uploaded to the app server', async () => {
-        file.status = 'UPLOADED'
-        await file.save()
-        manuscript = await Manuscript.find(manuscript.id, userId)
+        manuscript = await setStatusOfManuscriptFile('UPLOADED')
         expect(manuscript.fileStatus).toEqual('CHANGING')
       })
 
       it('returns CHANGING when the file has been created in the database', async () => {
-        file.status = 'CREATED'
-        await file.save()
-        manuscript = await Manuscript.find(manuscript.id, userId)
+        manuscript = await setStatusOfManuscriptFile('CREATED')
         expect(manuscript.fileStatus).toEqual('CHANGING')
       })
     })
@@ -543,4 +530,37 @@ const getThreeVersions = async userId => {
   expect(getDbTime(v3.updated)).toEqual(getDbTime(v3.created))
 
   return { v1, v2, v3 }
+}
+
+const setStatusOfFile = async (fileId, manuscriptId, userId, status) => {
+  const file = await File.find(fileId)
+  file.status = status
+  await file.save()
+  return Manuscript.find(manuscriptId, userId)
+}
+
+const createManuscriptWithOneFile = async (userId) => {
+  let manuscript = await createInitialManuscript(userId)
+  const file = new File({
+    manuscriptId: manuscript.id,
+    filename: 'test.txt',
+    url: '-',
+    type: 'test_file',
+  })
+  await file.save()
+  manuscript = await Manuscript.find(manuscript.id, userId)
+  return manuscript
+}
+
+const createInitialManuscript = async (userId, title = 'Alpha') => {
+  const manuscript = new Manuscript({
+    createdBy: userId,
+    meta: {
+      title,
+    },
+    status: 'initial',
+    teams: [],
+  })
+  await manuscript.save()
+  return manuscript
 }
