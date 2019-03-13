@@ -21,7 +21,7 @@ While at the March 2019 pubsweet meet, Hindawi demonstrated their open-source pr
 
 We initially plan to convert our current code base structure to match that of Hindawi's repository. Once this is complete we will then attempt to fix some of the concerns we have identified with this implementation, making sure to consult with Hindawi to ensure we maintain as similar approach as possible. Once these details have been addressed we can then try to identify sections of the two applications which are the same / similar to then recommend inclusion in future releases of pubsweet where they can then be easily adopted and maintained by the wider community.
 
-### Suggested Architecture Pattern
+### Overview of suggested architecture pattern
 
 The suggested pattern of architecture would be to place each bound context, both client and server side code it its own self contained `component` directory, with the naming convention `component-xxxx` for bound contexts and `component-model-xxxx` for any shared data-model components, these would then leverage pubsweets ability to pull in resolvers to form a full server side system while the client would make use of an `app` directory which contains a react router which pulls together the different client side components. An example file structure can be found below
 
@@ -37,4 +37,43 @@ The suggested pattern of architecture would be to place each bound context, both
   ...
 ```
 
-### Identified Concerns
+Each component behaves like a stand alone module with its own `package.json`, `/config`, `/src` and `/test` directory (some don't have `/config`).
+
+Context components are then structured:
+
+```
+/component-xxxx
+  /client
+    /components
+    /graphql
+    /pages
+    /tests
+  /config
+  /server
+    /src
+      /use-cases
+      resolvers.js
+      typeDefs.graphqls
+    /tests
+  index.js
+  package.json
+```
+
+Model components are structured:
+
+```
+/component-model-xxxx
+  /src
+    /entities
+    /use-cases
+      resolvers.js
+      typeDefs.graphqls
+  /congig
+  /test
+  index.js
+  package.json
+```
+
+### Pros
+
+### Cons
