@@ -579,7 +579,7 @@ const getThreeVersions = async userId => {
 }
 
 const setStatusOfFile = async (file, manuscript, status) => {
-  file.status = status
+  file.status = status // eslint-disable-line no-param-reassign
   await file.save()
   return Manuscript.find(manuscript.id, manuscript.createdBy)
 }
