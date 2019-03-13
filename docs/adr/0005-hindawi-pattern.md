@@ -23,4 +23,18 @@ We initially plan to convert our current code base structure to match that of Hi
 
 ### Suggested Architecture Pattern
 
+The suggested pattern of architecture would be to place each bound context, both client and server side code it its own self contained `component` directory, with the naming convention `component-xxxx` for bound contexts and `component-model-xxxx` for any shared data-model components, these would then leverage pubsweets ability to pull in resolvers to form a full server side system while the client would make use of an `app` directory which contains a react router which pulls together the different client side components. An example file structure can be found below
+
+```
+/packages
+  /app
+  /component-dashboard
+  /component-login
+  /component-submission
+  /component-model-manuscript
+  /component-model-file
+  /component-elife-ui
+  ...
+```
+
 ### Identified Concerns
