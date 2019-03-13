@@ -161,9 +161,8 @@ describe('Manuscript', () => {
         manuscript = await createInitialManuscript(userId)
         manuscript = await addFileToManuscript(manuscript)
         file = await File.find(manuscript.files[0].id)
-        await file.save()
         setStatusOfFirstFile = setStatusOfFile.bind(null,
-          file.id, manuscript.id, userId
+          file, manuscript
         )
       })
 
@@ -202,10 +201,10 @@ describe('Manuscript', () => {
         )
         expect(file1.id).not.toEqual(file2.id)
         setStatusOfFirstFile = setStatusOfFile.bind(null,
-          file1.id, manuscript.id, userId
+          file1, manuscript
         )
         setStatusOfSecondFile = setStatusOfFile.bind(null,
-          file2.id, manuscript.id, userId
+          file2, manuscript
         )
       })
 
@@ -579,11 +578,10 @@ const getThreeVersions = async userId => {
   return { v1, v2, v3 }
 }
 
-const setStatusOfFile = async (fileId, manuscriptId, userId, status) => {
-  const file = await File.find(fileId)
+const setStatusOfFile = async (file, manuscript, status) => {
   file.status = status
   await file.save()
-  return Manuscript.find(manuscriptId, userId)
+  return Manuscript.find(manuscript.id, manuscript.createdBy)
 }
 
 const addFileToManuscript = async (manuscript) => {
