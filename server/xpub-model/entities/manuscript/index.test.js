@@ -213,9 +213,23 @@ describe('Manuscript', () => {
         )
       })
 
-      it.skip('returns READY when both files are stored', () => {})
-      it.skip('returns READY when both files are cancelled', () => {})
-      it.skip('returns READY when one file is stored and once is cancelled', () => {})
+      it('returns READY when both files are stored', async () => {
+        manuscript = await setStatusOfManuscriptFile('STORED')
+        manuscript = await setStatusOfSupportingFile('STORED')
+        expect(manuscript.fileStatus).toEqual('READY')
+      })
+
+      it('returns READY when both files are cancelled', async () => {
+        manuscript = await setStatusOfManuscriptFile('CANCELLED')
+        manuscript = await setStatusOfSupportingFile('CANCELLED')
+        expect(manuscript.fileStatus).toEqual('READY')
+      })
+
+      it('returns READY when one file is stored and once is cancelled', async () => {
+        manuscript = await setStatusOfManuscriptFile('STORED')
+        manuscript = await setStatusOfSupportingFile('CANCELLED')
+        expect(manuscript.fileStatus).toEqual('READY')
+      })
 
       it('returns CHANGING when one file has been uploaded to the app server', async () => {
         manuscript = await setStatusOfManuscriptFile('STORED')
@@ -223,9 +237,23 @@ describe('Manuscript', () => {
         expect(manuscript.fileStatus).toEqual('CHANGING')
       })
 
-      it.skip('returns CHANGING when one file has been created in the database', () => {})
-      it.skip('returns CHANGING when both files have been uploaded to the app server', () => {})
-      it.skip('returns CHANGING when both files have been created in the database', () => {})
+      it('returns CHANGING when one file has been created in the database', async () => {
+        manuscript = await setStatusOfManuscriptFile('STORED')
+        manuscript = await setStatusOfSupportingFile('CREATED')
+        expect(manuscript.fileStatus).toEqual('CHANGING')
+      })
+
+      it('returns CHANGING when both files have been uploaded to the app server', async () => {
+        manuscript = await setStatusOfManuscriptFile('UPLOADED')
+        manuscript = await setStatusOfSupportingFile('UPLOADED')
+        expect(manuscript.fileStatus).toEqual('CHANGING')
+      })
+
+      it('returns CHANGING when both files have been created in the database', async () => {
+        manuscript = await setStatusOfManuscriptFile('CREATED')
+        manuscript = await setStatusOfSupportingFile('CREATED')
+        expect(manuscript.fileStatus).toEqual('CHANGING')
+      })
     })
 
     describe('given there is a manuscript file and multiple supporting files', () => {
