@@ -158,7 +158,8 @@ describe('Manuscript', () => {
       let setStatusOfFirstFile
 
       beforeEach(async () => {
-        manuscript = await createManuscriptWithOneFile(userId)
+        manuscript = await createInitialManuscript(userId)
+        manuscript = await addFileToManuscript(manuscript)
         file = await File.find(manuscript.files[0].id)
         await file.save()
         setStatusOfFirstFile = setStatusOfFile.bind(null,
@@ -193,7 +194,9 @@ describe('Manuscript', () => {
       let setStatusOfFirstFile, setStatusOfSecondFile
 
       beforeEach(async () => {
-        manuscript = await createManuscriptWithTwoFiles(userId);
+        manuscript = await createInitialManuscript(userId)
+        manuscript = await addFileToManuscript(manuscript)
+        manuscript = await addFileToManuscript(manuscript);
         [ file1, file2 ] = await Promise.all(
           manuscript.files.map(({ id }) => File.find(id))
         )
@@ -583,8 +586,7 @@ const setStatusOfFile = async (fileId, manuscriptId, userId, status) => {
   return Manuscript.find(manuscriptId, userId)
 }
 
-const createManuscriptWithOneFile = async (userId) => {
-  let manuscript = await createInitialManuscript(userId)
+const addFileToManuscript = async (manuscript) => {
   const file = new File({
     manuscriptId: manuscript.id,
     filename: 'test.txt',
@@ -592,28 +594,7 @@ const createManuscriptWithOneFile = async (userId) => {
     type: 'test_file',
   })
   await file.save()
-  manuscript = await Manuscript.find(manuscript.id, userId)
-  return manuscript
-}
-
-const createManuscriptWithTwoFiles = async (userId) => {
-  let manuscript = await createInitialManuscript(userId)
-  const file1 = new File({
-    manuscriptId: manuscript.id,
-    filename: 'test1.txt',
-    url: '-',
-    type: 'test_file',
-  })
-  const file2 = new File({
-    manuscriptId: manuscript.id,
-    filename: 'test2.txt',
-    url: '-',
-    type: 'test_file',
-  })
-  await file1.save()
-  await file2.save()
-  manuscript = await Manuscript.find(manuscript.id, userId)
-  return manuscript
+  return Manuscript.find(manuscript.id, manuscript.createdBy)
 }
 
 const createInitialManuscript = async (userId, title = 'Alpha') => {
