@@ -103,7 +103,6 @@ class Manuscript extends BaseModel {
         isReady: false
       }
     ]
-    if(this.files.length === 0) return 'READY'
     return this.files
       .map((file) => FILE_STATUSES
         .find(f => (f.uploadStatuses.includes(file.status)))
