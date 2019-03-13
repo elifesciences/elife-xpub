@@ -11,6 +11,31 @@ describe('File', () => {
     await createTables(true)
   })
 
+  describe('constructor', () => {
+    it('sets the status to undefined, even with a default within the schema', async () => {
+      const file = new File({
+        manuscriptId: '1',
+        filename: 'thisfile.txt',
+        url: '/an/url',
+      })
+      expect(file.status).toBe(undefined)
+    })
+  })
+
+  describe('save()', () => {
+    it('should set the status to CREATED', async () => {
+      const manuscript = await new Manuscript({
+        createdBy: userId,
+      }).save()
+      const file = await new File({
+        manuscriptId: manuscript.id,
+        filename: 'thisfile.txt',
+        url: '/an/url',
+      }).save()
+      expect(file.status).toBe('CREATED')
+    })
+  })
+
   describe('delete()', () => {
     it('should fail if id is not provided when deleting the file', async () => {
       const file = new File()
@@ -38,17 +63,6 @@ describe('File', () => {
   })
 
   describe('updateStatus()', () => {
-    it('should be initialised in the CREATED state', async () => {
-      const manuscript = await new Manuscript({
-        createdBy: userId,
-      }).save()
-      const file = await new File({
-        manuscriptId: manuscript.id,
-        filename: 'thisfile.txt',
-        url: '/an/url',
-      }).save()
-      expect(file.status).toBe('CREATED')
-    })
     it('sets file status to value passed', async () => {
       const manuscript = await new Manuscript({
         createdBy: userId,

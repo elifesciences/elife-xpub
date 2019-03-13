@@ -3,6 +3,29 @@ const uuid = require('uuid')
 const Manuscript = require('./entities/manuscript')
 const File = require('./entities/file')
 
+describe('creating getters still allows models to be saved', () => {
+  class ModelWithGetter extends Manuscript {
+    get someGetter() { // eslint-disable-line class-methods-use-this
+      return true
+    }
+  }
+
+  let userId
+
+  beforeEach(async () => {
+    userId = uuid()
+    await createTables(true)
+  })
+
+  it('should save successfully', async () => {
+    const instance = new ModelWithGetter({
+      createdBy: userId,
+    })
+    await instance.save()
+    expect(instance.someGetter).toBe(true)
+  })
+})
+
 describe('related objects behave as we expect', () => {
   let userId
 
