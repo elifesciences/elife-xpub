@@ -152,115 +152,101 @@ describe('Manuscript', () => {
       })
     })
 
-    describe('given there is a single manuscript file', () => {
+    describe('given there is a single file', () => {
       let manuscript
       let file
-      let setStatusOfManuscriptFile
+      let setStatusOfFirstFile
 
       beforeEach(async () => {
         manuscript = await createManuscriptWithOneFile(userId)
         file = await File.find(manuscript.files[0].id)
-        file.type = 'MANUSCRIPT_SOURCE'
         await file.save()
-        setStatusOfManuscriptFile = setStatusOfFile.bind(null,
+        setStatusOfFirstFile = setStatusOfFile.bind(null,
           file.id, manuscript.id, userId
         )
       })
 
       it('returns READY when the file is stored', async () => {
-        manuscript = await setStatusOfManuscriptFile('STORED')
+        manuscript = await setStatusOfFirstFile('STORED')
         expect(manuscript.fileStatus).toEqual('READY')
       })
 
       it('returns READY when the file upload was cancelled', async () => {
-        manuscript = await setStatusOfManuscriptFile('CANCELLED')
+        manuscript = await setStatusOfFirstFile('CANCELLED')
         expect(manuscript.fileStatus).toEqual('READY')
       })
 
       it('returns CHANGING when the file has been uploaded to the app server', async () => {
-        manuscript = await setStatusOfManuscriptFile('UPLOADED')
+        manuscript = await setStatusOfFirstFile('UPLOADED')
         expect(manuscript.fileStatus).toEqual('CHANGING')
       })
 
       it('returns CHANGING when the file has been created in the database', async () => {
-        manuscript = await setStatusOfManuscriptFile('CREATED')
+        manuscript = await setStatusOfFirstFile('CREATED')
         expect(manuscript.fileStatus).toEqual('CHANGING')
       })
     })
 
-    describe('given there is a manuscript file and a supporting file', () => {
+    describe('given there are multiple files', () => {
       let manuscript
-      let manuscriptFile, supportingFile
-      let setStatusOfManuscriptFile, setStatusOfSupportingFile
+      let file1, file2
+      let setStatusOfFirstFile, setStatusOfSecondFile
 
       beforeEach(async () => {
         manuscript = await createManuscriptWithTwoFiles(userId);
-        [ manuscriptFile, supportingFile ] = await Promise.all(
-          manuscript.files
-            .map((file, index) => {
-              const updated = {...file}
-              updated.type = index === 0 ? 'MANUSCRIPT_SOURCE' : 'SUPPORTING_FILE'
-              return updated
-            })
-            .map(setTypeOfFile)
+        [ file1, file2 ] = await Promise.all(
+          manuscript.files.map(({ id }) => File.find(id))
         )
-        expect(manuscriptFile.id).not.toEqual(supportingFile.id)
-        setStatusOfManuscriptFile = setStatusOfFile.bind(null,
-          manuscriptFile.id, manuscript.id, userId
+        expect(file1.id).not.toEqual(file2.id)
+        setStatusOfFirstFile = setStatusOfFile.bind(null,
+          file1.id, manuscript.id, userId
         )
-        setStatusOfSupportingFile = setStatusOfFile.bind(null,
-          supportingFile.id, manuscript.id, userId
+        setStatusOfSecondFile = setStatusOfFile.bind(null,
+          file2.id, manuscript.id, userId
         )
       })
 
       it('returns READY when both files are stored', async () => {
-        manuscript = await setStatusOfManuscriptFile('STORED')
-        manuscript = await setStatusOfSupportingFile('STORED')
+        manuscript = await setStatusOfFirstFile('STORED')
+        manuscript = await setStatusOfSecondFile('STORED')
         expect(manuscript.fileStatus).toEqual('READY')
       })
 
       it('returns READY when both files are cancelled', async () => {
-        manuscript = await setStatusOfManuscriptFile('CANCELLED')
-        manuscript = await setStatusOfSupportingFile('CANCELLED')
+        manuscript = await setStatusOfFirstFile('CANCELLED')
+        manuscript = await setStatusOfSecondFile('CANCELLED')
         expect(manuscript.fileStatus).toEqual('READY')
       })
 
       it('returns READY when one file is stored and once is cancelled', async () => {
-        manuscript = await setStatusOfManuscriptFile('STORED')
-        manuscript = await setStatusOfSupportingFile('CANCELLED')
+        manuscript = await setStatusOfFirstFile('STORED')
+        manuscript = await setStatusOfSecondFile('CANCELLED')
         expect(manuscript.fileStatus).toEqual('READY')
       })
 
       it('returns CHANGING when one file has been uploaded to the app server', async () => {
-        manuscript = await setStatusOfManuscriptFile('STORED')
-        manuscript = await setStatusOfSupportingFile('UPLOADED')
+        manuscript = await setStatusOfFirstFile('STORED')
+        manuscript = await setStatusOfSecondFile('UPLOADED')
         expect(manuscript.fileStatus).toEqual('CHANGING')
       })
 
       it('returns CHANGING when one file has been created in the database', async () => {
-        manuscript = await setStatusOfManuscriptFile('STORED')
-        manuscript = await setStatusOfSupportingFile('CREATED')
+        manuscript = await setStatusOfFirstFile('STORED')
+        manuscript = await setStatusOfSecondFile('CREATED')
         expect(manuscript.fileStatus).toEqual('CHANGING')
       })
 
       it('returns CHANGING when both files have been uploaded to the app server', async () => {
-        manuscript = await setStatusOfManuscriptFile('UPLOADED')
-        manuscript = await setStatusOfSupportingFile('UPLOADED')
+        manuscript = await setStatusOfFirstFile('UPLOADED')
+        manuscript = await setStatusOfSecondFile('UPLOADED')
         expect(manuscript.fileStatus).toEqual('CHANGING')
       })
 
       it('returns CHANGING when both files have been created in the database', async () => {
-        manuscript = await setStatusOfManuscriptFile('CREATED')
-        manuscript = await setStatusOfSupportingFile('CREATED')
+        manuscript = await setStatusOfFirstFile('CREATED')
+        manuscript = await setStatusOfSecondFile('CREATED')
         expect(manuscript.fileStatus).toEqual('CHANGING')
       })
-    })
-
-    describe('given there is a manuscript file and multiple supporting files', () => {
-      it.skip('returns READY when all files are stored', () => {})
-      it.skip('returns READY when all files are cancelled', () => {})
-      it.skip('returns CHANGING when all files have been uploaded to the app server', () => {})
-      it.skip('returns CHANGING when all files have been created in the database', () => {})
     })
   })
 
@@ -595,12 +581,6 @@ const setStatusOfFile = async (fileId, manuscriptId, userId, status) => {
   file.status = status
   await file.save()
   return Manuscript.find(manuscriptId, userId)
-}
-
-const setTypeOfFile = async ({id, type}) => {
-  const file = await File.find(id)
-  file.type = type
-  return file.save()
 }
 
 const createManuscriptWithOneFile = async (userId) => {
