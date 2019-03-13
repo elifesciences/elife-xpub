@@ -188,11 +188,41 @@ describe('Manuscript', () => {
       })
     })
 
-    describe.skip('given there is a manuscript file and a supporting file', () => {
+    describe('given there is a manuscript file and a supporting file', () => {
+      let manuscript
+      let manuscriptFile, supportingFile
+      let setStatusOfManuscriptFile, setStatusOfSupportingFile
+
+      beforeEach(async () => {
+        manuscript = await createManuscriptWithTwoFiles(userId);
+        [ manuscriptFile, supportingFile ] = await Promise.all(
+          manuscript.files
+            .map((file, index) => {
+              const updated = {...file}
+              updated.type = index === 0 ? 'MANUSCRIPT_SOURCE' : 'SUPPORTING_FILE'
+              return updated
+            })
+            .map(setTypeOfFile)
+        )
+        expect(manuscriptFile.id).not.toEqual(supportingFile.id)
+        setStatusOfManuscriptFile = setStatusOfFile.bind(null,
+          manuscriptFile.id, manuscript.id, userId
+        )
+        setStatusOfSupportingFile = setStatusOfFile.bind(null,
+          supportingFile.id, manuscript.id, userId
+        )
+      })
+
       it.skip('returns READY when both files are stored', () => {})
       it.skip('returns READY when both files are cancelled', () => {})
       it.skip('returns READY when one file is stored and once is cancelled', () => {})
-      it.skip('returns CHANGING when one file has been uploaded to the app server', () => {})
+
+      it('returns CHANGING when one file has been uploaded to the app server', async () => {
+        manuscript = await setStatusOfManuscriptFile('STORED')
+        manuscript = await setStatusOfSupportingFile('UPLOADED')
+        expect(manuscript.fileStatus).toEqual('CHANGING')
+      })
+
       it.skip('returns CHANGING when one file has been created in the database', () => {})
       it.skip('returns CHANGING when both files have been uploaded to the app server', () => {})
       it.skip('returns CHANGING when both files have been created in the database', () => {})
@@ -539,6 +569,12 @@ const setStatusOfFile = async (fileId, manuscriptId, userId, status) => {
   return Manuscript.find(manuscriptId, userId)
 }
 
+const setTypeOfFile = async ({id, type}) => {
+  const file = await File.find(id)
+  file.type = type
+  return file.save()
+}
+
 const createManuscriptWithOneFile = async (userId) => {
   let manuscript = await createInitialManuscript(userId)
   const file = new File({
@@ -548,6 +584,26 @@ const createManuscriptWithOneFile = async (userId) => {
     type: 'test_file',
   })
   await file.save()
+  manuscript = await Manuscript.find(manuscript.id, userId)
+  return manuscript
+}
+
+const createManuscriptWithTwoFiles = async (userId) => {
+  let manuscript = await createInitialManuscript(userId)
+  const file1 = new File({
+    manuscriptId: manuscript.id,
+    filename: 'test1.txt',
+    url: '-',
+    type: 'test_file',
+  })
+  const file2 = new File({
+    manuscriptId: manuscript.id,
+    filename: 'test2.txt',
+    url: '-',
+    type: 'test_file',
+  })
+  await file1.save()
+  await file2.save()
   manuscript = await Manuscript.find(manuscript.id, userId)
   return manuscript
 }
