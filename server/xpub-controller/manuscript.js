@@ -17,6 +17,7 @@ class Manuscript {
       this.storage,
       this.filesHelper,
     )
+    this.notify = new Notification(this.config)
   }
 
   async upload(manuscriptId, file, fileSize) {
@@ -85,8 +86,7 @@ class Manuscript {
 
     const oldSignature = manuscript.submitterSignature
     if (data.submitterSignature && oldSignature !== data.submitterSignature) {
-      const notify = new Notification(this.config, manuscript.getAuthor())
-      notify.sendFinalSubmissionEmail()
+      this.notify.sendFinalSubmissionEmail(manuscript.getAuthor())
     }
     manuscript.applyInput(data)
 

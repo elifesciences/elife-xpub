@@ -89,3 +89,51 @@ describe('upload', () => {
     }
   })
 })
+
+describe('update manuscript', () => {
+  let userId
+
+  beforeEach(async () => {
+    await createTables(true)
+    const profileId = 'ewwboc7m'
+    const identities = [{ type: 'elife', identifier: profileId }]
+    const user = await new User({ identities }).save()
+    userId = user.id
+    // Notification.mockClear();
+  })
+
+  it('Checks if the email is sent once the user signs the submission', async () => {
+    const manuscriptController = createMockController(userId)
+    const manuscript = new Manuscript({ createdBy: userId })
+    await manuscript.save()
+    manuscript.submitterSignature = 'Albert'
+    manuscriptController.notify.sendFinalSubmissionEmail = jest.fn(
+      () =>
+        new Promise(resolve => {
+          resolve('ok')
+        }),
+    )
+
+    await manuscriptController.update(manuscript)
+    expect(
+      manuscriptController.notify.sendFinalSubmissionEmail,
+    ).toBeCalledTimes(1)
+  })
+
+  it('Ensure that sendFinalSubmissionEmail is not called once the submission is on-going', async () => {
+    const manuscriptController = createMockController(userId)
+    const manuscript = new Manuscript({ createdBy: userId })
+    await manuscript.save()
+    manuscriptController.notify.sendFinalSubmissionEmail = jest.fn(
+      () =>
+        new Promise(resolve => {
+          resolve('ok')
+        }),
+    )
+
+    await manuscriptController.update(manuscript)
+    expect(
+      manuscriptController.notify.sendFinalSubmissionEmail,
+    ).toBeCalledTimes(0)
+  })
+})
