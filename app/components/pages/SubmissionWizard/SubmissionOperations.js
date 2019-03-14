@@ -25,6 +25,7 @@ function runMutation(formValues, mutation, { refetchQueries = [] } = {}) {
     'teams',
     'status',
     'clientStatus',
+    'fileStatus',
     'lastStepVisited',
   ]
 
