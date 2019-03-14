@@ -120,6 +120,10 @@ class SearchBox extends React.Component {
     )
   }
 
+  handleSearch = event => {
+    this.props.onSubmit(this.state.value)
+  }
+
   onSuggestionsFetchRequested = ({ value }) => {
     const inputValue = value.trim().toLowerCase()
     const inputLength = inputValue.length
@@ -162,10 +166,6 @@ class SearchBox extends React.Component {
     if (event.keyCode === 13) {
       this.handleSearch()
     }
-  }
-
-  handleSearch = event => {
-    this.props.onSubmit(this.state.value)
   }
 
   renderSuggestion = suggestion => {
