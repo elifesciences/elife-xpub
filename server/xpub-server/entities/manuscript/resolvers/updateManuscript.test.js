@@ -2,7 +2,6 @@ jest.mock('@pubsweet/logger')
 
 const { createTables } = require('@pubsweet/db-manager')
 const { User, Manuscript } = require('@elifesciences/xpub-model')
-const mailer = require('@pubsweet/component-send-email')
 const { Mutation } = require('.')
 const {
   userData,
@@ -12,13 +11,6 @@ const {
 } = require('./index.test.data')
 
 const replaySetup = require('../../../../../test/helpers/replay-setup')
-
-async function waitforEmails(NUM_EMAILS) {
-  for (let i = 0; i < 100 && mailer.getMails().length < NUM_EMAILS; i += 1) {
-    // eslint-disable-next-line no-await-in-loop
-    await new Promise(resolve => setTimeout(resolve, 10))
-  }
-}
 
 describe('Manuscript resolvers', () => {
   const profileId = userData.identities[0].identifier
@@ -63,8 +55,7 @@ describe('Manuscript resolvers', () => {
       )
     })
 
-    it('updates the current submission for user with data and emails', async () => {
-      const NUM_EMAILS = 1
+    it('updates the current submission for user with data', async () => {
       const manuscript = await new Manuscript({ createdBy: userId }).save()
 
       await Mutation.updateManuscript(
@@ -72,17 +63,6 @@ describe('Manuscript resolvers', () => {
         { data: { id: manuscript.id, ...manuscriptInput } },
         { user: profileId },
       )
-      await waitforEmails(NUM_EMAILS)
-
-      const allEmails = mailer.getMails()
-      expect(allEmails).toHaveLength(NUM_EMAILS)
-
-      // Check the dashboard email
-      expect(allEmails[0]).toMatchObject({
-        to: 'mymail@mail.com',
-        subject: 'Your eLife submission',
-      })
-
       const actualManuscript = await Manuscript.find(manuscript.id, userId)
       expect(actualManuscript).toMatchObject(expectedManuscript)
     })

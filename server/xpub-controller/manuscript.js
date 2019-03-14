@@ -85,10 +85,10 @@ class Manuscript {
     }
 
     const oldSignature = manuscript.submitterSignature
+    manuscript.applyInput(data)
     if (data.submitterSignature && oldSignature !== data.submitterSignature) {
       this.notify.sendFinalSubmissionEmail(manuscript.getAuthor())
     }
-    manuscript.applyInput(data)
 
     await manuscript.save()
     logger.debug(`Updated manuscript`, {
