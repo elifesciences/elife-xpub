@@ -75,5 +75,13 @@ Model components are structured:
 ```
 
 ### Pros
+- Easy to extend without making existing code harder to maintain
+- Easy to re-use with differing workflows without the need to edit large amounts of code
+- Flexible directory structure within components means we can pick and choose whether we include tests, client-side code, etc.
+- Components should have a single responsibility
+- Models are injected making testing easier
+- Better seperation of code makes testing easier
 
 ### Cons
+- Some components don't need the same resources across the stack, so some components won't have UI or resolvers
+- Components can have the need to rely on shared code, which is a sign of domains not having been decoupled from each other. This may lead to code duplication or components depending on each other.
