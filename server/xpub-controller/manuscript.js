@@ -83,7 +83,8 @@ class Manuscript {
       )
     }
 
-    if (data.submitterSignature) {
+    const oldSignature = manuscript.submitterSignature
+    if (data.submitterSignature && oldSignature !== data.submitterSignature) {
       const notify = new Notification(this.config, manuscript.getAuthor())
       notify.sendFinalSubmissionEmail()
     }
