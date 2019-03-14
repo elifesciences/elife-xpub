@@ -1,5 +1,6 @@
 const logger = require('@pubsweet/logger')
 const ManuscriptModel = require('@elifesciences/xpub-model').Manuscript
+const Notification = require('./notification')
 const { FilesHelper, ManuscriptHelper } = require('./helpers')
 
 class Manuscript {
@@ -82,6 +83,10 @@ class Manuscript {
       )
     }
 
+    if (data.submitterSignature) {
+      const notify = new Notification(this.config, manuscript.getAuthor())
+      notify.sendFinalSubmissionEmail()
+    }
     manuscript.applyInput(data)
 
     await manuscript.save()
