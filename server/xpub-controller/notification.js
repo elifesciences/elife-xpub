@@ -34,7 +34,7 @@ class Notification {
     return result
   }
 
-  async sendDashboardEmail() {
+  async _sendEmail(htmlTemplate, txtTemplate) {
     const emailList = this.people.map(person => person.alias.email).join(',')
     const valid = await this.people
       .map(async person => Notification.isValidEmail(person.alias.email))
@@ -45,8 +45,8 @@ class Notification {
       return false
     }
 
-    const textCompile = pug.compileFile('templates/dashboard-email-text.pug')
-    const htmlCompile = pug.compileFile('templates/dashboard-email-html.pug')
+    const textCompile = pug.compileFile(txtTemplate)
+    const htmlCompile = pug.compileFile(htmlTemplate)
 
     const firstNameList = this.people
       .map(person => person.alias.firstName)
@@ -84,58 +84,18 @@ class Notification {
     return sent
   }
 
+  async sendDashboardEmail() {
+    return this._sendEmail(
+      'templates/dashboard-email-html.pug',
+      'templates/dashboard-email-text.pug',
+    )
+  }
+
   async sendFinalSubmissionEmail() {
-    const emailList = this.people.map(person => person.alias.email).join(',')
-    const valid = await this.people
-      .map(async person => Notification.isValidEmail(person.alias.email))
-      .reduce((previous, current) => previous && current)
-
-    if (!valid) {
-      logger.warn(`Failed attempt to send email to: ${emailList}`)
-      return false
-    }
-
-    const textCompile = pug.compileFile(
+    return this._sendEmail(
+      'templates/final-submission-email-html.pug',
       'templates/final-submission-email-text.pug',
     )
-    const htmlCompile = pug.compileFile(
-      'templates/final-submission-email-html.pug',
-    )
-
-    const firstNameList = this.people
-      .map(person => person.alias.firstName)
-      .join(',')
-
-    const text = textCompile({
-      authorName: firstNameList,
-      linkDashboard: this.config['pubsweet-server'].baseUrl,
-    })
-    const html = htmlCompile({
-      authorName: firstNameList,
-      linkDashboard: this.config['pubsweet-server'].baseUrl,
-    })
-
-    let sent = false
-    mailer
-      .send({
-        to: emailList,
-        subject: 'Your eLife submission',
-        from: 'editorial@elifesciences.org',
-        text,
-        html,
-      })
-      .then(() => {
-        logger.info(
-          `Sent confirmation email to corresponding author: ${emailList}`,
-        )
-        sent = true
-      })
-      .catch(err => {
-        logger.error(
-          `Error sending corresponding author confirmation email: ${err}`,
-        )
-      })
-    return sent
   }
 }
 
