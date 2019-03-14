@@ -189,37 +189,55 @@ describe('Manuscripts', () => {
       )
     })
 
-    it('sends email and updates status when export fails', async () => {
-      const NUM_EMAILS = 1
-      jest.spyOn(logger, 'error').mockImplementationOnce(() => {})
-      mecaExport.mockImplementationOnce(() =>
-        Promise.reject(new Error('Broked')),
-      )
+    describe('when export fails', () => {
+      let manuscript
 
-      const manuscript = lodash.cloneDeep(manuscriptInput)
-      manuscript.id = id
-      await Mutation.submitManuscript(
-        {},
-        { data: manuscript },
-        { user: profileId },
-      )
-
-      await waitforEmails(NUM_EMAILS)
-
-      const allEmails = mailer.getMails()
-      expect(allEmails).toHaveLength(NUM_EMAILS)
-
-      // Check the MECA fail email
-      expect(allEmails[0]).toMatchObject({
-        to: 'test@example.com',
-        subject: 'MECA export failed',
+      beforeEach(() => {
+        jest.spyOn(logger, 'error').mockImplementationOnce(() => {})
+        mecaExport.mockImplementationOnce(() =>
+          Promise.reject(new Error('Broked')),
+        )
+        manuscript = lodash.cloneDeep(manuscriptInput)
+        manuscript.id = id
       })
 
-      expect(logger.error).toHaveBeenCalled()
-      const updatedManuscript = await Manuscript.find(manuscript.id, userId)
-      expect(updatedManuscript.status).toBe(
-        Manuscript.statuses.MECA_EXPORT_FAILED,
-      )
+      it('sends email alert', async () => {
+        await Mutation.submitManuscript(
+          {},
+          { data: manuscript },
+          { user: profileId },
+        )
+        const NUM_EMAILS = 1
+        await waitforEmails(NUM_EMAILS)
+        const allEmails = mailer.getMails()
+
+        expect(allEmails).toHaveLength(NUM_EMAILS)
+        expect(allEmails[0]).toMatchObject({
+          to: 'test@example.com',
+          subject: 'MECA export failed',
+        })
+      })
+
+      it('updated status to MECA_EXPORT_FAILED', async () => {
+        await Mutation.submitManuscript(
+          {},
+          { data: manuscript },
+          { user: profileId },
+        )
+        const updatedManuscript = await Manuscript.find(manuscript.id, userId)
+        expect(updatedManuscript.status).toBe(
+          Manuscript.statuses.MECA_EXPORT_FAILED,
+        )
+      })
+
+      it('should log an error', async () => {
+        await Mutation.submitManuscript(
+          {},
+          { data: manuscript },
+          { user: profileId },
+        )
+        expect(logger.error).toHaveBeenCalledWith('MECA export failed', expect.any(Error))
+      })
     })
   })
 })
