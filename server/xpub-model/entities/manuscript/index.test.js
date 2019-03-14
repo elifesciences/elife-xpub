@@ -2,6 +2,7 @@ const { createTables } = require('@pubsweet/db-manager')
 const uuid = require('uuid')
 const Team = require('../team')
 const User = require('../user')
+const File = require('../file')
 const AuditLog = require('../auditLog')
 const Manuscript = require('.')
 
@@ -137,6 +138,117 @@ describe('Manuscript', () => {
           teamMembers: [],
         },
       ])
+    })
+  })
+
+  describe('get fileStatus()', () => {
+    describe('given there are no files', () => {
+      it('returns READY', () => {
+        const manuscript = new Manuscript({
+          createdBy: userId,
+        })
+        manuscript.files = []
+        expect(manuscript.fileStatus).toEqual('READY')
+      })
+    })
+
+    describe('given there is a single file', () => {
+      let manuscript
+      let file
+      let setStatusOfFirstFile
+
+      beforeEach(async () => {
+        manuscript = await createInitialManuscript(userId)
+        manuscript = await addFileToManuscript(manuscript)
+        file = await File.find(manuscript.files[0].id)
+        setStatusOfFirstFile = setStatusOfFile.bind(null,
+          file, manuscript
+        )
+      })
+
+      it('returns READY when the file is stored', async () => {
+        manuscript = await setStatusOfFirstFile('STORED')
+        expect(manuscript.fileStatus).toEqual('READY')
+      })
+
+      it('returns READY when the file upload was cancelled', async () => {
+        manuscript = await setStatusOfFirstFile('CANCELLED')
+        expect(manuscript.fileStatus).toEqual('READY')
+      })
+
+      it('returns CHANGING when the file has been uploaded to the app server', async () => {
+        manuscript = await setStatusOfFirstFile('UPLOADED')
+        expect(manuscript.fileStatus).toEqual('CHANGING')
+      })
+
+      it('returns CHANGING when the file has been created in the database', async () => {
+        manuscript = await setStatusOfFirstFile('CREATED')
+        expect(manuscript.fileStatus).toEqual('CHANGING')
+      })
+    })
+
+    describe('given there are multiple files', () => {
+      let manuscript
+      let file1, file2
+      let setStatusOfFirstFile, setStatusOfSecondFile
+
+      beforeEach(async () => {
+        manuscript = await createInitialManuscript(userId)
+        manuscript = await addFileToManuscript(manuscript)
+        manuscript = await addFileToManuscript(manuscript);
+        [ file1, file2 ] = await Promise.all(
+          manuscript.files.map(({ id }) => File.find(id))
+        )
+        expect(file1.id).not.toEqual(file2.id)
+        setStatusOfFirstFile = setStatusOfFile.bind(null,
+          file1, manuscript
+        )
+        setStatusOfSecondFile = setStatusOfFile.bind(null,
+          file2, manuscript
+        )
+      })
+
+      it('returns READY when both files are stored', async () => {
+        manuscript = await setStatusOfFirstFile('STORED')
+        manuscript = await setStatusOfSecondFile('STORED')
+        expect(manuscript.fileStatus).toEqual('READY')
+      })
+
+      it('returns READY when both files are cancelled', async () => {
+        manuscript = await setStatusOfFirstFile('CANCELLED')
+        manuscript = await setStatusOfSecondFile('CANCELLED')
+        expect(manuscript.fileStatus).toEqual('READY')
+      })
+
+      it('returns READY when one file is stored and once is cancelled', async () => {
+        manuscript = await setStatusOfFirstFile('STORED')
+        manuscript = await setStatusOfSecondFile('CANCELLED')
+        expect(manuscript.fileStatus).toEqual('READY')
+      })
+
+      it('returns CHANGING when one file has been uploaded to the app server', async () => {
+        manuscript = await setStatusOfFirstFile('STORED')
+        manuscript = await setStatusOfSecondFile('UPLOADED')
+        expect(manuscript.fileStatus).toEqual('CHANGING')
+      })
+
+      it('returns CHANGING when one file has been created in the database', async () => {
+        manuscript = await setStatusOfFirstFile('STORED')
+        manuscript = await setStatusOfSecondFile('CREATED')
+        expect(manuscript.fileStatus).toEqual('CHANGING')
+      })
+
+      it('returns CHANGING when both files have been uploaded to the app server', async () => {
+        manuscript = await setStatusOfFirstFile('UPLOADED')
+        manuscript = await setStatusOfSecondFile('UPLOADED')
+        expect(manuscript.fileStatus).toEqual('CHANGING')
+      })
+
+      it('returns CHANGING when both files have been created in the database', async () => {
+        manuscript = await setStatusOfFirstFile('CREATED')
+        manuscript = await setStatusOfSecondFile('CREATED')
+        expect(manuscript.fileStatus).toEqual('CHANGING')
+      })
     })
   })
 
@@ -464,4 +576,34 @@ const getThreeVersions = async userId => {
   expect(getDbTime(v3.updated)).toEqual(getDbTime(v3.created))
 
   return { v1, v2, v3 }
+}
+
+const setStatusOfFile = async (file, manuscript, status) => {
+  file.status = status // eslint-disable-line no-param-reassign
+  await file.save()
+  return Manuscript.find(manuscript.id, manuscript.createdBy)
+}
+
+const addFileToManuscript = async (manuscript) => {
+  const file = new File({
+    manuscriptId: manuscript.id,
+    filename: 'test.txt',
+    url: '-',
+    type: 'test_file',
+  })
+  await file.save()
+  return Manuscript.find(manuscript.id, manuscript.createdBy)
+}
+
+const createInitialManuscript = async (userId, title = 'Alpha') => {
+  const manuscript = new Manuscript({
+    createdBy: userId,
+    meta: {
+      title,
+    },
+    status: 'initial',
+    teams: [],
+  })
+  await manuscript.save()
+  return manuscript
 }

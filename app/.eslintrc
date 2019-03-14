@@ -1,0 +1,6 @@
+{
+  "rules": {
+    "no-console": 0,
+    "react/jsx-sort-props": 0
+  }
+}

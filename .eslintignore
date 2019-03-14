@@ -1,4 +1,7 @@
 _build
+_build_styleguide
+.github
+migrations-*
 coverage
 node_modules
 assets

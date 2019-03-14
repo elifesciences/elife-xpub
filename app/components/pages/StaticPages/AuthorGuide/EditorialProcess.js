@@ -19,8 +19,8 @@ const EditorialProcess = props => (
         promising research
       </NativeLink>{' '}
       across the life sciences and biomedicine. Before you submit your work,
-      please note that eLife is a very selective journal that aims to publish
-      work of the highest scientific standards and importance. Leading academic
+      please note that eLife is a selective journal that aims to publish work of
+      the highest scientific standards and importance. Leading academic
       researchers evaluate new submissions and approximately two-thirds are
       returned to the authors without further peer review. Approximately half of
       the articles that are selected for peer review go on to be published.

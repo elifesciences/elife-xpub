@@ -935,7 +935,10 @@ const JournalPolicies = props => (
       <NativeLink href="http://www.wwpdb.org/" target="_blank">
         Worldwide Protein Data Bank
       </NativeLink>{' '}
-      organisations as a Related Manuscript File.
+      organisations as a Related Manuscript File. The associated maps and
+      coordinate data for the structure should be placed into a zipped folder
+      and uploaded as a Supporting Zip Document; please label this as &quot;maps
+      and coordinate data for review&quot;.
     </Paragraph.Reading>
 
     <Paragraph.Reading>
