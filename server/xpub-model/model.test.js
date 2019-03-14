@@ -58,7 +58,7 @@ describe('related objects behave as we expect', () => {
       expect(updatedStart).not.toEqual(manuscript.updated)
     })
 
-    it.skip('manuscript order test', async () => {
+    it.skip('manuscript order test', async () => {  // eslint-disable-line jest/no-disabled-tests
       // create 9 manuscripts
       const msList = await batchCreate(userId, 9)
 

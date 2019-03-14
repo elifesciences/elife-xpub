@@ -31,7 +31,7 @@ function startServer(port) {
       })
     })
   })
-  sftp.on('error', err => console.warn(err))
+  sftp.on('error', err => console.warn(err)) // eslint-disable-line no-console
 
   const server = sftp.listen(port)
 
