@@ -39,6 +39,7 @@ const UPLOAD_SUPPORTING_MUTATION = gql`
         status
         id
       }
+      fileStatus
     }
   }
 `
@@ -211,13 +212,20 @@ const FilesPageContainer = ({
                             })
                           }
                           uploadFile={file =>
-                            new Promise((resolve, reject) =>
-                              uploadSupportFiles({
+                            new Promise((resolve, reject) => {
+                              setFieldValue('fileStatus', 'CHANGING')
+                              return uploadSupportFiles({
                                 variables: { file, id: values.id },
                               })
-                                .then(data => resolve(data))
-                                .catch(err => reject(err)),
-                            )
+                                .then(data => {
+                                  setFieldValue(
+                                    'fileStatus',
+                                    data.data.uploadSupportingFile.fileStatus,
+                                  )
+                                  resolve(data)
+                                })
+                                .catch(err => reject(err))
+                            })
                           }
                         />
                       )}
