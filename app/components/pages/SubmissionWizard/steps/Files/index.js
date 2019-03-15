@@ -233,7 +233,11 @@ const FilesPageContainer = ({
                   )}
                 </Mutation>
               </Box>
-              <ValidatedField name="fileStatus" type="hidden" />
+              <ValidatedField
+                name="fileStatus"
+                type="hidden"
+                data-test-id="ongoing-upload-error"
+              />
             </React.Fragment>
           )}
         </Mutation>

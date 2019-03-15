@@ -13,6 +13,7 @@ const files = {
   supportingFileError: Selector('[data-test-id=file-block-error]'),
   fileName: Selector('[data-test-id=fileName]'),
   dropzoneMessage: Selector('[data-test-id=dropzoneMessage]'),
+  ongoingFileUploadError: Selector('[data-test-id=ongoing-upload-error]'),
 }
 
 export default files
