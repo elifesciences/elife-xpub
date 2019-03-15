@@ -63,6 +63,7 @@ describe('Manuscripts', () => {
           url: 'fake-path.pdf',
           filename: 'FakeManuscript.pdf',
           type: 'MANUSCRIPT_SOURCE',
+          status: 'STORED',
         },
       ]
 
@@ -87,6 +88,32 @@ describe('Manuscripts', () => {
         ...expectedManuscript,
         status: expect.stringMatching(/^MECA_EXPORT_(SUCCEEDED|PENDING)/),
       })
+    })
+
+    it('throws error if manuscript fileStatus is not READY', async () => {
+      let manuscript = await Manuscript.find(id, userId)
+      manuscript.files.push({
+        url: 'fake-path.pdf',
+        filename: 'FakeManuscript.pdf',
+        type: 'SUPPORTING_FILE',
+        status: 'CREATED',
+      })
+      manuscript = await manuscript.save()
+
+      expect.assertions(3)
+      expect(manuscript.files).toHaveLength(2)
+      expect(manuscript.fileStatus).toBe('CHANGING')
+      await expect(
+        Mutation.submitManuscript(
+          {},
+          { data: { ...manuscriptInput, id } },
+          { user: profileId },
+        ),
+      ).rejects.toEqual(
+        new Error('Manuscript fileStatus is CHANGING', {
+          manuscriptId: manuscript.id,
+        }),
+      )
     })
 
     it('calls meca export with correct arguments', async () => {
@@ -236,7 +263,10 @@ describe('Manuscripts', () => {
           { data: manuscript },
           { user: profileId },
         )
-        expect(logger.error).toHaveBeenCalledWith('MECA export failed', expect.any(Error))
+        expect(logger.error).toHaveBeenCalledWith(
+          'MECA export failed',
+          expect.any(Error),
+        )
       })
     })
   })

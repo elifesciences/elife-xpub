@@ -35,6 +35,13 @@ async function submitManuscript(_, { data }, { user, ip }) {
   }
 
   await manuscript.save()
+
+  if (manuscript.fileStatus !== 'READY') {
+    throw new Error('Manuscript fileStatus is CHANGING', {
+      manuscriptId: manuscript.id,
+    })
+  }
+
   manuscript = await Manuscript.updateStatus(
     manuscript.id,
     Manuscript.statuses.MECA_EXPORT_PENDING,
