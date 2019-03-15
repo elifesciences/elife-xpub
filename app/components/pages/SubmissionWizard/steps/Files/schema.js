@@ -21,7 +21,7 @@ const schema = yup.object().shape({
   fileStatus: yup
     .string()
     .required()
-    .oneOf(['READY'], 'There is some uploads on going, wait while they finish'),
+    .oneOf(['READY'], 'Please wait until all files have uploaded.'),
 })
 
 export { schema }
