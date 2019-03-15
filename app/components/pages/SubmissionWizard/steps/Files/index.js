@@ -21,6 +21,7 @@ const UPLOAD_MANUSCRIPT_MUTATION = gql`
         status
         id
       }
+      fileStatus
     }
   }
 `
@@ -104,6 +105,7 @@ export const onFileDrop = (
     )
 
   formFunctions.setFieldTouched('files', true, false)
+  formFunctions.setFieldValue('fileStatus', 'CHANGING')
   if (files.length > 1) {
     validationError(errorMessageMapping.MULTIPLE)
     return
@@ -118,6 +120,7 @@ export const onFileDrop = (
   }).then(({ data }) => {
     formFunctions.setFieldValue('meta.title', data.uploadManuscript.meta.title)
     formFunctions.setFieldValue('files', data.uploadManuscript.files)
+    formFunctions.setFieldValue('fileStatus', data.uploadManuscript.fileStatus)
   })
 }
 
@@ -222,11 +225,7 @@ const FilesPageContainer = ({
                   )}
                 </Mutation>
               </Box>
-              <ValidatedField
-                name="files.fileStatus"
-                type="hidden"
-                value="READY"
-              />
+              <ValidatedField name="fileStatus" type="hidden" />
             </React.Fragment>
           )}
         </Mutation>
