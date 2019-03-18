@@ -45,7 +45,12 @@ class CookieNotice extends React.Component {
               Learn more.
             </NativeLink>
           </Box>
-          <Button onClick={this.acceptNotice} extraSmall primary>
+          <Button
+            data-test-id="cookieAcceptButton"
+            onClick={this.acceptNotice}
+            extraSmall
+            primary
+          >
             got it
           </Button>
         </FooterMessage>
