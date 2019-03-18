@@ -8,6 +8,10 @@
 
 ## Timeline
 
+2019-02-22 (Friday)
+
+10:51: Unicode character removal PR [#1562](https://github.com/elifesciences/elife-xpub/pull/1562) is merged in and subsequently deployed to production, causing the issue.
+
 2019-02-23 (Saturday)
 
 09:06: Hannah received email from Andy from editorial
@@ -85,11 +89,11 @@ xPub user filter is re-enabled in a PR
 - Another manual fix
 - Ultimate root cause fix
 
-## Impact (TBC)
+## Impact
 
-MTTD: 00:10
+MTTD: 22:15
 
-MTTR: 01:00
+MTTR: 03:47
 
 ## Corrective Actions
 
