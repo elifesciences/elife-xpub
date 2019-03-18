@@ -11,6 +11,7 @@ class CookieNotice extends React.Component {
   previouslyAccepted() {
     return Helpers.getCookieValue('previouslyAccepted', this.document.cookie)
   }
+
   render() {
     if (!this.previouslyAccepted()) {
       return <div>Cookie to go here</div>
