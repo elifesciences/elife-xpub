@@ -1,20 +1,12 @@
 import React from 'react'
-import styled from 'styled-components'
 import { Box } from '@rebass/grid'
 import { H1 } from '@pubsweet/ui'
 import Paragraph from 'ui/atoms/Paragraph'
 import ButtonLink from 'ui/atoms/ButtonLink'
 import FooterText from 'ui/atoms/FooterText'
 import NativeLink from 'ui/atoms/NativeLink'
+import ImageBlock from 'ui/atoms/ImageBlock'
 import { RedirectLayout, TwoColumnLayout } from '../../global'
-
-const ImageBlock = styled(Box)`
-  width:75%
-  height: 100%;
-  background-image: url("/assets/redirect.png");
-  background-size: cover;
-  background-position: center;
-`
 
 const LandingRedirect = () => (
   <RedirectLayout>
@@ -40,7 +32,7 @@ const LandingRedirect = () => (
           continue
         </ButtonLink>
       </Box>
-      <ImageBlock ml="auto" />
+      <ImageBlock ml="auto" image="/assets/redirect.png" />
     </TwoColumnLayout>
     <FooterText onlyCenterDesktop>
       Read our{' '}
