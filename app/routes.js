@@ -3,6 +3,7 @@ import { Route, Switch } from 'react-router-dom'
 
 import { AuthenticatedComponent, Layout } from './components/global'
 import ErrorBoundary from './components/global/ErrorBoundary'
+import CookieNotice from './components/global/CookieNotice'
 
 import LandingRedirect from './components/pages/LandingRedirect'
 import LoginPage from './components/pages/Login'
@@ -19,8 +20,8 @@ import TrackedRoute from './trackedRoute'
 
 const Routes = () => (
   <Switch>
-    <div>
-      Coookie Notice
+    <React.Fragment>
+      <CookieNotice />
       <TrackedRoute component={LandingRedirect} exact path="/redirect" />
       <Layout>
         <ErrorBoundary>
@@ -41,7 +42,7 @@ const Routes = () => (
           </Switch>
         </ErrorBoundary>
       </Layout>
-    </div>
+    </React.Fragment>
   </Switch>
 )
 
