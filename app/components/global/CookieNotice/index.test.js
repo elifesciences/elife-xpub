@@ -8,6 +8,7 @@ describe('CookieNotice', () => {
       cookie: `cookieNotificationAccepted=true; expires=Fri, 31 Dec 9999 23:59:59 GMT`,
     }
     const wrapper = shallow(<CookieNotice document={document} />)
+
     expect(wrapper.type()).toEqual(null)
   })
 
@@ -19,6 +20,7 @@ describe('CookieNotice', () => {
     const wrapper = shallow(<CookieNotice document={document} />)
     wrapper.find('[data-test-id="cookieAcceptButton"]').simulate('click')
     wrapper.update()
+
     expect(document.cookie).toBe(
       `cookieNotificationAccepted=true; expires=Tue, 19 January 2038 03:14:07 UTC; path=/; domain=${
         document.domain
