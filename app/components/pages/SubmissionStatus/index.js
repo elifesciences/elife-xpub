@@ -2,7 +2,7 @@ import React from 'react'
 
 const SubmissionStatusContainer = () => (
   <React.Fragment>
-    <div>we are in the status page.</div>
+    <div data-test-id="welcome-message">we are in the status page.</div>
   </React.Fragment>
 )
 
