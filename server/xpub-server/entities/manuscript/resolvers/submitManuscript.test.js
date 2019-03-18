@@ -116,6 +116,23 @@ describe('Manuscripts', () => {
       )
     })
 
+    it('sends a confirmation email to the submitter', async () => {
+      await Mutation.submitManuscript(
+        {},
+        { data: { ...manuscriptInput, id } },
+        { user: profileId },
+      )
+      const NUM_EMAILS = 1
+      await waitforEmails(NUM_EMAILS)
+      const allEmails = mailer.getMails()
+
+      expect(allEmails).toHaveLength(NUM_EMAILS)
+      expect(allEmails[0]).toMatchObject({
+        subject: 'Your eLife submission',
+        to: 'mymail@mail.com',
+      })
+    })
+
     it('calls meca export with correct arguments', async () => {
       const ip = '1.2.3.4'
       await Mutation.submitManuscript(
@@ -234,12 +251,12 @@ describe('Manuscripts', () => {
           { data: manuscript },
           { user: profileId },
         )
-        const NUM_EMAILS = 1
+        const NUM_EMAILS = 2
         await waitforEmails(NUM_EMAILS)
         const allEmails = mailer.getMails()
 
         expect(allEmails).toHaveLength(NUM_EMAILS)
-        expect(allEmails[0]).toMatchObject({
+        expect(allEmails[1]).toMatchObject({
           to: 'test@example.com',
           subject: 'MECA export failed',
         })

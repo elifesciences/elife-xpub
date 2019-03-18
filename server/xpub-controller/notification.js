@@ -8,8 +8,7 @@ const logger = require('@pubsweet/logger')
 const resolveMx = util.promisify(dns.resolveMx)
 
 class Notification {
-  constructor(config, people) {
-    this.people = people
+  constructor(config) {
     this.config = config
   }
 
@@ -34,9 +33,9 @@ class Notification {
     return result
   }
 
-  async sendDashboardEmail() {
-    const emailList = this.people.map(person => person.alias.email).join(',')
-    const valid = await this.people
+  async _sendEmail(people, htmlTemplate, txtTemplate) {
+    const emailList = people.map(person => person.alias.email).join(',')
+    const valid = await people
       .map(async person => Notification.isValidEmail(person.alias.email))
       .reduce((previous, current) => previous && current)
 
@@ -45,12 +44,10 @@ class Notification {
       return false
     }
 
-    const textCompile = pug.compileFile('templates/dashboard-email-text.pug')
-    const htmlCompile = pug.compileFile('templates/dashboard-email-html.pug')
+    const textCompile = pug.compileFile(txtTemplate)
+    const htmlCompile = pug.compileFile(htmlTemplate)
 
-    const firstNameList = this.people
-      .map(person => person.alias.firstName)
-      .join(',')
+    const firstNameList = people.map(person => person.alias.firstName).join(',')
 
     const text = textCompile({
       authorName: firstNameList,
@@ -82,6 +79,22 @@ class Notification {
         )
       })
     return sent
+  }
+
+  async sendDashboardEmail(people) {
+    return this._sendEmail(
+      people,
+      'templates/dashboard-email-html.pug',
+      'templates/dashboard-email-text.pug',
+    )
+  }
+
+  async sendFinalSubmissionEmail(people) {
+    return this._sendEmail(
+      people,
+      'templates/final-submission-email-html.pug',
+      'templates/final-submission-email-text.pug',
+    )
   }
 }
 
