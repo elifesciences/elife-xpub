@@ -1,6 +1,5 @@
 const logger = require('@pubsweet/logger')
 const ManuscriptModel = require('@elifesciences/xpub-model').Manuscript
-const Notification = require('./notification')
 const { FilesHelper, ManuscriptHelper } = require('./helpers')
 
 class Manuscript {
@@ -17,7 +16,6 @@ class Manuscript {
       this.storage,
       this.filesHelper,
     )
-    this.notify = new Notification(this.config)
   }
 
   async upload(manuscriptId, file, fileSize) {
@@ -84,11 +82,7 @@ class Manuscript {
       )
     }
 
-    const oldSignature = manuscript.submitterSignature
     manuscript.applyInput(data)
-    if (data.submitterSignature && oldSignature !== data.submitterSignature) {
-      this.notify.sendFinalSubmissionEmail(manuscript.getAuthor())
-    }
 
     await manuscript.save()
     logger.debug(`Updated manuscript`, {
