@@ -83,11 +83,10 @@ xPub user filter is re-enabled in a PR
 <!-- - Difficult to see what the assertions were due to snapshot testing -->
 - EJP as an external service had no way that we know of to test out the MECA export
 
-## Stabilization Steps ( TBC)
+## Stabilization Steps
 
-- Manual fix
-- Another manual fix
-- Ultimate root cause fix
+- Giorgio changes the filter to direct 100% of traffic to EJP
+- Ultimate root cause fix: https://github.com/elifesciences/elife-xpub/pull/1573
 
 ## Impact
 
