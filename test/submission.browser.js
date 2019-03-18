@@ -217,3 +217,12 @@ test('redirect page allows you to continue through app', async t => {
   navigationHelper.startAtRedirect()
   await t.expect(getPageUrl()).contains('/login')
 })
+
+test('cookie notice', async t => {
+  const navigationHelper = new NavigationHelper(t)
+
+  navigationHelper.login()
+  await t.expect(Selector('[data-test-id="cookieAcceptButton"]').exists).ok()
+  await this.t.click(Selector('[data-test-id="cookieAcceptButton"]'))
+  await t.expect(Selector('[data-test-id="cookieAcceptButton"]').exists).notOk()
+})
