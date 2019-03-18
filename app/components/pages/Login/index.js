@@ -4,7 +4,7 @@ import { Redirect } from 'react-router-dom'
 import { withApollo } from 'react-apollo'
 import gql from 'graphql-tag'
 import config from 'config'
-import { H2 } from '@pubsweet/ui'
+import { H1 } from '@pubsweet/ui'
 import styled from 'styled-components'
 import { th } from '@pubsweet/ui-toolkit'
 import ButtonOrcid from 'ui/atoms/ButtonOrcid'
@@ -83,22 +83,23 @@ class LoginPage extends React.Component {
       <Container mx="auto" width={[1, 410]}>
         {/* roughly centre the box vertically */}
         <Box mb={4}>
-          <H2>
-            eLife is changing the way work is reviewed and selected for
-            publication
-          </H2>
+          <H1>Welcome!</H1>
         </Box>
         <Box mb={5}>
           <Paragraph.Reading>
             The leading scientists behind eLife are committed to rapid, fair,
-            and constructive review. Before you submit your work, please note
-            that eLife is a very selective journal that aims to publish work of
-            the highest scientific standards and importance.
+            and constructive review of academic research.
           </Paragraph.Reading>
           <Paragraph.Reading>
-            Our new manuscript submission system will guide you through the
-            process of submitting your research.
-            {!token && ' Log in with your ORCID identifier to get started.'}
+            We welcome submissions of the highest scientific standards and
+            importance in all areas of the life and biomedical sciences.
+          </Paragraph.Reading>
+          <Paragraph.Reading>
+            You can read more in our{' '}
+            <NativeLink href="https://reviewer.elifesciences.org/author-guide">
+              author guide
+            </NativeLink>
+            .
           </Paragraph.Reading>
         </Box>
         {token ? (
