@@ -4,7 +4,7 @@
 
 ## Description
 
-- MECA exports not being accepted by EJP
+- Article files not appearing in eJP
 
 ## Timeline
 
@@ -20,11 +20,11 @@
 
 10:32: Peter confirms that he's received the email and starts looking into the issue
 
-10:34: Hannah suggests we switch back to using EJP for 100% of users to mitigate the issue
+10:34: Hannah suggests we switch back to using eJP for 100% of users to mitigate the issue
 
 Peter didn't have permissions to implement the suggested solution
 
-10:40: Peter suggests we bypass the filter and hardcode to use EJP
+10:40: Peter suggests we bypass the filter and hardcode to use eJP
 
 10:47: Peter raises the above PR within the builder repository
 
@@ -38,35 +38,35 @@ Peter and Hannah didn't have permissions to merge it in
 
 11:29: Peter contacts #incident-response to request help on Jenkins
 
-12:08: Giorgio does not approve the initial change that went in
+12:08: Giorgio uneasy with the initial change that went in
 
-12:27: Giorgio changes the filter to direct 100% of traffic to EJP, which was the initial solution that was attempted at 10:34
+12:27: Giorgio changes the filter to direct 100% of traffic to eJP, which was the initial solution that was attempted at 10:34
 
-12:53: incident was mitigated
+12:53: Incident was mitigated
 
 At this point, there are two changes introduced to mitigate the incident:
-- user filter is at 100% traffic to EJP
+- user filter is at 100% traffic to eJP
 - journal site submit button points directly to submit.elifesciences.org
 
 2019-02-25 (Monday)
 
-At some point, the cause is found..
+During the morning, Peter is able to find the cause of the issue
 
 11:28: Peter raises https://github.com/elifesciences/elife-xpub/pull/1573 to fix the issue
 
 13:43: Peter's PR gets merged in
 
-Steps are now taken to direct 50% of traffic back to xpub 
+Steps are now taken to direct 50% of traffic back to xPub 
 
 xPub user filter is re-enabled in a PR
 
 14:00: Cory raises a PR to change the destination of the button back to what it was
 
-15:56: Cory's PR get's merged 
+15:56: Cory's PR gets merged 
 
 2019-02-26 (Tuesday)
 
-~08:00: user filter PR is merged
+08:00: User filter PR is merged
 
 08:51: Peter announces in the #xpub channel that incident had been resolved, and traffic was being directed to xPub
 
@@ -81,11 +81,11 @@ xPub user filter is re-enabled in a PR
 - https://github.com/elifesciences/elife-xpub/pull/1562/ changed the values being passed to the manifest generator so they didn't include IDs, mime types, etc
 - Test was asserting on the wrong values (i.e. the MIME types and IDs within the manifest file, within the MECA export)
 <!-- - Difficult to see what the assertions were due to snapshot testing -->
-- EJP as an external service had no way that we know of to test out the MECA export
+- eJP as an external service had no way that we know of to test out the MECA export
 
 ## Stabilization Steps
 
-- Giorgio changes the filter to direct 100% of traffic to EJP
+- Giorgio changes the filter to direct 100% of traffic to eJP
 - Ultimate root cause fix: https://github.com/elifesciences/elife-xpub/pull/1573
 
 ## Impact
@@ -100,4 +100,5 @@ MTTR: 03:47
 - Make a decision as to whether we have a holding page or whether we switch back to EJP, if a major incident in the future was cause downtime
 - Peter to investigate why Jenkins didn't deploy the incident mitigation changes made on Saturday
 - Consider introducing type checking
-- Investigate testing EJP via end2end testing
+- Investigate testing eJP via end2end testing
+- Report any incidents in #incident-response channel as first step
