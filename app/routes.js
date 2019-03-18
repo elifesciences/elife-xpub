@@ -11,6 +11,7 @@ import DashboardPage from './components/pages/Dashboard'
 import AuthorGuide from './components/pages/StaticPages/AuthorGuide'
 import ReviewerGuide from './components/pages/StaticPages/ReviewerGuide'
 import ContactUs from './components/pages/StaticPages/ContactUs'
+import SubmissionStatusPage from './components/pages/SubmissionStatus'
 
 import SubmissionWizard from './components/pages/SubmissionWizard'
 import ErrorPage from './components/pages/Error'
@@ -33,6 +34,11 @@ const Routes = () => (
               <TrackedRoute component={ThankYouPage} path="/thankyou/:id" />
               <Route component={SubmissionWizard} path="/submit/:id" />
               <TrackedRoute component={DashboardPage} exact path="/" />
+              <TrackedRoute
+                component={SubmissionStatusPage}
+                exact
+                path="/submissions/:id"
+              />
               <ErrorPage error="404: page not found" />
             </Switch>
           </AuthenticatedComponent>
