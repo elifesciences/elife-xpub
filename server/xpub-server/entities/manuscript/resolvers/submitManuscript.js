@@ -5,6 +5,7 @@ const logger = require('@pubsweet/logger')
 const { mecaExport } = require('@elifesciences/xpub-meca-export')
 const { Manuscript, User } = require('@elifesciences/xpub-model')
 const { S3Storage } = require('@elifesciences/xpub-client')
+const Notification = require('@elifesciences/xpub-controller/notification')
 const manuscriptInputSchema = require('../helpers/manuscriptInputValidationSchema')
 
 async function submitManuscript(_, { data }, { user, ip }) {
@@ -27,6 +28,10 @@ async function submitManuscript(_, { data }, { user, ip }) {
   }
 
   manuscript.applyInput(manuscriptInput)
+
+  const notify = new Notification(config)
+  await notify.sendFinalSubmissionEmail(manuscript.getAuthor())
+
   const sourceFile = manuscript.getSource()
   if (!sourceFile) {
     throw new Error('Manuscript has no source file', {
