@@ -18,6 +18,10 @@ const schema = yup.object().shape({
       value => stripHtml(value).split(/\s+/).length > MIN_WORDS,
     ),
   files: yup.array().min(1, errorMessageMapping.EMPTY),
+  fileStatus: yup
+    .string()
+    .required()
+    .oneOf(['READY'], 'Please wait until all files have uploaded.'),
 })
 
 export { schema }
