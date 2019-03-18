@@ -1,5 +1,6 @@
 import React from 'react'
 import { Box } from '@rebass/grid'
+import { Button } from '@pubsweet/ui'
 import FooterMessage from 'ui/atoms/FooterMessage'
 import NativeLink from 'ui/atoms/NativeLink'
 import Helpers from './helpers'
@@ -15,14 +16,26 @@ class CookieNotice extends React.Component {
   }
 
   previouslyAccepted() {
-    return Helpers.getCookieValue('previouslyAccepted', this.document.cookie)
+    return Helpers.getCookieValue(
+      'cookieNotificationAccepted',
+      this.document.cookie,
+    )
+  }
+
+  acceptNotice = () => {
+    const expiryDate = 'Tue, 19 January 2038 03:14:07 UTC'
+    const cookieString = `cookieNotificationAccepted=true; expires=${expiryDate}; path=/; domain=${
+      this.document.domain
+    };`
+    this.document.cookie = cookieString
+    this.setState({ visible: false })
   }
 
   render() {
     if (this.state.visible) {
       return (
         <FooterMessage>
-          <Box mx="auto" width={[1, 1, 1, 1, 1 / 2]}>
+          <Box mx="auto" mb={3} width={[1, 1, 1, 1, 1 / 2]}>
             This site uses cookies to deliver its services and analyse traffic.
             By using this site, you agree to its use of cookies.{' '}
             <NativeLink
@@ -32,6 +45,9 @@ class CookieNotice extends React.Component {
               Learn more.
             </NativeLink>
           </Box>
+          <Button onClick={this.acceptNotice} extraSmall primary>
+            got it
+          </Button>
         </FooterMessage>
       )
     }
