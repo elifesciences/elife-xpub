@@ -17,6 +17,7 @@
     "joi": "^13.6.0",
     "jsonwebtoken": "^8.3.0",
     "lodash": "^4.17.5",
+    "node-cleanup": "^2.1.2",
     "request": "^2.88.0",
     "request-promise-native": "^1.0.5",
     "uuid": "^3.3.2",

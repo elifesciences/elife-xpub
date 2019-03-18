@@ -12,7 +12,7 @@ class AuditLog extends BaseModel {
         userId: { type: 'uuid' }, // Currently not used
         action: {
           type: 'string',
-          enum: ['CREATED', 'UPDATED', 'DELETED', 'MECA_RESULT'],
+          enum: ['CREATED', 'UPDATED', 'DELETED', 'MECA_RESULT', 'APPLICATION'],
         },
         value: { type: ['string', 'null'] },
         objectId: { type: 'uuid' },

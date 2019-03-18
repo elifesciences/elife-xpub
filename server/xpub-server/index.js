@@ -2,7 +2,8 @@ const os = require('os')
 const { merge } = require('lodash')
 const fs = require('fs')
 const logger = require('@pubsweet/logger')
-const cleanup = require('./cleanup')
+const cleanup = require('./cleanup').Cleanup
+const { AuditLog } = require('@elifesciences/xpub-model')
 
 // concatenate schemas
 const xpubTypeDefs = fs.readFileSync(
@@ -38,15 +39,30 @@ const registerRoutes = app => {
 const appMessage = action =>
   `${action} Application: ${os.hostname()}, PID: ${process.pid}`
 
-const stopServer = () => {
-  // handle the application cleanup in here
-  logger.info(appMessage('Stopping'))
+const auditApplicationEvent = async message => {
+  await new AuditLog({
+    action: 'APPLICATION',
+    objectId: '00000000-0000-0000-0000-000000000000',
+    objectType: 'process',
+    value: message,
+  }).save()
 }
 
-logger.info(appMessage('Starting'))
+const xpubCleanup = async cb => {
+  const msg = appMessage('Stopping')
+  logger.info(msg)
+  // handle the application cleanup in here
+  await auditApplicationEvent(msg)
+  cb()
+}
+
+const stopServer = () => xpubCleanup
+const msg = appMessage('Starting')
+logger.info(msg)
+auditApplicationEvent(msg)
 
 // eslint-disable-next-line no-unused-vars
-const cleanupHandler = cleanup.Cleanup(process, logger, stopServer)
+const cleanupHandler = cleanup(process, logger, stopServer)
 
 module.exports = {
   backend: () => registerRoutes,
