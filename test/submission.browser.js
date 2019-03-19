@@ -3,7 +3,14 @@ import config from 'config'
 import assert from 'assert'
 import logger from '@pubsweet/logger'
 import startSshServer from '@elifesciences/xpub-meca-export/test/mock-sftp-server'
-import { author, dashboard, editors, files, submission } from './pageObjects'
+import {
+  author,
+  dashboard,
+  editors,
+  files,
+  submission,
+  login,
+} from './pageObjects'
 import setFixtureHooks from './helpers/set-fixture-hooks'
 import NavigationHelper from './helpers/navigationHelper'
 
@@ -188,7 +195,7 @@ test('Ability to progress through the wizard is tied to validation', async t => 
 test('Form entries are saved when a user navigates to the next page of the wizard', async t => {
   const navigationHelper = new NavigationHelper(t)
 
-  navigationHelper.login()
+  await navigationHelper.login()
   navigationHelper.newSubmission()
 
   navigationHelper.setAuthorName('Meghan')
@@ -219,10 +226,8 @@ test('redirect page allows you to continue through app', async t => {
 })
 
 test('cookie notice', async t => {
-  const navigationHelper = new NavigationHelper(t)
-
-  navigationHelper.login()
+  await t.navigateTo(login.url)
   await t.expect(Selector('[data-test-id="cookieAcceptButton"]').exists).ok()
-  await this.t.click(Selector('[data-test-id="cookieAcceptButton"]'))
+  await t.click(Selector('[data-test-id="cookieAcceptButton"]'))
   await t.expect(Selector('[data-test-id="cookieAcceptButton"]').exists).notOk()
 })

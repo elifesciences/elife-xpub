@@ -19,9 +19,9 @@ import ThankYouPage from './components/pages/ThankYou'
 import TrackedRoute from './trackedRoute'
 
 const Routes = () => (
-  <Switch>
-    <React.Fragment>
-      <CookieNotice />
+  <React.Fragment>
+    <CookieNotice />
+    <Switch>
       <TrackedRoute component={LandingRedirect} exact path="/redirect" />
       <Layout>
         <ErrorBoundary>
@@ -42,8 +42,8 @@ const Routes = () => (
           </Switch>
         </ErrorBoundary>
       </Layout>
-    </React.Fragment>
-  </Switch>
+    </Switch>
+  </React.Fragment>
 )
 
 export default Routes

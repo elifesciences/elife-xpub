@@ -1,5 +1,6 @@
-import { author, dashboard, login, wizardStep, files } from './pageObjects'
+import { author, wizardStep, files } from './pageObjects'
 import setFixtureHooks from './helpers/set-fixture-hooks'
+import NavigationHelper from './helpers/navigationHelper'
 
 const f = fixture('Submission')
 setFixtureHooks(f)
@@ -23,10 +24,10 @@ const manuscriptReplacement = {
 }
 
 test('Replace Manuscript on the Submission', async t => {
-  await t
-    .navigateTo(login.url)
-    .click(login.button)
-    .click(dashboard.desktopNewSubmission)
+  const navigationHelper = new NavigationHelper(t)
+
+  navigationHelper.login()
+  navigationHelper.newSubmission()
 
   // author details initially empty
   await t

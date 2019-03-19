@@ -1,3 +1,4 @@
+import { Selector } from 'testcafe'
 import {
   author,
   dashboard,
@@ -10,6 +11,7 @@ import {
   wizardStep,
   profile,
   redirect,
+  cookie,
 } from '../pageObjects'
 
 class NavigationHelper {
@@ -31,10 +33,16 @@ class NavigationHelper {
 
   async startAtRedirect() {
     await this.t.navigateTo(redirect.url).click(redirect.button)
+    if (Selector(cookie.button)) {
+      await this.t.click(Selector(cookie.button))
+    }
   }
 
   async login() {
     await this.t.navigateTo(login.url).click(login.button)
+    if (Selector(cookie.button)) {
+      await this.t.click(Selector(cookie.button))
+    }
   }
 
   async openProfile() {

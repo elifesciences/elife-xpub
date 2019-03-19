@@ -1,14 +1,7 @@
 import { Selector } from 'testcafe'
-import {
-  author,
-  dashboard,
-  editors,
-  files,
-  login,
-  submission,
-  wizardStep,
-} from './pageObjects'
+import { author, editors, files, submission, wizardStep } from './pageObjects'
 import setFixtureHooks from './helpers/set-fixture-hooks'
+import NavigationHelper from './helpers/navigationHelper'
 
 const f = fixture('PeoplePicker')
 setFixtureHooks(f)
@@ -19,10 +12,10 @@ const manuscript = {
 }
 
 test('People Picker', async t => {
-  await t
-    .navigateTo(login.url)
-    .click(login.button)
-    .click(dashboard.desktopNewSubmission)
+  const navigationHelper = new NavigationHelper(t)
+
+  navigationHelper.login()
+  navigationHelper.newSubmission()
 
   // author details initially empty
   await t
