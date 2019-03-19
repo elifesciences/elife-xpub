@@ -5,7 +5,7 @@ import Paragraph from 'ui/atoms/Paragraph'
 import ButtonLink from 'ui/atoms/ButtonLink'
 import FooterText from 'ui/atoms/FooterText'
 import NativeLink from 'ui/atoms/NativeLink'
-import ImageBlock from 'ui/atoms/ImageBlock'
+import ImageWrapper from 'ui/atoms/ImageWrapper'
 import { RedirectLayout, TwoColumnLayout } from '../../global'
 
 const LandingRedirect = () => (
@@ -32,7 +32,7 @@ const LandingRedirect = () => (
           continue
         </ButtonLink>
       </Box>
-      <ImageBlock ml="auto" image="/assets/redirect.png" />
+      <ImageWrapper ml="auto" image="/assets/redirect.png" />
     </TwoColumnLayout>
     <FooterText onlyCenterDesktop>
       Read our{' '}
