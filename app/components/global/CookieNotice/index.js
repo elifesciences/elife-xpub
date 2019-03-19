@@ -36,17 +36,14 @@ class CookieNotice extends React.Component {
     if (this.state.visible) {
       return (
         <FooterMessage>
-          <Box mx="auto" mb={3} width={[1, 1, 1, 1, 1 / 2]}>
+          <Box mx="auto" width={[1, 1, 1, 1, 1 / 2]}>
             This site uses cookies to deliver its services and analyse traffic.
-            By using this site, you agree to its use of cookies.{' '}
-            <NativeLink
-              href="https://elifesciences.org/privacy"
-              target="_blank"
-            >
-              Learn more.
-            </NativeLink>
+            By using this site, you agree to its use of cookies.
           </Box>
-          <div data-test-id="cookie-button-holder">
+          <NativeLink href="https://elifesciences.org/privacy" target="_blank">
+            Learn more.
+          </NativeLink>
+          <Box width={1} mt={3}>
             <Button
               data-test-id="cookieAcceptButton"
               onClick={this.acceptNotice}
@@ -55,7 +52,7 @@ class CookieNotice extends React.Component {
             >
               got it
             </Button>
-          </div>
+          </Box>
         </FooterMessage>
       )
     }
