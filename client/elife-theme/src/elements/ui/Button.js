@@ -5,10 +5,15 @@ const extraSmall = css`
   font-size: 11px;
   line-height: 12px;
   padding: ${th('space.1')};
+  height: ${th('space.3')};
 `
 
 const small = css`
+  font-size: 11px;
+  line-height: 12px;
   padding: ${th('space.1')};
+  min-width: 96px;
+  height: ${th('space.4')};
 `
 
 const primary = css`
