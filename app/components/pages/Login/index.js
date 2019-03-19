@@ -10,8 +10,8 @@ import ButtonOrcid from 'ui/atoms/ButtonOrcid'
 import ButtonLink from 'ui/atoms/ButtonLink'
 import Paragraph from 'ui/atoms/Paragraph'
 import NativeLink from 'ui/atoms/NativeLink'
-import FooterText from 'ui/atoms/FooterText'
 import ImageWrapper from 'ui/atoms/ImageWrapper'
+import FooterPrivacy from 'ui/atoms/FooterPrivacy'
 import media from 'global/layout/media'
 import { TwoColumnLayout } from '../../global'
 
@@ -27,7 +27,7 @@ const SmallCenterer = styled(Box).attrs({
   mx: 'auto',
   mt: 5,
   px: 5,
-  width: [1, 1, 840, 840],
+  width: [1, 1, 1, 1000],
 })`
   min-width: 0;
   ${media.tabletPortraitUp`
@@ -123,7 +123,7 @@ class LoginPage extends React.Component {
                   </ButtonLink>
                 </Box>
               ) : (
-                <Flex alignItems="center" mb={5}>
+                <Flex alignItems="center">
                   <Box mr={3}>
                     <a href={loginUrl}>
                       <ButtonOrcid data-test-id="login">
@@ -142,20 +142,7 @@ class LoginPage extends React.Component {
             </Box>
             <ImageWrapper ml="auto" image="/assets/welcome.png" />
           </TwoColumnLayout>
-          <FooterText onlyCenterDesktop>
-            Read our{' '}
-            <NativeLink href="https://elifesciences.org/terms" target="_blank">
-              Terms and conditions
-            </NativeLink>{' '}
-            and{' '}
-            <NativeLink
-              href="https://elifesciences.org/privacy"
-              target="_blank"
-            >
-              Privacy policy
-            </NativeLink>
-            .
-          </FooterText>
+          <FooterPrivacy />
         </SmallCenterer>
       </Box>
     )
