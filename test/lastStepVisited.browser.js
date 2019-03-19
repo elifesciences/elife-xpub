@@ -1,16 +1,17 @@
 import { ClientFunction } from 'testcafe'
 import config from 'config'
-import { author, dashboard, login, wizardStep } from './pageObjects'
+import { author, dashboard, wizardStep } from './pageObjects'
 import setFixtureHooks from './helpers/set-fixture-hooks'
+import NavigationHelper from './helpers/navigationHelper'
 
 const f = fixture('Submission')
 setFixtureHooks(f)
 
 test('Interrupt and resume Submission', async t => {
-  await t
-    .navigateTo(login.url)
-    .click(login.button)
-    .click(dashboard.desktopNewSubmission)
+  const navigationHelper = new NavigationHelper(t)
+
+  navigationHelper.login()
+  navigationHelper.newSubmission()
 
   // author details initially empty
   await t
