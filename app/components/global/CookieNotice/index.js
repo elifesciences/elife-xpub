@@ -5,6 +5,7 @@ import FooterMessage from 'ui/atoms/FooterMessage'
 import NativeLink from 'ui/atoms/NativeLink'
 import Helpers from './helpers'
 
+// This Cookie Notice component is based on the journals implementation: https://github.com/elifesciences/pattern-library/blob/develop/assets/js/components/CookieOverlay.js
 class CookieNotice extends React.Component {
   constructor(props) {
     super(props)
