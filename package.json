@@ -83,7 +83,8 @@
   },
   "workspaces": [
     "client/*",
-    "server/*"
+    "server/*",
+    "packages/*"
   ],
   "dependencies": {
     "@elifesciences/elife-theme": "^1.0.0",

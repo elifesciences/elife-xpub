@@ -14,6 +14,7 @@ module.exports = {
       '@elifesciences/xpub-server',
       '@elifesciences/xpub-controller',
       '@elifesciences/xpub-client-config',
+      '@elifesciences/component-dashboard',
       '@pubsweet/component-send-email',
     ],
   },

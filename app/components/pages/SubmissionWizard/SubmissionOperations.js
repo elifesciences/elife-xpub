@@ -4,7 +4,8 @@ import React from 'react'
 import omitDeep from 'omit-deep-lodash'
 import Loading from 'ui/atoms/Loading'
 import ErrorPage from '../Error'
-import { ALL_MANUSCRIPTS } from '../Dashboard/operations'
+//TODO: This should not be importing from the other component
+import { ALL_MANUSCRIPTS } from '@elifesciences/component-dashboard/client/graphql/queries'
 import {
   GET_MANUSCRIPT,
   UPDATE_MANUSCRIPT,
