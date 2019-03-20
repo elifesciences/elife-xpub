@@ -91,9 +91,11 @@ class Notification {
     )
   }
 
-  async sendFinalSubmissionEmail(people, title) {
+  async sendFinalSubmissionEmail(manuscript) {
+    const author = manuscript.getAuthor()
+    const { title } = manuscript.meta
     return this._sendEmail(
-      people,
+      author,
       'templates/final-submission-email-html.pug',
       'templates/final-submission-email-text.pug',
       title,
