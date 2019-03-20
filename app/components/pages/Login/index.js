@@ -27,10 +27,21 @@ const SmallCenterer = styled(Box).attrs({
   mt: 5,
   width: '100%',
 })`
-  max-width: 840px;
+  max-width: 432px;
   min-width: 0;
+  margin-top: 24px;
+  ${media.mobileUp`
+  margin-top: 72px;
+`};
   ${media.tabletPortraitUp`
   margin-top: 0;
+  max-width: 454px;
+`};
+  ${media.tabletLandscapeUp`
+  max-width: 786px;
+`};
+  ${media.desktopUp`
+  max-width: 840px;
 `};
 `
 
@@ -99,7 +110,7 @@ class LoginPage extends React.Component {
 
     return (
       <Flex justifyContent="center">
-        <SmallCenterer mx={['24px', '24px', '12.5%', '8.333%', '16.666%']}>
+        <SmallCenterer mx={3}>
           <TwoColumnLayout
             mb={[5, 5, 5, 7]}
             bottomSpacing={false}
@@ -107,7 +118,7 @@ class LoginPage extends React.Component {
             customWidth={[1, 1, 1, 1 / 2]}
           >
             <Box>
-              <Box mb={4}>
+              <Box mb={0}>
                 <H1>Welcome!</H1>
               </Box>
               <Box mb={5}>
