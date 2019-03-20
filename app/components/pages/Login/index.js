@@ -90,10 +90,13 @@ class LoginPage extends React.Component {
     }
 
     return (
-      <Box mx={['24px', '24px', '12.5%', '8.333%', '16.666%']}>
+      <Box
+        mx={['24px', '24px', '12.5%', '8.333%', '16.666%']}
+        css={{ 'max-width': '840px' }}
+      >
         <SmallCenterer>
           <TwoColumnLayout
-            mb={[2, 2, 2, 7]}
+            mb={[5, 5, 5, 7]}
             bottomSpacing={false}
             paddingX={0}
             customWidth={[1, 1, 1, 1 / 2]}
@@ -146,7 +149,7 @@ class LoginPage extends React.Component {
             <ImageWrapper ml="auto" image="/assets/welcome.jpg" />
           </TwoColumnLayout>
           <Box mx={-2}>
-            <FooterPrivacy />
+            <FooterPrivacy onlyCenterDesktop={false} />
           </Box>
         </SmallCenterer>
       </Box>
