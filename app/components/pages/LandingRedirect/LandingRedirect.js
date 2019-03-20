@@ -31,7 +31,7 @@ const LandingRedirect = () => (
           continue
         </ButtonLink>
       </Box>
-      <ImageWrapper ml="auto" image="/assets/redirect.png" />
+      <ImageWrapper ml="auto" image="/assets/redirect.jpg" />
     </TwoColumnLayout>
     <FooterPrivacy />
   </RedirectLayout>

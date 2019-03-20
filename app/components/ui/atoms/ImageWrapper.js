@@ -3,13 +3,13 @@ import { Box } from '@rebass/grid'
 import media from 'global/layout/media'
 
 const ImageWrapper = styled(Box)`
-  width: 300px;
-  height: 384px;
+  width: 75%;
+  height: 100%;
   background-image: url(${props => props.image});
   background-size: cover;
   background-position: center;
   display: none;
-  ${media.tabletPortraitUp`
+  ${media.tabletLandscapeUp`
   display: block`};
 `
 

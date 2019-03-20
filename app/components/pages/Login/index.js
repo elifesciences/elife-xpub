@@ -24,10 +24,8 @@ const EXCHANGE_TOKEN_MUTATION = gql`
 `
 
 const SmallCenterer = styled(Box).attrs({
-  mx: 'auto',
   mt: 5,
-  px: 5,
-  width: [1, 1, 1, 1000],
+  width: '100%',
 })`
   min-width: 0;
   ${media.tabletPortraitUp`
@@ -92,9 +90,14 @@ class LoginPage extends React.Component {
     }
 
     return (
-      <Box>
+      <Box mx={['24px', '24px', '12.5%', '8.333%', '16.666%']}>
         <SmallCenterer>
-          <TwoColumnLayout mb={[0, 0, 5]}>
+          <TwoColumnLayout
+            mb={[2, 2, 2, 7]}
+            bottomSpacing={false}
+            paddingX={0}
+            customWidth={[1, 1, 1, 1 / 2]}
+          >
             <Box>
               <Box mb={4}>
                 <H1>Welcome!</H1>
@@ -140,9 +143,11 @@ class LoginPage extends React.Component {
                 </Flex>
               )}
             </Box>
-            <ImageWrapper ml="auto" image="/assets/welcome.png" />
+            <ImageWrapper ml="auto" image="/assets/welcome.jpg" />
           </TwoColumnLayout>
-          <FooterPrivacy />
+          <Box mx={-2}>
+            <FooterPrivacy />
+          </Box>
         </SmallCenterer>
       </Box>
     )
