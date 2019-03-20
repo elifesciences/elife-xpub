@@ -33,7 +33,7 @@ class Notification {
     return result
   }
 
-  async _sendEmail(people, htmlTemplate, txtTemplate) {
+  async _sendEmail(people, htmlTemplate, txtTemplate, title) {
     const emailList = people.map(person => person.alias.email).join(',')
     const valid = await people
       .map(async person => Notification.isValidEmail(person.alias.email))
@@ -51,10 +51,12 @@ class Notification {
 
     const text = textCompile({
       authorName: firstNameList,
+      manuscriptTitle: title,
       linkDashboard: this.config['pubsweet-server'].baseUrl,
     })
     const html = htmlCompile({
       authorName: firstNameList,
+      manuscriptTitle: title,
       linkDashboard: this.config['pubsweet-server'].baseUrl,
     })
 
@@ -89,11 +91,12 @@ class Notification {
     )
   }
 
-  async sendFinalSubmissionEmail(people) {
+  async sendFinalSubmissionEmail(people, title) {
     return this._sendEmail(
       people,
       'templates/final-submission-email-html.pug',
       'templates/final-submission-email-text.pug',
+      title,
     )
   }
 }

@@ -30,7 +30,10 @@ async function submitManuscript(_, { data }, { user, ip }) {
   manuscript.applyInput(manuscriptInput)
 
   const notify = new Notification(config)
-  await notify.sendFinalSubmissionEmail(manuscript.getAuthor())
+  await notify.sendFinalSubmissionEmail(
+    manuscript.getAuthor(),
+    manuscript.meta.title,
+  )
 
   const sourceFile = manuscript.getSource()
   if (!sourceFile) {
