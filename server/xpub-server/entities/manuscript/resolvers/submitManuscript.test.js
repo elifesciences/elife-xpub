@@ -130,7 +130,9 @@ describe('Manuscripts', () => {
       expect(allEmails[0]).toMatchObject({
         subject: 'Your eLife submission',
         to: 'mymail@mail.com',
+        from: 'editorial@elifesciences.org',
       })
+      expect(allEmails[0].text).toMatchSnapshot()
     })
 
     it('calls meca export with correct arguments', async () => {
