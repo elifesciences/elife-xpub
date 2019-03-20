@@ -1,8 +1,7 @@
 import React from 'react'
-import styled, { css } from 'styled-components'
+import styled from 'styled-components'
 import { th } from '@pubsweet/ui-toolkit'
 import Paragraph from 'ui/atoms/Paragraph'
-import media from 'global/layout/media'
 
 const CenteredSmallParagraph = styled(Paragraph.Small).attrs({
   secondary: true,
@@ -11,15 +10,7 @@ const CenteredSmallParagraph = styled(Paragraph.Small).attrs({
   font-weight: 400;
   font-family: 'Noto Sans';
   text-align: center;
-
-  ${props =>
-    props.onlyCenterDesktop &&
-    css`
-      text-align: left;
-      ${media.desktopUp`
-      text-align: center;
-    `};
-    `} a {
+  ${props => props.customStyle} a {
     color: ${th('colorPrimary')};
     text-decoration: none;
   }
