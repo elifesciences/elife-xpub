@@ -5,7 +5,16 @@ import Paragraph from 'ui/atoms/Paragraph'
 import ButtonLink from 'ui/atoms/ButtonLink'
 import ImageWrapper from 'ui/atoms/ImageWrapper'
 import FooterPrivacy from 'ui/atoms/FooterPrivacy'
+import { css } from 'styled-components'
+import media from 'global/layout/media'
 import { RedirectLayout, TwoColumnLayout } from '../../global'
+
+const footerStyle = css`
+  text-align: left;
+  ${media.desktopUp`
+    text-align: center;
+  `};
+`
 
 const LandingRedirect = () => (
   <RedirectLayout>
@@ -33,7 +42,7 @@ const LandingRedirect = () => (
       </Box>
       <ImageWrapper ml="auto" image="/assets/redirect.jpg" />
     </TwoColumnLayout>
-    <FooterPrivacy />
+    <FooterPrivacy customStyle={footerStyle} />
   </RedirectLayout>
 )
 

@@ -2,8 +2,8 @@ import React from 'react'
 import FooterText from 'ui/atoms/FooterText'
 import NativeLink from 'ui/atoms/NativeLink'
 
-const FooterPrivacy = ({ onlyCenterDesktop }) => (
-  <FooterText onlyCenterDesktop={onlyCenterDesktop}>
+const FooterPrivacy = ({ customStyle }) => (
+  <FooterText customStyle={customStyle}>
     Read our{' '}
     <NativeLink href="https://elifesciences.org/terms" target="_blank">
       Terms and conditions

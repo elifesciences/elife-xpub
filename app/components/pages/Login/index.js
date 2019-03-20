@@ -5,7 +5,7 @@ import { withApollo } from 'react-apollo'
 import gql from 'graphql-tag'
 import config from 'config'
 import { H1 } from '@pubsweet/ui'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 import ButtonOrcid from 'ui/atoms/ButtonOrcid'
 import ButtonLink from 'ui/atoms/ButtonLink'
 import Paragraph from 'ui/atoms/Paragraph'
@@ -27,6 +27,7 @@ const SmallCenterer = styled(Box).attrs({
   mt: 5,
   width: '100%',
 })`
+  max-width: 840px;
   min-width: 0;
   ${media.tabletPortraitUp`
   margin-top: 0;
@@ -89,12 +90,16 @@ class LoginPage extends React.Component {
       }
     }
 
+    const footerStyle = css`
+      text-align: left;
+      ${media.tabletLandscapeUp`
+        text-align: center;
+      `};
+    `
+
     return (
-      <Box
-        mx={['24px', '24px', '12.5%', '8.333%', '16.666%']}
-        css={{ 'max-width': '840px' }}
-      >
-        <SmallCenterer>
+      <Flex justifyContent="center">
+        <SmallCenterer mx={['24px', '24px', '12.5%', '8.333%', '16.666%']}>
           <TwoColumnLayout
             mb={[5, 5, 5, 7]}
             bottomSpacing={false}
@@ -149,10 +154,10 @@ class LoginPage extends React.Component {
             <ImageWrapper ml="auto" image="/assets/welcome.jpg" />
           </TwoColumnLayout>
           <Box mx={-2}>
-            <FooterPrivacy onlyCenterDesktop={false} />
+            <FooterPrivacy customStyle={footerStyle} />
           </Box>
         </SmallCenterer>
-      </Box>
+      </Flex>
     )
   }
 }
