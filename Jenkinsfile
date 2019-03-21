@@ -10,7 +10,6 @@ elifePipeline {
         }
 
         stage 'Build image', {
-            throw new RuntimeException("Intentional build failure")
             // TODO: pull existing docker image if caching is not already effective
             dockerComposeBuild(commit)
         }
