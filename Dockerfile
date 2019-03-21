@@ -26,7 +26,7 @@ COPY \
     newrelic.js \
     .babelrc \
     .eslintignore \
-    .eslintrc \
+    .eslintrc.js \
     .prettierrc \
     .stylelintignore \
     .stylelintrc \
