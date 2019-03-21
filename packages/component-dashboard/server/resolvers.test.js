@@ -5,7 +5,7 @@ const { User, Manuscript } = require('@elifesciences/xpub-model')
 const { Mutation } = require('./resolvers')
 const { userData, badUserData } = require('./resolvers.test.data')
 
-describe('component-dashbaord resolvers', () => {
+describe('component-dashboard resolvers', () => {
   const profileId = userData.identities[0].identifier
   const badProfileId = badUserData.identities[0].identifier
   let userId
