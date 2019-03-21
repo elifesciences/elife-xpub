@@ -61,7 +61,7 @@
   "jest": {
     "collectCoverage": true,
     "collectCoverageFrom": [
-      "<rootDir>/{client,app,server}/**/*.js",
+      "<rootDir>/{client,app,server,packages}/**/*.js",
       "!**/*.{config,test}.js"
     ],
     "coverageThreshold": {
@@ -75,7 +75,8 @@
     "projects": [
       "<rootDir>/client",
       "<rootDir>/app",
-      "<rootDir>/server"
+      "<rootDir>/server",
+      "<rootDir>/packages"
     ]
   },
   "resolutions": {
