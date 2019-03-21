@@ -7,6 +7,7 @@ const { userData, badUserData } = require('./resolvers.test.data')
 
 describe('component-dashbaord resolvers', () => {
   const profileId = userData.identities[0].identifier
+  const badProfileId = badUserData.identities[0].identifier
   let userId
 
   beforeEach(async () => {
@@ -18,6 +19,35 @@ describe('component-dashbaord resolvers', () => {
     userId = user.id
     mailer.clearMails()
   })
+
+  describe('Mutations:deleteManuscript', () => {
+    it("fails if manuscript doesn't belong to user", async () => {
+      const blankManuscript = new Manuscript({ createdBy: userId })
+      const manuscript = await blankManuscript.save()
+
+      await expect(
+        Mutation.deleteManuscript(
+          {},
+          { id: manuscript.id },
+          { user: badProfileId },
+        ),
+      ).rejects.toThrow('Manuscript not found')
+    })
+
+    it('removes manuscript from database', async () => {
+      const blankManuscript = new Manuscript({ createdBy: userId })
+      const manuscript = await blankManuscript.save()
+      await Mutation.deleteManuscript(
+        {},
+        { id: manuscript.id },
+        { user: profileId },
+      )
+
+      const manuscripts = await Manuscript.all(userId)
+      expect(manuscripts).toEqual([])
+    })
+  })
+
   describe('Mutations:createManuscript', () => {
     it('fails if no authenticated user', async () => {
       await expect(Mutation.createManuscript({}, {}, {})).rejects.toThrow(
