@@ -15,7 +15,7 @@ module.exports = [
   /pubsweet-[^/\\]+\/(?!node_modules)/,
   /@pubsweet\/[^/\\]+\/(?!node_modules)/,
 
-  // include pubsweet packages when npm linked from pubsweet monorepo
+  // include our component packages
   filepath =>
     // is a child of packages but not node_modules
     filepath.match(/\/packages\//) && !filepath.match(/\/node_modules\//),
