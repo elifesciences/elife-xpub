@@ -1,0 +1,8 @@
+extend type Query {
+  manuscripts: [Manuscript]!
+}
+
+extend type Mutation {
+    createManuscript: Manuscript!
+    deleteManuscript(id: ID!): ID!
+}
