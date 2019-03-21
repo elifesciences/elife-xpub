@@ -3,6 +3,7 @@ const nodeCleanup = require('node-cleanup')
 const noOp = () => {}
 
 const CleanupUnwrapped = (exitCode, signal, target, logger, cb) => {
+  logger.info(`CleanupUnwrapped::... ${signal}`)
   const callback = cb || noOp
   target.on('cleanup', () => {
     // the return value of the callback can return a function that is async
@@ -16,7 +17,7 @@ const CleanupUnwrapped = (exitCode, signal, target, logger, cb) => {
   // uncaughtException gets handled here so we have access to the exception
   // itself.
   target.on('uncaughtException', e => {
-    logger.error('Uncaught Exception...')
+    logger.error('Cleanup::Uncaught Exception...')
     logger.error(e.stack)
     target.emit('cleanup')
     target.exit(exitCode)
@@ -31,17 +32,18 @@ const CleanupUnwrapped = (exitCode, signal, target, logger, cb) => {
         break
       }
       case 'SIGINT': {
-        logger.info('Ctrl-C...')
+        logger.info('Cleanup::Ctrl-C...')
         target.emit('cleanup')
         target.exit(exitCode)
         break
       }
       case 'SIGTERM': {
-        logger.info('SIGTERM...')
+        logger.info('Cleanup::SIGTERM...')
         target.emit('cleanup')
         break
       }
       case 'exit': {
+        logger.info('Cleanup::exit...')
         target.emit('cleanup')
         break
       }
