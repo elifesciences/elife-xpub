@@ -38,6 +38,11 @@ describe('ping route test', () => {
     await request.get('/ping').expect(200)
   })
 
+  it('fails a test', async () => {
+    const request = makeApp()
+    await request.get('/does-not-exist').expect(200)
+  })
+
   describe('Response Errors', () => {
     it('returns failure when an invalid response is returned from the database', async () => {
       setDbSuccess(0)
