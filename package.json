@@ -59,7 +59,7 @@
     ]
   },
   "jest": {
-    "collectCoverage": true,
+    "collectCoverage": false,
     "collectCoverageFrom": [
       "<rootDir>/{client,app,server,packages}/**/*.js",
       "!**/*.{config,test}.js"
@@ -76,7 +76,7 @@
       "<rootDir>/client",
       "<rootDir>/app",
       "<rootDir>/server",
-      "<rootDir>/packages"
+      "<rootDir>/packages/jest.config.client.js"
     ]
   },
   "resolutions": {
