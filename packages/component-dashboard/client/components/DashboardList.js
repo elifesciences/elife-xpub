@@ -2,9 +2,9 @@ import React from 'react'
 import styled from 'styled-components'
 import { Box } from '@rebass/grid'
 import { th } from '@pubsweet/ui-toolkit'
+import Paragraph from 'ui/atoms/Paragraph'
 
 import DashboardListItem from './DashboardListItem'
-import Paragraph from 'ui/atoms/Paragraph'
 
 const EmptyListMessage = styled(Box)`
   text-align: center;

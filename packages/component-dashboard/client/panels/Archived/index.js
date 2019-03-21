@@ -9,7 +9,9 @@ const EmptyListMessage = styled(Box)`
 `
 
 const Archived = () => (
-  <EmptyListMessage mt={7}>You currently have no archived submissions</EmptyListMessage>
+  <EmptyListMessage mt={7}>
+    You currently have no archived submissions
+  </EmptyListMessage>
 )
 
 export default Archived

@@ -3,14 +3,14 @@ import { graphql, compose } from 'react-apollo'
 import React from 'react'
 import omitDeep from 'omit-deep-lodash'
 import Loading from 'ui/atoms/Loading'
-import ErrorPage from '../Error'
-//TODO: This should not be importing from the other component
+// TODO: This should not be importing from the other component
 import { ALL_MANUSCRIPTS } from '@elifesciences/component-dashboard/client/graphql/queries'
 import {
   GET_MANUSCRIPT,
   UPDATE_MANUSCRIPT,
   SUBMIT_MANUSCRIPT,
 } from './operations'
+import ErrorPage from '../Error'
 import CosubmissionModifier from './formDataModifiers/CosubmissionModifier'
 import EditorSuggestionsModifier from './formDataModifiers/EditorSuggestionsModifier'
 

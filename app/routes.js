@@ -1,7 +1,7 @@
 import React from 'react'
 import { Route, Switch } from 'react-router-dom'
 
-//Components
+// Components
 import DashboardPage from '@elifesciences/component-dashboard/client'
 
 import { AuthenticatedComponent, Layout } from './components/global'
