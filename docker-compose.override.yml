@@ -4,7 +4,7 @@ services:
   app:
     build:
       dockerfile: ./Dockerfile-development
-    command: sh -c "yarn install --frozen-lockfile && ./scripts/wait-for-it.sh postgres:5432 -s -t 40 -- npx pubsweet server"
+      command: ["./scripts/server-start.sh"]
     volumes:
       - ./:/home/xpub
     depends_on:
