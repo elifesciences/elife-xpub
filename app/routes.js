@@ -2,7 +2,7 @@ import React from 'react'
 import { Route, Switch } from 'react-router-dom'
 
 // Components
-import DashboardPage from '@elifesciences/component-dashboard/client'
+import { DashboardPage } from '@elifesciences/component-dashboard/client'
 
 import { AuthenticatedComponent, Layout } from './components/global'
 import ErrorBoundary from './components/global/ErrorBoundary'
