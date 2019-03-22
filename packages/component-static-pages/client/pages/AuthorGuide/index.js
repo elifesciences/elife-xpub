@@ -1,6 +1,6 @@
 import React from 'react'
 
-import StaticPage from '../.'
+import Layout from '../../components/Layout'
 import EditorialProcess from './EditorialProcess'
 import Types from './Types'
 import Initial from './Initial'
@@ -12,7 +12,7 @@ import Fees from './Fees'
 import JournalMetrics from './JournalMetrics'
 
 const AuthorGuide = props => (
-  <StaticPage
+  <Layout
     navList={[
       {
         label: 'Editorial Process',

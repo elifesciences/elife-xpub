@@ -1,12 +1,12 @@
 import React from 'react'
 
-import StaticPage from '../.'
+import Layout from '../../components/Layout'
 import ReviewProcess from './ReviewProcess'
 import ReviewingPolicies from './ReviewingPolicies'
 import WritingTheReview from './WritingTheReview'
 
 const ReviewerGuide = props => (
-  <StaticPage
+  <Layout
     navList={[
       {
         label: 'Review Process',
