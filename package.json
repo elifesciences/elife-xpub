@@ -76,8 +76,8 @@
       "<rootDir>/client",
       "<rootDir>/app",
       "<rootDir>/server",
-      "<rootDir>/packages/jest.config.server.js",
-      "<rootDir>/packages/jest.config.client.js"
+      "<rootDir>/packages/component-dashboard/config/jest.config.server.js",
+      "<rootDir>/packages/component-dashboard/config/jest.config.client.js"
     ]
   },
   "resolutions": {

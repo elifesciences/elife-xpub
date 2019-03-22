@@ -1,5 +1,5 @@
 const { db } = require('pubsweet-server')
-const replaySetup = require('../test/helpers/replay-setup')
+const replaySetup = require('../../../test/helpers/replay-setup')
 
 replaySetup('success')
 
