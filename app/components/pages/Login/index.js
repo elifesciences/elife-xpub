@@ -4,23 +4,45 @@ import { Redirect } from 'react-router-dom'
 import { withApollo } from 'react-apollo'
 import gql from 'graphql-tag'
 import config from 'config'
-import { H2 } from '@pubsweet/ui'
-import styled from 'styled-components'
-import { th } from '@pubsweet/ui-toolkit'
+import { H1 } from '@pubsweet/ui'
+import styled, { css } from 'styled-components'
 import ButtonOrcid from 'ui/atoms/ButtonOrcid'
 import ButtonLink from 'ui/atoms/ButtonLink'
 import Paragraph from 'ui/atoms/Paragraph'
 import NativeLink from 'ui/atoms/NativeLink'
+import ImageWrapper from 'ui/atoms/ImageWrapper'
+import FooterPrivacy from 'ui/atoms/FooterPrivacy'
+import media from 'global/layout/media'
+import { TwoColumnLayout } from '../../global'
 
-const { url: loginUrl, signupUrl, legacySubmissionUrl } = config.login
+const { url: loginUrl, signupUrl } = config.login
 
 const EXCHANGE_TOKEN_MUTATION = gql`
   mutation($token: String) {
     exchangeJournalToken(token: $token)
   }
 `
-const Container = styled(Box)`
-  margin-top: ${th('calc(50vh - 300px)')};
+
+const SmallCenterer = styled(Box).attrs({
+  mt: 5,
+  width: '100%',
+})`
+  max-width: 432px;
+  min-width: 0;
+  margin-top: 24px;
+  ${media.mobileUp`
+  margin-top: 72px;
+`};
+  ${media.tabletPortraitUp`
+  margin-top: 0;
+  max-width: 454px;
+`};
+  ${media.tabletLandscapeUp`
+  max-width: 786px;
+`};
+  ${media.desktopUp`
+  max-width: 840px;
+`};
 `
 
 class LoginPage extends React.Component {
@@ -79,56 +101,74 @@ class LoginPage extends React.Component {
       }
     }
 
+    const footerStyle = css`
+      text-align: left;
+      ${media.tabletLandscapeUp`
+        text-align: center;
+      `};
+    `
+
     return (
-      <Container mx="auto" width={[1, 410]}>
-        {/* roughly centre the box vertically */}
-        <Box mb={4}>
-          <H2>
-            eLife is changing the way work is reviewed and selected for
-            publication
-          </H2>
-        </Box>
-        <Box mb={5}>
-          <Paragraph.Reading>
-            The leading scientists behind eLife are committed to rapid, fair,
-            and constructive review. Before you submit your work, please note
-            that eLife is a very selective journal that aims to publish work of
-            the highest scientific standards and importance.
-          </Paragraph.Reading>
-          <Paragraph.Reading>
-            Our new manuscript submission system will guide you through the
-            process of submitting your research.
-            {!token && ' Log in with your ORCID identifier to get started.'}
-          </Paragraph.Reading>
-        </Box>
-        {token ? (
-          <Box mb={5}>
-            <ButtonLink data-test-id="continue" primary to="/">
-              Continue
-            </ButtonLink>
-          </Box>
-        ) : (
-          <Flex alignItems="center" mb={5}>
-            <Box mr={3}>
-              <a href={loginUrl}>
-                <ButtonOrcid data-test-id="login">Login with ORCID</ButtonOrcid>
-              </a>
-            </Box>
+      <Flex justifyContent="center">
+        <SmallCenterer mx={3}>
+          <TwoColumnLayout
+            mb={[5, 5, 5, 7]}
+            bottomSpacing={false}
+            paddingX={0}
+            customWidth={[1, 1, 1, 1 / 2]}
+          >
             <Box>
-              <Paragraph.Reading>
-                No ORCID? <NativeLink href={signupUrl}>Sign up</NativeLink> now.
-              </Paragraph.Reading>
+              <Box mb={0}>
+                <H1>Welcome!</H1>
+              </Box>
+              <Box mb={5}>
+                <Paragraph.Writing>
+                  The leading scientists behind eLife are committed to rapid,
+                  fair, and constructive review of academic research.
+                </Paragraph.Writing>
+                <Paragraph.Writing>
+                  We welcome submissions of the highest scientific standards and
+                  importance in all areas of the life and biomedical sciences.
+                </Paragraph.Writing>
+                <Paragraph.Writing>
+                  You can read more in our{' '}
+                  <NativeLink href="https://reviewer.elifesciences.org/author-guide">
+                    author guide
+                  </NativeLink>
+                  .
+                </Paragraph.Writing>
+              </Box>
+              {token ? (
+                <Box>
+                  <ButtonLink data-test-id="continue" primary to="/">
+                    Continue
+                  </ButtonLink>
+                </Box>
+              ) : (
+                <Flex alignItems="center">
+                  <Box mr={3}>
+                    <a href={loginUrl}>
+                      <ButtonOrcid data-test-id="login">
+                        Login with ORCID
+                      </ButtonOrcid>
+                    </a>
+                  </Box>
+                  <Box>
+                    <Paragraph.Writing>
+                      No ORCID?{' '}
+                      <NativeLink href={signupUrl}>Sign up</NativeLink> now.
+                    </Paragraph.Writing>
+                  </Box>
+                </Flex>
+              )}
             </Box>
-          </Flex>
-        )}
-        <Paragraph.Reading>
-          For{' '}
-          <NativeLink href={legacySubmissionUrl}>
-            existing manuscripts
-          </NativeLink>{' '}
-          go to our full submission and peer review system.
-        </Paragraph.Reading>
-      </Container>
+            <ImageWrapper ml="auto" image="/assets/welcome.jpg" />
+          </TwoColumnLayout>
+          <Box mx={-2}>
+            <FooterPrivacy customStyle={footerStyle} />
+          </Box>
+        </SmallCenterer>
+      </Flex>
     )
   }
 }

@@ -133,6 +133,7 @@ describe('Manuscripts', () => {
         from: 'editorial@elifesciences.org',
       })
       expect(allEmails[0].text).toMatchSnapshot()
+      expect(allEmails[0].html).toMatchSnapshot()
     })
 
     it('calls meca export with correct arguments', async () => {

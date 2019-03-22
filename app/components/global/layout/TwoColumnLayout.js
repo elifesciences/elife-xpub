@@ -2,15 +2,21 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Flex, Box } from '@rebass/grid'
 
-const TwoColumnLayout = ({ children, bottomSpacing, ...props }) => (
+const TwoColumnLayout = ({
+  customWidth = [1, 1, 1 / 2],
+  paddingX = 2,
+  children,
+  bottomSpacing,
+  ...props
+}) => (
   <Flex flexWrap="wrap" mx={-2} {...props}>
     {React.Children.map(children, (item, index) => (
       <Box
         // try to use the key property of the React element
         key={item.key || index}
         mb={bottomSpacing ? 3 : 0}
-        px={2}
-        width={[1, 1, 1 / 2]}
+        px={paddingX}
+        width={customWidth}
       >
         {item}
       </Box>
