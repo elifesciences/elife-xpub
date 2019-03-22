@@ -22,7 +22,7 @@ const SideNavContainer = styled(Box)`
 `
 const MainContainer = styled(Box)``
 
-const StaticPage = ({ history, navList }) => (
+const Layout = ({ history, navList }) => (
   <div>
     <ErrorBoundary>
       <TopNavContainer>
@@ -70,7 +70,7 @@ const StaticPage = ({ history, navList }) => (
   </div>
 )
 
-StaticPage.propTypes = {
+Layout.propTypes = {
   navList: PropTypes.arrayOf(
     PropTypes.shape({
       label: PropTypes.string.isRequired,
@@ -80,4 +80,4 @@ StaticPage.propTypes = {
   ).isRequired,
 }
 
-export default StaticPage
+export default Layout

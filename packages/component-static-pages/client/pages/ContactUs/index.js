@@ -1,12 +1,12 @@
 import React from 'react'
 
-import StaticPage from '../.'
+import Layout from '../../components/Layout'
 import ContactELife from './ContactELife'
 import EditorialStaff from './EditorialStaff'
 import ProductionStaff from './ProductionStaff'
 
 const ContactUs = props => (
-  <StaticPage
+  <Layout
     navList={[
       {
         label: 'Contact eLife',

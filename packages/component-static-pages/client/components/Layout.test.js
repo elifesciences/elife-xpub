@@ -4,7 +4,7 @@ import { MemoryRouter, NavLink, Route } from 'react-router-dom'
 import { ThemeProvider } from 'styled-components'
 import theme from '@elifesciences/elife-theme'
 
-import StaticPage from '.'
+import Layout from './Layout'
 
 const navList = [
   {
@@ -35,7 +35,7 @@ const makeWrapper = ({ path }) =>
     <ThemeProvider theme={theme}>
       <MemoryRouter initialEntries={[`${path}`]}>
         <Route
-          render={history => <StaticPage history={history} navList={navList} />}
+          render={history => <Layout history={history} navList={navList} />}
         />
       </MemoryRouter>
     </ThemeProvider>,
