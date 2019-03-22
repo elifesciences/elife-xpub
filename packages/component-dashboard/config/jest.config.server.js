@@ -1,5 +1,5 @@
 module.exports = {
-  displayName: 'package-server',
+  displayName: 'component-dashboard-server',
   rootDir: '../',
   setupTestFrameworkScriptFile: '<rootDir>/config/jest-setup.server.js',
   testMatch: ['<rootDir>/server/**/*.test.js'],
