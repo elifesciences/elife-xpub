@@ -1,6 +1,6 @@
 import gql from 'graphql-tag'
 // TODO: component-dashboard needs its own model or a shared gql fragment for manuscript
-import { manuscriptFragment } from '../../../../app/components/pages/SubmissionWizard/operations'
+import { manuscriptFragment } from '../../../../packages/component-submission/client/operations'
 
 export const CREATE_MANUSCRIPT = gql`
   mutation CreateManuscript {

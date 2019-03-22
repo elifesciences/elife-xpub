@@ -13,9 +13,9 @@ import { schema as submissionPageSchema } from './steps/Submission/schema'
 import { schema as editorsPageSchema } from './steps/Editors/schema'
 import { schema as disclosurePageSchema } from './steps/Disclosure/schema'
 import WizardStep from './WizardStep'
-import ErrorPage from '../../../components/pages/Error'
+import ErrorPage from '../../../app/components/pages/Error'
 import { ON_UPLOAD_PROGRESS } from './operations'
-import TrackedRoute from '../../../trackedRoute'
+import TrackedRoute from '../../../app/trackedRoute'
 
 const SubmissionWizard = ({ match, history }) => (
   <SubmissionOperations manuscriptId={match.params.id}>
