@@ -2,7 +2,7 @@ FROM xpub/xpub:20181213
 
 WORKDIR ${HOME}
 
-COPY package.json yarn.lock app.js .babelrc .eslintignore .eslintrc .prettierrc .stylelintignore .stylelintrc ./
+COPY package.json yarn.lock app.js .babelrc .eslintignore .eslintrc.js .prettierrc .stylelintignore .stylelintrc ./
 COPY assets assets
 COPY webpack webpack
 COPY config config
