@@ -13,7 +13,7 @@ import NativeLink from 'ui/atoms/NativeLink'
 import ImageWrapper from 'ui/atoms/ImageWrapper'
 import FooterPrivacy from 'ui/atoms/FooterPrivacy'
 import media from 'global/layout/media'
-import { TwoColumnLayout } from '../../../app/components/global'
+import { TwoColumnLayout } from 'global'
 
 const { url: loginUrl, signupUrl } = config.login
 
