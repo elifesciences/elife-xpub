@@ -6,14 +6,14 @@ import gql from 'graphql-tag'
 import config from 'config'
 import { H1 } from '@pubsweet/ui'
 import styled, { css } from 'styled-components'
-import ButtonOrcid from 'ui/atoms/ButtonOrcid'
 import ButtonLink from 'ui/atoms/ButtonLink'
 import Paragraph from 'ui/atoms/Paragraph'
 import NativeLink from 'ui/atoms/NativeLink'
 import ImageWrapper from 'ui/atoms/ImageWrapper'
 import FooterPrivacy from 'ui/atoms/FooterPrivacy'
-import media from 'global/layout/media'
 import { TwoColumnLayout } from 'global'
+import media from 'global/layout/media'
+import ButtonOrcid from './components/ButtonOrcid'
 
 const { url: loginUrl, signupUrl } = config.login
 
