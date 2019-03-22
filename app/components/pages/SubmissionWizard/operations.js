@@ -16,7 +16,7 @@ const reviewerFragment = gql`
   }
 `
 
-const manuscriptFragment = gql`
+export const manuscriptFragment = gql`
   fragment WholeManuscript on Manuscript {
     id
     clientStatus
@@ -80,15 +80,6 @@ export const GET_MANUSCRIPT = gql`
   ${manuscriptFragment}
 `
 
-export const CREATE_MANUSCRIPT = gql`
-  mutation CreateManuscript {
-    createManuscript {
-      ...WholeManuscript
-    }
-  }
-  ${manuscriptFragment}
-`
-
 export const UPDATE_MANUSCRIPT = gql`
   mutation UpdateManuscript($data: ManuscriptInput!) {
     updateManuscript(data: $data) {
@@ -105,12 +96,6 @@ export const SUBMIT_MANUSCRIPT = gql`
     }
   }
   ${manuscriptFragment}
-`
-
-export const DELETE_MANUSCRIPT = gql`
-  mutation DeleteManuscript($id: ID!) {
-    deleteManuscript(id: $id)
-  }
 `
 
 export const ON_UPLOAD_PROGRESS = gql`

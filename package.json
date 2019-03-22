@@ -61,7 +61,7 @@
   "jest": {
     "collectCoverage": true,
     "collectCoverageFrom": [
-      "<rootDir>/{client,app,server}/**/*.js",
+      "<rootDir>/{client,app,server,packages}/**/*.js",
       "!**/*.{config,test}.js"
     ],
     "coverageThreshold": {
@@ -75,7 +75,9 @@
     "projects": [
       "<rootDir>/client",
       "<rootDir>/app",
-      "<rootDir>/server"
+      "<rootDir>/server",
+      "<rootDir>/packages/component-dashboard/config/jest.config.server.js",
+      "<rootDir>/packages/component-dashboard/config/jest.config.client.js"
     ]
   },
   "resolutions": {
@@ -83,7 +85,8 @@
   },
   "workspaces": [
     "client/*",
-    "server/*"
+    "server/*",
+    "packages/*"
   ],
   "dependencies": {
     "@elifesciences/elife-theme": "^1.0.0",

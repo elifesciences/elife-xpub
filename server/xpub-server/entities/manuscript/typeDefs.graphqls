@@ -1,11 +1,8 @@
 extend type Query {
   manuscript(id: ID!): Manuscript!
-  manuscripts: [Manuscript]!
 }
 
 extend type Mutation {
-  createManuscript: Manuscript!
-  deleteManuscript(id: ID!): ID!
   updateManuscript(data: ManuscriptInput!): Manuscript!
   uploadManuscript(id: ID!, file: Upload!, fileSize: Int!): Manuscript!
   uploadSupportingFile(id: ID!, file: Upload!): Manuscript!

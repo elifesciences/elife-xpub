@@ -8,12 +8,13 @@ import { H2 } from '@pubsweet/ui'
 import PropTypes from 'prop-types'
 import { Mutation } from 'react-apollo'
 import Icon from 'ui/atoms/Icon'
+import ModalDialog from 'ui/molecules/ModalDialog'
+import ModalHistoryState from 'ui/molecules/ModalHistoryState'
 import media from 'global/layout/media'
-import { DELETE_MANUSCRIPT } from '../../pages/SubmissionWizard/operations'
-import { ALL_MANUSCRIPTS } from '../../pages/Dashboard/operations'
-import ManuscriptStatus from '../atoms/ManuscriptStatus'
-import ModalDialog from './ModalDialog'
-import ModalHistoryState from './ModalHistoryState'
+
+import { DELETE_MANUSCRIPT } from '../graphql/mutations'
+import { ALL_MANUSCRIPTS } from '../graphql/queries'
+import ManuscriptStatus from './ManuscriptStatus'
 
 export const dashboardDateText = date => {
   const diffDays = differenceInCalendarDays(new Date(), date)

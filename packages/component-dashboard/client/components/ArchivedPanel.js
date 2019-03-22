@@ -8,8 +8,10 @@ const EmptyListMessage = styled(Box)`
   color: ${th('colorTextSecondary')};
 `
 
-const Archived = () => (
-  <EmptyListMessage mt={7}>You currently have no archived submissions</EmptyListMessage>
+const ArchivedPanel = () => (
+  <EmptyListMessage mt={7}>
+    You currently have no archived submissions
+  </EmptyListMessage>
 )
 
-export default Archived
+export default ArchivedPanel

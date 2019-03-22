@@ -3,10 +3,10 @@ import styled from 'styled-components'
 import { Box } from '@rebass/grid'
 import media from 'global/layout/media'
 import StickyFooter from 'ui/atoms/StickyFooter'
-import DashboardContent from './DashboardContent'
-import Submissions from './panels/Submissions'
-import Archived from './panels/Archived'
-import NewSubmissionButton from './NewSubmissionButton'
+import DashboardContent from '../components/DashboardContent'
+import Submissions from '../components/SubmissionsPanel'
+import Archived from '../components/ArchivedPanel'
+import NewSubmissionButton from '../components/NewSubmissionButton'
 
 const DesktopSubmitContainer = styled(Box)`
   text-align: right;
