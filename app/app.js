@@ -11,7 +11,7 @@ import { configureStore, Root } from 'pubsweet-client'
 import theme, { GlobalStyle } from '@elifesciences/elife-theme'
 
 import Routes from './routes'
-import * as AuthorDetailsSchema from './components/pages/SubmissionWizard/steps/Author/schema'
+import * as AuthorDetailsSchema from '../packages/component-submission/client/steps/Author/schema'
 
 const history = createHistory()
 const store = configureStore(history, {})

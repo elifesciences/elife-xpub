@@ -2,15 +2,15 @@ import { cloneDeep } from 'lodash'
 import { graphql, compose } from 'react-apollo'
 import React from 'react'
 import omitDeep from 'omit-deep-lodash'
-import Loading from 'ui/atoms/Loading'
-// TODO: This should not be importing from the other component
 import { ALL_MANUSCRIPTS } from '@elifesciences/component-dashboard/client/graphql/queries'
+import Loading from '../../../app/components/ui/atoms/Loading'
+// TODO: This should not be importing from the other component
 import {
   GET_MANUSCRIPT,
   UPDATE_MANUSCRIPT,
   SUBMIT_MANUSCRIPT,
 } from './operations'
-import ErrorPage from '../Error'
+import ErrorPage from '../../../app/components/pages/Error'
 import CosubmissionModifier from './formDataModifiers/CosubmissionModifier'
 import EditorSuggestionsModifier from './formDataModifiers/EditorSuggestionsModifier'
 

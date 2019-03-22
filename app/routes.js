@@ -15,7 +15,7 @@ import AuthorGuide from './components/pages/StaticPages/AuthorGuide'
 import ReviewerGuide from './components/pages/StaticPages/ReviewerGuide'
 import ContactUs from './components/pages/StaticPages/ContactUs'
 
-import SubmissionWizard from './components/pages/SubmissionWizard'
+import SubmissionWizard from '../packages/component-submission/client'
 import ErrorPage from './components/pages/Error'
 import ThankYouPage from './components/pages/ThankYou'
 import TrackedRoute from './trackedRoute'

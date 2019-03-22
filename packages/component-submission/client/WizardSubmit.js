@@ -1,7 +1,7 @@
 import React from 'react'
 import { H2, Button } from '@pubsweet/ui'
-import ModalDialog from 'ui/molecules/ModalDialog'
-import ModalHistoryState from 'ui/molecules/ModalHistoryState'
+import ModalDialog from '../../../app/components/ui/molecules/ModalDialog'
+import ModalHistoryState from '../../../app/components/ui/molecules/ModalHistoryState'
 
 const WizardSubmit = ({ setTouched, submitForm, validateForm }) => (
   <ModalHistoryState>
