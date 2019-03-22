@@ -1,8 +1,8 @@
 ```js
-const ContactELife = require('./ContactUs/ContactELife').default
-const EditorialStaff = require('./ContactUs/EditorialStaff').default
-const ProductionStaff = require('./ContactUs/ProductionStaff').default
-;<StaticPage
+const ContactELife = require('../pages/ContactUs/ContactELife').default
+const EditorialStaff = require('../pages/ContactUs/EditorialStaff').default
+const ProductionStaff = require('../pages/ContactUs/ProductionStaff').default
+;<Layout
   navList={[
     {
       label: 'Contact eLife',

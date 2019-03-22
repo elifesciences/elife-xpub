@@ -1,8 +1,8 @@
 import React from 'react'
 import { H1 } from '@pubsweet/ui'
 
-import StaffGrid from 'ui/molecules/StaffGrid'
-import StaffCard from 'ui/molecules/StaffCard'
+import StaffGrid from '../../components/StaffGrid'
+import StaffCard from '../../components/StaffCard'
 
 const EditorialStaff = () => (
   <React.Fragment>

@@ -3,7 +3,7 @@ import { H1, H2, H3 } from '@pubsweet/ui'
 
 import Paragraph from 'ui/atoms/Paragraph'
 import NativeLink from 'ui/atoms/NativeLink'
-import List from 'ui/atoms/List'
+import List from '../../components/List'
 
 const Fees = props => (
   <React.Fragment>
