@@ -13,7 +13,7 @@ import NativeLink from 'ui/atoms/NativeLink'
 import ImageWrapper from 'ui/atoms/ImageWrapper'
 import FooterPrivacy from 'ui/atoms/FooterPrivacy'
 import media from 'global/layout/media'
-import { TwoColumnLayout } from '../../global'
+import { TwoColumnLayout } from '../../../app/components/global'
 
 const { url: loginUrl, signupUrl } = config.login
 
@@ -112,10 +112,10 @@ class LoginPage extends React.Component {
       <Flex justifyContent="center">
         <SmallCenterer mx={3}>
           <TwoColumnLayout
-            mb={[5, 5, 5, 7]}
             bottomSpacing={false}
-            paddingX={0}
             customWidth={[1, 1, 1, 1 / 2]}
+            mb={[5, 5, 5, 7]}
+            paddingX={0}
           >
             <Box>
               <Box mb={0}>
@@ -162,7 +162,7 @@ class LoginPage extends React.Component {
                 </Flex>
               )}
             </Box>
-            <ImageWrapper ml="auto" image="/assets/welcome.jpg" />
+            <ImageWrapper image="/assets/welcome.jpg" ml="auto" />
           </TwoColumnLayout>
           <Box mx={-2}>
             <FooterPrivacy customStyle={footerStyle} />
