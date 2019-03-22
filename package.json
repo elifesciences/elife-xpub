@@ -60,11 +60,6 @@
   },
   "jest": {
     "collectCoverage": true,
-    "collectCoverageFrom": [
-      "<rootDir>/{client,app,server,packages}/**/*.js",
-      "!**/*.{config,test}.js",
-      "!**/jest*.js"
-    ],
     "coverageThreshold": {
       "global": {
         "branches": 60,
@@ -78,7 +73,9 @@
       "<rootDir>/app",
       "<rootDir>/server",
       "<rootDir>/packages/component-dashboard/config/jest.config.server.js",
-      "<rootDir>/packages/component-dashboard/config/jest.config.client.js"
+      "<rootDir>/packages/component-dashboard/config/jest.config.client.js",
+      "<rootDir>/packages/component-submission/config/jest.config.server.js",
+      "<rootDir>/packages/component-submission/config/jest.config.client.js"
     ]
   },
   "resolutions": {
