@@ -8,8 +8,8 @@ import { th } from '@pubsweet/ui-toolkit'
 import ErrorBoundary from 'global/ErrorBoundary'
 import media from 'global/layout/media'
 import NavigationDropdown from 'ui/atoms/NavigationDropdown'
-import SideNav from '../components/SideNav'
-import ScrollToTop from '../components/ScrollToTop'
+import SideNav from './SideNav'
+import ScrollToTop from './ScrollToTop'
 
 const TopNavContainer = styled(Box).attrs({ mx: -3 })`
   border-bottom: ${th('borderWidth')} ${th('borderStyle')} ${th('colorBorder')};
@@ -22,7 +22,7 @@ const SideNavContainer = styled(Box)`
 `
 const MainContainer = styled(Box)``
 
-const StaticPage = ({ history, navList }) => (
+const Layout = ({ history, navList }) => (
   <div>
     <ErrorBoundary>
       <TopNavContainer>
@@ -70,7 +70,7 @@ const StaticPage = ({ history, navList }) => (
   </div>
 )
 
-StaticPage.propTypes = {
+Layout.propTypes = {
   navList: PropTypes.arrayOf(
     PropTypes.shape({
       label: PropTypes.string.isRequired,
@@ -80,4 +80,4 @@ StaticPage.propTypes = {
   ).isRequired,
 }
 
-export default StaticPage
+export default Layout
