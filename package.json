@@ -62,7 +62,8 @@
     "collectCoverage": true,
     "collectCoverageFrom": [
       "<rootDir>/{client,app,server,packages}/**/*.js",
-      "!**/*.{config,test}.js"
+      "!**/*.{config,test}.js",
+      "!**/jest*.js"
     ],
     "coverageThreshold": {
       "global": {
