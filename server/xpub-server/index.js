@@ -24,11 +24,7 @@ const typeDefs = `
 `
 
 // merge resolvers
-const resolvers = merge(
-  {},
-  require(`./entities/manuscript/resolvers`),
-  require(`./entities/user/resolvers`),
-)
+const resolvers = merge({}, require(`./entities/user/resolvers`))
 
 const registerRoutes = app => {
   require(`./entities/user/routes`)(app)

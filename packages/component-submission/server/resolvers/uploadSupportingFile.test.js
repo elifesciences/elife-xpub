@@ -4,7 +4,7 @@ const { createTables } = require('@pubsweet/db-manager')
 const { User, Manuscript, AuditLog } = require('@elifesciences/xpub-model')
 const { Mutation } = require('.')
 const { userData } = require('./index.test.data')
-const startS3rver = require('../../../test/mock-s3-server')
+const startS3rver = require('../../../../server/xpub-server/test/mock-s3-server')
 
 describe('uploadSupportingFile', () => {
   const profileId = userData.identities[0].identifier
@@ -36,7 +36,7 @@ describe('uploadSupportingFile', () => {
     const supportingFile = {
       filename: 'supporting.pdf',
       stream: fs.createReadStream(
-        `${__dirname}/../../../../../test/fixtures/dummy-supporting-1.pdf`,
+        `${__dirname}/../../../../test/fixtures/dummy-supporting-1.pdf`,
       ),
       mimetype: 'application/pdf',
     }

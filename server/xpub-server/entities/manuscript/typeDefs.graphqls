@@ -3,17 +3,7 @@ extend type Query {
 }
 
 extend type Mutation {
-  updateManuscript(data: ManuscriptInput!): Manuscript!
-  uploadManuscript(id: ID!, file: Upload!, fileSize: Int!): Manuscript!
-  uploadSupportingFile(id: ID!, file: Upload!): Manuscript!
-  removeSupportingFiles(id: ID!): Manuscript
-  removeUploadedManuscript(id: ID!): Manuscript!
-  submitManuscript(data: ManuscriptInput!): Manuscript!
   savePage(url:String!, id:String!):Manuscript!
-}
-
-extend type Subscription {
-  manuscriptUploadProgress(id: ID!): Int!
 }
 
 extend type Manuscript {
@@ -57,39 +47,3 @@ input ManuscriptMetaInput {
 
 # temporary solution awaiting more clarity on team member metadata in shared data model
 union Assignee = EditorAlias | ReviewerAlias | AuthorAlias
-type AuthorAlias {
-  firstName: String
-  lastName: String
-  email: String
-  aff: String
-}
-input AuthorAliasInput {
-  firstName: String
-  lastName: String
-  email: String
-  aff: String
-}
-type EditorAlias {
-  id: ID
-  name: String
-  aff: String
-  focuses: [String]
-  expertises: [String]
-}
-type ReviewerAlias {
-  name: String
-  email: String
-}
-input ReviewerAliasInput {
-  name: String
-  email: String
-}
-type OpposedReviewer {
-  name: String
-  email: String
-}
-input OpposedReviewerInput {
-  name: String
-  email: String
-}
-

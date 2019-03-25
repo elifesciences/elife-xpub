@@ -19,7 +19,7 @@ const {
   manuscriptInput,
 } = require('./index.test.data')
 
-const replaySetup = require('../../../../../test/helpers/replay-setup')
+const replaySetup = require('../../../../test/helpers/replay-setup')
 
 async function waitforEmails(NUM_EMAILS) {
   for (let i = 0; i < 100 && mailer.getMails().length < NUM_EMAILS; i += 1) {

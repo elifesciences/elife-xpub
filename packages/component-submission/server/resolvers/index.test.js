@@ -8,7 +8,7 @@ const { User, Manuscript } = require('@elifesciences/xpub-model')
 const { Query } = require('.')
 const { userData } = require('./index.test.data')
 
-const replaySetup = require('../../../../../test/helpers/replay-setup')
+const replaySetup = require('../../../../test/helpers/replay-setup')
 
 describe('Manuscripts', () => {
   const profileId = userData.identities[0].identifier
