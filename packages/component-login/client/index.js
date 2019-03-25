@@ -67,6 +67,7 @@ class LoginPage extends React.Component {
         LoginPage.setToken(null)
         // TODO expose this error once we have a UI to do so
         this.props.history.push('/login', { error: err.message })
+        // eslint-disable-next-line no-console
         console.error(err)
       })
   }

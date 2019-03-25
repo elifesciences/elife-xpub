@@ -62,6 +62,7 @@ describe('LoginPage component', () => {
 
     await new Promise(resolve => setTimeout(resolve, 0))
     expect(historyMock.push).toHaveBeenCalledWith('/login', { error: 'Nope' })
+    // eslint-disable-next-line no-console
     expect(console.error).toHaveBeenCalled()
   })
 })
