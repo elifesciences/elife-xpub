@@ -2,8 +2,8 @@ import React from 'react'
 import { Redirect } from 'react-router'
 import { Query } from 'react-apollo'
 import Loading from 'ui/atoms/Loading'
+import { ErrorPage } from '@elifesciences/component-elife-ui/client'
 import { CURRENT_USER } from './queries'
-import ErrorPage from '../../../../app/components/pages/Error'
 
 const AuthenticatedComponent = ({ children }) => (
   <Query query={CURRENT_USER}>
