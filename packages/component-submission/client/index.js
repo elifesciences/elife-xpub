@@ -128,3 +128,4 @@ const SubmissionWizard = ({ match, history }) => (
 )
 
 export default SubmissionWizard
+export { default as ThankYouPage } from './pages/ThankYou'

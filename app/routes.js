@@ -3,15 +3,13 @@ import { Route, Switch } from 'react-router-dom'
 
 // Components
 import { DashboardPage } from '@elifesciences/component-dashboard/client'
-import {
-  ErrorPage,
-  ThankYouPage,
-} from '@elifesciences/component-elife-ui/client'
+import { ErrorPage } from '@elifesciences/component-elife-ui/client'
 
 import { AuthenticatedComponent, Layout } from 'global'
 import ErrorBoundary from 'global/ErrorBoundary'
 import CookieNotice from 'global/CookieNotice'
 
+import { ThankYouPage } from '@elifesciences/component-submission/client'
 import LandingRedirect from './components/pages/LandingRedirect'
 import LoginPage from '../packages/component-login/client'
 import LogoutPage from '../packages/component-login/client/pages/Logout/index'
