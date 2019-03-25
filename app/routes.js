@@ -10,7 +10,7 @@ import CookieNotice from 'global/CookieNotice'
 
 import LandingRedirect from './components/pages/LandingRedirect'
 import LoginPage from '../packages/component-login/client'
-import LogoutPage from './components/pages/Logout/index'
+import LogoutPage from '../packages/component-login/client/pages/Logout/index'
 import AuthorGuide from '../packages/component-static-pages/client/pages/AuthorGuide'
 import ReviewerGuide from '../packages/component-static-pages/client/pages/ReviewerGuide'
 import ContactUs from '../packages/component-static-pages/client/pages/ContactUs'
