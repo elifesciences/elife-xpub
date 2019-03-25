@@ -3,7 +3,10 @@ import { Route, Switch } from 'react-router-dom'
 
 // Components
 import { DashboardPage } from '@elifesciences/component-dashboard/client'
-import { ErrorPage } from '@elifesciences/component-elife-ui/client'
+import {
+  ErrorPage,
+  ThankYouPage,
+} from '@elifesciences/component-elife-ui/client'
 
 import { AuthenticatedComponent, Layout } from 'global'
 import ErrorBoundary from 'global/ErrorBoundary'
@@ -17,7 +20,6 @@ import ReviewerGuide from '../packages/component-static-pages/client/pages/Revie
 import ContactUs from '../packages/component-static-pages/client/pages/ContactUs'
 
 import SubmissionWizard from '../packages/component-submission/client'
-import ThankYouPage from './components/pages/ThankYou'
 import TrackedRoute from './trackedRoute'
 
 const Routes = () => (
