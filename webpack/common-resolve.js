@@ -12,7 +12,14 @@ module.exports = {
       'client',
       'ui',
     ),
-    global: path.resolve(__dirname, '..', 'app', 'components', 'global'),
+    global: path.resolve(
+      __dirname,
+      '..',
+      'packages',
+      'component-elife-ui',
+      'client',
+      'global',
+    ),
   },
   extensions: ['.js', '.jsx'],
 }

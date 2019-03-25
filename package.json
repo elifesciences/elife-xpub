@@ -76,7 +76,8 @@
       "<rootDir>/packages/component-dashboard/config/jest.config.client.js",
       "<rootDir>/packages/component-submission/config/jest.config.server.js",
       "<rootDir>/packages/component-submission/config/jest.config.client.js",
-      "<rootDir>/packages/component-static-pages/config/jest.config.client.js"
+      "<rootDir>/packages/component-static-pages/config/jest.config.client.js",
+      "<rootDir>/packages/component-elife-ui/config/jest.config.client.js"
     ]
   },
   "resolutions": {

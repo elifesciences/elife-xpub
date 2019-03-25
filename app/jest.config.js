@@ -6,6 +6,6 @@ module.exports = {
   moduleNameMapper: {
     '\\.s?css$': 'identity-obj-proxy',
     '^ui(.*)$': '<rootDir>/packages/component-elife-ui/client/ui$1',
-    '^global(.*)$': '<rootDir>/app/components/global$1',
+    '^global(.*)$': '<rootDir>/packages/component-elife-ui/client/global$1',
   },
 }
