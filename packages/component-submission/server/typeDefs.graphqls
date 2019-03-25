@@ -1,0 +1,49 @@
+extend type Mutation {
+  uploadManuscript(id: ID!, file: Upload!, fileSize: Int!): Manuscript!
+  updateManuscript(data: ManuscriptInput!): Manuscript!
+  uploadSupportingFile(id: ID!, file: Upload!): Manuscript!
+  removeSupportingFiles(id: ID!): Manuscript
+  removeUploadedManuscript(id: ID!): Manuscript!
+  submitManuscript(data: ManuscriptInput!): Manuscript!
+}
+
+extend type Subscription {
+  manuscriptUploadProgress(id: ID!): Int!
+}
+
+type AuthorAlias {
+  firstName: String
+  lastName: String
+  email: String
+  aff: String
+}
+input AuthorAliasInput {
+  firstName: String
+  lastName: String
+  email: String
+  aff: String
+}
+type EditorAlias {
+  id: ID
+  name: String
+  aff: String
+  focuses: [String]
+  expertises: [String]
+}
+type ReviewerAlias {
+  name: String
+  email: String
+}
+input ReviewerAliasInput {
+  name: String
+  email: String
+}
+type OpposedReviewer {
+  name: String
+  email: String
+}
+input OpposedReviewerInput {
+  name: String
+  email: String
+}
+
