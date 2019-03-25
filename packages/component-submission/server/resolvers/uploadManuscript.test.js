@@ -10,12 +10,12 @@ const stream = require('stream')
 const logger = require('@pubsweet/logger')
 const { createTables } = require('@pubsweet/db-manager')
 const mailer = require('@pubsweet/component-send-email')
-const startS3rver = require('../../../test/mock-s3-server')
+const startS3rver = require('../../../../server/xpub-server/test/mock-s3-server')
 const { User, Manuscript } = require('@elifesciences/component-model')
-const scienceBeamApi = require('../../../../xpub-client/scienceBeamApi')
+const scienceBeamApi = require('../../../../server/xpub-client/scienceBeamApi')
 const { Mutation } = require('.')
 const { userData, badUserData } = require('./index.test.data')
-const replaySetup = require('../../../../../test/helpers/replay-setup')
+const replaySetup = require('../../../../test/helpers/replay-setup')
 const { S3Storage } = require('@elifesciences/xpub-client')
 
 describe('Manuscripts', () => {
@@ -69,7 +69,7 @@ describe('Manuscripts', () => {
       const fileUpload = {
         filename: 'manuscript.pdf',
         stream: fs.createReadStream(
-          `${__dirname}/../../../../../test/fixtures/dummy-manuscript-2.pdf`,
+          `${__dirname}/../../../../test/fixtures/dummy-manuscript-2.pdf`,
         ),
         mimetype: 'application/pdf',
       }
@@ -100,7 +100,7 @@ describe('Manuscripts', () => {
       const file = {
         filename: 'manuscript.pdf',
         stream: fs.createReadStream(
-          `${__dirname}/../../../../../test/fixtures/dummy-manuscript-2.pdf`,
+          `${__dirname}/../../../../test/fixtures/dummy-manuscript-2.pdf`,
         ),
         mimetype: 'application/pdf',
       }
@@ -123,7 +123,7 @@ describe('Manuscripts', () => {
       const file = {
         filename: 'manuscript.pdf',
         stream: fs.createReadStream(
-          `${__dirname}/../../../../../test/fixtures/dummy-manuscript-2.pdf`,
+          `${__dirname}/../../../../test/fixtures/dummy-manuscript-2.pdf`,
         ),
         mimetype: 'application/pdf',
       }
@@ -156,7 +156,7 @@ describe('Manuscripts', () => {
       const file = {
         filename: 'manuscript.pdf',
         stream: fs.createReadStream(
-          `${__dirname}/../../../../../test/fixtures/dummy-manuscript-2.pdf`,
+          `${__dirname}/../../../../test/fixtures/dummy-manuscript-2.pdf`,
         ),
         mimetype: 'application/pdf',
       }
@@ -205,7 +205,7 @@ describe('Manuscripts', () => {
       const createFile = fileName => ({
         filename: fileName,
         stream: fs.createReadStream(
-          `${__dirname}/../../../../../test/fixtures/dummy-manuscript-2.pdf`,
+          `${__dirname}/../../../../test/fixtures/dummy-manuscript-2.pdf`,
         ),
         mimetype: 'application/pdf',
       })
