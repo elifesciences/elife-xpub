@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components'
 import { H2, H3 } from '@pubsweet/ui'
 
 export const FormH2 = styled(H2)`

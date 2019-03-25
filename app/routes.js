@@ -4,9 +4,9 @@ import { Route, Switch } from 'react-router-dom'
 // Components
 import { DashboardPage } from '@elifesciences/component-dashboard/client'
 
-import { AuthenticatedComponent, Layout } from './components/global'
-import ErrorBoundary from './components/global/ErrorBoundary'
-import CookieNotice from './components/global/CookieNotice'
+import { AuthenticatedComponent, Layout } from 'global'
+import ErrorBoundary from 'global/ErrorBoundary'
+import CookieNotice from 'global/CookieNotice'
 
 import LandingRedirect from './components/pages/LandingRedirect'
 import LoginPage from '../packages/component-login/client'

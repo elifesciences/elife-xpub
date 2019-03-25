@@ -63,11 +63,14 @@ class ModalOverlay extends React.Component {
           timeout={cssTimeToMilliseconds(theme.transitionDuration)}
           unmountOnExit
         >
-          <Container transparentBackground={transparentBackground} ref={this.overlay}>
+          <Container
+            ref={this.overlay}
+            transparentBackground={transparentBackground}
+          >
             {children}
-            {this.overlay.current &&
+            {this.overlay.current && (
               <ScrollLock touchScrollTarget={this.overlay.current} />
-            }
+            )}
           </Container>
         </CSSTransition>
       </Root>
