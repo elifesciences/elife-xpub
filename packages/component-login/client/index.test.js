@@ -1,5 +1,6 @@
 import React from 'react'
 import { shallow } from 'enzyme'
+import logger from '@pubsweet/logger'
 import LoginPage from '.'
 
 const clientMock = {
@@ -54,7 +55,7 @@ describe('LoginPage component', () => {
   })
 
   it('redirects when token exchange fails', async () => {
-    jest.spyOn(console, 'error').mockImplementationOnce(jest.fn())
+    jest.spyOn(logger, 'error').mockImplementationOnce(jest.fn())
     clientMock.mutate.mockImplementationOnce(() =>
       Promise.reject(new Error('Nope')),
     )
@@ -62,7 +63,6 @@ describe('LoginPage component', () => {
 
     await new Promise(resolve => setTimeout(resolve, 0))
     expect(historyMock.push).toHaveBeenCalledWith('/login', { error: 'Nope' })
-    // eslint-disable-next-line no-console
-    expect(console.error).toHaveBeenCalled()
+    expect(logger.error).toHaveBeenCalled()
   })
 })
