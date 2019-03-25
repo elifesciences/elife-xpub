@@ -43,6 +43,16 @@ module.exports = {
       name: 'Packages',
       sections: [
         {
+          name: 'Dashboard',
+          sections: [
+            {
+              name: 'Components',
+              components:
+                'packages/component-dashboard/client/components/**/*.js',
+            },
+          ],
+        },
+        {
           name: 'Static Pages',
           sections: [
             {
