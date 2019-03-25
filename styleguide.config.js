@@ -66,6 +66,19 @@ module.exports = {
           ],
         },
         {
+          name: 'Login',
+          sections: [
+            {
+              name: 'Client',
+              components: 'packages/component-login/client/*.js',
+            },
+            {
+              name: 'Components',
+              components: 'packages/component-login/client/components/**/*.js',
+            },
+          ],
+        },
+        {
           name: 'Static Pages',
           sections: [
             {

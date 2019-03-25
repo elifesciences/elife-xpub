@@ -9,7 +9,7 @@ import ErrorBoundary from 'global/ErrorBoundary'
 import CookieNotice from 'global/CookieNotice'
 
 import LandingRedirect from './components/pages/LandingRedirect'
-import LoginPage from '../packages/component-login/client'
+import LoginPage from '../packages/component-login/client/LoginPage'
 import LogoutPage from './components/pages/Logout/index'
 import AuthorGuide from '../packages/component-static-pages/client/pages/AuthorGuide'
 import ReviewerGuide from '../packages/component-static-pages/client/pages/ReviewerGuide'
