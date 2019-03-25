@@ -1,5 +1,5 @@
 module.exports = {
-  displayName: 'component-static-pages-client',
+  displayName: 'component-elife-ui-client',
   rootDir: '../',
   setupTestFrameworkScriptFile: '<rootDir>/config/jest-setup.client.js',
   testMatch: ['<rootDir>/client/**/*.test.js'],

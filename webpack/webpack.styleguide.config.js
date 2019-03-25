@@ -24,7 +24,7 @@ module.exports = {
   resolve: {
     alias: {
       config: path.join(__dirname, '../styleguide/config.json'),
-      ui: path.resolve(__dirname, '../app/components/ui'),
+      ui: path.resolve(__dirname, '../packages/component-elife-ui/client/ui'),
       global: path.resolve(__dirname, '../app/components/global'),
     },
   },
