@@ -93,6 +93,15 @@ module.exports = {
             },
           ],
         },
+        {
+          name: 'Submission',
+          sections: [
+            {
+              name: 'Steps',
+              components: 'packages/component-submission/client/**/*.js',
+            },
+          ],
+        },
       ],
     },
     {
