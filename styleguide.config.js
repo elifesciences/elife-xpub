@@ -9,7 +9,7 @@ module.exports = {
       sections: [
         {
           name: 'Global',
-          components: 'app/components/global/**/*.js',
+          components: 'packages/component-elife-ui/client/global/**/*.js',
         },
         {
           name: 'Pages',

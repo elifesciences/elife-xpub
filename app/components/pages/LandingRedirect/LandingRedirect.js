@@ -7,7 +7,7 @@ import ImageWrapper from 'ui/atoms/ImageWrapper'
 import FooterPrivacy from 'ui/atoms/FooterPrivacy'
 import { css } from 'styled-components'
 import media from 'global/layout/media'
-import { RedirectLayout, TwoColumnLayout } from '../../global'
+import { RedirectLayout, TwoColumnLayout } from 'global'
 
 const footerStyle = css`
   text-align: left;
