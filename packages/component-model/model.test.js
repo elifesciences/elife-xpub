@@ -5,7 +5,8 @@ const File = require('./entities/file')
 
 describe('creating getters still allows models to be saved', () => {
   class ModelWithGetter extends Manuscript {
-    get someGetter() { // eslint-disable-line class-methods-use-this
+    // eslint-disable-next-line class-methods-use-this
+    get someGetter() {
       return true
     }
   }
@@ -58,7 +59,8 @@ describe('related objects behave as we expect', () => {
       expect(updatedStart).not.toEqual(manuscript.updated)
     })
 
-    it.skip('manuscript order test', async () => {  // eslint-disable-line jest/no-disabled-tests
+    // eslint-disable-next-line jest/no-disabled-tests
+    it.skip('manuscript order test', async () => {
       // create 9 manuscripts
       const msList = await batchCreate(userId, 9)
 

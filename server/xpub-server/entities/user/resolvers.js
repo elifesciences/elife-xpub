@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken')
 const config = require('config')
-const { User } = require('@elifesciences/xpub-model')
-const elifeApi = require('@elifesciences/xpub-model/entities/user/helpers/elife-api')
+const { User } = require('@elifesciences/component-model')
+const elifeApi = require('@elifesciences/component-model/entities/user/helpers/elife-api')
 
 const resolvers = {
   Query: {

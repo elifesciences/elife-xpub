@@ -8,7 +8,7 @@ const logger = require('@pubsweet/logger')
 const { createTables } = require('@pubsweet/db-manager')
 const mailer = require('@pubsweet/component-send-email')
 const { mecaExport } = require('@elifesciences/xpub-meca-export')
-const { User, Manuscript } = require('@elifesciences/xpub-model')
+const { User, Manuscript } = require('@elifesciences/component-model')
 const { S3Storage } = require('@elifesciences/xpub-client')
 
 const { Mutation } = require('.')

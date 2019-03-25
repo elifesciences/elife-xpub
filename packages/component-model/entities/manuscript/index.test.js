@@ -161,9 +161,7 @@ describe('Manuscript', () => {
         manuscript = await createInitialManuscript(userId)
         manuscript = await addFileToManuscript(manuscript)
         file = await File.find(manuscript.files[0].id)
-        setStatusOfFirstFile = setStatusOfFile.bind(null,
-          file, manuscript
-        )
+        setStatusOfFirstFile = setStatusOfFile.bind(null, file, manuscript)
       })
 
       it('returns READY when the file is stored', async () => {
@@ -195,17 +193,13 @@ describe('Manuscript', () => {
       beforeEach(async () => {
         manuscript = await createInitialManuscript(userId)
         manuscript = await addFileToManuscript(manuscript)
-        manuscript = await addFileToManuscript(manuscript);
-        [ file1, file2 ] = await Promise.all(
-          manuscript.files.map(({ id }) => File.find(id))
+        manuscript = await addFileToManuscript(manuscript)
+        ;[file1, file2] = await Promise.all(
+          manuscript.files.map(({ id }) => File.find(id)),
         )
         expect(file1.id).not.toEqual(file2.id)
-        setStatusOfFirstFile = setStatusOfFile.bind(null,
-          file1, manuscript
-        )
-        setStatusOfSecondFile = setStatusOfFile.bind(null,
-          file2, manuscript
-        )
+        setStatusOfFirstFile = setStatusOfFile.bind(null, file1, manuscript)
+        setStatusOfSecondFile = setStatusOfFile.bind(null, file2, manuscript)
       })
 
       it('returns READY when both files are stored', async () => {
@@ -584,7 +578,7 @@ const setStatusOfFile = async (file, manuscript, status) => {
   return Manuscript.find(manuscript.id, manuscript.createdBy)
 }
 
-const addFileToManuscript = async (manuscript) => {
+const addFileToManuscript = async manuscript => {
   const file = new File({
     manuscriptId: manuscript.id,
     filename: 'test.txt',

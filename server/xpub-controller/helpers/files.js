@@ -1,6 +1,6 @@
 const logger = require('@pubsweet/logger')
-const FileModel = require('@elifesciences/xpub-model').File
-const SemanticExtractionModel = require('@elifesciences/xpub-model')
+const FileModel = require('@elifesciences/component-model').File
+const SemanticExtractionModel = require('@elifesciences/component-model')
   .SemanticExtraction
 
 class FilesHelper {
