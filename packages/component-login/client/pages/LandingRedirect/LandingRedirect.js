@@ -40,7 +40,7 @@ const LandingRedirect = () => (
           continue
         </ButtonLink>
       </Box>
-      <ImageWrapper ml="auto" image="/assets/redirect.jpg" />
+      <ImageWrapper image="/assets/redirect.jpg" ml="auto" />
     </TwoColumnLayout>
     <FooterPrivacy customStyle={footerStyle} />
   </RedirectLayout>

@@ -174,3 +174,4 @@ class LoginPage extends React.Component {
 }
 
 export default withApollo(LoginPage)
+export { default as LandingRedirect } from './pages/LandingRedirect'
