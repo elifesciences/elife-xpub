@@ -1,6 +1,6 @@
 const { createTables } = require('@pubsweet/db-manager')
 const { SupportingFiles } = require('@elifesciences/xpub-controller')
-const { AuditLog, User, Manuscript } = require('@elifesciences/xpub-model')
+const { AuditLog, User, Manuscript } = require('@elifesciences/component-model')
 const { userData } = require('./index.test.data')
 
 const dummyStorage = {

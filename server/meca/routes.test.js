@@ -5,7 +5,7 @@ const mailer = require('@pubsweet/component-send-email')
 const express = require('express')
 const bodyParser = require('body-parser')
 const supertest = require('supertest')
-const { Manuscript, User, AuditLog } = require('@elifesciences/xpub-model')
+const { Manuscript, User, AuditLog } = require('@elifesciences/component-model')
 const routes = require('./routes')
 
 const makeApp = () => {

@@ -10,7 +10,7 @@ module.exports = {
   pubsweet: {
     components: [
       '@elifesciences/xpub-meca-export',
-      '@elifesciences/xpub-model',
+      '@elifesciences/component-model',
       '@elifesciences/xpub-server',
       '@elifesciences/xpub-controller',
       '@elifesciences/xpub-client-config',

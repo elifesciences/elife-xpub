@@ -1,6 +1,6 @@
 const logger = require('@pubsweet/logger')
 const { S3Storage } = require('@elifesciences/xpub-client')
-const { Manuscript, User, File } = require('@elifesciences/xpub-model')
+const { Manuscript, User, File } = require('@elifesciences/component-model')
 
 const resolvers = {
   Query: {

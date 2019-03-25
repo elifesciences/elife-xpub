@@ -1,5 +1,5 @@
 const config = require('config')
-const { User } = require('@elifesciences/xpub-model')
+const { User } = require('@elifesciences/component-model')
 const { Manuscript } = require('@elifesciences/xpub-controller')
 
 async function updateManuscript(_, { data }, { user }) {

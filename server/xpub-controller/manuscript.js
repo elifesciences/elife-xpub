@@ -1,5 +1,5 @@
 const logger = require('@pubsweet/logger')
-const ManuscriptModel = require('@elifesciences/xpub-model').Manuscript
+const ManuscriptModel = require('@elifesciences/component-model').Manuscript
 const { FilesHelper, ManuscriptHelper } = require('./helpers')
 
 class Manuscript {

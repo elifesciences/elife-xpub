@@ -6,7 +6,7 @@ const logger = require('@pubsweet/logger')
 const {
   SemanticExtraction,
   Manuscript: ManuscriptModel,
-} = require('@elifesciences/xpub-model')
+} = require('@elifesciences/component-model')
 const FilesHelper = require('./files')
 
 const getFilesHelper = scienceBeamApi => new FilesHelper(config, scienceBeamApi)

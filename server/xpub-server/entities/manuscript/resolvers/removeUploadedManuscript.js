@@ -1,4 +1,4 @@
-const { Manuscript, User } = require('@elifesciences/xpub-model')
+const { Manuscript, User } = require('@elifesciences/component-model')
 const logger = require('@pubsweet/logger')
 
 async function removeUploadedManuscript(_, vars, { user }) {

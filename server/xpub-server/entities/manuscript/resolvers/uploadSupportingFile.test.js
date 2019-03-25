@@ -1,7 +1,7 @@
 const fs = require('fs-extra')
 const config = require('config')
 const { createTables } = require('@pubsweet/db-manager')
-const { User, Manuscript, AuditLog } = require('@elifesciences/xpub-model')
+const { User, Manuscript, AuditLog } = require('@elifesciences/component-model')
 const { Mutation } = require('.')
 const { userData } = require('./index.test.data')
 const startS3rver = require('../../../test/mock-s3-server')

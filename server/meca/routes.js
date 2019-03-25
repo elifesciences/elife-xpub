@@ -1,7 +1,7 @@
 const logger = require('@pubsweet/logger')
 const mailer = require('@pubsweet/component-send-email')
 const config = require('config')
-const { Manuscript, AuditLog } = require('@elifesciences/xpub-model')
+const { Manuscript, AuditLog } = require('@elifesciences/component-model')
 
 module.exports = app => {
   const apiKey = config.get('meca.apiKey')
