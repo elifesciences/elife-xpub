@@ -5,7 +5,6 @@ import { withApollo } from 'react-apollo'
 import gql from 'graphql-tag'
 import config from 'config'
 import { H1 } from '@pubsweet/ui'
-import logger from '@pubsweet/logger'
 import styled, { css } from 'styled-components'
 import ButtonLink from 'ui/atoms/ButtonLink'
 import Paragraph from 'ui/atoms/Paragraph'
@@ -68,7 +67,8 @@ class LoginPage extends React.Component {
         LoginPage.setToken(null)
         // TODO expose this error once we have a UI to do so
         this.props.history.push('/login', { error: err.message })
-        logger.error(err)
+        // eslint-disable-next-line no-console
+        console.error(err)
       })
   }
 
