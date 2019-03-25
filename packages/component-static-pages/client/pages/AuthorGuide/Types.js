@@ -2,8 +2,8 @@ import React from 'react'
 import { H1, H2, Link } from '@pubsweet/ui'
 
 import Paragraph from 'ui/atoms/Paragraph'
-import CalloutTextBox from 'ui/atoms/CalloutTextBox'
 import NativeLink from 'ui/atoms/NativeLink'
+import CalloutTextBox from '../../components/CalloutTextBox'
 
 const Types = props => (
   <React.Fragment>

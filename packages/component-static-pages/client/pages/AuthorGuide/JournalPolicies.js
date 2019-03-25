@@ -2,9 +2,9 @@ import React from 'react'
 import { H1, H2, H3 } from '@pubsweet/ui'
 
 import Paragraph from 'ui/atoms/Paragraph'
-import CalloutTextBox from 'ui/atoms/CalloutTextBox'
 import NativeLink from 'ui/atoms/NativeLink'
-import List from 'ui/atoms/List'
+import CalloutTextBox from '../../components/CalloutTextBox'
+import List from '../../components/List'
 
 const JournalPolicies = props => (
   <React.Fragment>

@@ -1,6 +1,6 @@
 import React from 'react'
 
-import RefTable from 'ui/molecules/RefTable'
+import RefTable from '../../components/RefTable'
 
 const RequiredInfoTable = props => (
   <React.Fragment>

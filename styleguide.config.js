@@ -40,6 +40,26 @@ module.exports = {
       ],
     },
     {
+      name: 'Packages',
+      sections: [
+        {
+          name: 'Static Pages',
+          sections: [
+            {
+              name: 'Components',
+              components:
+                'packages/component-static-pages/client/components/**/*.js',
+            },
+            {
+              name: 'Pages',
+              components:
+                'packages/component-static-pages/client/pages/**/*.js',
+            },
+          ],
+        },
+      ],
+    },
+    {
       name: 'eLife PubSweet components',
       components: 'client/*/**/*.js',
     },
