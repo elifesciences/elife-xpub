@@ -53,6 +53,19 @@ module.exports = {
           ],
         },
         {
+          name: 'Elife UI',
+          sections: [
+            {
+              name: 'Global',
+              components: 'packages/component-elife-ui/client/global/**/*.js',
+            },
+            {
+              name: 'UI',
+              components: 'packages/component-elife-ui/client/ui/**/*.js',
+            },
+          ],
+        },
+        {
           name: 'Static Pages',
           sections: [
             {
