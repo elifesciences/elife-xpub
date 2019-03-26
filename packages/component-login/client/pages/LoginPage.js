@@ -13,7 +13,7 @@ import ImageWrapper from 'ui/atoms/ImageWrapper'
 import FooterPrivacy from 'ui/atoms/FooterPrivacy'
 import { TwoColumnLayout } from 'global'
 import media from 'global/layout/media'
-import ButtonOrcid from './components/ButtonOrcid'
+import ButtonOrcid from '../components/ButtonOrcid'
 
 const { url: loginUrl, signupUrl } = config.login
 

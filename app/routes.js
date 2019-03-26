@@ -3,13 +3,13 @@ import { Route, Switch } from 'react-router-dom'
 
 // Components
 import { DashboardPage } from '@elifesciences/component-dashboard/client'
+import { LoginPage } from '@elifesciences/component-login/client'
 
 import { AuthenticatedComponent, Layout } from 'global'
 import ErrorBoundary from 'global/ErrorBoundary'
 import CookieNotice from 'global/CookieNotice'
 
 import LandingRedirect from './components/pages/LandingRedirect'
-import LoginPage from '../packages/component-login/client/LoginPage'
 import LogoutPage from './components/pages/Logout/index'
 import AuthorGuide from '../packages/component-static-pages/client/pages/AuthorGuide'
 import ReviewerGuide from '../packages/component-static-pages/client/pages/ReviewerGuide'
