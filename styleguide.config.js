@@ -43,6 +43,42 @@ module.exports = {
       name: 'Packages',
       sections: [
         {
+          name: 'Dashboard',
+          sections: [
+            {
+              name: 'Components',
+              components:
+                'packages/component-dashboard/client/components/**/*.js',
+            },
+          ],
+        },
+        {
+          name: 'Elife UI',
+          sections: [
+            {
+              name: 'Global',
+              components: 'packages/component-elife-ui/client/global/**/*.js',
+            },
+            {
+              name: 'UI',
+              components: 'packages/component-elife-ui/client/ui/**/*.js',
+            },
+          ],
+        },
+        {
+          name: 'Login',
+          sections: [
+            {
+              name: 'Client',
+              components: 'packages/component-login/client/*.js',
+            },
+            {
+              name: 'Components',
+              components: 'packages/component-login/client/components/**/*.js',
+            },
+          ],
+        },
+        {
           name: 'Static Pages',
           sections: [
             {
@@ -54,6 +90,15 @@ module.exports = {
               name: 'Pages',
               components:
                 'packages/component-static-pages/client/pages/**/*.js',
+            },
+          ],
+        },
+        {
+          name: 'Submission',
+          sections: [
+            {
+              name: 'Steps',
+              components: 'packages/component-submission/client/**/*.js',
             },
           ],
         },
