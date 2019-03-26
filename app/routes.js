@@ -4,13 +4,13 @@ import { Route, Switch } from 'react-router-dom'
 // Components
 import { DashboardPage } from '@elifesciences/component-dashboard/client'
 import { ErrorPage } from '@elifesciences/component-elife-ui/client'
+import { LoginPage } from '@elifesciences/component-login/client'
 
 import { AuthenticatedComponent, Layout } from 'global'
 import ErrorBoundary from 'global/ErrorBoundary'
 import CookieNotice from 'global/CookieNotice'
 
 import { ThankYouPage } from '@elifesciences/component-submission/client'
-import LoginPage from '../packages/component-login/client'
 import LandingRedirect from '../packages/component-login/client/pages/LandingRedirect'
 import LogoutPage from '../packages/component-login/client/pages/Logout/index'
 import AuthorGuide from '../packages/component-static-pages/client/pages/AuthorGuide'
