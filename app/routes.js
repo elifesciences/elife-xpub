@@ -11,7 +11,7 @@ import CookieNotice from 'global/CookieNotice'
 
 import { ThankYouPage } from '@elifesciences/component-submission/client'
 import LoginPage from '../packages/component-login/client'
-import { LandingRedirect } from '../packages/component-login/client/pages/LandingRedirect'
+import LandingRedirect from '../packages/component-login/client/pages/LandingRedirect'
 import LogoutPage from '../packages/component-login/client/pages/Logout/index'
 import AuthorGuide from '../packages/component-static-pages/client/pages/AuthorGuide'
 import ReviewerGuide from '../packages/component-static-pages/client/pages/ReviewerGuide'
