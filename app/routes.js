@@ -9,18 +9,19 @@ import {
   ReviewerGuide,
   AuthorGuide,
 } from '@elifesciences/component-static-pages/client'
+import {
+  ThankYouPage,
+  SubmissionWizard,
+} from '@elifesciences/component-submission/client'
 
 import { AuthenticatedComponent, Layout } from 'global'
 import ErrorBoundary from 'global/ErrorBoundary'
 import CookieNotice from 'global/CookieNotice'
+import TrackedRoute from './trackedRoute'
 
-import { ThankYouPage } from '@elifesciences/component-submission/client'
 import LoginPage from '../packages/component-login/client'
 import LandingRedirect from '../packages/component-login/client/pages/LandingRedirect'
 import LogoutPage from '../packages/component-login/client/pages/Logout/index'
-
-import SubmissionWizard from '../packages/component-submission/client'
-import TrackedRoute from './trackedRoute'
 
 const Routes = () => (
   <React.Fragment>
