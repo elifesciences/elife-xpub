@@ -8,10 +8,10 @@ import { hotjar } from 'react-hotjar'
 
 import { configureStore, Root } from 'pubsweet-client'
 
+import * as AuthorDetailsSchema from '@elifesciences/component-submission/client/pages/SubmissionWizard/steps/Author/schema'
 import theme, { GlobalStyle } from '@elifesciences/elife-theme'
 
 import Routes from './routes'
-import * as AuthorDetailsSchema from '../packages/component-submission/client/steps/Author/schema'
 
 const history = createHistory()
 const store = configureStore(history, {})
