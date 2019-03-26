@@ -4,6 +4,11 @@ import { Route, Switch } from 'react-router-dom'
 // Components
 import { DashboardPage } from '@elifesciences/component-dashboard/client'
 import { ErrorPage } from '@elifesciences/component-elife-ui/client'
+import {
+  ContactUs,
+  ReviewerGuide,
+  AuthorGuide,
+} from '@elifesciences/component-static-pages/client'
 
 import { AuthenticatedComponent, Layout } from 'global'
 import ErrorBoundary from 'global/ErrorBoundary'
@@ -13,9 +18,6 @@ import { ThankYouPage } from '@elifesciences/component-submission/client'
 import LoginPage from '../packages/component-login/client'
 import LandingRedirect from '../packages/component-login/client/pages/LandingRedirect'
 import LogoutPage from '../packages/component-login/client/pages/Logout/index'
-import AuthorGuide from '../packages/component-static-pages/client/pages/AuthorGuide'
-import ReviewerGuide from '../packages/component-static-pages/client/pages/ReviewerGuide'
-import ContactUs from '../packages/component-static-pages/client/pages/ContactUs'
 
 import SubmissionWizard from '../packages/component-submission/client'
 import TrackedRoute from './trackedRoute'
