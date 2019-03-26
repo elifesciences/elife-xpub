@@ -13,21 +13,22 @@ import {
   ThankYouPage,
   SubmissionWizard,
 } from '@elifesciences/component-submission/client'
+import {
+  LoginPage,
+  LandingRedirectPage,
+  LogoutPage,
+} from '@elifesciences/component-login/client'
 
 import { AuthenticatedComponent, Layout } from 'global'
 import ErrorBoundary from 'global/ErrorBoundary'
 import CookieNotice from 'global/CookieNotice'
 import TrackedRoute from './trackedRoute'
 
-import LoginPage from '../packages/component-login/client'
-import LandingRedirect from '../packages/component-login/client/pages/LandingRedirect'
-import LogoutPage from '../packages/component-login/client/pages/Logout/index'
-
 const Routes = () => (
   <React.Fragment>
     <CookieNotice />
     <Switch>
-      <TrackedRoute component={LandingRedirect} exact path="/redirect" />
+      <TrackedRoute component={LandingRedirectPage} exact path="/redirect" />
       <Layout>
         <ErrorBoundary>
           <Switch>

@@ -1,6 +1,6 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import LoginPage from '.'
+import LoginPage from './LoginPage'
 
 const clientMock = {
   mutate: jest.fn(() =>
