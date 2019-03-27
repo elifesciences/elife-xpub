@@ -16,7 +16,7 @@ module.exports = [
     // The configuration for the client
     name: 'app',
     target: 'web',
-    context: path.join(__dirname, '..', 'app'),
+    context: path.join(__dirname, '..', 'app', 'client'),
     entry: {
       app: ['babel-polyfill', './index'],
     },
@@ -36,7 +36,7 @@ module.exports = [
       }),
       new HtmlWebpackPlugin({
         title: '',
-        template: '../app/index-production.html',
+        template: '../index-production.html',
         inject: 'body',
         packageVersion: require('../package.json').version,
         gitHash: config.git.sha,

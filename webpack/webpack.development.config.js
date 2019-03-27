@@ -10,7 +10,7 @@ module.exports = [
     name: 'app',
     watch: true,
     target: 'web',
-    context: path.join(__dirname, '..', 'app'),
+    context: path.join(__dirname, '..', 'app', 'client'),
     entry: {
       app: [
         'react-hot-loader/patch',

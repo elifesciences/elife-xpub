@@ -13,6 +13,7 @@ rules.push({
   },
   include: [
     path.resolve(__dirname, '../app'),
+    path.resolve(__dirname, '../packages'),
     path.resolve(__dirname, '../client'),
   ],
 })
@@ -31,5 +32,5 @@ module.exports = {
       ),
     },
   },
-  plugins: [new CopyWebpackPlugin([{ from: './assets', to: 'assets' }])],
+  plugins: [new CopyWebpackPlugin([{ from: './app/assets', to: 'assets' }])],
 }
