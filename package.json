@@ -78,6 +78,7 @@
       "<rootDir>/packages/component-model/config/jest.config.server.js",
       "<rootDir>/packages/component-model-manuscript/config/jest.config.server.js",
       "<rootDir>/packages/component-model-file/config/jest.config.server.js",
+      "<rootDir>/packages/component-model-semantic-extraction/config/jest.config.server.js",
       "<rootDir>/packages/component-submission/config/jest.config.server.js",
       "<rootDir>/packages/component-submission/config/jest.config.client.js",
       "<rootDir>/packages/component-static-pages/config/jest.config.client.js",
