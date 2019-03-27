@@ -16,7 +16,7 @@ module.exports = [
     // The configuration for the client
     name: 'app',
     target: 'web',
-    context: path.join(__dirname, '..', 'app'),
+    context: path.join(__dirname, '..', 'app', 'client'),
     entry: {
       app: ['babel-polyfill', './index'],
     },

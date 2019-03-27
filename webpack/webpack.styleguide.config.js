@@ -12,7 +12,7 @@ rules.push({
     flags: 'g',
   },
   include: [
-    path.resolve(__dirname, '../app'),
+    path.resolve(__dirname, '../app/client'),
     path.resolve(__dirname, '../client'),
   ],
 })

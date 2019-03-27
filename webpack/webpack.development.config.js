@@ -20,7 +20,7 @@ module.exports = [
       ],
     },
     output: {
-      path: path.join(__dirname, '..', '..', '_build', 'assets'),
+      path: path.join(__dirname, '..', '_build', 'assets'),
       filename: '[name].js',
       publicPath: '/assets/',
     },
@@ -40,7 +40,7 @@ module.exports = [
         [config.authsome.mode]: config.authsome.mode,
         [config.validations]: config.validations,
       }),
-      new CopyWebpackPlugin([{ from: '../../assets' }]),
+      new CopyWebpackPlugin([{ from: '../assets' }]),
     ],
     node: {
       fs: 'empty',
