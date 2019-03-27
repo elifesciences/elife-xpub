@@ -1,7 +1,7 @@
 const { createTables } = require('@pubsweet/db-manager')
 const uuid = require('uuid')
 const File = require('.')
-const Manuscript = require('../manuscript')
+const Manuscript = require('@elifesciences/component-model-manuscript')
 
 describe('File', () => {
   let userId

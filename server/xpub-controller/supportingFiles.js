@@ -1,4 +1,4 @@
-const ManuscriptModel = require('@elifesciences/component-model').Manuscript
+const ManuscriptModel = require('@elifesciences/component-model-manuscript')
 const FileModel = require('@elifesciences/component-model').File
 const logger = require('@pubsweet/logger')
 

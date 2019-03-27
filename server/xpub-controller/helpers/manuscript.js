@@ -1,7 +1,7 @@
 const logger = require('@pubsweet/logger')
 const FilesHelper = require('./files')
 const FileModel = require('@elifesciences/component-model').File
-const ManuscriptModel = require('@elifesciences/component-model').Manuscript
+const ManuscriptModel = require('@elifesciences/component-model-manuscript')
 
 class ManuscriptHelper {
   constructor(config, userId, storage, filesHelper) {

@@ -3,7 +3,7 @@ const { transaction } = require('objection')
 const BaseModel = require('@pubsweet/base-model')
 const logger = require('@pubsweet/logger')
 const emptyManuscript = require('./helpers/empty')
-const AuditLog = require('../auditLog')
+const AuditLog = require('@elifesciences/component-model/entities/auditLog')
 
 // Temporarily commented out see #1162
 // const integrityError = (property, value, message) =>
