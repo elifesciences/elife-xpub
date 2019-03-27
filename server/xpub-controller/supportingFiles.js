@@ -1,5 +1,5 @@
 const ManuscriptModel = require('@elifesciences/component-model-manuscript')
-const FileModel = require('@elifesciences/component-model').File
+const FileModel = require('@elifesciences/component-model-file')
 const logger = require('@pubsweet/logger')
 
 class SupportingFiles {
