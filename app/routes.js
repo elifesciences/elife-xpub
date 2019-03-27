@@ -4,27 +4,31 @@ import { Route, Switch } from 'react-router-dom'
 // Components
 import { DashboardPage } from '@elifesciences/component-dashboard/client'
 import { ErrorPage } from '@elifesciences/component-elife-ui/client'
-import { LoginPage } from '@elifesciences/component-login/client'
+import {
+  ContactUs,
+  ReviewerGuide,
+  AuthorGuide,
+} from '@elifesciences/component-static-pages/client'
+import {
+  ThankYouPage,
+  SubmissionWizard,
+} from '@elifesciences/component-submission/client'
+import {
+  LoginPage,
+  LandingRedirectPage,
+  LogoutPage,
+} from '@elifesciences/component-login/client'
 
 import { AuthenticatedComponent, Layout } from 'global'
 import ErrorBoundary from 'global/ErrorBoundary'
 import CookieNotice from 'global/CookieNotice'
-
-import { ThankYouPage } from '@elifesciences/component-submission/client'
-import LandingRedirect from '../packages/component-login/client/pages/LandingRedirect'
-import LogoutPage from '../packages/component-login/client/pages/Logout/index'
-import AuthorGuide from '../packages/component-static-pages/client/pages/AuthorGuide'
-import ReviewerGuide from '../packages/component-static-pages/client/pages/ReviewerGuide'
-import ContactUs from '../packages/component-static-pages/client/pages/ContactUs'
-
-import SubmissionWizard from '../packages/component-submission/client'
 import TrackedRoute from './trackedRoute'
 
 const Routes = () => (
   <React.Fragment>
     <CookieNotice />
     <Switch>
-      <TrackedRoute component={LandingRedirect} exact path="/redirect" />
+      <TrackedRoute component={LandingRedirectPage} exact path="/redirect" />
       <Layout>
         <ErrorBoundary>
           <Switch>
