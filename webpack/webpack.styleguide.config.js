@@ -8,11 +8,11 @@ rules.push({
   loader: 'string-replace-loader',
   options: {
     search: '/assets/',
-    replace: './app/assets/',
+    replace: './assets/',
     flags: 'g',
   },
   include: [
-    path.resolve(__dirname, '../app/client'),
+    path.resolve(__dirname, '../app'),
     path.resolve(__dirname, '../client'),
   ],
 })
