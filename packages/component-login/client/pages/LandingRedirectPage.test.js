@@ -3,7 +3,7 @@ import { mount } from 'enzyme'
 import { MemoryRouter } from 'react-router-dom'
 import { ThemeProvider } from 'styled-components'
 import theme from '@elifesciences/elife-theme'
-import LandingRedirect from './LandingRedirect'
+import LandingRedirect from './LandingRedirectPage'
 
 const makeWrapper = props =>
   mount(

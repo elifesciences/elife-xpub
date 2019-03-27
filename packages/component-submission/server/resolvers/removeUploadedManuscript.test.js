@@ -1,5 +1,6 @@
 const { createTables } = require('@pubsweet/db-manager')
-const { User, Manuscript } = require('@elifesciences/component-model')
+const { User } = require('@elifesciences/component-model')
+const Manuscript = require('@elifesciences/component-model-manuscript')
 const { Mutation } = require('.')
 const { userData } = require('./index.test.data')
 

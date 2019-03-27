@@ -18,10 +18,13 @@ import {
   LandingRedirectPage,
   LogoutPage,
 } from '@elifesciences/component-login/client'
+import {
+  AuthenticatedComponent,
+  Layout,
+  ErrorBoundary,
+  CookieNotice,
+} from '@elifesciences/component-elife-ui/client/global'
 
-import { AuthenticatedComponent, Layout } from 'global'
-import ErrorBoundary from 'global/ErrorBoundary'
-import CookieNotice from 'global/CookieNotice'
 import TrackedRoute from './trackedRoute'
 
 const Routes = () => (

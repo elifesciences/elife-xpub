@@ -3,7 +3,7 @@ const { transaction } = require('objection')
 const BaseModel = require('@pubsweet/base-model')
 const logger = require('@pubsweet/logger')
 const emptyManuscript = require('./helpers/empty')
-const AuditLog = require('../auditLog')
+const AuditLog = require('@elifesciences/component-model/entities/auditLog')
 
 // Temporarily commented out see #1162
 // const integrityError = (property, value, message) =>
@@ -75,7 +75,7 @@ class Manuscript extends BaseModel {
     return {
       files: {
         relation: BaseModel.HasManyRelation,
-        modelClass: `${__dirname}/../file`,
+        modelClass: require('@elifesciences/component-model/entities/file'),
         join: {
           from: 'manuscript.id',
           to: 'file.manuscriptId',
@@ -83,7 +83,7 @@ class Manuscript extends BaseModel {
       },
       teams: {
         relation: BaseModel.HasManyRelation,
-        modelClass: `${__dirname}/../team`,
+        modelClass: require('@elifesciences/component-model/entities/team'),
         join: {
           from: 'manuscript.id',
           to: 'team.objectId',
