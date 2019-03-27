@@ -75,7 +75,7 @@ class Manuscript extends BaseModel {
     return {
       files: {
         relation: BaseModel.HasManyRelation,
-        modelClass: `${__dirname}/../file`,
+        modelClass: require('@elifesciences/component-model/entities/file'),
         join: {
           from: 'manuscript.id',
           to: 'file.manuscriptId',
@@ -83,7 +83,7 @@ class Manuscript extends BaseModel {
       },
       teams: {
         relation: BaseModel.HasManyRelation,
-        modelClass: `${__dirname}/../team`,
+        modelClass: require('@elifesciences/component-model/entities/team'),
         join: {
           from: 'manuscript.id',
           to: 'team.objectId',
