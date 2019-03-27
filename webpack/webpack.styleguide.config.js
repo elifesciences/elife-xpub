@@ -13,6 +13,7 @@ rules.push({
   },
   include: [
     path.resolve(__dirname, '../app'),
+    path.resolve(__dirname, '../packages'),
     path.resolve(__dirname, '../client'),
   ],
 })
