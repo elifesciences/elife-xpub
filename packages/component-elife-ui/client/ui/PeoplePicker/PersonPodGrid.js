@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import TwoColumnLayout from 'global/layout/TwoColumnLayout'
+import TwoColumnLayout from '@elifesciences/component-elife-ui/client/global/layout/TwoColumnLayout'
 import { peoplePropType } from './types'
 import PersonPod from './PersonPod'
 import Loading from '../atoms/Loading'

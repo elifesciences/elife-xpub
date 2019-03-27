@@ -5,9 +5,9 @@ import styled from 'styled-components'
 import { Box, Flex } from '@rebass/grid'
 import { th } from '@pubsweet/ui-toolkit'
 
-import ErrorBoundary from 'global/ErrorBoundary'
-import media from 'global/layout/media'
-import NavigationDropdown from 'ui/atoms/NavigationDropdown'
+import ErrorBoundary from '@elifesciences/component-elife-ui/client/global/ErrorBoundary'
+import media from '@elifesciences/component-elife-ui/client/global/layout/media'
+import NavigationDropdown from '@elifesciences/component-elife-ui/client/ui/atoms/NavigationDropdown'
 import SideNav from './SideNav'
 import ScrollToTop from './ScrollToTop'
 

@@ -5,9 +5,9 @@ import styled from 'styled-components'
 import Dropzone from 'react-dropzone'
 import { ErrorText } from '@pubsweet/ui'
 import { th } from '@pubsweet/ui-toolkit'
-import Paragraph from 'ui/atoms/Paragraph'
-import ActionText from 'ui/atoms/ActionText'
-import Icon from 'ui/atoms/Icon'
+import Paragraph from '@elifesciences/component-elife-ui/client/ui/atoms/Paragraph'
+import ActionText from '@elifesciences/component-elife-ui/client/ui/atoms/ActionText'
+import Icon from '@elifesciences/component-elife-ui/client/ui/atoms/Icon'
 import { errorMessageMapping, MAX_FILE_SIZE } from './utils'
 
 const UploadIcon = props => (

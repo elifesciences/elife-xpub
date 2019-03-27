@@ -4,7 +4,7 @@ import { Box, Flex } from '@rebass/grid'
 import { th } from '@pubsweet/ui-toolkit'
 import styled, { css } from 'styled-components'
 
-import Icon from 'ui/atoms/Icon'
+import Icon from '@elifesciences/component-elife-ui/client/ui/atoms/Icon'
 import {
   errorMessageMapping,
   MAX_SUPPORTING_FILES,

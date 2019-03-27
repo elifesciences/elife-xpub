@@ -2,8 +2,8 @@ import React from 'react'
 import styled from 'styled-components'
 import { Box } from '@rebass/grid'
 import { th } from '@pubsweet/ui-toolkit'
-import media from 'global/layout/media'
-import AppBarContainer from 'ui/atoms/AppBarContainer'
+import media from '@elifesciences/component-elife-ui/client/global/layout/media'
+import AppBarContainer from '@elifesciences/component-elife-ui/client/ui/atoms/AppBarContainer'
 
 const LogoWrapper = styled.span`
   ${th('customMixins.logoHolder')};

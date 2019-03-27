@@ -1,8 +1,8 @@
 import React from 'react'
 import { Box } from '@rebass/grid'
 
-import CalloutBox from 'ui/atoms/CalloutBox'
-import ControlledCheckbox from 'ui/atoms/ControlledCheckbox'
+import CalloutBox from '@elifesciences/component-elife-ui/client/ui/atoms/CalloutBox'
+import ControlledCheckbox from '@elifesciences/component-elife-ui/client/ui/atoms/ControlledCheckbox'
 
 const OptionalSection = ({
   label,

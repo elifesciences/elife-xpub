@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import { th } from '@pubsweet/ui-toolkit'
 import { Box, Flex } from '@rebass/grid'
 
-import media from 'global/layout/media'
+import media from '@elifesciences/component-elife-ui/client/global/layout/media'
 import { peoplePropType } from './types'
 import SelectedItem from '../atoms/SelectedItem'
 import PersonPodGrid from './PersonPodGrid'
