@@ -3,10 +3,8 @@ const uuid = require('uuid')
 const stream = require('stream')
 const { createTables } = require('@pubsweet/db-manager')
 const logger = require('@pubsweet/logger')
-const {
-  SemanticExtraction,
-  Manuscript: ManuscriptModel,
-} = require('@elifesciences/component-model')
+const { SemanticExtraction } = require('@elifesciences/component-model')
+const ManuscriptModel = require('@elifesciences/component-model-manuscript')
 const FilesHelper = require('./files')
 
 const getFilesHelper = scienceBeamApi => new FilesHelper(config, scienceBeamApi)
