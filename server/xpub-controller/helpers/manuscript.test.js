@@ -1,6 +1,7 @@
 const { createTables } = require('@pubsweet/db-manager')
-const { User, File } = require('@elifesciences/component-model')
+const { User } = require('@elifesciences/component-model')
 const Manuscript = require('@elifesciences/component-model-manuscript')
+const File = require('@elifesciences/component-model-file')
 const ManuscriptHelper = require('./manuscript')
 
 describe('clearPendingFile()', () => {
