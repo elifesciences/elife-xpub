@@ -1,12 +1,12 @@
 import React from 'react'
 import { Box } from '@rebass/grid'
 import { H1 } from '@pubsweet/ui'
-import Paragraph from 'ui/atoms/Paragraph'
-import ButtonLink from 'ui/atoms/ButtonLink'
-import ImageWrapper from 'ui/atoms/ImageWrapper'
-import FooterPrivacy from 'ui/atoms/FooterPrivacy'
+import Paragraph from '@elifesciences/component-elife-ui/client/ui/atoms/Paragraph'
+import ButtonLink from '@elifesciences/component-elife-ui/client/ui/atoms/ButtonLink'
+import ImageWrapper from '@elifesciences/component-elife-ui/client/ui/atoms/ImageWrapper'
+import FooterPrivacy from '@elifesciences/component-elife-ui/client/ui/atoms/FooterPrivacy'
 import { css } from 'styled-components'
-import media from 'global/layout/media'
+import media from '@elifesciences/component-elife-ui/client/global/layout/media'
 import { RedirectLayout, TwoColumnLayout } from 'global'
 
 const footerStyle = css`

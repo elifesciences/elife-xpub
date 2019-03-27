@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { Box, Flex } from '@rebass/grid'
 
-import Centerer from 'global/layout/Centerer'
+import Centerer from '@elifesciences/component-elife-ui/client/global/layout/Centerer'
 import PeoplePickerLogic from './PeoplePickerLogic'
 import PeoplePickerButtons from './PeoplePickerButtons'
 import PeoplePickerBody from './PeoplePickerBody'

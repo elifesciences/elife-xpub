@@ -1,7 +1,7 @@
 import React from 'react'
-import ActionText from 'ui/atoms/ActionText'
-import ValidatedField from 'ui/atoms/ValidatedField'
-import TwoColumnLayout from 'global/layout/TwoColumnLayout'
+import ActionText from '@elifesciences/component-elife-ui/client/ui/atoms/ActionText'
+import ValidatedField from '@elifesciences/component-elife-ui/client/ui/atoms/ValidatedField'
+import TwoColumnLayout from '@elifesciences/component-elife-ui/client/global/layout/TwoColumnLayout'
 
 const AuthorPage = ({ prefill }) => (
   <React.Fragment>

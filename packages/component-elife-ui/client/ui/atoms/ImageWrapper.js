@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import { Box } from '@rebass/grid'
-import media from 'global/layout/media'
+import media from '@elifesciences/component-elife-ui/client/global/layout/media'
 
 const ImageWrapper = styled(Box)`
   width: 75%;

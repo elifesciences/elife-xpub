@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import { Flex } from '@rebass/grid'
 import { th } from '@pubsweet/ui-toolkit'
-import media from 'global/layout/media'
+import media from '@elifesciences/component-elife-ui/client/global/layout/media'
 
 const AppBarContainer = styled(Flex)`
   align-items: center;

@@ -2,9 +2,9 @@ import React from 'react'
 import { Menu } from '@pubsweet/ui'
 import { Box } from '@rebass/grid'
 
-import ValidatedField from 'ui/atoms/ValidatedField'
-import ActionText from 'ui/atoms/ActionText'
-import Textarea from 'ui/atoms/Textarea'
+import ValidatedField from '@elifesciences/component-elife-ui/client/ui/atoms/ValidatedField'
+import ActionText from '@elifesciences/component-elife-ui/client/ui/atoms/ActionText'
+import Textarea from '@elifesciences/component-elife-ui/client/ui/atoms/Textarea'
 import SubjectAreaDropdown from './SubjectAreaDropdown'
 import OptionalSection from './OptionalSection'
 
