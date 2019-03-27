@@ -8,7 +8,7 @@ rules.push({
   loader: 'string-replace-loader',
   options: {
     search: '/assets/',
-    replace: './assets/',
+    replace: './app/assets/',
     flags: 'g',
   },
   include: [
@@ -31,5 +31,5 @@ module.exports = {
       ),
     },
   },
-  plugins: [new CopyWebpackPlugin([{ from: './assets', to: 'assets' }])],
+  plugins: [new CopyWebpackPlugin([{ from: './app/assets', to: 'assets' }])],
 }
