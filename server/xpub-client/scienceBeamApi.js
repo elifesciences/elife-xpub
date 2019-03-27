@@ -8,9 +8,13 @@ const parseString = promisify(xml2js.parseString)
 async function extractSemantics(config, fileContents, filename, mimetype) {
   let title = ''
   logger.info(`extractSemantics::start ${filename}`)
+  const include = 'title'
   const xmlBuffer = await request.post(config.get('scienceBeam.url'), {
     body: fileContents,
-    qs: { filename },
+    qs: {
+      filename,
+      include,
+    },
     headers: { 'content-type': mimetype },
     timeout: config.get('scienceBeam.timeoutMs'),
   })
