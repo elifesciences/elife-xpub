@@ -70,7 +70,7 @@
     },
     "projects": [
       "<rootDir>/client",
-      "<rootDir>/app",
+      "<rootDir>/app/config/jest.config.client.js",
       "<rootDir>/server",
       "<rootDir>/packages/component-dashboard/config/jest.config.server.js",
       "<rootDir>/packages/component-dashboard/config/jest.config.client.js",
