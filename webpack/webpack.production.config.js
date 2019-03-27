@@ -36,7 +36,7 @@ module.exports = [
       }),
       new HtmlWebpackPlugin({
         title: '',
-        template: '../app/index-production.html',
+        template: '../index-production.html',
         inject: 'body',
         packageVersion: require('../package.json').version,
         gitHash: config.git.sha,
