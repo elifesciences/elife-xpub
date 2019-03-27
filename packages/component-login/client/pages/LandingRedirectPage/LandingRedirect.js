@@ -7,7 +7,10 @@ import ImageWrapper from '@elifesciences/component-elife-ui/client/ui/atoms/Imag
 import FooterPrivacy from '@elifesciences/component-elife-ui/client/ui/atoms/FooterPrivacy'
 import { css } from 'styled-components'
 import media from '@elifesciences/component-elife-ui/client/global/layout/media'
-import { RedirectLayout, TwoColumnLayout } from 'global'
+import {
+  RedirectLayout,
+  TwoColumnLayout,
+} from '@elifesciences/component-elife-ui/client/global'
 
 const footerStyle = css`
   text-align: left;

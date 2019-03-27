@@ -11,7 +11,7 @@ import Paragraph from '@elifesciences/component-elife-ui/client/ui/atoms/Paragra
 import NativeLink from '@elifesciences/component-elife-ui/client/ui/atoms/NativeLink'
 import ImageWrapper from '@elifesciences/component-elife-ui/client/ui/atoms/ImageWrapper'
 import FooterPrivacy from '@elifesciences/component-elife-ui/client/ui/atoms/FooterPrivacy'
-import { TwoColumnLayout } from 'global'
+import { TwoColumnLayout } from '@elifesciences/component-elife-ui/client/global'
 import media from '@elifesciences/component-elife-ui/client/global/layout/media'
 import ButtonOrcid from '../components/ButtonOrcid'
 
