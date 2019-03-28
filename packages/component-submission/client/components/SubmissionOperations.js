@@ -13,7 +13,7 @@ import {
 } from './operations'
 import CosubmissionModifier from './formDataModifiers/CosubmissionModifier'
 import EditorSuggestionsModifier from './formDataModifiers/EditorSuggestionsModifier'
-import ErrorPage from '../../../../../app/client/pages/ErrorPage'
+import ErrorPage from '../../../../app/client/pages/ErrorPage'
 
 const dataModifiers = [
   new CosubmissionModifier(),
