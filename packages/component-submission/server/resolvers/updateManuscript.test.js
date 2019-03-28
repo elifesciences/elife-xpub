@@ -1,7 +1,7 @@
 jest.mock('@pubsweet/logger')
 
 const { createTables } = require('@pubsweet/db-manager')
-const { User } = require('@elifesciences/component-model')
+const User = require('@elifesciences/component-model-user')
 const Manuscript = require('@elifesciences/component-model-manuscript')
 const { Mutation } = require('.')
 const {
