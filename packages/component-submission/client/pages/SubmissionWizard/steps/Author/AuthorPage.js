@@ -1,6 +1,6 @@
 import React from 'react'
-import ActionText from '@elifesciences/component-elife-ui/client/ui/atoms/ActionText'
-import ValidatedField from '@elifesciences/component-elife-ui/client/ui/atoms/ValidatedField'
+import ActionText from '@elifesciences/component-elife-ui/client/atoms/ActionText'
+import ValidatedField from '@elifesciences/component-elife-ui/client/atoms/ValidatedField'
 import TwoColumnLayout from '@elifesciences/component-elife-ui/client/global/layout/TwoColumnLayout'
 
 const AuthorPage = ({ prefill }) => (

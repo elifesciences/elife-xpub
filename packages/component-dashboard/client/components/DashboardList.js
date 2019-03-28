@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { Box } from '@rebass/grid'
 import { th } from '@pubsweet/ui-toolkit'
-import Paragraph from '@elifesciences/component-elife-ui/client/ui/atoms/Paragraph'
+import Paragraph from '@elifesciences/component-elife-ui/client/atoms/Paragraph'
 
 import DashboardListItem from './DashboardListItem'
 

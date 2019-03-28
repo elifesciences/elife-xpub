@@ -4,9 +4,9 @@ import styled, { css } from 'styled-components'
 import { Box } from '@rebass/grid'
 import { Link } from 'react-router-dom'
 import { th } from '@pubsweet/ui-toolkit'
-import NativeLink from '@elifesciences/component-elife-ui/client/ui/atoms/NativeLink'
-import Icon from '@elifesciences/component-elife-ui/client/ui/atoms/Icon'
-import PopOverPanel from '@elifesciences/component-elife-ui/client/ui/atoms/PopOverPanel'
+import NativeLink from '@elifesciences/component-elife-ui/client/atoms/NativeLink'
+import Icon from '@elifesciences/component-elife-ui/client/atoms/Icon'
+import PopOverPanel from '@elifesciences/component-elife-ui/client/atoms/PopOverPanel'
 import media from '@elifesciences/component-elife-ui/client/global/layout/media'
 
 const loginUrl = config.login.url

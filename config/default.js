@@ -13,6 +13,8 @@ module.exports = {
       '@elifesciences/component-model-semantic-extraction',
       '@elifesciences/component-model-manuscript',
       '@elifesciences/component-model-file',
+      '@elifesciences/component-model-audit-log',
+      '@elifesciences/component-model-team',
       '@elifesciences/component-model',
       '@elifesciences/xpub-server',
       '@elifesciences/xpub-controller',

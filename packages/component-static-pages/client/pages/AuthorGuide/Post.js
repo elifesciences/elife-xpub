@@ -1,8 +1,8 @@
 import React from 'react'
 import { H1, H2, H3 } from '@pubsweet/ui'
 
-import Paragraph from '@elifesciences/component-elife-ui/client/ui/atoms/Paragraph'
-import NativeLink from '@elifesciences/component-elife-ui/client/ui/atoms/NativeLink'
+import Paragraph from '@elifesciences/component-elife-ui/client/atoms/Paragraph'
+import NativeLink from '@elifesciences/component-elife-ui/client/atoms/NativeLink'
 import List from '../../components/List'
 
 const Post = props => (
