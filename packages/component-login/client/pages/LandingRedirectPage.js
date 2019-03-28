@@ -7,10 +7,8 @@ import Paragraph from '@elifesciences/component-elife-ui/client/ui/atoms/Paragra
 import ButtonLink from '@elifesciences/component-elife-ui/client/ui/atoms/ButtonLink'
 import ImageWrapper from '@elifesciences/component-elife-ui/client/ui/atoms/ImageWrapper'
 import FooterPrivacy from '@elifesciences/component-elife-ui/client/ui/atoms/FooterPrivacy'
-import {
-  RedirectLayout,
-  TwoColumnLayout,
-} from '@elifesciences/component-elife-ui/client/global'
+import { TwoColumnLayout } from '@elifesciences/component-elife-ui/client/global'
+import RedirectLayout from './RedirectLayout'
 
 const footerStyle = css`
   text-align: left;
