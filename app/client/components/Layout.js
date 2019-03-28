@@ -1,11 +1,11 @@
 import React from 'react'
 import { Box } from '@rebass/grid'
-import Centerer from './Centerer'
-import AppBar from '../AppBar'
+import Centerer from '@elifesciences/component-elife-ui/client/global/layout/Centerer'
+import WrappedAppBar from './WrappedAppBar'
 
 const Layout = ({ children }) => (
   <Box pb={5}>
-    <AppBar
+    <WrappedAppBar
       defaultMenuItems={[
         { label: 'Author guide', link: '/author-guide' },
         { label: 'Reviewer guide', link: '/reviewer-guide' },

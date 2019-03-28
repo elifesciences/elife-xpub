@@ -1,9 +1,10 @@
 import React from 'react'
 import { Query } from 'react-apollo'
-import { CURRENT_USER } from '../queries'
-import ErrorBoundary from '../ErrorBoundary'
+import { ErrorBoundary } from '@elifesciences/component-elife-ui/client/global'
+import { CURRENT_USER } from '../graphql/queries'
 import AppBar from './AppBar'
 
+// TODO: This could be achieved with a HOC wrapper
 export default props => (
   <ErrorBoundary>
     <Query query={CURRENT_USER}>

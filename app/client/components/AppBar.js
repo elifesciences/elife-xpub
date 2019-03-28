@@ -6,7 +6,7 @@ import { th } from '@pubsweet/ui-toolkit'
 import NavLink from '@elifesciences/component-elife-ui/client/ui/atoms/NavLink'
 import media from '@elifesciences/component-elife-ui/client/global/layout/media'
 import BurgerMenu from '@elifesciences/component-elife-ui/client/ui/molecules/BurgerMenu'
-import AppBarContainer from '@elifesciences/component-elife-ui/client/ui/atoms/AppBarContainer'
+import TopBarContainer from '@elifesciences/component-elife-ui/client/ui/atoms/TopBarContainer'
 import ProfileMenu from './ProfileMenu'
 
 export const AppBarLink = styled(NavLink)`
@@ -32,7 +32,7 @@ const DesktopView = styled(Flex)`
 `
 
 const AppBar = ({ user, menuItems }) => (
-  <AppBarContainer px={3}>
+  <TopBarContainer px={3}>
     <BurgerMenu menuItems={menuItems} />
     <LogoLink href="https://elifesciences.org">
       <img alt="eLife" src="/assets/elife-logo.png" />
@@ -49,7 +49,7 @@ const AppBar = ({ user, menuItems }) => (
       </Box>
     </DesktopView>
     <ProfileMenu user={user} />
-  </AppBarContainer>
+  </TopBarContainer>
 )
 
 AppBar.propTypes = {
