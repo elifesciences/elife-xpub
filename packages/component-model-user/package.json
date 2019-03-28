@@ -1,0 +1,13 @@
+{
+  "name": "@elifesciences/component-model-user",
+  "version": "1.0.0",
+  "description": "",
+  "license": "MIT",
+  "author": "",
+  "main": "index.js",
+  "scripts": {},
+  "keywords": [],
+  "peerDependencies": {
+    "pubsweet-server": ">=2.0.0"
+  }
+}

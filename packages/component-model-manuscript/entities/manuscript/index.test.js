@@ -1,7 +1,7 @@
 const { createTables } = require('@pubsweet/db-manager')
 const uuid = require('uuid')
 const Team = require('@elifesciences/component-model-team')
-const User = require('../../../component-model/entities/user')
+const User = require('@elifesciences/component-model-user')
 const File = require('@elifesciences/component-model-file')
 const AuditLog = require('@elifesciences/component-model-audit-log')
 const Manuscript = require('.')

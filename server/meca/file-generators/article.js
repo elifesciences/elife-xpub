@@ -1,7 +1,7 @@
 const xmlbuilder = require('xmlbuilder')
 const lodash = require('lodash')
 const config = require('config')
-const elifeApi = require('@elifesciences/component-model/entities/user/helpers/elife-api')
+const elifeApi = require('@elifesciences/component-model-user/entities/user/helpers/elife-api')
 
 const {
   articleTypeMap,

@@ -16,6 +16,7 @@ module.exports = {
       '@elifesciences/component-model-audit-log',
       '@elifesciences/component-model-identity',
       '@elifesciences/component-model-team',
+      '@elifesciences/component-model-user',
       '@elifesciences/component-model',
       '@elifesciences/xpub-server',
       '@elifesciences/xpub-controller',
