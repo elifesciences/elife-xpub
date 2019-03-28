@@ -1,10 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-
 import TwoColumnLayout from '@elifesciences/component-elife-ui/client/global/layout/TwoColumnLayout'
+import Loading from '@elifesciences/component-elife-ui/client/ui/atoms/Loading'
+
 import { peoplePropType } from './types'
 import PersonPod from './PersonPod'
-import Loading from '../atoms/Loading'
 
 class PersonPodGrid extends React.Component {
   constructor(props) {

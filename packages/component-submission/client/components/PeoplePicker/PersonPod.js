@@ -4,6 +4,9 @@ import styled from 'styled-components'
 import { th } from '@pubsweet/ui-toolkit'
 import { Action } from '@pubsweet/ui'
 import { Flex, Box } from '@rebass/grid'
+import Icon from '@elifesciences/component-elife-ui/client/ui/atoms/Icon'
+import ButtonAsIconWrapper from '@elifesciences/component-elife-ui/client/ui/atoms/ButtonAsIconWrapper'
+import Paragraph from '@elifesciences/component-elife-ui/client/ui/atoms/Paragraph'
 
 import {
   personNamePropType,
@@ -11,9 +14,6 @@ import {
   expertisesPropType,
   focusesPropType,
 } from './types'
-import Icon from '../atoms/Icon'
-import ButtonAsIconWrapper from '../atoms/ButtonAsIconWrapper'
-import Paragraph from '../atoms/Paragraph'
 import PodContainer from './PodContainer'
 import PersonInfoModal from './PersonInfoModal'
 

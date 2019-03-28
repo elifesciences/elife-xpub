@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import { th } from '@pubsweet/ui-toolkit'
 import { Flex } from '@rebass/grid'
 
-import Icon from '../atoms/Icon'
+import Icon from '@elifesciences/component-elife-ui/client/ui/atoms/Icon'
 
 const AddIcon = props => (
   <Icon

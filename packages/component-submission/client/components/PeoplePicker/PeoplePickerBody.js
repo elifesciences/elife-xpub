@@ -3,10 +3,10 @@ import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { th } from '@pubsweet/ui-toolkit'
 import { Box, Flex } from '@rebass/grid'
-
 import media from '@elifesciences/component-elife-ui/client/global/layout/media'
+import SelectedItem from '@elifesciences/component-elife-ui/client/ui/atoms/SelectedItem'
+
 import { peoplePropType } from './types'
-import SelectedItem from '../atoms/SelectedItem'
 import PersonPodGrid from './PersonPodGrid'
 
 const SelectedItemsGrid = styled(Flex)`

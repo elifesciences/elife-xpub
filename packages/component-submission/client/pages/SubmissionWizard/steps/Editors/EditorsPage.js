@@ -5,7 +5,7 @@ import { ErrorText } from '@pubsweet/ui'
 import { FormH3 } from '@elifesciences/component-elife-ui/client/ui/atoms/FormHeadings'
 import ActionText from '@elifesciences/component-elife-ui/client/ui/atoms/ActionText'
 
-import PeoplePickerControl from '@elifesciences/component-elife-ui/client/ui/PeoplePicker/PeoplePickerControl'
+import PeoplePickerControl from '@elifesciences/component-submission/client/components/PeoplePicker/PeoplePickerControl'
 import Textarea from '@elifesciences/component-elife-ui/client/ui/atoms/Textarea'
 import CalloutBox from '@elifesciences/component-elife-ui/client/ui/atoms/CalloutBox'
 import ValidatedField from '@elifesciences/component-elife-ui/client/ui/atoms/ValidatedField'
