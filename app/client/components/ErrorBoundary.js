@@ -1,5 +1,5 @@
 import React from 'react'
-import { ErrorPage } from '@elifesciences/component-elife-ui/client'
+import ErrorPage from '../pages/ErrorPage'
 
 class ErrorBoundary extends React.Component {
   state = {}
