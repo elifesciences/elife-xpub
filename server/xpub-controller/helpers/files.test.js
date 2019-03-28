@@ -51,23 +51,23 @@ describe('FilesHelper', () => {
   })
 
   describe('publishPredictedProgress', () => {
+    const mockPredictor = {
+      getPredictedTime: () => 5.04049824,
+    }
     const timeData = [
       {
         now: 1550498450221,
         startDate: 1550498450014,
-        predictedTime: 5.04049824,
         expectedProgress: 4,
       },
       {
         now: 1550498450424,
         startDate: 1550498450014,
-        predictedTime: 5.04049824,
         expectedProgress: 8,
       },
       {
         now: 1550498450629,
         startDate: 1550498450014,
-        predictedTime: 5.04049824,
         expectedProgress: 12,
       },
     ]
@@ -85,11 +85,13 @@ describe('FilesHelper', () => {
     const manuscriptId = '4512fc2f-85bc-4032-97da-c63f8fefec61'
 
     it('calculates the progress correctly', () => {
-      // test over differen times to observe the progress is the correct one.
+      // test over different times to observe the progress is the correct one.
+      // NOTE: keeps the predicted time constant
       // | now            |   startdate      |  predictedTime   |   expectedProgress
       // | 1550498450221  |  1550498450014   | 5.04049824       |   4
       // | 1550498450424  |  1550498450014   | 5.04049824       |   8
       // | 1550498450629  |  1550498450014   | 5.04049824       |   12
+      expect(mockPredictor.getPredictedTime()).toBe(5.04049824)
 
       timeData.forEach(currentTimeData => {
         const originalDate = Date
@@ -99,7 +101,7 @@ describe('FilesHelper', () => {
           pubsubMock,
           ON_UPLOAD_PROGRESS,
           currentTimeData.startDate,
-          currentTimeData.predictedTime,
+          mockPredictor,
           manuscriptId,
         )
         publishPredictedProgress()
@@ -115,29 +117,31 @@ describe('FilesHelper', () => {
 
     it('is validated when correct parameters are passed', () => {
       const startedTime = new Date()
-      const predictedTime = 3
-      const progressFunc = FilesHelper.publishPredictedProgress(
-        { publish: () => {} },
-        ON_UPLOAD_PROGRESS,
-        startedTime,
-        predictedTime,
-        manuscriptId,
-      )
+      const progressFunc = () =>
+        FilesHelper.publishPredictedProgress(
+          { publish: () => {} },
+          ON_UPLOAD_PROGRESS,
+          startedTime,
+          mockPredictor,
+          manuscriptId,
+        )
       expect(progressFunc).not.toThrow()
     })
 
     it('throws an error if called with wrong parameters', () => {
       const startedTime = new Date()
-      const predictedTime = 0
+      const badPredictor = {
+        getPredictedTime: () => 0,
+      }
       const progressFunc = () =>
         FilesHelper.publishPredictedProgress(
           {},
           ON_UPLOAD_PROGRESS,
           startedTime,
-          predictedTime,
+          badPredictor,
           manuscriptId,
         )
-      expect(progressFunc).toThrowError(
+      expect(progressFunc).toThrow(
         new Error('Invalid parameters to calculate the upload file progress.'),
       )
     })

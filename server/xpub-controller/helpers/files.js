@@ -39,13 +39,16 @@ class FilesHelper {
     pubsub,
     ON_UPLOAD_PROGRESS,
     startedTime,
-    predictedTime,
+    predictor,
     manuscriptId,
   ) {
-    if (manuscriptId.length === 36 && predictedTime > 0) {
+    if (manuscriptId.length === 36 && predictor.getPredictedTime() > 0) {
       return () => {
         const elapsed = Date.now() - startedTime
-        let progress = parseInt((100 * elapsed) / 1000 / predictedTime, 10)
+        let progress = parseInt(
+          (100 * elapsed) / 1000 / predictor.getPredictedTime(),
+          10,
+        )
         // don't let the prediction complete the upload
         if (progress > 99) progress = 99
         pubsub.publish(`${ON_UPLOAD_PROGRESS}.${manuscriptId}`, {
@@ -60,7 +63,7 @@ class FilesHelper {
     pubsub,
     ON_UPLOAD_PROGRESS,
     startedTime,
-    predictedTime,
+    predictor,
     manuscriptId,
     interval,
   ) {
@@ -69,7 +72,7 @@ class FilesHelper {
         pubsub,
         ON_UPLOAD_PROGRESS,
         startedTime,
-        predictedTime,
+        predictor.getPredictedTime(),
         manuscriptId,
       ),
       interval,
