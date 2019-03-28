@@ -83,7 +83,7 @@ class Manuscript extends BaseModel {
       },
       teams: {
         relation: BaseModel.HasManyRelation,
-        modelClass: require('@elifesciences/component-model/entities/team'),
+        modelClass: require('@elifesciences/component-model-team'),
         join: {
           from: 'manuscript.id',
           to: 'team.objectId',
