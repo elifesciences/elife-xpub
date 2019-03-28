@@ -7,7 +7,7 @@ import { th } from '@pubsweet/ui-toolkit'
 import { Button } from '@pubsweet/ui'
 import {
   Icon,
-  ClearSearchButton,
+  CrossIconButton,
 } from '@elifesciences/component-elife-ui/client/atoms'
 
 import { personNamePropType } from './types'
@@ -32,7 +32,7 @@ const StyledSearchButton = styled(Button).attrs({
   margin: 0;
 `
 
-const StyledClearButton = styled(ClearSearchButton)`
+const StyledClearButton = styled(CrossIconButton)`
   fill: ${th('colorTextSecondary')};
   width: ${th('space.5')};
   border: ${th('borderWidth')} ${th('borderStyle')} ${th('colorBorder')};
