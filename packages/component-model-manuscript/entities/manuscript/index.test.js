@@ -3,7 +3,7 @@ const uuid = require('uuid')
 const Team = require('@elifesciences/component-model-team')
 const User = require('../../../component-model/entities/user')
 const File = require('@elifesciences/component-model-file')
-const AuditLog = require('../../../component-model/entities/auditLog')
+const AuditLog = require('@elifesciences/component-model-audit-log')
 const Manuscript = require('.')
 
 describe('Manuscript', () => {
