@@ -1,6 +1,6 @@
 import React from 'react'
 import { Query } from 'react-apollo'
-import { CURRENT_USER } from '../../../../../../../app/client/graphql/queries'
+import { CURRENT_USER } from '../../../../../../app/client/graphql/queries'
 import AuthorPage from './AuthorPage'
 
 const AuthorPageContainer = ({ handleSubmit, setFieldValue }) => (
