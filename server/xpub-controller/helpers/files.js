@@ -72,7 +72,7 @@ class FilesHelper {
         pubsub,
         ON_UPLOAD_PROGRESS,
         startedTime,
-        predictor.getPredictedTime(),
+        predictor,
         manuscriptId,
       ),
       interval,
