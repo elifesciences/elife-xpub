@@ -1,6 +1,6 @@
 const logger = require('@pubsweet/logger')
 const ManuscriptModel = require('@elifesciences/component-model-manuscript')
-const { FilesHelper, ManuscriptHelper } = require('./helpers')
+const { UploadPredictor, FilesHelper, ManuscriptHelper } = require('./helpers')
 
 class Manuscript {
   constructor(config, user, storage, scienceBeamApi, pubsubManager) {
@@ -22,6 +22,7 @@ class Manuscript {
     const { ON_UPLOAD_PROGRESS } = this.pubsubManager.asyncIterators
 
     this.filesHelper.validateFileSize(fileSize)
+    const predictor = new UploadPredictor(fileSize)
 
     // ensure user can view manuscript
     await ManuscriptModel.find(manuscriptId, this.userId)
@@ -30,14 +31,12 @@ class Manuscript {
 
     const pubsub = await this.pubsubManager.getPubsub()
 
-    // Predict upload time - The analysis was done on #839
-    const predictedTime = 5 + 4.67e-6 * fileSize
     const startedTime = Date.now()
     const progress = FilesHelper.startFileProgress(
       pubsub,
       ON_UPLOAD_PROGRESS,
       startedTime,
-      predictedTime,
+      predictor,
       manuscriptId,
       200,
     )
@@ -68,7 +67,7 @@ class Manuscript {
 
     const actualTime = (Date.now() - startedTime) / 1000
     logger.info(
-      `Manuscript Upload Time, Actual (${actualTime}) , Predicted (${predictedTime}) | ${manuscriptId}`,
+      `Manuscript Upload Time, Actual (${actualTime}) , Predicted (${predictor.getPredictedTime()}) | ${manuscriptId}`,
     )
 
     return ManuscriptModel.find(manuscriptId, this.userId)

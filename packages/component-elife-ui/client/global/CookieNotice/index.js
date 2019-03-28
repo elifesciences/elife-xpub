@@ -1,8 +1,8 @@
 import React from 'react'
 import { Box } from '@rebass/grid'
 import { Button } from '@pubsweet/ui'
-import FooterMessage from '@elifesciences/component-elife-ui/client/ui/atoms/FooterMessage'
-import NativeLink from '@elifesciences/component-elife-ui/client/ui/atoms/NativeLink'
+import FooterMessage from '@elifesciences/component-elife-ui/client/atoms/FooterMessage'
+import NativeLink from '@elifesciences/component-elife-ui/client/atoms/NativeLink'
 import Helpers from './helpers'
 
 // This Cookie Notice component is based on the journals implementation: https://github.com/elifesciences/pattern-library/blob/develop/assets/js/components/CookieOverlay.js

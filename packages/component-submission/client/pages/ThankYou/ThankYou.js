@@ -5,9 +5,9 @@ import PropTypes from 'prop-types'
 import { H1 } from '@pubsweet/ui'
 import config from 'config'
 
-import NativeLink from '@elifesciences/component-elife-ui/client/ui/atoms/NativeLink'
-import ButtonLink from '@elifesciences/component-elife-ui/client/ui/atoms/ButtonLink'
-import Paragraph from '@elifesciences/component-elife-ui/client/ui/atoms/Paragraph'
+import NativeLink from '@elifesciences/component-elife-ui/client/atoms/NativeLink'
+import ButtonLink from '@elifesciences/component-elife-ui/client/atoms/ButtonLink'
+import Paragraph from '@elifesciences/component-elife-ui/client/atoms/Paragraph'
 
 const CenteredContent = styled(Box)`
   text-align: center;

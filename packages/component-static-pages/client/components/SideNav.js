@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import { th } from '@pubsweet/ui-toolkit'
 import { Box } from '@rebass/grid'
 
-import NavLink from '@elifesciences/component-elife-ui/client/ui/atoms/NavLink'
+import NavLink from '@elifesciences/component-elife-ui/client/atoms/NavLink'
 
 const SideNavLink = styled(NavLink)`
   display: block;

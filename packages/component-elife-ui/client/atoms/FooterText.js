@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { th } from '@pubsweet/ui-toolkit'
-import Paragraph from '@elifesciences/component-elife-ui/client/ui/atoms/Paragraph'
+import Paragraph from '@elifesciences/component-elife-ui/client/atoms/Paragraph'
 
 const CenteredSmallParagraph = styled(Paragraph.Small).attrs({
   secondary: true,

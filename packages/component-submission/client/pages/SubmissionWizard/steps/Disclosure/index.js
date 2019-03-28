@@ -2,11 +2,11 @@ import React from 'react'
 import { Box } from '@rebass/grid'
 import { format, parse } from 'date-fns'
 
-import Paragraph from '@elifesciences/component-elife-ui/client/ui/atoms/Paragraph'
-import NativeLink from '@elifesciences/component-elife-ui/client/ui/atoms/NativeLink'
-import { FormH3 } from '@elifesciences/component-elife-ui/client/ui/atoms/FormHeadings'
-import ValidatedField from '@elifesciences/component-elife-ui/client/ui/atoms/ValidatedField'
-import ControlledCheckbox from '@elifesciences/component-elife-ui/client/ui/atoms/ControlledCheckbox'
+import Paragraph from '@elifesciences/component-elife-ui/client/atoms/Paragraph'
+import NativeLink from '@elifesciences/component-elife-ui/client/atoms/NativeLink'
+import { FormH3 } from '@elifesciences/component-elife-ui/client/atoms/FormHeadings'
+import ValidatedField from '@elifesciences/component-elife-ui/client/atoms/ValidatedField'
+import ControlledCheckbox from '@elifesciences/component-elife-ui/client/atoms/ControlledCheckbox'
 
 const localDate = parse(new Date())
 const formattedLocalDate = format(localDate, 'MMM D, YYYY')

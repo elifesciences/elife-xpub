@@ -3,10 +3,10 @@ import styled from 'styled-components'
 import PropTypes from 'prop-types'
 import { Flex, Box } from '@rebass/grid'
 import { th } from '@pubsweet/ui-toolkit'
-import NavLink from '@elifesciences/component-elife-ui/client/ui/atoms/NavLink'
+import NavLink from '@elifesciences/component-elife-ui/client/atoms/NavLink'
 import media from '@elifesciences/component-elife-ui/client/global/layout/media'
-import BurgerMenu from '@elifesciences/component-elife-ui/client/ui/molecules/BurgerMenu'
-import TopBarContainer from '@elifesciences/component-elife-ui/client/ui/atoms/TopBarContainer'
+import BurgerMenu from '@elifesciences/component-elife-ui/client/molecules/BurgerMenu'
+import TopBarContainer from '@elifesciences/component-elife-ui/client/atoms/TopBarContainer'
 import ProfileMenu from './ProfileMenu'
 
 export const AppBarLink = styled(NavLink)`
