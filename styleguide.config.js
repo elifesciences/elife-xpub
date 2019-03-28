@@ -27,15 +27,15 @@ module.exports = {
       sections: [
         {
           name: 'Atoms',
-          components: 'app/components/ui/atoms/**/*.js',
+          components: 'app/components/atoms/**/*.js',
         },
         {
           name: 'Molecules',
-          components: 'app/components/ui/molecules/**/*.js',
+          components: 'app/components/molecules/**/*.js',
         },
         {
           name: 'PeoplePicker',
-          components: 'app/components/ui/PeoplePicker/**/*.js',
+          components: 'app/components/peoplePicker/**/*.js',
         },
       ],
     },
@@ -61,7 +61,7 @@ module.exports = {
             },
             {
               name: 'UI',
-              components: 'packages/component-elife-ui/client/ui/**/*.js',
+              components: 'packages/component-elife-ui/client/**/*.js',
             },
           ],
         },
