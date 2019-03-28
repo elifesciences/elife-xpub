@@ -19,7 +19,7 @@ class User extends BaseModel {
     return {
       identities: {
         relation: BaseModel.HasManyRelation,
-        modelClass: `${__dirname}/../identity`,
+        modelClass: require('@elifesciences/component-model-identity'),
         join: {
           from: 'user.id',
           to: 'identity.userId',
