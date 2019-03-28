@@ -6,11 +6,13 @@ import gql from 'graphql-tag'
 import config from 'config'
 import { H1 } from '@pubsweet/ui'
 import styled, { css } from 'styled-components'
-import ButtonLink from '@elifesciences/component-elife-ui/client/atoms/ButtonLink'
-import Paragraph from '@elifesciences/component-elife-ui/client/atoms/Paragraph'
-import NativeLink from '@elifesciences/component-elife-ui/client/atoms/NativeLink'
-import ImageWrapper from '@elifesciences/component-elife-ui/client/atoms/ImageWrapper'
-import FooterPrivacy from '@elifesciences/component-elife-ui/client/atoms/FooterPrivacy'
+import {
+  ButtonLink,
+  Paragraph,
+  NativeLink,
+  ImageWrapper,
+  FooterPrivacy,
+} from '@elifesciences/component-elife-ui/client/atoms'
 import { TwoColumnLayout } from '@elifesciences/component-elife-ui/client/global'
 import media from '@elifesciences/component-elife-ui/client/global/layout/media'
 import ButtonOrcid from '../components/ButtonOrcid'

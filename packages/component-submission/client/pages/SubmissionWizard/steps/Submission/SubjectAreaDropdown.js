@@ -5,7 +5,7 @@ import { th } from '@pubsweet/ui-toolkit'
 import Select, { createFilter, components } from 'react-select'
 import config from 'config'
 
-import Icon from '@elifesciences/component-elife-ui/client/atoms/Icon'
+import { Icon } from '@elifesciences/component-elife-ui/client/atoms'
 
 const CrossIcon = props => (
   <Icon

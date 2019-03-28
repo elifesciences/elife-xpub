@@ -1,6 +1,8 @@
 import React from 'react'
-import FooterText from '@elifesciences/component-elife-ui/client/atoms/FooterText'
-import NativeLink from '@elifesciences/component-elife-ui/client/atoms/NativeLink'
+import {
+  FooterText,
+  NativeLink,
+} from '@elifesciences/component-elife-ui/client/atoms'
 
 const FooterPrivacy = ({ customStyle }) => (
   <FooterText customStyle={customStyle}>

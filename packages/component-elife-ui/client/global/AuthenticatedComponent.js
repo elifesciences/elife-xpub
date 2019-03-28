@@ -1,7 +1,7 @@
 import React from 'react'
 import { Redirect } from 'react-router'
 import { Query } from 'react-apollo'
-import Loading from '@elifesciences/component-elife-ui/client/atoms/Loading'
+import { Loading } from '@elifesciences/component-elife-ui/client/atoms'
 import { ErrorPage } from '@elifesciences/component-elife-ui/client'
 import { CURRENT_USER } from '../../../../app/client/graphql/queries'
 

@@ -7,7 +7,7 @@ import { th } from '@pubsweet/ui-toolkit'
 
 import ErrorBoundary from '@elifesciences/component-elife-ui/client/global/ErrorBoundary'
 import media from '@elifesciences/component-elife-ui/client/global/layout/media'
-import NavigationDropdown from '@elifesciences/component-elife-ui/client/atoms/NavigationDropdown'
+import { NavigationDropdown } from '@elifesciences/component-elife-ui/client/atoms'
 import SideNav from './SideNav'
 import ScrollToTop from './ScrollToTop'
 

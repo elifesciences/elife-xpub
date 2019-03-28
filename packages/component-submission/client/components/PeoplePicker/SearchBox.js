@@ -5,8 +5,10 @@ import Autosuggest from 'react-autosuggest'
 import { Flex, Box } from '@rebass/grid'
 import { th } from '@pubsweet/ui-toolkit'
 import { Button } from '@pubsweet/ui'
-import Icon from '@elifesciences/component-elife-ui/client/atoms/Icon'
-import ClearSearchButton from '@elifesciences/component-elife-ui/client/atoms/CrossIconButton'
+import {
+  Icon,
+  ClearSearchButton,
+} from '@elifesciences/component-elife-ui/client/atoms'
 
 import { personNamePropType } from './types'
 

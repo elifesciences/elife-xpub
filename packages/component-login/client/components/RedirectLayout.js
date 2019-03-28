@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { Box } from '@rebass/grid'
 import { th } from '@pubsweet/ui-toolkit'
 import media from '@elifesciences/component-elife-ui/client/global/layout/media'
-import TopBarContainer from '@elifesciences/component-elife-ui/client/atoms/TopBarContainer'
+import { TopBarContainer } from '@elifesciences/component-elife-ui/client/atoms'
 
 const LogoWrapper = styled.span`
   ${th('customMixins.logoHolder')};

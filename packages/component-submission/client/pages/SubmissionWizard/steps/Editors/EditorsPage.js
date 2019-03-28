@@ -3,12 +3,14 @@ import React from 'react'
 import { Box } from '@rebass/grid'
 import { ErrorText } from '@pubsweet/ui'
 import { FormH3 } from '@elifesciences/component-elife-ui/client/atoms/FormHeadings'
-import ActionText from '@elifesciences/component-elife-ui/client/atoms/ActionText'
+import {
+  ActionText,
+  Textarea,
+  CalloutBox,
+  ValidatedField,
+} from '@elifesciences/component-elife-ui/client/atoms'
 
 import PeoplePickerControl from '@elifesciences/component-submission/client/components/PeoplePicker/PeoplePickerControl'
-import Textarea from '@elifesciences/component-elife-ui/client/atoms/Textarea'
-import CalloutBox from '@elifesciences/component-elife-ui/client/atoms/CalloutBox'
-import ValidatedField from '@elifesciences/component-elife-ui/client/atoms/ValidatedField'
 import TwoColumnLayout from '@elifesciences/component-elife-ui/client/global/layout/TwoColumnLayout'
 import { limits } from './schema'
 

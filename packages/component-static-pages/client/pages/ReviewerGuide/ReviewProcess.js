@@ -1,8 +1,10 @@
 import React from 'react'
 import { H1, Link } from '@pubsweet/ui'
 
-import Paragraph from '@elifesciences/component-elife-ui/client/atoms/Paragraph'
-import NativeLink from '@elifesciences/component-elife-ui/client/atoms/NativeLink'
+import {
+  Paragraph,
+  NativeLink,
+} from '@elifesciences/component-elife-ui/client/atoms'
 
 const ReviewProcess = props => (
   <React.Fragment>

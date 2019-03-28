@@ -1,8 +1,10 @@
 import React from 'react'
 import { H1, H2, H3, Link } from '@pubsweet/ui'
+import {
+  Paragraph,
+  NativeLink,
+} from '@elifesciences/component-elife-ui/client/atoms'
 
-import Paragraph from '@elifesciences/component-elife-ui/client/atoms/Paragraph'
-import NativeLink from '@elifesciences/component-elife-ui/client/atoms/NativeLink'
 import CalloutTextBox from '../../components/CalloutTextBox'
 import List from '../../components/List'
 

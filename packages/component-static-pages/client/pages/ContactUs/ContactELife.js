@@ -1,7 +1,7 @@
 import React from 'react'
 import { H1 } from '@pubsweet/ui'
 
-import Paragraph from '@elifesciences/component-elife-ui/client/atoms/Paragraph'
+import { Paragraph } from '@elifesciences/component-elife-ui/client/atoms'
 import List from '../../components/List'
 
 const ContactELife = props => (
