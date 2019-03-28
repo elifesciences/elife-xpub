@@ -2,7 +2,7 @@ import React from 'react'
 import gql from 'graphql-tag'
 import { Query } from 'react-apollo'
 import { ErrorPage } from '@elifesciences/component-elife-ui/client'
-import Loading from '@elifesciences/component-elife-ui/client/ui/atoms/Loading'
+import Loading from '@elifesciences/component-elife-ui/client/atoms/Loading'
 import ThankYou from './ThankYou'
 
 const MANUSCRIPT_TITLE = gql`

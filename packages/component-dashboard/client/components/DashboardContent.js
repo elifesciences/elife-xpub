@@ -6,10 +6,10 @@ import { th } from '@pubsweet/ui-toolkit'
 import { Link } from 'react-router-dom'
 
 import media from '@elifesciences/component-elife-ui/client/global/layout/media'
-import NavigationDropdown from '@elifesciences/component-elife-ui/client/ui/atoms/NavigationDropdown'
-import Tabs from '@elifesciences/component-elife-ui/client/ui/molecules/Tabs'
-import NativeLink from '@elifesciences/component-elife-ui/client/ui/atoms/NativeLink'
-import FooterText from '@elifesciences/component-elife-ui/client/ui/atoms/FooterText'
+import NavigationDropdown from '@elifesciences/component-elife-ui/client/atoms/NavigationDropdown'
+import Tabs from '@elifesciences/component-elife-ui/client/molecules/Tabs'
+import NativeLink from '@elifesciences/component-elife-ui/client/atoms/NativeLink'
+import FooterText from '@elifesciences/component-elife-ui/client/atoms/FooterText'
 
 const MobileOnlySubmissionsContainer = styled(Box).attrs({ mx: -3 })`
   border-bottom: ${th('borderWidth')} ${th('borderStyle')} ${th('colorBorder')};
