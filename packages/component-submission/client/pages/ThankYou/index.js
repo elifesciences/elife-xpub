@@ -1,9 +1,9 @@
 import React from 'react'
 import gql from 'graphql-tag'
 import { Query } from 'react-apollo'
-import { ErrorPage } from '@elifesciences/component-elife-ui/client'
 import { Loading } from '@elifesciences/component-elife-ui/client/atoms'
-import ThankYou from './ThankYou'
+import ThankYou from '../../components/ThankYou'
+import ErrorPage from '../../../../../app/client/pages/ErrorPage'
 
 const MANUSCRIPT_TITLE = gql`
   query GetManuscript($id: ID!) {

@@ -3,7 +3,6 @@ import { graphql, compose } from 'react-apollo'
 import React from 'react'
 import omitDeep from 'omit-deep-lodash'
 import { ALL_MANUSCRIPTS } from '@elifesciences/component-dashboard/client/graphql/queries'
-import { ErrorPage } from '@elifesciences/component-elife-ui/client'
 import { Loading } from '@elifesciences/component-elife-ui/client/atoms'
 
 // TODO: This should not be importing from the other component
@@ -14,6 +13,7 @@ import {
 } from './operations'
 import CosubmissionModifier from './formDataModifiers/CosubmissionModifier'
 import EditorSuggestionsModifier from './formDataModifiers/EditorSuggestionsModifier'
+import ErrorPage from '../../../../app/client/pages/ErrorPage'
 
 const dataModifiers = [
   new CosubmissionModifier(),
