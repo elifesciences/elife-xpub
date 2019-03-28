@@ -1,9 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Flex, Box } from '@rebass/grid'
+import Paragraph from '@elifesciences/component-elife-ui/client/atoms/Paragraph'
 
 import PodContainer from './PodContainer'
-import Paragraph from '../atoms/Paragraph'
 
 const ChooserPod = ({
   roleName,

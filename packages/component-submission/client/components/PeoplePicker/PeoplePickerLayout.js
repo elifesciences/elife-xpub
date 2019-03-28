@@ -2,14 +2,14 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { Box, Flex } from '@rebass/grid'
-
+import { FormH2 } from '@elifesciences/component-elife-ui/client/atoms/FormHeadings'
+import StickyFooter from '@elifesciences/component-elife-ui/client/atoms/StickyFooter'
 import Centerer from '@elifesciences/component-elife-ui/client/global/layout/Centerer'
+
 import PeoplePickerLogic from './PeoplePickerLogic'
 import PeoplePickerButtons from './PeoplePickerButtons'
 import PeoplePickerBody from './PeoplePickerBody'
 import SearchBox from './SearchBox'
-import { FormH2 } from '../atoms/FormHeadings'
-import StickyFooter from '../atoms/StickyFooter'
 
 const MainColumn = styled(Box).attrs({ mx: [0, 0, 0, '16.666%'] })`
   flex: 1 1 100%;

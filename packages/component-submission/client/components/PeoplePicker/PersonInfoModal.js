@@ -3,6 +3,8 @@ import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { th } from '@pubsweet/ui-toolkit'
 import { H2 } from '@pubsweet/ui'
+import Paragraph from '@elifesciences/component-elife-ui/client/atoms/Paragraph'
+import ModalDialog from '@elifesciences/component-elife-ui/client/molecules/ModalDialog'
 
 import {
   personNamePropType,
@@ -10,8 +12,6 @@ import {
   focusesPropType,
   expertisesPropType,
 } from './types'
-import Paragraph from '../atoms/Paragraph'
-import ModalDialog from '../molecules/ModalDialog'
 
 const StyledH2 = styled(H2)`
   margin-bottom: 0;
