@@ -143,38 +143,88 @@ describe('FilesHelper', () => {
     })
   })
 
-  describe('endFileProgress', () => {
+  describe('FileProgress', () => {
     jest.useFakeTimers()
     const manuscriptId = uuid()
     const ON_UPLOAD_PROGRESS = 'ON_UPLOAD_PROGRESS'
     const pubsubMock = {
-      publish: jest.fn(),
+      // publish: jest.fn(),
+      publish: (msg, obj) => console.log(`>>>> ${obj}`),
     }
-    it('publishes progress as a 100 percent', () => {
-      const progress = setInterval(() => {}, 10)
+    const predictor = {
+      getPredictedTime: () => 1,
+    }
 
-      FilesHelper.endFileProgress(
-        pubsubMock,
-        ON_UPLOAD_PROGRESS,
-        progress,
-        manuscriptId,
-      )
-      expect(pubsubMock.publish).toHaveBeenCalledWith(
-        `${ON_UPLOAD_PROGRESS}.${manuscriptId}`,
-        { manuscriptUploadProgress: 100 },
-      )
+    describe('startFileProgress', () => {
+      const waitforUpdates = async number => {
+        // limit the wait to 1.1 seconds
+        // for (let i = 0; i < 110 && pubsubMock.publish.mock.calls.length < number; i += 1) {
+        for (let i = 0; i < 110; i += 1) {
+          console.log('tick')
+          // eslint-disable-next-line no-await-in-loop
+          await new Promise(resolve => setTimeout(resolve, 10))
+        }
+      }
+
+      // I woz ere - add 'only' to this test and continue
+      it('starts and ends file progress ok', async () => {
+        const startedTime = Date.now()
+        const progress = FilesHelper.startFileProgress(
+          pubsubMock,
+          ON_UPLOAD_PROGRESS,
+          startedTime,
+          predictor,
+          manuscriptId,
+          100,
+        )
+
+        console.log(`A ${JSON.stringify(progress)}`)
+        await waitforUpdates(1)
+        console.log(`B`)
+
+        // expect(pubsubMock.publish).toHaveBeenCalled(
+        console.log(`${JSON.stringify(pubsubMock, null, 4)}`)
+        expect(pubsubMock.publish).toHaveBeenCalledWith(
+          `${ON_UPLOAD_PROGRESS}.${manuscriptId}`,
+          { manuscriptUploadProgress: 100 },
+        )
+
+        FilesHelper.endFileProgress(
+          pubsubMock,
+          ON_UPLOAD_PROGRESS,
+          100,
+          manuscriptId,
+        )
+      })
     })
 
-    it('clears the progress interval', () => {
-      const progress = setInterval(() => {}, 10)
+    describe('endFileProgress', () => {
+      it('publishes progress as a 100 percent', () => {
+        const progress = setInterval(() => {}, 10)
 
-      FilesHelper.endFileProgress(
-        pubsubMock,
-        ON_UPLOAD_PROGRESS,
-        progress,
-        manuscriptId,
-      )
-      expect(clearInterval).toHaveBeenCalledWith(progress)
+        FilesHelper.endFileProgress(
+          pubsubMock,
+          ON_UPLOAD_PROGRESS,
+          progress,
+          manuscriptId,
+        )
+        expect(pubsubMock.publish).toHaveBeenCalledWith(
+          `${ON_UPLOAD_PROGRESS}.${manuscriptId}`,
+          { manuscriptUploadProgress: 100 },
+        )
+      })
+
+      it('clears the progress interval', () => {
+        const progress = setInterval(() => {}, 10)
+
+        FilesHelper.endFileProgress(
+          pubsubMock,
+          ON_UPLOAD_PROGRESS,
+          progress,
+          manuscriptId,
+        )
+        expect(clearInterval).toHaveBeenCalledWith(progress)
+      })
     })
   })
 

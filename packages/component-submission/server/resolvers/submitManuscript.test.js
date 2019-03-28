@@ -23,10 +23,15 @@ const {
 const replaySetup = require('../../../../test/helpers/replay-setup')
 
 async function waitforEmails(NUM_EMAILS) {
-  for (let i = 0; i < 100 && mailer.getMails().length < NUM_EMAILS; i += 1) {
+  console.log(`waitforEmails - start ${mailer.getMails().length}`)
+  let i = -1
+  for (i = 0; i < 100 && mailer.getMails().length < NUM_EMAILS; i += 1) {
+    console.log('tick')
     // eslint-disable-next-line no-await-in-loop
     await new Promise(resolve => setTimeout(resolve, 10))
   }
+  console.log(`waitforEmails - end ${mailer.getMails().length}`)
+  return i
 }
 
 describe('Manuscripts', () => {
@@ -124,7 +129,8 @@ describe('Manuscripts', () => {
         { user: profileId },
       )
       const NUM_EMAILS = 1
-      await waitforEmails(NUM_EMAILS)
+      const num = await waitforEmails(NUM_EMAILS)
+      console.log(`${num}`)
       const allEmails = mailer.getMails()
 
       expect(allEmails).toHaveLength(NUM_EMAILS)
@@ -256,7 +262,8 @@ describe('Manuscripts', () => {
           { user: profileId },
         )
         const NUM_EMAILS = 2
-        await waitforEmails(NUM_EMAILS)
+        const num = await waitforEmails(NUM_EMAILS)
+        console.log(`${num}`)
         const allEmails = mailer.getMails()
 
         expect(allEmails).toHaveLength(NUM_EMAILS)
