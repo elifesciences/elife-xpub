@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { Box } from '@rebass/grid'
 import { th } from '@pubsweet/ui-toolkit'
 import media from '@elifesciences/component-elife-ui/client/global/layout/media'
-import AppBarContainer from '@elifesciences/component-elife-ui/client/ui/atoms/AppBarContainer'
+import TopBarContainer from '@elifesciences/component-elife-ui/client/ui/atoms/TopBarContainer'
 
 const LogoWrapper = styled.span`
   ${th('customMixins.logoHolder')};
@@ -23,11 +23,11 @@ const SmallCenterer = styled(Box).attrs({
 
 const RedirectLayout = ({ children }) => (
   <Box pb={5}>
-    <AppBarContainer px={3}>
+    <TopBarContainer px={3}>
       <LogoWrapper>
         <img alt="eLife" src="/assets/elife-logo.png" />
       </LogoWrapper>
-    </AppBarContainer>
+    </TopBarContainer>
     <SmallCenterer>{children}</SmallCenterer>
   </Box>
 )

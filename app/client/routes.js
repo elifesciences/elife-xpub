@@ -3,7 +3,7 @@ import { Route, Switch } from 'react-router-dom'
 
 // Components
 import { DashboardPage } from '@elifesciences/component-dashboard/client'
-import { ErrorPage } from '@elifesciences/component-elife-ui/client'
+
 import {
   ContactUs,
   ReviewerGuide,
@@ -20,11 +20,12 @@ import {
 } from '@elifesciences/component-login/client'
 import {
   AuthenticatedComponent,
-  Layout,
   ErrorBoundary,
   CookieNotice,
 } from '@elifesciences/component-elife-ui/client/global'
 
+import ErrorPage from './pages/ErrorPage'
+import Layout from './components/Layout'
 import TrackedRoute from './trackedRoute'
 
 const Routes = () => (

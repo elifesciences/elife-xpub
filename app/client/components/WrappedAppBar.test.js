@@ -5,8 +5,8 @@ import { ThemeProvider } from 'styled-components'
 import theme from '@elifesciences/elife-theme'
 import { MemoryRouter } from 'react-router-dom'
 // eslint-disable-next-line import/no-named-default
-import { default as AppBarWrapper } from '.'
-import { CURRENT_USER } from '../queries'
+import { default as AppBarWrapper } from './WrappedAppBar'
+import { CURRENT_USER } from '../graphql/queries'
 import AppBar from './AppBar'
 
 const defaultProps = {
