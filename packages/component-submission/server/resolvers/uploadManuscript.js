@@ -1,5 +1,5 @@
 const config = require('config')
-const { User } = require('@elifesciences/component-model')
+const User = require('@elifesciences/component-model-user')
 const { Manuscript } = require('@elifesciences/xpub-controller')
 const { S3Storage, ScienceBeamApi } = require('@elifesciences/xpub-client')
 const pubsubManager = require('pubsweet-server/src/graphql/pubsub')

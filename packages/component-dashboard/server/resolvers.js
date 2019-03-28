@@ -1,6 +1,6 @@
 const logger = require('@pubsweet/logger')
 const { S3Storage } = require('@elifesciences/xpub-client')
-const { User } = require('@elifesciences/component-model')
+const User = require('@elifesciences/component-model-user')
 const Manuscript = require('@elifesciences/component-model-manuscript')
 const File = require('@elifesciences/component-model-file')
 
