@@ -1,7 +1,10 @@
 import React from 'react'
 import { H1, H2 } from '@pubsweet/ui'
-import Paragraph from '@elifesciences/component-elife-ui/client/atoms/Paragraph'
-import NativeLink from '@elifesciences/component-elife-ui/client/atoms/NativeLink'
+import {
+  Paragraph,
+  NativeLink,
+} from '@elifesciences/component-elife-ui/client/atoms'
+
 import { BoxChart, ColumnChart } from './JournalCharts'
 import * as data from './JournalCharts.data'
 

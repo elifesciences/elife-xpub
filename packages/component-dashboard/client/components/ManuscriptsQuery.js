@@ -1,6 +1,6 @@
 import React from 'react'
 import { Query } from 'react-apollo'
-import Loading from '@elifesciences/component-elife-ui/client/atoms/Loading'
+import { Loading } from '@elifesciences/component-elife-ui/client/atoms'
 
 const ManuscriptsQuery = ({ query, children }) => (
   <Query fetchPolicy="cache-and-network" query={query}>

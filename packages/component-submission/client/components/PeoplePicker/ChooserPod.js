@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Flex, Box } from '@rebass/grid'
-import Paragraph from '@elifesciences/component-elife-ui/client/atoms/Paragraph'
+import { Paragraph } from '@elifesciences/component-elife-ui/client/atoms'
 
 import PodContainer from './PodContainer'
 

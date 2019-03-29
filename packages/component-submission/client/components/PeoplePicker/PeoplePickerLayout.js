@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { Box, Flex } from '@rebass/grid'
 import { FormH2 } from '@elifesciences/component-elife-ui/client/atoms/FormHeadings'
-import StickyFooter from '@elifesciences/component-elife-ui/client/atoms/StickyFooter'
+import { StickyFooter } from '@elifesciences/component-elife-ui/client/atoms'
 import Centerer from '@elifesciences/component-elife-ui/client/global/layout/Centerer'
 
 import PeoplePickerLogic from './PeoplePickerLogic'

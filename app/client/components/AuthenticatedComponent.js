@@ -1,8 +1,8 @@
 import React from 'react'
 import { Redirect } from 'react-router'
 import { Query } from 'react-apollo'
-import Loading from '@elifesciences/component-elife-ui/client/atoms/Loading'
-import ErrorPage from '../pages/ErrorPage'
+import { Loading } from '@elifesciences/component-elife-ui/client/atoms'
+import { ErrorPage } from '@elifesciences/component-elife-ui/client'
 import { CURRENT_USER } from '../graphql/queries'
 
 const AuthenticatedComponent = ({ children }) => (

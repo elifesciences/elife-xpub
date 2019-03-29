@@ -3,10 +3,12 @@ import { Box } from '@rebass/grid'
 import { H1 } from '@pubsweet/ui'
 import { css } from 'styled-components'
 import media from '@elifesciences/component-elife-ui/client/global/layout/media'
-import Paragraph from '@elifesciences/component-elife-ui/client/atoms/Paragraph'
-import ButtonLink from '@elifesciences/component-elife-ui/client/atoms/ButtonLink'
-import ImageWrapper from '@elifesciences/component-elife-ui/client/atoms/ImageWrapper'
-import FooterPrivacy from '@elifesciences/component-elife-ui/client/atoms/FooterPrivacy'
+import {
+  Paragraph,
+  ButtonLink,
+  ImageWrapper,
+  FooterPrivacy,
+} from '@elifesciences/component-elife-ui/client/atoms'
 import { TwoColumnLayout } from '@elifesciences/component-elife-ui/client/global'
 import RedirectLayout from '../components/RedirectLayout'
 

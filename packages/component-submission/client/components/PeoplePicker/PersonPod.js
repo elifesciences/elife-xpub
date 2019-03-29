@@ -4,9 +4,11 @@ import styled from 'styled-components'
 import { th } from '@pubsweet/ui-toolkit'
 import { Action } from '@pubsweet/ui'
 import { Flex, Box } from '@rebass/grid'
-import Icon from '@elifesciences/component-elife-ui/client/atoms/Icon'
-import ButtonAsIconWrapper from '@elifesciences/component-elife-ui/client/atoms/ButtonAsIconWrapper'
-import Paragraph from '@elifesciences/component-elife-ui/client/atoms/Paragraph'
+import {
+  Icon,
+  ButtonAsIconWrapper,
+  Paragraph,
+} from '@elifesciences/component-elife-ui/client/atoms'
 
 import {
   personNamePropType,

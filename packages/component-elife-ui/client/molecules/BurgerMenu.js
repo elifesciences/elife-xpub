@@ -3,11 +3,13 @@ import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { Box, Flex } from '@rebass/grid'
 import { th } from '@pubsweet/ui-toolkit'
-import NavLink from '@elifesciences/component-elife-ui/client/atoms/NavLink'
+import {
+  NavLink,
+  Icon,
+  ButtonAsIconWrapper,
+  CrossIconButton,
+} from '@elifesciences/component-elife-ui/client/atoms'
 import media from '@elifesciences/component-elife-ui/client/global/layout/media'
-import Icon from '@elifesciences/component-elife-ui/client/atoms/Icon'
-import ButtonAsIconWrapper from '@elifesciences/component-elife-ui/client/atoms/ButtonAsIconWrapper'
-import CrossIconButton from '@elifesciences/component-elife-ui/client/atoms/CrossIconButton'
 import ModalOverlay from '@elifesciences/component-elife-ui/client/molecules/ModalOverlay'
 
 const MenuPanel = styled.div`

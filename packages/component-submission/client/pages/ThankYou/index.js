@@ -1,7 +1,7 @@
 import React from 'react'
 import gql from 'graphql-tag'
 import { Query } from 'react-apollo'
-import Loading from '@elifesciences/component-elife-ui/client/atoms/Loading'
+import { Loading } from '@elifesciences/component-elife-ui/client/atoms'
 import ThankYou from '../../components/ThankYou'
 import ErrorPage from '../../../../../app/client/pages/ErrorPage'
 

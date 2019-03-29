@@ -4,12 +4,13 @@ import styled from 'styled-components'
 import { Box } from '@rebass/grid'
 import { th } from '@pubsweet/ui-toolkit'
 import { Link } from 'react-router-dom'
-
+import {
+  NavigationDropdown,
+  NativeLink,
+  FooterText,
+} from '@elifesciences/component-elife-ui/client/atoms'
 import media from '@elifesciences/component-elife-ui/client/global/layout/media'
-import NavigationDropdown from '@elifesciences/component-elife-ui/client/atoms/NavigationDropdown'
 import Tabs from '@elifesciences/component-elife-ui/client/molecules/Tabs'
-import NativeLink from '@elifesciences/component-elife-ui/client/atoms/NativeLink'
-import FooterText from '@elifesciences/component-elife-ui/client/atoms/FooterText'
 
 const MobileOnlySubmissionsContainer = styled(Box).attrs({ mx: -3 })`
   border-bottom: ${th('borderWidth')} ${th('borderStyle')} ${th('colorBorder')};
