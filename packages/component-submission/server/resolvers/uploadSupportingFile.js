@@ -1,4 +1,4 @@
-const User = require('@elifesciences/component-model-user')
+const User = require('@elifesciences/component-model-user').model
 const Manuscript = require('@elifesciences/component-model-manuscript')
 const { SupportingFiles } = require('@elifesciences/xpub-controller')
 const { S3Storage } = require('@elifesciences/xpub-client')
