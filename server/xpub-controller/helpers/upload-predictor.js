@@ -1,25 +1,31 @@
 class UploadPredictor {
   constructor(fileSize) {
     // Predict upload time - The analysis was done on #839
-    this.predictedTime = 5 + 4.67e-6 * fileSize
+    this.constant = 5
+    this.gradient = 4.67e-6
     this.fileSize = fileSize
-    this.start()
+    this.startTime = 0
+  }
+
+  static round(n) {
+    return Math.round(100 * n) / 100
   }
 
   getPredictedTime() {
-    return this.predictedTime
+    return UploadPredictor.round(this.constant + this.gradient * this.fileSize)
   }
 
-  start() {
-    this.startTime = Date.now()
-    this.lastTime = Date.now()
+  getConstant() {
+    return this.constant
   }
 
-  update(time, newSize) {
-    const oldPrediction = this.predictedTime
-    const newPrediction = oldPrediction
+  start(time) {
+    this.startTime = time
+  }
 
-    return newPrediction
+  update(time, currentSize) {
+    const diffTime = time - this.startTime
+    this.gradient = diffTime / currentSize
   }
 }
 

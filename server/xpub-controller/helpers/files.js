@@ -84,7 +84,7 @@ class FilesHelper {
   }
 
   static async uploadFileToServer(stream, fileSize, predictor) {
-    predictor.start()
+    predictor.start(Date.now())
     return new Promise((resolve, reject) => {
       let uploadedSize = 0
       const chunks = []
