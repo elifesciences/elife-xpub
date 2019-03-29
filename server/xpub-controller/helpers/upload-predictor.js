@@ -1,6 +1,10 @@
 class UploadPredictor {
   constructor(fileSize) {
-    // Predict upload time - The analysis was done on #839
+    // Predict upload time -
+    // The analysis was done on #839
+    // NOTE: This is not effective locally as S3 becomes significant and
+    // file upload less so. Whereas in production S3 happens within AWS and
+    // the file upload is the most significant factor.
     this.constant = 5
     this.gradient = 4.67e-6
     this.fileSize = fileSize
@@ -15,7 +19,6 @@ class UploadPredictor {
     const t = UploadPredictor.round(
       this.constant + this.gradient * this.fileSize,
     )
-    console.log(`::::::::: ${t}`)
     return t
   }
 
@@ -28,17 +31,8 @@ class UploadPredictor {
   }
 
   updateSeconds(time, currentSize) {
-    const old = this.gradient
     const diffTime = time - this.startTime
     this.gradient = diffTime / currentSize
-    console.log(
-      currentSize / this.fileSize,
-      diffTime,
-      ' | ',
-      old,
-      '->',
-      this.gradient,
-    )
   }
 }
 
