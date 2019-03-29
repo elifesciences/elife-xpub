@@ -1,4 +1,4 @@
-const User = require('./index').model
+const User = require('./entities/user')
 
 const resolvers = {
   Query: {
