@@ -25,11 +25,6 @@ module.exports = {
   resolve: {
     alias: {
       config: path.join(__dirname, '../styleguide/config.json'),
-      ui: path.resolve(__dirname, '../packages/component-elife-ui/client/ui'),
-      global: path.resolve(
-        __dirname,
-        '../packages/component-elife-ui/client/global',
-      ),
     },
   },
   plugins: [new CopyWebpackPlugin([{ from: './app/assets', to: 'assets' }])],
