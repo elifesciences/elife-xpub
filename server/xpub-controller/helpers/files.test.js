@@ -184,6 +184,22 @@ describe('FilesHelper', () => {
   })
 
   describe('uploadFilesToServer', () => {
+    it('uses the predictor correctly', async () => {
+      const fileSize = 1000
+      const uploadedSize = 1000
+      const bufferStream = new stream.PassThrough()
+      const predictor = {
+        start: jest.fn(),
+        update: jest.fn(),
+      }
+      bufferStream.end(Buffer.alloc(uploadedSize))
+      jest.spyOn(logger, 'warn').mockImplementationOnce(() => {})
+      await FilesHelper.uploadFileToServer(bufferStream, fileSize, predictor)
+      expect(logger.warn).toHaveBeenCalledTimes(0)
+      expect(predictor.start).toHaveBeenCalledTimes(1)
+      expect(predictor.update).toHaveBeenCalledTimes(1)
+    })
+
     it('warns if the uploaded size is not the same as the fileSize', async () => {
       const fileSize = 100
       const uploadedSize = 110

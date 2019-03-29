@@ -84,12 +84,14 @@ class FilesHelper {
   }
 
   static async uploadFileToServer(stream, fileSize, predictor) {
+    predictor.start()
     return new Promise((resolve, reject) => {
       let uploadedSize = 0
       const chunks = []
       stream.on('data', chunk => {
         uploadedSize += chunk.length
         chunks.push(chunk)
+        predictor.update(Date.now(), uploadedSize)
       })
       stream.on('error', reject)
       stream.on('end', () => {
