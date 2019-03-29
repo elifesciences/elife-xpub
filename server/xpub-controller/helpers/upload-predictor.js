@@ -12,20 +12,33 @@ class UploadPredictor {
   }
 
   getPredictedTime() {
-    return UploadPredictor.round(this.constant + this.gradient * this.fileSize)
+    const t = UploadPredictor.round(
+      this.constant + this.gradient * this.fileSize,
+    )
+    console.log(`::::::::: ${t}`)
+    return t
   }
 
   getConstant() {
     return this.constant
   }
 
-  start(time) {
+  startSeconds(time) {
     this.startTime = time
   }
 
-  update(time, currentSize) {
+  updateSeconds(time, currentSize) {
+    const old = this.gradient
     const diffTime = time - this.startTime
     this.gradient = diffTime / currentSize
+    console.log(
+      currentSize / this.fileSize,
+      diffTime,
+      ' | ',
+      old,
+      '->',
+      this.gradient,
+    )
   }
 }
 

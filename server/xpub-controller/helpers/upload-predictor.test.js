@@ -16,8 +16,8 @@ describe('UploadPredictor', () => {
     const size = 1e6
     const predictor = new UploadPredictor(size)
     const initialPrediction = predictor.getPredictedTime()
-    predictor.start(0)
-    predictor.update(initialPrediction - predictor.getConstant(), size)
+    predictor.startSeconds(0)
+    predictor.updateSeconds(initialPrediction - predictor.getConstant(), size)
     expect(predictor.getPredictedTime()).toBe(initialPrediction)
   })
 
@@ -25,12 +25,12 @@ describe('UploadPredictor', () => {
     const size = 1e6
     const predictor = new UploadPredictor(size)
     const initialPrediction = predictor.getPredictedTime()
-    predictor.start(0)
+    predictor.startSeconds(0)
     const steps = 10
     for (let i = 1; i <= steps; i += 1) {
       const uploadedSize = (size * i) / steps
       const time = ((initialPrediction - predictor.getConstant()) * i) / steps
-      predictor.update(time, uploadedSize)
+      predictor.updateSeconds(time, uploadedSize)
       expect(predictor.getPredictedTime()).toBe(initialPrediction)
     }
   })
@@ -43,7 +43,7 @@ describe('UploadPredictor', () => {
     const setup = () => {
       predictor = new UploadPredictor(size)
       initialPrediction = predictor.getPredictedTime()
-      predictor.start(0)
+      predictor.startSeconds(0)
       return predictor
     }
 
@@ -52,7 +52,7 @@ describe('UploadPredictor', () => {
       // simulate the new factor over a third
       const uploadedSize = (size * (1 / factor)) / 3
       const time = (initialPrediction - c) / 3
-      predictor.update(time, uploadedSize)
+      predictor.updateSeconds(time, uploadedSize)
       // return expected time
       return c + factor * (initialPrediction - c)
     }
