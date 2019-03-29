@@ -1,5 +1,5 @@
 import config from 'config'
-import startSshServer from '@elifesciences/xpub-meca-export/test/mock-sftp-server'
+import { startSshServer } from '@elifesciences/component-meca/'
 import { profile, files } from './pageObjects'
 import setFixtureHooks from './helpers/set-fixture-hooks'
 import NavigationHelper from './helpers/navigationHelper'

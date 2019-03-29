@@ -1,5 +1,5 @@
 const { db } = require('pubsweet-server')
-const { mecaExport } = require('@elifesciences/xpub-meca-export')
+const { mecaExport } = require('@elifesciences/component-meca')
 const { S3Storage } = require('@elifesciences/xpub-client')
 const Manuscript = require('@elifesciences/component-model-manuscript')
 
