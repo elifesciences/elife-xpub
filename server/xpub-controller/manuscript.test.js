@@ -1,5 +1,5 @@
 const { createTables } = require('@pubsweet/db-manager')
-const User = require('@elifesciences/component-model-user')
+const User = require('@elifesciences/component-model-user').model
 const Manuscript = require('@elifesciences/component-model-manuscript').model
 const ManuscriptController = require('./manuscript')
 const { FilesHelper, ManuscriptHelper } = require('./helpers')
