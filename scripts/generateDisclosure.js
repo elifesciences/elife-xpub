@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 const fs = require('fs')
 const generateDisclosurePdf = require('../server/meca/file-generators/disclosure')
-const Manuscript = require('@elifesciences/component-model-manuscript')
+const Manuscript = require('@elifesciences/component-model-manuscript').model
 const { db } = require('pubsweet-server')
 
 async function regenerate(id) {

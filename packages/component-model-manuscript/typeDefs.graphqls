@@ -2,10 +2,6 @@ extend type Query {
   manuscript(id: ID!): Manuscript!
 }
 
-extend type Mutation {
-  savePage(url:String!, id:String!):Manuscript!
-}
-
 extend type Manuscript {
   # todo: these should be handled through teams
   author: Alias
@@ -18,6 +14,7 @@ extend type Manuscript {
   coverLetter: String
 }
 
+# TODO: This should be part of submission not the manuscript model
 input ManuscriptInput {
   id: ID!
   suggestedSeniorEditors: [ID]
