@@ -8,8 +8,10 @@ import { H2 } from '@pubsweet/ui'
 import PropTypes from 'prop-types'
 import { Mutation } from 'react-apollo'
 import { Icon } from '@elifesciences/component-elife-ui/client/atoms'
-import ModalDialog from '@elifesciences/component-elife-ui/client/molecules/ModalDialog'
-import ModalHistoryState from '@elifesciences/component-elife-ui/client/molecules/ModalHistoryState'
+import {
+  ModalDialog,
+  ModalHistoryState,
+} from '@elifesciences/component-elife-ui/client/molecules'
 import media from '@elifesciences/component-elife-ui/client/global/layout/media'
 
 import { DELETE_MANUSCRIPT } from '../graphql/mutations'

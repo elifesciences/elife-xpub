@@ -1,7 +1,9 @@
 import React from 'react'
 import { H2, Button } from '@pubsweet/ui'
-import ModalDialog from '@elifesciences/component-elife-ui/client/molecules/ModalDialog'
-import ModalHistoryState from '@elifesciences/component-elife-ui/client/molecules/ModalHistoryState'
+import {
+  ModalDialog,
+  ModalHistoryState,
+} from '@elifesciences/component-elife-ui/client/molecules'
 
 const WizardSubmit = ({ setTouched, submitForm, validateForm }) => (
   <ModalHistoryState>

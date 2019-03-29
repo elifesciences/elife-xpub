@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import { th } from '@pubsweet/ui-toolkit'
 import { H2 } from '@pubsweet/ui'
 import { Paragraph } from '@elifesciences/component-elife-ui/client/atoms'
-import ModalDialog from '@elifesciences/component-elife-ui/client/molecules/ModalDialog'
+import { ModalDialog } from '@elifesciences/component-elife-ui/client/molecules'
 
 import {
   personNamePropType,

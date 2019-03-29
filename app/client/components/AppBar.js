@@ -8,7 +8,7 @@ import {
   TopBarContainer,
 } from '@elifesciences/component-elife-ui/client/atoms'
 import media from '@elifesciences/component-elife-ui/client/global/layout/media'
-import BurgerMenu from '@elifesciences/component-elife-ui/client/molecules/BurgerMenu'
+import { BurgerMenu } from '@elifesciences/component-elife-ui/client/molecules'
 import ProfileMenu from './ProfileMenu'
 
 export const AppBarLink = styled(NavLink)`
