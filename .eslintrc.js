@@ -3,13 +3,6 @@ module.exports = {
     es6: true,
     browser: true,
   },
-  settings: {
-    'import/resolver': {
-      webpack: {
-        config: __dirname + '/webpack/webpack.development.config.js',
-      },
-    },
-  },
   extends: ['pubsweet'],
   parser: 'babel-eslint',
   rules: {
