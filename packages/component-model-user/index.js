@@ -1,5 +1,5 @@
 const User = require('./entities/user')
-const resolvers = require('./entities/user/resolvers')
+const resolvers = require('./resolvers')
 
 module.exports = {
   model: User,

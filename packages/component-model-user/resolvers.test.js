@@ -1,5 +1,5 @@
 const { createTables } = require('@pubsweet/db-manager')
-const replaySetup = require('../../../../test/helpers/replay-setup')
+const replaySetup = require('../../test/helpers/replay-setup')
 const { Query } = require('./resolvers')
 
 const profileId = 'ewwboc7m'
