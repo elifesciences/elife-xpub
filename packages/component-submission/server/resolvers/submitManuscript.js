@@ -30,9 +30,6 @@ async function submitManuscript(_, { data }, { user, ip }) {
 
   manuscript.applyInput(manuscriptInput)
 
-  const notify = new Notification(config)
-  await notify.sendFinalSubmissionEmail(manuscript)
-
   const sourceFile = manuscript.getSource()
   if (!sourceFile) {
     throw new Error('Manuscript has no source file', {
@@ -54,8 +51,10 @@ async function submitManuscript(_, { data }, { user, ip }) {
   )
 
   await mecaExport(manuscript, S3Storage.getContent, ip)
-    .then(() => {
+    .then(async () => {
       logger.info(`Manuscript ${manuscript.id} successfully exported`)
+      const notify = new Notification(config)
+      await notify.sendFinalSubmissionEmail(manuscript)
       return Manuscript.updateStatus(
         manuscript.id,
         Manuscript.statuses.MECA_EXPORT_SUCCEEDED,
