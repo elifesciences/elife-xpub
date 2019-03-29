@@ -45,6 +45,7 @@ class Manuscript {
         fileData,
         fileSize,
         manuscriptId,
+        predictor,
       )
     } catch (error) {
       FilesHelper.endFileProgress(

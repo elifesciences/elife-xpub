@@ -6,6 +6,7 @@ const logger = require('@pubsweet/logger')
 const SemanticExtraction = require('@elifesciences/component-model-semantic-extraction')
 const ManuscriptModel = require('@elifesciences/component-model-manuscript')
 const FilesHelper = require('./files')
+const UploadPredictor = require('./upload-predictor')
 
 const getFilesHelper = scienceBeamApi => new FilesHelper(config, scienceBeamApi)
 
@@ -187,9 +188,10 @@ describe('FilesHelper', () => {
       const fileSize = 100
       const uploadedSize = 110
       const bufferStream = new stream.PassThrough()
+      const predictor = new UploadPredictor(fileSize)
       bufferStream.end(Buffer.alloc(uploadedSize))
       jest.spyOn(logger, 'warn').mockImplementationOnce(() => {})
-      await FilesHelper.uploadFileToServer(bufferStream, fileSize)
+      await FilesHelper.uploadFileToServer(bufferStream, fileSize, predictor)
       expect(logger.warn).toHaveBeenCalledWith(
         'Reported file size for manuscript is different than the actual file size',
       )

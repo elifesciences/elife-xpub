@@ -83,7 +83,7 @@ class FilesHelper {
     return clearInterval(progress)
   }
 
-  static async uploadFileToServer(stream, fileSize) {
+  static async uploadFileToServer(stream, fileSize, predictor) {
     return new Promise((resolve, reject) => {
       let uploadedSize = 0
       const chunks = []

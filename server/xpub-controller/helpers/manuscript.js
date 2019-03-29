@@ -29,7 +29,7 @@ class ManuscriptHelper {
     }
   }
 
-  async uploadManuscriptFile(fileData, fileSize, manuscriptId) {
+  async uploadManuscriptFile(fileData, fileSize, manuscriptId, predictor) {
     const { stream } = fileData
     let { fileEntity } = fileData
     const { id: fileId, filename, mimeType } = fileEntity
@@ -41,7 +41,11 @@ class ManuscriptHelper {
     logger.info(
       `Manuscript Upload fileContents::start ${filename} | ${manuscriptId}`,
     )
-    const fileContent = await FilesHelper.uploadFileToServer(stream, fileSize)
+    const fileContent = await FilesHelper.uploadFileToServer(
+      stream,
+      fileSize,
+      predictor,
+    )
 
     fileEntity = await FileModel.find(fileId)
     await fileEntity.updateStatus('UPLOADED')
