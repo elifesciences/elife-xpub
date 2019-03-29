@@ -5,6 +5,7 @@ extend type Mutation {
   removeSupportingFiles(id: ID!): Manuscript
   removeUploadedManuscript(id: ID!): Manuscript!
   submitManuscript(data: ManuscriptInput!): Manuscript!
+  savePage(url:String!, id:String!):Manuscript!
 }
 
 extend type Subscription {

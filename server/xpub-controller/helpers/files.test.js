@@ -5,6 +5,7 @@ const { createTables } = require('@pubsweet/db-manager')
 const logger = require('@pubsweet/logger')
 const SemanticExtraction = require('@elifesciences/component-model-semantic-extraction')
 const ManuscriptModel = require('@elifesciences/component-model-manuscript')
+  .model
 const FilesHelper = require('./files')
 
 const getFilesHelper = scienceBeamApi => new FilesHelper(config, scienceBeamApi)

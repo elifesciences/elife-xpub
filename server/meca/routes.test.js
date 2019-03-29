@@ -7,7 +7,7 @@ const bodyParser = require('body-parser')
 const supertest = require('supertest')
 const AuditLog = require('@elifesciences/component-model-audit-log')
 const User = require('@elifesciences/component-model-user')
-const Manuscript = require('@elifesciences/component-model-manuscript')
+const Manuscript = require('@elifesciences/component-model-manuscript').model
 const routes = require('./routes')
 
 const makeApp = () => {
