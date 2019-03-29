@@ -101,7 +101,7 @@ describe('Manuscripts', () => {
       })
       manuscript = await manuscript.save()
 
-      expect.assertions(3)
+      expect.assertions(4)
       expect(manuscript.files).toHaveLength(2)
       expect(manuscript.fileStatus).toBe('CHANGING')
       await expect(
@@ -115,6 +115,9 @@ describe('Manuscripts', () => {
           manuscriptId: manuscript.id,
         }),
       )
+      const NUM_EMAILS = 0
+      await waitforEmails(NUM_EMAILS)
+      expect(mailer.getMails()).toHaveLength(NUM_EMAILS)
     })
 
     it('sends a confirmation email to the submitter', async () => {
@@ -249,18 +252,19 @@ describe('Manuscripts', () => {
         manuscript.id = id
       })
 
-      it('sends email alert', async () => {
+      it('sends email alert on failure', async () => {
         await Mutation.submitManuscript(
           {},
           { data: manuscript },
           { user: profileId },
         )
-        const NUM_EMAILS = 2
+
+        const NUM_EMAILS = 1
         await waitforEmails(NUM_EMAILS)
         const allEmails = mailer.getMails()
 
         expect(allEmails).toHaveLength(NUM_EMAILS)
-        expect(allEmails[1]).toMatchObject({
+        expect(allEmails[0]).toMatchObject({
           to: 'test@example.com',
           subject: 'MECA export failed',
         })
