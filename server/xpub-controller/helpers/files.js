@@ -41,10 +41,10 @@ class FilesHelper {
     predictor,
     manuscriptId,
   ) {
-    const prediction = predictor.getPredictedTime()
-    if (manuscriptId.length === 36 && prediction > 0) {
+    if (manuscriptId.length === 36 && predictor.getPredictedTime() > 0) {
       return () => {
         const elapsed = Date.now() - startedTime
+        const prediction = predictor.getPredictedTime()
         let progress = parseInt((100 * elapsed) / 1000 / prediction, 10)
         // don't let the prediction complete the upload
         if (progress > 99) progress = 99
@@ -83,13 +83,16 @@ class FilesHelper {
     return clearInterval(progress)
   }
 
-  static async uploadFileToServer(stream, fileSize) {
+  static async uploadFileToServer(stream, fileSize, predictor) {
+    predictor.startSeconds(Date.now() / 1000)
     return new Promise((resolve, reject) => {
       let uploadedSize = 0
       const chunks = []
       stream.on('data', chunk => {
         uploadedSize += chunk.length
         chunks.push(chunk)
+        console.log('!!!')
+        predictor.updateSeconds(Date.now() / 1000, uploadedSize)
       })
       stream.on('error', reject)
       stream.on('end', () => {
