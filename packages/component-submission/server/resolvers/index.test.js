@@ -5,7 +5,7 @@ const fs = require('fs-extra')
 const { createTables } = require('@pubsweet/db-manager')
 const mailer = require('@pubsweet/component-send-email')
 const User = require('@elifesciences/component-model-user')
-const Manuscript = require('@elifesciences/component-model-manuscript')
+const Manuscript = require('@elifesciences/component-model-manuscript').model
 const { Query } = require('.')
 const { userData } = require('./index.test.data')
 

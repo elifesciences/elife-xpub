@@ -1,5 +1,6 @@
 const logger = require('@pubsweet/logger')
 const ManuscriptModel = require('@elifesciences/component-model-manuscript')
+  .model
 const { UploadPredictor, FilesHelper, ManuscriptHelper } = require('./helpers')
 
 class Manuscript {

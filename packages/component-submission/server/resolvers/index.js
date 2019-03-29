@@ -1,6 +1,6 @@
 const logger = require('@pubsweet/logger')
 const User = require('@elifesciences/component-model-user')
-const Manuscript = require('@elifesciences/component-model-manuscript')
+const Manuscript = require('@elifesciences/component-model-manuscript').model
 const elifeApi = require('@elifesciences/component-model-user/entities/user/helpers/elife-api')
 const {
   getPubsub,
