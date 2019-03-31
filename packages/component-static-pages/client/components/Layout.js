@@ -7,9 +7,10 @@ import { th } from '@pubsweet/ui-toolkit'
 
 import media from '@elifesciences/component-elife-ui/client/global/layout/media'
 import { NavigationDropdown } from '@elifesciences/component-elife-ui/client/atoms'
+import { ErrorBoundary } from '@elifesciences/component-elife-app/client'
+
 import SideNav from './SideNav'
 import ScrollToTop from './ScrollToTop'
-import ErrorBoundary from '../../../../app/client/components/ErrorBoundary'
 
 const TopNavContainer = styled(Box).attrs({ mx: -3 })`
   border-bottom: ${th('borderWidth')} ${th('borderStyle')} ${th('colorBorder')};

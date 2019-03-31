@@ -21,11 +21,11 @@ import {
 import { CookieNotice } from '@elifesciences/component-elife-ui/client/global'
 
 import {
+  ErrorBoundary,
   ErrorPage,
   TrackedRoute,
 } from '@elifesciences/component-elife-app/client'
 import Layout from './components/Layout'
-import ErrorBoundary from './components/ErrorBoundary'
 import AuthenticatedComponent from './components/AuthenticatedComponent'
 
 const Routes = () => (
