@@ -1,7 +1,10 @@
 import React from 'react'
 import { Switch, Redirect } from 'react-router-dom'
 import { Subscription } from 'react-apollo'
-import { ErrorPage } from '@elifesciences/component-elife-app/client'
+import {
+  ErrorPage,
+  TrackedRoute,
+} from '@elifesciences/component-elife-app/client'
 
 import SubmissionOperations from '../../components/SubmissionOperations'
 import AuthorPageContainer from '../../components/steps/Author'
@@ -16,7 +19,6 @@ import { schema as editorsPageSchema } from '../../components/steps/Editors/sche
 import { schema as disclosurePageSchema } from '../../components/steps/Disclosure/schema'
 import WizardStep from '../../components/WizardStep'
 import { ON_UPLOAD_PROGRESS } from '../../components/operations'
-import TrackedRoute from '../../../../../app/client/trackedRoute'
 
 const SubmissionWizard = ({ match, history }) => (
   <SubmissionOperations manuscriptId={match.params.id}>

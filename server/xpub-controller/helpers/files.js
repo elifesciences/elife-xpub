@@ -91,7 +91,6 @@ class FilesHelper {
       stream.on('data', chunk => {
         uploadedSize += chunk.length
         chunks.push(chunk)
-        console.log('!!!')
         predictor.updateSeconds(Date.now() / 1000, uploadedSize)
       })
       stream.on('error', reject)

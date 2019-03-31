@@ -20,11 +20,13 @@ import {
 } from '@elifesciences/component-login/client'
 import { CookieNotice } from '@elifesciences/component-elife-ui/client/global'
 
-import { ErrorPage } from '@elifesciences/component-elife-app/client'
+import {
+  ErrorPage,
+  TrackedRoute,
+} from '@elifesciences/component-elife-app/client'
 import Layout from './components/Layout'
 import ErrorBoundary from './components/ErrorBoundary'
 import AuthenticatedComponent from './components/AuthenticatedComponent'
-import TrackedRoute from './trackedRoute'
 
 const Routes = () => (
   <React.Fragment>
