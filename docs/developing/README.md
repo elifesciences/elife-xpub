@@ -1,6 +1,7 @@
 # Developer's Documentation
 
 - [Quick Start](quick-start.md)
+- [Application Startup](app-startup.md)
 - [Architecture](architecture.md)
 - [Styleguide](styleguide.md)
 - [PubSweet Components](pubsweet.md)
