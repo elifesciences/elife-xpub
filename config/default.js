@@ -20,7 +20,6 @@ module.exports = {
       '@elifesciences/component-model-user',
       '@elifesciences/component-model',
       '@elifesciences/xpub-server',
-      '@elifesciences/xpub-controller',
       '@elifesciences/component-dashboard',
       '@elifesciences/component-submission',
       '@pubsweet/component-send-email',
