@@ -10,7 +10,7 @@ module.exports = [
     name: 'app',
     watch: true,
     target: 'web',
-    context: path.join(__dirname, '..', 'app', 'client'),
+    context: path.join(__dirname, '..', 'app'),
     entry: {
       app: [
         'react-hot-loader/patch',
@@ -40,7 +40,7 @@ module.exports = [
         [config.authsome.mode]: config.authsome.mode,
         [config.validations]: config.validations,
       }),
-      new CopyWebpackPlugin([{ from: '../assets' }]),
+      new CopyWebpackPlugin([{ from: './assets' }]),
     ],
     node: {
       fs: 'empty',
