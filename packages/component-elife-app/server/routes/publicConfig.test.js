@@ -19,7 +19,7 @@ describe('Client config handler', () => {
         secret: 'password',
       },
     }))
-    routes = require('./routes')
+    routes = require('.')
   })
 
   it('returns javascript', async () => {
