@@ -1,0 +1,27 @@
+GET /people/e8d8b1dd
+accept-encoding: gzip, deflate
+
+HTTP/1.1 200 OK
+server: nginx
+content-type: application/vnd.elife.person+json;version=1
+cache-control: max-age=300, public, stale-if-error=86400, stale-while-revalidate=300
+etag: "b690ae5cf07a796c295947148da20bdb"
+x-ua-compatible: IE=edge
+content-language: en
+x-content-type-options: nosniff
+x-frame-options: SAMEORIGIN
+access-control-allow-origin: *
+x-kong-upstream-latency: 60
+x-kong-proxy-latency: 0
+via: kong/0.9.5, 1.1 varnish, 1.1 varnish
+accept-ranges: bytes
+date: Tue, 14 Aug 2018 15:59:47 GMT
+age: 0
+connection: close
+x-served-by: cache-dca17731-DCA, cache-lcy19230-LCY
+x-cache: MISS, MISS
+x-cache-hits: 0, 0
+x-timer: S1534262387.178626,VS0,VE142
+vary: Accept, Authorization, Accept-Encoding
+
+{"id":"e8d8b1dd","type":{"id":"reviewing-editor","label":"Reviewing Editor"},"name":{"preferred":"Abby Dernburg","index":"Dernburg, Abby"},"research":{"focuses":["meiosis","synapsis","meiotic recombination","chromosome dynamics"],"organisms":["\u003Ci\u003EC. elegans\u003C\/i\u003E"],"expertises":[{"id":"cell-biology","name":"Cell Biology"},{"id":"chromosomes-gene-expression","name":"Chromosomes and Gene Expression"}]},"affiliations":[{"name":["University of California, Berkeley"],"address":{"formatted":["United States"],"components":{"country":"United States"}}}]}

@@ -22,7 +22,7 @@ const sampleManuscript = require('./article.test.data')
 
 const existingNames = [{ id: 1, first: 'J. Edward', last: 'Reviewer' }]
 
-Replay.fixtures = `../test/http-mocks`
+Replay.fixtures = `${__dirname}/../test/http-mocks`
 
 describe('Article XML generator', () => {
   beforeAll(async () => {

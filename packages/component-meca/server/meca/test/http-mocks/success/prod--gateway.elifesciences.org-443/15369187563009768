@@ -1,0 +1,27 @@
+GET /people/5164e35c
+accept-encoding: gzip, deflate
+
+HTTP/1.1 200 OK
+server: nginx
+content-type: application/vnd.elife.person+json;version=1
+cache-control: max-age=300, public, stale-if-error=86400, stale-while-revalidate=300
+etag: "30954024dbc057bc4d332bdbf12f45d0"
+x-ua-compatible: IE=edge
+content-language: en
+x-content-type-options: nosniff
+x-frame-options: SAMEORIGIN
+access-control-allow-origin: *
+x-kong-upstream-latency: 131
+x-kong-proxy-latency: 0
+via: kong/0.9.5, 1.1 varnish, 1.1 varnish
+accept-ranges: bytes
+date: Fri, 14 Sep 2018 09:52:36 GMT
+age: 0
+connection: close
+x-served-by: cache-dca17733-DCA, cache-lcy19232-LCY
+x-cache: MISS, MISS
+x-cache-hits: 0, 0
+x-timer: S1536918756.087246,VS0,VE215
+vary: Accept, Authorization, Accept-Encoding
+
+{"id":"5164e35c","type":{"id":"reviewing-editor","label":"Reviewing Editor"},"name":{"preferred":"Alexander Borst","index":"Borst, Alexander"},"research":{"focuses":["visual processing","systems neuroscience","computational neuroscience"],"organisms":["Drosophila"],"expertises":[{"id":"computational-systems-biology","name":"Computational and Systems Biology"},{"id":"neuroscience","name":"Neuroscience"}]},"affiliations":[{"name":["Max Planck Institute of Neurobiology"],"address":{"formatted":["Germany"],"components":{"country":"Germany"}}}]}
