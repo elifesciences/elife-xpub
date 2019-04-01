@@ -1,6 +1,6 @@
 const logger = require('@pubsweet/logger')
-const User = require('@elifesciences/component-model-user')
-const Manuscript = require('@elifesciences/component-model-manuscript')
+const User = require('@elifesciences/component-model-user').model
+const Manuscript = require('@elifesciences/component-model-manuscript').model
 const elifeApi = require('@elifesciences/component-model-user/entities/user/helpers/elife-api')
 const {
   getPubsub,
@@ -21,6 +21,9 @@ const resolvers = {
     async manuscript(_, { id }, { user }) {
       const userUuid = await User.getUuidForProfile(user)
       return Manuscript.find(id, userUuid)
+    },
+    async editors(_, { role }) {
+      return elifeApi.people(role)
     },
   },
 

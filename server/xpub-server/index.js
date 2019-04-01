@@ -14,7 +14,6 @@ const elifeTypeDefs = fs.readFileSync(
   'utf8',
 )
 const entityTypeDefs = [
-  fs.readFileSync(`${__dirname}/entities/manuscript/typeDefs.graphqls`, 'utf8'),
   fs.readFileSync(`${__dirname}/entities/user/typeDefs.graphqls`, 'utf8'),
 ]
 const typeDefs = `

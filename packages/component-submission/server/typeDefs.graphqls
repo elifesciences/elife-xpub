@@ -1,3 +1,7 @@
+extend type Query {
+  editors(role: String!): [EditorAlias]
+}
+
 extend type Mutation {
   uploadManuscript(id: ID!, file: Upload!, fileSize: Int!): Manuscript!
   updateManuscript(data: ManuscriptInput!): Manuscript!
@@ -5,6 +9,7 @@ extend type Mutation {
   removeSupportingFiles(id: ID!): Manuscript
   removeUploadedManuscript(id: ID!): Manuscript!
   submitManuscript(data: ManuscriptInput!): Manuscript!
+  savePage(url:String!, id:String!):Manuscript!
 }
 
 extend type Subscription {

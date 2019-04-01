@@ -1,18 +1,7 @@
 const jwt = require('jsonwebtoken')
 const config = require('config')
-const User = require('@elifesciences/component-model-user')
-const elifeApi = require('@elifesciences/component-model-user/entities/user/helpers/elife-api')
 
 const resolvers = {
-  Query: {
-    async currentUser(_, vars, ctx) {
-      if (!ctx.user) return null
-      return User.findOrCreate(ctx.user)
-    },
-    async editors(_, { role }) {
-      return elifeApi.people(role)
-    },
-  },
   Mutation: {
     async exchangeJournalToken(_, { token }) {
       const secret = config.get('pubsweet-server.secret')

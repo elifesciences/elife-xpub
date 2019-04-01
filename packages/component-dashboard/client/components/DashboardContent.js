@@ -10,7 +10,7 @@ import {
   FooterText,
 } from '@elifesciences/component-elife-ui/client/atoms'
 import media from '@elifesciences/component-elife-ui/client/global/layout/media'
-import Tabs from '@elifesciences/component-elife-ui/client/molecules/Tabs'
+import { Tabs } from '@elifesciences/component-elife-ui/client/molecules'
 
 const MobileOnlySubmissionsContainer = styled(Box).attrs({ mx: -3 })`
   border-bottom: ${th('borderWidth')} ${th('borderStyle')} ${th('colorBorder')};

@@ -1,5 +1,5 @@
-const User = require('@elifesciences/component-model-user')
-const Manuscript = require('@elifesciences/component-model-manuscript')
+const User = require('@elifesciences/component-model-user').model
+const Manuscript = require('@elifesciences/component-model-manuscript').model
 const logger = require('@pubsweet/logger')
 
 async function removeUploadedManuscript(_, vars, { user }) {

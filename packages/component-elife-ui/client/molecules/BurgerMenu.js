@@ -10,7 +10,7 @@ import {
   CrossIconButton,
 } from '@elifesciences/component-elife-ui/client/atoms'
 import media from '@elifesciences/component-elife-ui/client/global/layout/media'
-import ModalOverlay from '@elifesciences/component-elife-ui/client/molecules/ModalOverlay'
+import { ModalOverlay } from '@elifesciences/component-elife-ui/client/molecules'
 
 const MenuPanel = styled.div`
     max-width: 240px;

@@ -1,5 +1,6 @@
 const logger = require('@pubsweet/logger')
 const ManuscriptModel = require('@elifesciences/component-model-manuscript')
+  .model
 const { UploadPredictor, FilesHelper, ManuscriptHelper } = require('./helpers')
 
 class Manuscript {
@@ -45,6 +46,7 @@ class Manuscript {
         fileData,
         fileSize,
         manuscriptId,
+        predictor,
       )
     } catch (error) {
       FilesHelper.endFileProgress(
