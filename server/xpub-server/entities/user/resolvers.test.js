@@ -1,37 +1,13 @@
 const jwt = require('jsonwebtoken')
 const config = require('config')
 const { createTables } = require('@pubsweet/db-manager')
-const { Query, Mutation } = require('./resolvers')
+const { Mutation } = require('./resolvers')
 const replaySetup = require('../../../../test/helpers/replay-setup')
 
 describe('User', () => {
   beforeEach(async () => {
     await createTables(true)
     replaySetup('success')
-  })
-
-  describe('editors', () => {
-    it('returns a list of senior editors', async () => {
-      const result = await Query.editors({}, { role: 'senior-editor' })
-      expect(result.length).toBeGreaterThanOrEqual(40)
-      expect(result[0]).toEqual({
-        id: '8d7e57b3',
-        aff: undefined,
-        name: 'Richard Aldrich',
-        focuses: [
-          'ion channels',
-          'calcium binding proteins',
-          'membrane transport',
-          'allostery and cooperativity',
-          'cellular neurophysiology',
-          'biochemical neuroscience',
-        ],
-        expertises: [
-          'Structural Biology and Molecular Biophysics',
-          'Neuroscience',
-        ],
-      })
-    })
   })
 
   describe('exchangeJournalToken', () => {

@@ -1,7 +1,3 @@
-extend type Query {
-  editors(role: String!): [EditorAlias]
-}
-
 extend type Mutation {
   exchangeJournalToken(token: String): String
 }

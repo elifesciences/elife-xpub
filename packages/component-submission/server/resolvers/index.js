@@ -22,6 +22,9 @@ const resolvers = {
       const userUuid = await User.getUuidForProfile(user)
       return Manuscript.find(id, userUuid)
     },
+    async editors(_, { role }) {
+      return elifeApi.people(role)
+    },
   },
 
   Mutation: {
