@@ -2,8 +2,7 @@
 
 ## Dockerfile(s)
 
-In general the actual Dockerfiles don't specify the way in which the application
-starts (see below).
+Dockerfiles don't specify the way in which the application starts (see below).
 
 ```
 ~/dev/elife-xpub $ grep CMD Dockerfile*
@@ -16,9 +15,9 @@ explcitly with `RUN [ "npx", "pubsweet", "build"]`
 
 ## Docker Compose
 
-In general docker-compose is used as the way to start the application.
+The `docker-compose` files are used as the way to start the application.
 
-Again the main docker-compose.yml file is meant for developers and so starts all the
+Developers are meant to use the main docker-compose.yml file and so starts all the
 services xpub depends on and then starts the app (see below)
 
 ```
