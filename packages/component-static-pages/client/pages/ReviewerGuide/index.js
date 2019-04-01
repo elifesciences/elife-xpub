@@ -1,5 +1,4 @@
 import React from 'react'
-
 import Layout from '../../components/Layout'
 import ReviewProcess from './ReviewProcess'
 import ReviewingPolicies from './ReviewingPolicies'

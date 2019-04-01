@@ -9,7 +9,7 @@ module.exports = [
   {
     name: 'app',
     target: 'web',
-    context: path.join(__dirname, '..', 'app', 'client'),
+    context: path.join(__dirname, '..', 'app'),
     entry: {
       app: ['babel-polyfill', './index'],
     },
@@ -32,7 +32,7 @@ module.exports = [
         [config.authsome.mode]: config.authsome.mode,
         [config.validations]: config.validations,
       }),
-      new CopyWebpackPlugin([{ from: '../assets' }]),
+      new CopyWebpackPlugin([{ from: './assets' }]),
     ],
     node: {
       fs: 'empty',

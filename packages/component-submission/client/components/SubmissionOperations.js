@@ -4,8 +4,8 @@ import React from 'react'
 import omitDeep from 'omit-deep-lodash'
 import { ALL_MANUSCRIPTS } from '@elifesciences/component-dashboard/client/graphql/queries'
 import { Loading } from '@elifesciences/component-elife-ui/client/atoms'
+import { ErrorPage } from '@elifesciences/component-elife-app/client'
 
-// TODO: This should not be importing from the other component
 import {
   GET_MANUSCRIPT,
   UPDATE_MANUSCRIPT,
@@ -13,7 +13,6 @@ import {
 } from './operations'
 import CosubmissionModifier from './formDataModifiers/CosubmissionModifier'
 import EditorSuggestionsModifier from './formDataModifiers/EditorSuggestionsModifier'
-import ErrorPage from '../../../../app/client/pages/ErrorPage'
 
 const dataModifiers = [
   new CosubmissionModifier(),
