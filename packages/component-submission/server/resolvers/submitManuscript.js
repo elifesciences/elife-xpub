@@ -8,7 +8,7 @@ const Manuscript = require('@elifesciences/component-model-manuscript').model
 const { S3Storage } = require('@elifesciences/xpub-client')
 const manuscriptInputSchema = require('../helpers/manuscriptInputValidationSchema')
 
-const Notification = require('../services')
+const { Notification } = require('../services')
 
 async function submitManuscript(_, { data }, { user, ip }) {
   const userUuid = await User.getUuidForProfile(user)
