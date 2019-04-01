@@ -9,7 +9,7 @@ module.exports = {
   validations: path.resolve(__dirname, 'non-serializable/validations.js'),
   pubsweet: {
     components: [
-      '@elifesciences/xpub-meca-export',
+      '@elifesciences/component-meca',
       '@elifesciences/component-elife-app',
       '@elifesciences/component-model-semantic-extraction',
       '@elifesciences/component-model-manuscript',

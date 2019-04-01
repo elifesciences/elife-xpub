@@ -9,7 +9,7 @@ const rootDir = process.cwd()
 // Output from " find | grep http-mocks$ "
 const pathHttpMocks = [
   path.join(rootDir, 'test/http-mocks'),
-  path.join(rootDir, 'server/meca/test/http-mocks'),
+  path.join(rootDir, 'packages/component-meca/server/meca/test/http-mocks'),
 ]
 
 const md5 = s =>

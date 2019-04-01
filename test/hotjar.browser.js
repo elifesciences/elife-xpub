@@ -1,6 +1,6 @@
 import { Selector } from 'testcafe'
 import config from 'config'
-import startSshServer from '@elifesciences/xpub-meca-export/test/mock-sftp-server'
+import { startSshServer } from '@elifesciences/component-meca/'
 import {
   editors,
   profile,

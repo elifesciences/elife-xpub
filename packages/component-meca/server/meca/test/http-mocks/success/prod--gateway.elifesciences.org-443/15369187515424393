@@ -1,0 +1,27 @@
+GET /people/bfd2c042
+accept-encoding: gzip, deflate
+
+HTTP/1.1 200 OK
+server: nginx
+content-type: application/vnd.elife.person+json;version=1
+cache-control: max-age=300, public, stale-if-error=86400, stale-while-revalidate=300
+etag: "7def133d316fc418dfc9b7f93de686a7"
+x-ua-compatible: IE=edge
+content-language: en
+x-content-type-options: nosniff
+x-frame-options: SAMEORIGIN
+access-control-allow-origin: *
+x-kong-upstream-latency: 191
+x-kong-proxy-latency: 0
+via: kong/0.9.5, 1.1 varnish, 1.1 varnish
+accept-ranges: bytes
+date: Fri, 14 Sep 2018 09:52:31 GMT
+age: 0
+connection: close
+x-served-by: cache-dca17737-DCA, cache-lcy19243-LCY
+x-cache: MISS, MISS
+x-cache-hits: 0, 0
+x-timer: S1536918751.217117,VS0,VE321
+vary: Accept, Authorization, Accept-Encoding
+
+{"id":"bfd2c042","type":{"id":"senior-editor","label":"Senior Editor"},"name":{"preferred":"Gary Westbrook","index":"Westbrook, Gary"},"image":{"uri":"https:\/\/iiif.elifesciences.org\/journal-cms\/person%2F2018-01%2Fa06w3888.jpg","alt":"","source":{"mediaType":"image\/jpeg","uri":"https:\/\/iiif.elifesciences.org\/journal-cms\/person%2F2018-01%2Fa06w3888.jpg\/full\/full\/0\/default.jpg","filename":"a06w3888.jpg"},"size":{"width":3600,"height":2400},"focalPoint":{"x":50,"y":50}},"profile":[{"text":"Gary Westbrook is a Senior Scientist and Co-Director of the Vollum Institute and Rocky and Julie Dixon Professor of Neurology at Oregon Health and Science University. Dr Westbrook is a member of the National Academy of Medicine (formerly Institute of Medicine), the American Academy of Arts and Sciences, and past editor-in-chief of the Journal of Neuroscience. He has received Javits and Merit awards from NIH for his research as well as an International Cooperation Award from the Max Planck Society. Dr Westbrook received his medical training and did graduate study in Biomedical Engineering at Case Western Reserve University, followed by residencies in Internal Medicine and Neurology, and basic neuroscience research at the National Institutes of Health in Bethesda. Earlier work in his lab was mostly directed at the level of receptors, particularly N-methyl-D-aspartate (NMDA) receptors, and the function of single synapses. The emphasis has now largely shifted to studies of small networks (microcircuits) in the hippocampus and olfactory system. Dr Westbrook maintains interests in clinical neurology, particularly epilepsy, as well as graduate research training \u2013 he currently serves as the director of the Neuroscience Graduate Program at Vollum\/OHSU.","type":"paragraph"}],"research":{"focuses":["clinical neurology","synaptic transmission","olfactory system","hippocampus","neuroscience","brain microcircuits","neurological diseases"],"expertises":[{"id":"neuroscience","name":"Neuroscience"}]},"competingInterests":"Gary Westbrook is employed by Oregon Health and Science University. He receives research and training funding from the National Institutes of Health and the Ellison Medical Foundation. He is a member of the National Academy of Medicine (formerly Institute of Medicine) and the American Academy of Arts and Sciences. He serves on Scientific Advisory Boards for Max Planck Institutes in G\u00f6ttingen (MPIEM) and Florida (MPFI), the Myelin Repair Foundation, and on study sections for the National Institutes of Health. He is currently a member of editorial boards for Physiological Reviews and Philosophical Transactions of the Royal Society B."}

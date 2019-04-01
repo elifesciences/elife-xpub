@@ -1,0 +1,27 @@
+GET /people/f9ef0420
+accept-encoding: gzip, deflate
+
+HTTP/1.1 200 OK
+server: nginx
+content-type: application/vnd.elife.person+json;version=1
+cache-control: max-age=300, public, stale-if-error=86400, stale-while-revalidate=300
+etag: "589a9d102caeb9dbbb4938dd16e9d520"
+x-ua-compatible: IE=edge
+content-language: en
+x-content-type-options: nosniff
+x-frame-options: SAMEORIGIN
+access-control-allow-origin: *
+x-kong-upstream-latency: 168
+x-kong-proxy-latency: 0
+via: kong/0.9.5, 1.1 varnish, 1.1 varnish
+accept-ranges: bytes
+date: Fri, 14 Sep 2018 09:52:31 GMT
+age: 0
+connection: close
+x-served-by: cache-dca17724-DCA, cache-lcy19245-LCY
+x-cache: MISS, MISS
+x-cache-hits: 0, 0
+x-timer: S1536918751.203654,VS0,VE251
+vary: Accept, Authorization, Accept-Encoding
+
+{"id":"f9ef0420","type":{"id":"senior-editor","label":"Senior Editor"},"name":{"preferred":"Charles Sawyers","index":"Sawyers, Charles"},"image":{"uri":"https:\/\/iiif.elifesciences.org\/journal-cms\/person%2F2012-03%2Fsawyers_0_crop.jpg","alt":"Charles Sawyers","source":{"mediaType":"image\/jpeg","uri":"https:\/\/iiif.elifesciences.org\/journal-cms\/person%2F2012-03%2Fsawyers_0_crop.jpg\/full\/full\/0\/default.jpg","filename":"sawyers_0_crop.jpg"},"size":{"width":1543,"height":1338}},"profile":[{"text":"Charles Sawyers is an Investigator of the Howard Hughes Medical Institute and the Director of the Human Oncology and Pathogenesis Program at Memorial Sloan-Kettering Cancer Center. His studies of BCR-ABL tyrosine kinase function in chronic myeloid leukemia, in collaboration with Brian Druker and Novartis, led to the development of the kinase inhibitor imatinib as primary therapy for CML. This was followed by his discovery that BCR-ABL kinase domain mutations confer imatinib resistance, and development of the second generation Abl kinase inhibitor dasatinib, in collaboration with Bristol Myers Squibb. Sawyers\u0027 current work in prostate cancer resulted in the novel antiandrogen enzalutamide (MDV3100), discovered in collaboration with University of California, Los Angeles chemist Michael Jung, which received FDA approval in 2012. Sawyers is a member of the National Academy of Sciences and the Institute of Medicine and co-recipient of the 2009 Lasker~DeBakey Clinical Medical Research Award.","type":"paragraph"}],"research":{"focuses":["oncology and translational medicine","oncology","translational medicine"],"expertises":[{"id":"cancer-biology","name":"Cancer Biology"},{"id":"human-biology-medicine","name":"Human Biology and Medicine"}]},"competingInterests":"Charles Sawyers receives research funding from the Howard Hughes Medical Institute, the National Cancer Institute, the Starr Cancer Consortium, Stand Up to Cancer, and the Prostate Cancer Foundation. He is President Elect of the American Association of Cancer Research and will serve as President from 2013\u201314. He is a Councilor of the American Association of Physicians (until 2017) and serves on the editorial boards of Cell and Cancer Cell, and as a scientific advisor to Agios, Aragon, Aveo, Housey Pharmaceuticals, Merck, Nextech, Pfizer, and Tracon."}

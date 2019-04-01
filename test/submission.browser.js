@@ -2,7 +2,7 @@ import { ClientFunction, Selector } from 'testcafe'
 import config from 'config'
 import assert from 'assert'
 import logger from '@pubsweet/logger'
-import startSshServer from '@elifesciences/xpub-meca-export/test/mock-sftp-server'
+import { startSshServer } from '@elifesciences/component-meca/'
 import {
   author,
   dashboard,

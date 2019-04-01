@@ -1,5 +1,5 @@
 jest.mock('@pubsweet/logger')
-jest.mock('@elifesciences/xpub-meca-export', () => ({
+jest.mock('@elifesciences/component-meca', () => ({
   mecaExport: jest.fn(() => Promise.resolve()),
 }))
 
@@ -7,7 +7,7 @@ const lodash = require('lodash')
 const logger = require('@pubsweet/logger')
 const { createTables } = require('@pubsweet/db-manager')
 const mailer = require('@pubsweet/component-send-email')
-const { mecaExport } = require('@elifesciences/xpub-meca-export')
+const { mecaExport } = require('@elifesciences/component-meca')
 const User = require('@elifesciences/component-model-user').model
 const Manuscript = require('@elifesciences/component-model-manuscript').model
 const { S3Storage } = require('@elifesciences/xpub-client')
