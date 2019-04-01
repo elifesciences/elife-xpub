@@ -16,16 +16,6 @@ const resolvers = {
       })
     },
   },
-  Identity: {
-    __resolveType(identity) {
-      switch (identity.type) {
-        case 'elife':
-          return 'ElifeIdentity'
-        default:
-          return null
-      }
-    },
-  },
 }
 
 module.exports = resolvers
