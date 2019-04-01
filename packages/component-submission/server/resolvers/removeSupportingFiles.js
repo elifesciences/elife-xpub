@@ -1,6 +1,7 @@
-const { SupportingFiles } = require('@elifesciences/xpub-controller')
 const { S3Storage } = require('@elifesciences/xpub-client')
 const User = require('@elifesciences/component-model-user').model
+
+const { SupportingFiles } = require('../use-cases')
 
 async function removeSupportingFiles(_, { id }, { user }) {
   const userUuid = await User.getUuidForProfile(user)

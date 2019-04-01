@@ -1,7 +1,8 @@
 const User = require('@elifesciences/component-model-user').model
 const Manuscript = require('@elifesciences/component-model-manuscript').model
-const { SupportingFiles } = require('@elifesciences/xpub-controller')
 const { S3Storage } = require('@elifesciences/xpub-client')
+
+const { SupportingFiles } = require('../use-cases')
 
 async function uploadSupportingFile(_, { file, id }, { user }) {
   const userUuid = await User.getUuidForProfile(user)
