@@ -18,6 +18,7 @@ describe('Client config handler', () => {
       privateConfig: {
         secret: 'password',
       },
+      get: jest.fn(),
     }))
     routes = require('.')
   })

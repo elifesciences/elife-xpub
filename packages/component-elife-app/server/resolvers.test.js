@@ -2,9 +2,9 @@ const jwt = require('jsonwebtoken')
 const config = require('config')
 const { createTables } = require('@pubsweet/db-manager')
 const { Mutation } = require('./resolvers')
-const replaySetup = require('../../../../test/helpers/replay-setup')
+const replaySetup = require('../../../test/helpers/replay-setup')
 
-describe('User', () => {
+describe('component-elife-app resolvers', () => {
   beforeEach(async () => {
     await createTables(true)
     replaySetup('success')
