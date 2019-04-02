@@ -1,3 +1,80 @@
+# -- BASE MODEL START --
+type Manuscript implements Object {
+  id: ID!
+  created: DateTime!
+  updated: DateTime
+  manuscriptVersions: [ManuscriptVersion]
+  files: [File]
+  fileStatus: String
+  teams: [Team]
+  reviews: [Review]
+  status: String
+  lastStepVisited: String
+  decision: String
+  meta: ManuscriptMeta
+}
+
+type ManuscriptVersion implements Object {
+  id: ID!
+  created: DateTime!
+  updated: DateTime
+  files: [File]
+  teams: [Team]
+  reviews: [Review]
+  status: String
+  lastStepVisited: String
+  decision: String
+  meta: ManuscriptMeta
+}
+
+type ManuscriptMeta {
+  title: String!
+  articleType: String
+  articleIds: [ArticleId]
+  abstract: String
+  subjects: [String]
+  history: [MetaDate]
+  publicationDates: [MetaDate]
+  notes: [Note]
+}
+
+type ArticleId {
+  pubIdType: String
+  id: String
+}
+
+type MetaDate {
+  type: String
+  date: DateTime
+}
+
+type Note implements Object {
+  id: ID!
+  created: DateTime!
+  updated: DateTime
+  notesType: String
+  content: String
+}
+
+# This should be moved to the component-review package when it's created.
+type Review implements Object {
+  id: ID!
+  created: DateTime!
+  updated: DateTime
+  comments: [Comment]
+  recommendation: String
+  open: Boolean
+  user: User
+}
+
+type Comment {
+  type: String
+  content: String
+  files: [File]
+}
+
+# -- BASE MODEL END --
+
 extend type Query {
   manuscript(id: ID!): Manuscript!
 }
@@ -12,6 +89,15 @@ extend type Manuscript {
   opposedReviewingEditorsReason: String
   opposedReviewersReason: String
   coverLetter: String
+
+  previouslyDiscussed: String
+  previouslySubmitted: [String!]
+  cosubmission: [String!]
+  submitterSignature: String
+  disclosureConsent: Boolean
+  relatedManuscripts: [RelatedManuscript!]
+  qcIssues: [QCIssue!]
+  assignees(role: String!): [Assignee]
 }
 
 # TODO: This should be part of submission not the manuscript model
@@ -44,3 +130,54 @@ input ManuscriptMetaInput {
 
 # temporary solution awaiting more clarity on team member metadata in shared data model
 union Assignee = EditorAlias | ReviewerAlias | AuthorAlias
+
+type RelatedManuscript {
+  connectionType: SubmissionRelationship!
+  submissionIdentifier: String!
+  title: String!
+}
+
+enum SubmissionRelationship {
+  COSUBMISSION
+  RESUBMISSION
+  ADVANCE
+  SCIENTIFICCORRESPONDENCE
+}
+
+type QCIssue {
+  id: ID!
+  created: DateTime!
+  updated: DateTime
+  # To be defined
+  #location: QCIssueLocation!
+  comments: [QCComment!]!
+  resolved: Boolean!
+}
+
+type QCComment {
+  id: ID!
+  created: DateTime!
+  updated: DateTime!
+  user: User!
+  text: String!
+}
+
+type AuthorMetadata {
+  rank: Int!
+  # to be defined
+  #contributions: AuthorMetadataContribution!
+  corresponding: Boolean!
+  conflictOfInterest: String
+}
+
+type ReviewerMetadata {
+  rank: Int!
+  # Accounts for instances where a post-doc has helped review
+  coRelationship: [TeamMember]
+  conflictOfInterest: String
+  revealIdentity: Boolean!
+}
+
+type EditorMetadata {
+  elifePersonId: ID
+}

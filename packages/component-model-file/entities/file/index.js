@@ -1,5 +1,5 @@
 const BaseModel = require('@pubsweet/base-model')
-const AuditLog = require('@elifesciences/component-model-audit-log')
+const AuditLog = require('@elifesciences/component-model-audit-log').model
 
 class File extends BaseModel {
   static get tableName() {

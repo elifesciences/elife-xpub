@@ -1,0 +1,21 @@
+# -- BASE MODEL START --
+type File implements Object {
+  id: ID!
+  created: DateTime!
+  updated: DateTime
+  type: String
+  label: String
+  filename: String
+  url: String
+  mimeType: String
+  size: Int
+}
+
+# -- BASE MODEL END --
+
+extend type File {
+  # Refers to changes to individual files
+  lastChangeDate: DateTime!
+  lastChangeUser: User!
+  status: String!
+}

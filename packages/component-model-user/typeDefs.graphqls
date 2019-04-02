@@ -1,0 +1,32 @@
+# -- BASE MODEL START --
+extend type User {
+  created: DateTime!
+  updated: DateTime
+  identities: [Identity]
+  defaultIdentity: String
+}
+
+# Todo move ElifeIdentity to elife.graphqls
+union Identity = Local | External | ElifeIdentity
+
+type Local {
+  name: Name
+  email: Email
+  aff: String
+}
+
+type External {
+  identifier: String
+  email: Email
+  aff: String
+}
+
+type Name {
+  surname: String
+  givenNames: String
+  title: String
+}
+
+scalar Email
+
+# -- BASE MODEL END --
