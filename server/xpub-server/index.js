@@ -1,7 +1,7 @@
 const os = require('os')
 const fs = require('fs')
 const logger = require('@pubsweet/logger')
-const cleanup = require('./cleanup')
+const cleanup = require('@elifesciences/component-elife-app/server/cleanup')
 
 // concatenate schemas
 const xpubTypeDefs = fs.readFileSync(
@@ -18,10 +18,6 @@ const typeDefs = `
   ${elifeTypeDefs}
 `
 
-const registerRoutes = app => {
-  require('./routes')(app)
-}
-
 const appMessage = action =>
   `${action} Application: ${os.hostname()}, PID: ${process.pid}`
 
@@ -36,7 +32,6 @@ logger.info(appMessage('Starting'))
 const cleanupHandler = cleanup.Cleanup(process, logger, stopServer)
 
 module.exports = {
-  backend: () => registerRoutes,
   typeDefs,
   migrationsPath: `./schema/migrations`,
 }

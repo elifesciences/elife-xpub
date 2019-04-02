@@ -11,6 +11,9 @@ describe('Client config handler', () => {
 
   beforeEach(() => {
     jest.mock('config', () => ({
+      aws: {
+        credentials: '',
+      },
       publicConfig: {
         isPublic: true,
         key: 'value',
