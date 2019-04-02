@@ -3,7 +3,7 @@ jest.mock('@elifesciences/component-elife-app/server/health')
 
 const express = require('express')
 const supertest = require('supertest')
-const health = require('@elifesciences/component-elife-app/server/health')
+const health = require('../health')
 
 describe('ping route test', () => {
   let routes

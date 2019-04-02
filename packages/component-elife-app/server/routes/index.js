@@ -1,8 +1,5 @@
 const logger = require('@pubsweet/logger')
-const {
-  checkDataBase,
-  checkS3,
-} = require('@elifesciences/component-elife-app/server/health')
+const { checkDataBase, checkS3 } = require('../health')
 
 const DATABASE_ERROR = 'Database Error'
 const S3_ERROR = 'S3 Error'
