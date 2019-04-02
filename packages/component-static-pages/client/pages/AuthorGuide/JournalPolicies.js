@@ -898,7 +898,7 @@ const JournalPolicies = props => (
       To facilitate the interpretation and replication of experiments, authors
       are required to complete eLife&apos;s{' '}
       <NativeLink
-        href="https://cdn.elifesciences.org/xpub/guides/transparent_reporting.pdf"
+        href="https://elife-cdn.s3.amazonaws.com/xpub/guides/transparent_reporting.pdf"
         target="_blank"
       >
         Transparent Reporting Form
