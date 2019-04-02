@@ -1,6 +1,6 @@
 const winston = require('winston')
 
-const logPath = process.env.XPUB_LOG_PATH || '/var/log/xpub'
+const logPath = process.env.XPUB_LOG_PATH || './'
 
 const logger = new winston.Logger({
   transports: [
