@@ -23,6 +23,14 @@ _NOTE_ Due to the fact some npm packages need compiling issues can arise (like t
 when you attempt to run the application both from your local machine and by using the container.
 This can arise when the machine code generated differs between the two systems.
 
+If you encounter the issue, you will need to:
+- create an empty folder (e.g. .docker-node_modules)
+- add the following line in docker-compose.override.yml in the volumes section:
+` docker-node_modules/:/home/xpub/node_modules`
+- run: `docker-compose up app yarn install`
+
+This will install a separate node_modules for the docker container will be installed and kept separate from the node_modules folder in your host machine.
+
 ## Docker Compose
 
 The `docker-compose` files are used as the way to start the application.
