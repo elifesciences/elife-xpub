@@ -143,14 +143,14 @@ const Types = props => (
       original paper. Authors should upload a completed version of the
       Transparent Reporting Form (
       <NativeLink
-        href="https://cdn.elifesciences.org/xpub/guides/transparent_reporting.pdf"
+        href="https://elife-cdn.s3.amazonaws.com/xpub/guides/transparent_reporting.pdf"
         target="_blank"
       >
         PDF
       </NativeLink>
       ;{' '}
       <NativeLink
-        href="https://cdn.elifesciences.org/xpub/guides/transparent_reporting.docx"
+        href="https://elife-cdn.s3.amazonaws.com/xpub/guides/transparent_reporting.docx"
         target="_blank"
       >
         Word
