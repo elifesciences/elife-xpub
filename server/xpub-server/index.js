@@ -1,10 +1,6 @@
 const os = require('os')
 const logger = require('@pubsweet/logger')
-const cleanup = require('./cleanup')
-
-const registerRoutes = app => {
-  require('./routes')(app)
-}
+const cleanup = require('@elifesciences/component-elife-app/server/cleanup')
 
 const appMessage = action =>
   `${action} Application: ${os.hostname()}, PID: ${process.pid}`
@@ -20,6 +16,5 @@ logger.info(appMessage('Starting'))
 const cleanupHandler = cleanup.Cleanup(process, logger, stopServer)
 
 module.exports = {
-  backend: () => registerRoutes,
   migrationsPath: `./schema/migrations`,
 }

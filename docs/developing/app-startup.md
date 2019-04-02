@@ -10,8 +10,26 @@ Dockerfile:CMD []
 Dockerfile-development:CMD []
 ```
 
-However, because the `Dockerfile` is meant for developers it does run the application
-explcitly with `RUN [ "npx", "pubsweet", "build"]`
+The image produced by `Dockerfile` is used throughout the pipeline and into production
+so the application is pre-built explicitly with `RUN [ "npx", "pubsweet", "build"]`
+
+The image produced by `Dockerfile-development` is meant for developers and is used via
+`docker-compose` - this just links your local files into the image to be compiled and run there.
+
+The reason for doing this is to able to isolate the environment from your local machine,
+this also means its predicatable and reproducable.
+
+_NOTE_ Due to the fact some npm packages need compiling issues can arise (like the `bcrypt` issue)
+when you attempt to run the application both from your local machine and by using the container.
+This can arise when the machine code generated differs between the two systems.
+
+If you encounter the issue, you will need to:
+- create an empty folder (e.g. .docker-node_modules)
+- add the following line in docker-compose.override.yml in the volumes section:
+` docker-node_modules/:/home/xpub/node_modules`
+- run: `docker-compose up app yarn install`
+
+This will install a separate node_modules for the docker container will be installed and kept separate from the node_modules folder in your host machine.
 
 ## Docker Compose
 
@@ -57,9 +75,8 @@ Jenkinsfile
 
 ## Starting in Staging / Prodcution
 
-Below shows the docker compose file used for deploying when `builder` is used.
-
-This is for staging and production:
+Below shows the docker compose file used when deploying with [`builder`](https://github.com/elifesciences/builder).
+This uses the repo [elife-xpub-deployemnt](https://github.com/elifesciences/elife-xpub-deployment) for both staging and production:
 
 ```
 ~/dev/elife-xpub-deployment $ head command docker-compose.yml

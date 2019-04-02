@@ -1,9 +1,9 @@
 jest.mock('@pubsweet/logger')
-jest.mock('./health')
+jest.mock('@elifesciences/component-elife-app/server/health')
 
 const express = require('express')
 const supertest = require('supertest')
-const health = require('./health')
+const health = require('../health')
 
 describe('ping route test', () => {
   let routes
@@ -15,7 +15,7 @@ describe('ping route test', () => {
   }
 
   beforeEach(() => {
-    routes = require('./routes')
+    routes = require('.')
     health.checkDataBase.mockResolvedValue(14)
     setS3Success(1)
     setDbSuccess(1)
@@ -106,7 +106,7 @@ describe('status route test', () => {
   }
 
   beforeEach(() => {
-    routes = require('./routes')
+    routes = require('.')
   })
 
   it('returns success when app ok', async () => {
