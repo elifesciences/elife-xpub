@@ -75,6 +75,7 @@
       "<rootDir>/packages/component-dashboard/config/jest.config.client.js",
       "<rootDir>/packages/component-login/config/jest.config.client.js",
       "<rootDir>/packages/component-meca/config/jest.config.server.js",
+      "<rootDir>/packages/component-logger/config/jest.config.server.js",
       "<rootDir>/packages/component-model/config/jest.config.server.js",
       "<rootDir>/packages/component-model-audit-log/config/jest.config.server.js",
       "<rootDir>/packages/component-model-manuscript/config/jest.config.server.js",
