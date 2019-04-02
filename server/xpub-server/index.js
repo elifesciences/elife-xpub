@@ -8,14 +8,9 @@ const xpubTypeDefs = fs.readFileSync(
   `${__dirname}/schema/xpub.graphqls`,
   'utf8',
 )
-const elifeTypeDefs = fs.readFileSync(
-  `${__dirname}/schema/elife.graphqls`,
-  'utf8',
-)
 
 const typeDefs = `
   ${xpubTypeDefs}
-  ${elifeTypeDefs}
 `
 
 const registerRoutes = app => {

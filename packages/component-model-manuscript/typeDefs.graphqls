@@ -12,6 +12,15 @@ extend type Manuscript {
   opposedReviewingEditorsReason: String
   opposedReviewersReason: String
   coverLetter: String
+
+  previouslyDiscussed: String
+  previouslySubmitted: [String!]
+  cosubmission: [String!]
+  submitterSignature: String
+  disclosureConsent: Boolean
+  relatedManuscripts: [RelatedManuscript!]
+  qcIssues: [QCIssue!]
+  assignees(role: String!): [Assignee]
 }
 
 # TODO: This should be part of submission not the manuscript model
@@ -44,3 +53,54 @@ input ManuscriptMetaInput {
 
 # temporary solution awaiting more clarity on team member metadata in shared data model
 union Assignee = EditorAlias | ReviewerAlias | AuthorAlias
+
+type RelatedManuscript {
+  connectionType: SubmissionRelationship!
+  submissionIdentifier: String!
+  title: String!
+}
+
+enum SubmissionRelationship {
+  COSUBMISSION
+  RESUBMISSION
+  ADVANCE
+  SCIENTIFICCORRESPONDENCE
+}
+
+type QCIssue {
+  id: ID!
+  created: DateTime!
+  updated: DateTime
+  # To be defined
+  #location: QCIssueLocation!
+  comments: [QCComment!]!
+  resolved: Boolean!
+}
+
+type QCComment {
+  id: ID!
+  created: DateTime!
+  updated: DateTime!
+  user: User!
+  text: String!
+}
+
+type AuthorMetadata {
+  rank: Int!
+  # to be defined
+  #contributions: AuthorMetadataContribution!
+  corresponding: Boolean!
+  conflictOfInterest: String
+}
+
+type ReviewerMetadata {
+  rank: Int!
+  # Accounts for instances where a post-doc has helped review
+  coRelationship: [TeamMember]
+  conflictOfInterest: String
+  revealIdentity: Boolean!
+}
+
+type EditorMetadata {
+  elifePersonId: ID
+}

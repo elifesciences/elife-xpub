@@ -1,3 +1,22 @@
 extend type Mutation {
   exchangeJournalToken(token: String): String
 }
+
+# syntax supported in graphql-js >v14.0.0-rc.1
+#extend union Identity = ElifeIdentity
+
+type ElifeIdentity {
+  id: ID!
+  type: String
+  identifier: String
+  name: String
+  email: String
+  aff: String
+  meta: ElifeIdentityMeta
+}
+
+type ElifeIdentityMeta {
+  firstName: String
+  lastName: String
+  orcid: String
+}

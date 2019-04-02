@@ -1,0 +1,10 @@
+extend type TeamMember {
+  meta: TeamMemberMeta
+}
+
+union TeamMemberMeta = AuthorMetadata | ReviewerMetadata | EditorMetadata
+
+extend type Alias {
+  firstName: String
+  lastName: String
+}

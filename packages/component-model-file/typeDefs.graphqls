@@ -1,0 +1,6 @@
+extend type File {
+  # Refers to changes to individual files
+  lastChangeDate: DateTime!
+  lastChangeUser: User!
+  status: String!
+}

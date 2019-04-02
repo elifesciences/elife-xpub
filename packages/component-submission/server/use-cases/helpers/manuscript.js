@@ -1,6 +1,6 @@
 const logger = require('@pubsweet/logger')
 const FilesHelper = require('./files')
-const FileModel = require('@elifesciences/component-model-file')
+const FileModel = require('@elifesciences/component-model-file').model
 const ManuscriptModel = require('@elifesciences/component-model-manuscript')
   .model
 
