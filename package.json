@@ -142,6 +142,7 @@
     "yup": "^0.26.2"
   },
   "devDependencies": {
+    "@yarnpkg/lockfile": "^1.1.0",
     "babel-core": "^6.26.0",
     "babel-eslint": "^8.0.2",
     "babel-loader": "^7.1.2",
