@@ -1,5 +1,5 @@
 # -- BASE MODEL START --
-# This should be relocated in the future to a shared kernal package
+# This should be relocated in the future to a shared kernel package
 
 interface Object {
   id: ID!
