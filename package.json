@@ -38,7 +38,7 @@
     "styleguide": "styleguidist server",
     "test": "NODE_CONFIG_ENV=test jest --runInBand",
     "test:browser": "NODE_CONFIG_ENV=test NODE_ENV=production DEBUG=replay testcafe --concurrency 1 \"${BROWSER:-chrome}\" 'test/**/*.browser.js'",
-    "test:dependencies": "check-yarn-dupes react react-dom styled-components pubsweet-server",
+    "test:dependencies": "node scripts/check-duplicate-packages.js react react-dom styled-components pubsweet-server",
     "update": "yarn upgrade-interactive --latest"
   },
   "lint-staged": {
@@ -142,6 +142,7 @@
     "yup": "^0.26.2"
   },
   "devDependencies": {
+    "@yarnpkg/lockfile": "^1.1.0",
     "babel-core": "^6.26.0",
     "babel-eslint": "^8.0.2",
     "babel-loader": "^7.1.2",
