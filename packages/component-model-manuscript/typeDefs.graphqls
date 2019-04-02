@@ -1,3 +1,80 @@
+# -- BASE MODEL START --
+type Manuscript implements Object {
+  id: ID!
+  created: DateTime!
+  updated: DateTime
+  manuscriptVersions: [ManuscriptVersion]
+  files: [File]
+  fileStatus: String
+  teams: [Team]
+  reviews: [Review]
+  status: String
+  lastStepVisited: String
+  decision: String
+  meta: ManuscriptMeta
+}
+
+type ManuscriptVersion implements Object {
+  id: ID!
+  created: DateTime!
+  updated: DateTime
+  files: [File]
+  teams: [Team]
+  reviews: [Review]
+  status: String
+  lastStepVisited: String
+  decision: String
+  meta: ManuscriptMeta
+}
+
+type ManuscriptMeta {
+  title: String!
+  articleType: String
+  articleIds: [ArticleId]
+  abstract: String
+  subjects: [String]
+  history: [MetaDate]
+  publicationDates: [MetaDate]
+  notes: [Note]
+}
+
+type ArticleId {
+  pubIdType: String
+  id: String
+}
+
+type MetaDate {
+  type: String
+  date: DateTime
+}
+
+type Note implements Object {
+  id: ID!
+  created: DateTime!
+  updated: DateTime
+  notesType: String
+  content: String
+}
+
+# This should be moved to the component-review package when it's created.
+type Review implements Object {
+  id: ID!
+  created: DateTime!
+  updated: DateTime
+  comments: [Comment]
+  recommendation: String
+  open: Boolean
+  user: User
+}
+
+type Comment {
+  type: String
+  content: String
+  files: [File]
+}
+
+# -- BASE MODEL END --
+
 extend type Query {
   manuscript(id: ID!): Manuscript!
 }

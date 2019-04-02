@@ -1,17 +1,6 @@
 const os = require('os')
-const fs = require('fs')
 const logger = require('@pubsweet/logger')
 const cleanup = require('./cleanup')
-
-// concatenate schemas
-const xpubTypeDefs = fs.readFileSync(
-  `${__dirname}/schema/xpub.graphqls`,
-  'utf8',
-)
-
-const typeDefs = `
-  ${xpubTypeDefs}
-`
 
 const registerRoutes = app => {
   require('./routes')(app)
@@ -32,6 +21,5 @@ const cleanupHandler = cleanup.Cleanup(process, logger, stopServer)
 
 module.exports = {
   backend: () => registerRoutes,
-  typeDefs,
   migrationsPath: `./schema/migrations`,
 }

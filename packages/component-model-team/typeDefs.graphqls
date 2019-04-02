@@ -1,3 +1,27 @@
+# -- BASE MODEL START --
+extend type Team {
+  created: DateTime!
+  updated: DateTime
+  teamMembers: [TeamMember]
+  role: String
+  objectId: Object
+  objectType: String
+}
+
+type TeamMember {
+  user: User
+  status: String
+  alias: Alias
+}
+
+type Alias {
+  name: Name
+  email: Email
+  aff: String
+}
+
+# -- BASE MODEL END --
+
 extend type TeamMember {
   meta: TeamMemberMeta
 }

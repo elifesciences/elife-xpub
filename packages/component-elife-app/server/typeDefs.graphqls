@@ -1,3 +1,16 @@
+# -- BASE MODEL START --
+# This should be relocated in the future to a shared kernal package
+
+interface Object {
+  id: ID!
+  created: DateTime!
+  updated: DateTime
+}
+
+scalar DateTime
+
+# -- BASE MODEL END --
+
 extend type Mutation {
   exchangeJournalToken(token: String): String
 }

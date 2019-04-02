@@ -1,0 +1,11 @@
+# -- BASE MODEL START --
+type AuditLog {
+  id: ID!
+  created: DateTime!
+  user: User
+  action: String
+  object: Object
+  objectType: String
+}
+
+# -- BASE MODEL END --
