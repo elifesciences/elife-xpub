@@ -11,7 +11,7 @@ Dockerfile-development:CMD []
 ```
 
 The image produced by `Dockerfile` is used throughout the pipeline and into production
-so the application is pre-built explcitly with `RUN [ "npx", "pubsweet", "build"]`
+so the application is pre-built explicitly with `RUN [ "npx", "pubsweet", "build"]`
 
 The image produced by `Dockerfile-development` is meant for developers and is used via
 `docker-compose` - this just links your local files into the image to be compiled and run there.
