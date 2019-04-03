@@ -19,7 +19,6 @@ module.exports = {
       '@elifesciences/component-model-team',
       '@elifesciences/component-model-user',
       '@elifesciences/component-model',
-      '@elifesciences/xpub-server',
       '@elifesciences/component-dashboard',
       '@elifesciences/component-submission',
       '@pubsweet/component-send-email',
