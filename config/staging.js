@@ -1,4 +1,4 @@
-const logger = require('./non-serializable/logger')
+const { logger } = require('@elifesciences/component-logger')
 
 module.exports = {
   'pubsweet-server': {
@@ -20,8 +20,8 @@ module.exports = {
   meca: {
     email: {
       recipient: 'xpub-tech-alerts@elifesciences.org',
-      subjectPrefix: '[Staging] '
-    }
+      subjectPrefix: '[Staging] ',
+    },
   },
   aws: {
     s3: {

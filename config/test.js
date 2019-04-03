@@ -1,6 +1,6 @@
 const { deferConfig } = require('config/defer')
 const AWS = require('aws-sdk')
-const logger = require('./non-serializable/mock-logger')
+const { mockLogger } = require('@elifesciences/component-logger')
 
 module.exports = {
   'pubsweet-server': {
@@ -14,7 +14,7 @@ module.exports = {
     ),
     uploads: 'test/temp/uploads',
     secret: 'test',
-    logger,
+    mockLogger,
   },
   login: {
     url: '/mock-token-exchange/ewwboc7m',
@@ -52,7 +52,7 @@ module.exports = {
     apiKey: 'abcd1234',
     email: {
       recipient: 'test@example.com',
-    }
+    },
   },
   mailer: {
     transport: {
