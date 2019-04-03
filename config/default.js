@@ -19,6 +19,7 @@ module.exports = {
       '@elifesciences/component-model-team',
       '@elifesciences/component-model-user',
       '@elifesciences/component-model',
+      '@elifesciences/component-service-s3',
       '@elifesciences/component-dashboard',
       '@elifesciences/component-submission',
       '@pubsweet/component-send-email',
