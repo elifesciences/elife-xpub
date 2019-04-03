@@ -9,7 +9,6 @@ if [ "$#" -ne 1 ]; then
 fi
 
 release_name="elife-xpub--${1}"
-# TODO: hardcoded ip of a node
-node_ip=35.172.178.78
+first_node_address=$(sudo -u elife -H kubectl get nodes -o json | jq -r '.items[0].status.addresses[] | select(.type=="ExternalDNS").address')
 node_port=$(sudo -u elife -H kubectl get --namespace default -o jsonpath="{.spec.ports[0].nodePort}" services "$release_name")
-echo "http://$node_ip:$node_port"
+echo "http://$first_node_address:$node_port"

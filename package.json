@@ -38,7 +38,7 @@
     "styleguide": "styleguidist server",
     "test": "NODE_CONFIG_ENV=test jest --runInBand",
     "test:browser": "NODE_CONFIG_ENV=test NODE_ENV=production DEBUG=replay testcafe --concurrency 1 \"${BROWSER:-chrome}\" 'test/**/*.browser.js'",
-    "test:dependencies": "check-yarn-dupes react react-dom styled-components pubsweet-server",
+    "test:dependencies": "node scripts/check-duplicate-packages.js react react-dom styled-components pubsweet-server",
     "update": "yarn upgrade-interactive --latest"
   },
   "lint-staged": {
@@ -70,11 +70,11 @@
     },
     "projects": [
       "<rootDir>/client",
-      "<rootDir>/server",
       "<rootDir>/packages/component-dashboard/config/jest.config.server.js",
       "<rootDir>/packages/component-dashboard/config/jest.config.client.js",
       "<rootDir>/packages/component-login/config/jest.config.client.js",
       "<rootDir>/packages/component-meca/config/jest.config.server.js",
+      "<rootDir>/packages/component-logger/config/jest.config.server.js",
       "<rootDir>/packages/component-model/config/jest.config.server.js",
       "<rootDir>/packages/component-model-audit-log/config/jest.config.server.js",
       "<rootDir>/packages/component-model-manuscript/config/jest.config.server.js",
@@ -99,6 +99,7 @@
   ],
   "dependencies": {
     "@elifesciences/elife-theme": "^1.0.0",
+    "@pubsweet/component-send-email": "^0.2.13",
     "@pubsweet/ui": "^9.0.3",
     "@pubsweet/ui-toolkit": "^2.0.3",
     "@rebass/grid": "^6.0.0-7",
@@ -142,6 +143,7 @@
     "yup": "^0.26.2"
   },
   "devDependencies": {
+    "@yarnpkg/lockfile": "^1.1.0",
     "babel-core": "^6.26.0",
     "babel-eslint": "^8.0.2",
     "babel-loader": "^7.1.2",
