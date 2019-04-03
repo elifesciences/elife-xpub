@@ -62,7 +62,7 @@ const Full = props => (
           reporting. At the Full Submission step, authors should be ready to
           upload a completed version of this form (
           <NativeLink
-            href="https://elife-cdn.s3.amazonaws.com/xpub/guides/transparent_reporting.pdf"
+            href="https://cdn.elifesciences.org/xpub/guides/transparent_reporting.pdf"
             target="_blank"
           >
             PDF
