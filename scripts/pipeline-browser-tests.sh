@@ -9,6 +9,6 @@ npm run test:browser -- --screenshots /tmp/screenshots --screenshots-on-fails
 echo "Ran browser tests"
 cd packages/component-logger
 echo "CD into logger folder"
-ls -la /var/log/xpub
+find / | grep 'xpub.log'
 npx jest --testMatch=**/log.filter-ci.js
 echo "Ran log filter test"
