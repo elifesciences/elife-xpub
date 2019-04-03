@@ -11,6 +11,7 @@ module.exports = {
     components: [
       '@elifesciences/component-meca',
       '@elifesciences/component-elife-app',
+      '@elifesciences/component-logger',
       '@elifesciences/component-model-semantic-extraction',
       '@elifesciences/component-model-manuscript',
       '@elifesciences/component-model-file',
