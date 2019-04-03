@@ -17,7 +17,7 @@ const ScienceBeamApi = require('../services/scienceBeamApi')
 const { Mutation } = require('.')
 const { userData, badUserData } = require('./index.test.data')
 const replaySetup = require('../../../../test/helpers/replay-setup')
-const { S3Storage } = require('@elifesciences/component-services')
+const { S3Storage } = require('@elifesciences/component-service-s3')
 
 describe('Manuscripts', () => {
   const profileId = userData.identities[0].identifier
