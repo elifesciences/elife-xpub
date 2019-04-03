@@ -13,7 +13,6 @@ RUN apt-get update \
 
 COPY package.json yarn.lock ./
 COPY client client
-COPY server server
 COPY packages packages
 
 # We do a development install because react-styleguidist is a dev dependency and we want to run tests
