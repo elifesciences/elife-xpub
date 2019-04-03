@@ -98,6 +98,7 @@
   ],
   "dependencies": {
     "@elifesciences/elife-theme": "^1.0.0",
+    "@pubsweet/component-send-email": "^0.2.13",
     "@pubsweet/ui": "^9.0.3",
     "@pubsweet/ui-toolkit": "^2.0.3",
     "@rebass/grid": "^6.0.0-7",
