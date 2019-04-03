@@ -69,7 +69,7 @@ const Full = props => (
           </NativeLink>
           ;{' '}
           <NativeLink
-            href="https://elife-cdn.s3.amazonaws.com/xpub/guides/transparent_reporting.docx"
+            href="https://cdn.elifesciences.org/xpub/guides/transparent_reporting.docx"
             target="_blank"
           >
             Word
