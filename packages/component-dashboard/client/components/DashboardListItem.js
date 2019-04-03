@@ -130,37 +130,38 @@ const ItemContent = styled(Box)`
   justify-content: space-between;
 `};
 `
+export const DashboardListItemContent = ({ manuscript, title }) => {
+  const { clientStatus, updated } = manuscript
+  const date = new Date(updated)
+  return (
+    <ItemContent>
+      <TitleBox
+        color={mapColor(clientStatus)}
+        data-hj-suppress=""
+        data-test-id="title"
+        mb={3}
+      >
+        {title}
+      </TitleBox>
+      <ManuscriptStatus statusCode={clientStatus} />
+      <DateBox>
+        <time>{dashboardDateText(date)}</time>
+        <AbsoluteDate>{format(date, 'ddd D MMM YYYY')}</AbsoluteDate>
+      </DateBox>
+    </ItemContent>
+  )
+}
 
 const DashboardListItem = ({ manuscript, onDelete }) => {
   const title = manuscript.meta.title || '(Untitled)'
-
-  const renderItemContent = () => {
-    const { clientStatus, updated } = manuscript
-    const date = new Date(updated)
-    return (
-      <ItemContent>
-        <TitleBox
-          color={mapColor(clientStatus)}
-          data-hj-suppress=""
-          data-test-id="title"
-          mb={3}
-        >
-          {title}
-        </TitleBox>
-        <ManuscriptStatus statusCode={clientStatus} />
-        <DateBox>
-          <time>{dashboardDateText(date)}</time>
-          <AbsoluteDate>{format(date, 'ddd D MMM YYYY')}</AbsoluteDate>
-        </DateBox>
-      </ItemContent>
-    )
-  }
 
   return (
     <Root py={3}>
       {manuscript.clientStatus === 'SUBMITTED' ? (
         <Fragment>
-          <DashboardLinkFake>{renderItemContent()}</DashboardLinkFake>
+          <DashboardLinkFake>
+            <DashboardListItemContent manuscript={manuscript} title={title} />
+          </DashboardLinkFake>
           <ButtonContainer />
         </Fragment>
       ) : (
@@ -171,7 +172,10 @@ const DashboardListItem = ({ manuscript, onDelete }) => {
                 data-test-id="continue-submission"
                 to={`${manuscript.lastStepVisited}`}
               >
-                {renderItemContent()}
+                <DashboardListItemContent
+                  manuscript={manuscript}
+                  title={title}
+                />
               </DashboardLink>
               <ButtonContainer>
                 <StyledRemoveIcon
@@ -208,7 +212,7 @@ DashboardListItem.propTypes = {
       title: PropTypes.string,
     }).isRequired,
     clientStatus: PropTypes.string.isRequired,
-    created: PropTypes.string.isRequired,
+    updated: PropTypes.string.isRequired,
   }).isRequired,
   onDelete: PropTypes.func.isRequired,
 }

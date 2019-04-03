@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { Box } from '@rebass/grid'
 import { th } from '@pubsweet/ui-toolkit'
@@ -41,5 +42,21 @@ const DashboardList = ({ manuscripts, deleteSubmission }) =>
       </EmptyListSmallParagraph>
     </EmptyListMessage>
   )
+
+DashboardList.propTypes = {
+  manuscripts: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      meta: PropTypes.shape({
+        title: PropTypes.string,
+      }).isRequired,
+    }),
+  ),
+  deleteSubmission: PropTypes.func.isRequired,
+}
+
+DashboardList.defaultProps = {
+  manuscripts: [],
+}
 
 export default DashboardList
