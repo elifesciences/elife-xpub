@@ -4,9 +4,10 @@ const { createTables } = require('@pubsweet/db-manager')
 const AuditLog = require('@elifesciences/component-model-audit-log').model
 const User = require('@elifesciences/component-model-user').model
 const Manuscript = require('@elifesciences/component-model-manuscript').model
+const startS3rver = require('@elifesciences/component-service-s3/mock')
+
 const { Mutation } = require('.')
 const { userData } = require('./index.test.data')
-const startS3rver = require('../../../../server/xpub-server/test/mock-s3-server')
 
 describe('uploadSupportingFile', () => {
   const profileId = userData.identities[0].identifier
