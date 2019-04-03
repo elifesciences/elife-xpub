@@ -39,6 +39,7 @@ async function submitManuscript(_, { data }, { user, ip }) {
   }
 
   await manuscript.save()
+  manuscript = await Manuscript.find(data.id, userUuid)
 
   if (manuscript.fileStatus !== 'READY') {
     throw new Error('Manuscript fileStatus is CHANGING', {

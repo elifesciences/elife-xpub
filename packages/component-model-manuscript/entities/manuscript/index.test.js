@@ -154,14 +154,13 @@ describe('Manuscript', () => {
 
     describe('given there is a single file', () => {
       let manuscript
-      let file
       let setStatusOfFirstFile
 
       beforeEach(async () => {
         manuscript = await createInitialManuscript(userId)
         manuscript = await addFileToManuscript(manuscript)
-        file = await File.find(manuscript.files[0].id)
-        setStatusOfFirstFile = setStatusOfFile.bind(null, file, manuscript)
+        await File.find(manuscript.files[0].id)
+        setStatusOfFirstFile = setStatusOfFile.bind(null, 0, manuscript)
       })
 
       it('returns READY when the file is stored', async () => {
@@ -185,21 +184,18 @@ describe('Manuscript', () => {
       })
     })
 
-    describe('given there are multiple files', () => {
+    describe('given there are two files', () => {
       let manuscript
-      let file1, file2
       let setStatusOfFirstFile, setStatusOfSecondFile
 
       beforeEach(async () => {
         manuscript = await createInitialManuscript(userId)
         manuscript = await addFileToManuscript(manuscript)
         manuscript = await addFileToManuscript(manuscript)
-        ;[file1, file2] = await Promise.all(
-          manuscript.files.map(({ id }) => File.find(id)),
-        )
-        expect(file1.id).not.toEqual(file2.id)
-        setStatusOfFirstFile = setStatusOfFile.bind(null, file1, manuscript)
-        setStatusOfSecondFile = setStatusOfFile.bind(null, file2, manuscript)
+        await Promise.all(manuscript.files.map(({ id }) => File.find(id)))
+        expect(manuscript.files[0].id).not.toEqual(manuscript.files[1].id)
+        setStatusOfFirstFile = setStatusOfFile.bind(null, 0, manuscript)
+        setStatusOfSecondFile = setStatusOfFile.bind(null, 1, manuscript)
       })
 
       it('returns READY when both files are stored', async () => {
@@ -241,6 +237,48 @@ describe('Manuscript', () => {
       it('returns CHANGING when both files have been created in the database', async () => {
         manuscript = await setStatusOfFirstFile('CREATED')
         manuscript = await setStatusOfSecondFile('CREATED')
+        expect(manuscript.fileStatus).toEqual('CHANGING')
+      })
+    })
+
+    describe('given there are multiple files', () => {
+      let manuscript
+      let setFile2Status
+
+      const setAllStored = async () => {
+        await Promise.all(
+          manuscript.files.map(async (file, index) =>
+            setStatusOfFile(index, manuscript, 'STORED'),
+          ),
+        )
+        return true
+      }
+
+      beforeEach(async () => {
+        manuscript = await createInitialManuscript(userId)
+
+        for (let i = 0; i < 10; i += 1) {
+          // eslint-disable-next-line no-await-in-loop
+          manuscript = await addFileToManuscript(manuscript)
+        }
+        await Promise.all(manuscript.files.map(({ id }) => File.find(id)))
+        expect(manuscript.files).toHaveLength(10)
+        expect(manuscript.files[0].id).not.toEqual(manuscript.files[1].id)
+        setFile2Status = setStatusOfFile.bind(null, 1, manuscript)
+      })
+
+      it('is changing when all files are created', async () => {
+        expect(manuscript.fileStatus).toEqual('CHANGING')
+      })
+
+      it('is not changing when all files are stored', async () => {
+        await setAllStored()
+        expect(manuscript.files[9].status).toBe('STORED')
+        expect(manuscript.fileStatus).toEqual('READY')
+      })
+
+      it('is changing when all but one file is stored', async () => {
+        manuscript = await setFile2Status('STORED')
         expect(manuscript.fileStatus).toEqual('CHANGING')
       })
     })
@@ -572,9 +610,9 @@ const getThreeVersions = async userId => {
   return { v1, v2, v3 }
 }
 
-const setStatusOfFile = async (file, manuscript, status) => {
-  file.status = status // eslint-disable-line no-param-reassign
-  await file.save()
+const setStatusOfFile = async (index, manuscript, status) => {
+  manuscript.files[index].status = status // eslint-disable-line no-param-reassign
+  await manuscript.files[index].save()
   return Manuscript.find(manuscript.id, manuscript.createdBy)
 }
 

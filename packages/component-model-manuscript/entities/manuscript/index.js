@@ -103,15 +103,29 @@ class Manuscript extends BaseModel {
         isReady: false,
       },
     ]
-    return this.files
+    const logObject = this.files.map(file => ({
+      id: file.id,
+      type: file.type,
+      status: file.status,
+      name: file.filename,
+    }))
+
+    logger.info(
+      `get fileStatus(): ${logObject.length} ${JSON.stringify(logObject)}`,
+    )
+
+    const result = this.files
       .map(
         file =>
-          FILE_STATUSES.find(f => f.uploadStatuses.includes(file.status))
+          FILE_STATUSES.find(fs => fs.uploadStatuses.includes(file.status))
             .isReady,
       )
       .every(status => status)
       ? 'READY'
       : 'CHANGING'
+
+    logger.info(`get fileStatus(): =${result}`)
+    return result
   }
 
   static get statuses() {
