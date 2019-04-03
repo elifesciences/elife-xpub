@@ -133,7 +133,7 @@
     "react-select": "^2.0.0",
     "react-tabs": "^2.3.0",
     "react-transition-group": "^2.4.0",
-    "recompose": "^0.28.2",
+    "recompose": "^0.30.0",
     "redux": "^3.6.0",
     "redux-logger": "^3.0.1",
     "styled-components": "^4.1.3",

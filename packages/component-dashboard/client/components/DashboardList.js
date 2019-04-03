@@ -20,13 +20,14 @@ const EmptyListParagraph = styled(Box)`
   margin-bottom: 24px;
 `
 
-const DashboardList = ({ manuscripts }) =>
+const DashboardList = ({ manuscripts, deleteSubmission }) =>
   manuscripts.length > 0 ? (
     manuscripts.map((manuscript, index) => (
       <DashboardListItem
         index={index}
         key={manuscript.id}
         manuscript={manuscript}
+        onDelete={() => deleteSubmission(manuscript.id)}
       />
     ))
   ) : (
