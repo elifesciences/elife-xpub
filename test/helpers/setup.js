@@ -2,11 +2,11 @@ import DestinationRequest from 'testcafe-hammerhead/lib/request-pipeline/destina
 import { createTables } from '@pubsweet/db-manager'
 import config from 'config'
 import start from 'pubsweet/src/startup/start'
+import startS3Server from '@elifesciences/component-service-s3/mock'
 // while writing tests, using the following to start the server avoids having to recompile the app
 // import {startServer: start} from 'pubsweet-server'
 
 import replaySetup from './replay-setup'
-import startS3Server from '../../server/xpub-server/test/mock-s3-server'
 
 let server
 let s3rver

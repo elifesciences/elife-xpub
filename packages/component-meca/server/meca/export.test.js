@@ -1,4 +1,5 @@
 const { createTables } = require('@pubsweet/db-manager')
+const startS3Server = require('@elifesciences/component-service-s3/mock')
 const xml2json = require('xml2json')
 const JsZip = require('jszip')
 const config = require('config')
@@ -6,7 +7,6 @@ const Replay = require('replay')
 const startSftpServer = require('./test/mock-sftp-server')
 const sampleManuscript = require('./export.test.data')
 const mecaExport = require('./export')
-const startS3Server = require('../../../../server/xpub-server/test/mock-s3-server')
 
 Replay.fixtures = `${__dirname}/test/http-mocks`
 const mecaPostfix = '-meca.zip'
