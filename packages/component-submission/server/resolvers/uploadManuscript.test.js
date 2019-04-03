@@ -13,11 +13,11 @@ const mailer = require('@pubsweet/component-send-email')
 const startS3rver = require('../../../../server/xpub-server/test/mock-s3-server')
 const User = require('@elifesciences/component-model-user').model
 const Manuscript = require('@elifesciences/component-model-manuscript').model
-const scienceBeamApi = require('../../../../server/xpub-client/scienceBeamApi')
+const ScienceBeamApi = require('../services/scienceBeamApi')
 const { Mutation } = require('.')
 const { userData, badUserData } = require('./index.test.data')
 const replaySetup = require('../../../../test/helpers/replay-setup')
-const { S3Storage } = require('@elifesciences/xpub-client')
+const { S3Storage } = require('@elifesciences/component-services')
 
 describe('Manuscripts', () => {
   const profileId = userData.identities[0].identifier
@@ -129,7 +129,7 @@ describe('Manuscripts', () => {
         mimetype: 'application/pdf',
       }
 
-      jest.spyOn(scienceBeamApi, 'extractSemantics').mockRejectedValueOnce({
+      jest.spyOn(ScienceBeamApi, 'extractSemantics').mockRejectedValueOnce({
         error: {
           code: 'ETIMEDOUT',
           connect: false,
