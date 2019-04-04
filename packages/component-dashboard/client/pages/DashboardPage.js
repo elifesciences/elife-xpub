@@ -30,7 +30,7 @@ const DashboardPage = ({ createNewSubmission, deleteSubmission, data }) => (
     <Box mx={[0, 0, 0, '16.666%']} pb={[6, 6, 0, 0]}>
       <DesktopSubmitContainer mb={1} mt={3}>
         <Button
-          dataTestId="desktop-new-submission"
+          data-test-id="desktop-new-submission"
           onClick={createNewSubmission}
           primary
         >
@@ -58,7 +58,7 @@ const DashboardPage = ({ createNewSubmission, deleteSubmission, data }) => (
     <MobileOnlyContainer>
       <StickyFooter pb={[18, 18, 5, 5]}>
         <Button
-          dataTestId="mobile-new-submission"
+          data-test-id="mobile-new-submission"
           onClick={createNewSubmission}
           primary
         >
