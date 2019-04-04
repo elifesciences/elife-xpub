@@ -10,14 +10,22 @@ import {
 } from '@elifesciences/component-elife-ui/client/atoms'
 import { FormH3 } from '@elifesciences/component-elife-ui/client/atoms/FormHeadings'
 
+import { getErrorStepsFromErrors } from '../logic/getErrorStepsFromErrors'
+
 const localDate = parse(new Date())
 const formattedLocalDate = format(localDate, 'MMM D, YYYY')
 
+const generateReadableStepsList = steps => (
+    `"${ 
+    [steps.slice(0, -1).join('", "'), steps.slice(-1)[0]].join(
+      steps.length < 2 ? '' : '" and "',
+    ) 
+    }"`
+  )
 const DisclosurePage = ({ values, errors }) => {
   const formattedArticleType = values.meta.articleType
     .toUpperCase()
     .replace(/-+/g, ' ')
-  console.log(values)
   return (
     <React.Fragment>
       <Box mb={4}>
@@ -72,6 +80,10 @@ const DisclosurePage = ({ values, errors }) => {
         label="I agree on behalf of all authors"
         name="disclosureConsent"
       />
+      {!!Object.keys(errors).length &&
+        `We're sorry but there appears to be one or more errors in your submission that require attention before you can submit. Please use the back button to review your ${generateReadableStepsList(
+          getErrorStepsFromErrors(errors),
+        )} and try again.`}
     </React.Fragment>
   )
 }
