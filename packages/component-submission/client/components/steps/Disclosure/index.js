@@ -17,7 +17,7 @@ const DisclosurePage = ({ values, errors }) => {
   const formattedArticleType = values.meta.articleType
     .toUpperCase()
     .replace(/-+/g, ' ')
-  console.log(errors)
+  console.log(values)
   return (
     <React.Fragment>
       <Box mb={4}>
