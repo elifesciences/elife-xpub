@@ -13,11 +13,11 @@ import { FormH3 } from '@elifesciences/component-elife-ui/client/atoms/FormHeadi
 const localDate = parse(new Date())
 const formattedLocalDate = format(localDate, 'MMM D, YYYY')
 
-const DisclosurePage = ({ values }) => {
+const DisclosurePage = ({ values, errors }) => {
   const formattedArticleType = values.meta.articleType
     .toUpperCase()
     .replace(/-+/g, ' ')
-
+  console.log(errors)
   return (
     <React.Fragment>
       <Box mb={4}>
