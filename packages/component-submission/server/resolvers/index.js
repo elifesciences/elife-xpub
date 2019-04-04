@@ -1,6 +1,8 @@
+const config = require('config')
 const logger = require('@pubsweet/logger')
 const User = require('@elifesciences/component-model-user').model
 const Manuscript = require('@elifesciences/component-model-manuscript').model
+const { S3Storage } = require('@elifesciences/component-service-s3')
 const elifeApi = require('@elifesciences/component-model-user/entities/user/helpers/elife-api')
 const {
   getPubsub,
@@ -13,6 +15,7 @@ const updateManuscript = require('./updateManuscript')
 const uploadManuscript = require('./uploadManuscript')
 const uploadSupportingFile = require('./uploadSupportingFile')
 const removeSupportingFiles = require('./removeSupportingFiles')
+const ManuscriptUseCase = require('../use-cases').Manuscript
 
 const { ON_UPLOAD_PROGRESS } = asyncIterators
 
@@ -20,7 +23,9 @@ const resolvers = {
   Query: {
     async manuscript(_, { id }, { user }) {
       const userUuid = await User.getUuidForProfile(user)
-      return Manuscript.find(id, userUuid)
+      const manuscripts = new ManuscriptUseCase(config, userUuid, S3Storage)
+
+      return manuscripts.find(id)
     },
     async editors(_, { role }) {
       return elifeApi.people(role)

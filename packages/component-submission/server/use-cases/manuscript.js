@@ -1,4 +1,5 @@
 const logger = require('@pubsweet/logger')
+const FileModel = require('@elifesciences/component-model-file').model
 const ManuscriptModel = require('@elifesciences/component-model-manuscript')
   .model
 const { UploadPredictor, FilesHelper, ManuscriptHelper } = require('./helpers')
@@ -90,6 +91,21 @@ class Manuscript {
       manuscriptId: data.id,
       userId: this.userId,
     })
+
+    return manuscript
+  }
+
+  async find(manuscriptId) {
+    const manuscript = await ManuscriptModel.find(manuscriptId, this.userId)
+
+    // eslint-disable-next-line no-restricted-syntax
+    for (const file of manuscript.files) {
+      // eslint-disable-next-line no-await-in-loop
+      const fileEntity = await FileModel.find(file.id)
+
+      // eslint-disable-next-line no-param-reassign
+      file.downloadLink = this.storage.getDownloadLink(fileEntity)
+    }
 
     return manuscript
   }
