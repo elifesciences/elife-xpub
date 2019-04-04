@@ -33,7 +33,7 @@ module.exports = {
   },
 
   forever: {
-    watchDirectory: path.resolve(__dirname, '..', 'server'),
+    watchDirectory: path.resolve(__dirname, '..', 'packages'),
   },
 
   aws: {
