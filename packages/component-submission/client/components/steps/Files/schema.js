@@ -9,7 +9,7 @@ function stripHtml(html) {
   return doc.body.textContent || ''
 }
 
-const schema = yup.object().shape({
+const filesPageSchema = {
   coverLetter: yup
     .string()
     .test(
@@ -22,6 +22,6 @@ const schema = yup.object().shape({
     .string()
     .required()
     .oneOf(['READY'], 'Please wait until all files have uploaded.'),
-})
+}
 
-export { schema }
+export default filesPageSchema
