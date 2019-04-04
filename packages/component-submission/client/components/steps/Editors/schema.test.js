@@ -1,5 +1,8 @@
+import * as yup from 'yup'
 import { yupToFormErrors } from 'formik'
-import { schema } from './schema'
+import editorsPageSchema from './schema'
+
+const schema = yup.object().shape(editorsPageSchema)
 
 describe('Editors page form validation', () => {
   it('allows valid data', () => {
@@ -38,7 +41,7 @@ describe('Editors page form validation', () => {
       opposedReviewersReason: '',
     }
 
-    let errors
+    let errors = 'chickens'
     try {
       schema.validateSync(invalidData, { abortEarly: false })
     } catch (e) {
