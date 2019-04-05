@@ -1,6 +1,9 @@
+import * as yup from 'yup'
 import { yupToFormErrors } from 'formik'
 
-import { schema } from './schema'
+import { disclosurePageSchemaInner } from './schema'
+
+const schema = yup.object().shape(disclosurePageSchemaInner)
 
 describe('Disclosure page validation', () => {
   it('allows valid data', () => {

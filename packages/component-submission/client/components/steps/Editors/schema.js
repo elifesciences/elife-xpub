@@ -5,7 +5,7 @@ import { suggestedReviewersLimits } from './SuggestedReviewersValidator'
 // TODO only the initially displayed fields should be required,
 // fields added by the user should be optional
 
-const limits = {
+export const limits = {
   suggestedSeniorEditors: { min: 2, max: 6 },
   opposedSeniorEditors: { min: 0, max: 1 },
   suggestedReviewingEditors: { min: 2, max: 6 },
@@ -41,7 +41,7 @@ const opposedReviewerValidator = () =>
     }),
   )
 
-const schema = yup.object().shape({
+const editorsPageSchema = {
   suggestedSeniorEditors: editorValidator('suggestedSeniorEditors'),
   opposedSeniorEditors: editorValidator('opposedSeniorEditors'),
   opposedSeniorEditorsReason: opposedReasonValidator('opposedSeniorEditors'),
@@ -53,6 +53,6 @@ const schema = yup.object().shape({
   suggestedReviewers: suggestedReviewerValidator(),
   opposedReviewers: opposedReviewerValidator(),
   opposedReviewersReason: opposedReasonValidator('opposedReviewers'),
-})
+}
 
-export { schema, limits }
+export default editorsPageSchema
