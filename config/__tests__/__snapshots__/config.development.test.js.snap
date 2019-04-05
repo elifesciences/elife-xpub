@@ -8,9 +8,9 @@ Config {
   },
   "aws": Object {
     "credentials": Object {
-      "accessKeyId": "AKIAIORAPR2CWCGAQVMQ",
+      "accessKeyId": "needs updating",
       "region": "us-east-1",
-      "secretAccessKey": "rrQg9pO/p29STZZBQXPH/cS6/CxMLCoYq+5xQeLz",
+      "secretAccessKey": "",
     },
     "s3": Object {
       "params": Object {
@@ -505,7 +505,7 @@ Config {
     },
     "morganLogFormat": ":remote-addr [:date[clf]] :method :url :status :graphql[operation] :res[content-length] :response-time ms",
     "port": 3000,
-    "secret": "not very secret",
+    "secret": "",
     "uploads": "uploads",
   },
   "schema": Object {},

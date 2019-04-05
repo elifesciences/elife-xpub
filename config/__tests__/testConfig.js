@@ -4,6 +4,13 @@ module.exports = (configName, ignore = []) => {
   process.env.NODE_CONFIG_ENV = configName
   const configObject = require('config')
   let config = _.cloneDeep(configObject)
+  const secretKeys = [
+    'aws.credentials.secretAccessKey',
+    'pubsweet-server.secret',
+    'server.api.secret',
+  ]
+  secretKeys.forEach(key => _.set(config, key, ''))
+
   if (ignore) {
     ignore.forEach(key => _.set(config, key, ''))
   }

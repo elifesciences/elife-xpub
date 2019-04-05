@@ -10,7 +10,7 @@ Config {
     "credentials": Object {
       "accessKeyId": "test",
       "region": "eu-west-1",
-      "secretAccessKey": "test",
+      "secretAccessKey": "",
     },
     "s3": Object {
       "endpoint": Endpoint {
@@ -510,7 +510,7 @@ Config {
     },
     "morganLogFormat": ":remote-addr [:date[clf]] :method :url :status :graphql[operation] :res[content-length] :response-time ms",
     "port": 4000,
-    "secret": "test",
+    "secret": "",
     "uploads": "test/temp/uploads",
   },
   "schema": Object {},
