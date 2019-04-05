@@ -1,10 +1,10 @@
-const { mockLogger } = require('@elifesciences/component-logger')
+const logger = require('@elifesciences/component-logger').mockLogger
 
-mockLogger.transports.console.level = 'debug'
+logger.transports.console.level = 'debug'
 
 module.exports = {
   'pubsweet-server': {
-    mockLogger,
+    logger,
   },
   server: {
     api: {
