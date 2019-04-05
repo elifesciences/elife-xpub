@@ -1,6 +1,7 @@
 const { logger } = require('@elifesciences/component-logger')
 
 module.exports = {
+  configTag: 'staging',
   'pubsweet-server': {
     logger,
   },

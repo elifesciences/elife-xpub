@@ -2,6 +2,7 @@ const path = require('path')
 const logger = require('winston')
 
 module.exports = {
+  configTag: 'default',
   authsome: {
     isPublic: true,
     mode: path.resolve(__dirname, 'non-serializable/authsome.js'),
