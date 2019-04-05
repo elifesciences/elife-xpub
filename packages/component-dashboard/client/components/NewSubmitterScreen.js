@@ -13,7 +13,7 @@ import { H1, Button } from '@pubsweet/ui'
 const NewSubmitterScreen = ({ createNewSubmission }) => (
   <SmallCenterer>
     <TwoColumnLayout mb={[0, 0, 5]}>
-      <ImageWrapper image="/assets/redirect.jpg" mr="auto" />
+      <ImageWrapper image="/assets/before-you-start.jpg" mr="auto" />
       <Box>
         <Box mb={4}>
           <H1>Before you start</H1>

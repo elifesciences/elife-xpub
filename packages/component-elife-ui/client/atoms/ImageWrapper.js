@@ -9,7 +9,7 @@ const ImageWrapper = styled(Box)`
   background-size: cover;
   background-position: center;
   display: none;
-  ${media.tabletLandscapeUp`
+  ${media.tabletPortraitUp`
   display: block`};
 `
 
