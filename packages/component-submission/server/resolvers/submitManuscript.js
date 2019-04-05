@@ -49,7 +49,6 @@ async function submitManuscript(_, { data }, { user, ip }) {
 
   const manuscript = new Manuscript(config, userUuid, S3Storage)
 
-  manuscriptModel = await manuscript.getView(data.id)
   manuscriptModel = await ManuscriptModel.updateStatus(
     manuscriptModel.id,
     ManuscriptModel.statuses.MECA_EXPORT_PENDING,
@@ -60,7 +59,7 @@ async function submitManuscript(_, { data }, { user, ip }) {
       logger.info(`Manuscript ${manuscriptModel.id} successfully exported`)
       const notify = new Notification(config)
       await notify.sendFinalSubmissionEmail(manuscriptModel)
-      return ManuscriptModel.updateStatus(
+      ManuscriptModel.updateStatus(
         manuscriptModel.id,
         ManuscriptModel.statuses.MECA_EXPORT_SUCCEEDED,
       )
@@ -86,7 +85,9 @@ ${err}`,
       logger.error('Error handling MECA export failure', err)
     })
 
-  return manuscriptModel
+  const m = await manuscript.getView(data.id)
+
+  return m
 }
 
 module.exports = submitManuscript
