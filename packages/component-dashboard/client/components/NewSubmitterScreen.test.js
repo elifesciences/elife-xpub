@@ -20,13 +20,13 @@ describe('NewSubmitterScreen', () => {
     const screen = shallow(<NewSubmitterScreen />)
     expect(
       screen.findWhere(
-        n => n.prop('to') === 'https://submit.elifesciences.org',
+        n => n.prop('href') === 'https://submit.elifesciences.org',
       ),
     ).toHaveLength(1)
     expect(
       screen.findWhere(
         n =>
-          n.prop('to') ===
+          n.prop('href') ===
           'https://reviewer.elifesciences.org/contact-us/contact-elife',
       ),
     ).toHaveLength(1)

@@ -39,7 +39,7 @@ const NewSubmitterScreen = ({ createNewSubmission }) => (
           <Paragraph.Writing>
             If you&apos;re looking for a previous submission with eLife or want
             to submit a <strong>research advance</strong> please use our{' '}
-            <NativeLink target="_blank" to="https://submit.elifesciences.org">
+            <NativeLink href="https://submit.elifesciences.org" target="_blank">
               legacy submission system
             </NativeLink>
             .
@@ -47,8 +47,8 @@ const NewSubmitterScreen = ({ createNewSubmission }) => (
           <Paragraph.Writing>
             If you experience any problems please{' '}
             <NativeLink
+              href="https://reviewer.elifesciences.org/contact-us/contact-elife"
               target="_blank"
-              to="https://reviewer.elifesciences.org/contact-us/contact-elife"
             >
               contact us
             </NativeLink>
