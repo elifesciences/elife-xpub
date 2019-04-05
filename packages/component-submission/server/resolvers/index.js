@@ -1,7 +1,8 @@
 const config = require('config')
 const logger = require('@pubsweet/logger')
 const User = require('@elifesciences/component-model-user').model
-const Manuscript = require('@elifesciences/component-model-manuscript').model
+const ManuscriptModel = require('@elifesciences/component-model-manuscript')
+  .model
 const { S3Storage } = require('@elifesciences/component-service-s3')
 const elifeApi = require('@elifesciences/component-model-user/entities/user/helpers/elife-api')
 const {
@@ -15,7 +16,7 @@ const updateManuscript = require('./updateManuscript')
 const uploadManuscript = require('./uploadManuscript')
 const uploadSupportingFile = require('./uploadSupportingFile')
 const removeSupportingFiles = require('./removeSupportingFiles')
-const ManuscriptUseCase = require('../use-cases').Manuscript
+const { Manuscript } = require('../use-cases')
 
 const { ON_UPLOAD_PROGRESS } = asyncIterators
 
@@ -23,9 +24,9 @@ const resolvers = {
   Query: {
     async manuscript(_, { id }, { user }) {
       const userUuid = await User.getUuidForProfile(user)
-      const manuscripts = new ManuscriptUseCase(config, userUuid, S3Storage)
+      const manuscript = new Manuscript(config, userUuid, S3Storage)
 
-      return manuscripts.find(id)
+      return manuscript.getView(id)
     },
     async editors(_, { role }) {
       return elifeApi.people(role)
@@ -47,17 +48,18 @@ const resolvers = {
 
     async savePage(_, vars, { user }) {
       const userUuid = await User.getUuidForProfile(user)
-      const manuscript = await Manuscript.find(vars.id, userUuid)
+      const manuscriptModel = await ManuscriptModel.find(vars.id, userUuid)
+      const manuscript = new Manuscript(config, userUuid, S3Storage)
 
-      manuscript.lastStepVisited = vars.url
-      await manuscript.save()
+      manuscriptModel.lastStepVisited = vars.url
+      await manuscriptModel.save()
       logger.debug(`Updated manuscript`, {
         manuscriptId: vars.id,
         userId: userUuid,
         lastStepVisited: vars.url,
       })
 
-      return manuscript
+      return manuscript.getView(vars.id)
     },
   },
 

@@ -16,6 +16,7 @@ const UPLOAD_MANUSCRIPT_MUTATION = gql`
         title
       }
       files {
+        downloadLink
         filename
         type
         status
@@ -34,6 +35,7 @@ const UPLOAD_SUPPORTING_MUTATION = gql`
         title
       }
       files {
+        downloadLink
         filename
         type
         status

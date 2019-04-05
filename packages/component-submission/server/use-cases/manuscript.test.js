@@ -117,7 +117,7 @@ describe('find', () => {
     })
 
     await file.save()
-    const foundManuscript = await manuscriptController.find(manuscriptId)
+    const foundManuscript = await manuscriptController.getView(manuscriptId)
 
     expect(foundManuscript.files[0].downloadLink).toEqual(
       'http://example.com/download-link',

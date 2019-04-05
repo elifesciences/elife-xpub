@@ -4,22 +4,22 @@ const mailer = require('@pubsweet/component-send-email')
 const logger = require('@pubsweet/logger')
 const { mecaExport } = require('@elifesciences/component-meca')
 const User = require('@elifesciences/component-model-user').model
-const Manuscript = require('@elifesciences/component-model-manuscript').model
+const ManuscriptModel = require('@elifesciences/component-model-manuscript')
+  .model
 const { S3Storage } = require('@elifesciences/component-service-s3')
 const manuscriptInputSchema = require('../helpers/manuscriptInputValidationSchema')
-
 const { Notification } = require('../services')
 
 async function submitManuscript(_, { data }, { user, ip }) {
   const userUuid = await User.getUuidForProfile(user)
-  let manuscript = await Manuscript.find(data.id, userUuid)
-  if (manuscript.status !== Manuscript.statuses.INITIAL) {
+  let manuscriptModel = await ManuscriptModel.find(data.id, userUuid)
+  if (manuscriptModel.status !== ManuscriptModel.statuses.INITIAL) {
     throw new Error(
-      `Cannot submit manuscript with status of ${manuscript.status}`,
+      `Cannot submit manuscript with status of ${manuscriptModel.status}`,
     )
   }
 
-  const manuscriptInput = Manuscript.removeOptionalBlankReviewers(data)
+  const manuscriptInput = ManuscriptModel.removeOptionalBlankReviewers(data)
   const { error: errorManuscript } = Joi.validate(
     manuscriptInput,
     manuscriptInputSchema,
@@ -29,50 +29,50 @@ async function submitManuscript(_, { data }, { user, ip }) {
     throw new Error(errorManuscript)
   }
 
-  manuscript.applyInput(manuscriptInput)
+  manuscriptModel.applyInput(manuscriptInput)
 
-  const sourceFile = manuscript.getSource()
+  const sourceFile = manuscriptModel.getSource()
   if (!sourceFile) {
     throw new Error('Manuscript has no source file', {
-      manuscriptId: manuscript.id,
+      manuscriptId: manuscriptModel.id,
     })
   }
 
-  await manuscript.save()
+  await manuscriptModel.save()
 
-  if (manuscript.fileStatus !== 'READY') {
+  if (manuscriptModel.fileStatus !== 'READY') {
     throw new Error('Manuscript fileStatus is CHANGING', {
-      manuscriptId: manuscript.id,
+      manuscriptId: manuscriptModel.id,
     })
   }
 
-  manuscript = await Manuscript.updateStatus(
-    manuscript.id,
-    Manuscript.statuses.MECA_EXPORT_PENDING,
+  manuscriptModel = await ManuscriptModel.updateStatus(
+    manuscriptModel.id,
+    ManuscriptModel.statuses.MECA_EXPORT_PENDING,
   )
 
-  await mecaExport(manuscript, S3Storage.getContent, ip)
+  await mecaExport(manuscriptModel, S3Storage.getContent, ip)
     .then(async () => {
-      logger.info(`Manuscript ${manuscript.id} successfully exported`)
+      logger.info(`Manuscript ${manuscriptModel.id} successfully exported`)
       const notify = new Notification(config)
-      await notify.sendFinalSubmissionEmail(manuscript)
-      return Manuscript.updateStatus(
-        manuscript.id,
-        Manuscript.statuses.MECA_EXPORT_SUCCEEDED,
+      await notify.sendFinalSubmissionEmail(manuscriptModel)
+      return ManuscriptModel.updateStatus(
+        manuscriptModel.id,
+        ManuscriptModel.statuses.MECA_EXPORT_SUCCEEDED,
       )
     })
     .catch(async err => {
       logger.error('MECA export failed', err)
-      await Manuscript.updateStatus(
-        manuscript.id,
-        Manuscript.statuses.MECA_EXPORT_FAILED,
+      await ManuscriptModel.updateStatus(
+        manuscriptModel.id,
+        ManuscriptModel.statuses.MECA_EXPORT_FAILED,
       )
       return mailer.send({
         to: config.get('meca.email.recipient'),
         from: config.get('meca.email.sender'),
         subject: `${config.get('meca.email.subjectPrefix')}MECA export failed`,
-        text: `Manuscript ID: ${manuscript.id}
-Manuscript title: ${manuscript.meta.title}
+        text: `Manuscript ID: ${manuscriptModel.id}
+Manuscript title: ${manuscriptModel.meta.title}
 Error:
 
 ${err}`,
@@ -82,7 +82,10 @@ ${err}`,
       logger.error('Error handling MECA export failure', err)
     })
 
-  return manuscript
+  //   const manuscript = new Manuscript(config, userUuid, S3Storage)
+
+  //   return manuscript.getView(data.id)
+  return manuscriptModel
 }
 
 module.exports = submitManuscript

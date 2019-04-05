@@ -73,7 +73,7 @@ class Manuscript {
       `Manuscript Upload Time, Actual (${actualTime}) , Predicted (${predictor.getPredictedTime()}) | ${manuscriptId}`,
     )
 
-    return ManuscriptModel.find(manuscriptId, this.userId)
+    return this.getView(manuscriptId)
   }
 
   async update(data) {
@@ -92,10 +92,10 @@ class Manuscript {
       userId: this.userId,
     })
 
-    return manuscript
+    return this.getView(data.id)
   }
 
-  async find(manuscriptId) {
+  async getView(manuscriptId) {
     const manuscript = await ManuscriptModel.find(manuscriptId, this.userId)
 
     // eslint-disable-next-line no-restricted-syntax
