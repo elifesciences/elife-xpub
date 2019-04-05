@@ -85,9 +85,7 @@ ${err}`,
       logger.error('Error handling MECA export failure', err)
     })
 
-  const m = await manuscript.getView(data.id)
-
-  return m
+  return manuscript.getView(data.id)
 }
 
 module.exports = submitManuscript
