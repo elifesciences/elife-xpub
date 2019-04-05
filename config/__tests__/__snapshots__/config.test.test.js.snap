@@ -27,7 +27,6 @@ Array [
   "pubsweet-server.enableExperimentalGraphql",
   "pubsweet-server.morganLogFormat",
   "pubsweet-server.baseUrl",
-  "pubsweet-server.secret",
   "pubsweet-client.isPublic",
   "pubsweet-client.API_ENDPOINT",
   "pubsweet-client.login-redirect",

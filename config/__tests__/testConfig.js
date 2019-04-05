@@ -25,5 +25,6 @@ module.exports = configName => {
   expect(config.configTag).toBe(configName)
 
   config = getKeys(config)
+  config = config.filter(value => value !== 'pubsweet-server.secret')
   expect(config).toMatchSnapshot('config-keys')
 }
