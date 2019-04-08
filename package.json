@@ -29,6 +29,7 @@
     "lint:style": "stylelint app/**/*.scss app/**/*.css",
     "precommit": "lint-staged",
     "reset": "pubsweet setupdb --clobber",
+    "secretcheck": "scripts/secretcheck.sh",
     "server": "pubsweet server",
     "setupdb": "pubsweet setupdb",
     "start": "docker-compose up",
@@ -89,6 +90,10 @@
       "<rootDir>/packages/component-elife-ui/config/jest.config.client.js"
     ]
   },
+  "pre-commit": [
+    "precommit",
+    "secretcheck"
+  ],
   "resolutions": {
     "lodash": ">=4.17.11"
   },
@@ -115,6 +120,7 @@
     "lodash": "^4.17.5",
     "newrelic": "^4.8.1",
     "omit-deep-lodash": "^1.1.2",
+    "pre-commit": "^1.0.0",
     "prop-types": "^15.6.2",
     "pubsweet-client": "^8.0.0",
     "pubsweet-server": "^10.1.4",
