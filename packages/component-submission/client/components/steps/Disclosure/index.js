@@ -85,9 +85,9 @@ const DisclosurePage = ({ values, errors }) => {
         <ErrorMessage data-test-id="test-error-message">
           We&apos;re sorry but there appears to be one or more errors in your
           submission that require attention before you can submit. Please use
-          the back button to review your{' '}
-          {convertArrayToReadableList(getErrorStepsFromErrors(errors))} and try
-          again.
+          the back button to review the{' '}
+          {convertArrayToReadableList(getErrorStepsFromErrors(errors))} steps
+          before trying again.
         </ErrorMessage>
       )}
     </React.Fragment>
