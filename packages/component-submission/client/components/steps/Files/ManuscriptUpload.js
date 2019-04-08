@@ -9,6 +9,7 @@ import {
   Paragraph,
   ActionText,
   Icon,
+  NativeLink,
 } from '@elifesciences/component-elife-ui/client/atoms'
 import { errorMessageMapping, MAX_FILE_SIZE } from './utils'
 
@@ -90,6 +91,7 @@ const DropzoneContent = ({
   errorMessage,
   dropzoneOpen,
   fileName,
+  downloadLink,
 }) => {
   if (conversion.converting) {
     return (
@@ -134,7 +136,7 @@ const DropzoneContent = ({
           data-test-id="dropzoneMessage"
         >
           Success! <ActionText onClick={dropzoneOpen}>Replace</ActionText> your
-          manuscript.
+          manuscript file or <NativeLink href={downloadLink} /> to check it.
         </UploadInstruction>
       </React.Fragment>
     )
@@ -189,7 +191,14 @@ class ManuscriptUpload extends React.Component {
   }
 
   render() {
-    const { onDrop, conversion, formError, fileName, ...props } = this.props
+    const {
+      onDrop,
+      conversion,
+      formError,
+      fileName,
+      downloadLink,
+      ...props
+    } = this.props
     let dropzoneRef
     return (
       <StyledDropzone
@@ -212,6 +221,7 @@ class ManuscriptUpload extends React.Component {
           <Box width={1}>
             <DropzoneContent
               conversion={conversion}
+              downloadLink={downloadLink}
               dropzoneOpen={() => dropzoneRef.open()}
               errorMessage={this.state.errorMessage}
               fileName={this.droppedFileName || fileName}

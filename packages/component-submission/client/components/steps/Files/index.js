@@ -178,6 +178,7 @@ const FilesPageContainer = ({
                     error: uploadError,
                   }}
                   data-test-id="upload"
+                  downloadLink={manuscriptFile.downloadLink}
                   fileName={manuscriptFile.filename}
                   formError={touched[filesFieldName] && errors[filesFieldName]}
                   onDrop={files =>
