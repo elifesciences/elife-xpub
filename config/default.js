@@ -41,6 +41,7 @@ module.exports = {
     enableExperimentalGraphql: true,
     morganLogFormat:
       ':remote-addr [:date[clf]] :method :url :status :graphql[operation] :res[content-length] :response-time ms',
+    secret: 'default-secret-that-needs-changing',
   },
   'pubsweet-client': {
     isPublic: true,

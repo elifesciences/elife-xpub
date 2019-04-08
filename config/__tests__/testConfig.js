@@ -9,7 +9,8 @@ const getKeys = (obj, root = '') => {
       const o = _.get(obj, k)
       const name = root.length > 0 ? `${root}.${k}` : k
       const depth = (root.match(new RegExp('.', 'g')) || []).length
-      if (o && o instanceof Object && depth < MAX_DEPTH) {
+      const isValidObject = o && o instanceof Object
+      if (isValidObject && !Array.isArray(o) && depth < MAX_DEPTH) {
         return getKeys(o, name)
       }
       return name
@@ -25,6 +26,5 @@ module.exports = configName => {
   expect(config.configTag).toBe(configName)
 
   config = getKeys(config)
-  config = config.filter(value => value !== 'pubsweet-server.secret')
   expect(config).toMatchSnapshot('config-keys')
 }
