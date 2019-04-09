@@ -7,6 +7,7 @@ const User = require('@elifesciences/component-model-user').model
 const Manuscript = require('@elifesciences/component-model-manuscript').model
 const { S3Storage } = require('@elifesciences/component-service-s3')
 const manuscriptInputSchema = require('../helpers/manuscriptInputValidationSchema')
+const lodash = require('lodash')
 
 const { Notification } = require('../services')
 
@@ -15,7 +16,11 @@ async function submitManuscript(_, { data }, { user, ip }) {
   let manuscript = await Manuscript.find(data.id, userUuid)
   logger.warn('manuscript beginning submit')
   logger.warn(
-    JSON.stringify(_.pick(manuscript, ['id', 'files', 'fileStatus']), null, 4),
+    JSON.stringify(
+      lodash.pick(manuscript, ['id', 'files', 'fileStatus']),
+      null,
+      4,
+    ),
   )
 
   if (manuscript.status !== Manuscript.statuses.INITIAL) {
