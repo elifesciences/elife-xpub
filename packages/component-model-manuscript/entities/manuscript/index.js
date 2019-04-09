@@ -359,7 +359,7 @@ class Manuscript extends BaseModel {
 
   getSource() {
     logger.warn('manuscript getsource files')
-    logger.warn(JSON.stringify(this.files))
+    logger.warn(JSON.stringify(this.files, null, 4))
     return this.files.find(file => file.type === 'MANUSCRIPT_SOURCE')
   }
 }

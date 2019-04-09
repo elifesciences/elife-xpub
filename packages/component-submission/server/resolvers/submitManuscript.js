@@ -13,8 +13,15 @@ const { Notification } = require('../services')
 async function submitManuscript(_, { data }, { user, ip }) {
   const userUuid = await User.getUuidForProfile(user)
   let manuscript = await Manuscript.find(data.id, userUuid)
-  logger.warn('manuscript beginning submit')
-  logger.warn(JSON.stringify(manuscript))
+  logger
+    .warn('manuscript beginning submit')
+    .warn(
+      JSON.stringify(
+        _.pick(manuscript, ['id', 'files', 'fileStatus']),
+        null,
+        4,
+      ),
+    )
 
   if (manuscript.status !== Manuscript.statuses.INITIAL) {
     throw new Error(

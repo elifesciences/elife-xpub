@@ -2,6 +2,7 @@ const logger = require('@pubsweet/logger')
 const ManuscriptModel = require('@elifesciences/component-model-manuscript')
   .model
 const { UploadPredictor, FilesHelper, ManuscriptHelper } = require('./helpers')
+const _ = require('lodash')
 
 class Manuscript {
   constructor(config, user, storage, scienceBeamApi, pubsubManager) {
@@ -78,7 +79,13 @@ class Manuscript {
   async update(data) {
     const manuscript = await ManuscriptModel.find(data.id, this.userId)
     logger.warn('manuscript update model')
-    logger.warn(JSON.stringify(manuscript))
+    logger.warn(
+      JSON.stringify(
+        _.pick(manuscript, ['id', 'files', 'fileStatus']),
+        null,
+        4,
+      ),
+    )
     if (manuscript.status !== ManuscriptModel.statuses.INITIAL) {
       throw new Error(
         `Cannot update manuscript with status of ${manuscript.status}`,
