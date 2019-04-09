@@ -13,6 +13,9 @@ const { Notification } = require('../services')
 async function submitManuscript(_, { data }, { user, ip }) {
   const userUuid = await User.getUuidForProfile(user)
   let manuscript = await Manuscript.find(data.id, userUuid)
+  logger.warn('manuscript beginning submit')
+  logger.warn(JSON.stringify(manuscript))
+
   if (manuscript.status !== Manuscript.statuses.INITIAL) {
     throw new Error(
       `Cannot submit manuscript with status of ${manuscript.status}`,

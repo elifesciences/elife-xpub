@@ -77,6 +77,8 @@ class Manuscript {
 
   async update(data) {
     const manuscript = await ManuscriptModel.find(data.id, this.userId)
+    logger.warn('manuscript update model')
+    logger.warn(JSON.stringify(manuscript))
     if (manuscript.status !== ManuscriptModel.statuses.INITIAL) {
       throw new Error(
         `Cannot update manuscript with status of ${manuscript.status}`,
