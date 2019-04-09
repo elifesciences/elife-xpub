@@ -8,7 +8,7 @@ module.exports = {
       database: 'test',
       idleTimeoutMillis: 800, // Stops open handles in tests
     },
-    port: 4000,
+    port: 3000,
     baseUrl: deferConfig(cfg => `http://app:${cfg['pubsweet-server'].port}`),
     uploads: 'test/temp/uploads',
     secret: 'test',

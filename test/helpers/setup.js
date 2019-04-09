@@ -1,4 +1,3 @@
-import { createTables } from '@pubsweet/db-manager'
 import config from 'config'
 import startS3Server from '@elifesciences/component-service-s3/mock'
 import db from 'pubsweet-server/src/db'
@@ -22,14 +21,11 @@ export async function setup(t) {
     WHERE schemaname = current_schema
   `)
 
-  const truncateQuery = rows
-    .map(row => `TRUNCATE "${row.tablename}" CASCADE`)
-    .join(';')
+  const truncateQuery = `START TRANSACTION;
+    ${rows.map(row => `TRUNCATE "${row.tablename}" CASCADE`).join(';')};
+    COMMIT`
 
   await db.raw(truncateQuery)
-
-  console.log('test/helpers/setup.js::setup createTables')
-  await createTables(true)
 
   console.log('test/helpers/setup.js::setup replaySetup')
   replaySetup('success')
