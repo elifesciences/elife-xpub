@@ -3,6 +3,7 @@ import config from 'config'
 import startS3Server from '@elifesciences/component-service-s3/mock'
 import db from 'pubsweet-server/src/db'
 
+// idea: this might be another option for when running browser tests
 // while writing tests, using the following to start the server avoids having to recompile the app
 // import {startServer: start} from 'pubsweet-server'
 
