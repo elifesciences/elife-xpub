@@ -1,6 +1,11 @@
 version: '3'
 
 services:
+  test_browser:
+    build:
+      context: .
+      dockerfile: ./Dockerfile-development
+
   app:
     build:
       context: .

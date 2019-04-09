@@ -1,6 +1,28 @@
 version: '3'
 
 services:
+  test_browser:
+    build:
+      dockerfile: ./Dockerfile
+      args:
+        CI_COMMIT_SHA: ${IMAGE_TAG}
+    image: elifesciences/elife-xpub:${IMAGE_TAG}
+    # no need to start the up in any scenario, yet
+    command: sh -c "./scripts/wait-for-it.sh -t 180 app:4000 && socat -d tcp-listen:10081,reuseaddr,fork tcp:localhost:10080 & npm run test:browser -- --screenshots /tmp/screenshots --screenshots-on-fails"
+    depends_on:
+      - app
+    environment:
+      BROWSER:
+      NODE_ENV:
+      NODE_CONFIG_ENV:
+      PGHOST:
+      PGUSER:
+      PGPASSWORD:
+      PGDATABASE:
+      PUBSWEET_SECRET:
+    volumes:
+      - ./build/screenshots:/tmp/screenshots
+
   app:
     build:
       dockerfile: ./Dockerfile
