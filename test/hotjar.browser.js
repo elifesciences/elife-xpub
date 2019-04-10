@@ -52,11 +52,11 @@ test('test suppressions', async t => {
 
   // editor's page
   navigationHelper.openEditorsPicker()
-  navigationHelper.selectPeople([0, 2, 3])
+  navigationHelper.selectPeople([0, 1, 2])
   navigationHelper.closePeoplePicker()
 
   navigationHelper.openReviewerPicker()
-  navigationHelper.selectPeople([1, 4, 6])
+  navigationHelper.selectPeople([0, 1, 2])
   navigationHelper.closePeoplePicker()
 
   await t
