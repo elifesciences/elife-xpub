@@ -56,7 +56,7 @@ services:
   sftp:
     image: atmoz/sftp:alpine
     ports:
-      - 22:3022
+      - "2222:22"
     command: test:tset:1001
 
   postgres:
