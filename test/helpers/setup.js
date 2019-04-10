@@ -1,5 +1,3 @@
-import config from 'config'
-import startS3Server from '@elifesciences/component-service-s3/mock'
 import db from 'pubsweet-server/src/db'
 
 // idea: this might be another option for when running browser tests
@@ -7,8 +5,6 @@ import db from 'pubsweet-server/src/db'
 // import {startServer: start} from 'pubsweet-server'
 
 import replaySetup from './replay-setup'
-
-let s3rver
 
 export async function setup(t) {
   console.log('test/helpers/setup.js::setup')
@@ -29,16 +25,4 @@ export async function setup(t) {
 
   console.log('test/helpers/setup.js::setup replaySetup')
   replaySetup('success')
-
-  console.log('test/helpers/setup.js::setup await startS3Server')
-  // setup mock S3 server
-  s3rver = await startS3Server({
-    ...config.get('aws.credentials'),
-    ...config.get('aws.s3'),
-  })
-}
-
-export async function teardown() {
-  console.log('test/helpers/setup.js::teardown')
-  await new Promise(resolve => s3rver.instance.close(resolve))
 }

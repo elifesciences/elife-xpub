@@ -30,7 +30,7 @@ module.exports = {
       },
       endpoint: new AWS.Endpoint(
         // randomise port to avoid conflicts in parallel test runs
-        `http://localhost:${Math.floor(Math.random() * 50000) + 15000}`,
+        'http://fakes3:4569/',
       ),
     },
   },
@@ -40,7 +40,7 @@ module.exports = {
   server: {
     api: {
       secret: '',
-      url: 'http://api-dummy:8080/'
+      url: 'http://api-dummy:8080/',
     },
   },
   meca: {
