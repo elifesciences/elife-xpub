@@ -8,7 +8,7 @@ services:
         CI_COMMIT_SHA: ${IMAGE_TAG}
     image: elifesciences/elife-xpub:${IMAGE_TAG}
     # no need to start the up in any scenario, yet
-    command: sh -c "./scripts/wait-for-app.sh app:3000 ; socat -d tcp-listen:10081,reuseaddr,fork tcp:localhost:10080 & npm run test:browser -- --screenshots /tmp/screenshots --screenshots-on-fails"
+    command: sh -c "./scripts/wait-for-app.sh app:3000 ; socat -d tcp-listen:10081,reuseaddr,fork tcp:localhost:10080 & node -e \"console.log(require('config'))\";  npm run test:browser -- --screenshots /tmp/screenshots --screenshots-on-fails"
     depends_on:
       - app
     environment:
@@ -33,6 +33,7 @@ services:
     command: sh -c "npx pubsweet server"
     depends_on:
       - postgres
+      - api-dummy
     environment:
       BROWSER:
       NODE_ENV:
