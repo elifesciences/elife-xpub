@@ -35,6 +35,7 @@ services:
       - postgres
       - api-dummy
       - fakes3
+      - sftp
     environment:
       BROWSER:
       NODE_ENV:
@@ -51,6 +52,12 @@ services:
     image: elifesciences/api-dummy
     ports:
       - 8080:8080
+
+  sftp:
+    image: atmoz/sftp:alpine
+    ports:
+      - 22:3022
+    command: test:tset:1001
 
   postgres:
     image: postgres:10.4

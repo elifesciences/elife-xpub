@@ -1,8 +1,4 @@
 import { ClientFunction, Selector } from 'testcafe'
-import config from 'config'
-import assert from 'assert'
-import logger from '@pubsweet/logger'
-import { startSshServer } from '@elifesciences/component-meca/'
 import {
   author,
   dashboard,
@@ -27,31 +23,9 @@ const manuscript = {
 }
 
 const supportingFileLarge = './fixtures/dummy-pdf-test11MB.pdf'
-
 const getPageUrl = ClientFunction(() => window.location.href)
-const autoRetry = async (fn, timeout = 5000) => {
-  const delay = 100
-  const start = Date.now()
-  while (true) {
-    try {
-      // eslint-disable-next-line no-await-in-loop
-      return await fn()
-    } catch (err) {
-      if (Date.now() > start + timeout) {
-        throw err
-      }
-      logger.debug(`Auto retrying failed assertion:`, err.message || err.errMsg)
-    }
-    // eslint-disable-next-line no-await-in-loop
-    await new Promise(resolve => setTimeout(resolve, delay))
-  }
-}
 
 test('Happy path', async t => {
-  const { mockFs, server } = await startSshServer(
-    config.get('meca.sftp.connectionOptions.port'),
-  )
-
   const navigationHelper = new NavigationHelper(t)
   navigationHelper.login()
   navigationHelper.newSubmission()
@@ -148,15 +122,6 @@ test('Happy path', async t => {
     .expect(dashboard.statuses.textContent)
     // TODO this might cause a race condition
     .eql('Submitted')
-
-  // SFTP server
-  await autoRetry(() => {
-    const dir = mockFs.readdirSync('/test')
-    assert.strictEqual(dir[0].substring(36), '-meca.zip')
-  })
-  await new Promise((resolve, reject) =>
-    server.close(err => (err ? reject(err) : resolve())),
-  )
 })
 
 test('Ability to progress through the wizard is tied to validation', async t => {

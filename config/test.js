@@ -46,7 +46,7 @@ module.exports = {
   meca: {
     sftp: {
       connectionOptions: {
-        host: 'localhost',
+        host: 'sftp',
         port: 3022,
         username: 'test',
         password: 'tset',
