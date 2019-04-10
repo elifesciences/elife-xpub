@@ -70,13 +70,13 @@ test('Happy path', async t => {
   navigationHelper.preFillAuthorDetailsWithOrcid()
   await t
     .expect(author.firstNameField.value)
-    .eql('Tamlyn')
+    .eql('Josiah')
     .expect(author.secondNameField.value)
-    .eql('Rhodes')
+    .eql('Carberry')
     .expect(author.emailField.value)
-    .eql('f72c502e0d657f363b5f2dc79dd8ceea')
+    .eql('j.carberry@orcid.org')
     .expect(author.institutionField.value)
-    .eql('Tech team, University of eLife')
+    .eql('Psychoceramics, Wesleyan University')
   navigationHelper.setAuthorEmail('example@example.org')
   navigationHelper.navigateForward()
 

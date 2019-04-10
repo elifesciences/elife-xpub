@@ -45,6 +45,11 @@ services:
     volumes:
       - ./build/screenshots:/tmp/screenshots
 
+  api-dummy:
+    image: elifesciences/api-dummy
+    ports:
+      - 8080:8080
+
   postgres:
     image: postgres:10.4
     ports:

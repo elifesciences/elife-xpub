@@ -15,7 +15,7 @@ module.exports = {
     logger,
   },
   login: {
-    url: '/mock-token-exchange/ewwboc7m',
+    url: '/mock-token-exchange/jcarberry',
     enableMock: true,
   },
   aws: {
@@ -36,6 +36,12 @@ module.exports = {
   },
   fileUpload: {
     maxSizeMB: 10,
+  },
+  server: {
+    api: {
+      secret: '',
+      url: 'http://api-dummy:8080/'
+    },
   },
   meca: {
     sftp: {
