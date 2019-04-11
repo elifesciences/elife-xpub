@@ -28,22 +28,19 @@ module.exports = {
       params: {
         Bucket: 'test',
       },
-      endpoint: new AWS.Endpoint('http://fakes3:4569/'),
+      endpoint: new AWS.Endpoint(
+        // randomise port to avoid conflicts in parallel test runs
+        `http://localhost:${Math.floor(Math.random() * 50000) + 15000}`,
+      ),
     },
   },
   fileUpload: {
     maxSizeMB: 10,
   },
-  server: {
-    api: {
-      secret: '',
-      url: 'http://api-dummy:8080/',
-    },
-  },
   meca: {
     sftp: {
       connectionOptions: {
-        host: 'sftp',
+        host: 'localhost',
         port: 3022,
         username: 'test',
         password: 'tset',
