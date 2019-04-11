@@ -48,7 +48,7 @@ services:
       - ./build/screenshots:/tmp/screenshots
 
   api-dummy:
-    image: elifesciences/api-dummy
+    image: elifesciences/api-dummy:approved
     ports:
       - 8080:8080
 
