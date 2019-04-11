@@ -14,21 +14,8 @@ services:
       - ${PORT:-3000}:3000
     depends_on:
       - postgres
-      - api-dummy
-
-  api-dummy:
-    build:
-      dockerfile: ./Dockerfile-api-dummy
-      context: .
-    ports:
-      - 8080:8080
 
   postgres:
     image: postgres:10.4
     ports:
       - 5432:5432
-
-  fakes3:
-    image: lphoward/fake-s3
-    ports:
-      - 4569:4569
