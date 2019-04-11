@@ -1,5 +1,6 @@
 import React from 'react'
 import { Switch, Redirect } from 'react-router-dom'
+import { compose } from 'recompose'
 import { Subscription } from 'react-apollo'
 import {
   ErrorPage,
@@ -18,11 +19,13 @@ import submissionPageSchema from '../../components/steps/Submission/schema'
 import editorsPageSchema from '../../components/steps/Editors/schema'
 import disclosurePageSchema from '../../components/steps/Disclosure/schema'
 import WizardStep from '../../components/WizardStep'
+
+import withGQL from '../../graphql/withGQL'
 import { ON_UPLOAD_PROGRESS } from '../../components/operations'
 
-const SubmissionWizard = ({ match, history }) => (
-  <SubmissionOperations manuscriptId={match.params.id}>
-    {({ initialValues, updateManuscript, submitManuscript }) => (
+const SubmissionWizard = ({ match, history, data }) => (
+  <SubmissionOperations data={data} manuscriptId={match.params.id}>
+    {({ updateManuscript, submitManuscript, initialValues }) => (
       <Subscription
         subscription={ON_UPLOAD_PROGRESS}
         variables={{ id: match.params.id }}
@@ -130,4 +133,4 @@ const SubmissionWizard = ({ match, history }) => (
   </SubmissionOperations>
 )
 
-export default SubmissionWizard
+export default compose(withGQL)(SubmissionWizard)

@@ -6,11 +6,7 @@ import { ALL_MANUSCRIPTS } from '@elifesciences/component-dashboard/client/graph
 import { Loading } from '@elifesciences/component-elife-ui/client/atoms'
 import { ErrorPage } from '@elifesciences/component-elife-app/client'
 
-import {
-  GET_MANUSCRIPT,
-  UPDATE_MANUSCRIPT,
-  SUBMIT_MANUSCRIPT,
-} from './operations'
+import { UPDATE_MANUSCRIPT, SUBMIT_MANUSCRIPT } from './operations'
 import CosubmissionModifier from './formDataModifiers/CosubmissionModifier'
 import EditorSuggestionsModifier from './formDataModifiers/EditorSuggestionsModifier'
 
@@ -79,7 +75,4 @@ const SubmissionOperations = ({
 export default compose(
   graphql(UPDATE_MANUSCRIPT, { name: 'updateManuscript' }),
   graphql(SUBMIT_MANUSCRIPT, { name: 'submitManuscript' }),
-  graphql(GET_MANUSCRIPT, {
-    options: props => ({ variables: { id: props.manuscriptId } }),
-  }),
 )(SubmissionOperations)
