@@ -6,24 +6,24 @@
 # This will then wait for a max of 5 mins for the application to start
 #
 
-RESOURCE=http://$1/assets/app.js
-CMD="timeout 1s curl -s ${RESOURCE}" 
-FOUND=""
-DIFF=0
-TIMEOUT=300
-START=$(date +"%s")
+resource_to_wait_for=http://$1/assets/app.js
+wait_command="timeout 1s curl -s ${resource_to_wait_for}" 
+found=""
+elapsed_sec=0
+timeout_sec=300
+start_time=$(date +"%s")
 
-while [[ -z "${FOUND}" && ${DIFF} -lt ${TIMEOUT} ]]
+while [[ -z "${found}" && ${elapsed_sec} -lt ${timeout_sec} ]]
 do
-  FOUND=$(${CMD})
+  found=$(${wait_command})
  
   if [ "$?" != "124" ]
   then
     sleep 1
   fi
-  NOW=$(date +"%s")
-  DIFF=$(expr ${NOW} - ${START})
-  printf "Waiting for ${DIFF} seconds...\r"
+  this_time=$(date +"%s")
+  elapsed_sec=$(expr ${this_time} - ${start_time})
+  printf "Waiting for ${elapsed_sec} seconds...\r"
 done
 echo
-echo Waited for ${DIFF} seconds. Found ${#FOUND} bytes
+echo Waited for ${elapsed_sec} seconds. Found ${#found} bytes
