@@ -1,0 +1,46 @@
+{
+  "id": "7a1ad22e",
+  "type": {
+    "id": "reviewing-editor",
+    "label": "Reviewing Editor"
+  },
+  "name": {
+    "preferred": "D\u00e9borah Bourc\u0027his",
+    "index": "Bourc\u0027his, D\u00e9borah"
+  },
+  "research": {
+    "focuses": [
+      "epigenetics",
+      "DNA methylation",
+      "genomic imprinting",
+      "transposons",
+      "reproduction"
+    ],
+    "organisms": ["mouse"],
+    "expertises": [
+      {
+        "id": "chromosomes-gene-expression",
+        "name": "Chromosomes and Gene Expression"
+      },
+      {
+        "id": "developmental-biology",
+        "name": "Developmental Biology"
+      },
+      {
+        "id": "stem-cells-regenerative-medicine",
+        "name": "Stem Cells and Regenerative Medicine"
+      }
+    ]
+  },
+  "affiliations": [
+    {
+      "name": ["Institut Curie"],
+      "address": {
+        "formatted": ["France"],
+        "components": {
+          "country": "France"
+        }
+      }
+    }
+  ]
+}

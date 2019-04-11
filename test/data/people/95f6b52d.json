@@ -1,0 +1,43 @@
+{
+  "id": "95f6b52d",
+  "type": {
+    "id": "reviewing-editor",
+    "label": "Reviewing Editor"
+  },
+  "name": {
+    "surname": "Faraldo-Gomez",
+    "givenNames": "Jose",
+    "preferred": "Jose Faraldo-Gomez",
+    "index": "Faraldo-Gomez, Jose"
+  },
+  "research": {
+    "focuses": [
+      "Computational biophysics",
+      "molecular computation",
+      "membrane proteins"
+    ],
+    "expertises": [
+      {
+        "id": "biochemistry-chemical-biology",
+        "name": "Biochemistry and Chemical Biology"
+      },
+      {
+        "id": "structural-biology-molecular-biophysics",
+        "name": "Structural Biology and Molecular Biophysics"
+      }
+    ]
+  },
+  "affiliations": [
+    {
+      "name": [
+        "National Heart, Lung and Blood Institute, National Institutes of Health"
+      ],
+      "address": {
+        "formatted": ["United States"],
+        "components": {
+          "country": "United States"
+        }
+      }
+    }
+  ]
+}

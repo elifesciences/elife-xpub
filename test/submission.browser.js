@@ -84,11 +84,11 @@ test('Happy path', async t => {
 
   // selecting suggested and excluded editors & reviewers
   navigationHelper.openEditorsPicker()
-  navigationHelper.selectPeople([0, 1, 2])
+  navigationHelper.selectPeople([0, 2, 3, 5, 7, 9])
   navigationHelper.closePeoplePicker()
 
   navigationHelper.openReviewerPicker()
-  navigationHelper.selectPeople([0, 1, 2])
+  navigationHelper.selectPeople([1, 4, 6, 8, 10, 11])
   navigationHelper.closePeoplePicker()
 
   await t

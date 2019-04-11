@@ -49,7 +49,9 @@ services:
       - ./build/screenshots:/tmp/screenshots
 
   api-dummy:
-    image: elifesciences/api-dummy
+    build:
+      dockerfile: ./Dockerfile-api-dummy
+      context: .
     ports:
       - 8080:8080
 

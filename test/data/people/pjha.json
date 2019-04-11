@@ -1,0 +1,44 @@
+{
+  "id": "pjha",
+  "type": {
+    "id": "senior-editor",
+    "label": "Senior Editor"
+  },
+  "name": {
+    "preferred": "Prabhat Jha",
+    "index": "Jha, Prabhat"
+  },
+  "research": {
+    "expertises": [
+      {
+        "id": "epidemiology-global-health",
+        "name": "Epidemiology and Global Health"
+      },
+      {
+        "id": "microbiology-infectious-disease",
+        "name": "Microbiology and Infectious Disease"
+      }
+    ],
+    "focuses": ["Epidemiology"]
+  },
+  "profile": [
+    {
+      "type": "paragraph",
+      "text": "Prabhat Jha has been a key figure in epidemiology and economics of global health for the past decade. He is the University of Toronto Endowed Professor in Disease Control and Canada Research Chair at the Dalla Lana School of Public Health, and the founding Director of the Centre for Global Health Research at St. Michael's Hospital in Toronto. Professor Jha is a lead investigator of the Million Death Study in India, which quantifies the causes of premature mortality in over one million homes from 1997–2014 and which examines the contribution of key risk factors such as tobacco, alcohol, diet, and environmental exposures. He is co-investigator of the Disease Control Priorities Network and the author of several influential books on tobacco control, including two that helped enable a global treaty on tobacco control, now signed by over 160 countries. Prior to founding CGHR, Professor Jha served as Senior Scientist for the World Health Organization, where he co-led the work on health and poverty for the Commission on Macroeconomics and Health. Earlier, he headed the World Bank team responsible for developing the Second National HIV/AIDS Control Program in India. His advisory work has included the Government of South Africa on its national health insurance plan, and the United States Institute of Medicine on global health. Notable recognitions include the Order of Canada (2013) for contributions to global health, the  Luther Terry Award for Research on Tobacco Control (2012), The Globe and Mail 25 Transformational Canadians (2010), Top 40 Canadians under Age 40 Award (2004), the Ontario Premier’s Research Excellence Award (2004), and Gold Medal from the Poland Health Promotion Foundation (2000). Professor Jha holds an MD from the University of Manitoba and a DPhil from Oxford University, where he studied as a Canadian Rhodes Scholar."
+    }
+  ],
+  "competingInterests": "Prabhat Jha has received funding from the Bill and Melinda Gates Foundation, Canadian International Development Research Agency, Canadian International Development Agency, the International Science and Technology Program of the Canadian government, and the US National Institutes of Health. He serves on the editorial board of <i>Demography India</i>. He advises several agencies and the Canadian government on epidemiology, disease control strategies, and tobacco control, and serves on the advisory board of the UK Biobank.",
+  "image": {
+    "alt": "",
+    "uri": "https://iiif.elifesciences.org/journal-cms/person%2F2012-03%2Fkegley120208elife0213b.jpg",
+    "source": {
+      "mediaType": "image/png",
+      "uri": "https://iiif.elifesciences.org/journal-cms/person%2F2012-03%2Fkegley120208elife0213b.jpg/full/full/0/default.png",
+      "filename": "kegley120208elife0213b.jpg"
+    },
+    "size": {
+      "width": 4256,
+      "height": 2832
+    }
+  }
+}
