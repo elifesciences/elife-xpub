@@ -28,10 +28,7 @@ module.exports = {
       params: {
         Bucket: 'test',
       },
-      endpoint: new AWS.Endpoint(
-        // randomise port to avoid conflicts in parallel test runs
-        'http://fakes3:4569/',
-      ),
+      endpoint: new AWS.Endpoint('http://fakes3:4569/'),
     },
   },
   fileUpload: {
