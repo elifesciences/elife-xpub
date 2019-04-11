@@ -84,7 +84,7 @@ module.exports = {
   login: {
     // TODO swap this mock for the Journal endpoint when available
     isPublic: true,
-    url: '/mock-token-exchange/jcarberry',
+    url: '/mock-token-exchange/ewwboc7m',
     enableMock: true,
     signupUrl: 'https://orcid.org/register',
     legacySubmissionUrl: 'https://submit.elifesciences.org',
