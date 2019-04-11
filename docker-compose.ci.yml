@@ -69,8 +69,3 @@ services:
       POSTGRES_PASSWORD:
     volumes:
       - ./scripts/test-ci.sql:/docker-entrypoint-initdb.d/test-ci.sql
-
-  fakes3:
-    image: lphoward/fake-s3
-    ports:
-      - 4569:4569
