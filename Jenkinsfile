@@ -86,6 +86,7 @@ elifePipeline {
                     sh "IMAGE_TAG=${commit} NODE_ENV=production NODE_CONFIG_ENV=test docker-compose -f docker-compose.yml -f docker-compose.ci.yml run -p 10081:10081 --rm --name elife-xpub_app_test_browser test_browser"
                 }, 'test:browser', commit)
             } finally {
+                archiveArtifacts artifacts: "build/screenshots/*", allowEmptyArchive: true
                 sh "IMAGE_TAG=${commit} docker-compose -f docker-compose.yml -f docker-compose.ci.yml down -v"
             }
         }
