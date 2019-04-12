@@ -84,13 +84,14 @@ elifePipeline {
                 sh "IMAGE_TAG=${commit} NODE_ENV=production NODE_CONFIG_ENV=test docker-compose -f docker-compose.yml -f docker-compose.ci.yml run --rm --name elife-xpub_wait_postgres app bash -c './scripts/wait-for-it.sh postgres:5432'"
                 sh "IMAGE_TAG=${commit} NODE_ENV=production NODE_CONFIG_ENV=test docker-compose -f docker-compose.yml -f docker-compose.ci.yml run --rm --name elife-xpub_clobber_db app bash -c 'npx pubsweet setupdb --clobber --username test --password password --email test@example.com'"
                 sh "IMAGE_TAG=${commit} NODE_ENV=production NODE_CONFIG_ENV=test docker-compose -f docker-compose.yml -f docker-compose.ci.yml up -d app api-dummy"
+                sh "aws --endpoint-url='http://localhost:4569' s3 mb s3://test"
                 withCommitStatus({
                     sh "IMAGE_TAG=${commit} NODE_ENV=production NODE_CONFIG_ENV=test docker-compose -f docker-compose.yml -f docker-compose.ci.yml run -p 10081:10081 --rm --name elife-xpub_app_test_browser test_browser"
                 }, 'test:browser', commit)
             } finally {
                 archiveArtifacts artifacts: "build/screenshots/**/*", allowEmptyArchive: true
-                sh "aws --endpoint-url='http://localhost:4569' s3 ls"
-                sh "aws --endpoint-url='http://localhost:4569' s3 ls test --recursive"
+                sh "echo Bucket var: ${S3_BUCKET} ; aws --endpoint-url='http://localhost:4569' s3 ls"
+                sh "aws --endpoint-url='http://localhost:4569' s3 ls s3://test --recursive"
                 sh "IMAGE_TAG=${commit} docker-compose -f docker-compose.yml -f docker-compose.ci.yml down -v"
             }
         }
