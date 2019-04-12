@@ -46,6 +46,7 @@ services:
       PUBSWEET_SECRET:
     volumes:
       - ./build/screenshots:/tmp/screenshots
+      - ./build/logs/:/var/log/xpub
 
   api-dummy:
     build:

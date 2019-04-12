@@ -85,7 +85,7 @@ elifePipeline {
                     sh "IMAGE_TAG=${commit} NODE_ENV=production NODE_CONFIG_ENV=test docker-compose -f docker-compose.yml -f docker-compose.ci.yml run -p 10081:10081 --rm --name elife-xpub_app_test_browser test_browser"
                 }, 'test:browser', commit)
             } finally {
-                archiveArtifacts artifacts: "build/screenshots/**/*", allowEmptyArchive: true
+                archiveArtifacts artifacts: "build/screenshots/**/* build/logs/*", allowEmptyArchive: true
                 sh "aws --endpoint-url='http://localhost:4569' s3 ls"
                 sh "aws --endpoint-url='http://localhost:4569' s3 ls s3://test --recursive"
                 sh "aws --endpoint-url='http://localhost:4569' s3 ls s3://fakes3 --recursive"
