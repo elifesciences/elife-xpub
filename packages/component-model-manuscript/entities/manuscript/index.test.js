@@ -11,17 +11,17 @@ describe('Manuscript', () => {
 
   beforeEach(async () => {
     // eslint-disable-next-line no-console
-    console.log('createTables::start')
+    console.log('createTables::start', new Date().toTimeString())
     await createTables(true)
     // eslint-disable-next-line no-console
-    console.log('createTables::end')
+    console.log('createTables::end', new Date().toTimeString())
     const profileId = 'ewwboc7m'
     const identities = [{ type: 'elife', identifier: profileId }]
     // eslint-disable-next-line no-console
-    console.log('create new User::start')
+    console.log('create new User::start', new Date().toTimeString())
     const user = await new User({ identities }).save()
     // eslint-disable-next-line no-console
-    console.log('create new User::end')
+    console.log('create new User::end', new Date().toTimeString())
     userId = user.id
   })
 
