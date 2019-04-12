@@ -88,7 +88,6 @@ elifePipeline {
                 archiveArtifacts artifacts: "build/screenshots/**/*,build/logs/**/*", allowEmptyArchive: true
                 sh "aws --endpoint-url='http://localhost:4569' s3 ls"
                 sh "aws --endpoint-url='http://localhost:4569' s3 ls s3://test --recursive"
-                sh "aws --endpoint-url='http://localhost:4569' s3 ls s3://fakes3 --recursive"
                 sh "IMAGE_TAG=${commit} docker-compose -f docker-compose.yml -f docker-compose.ci.yml down -v"
             }
         }
