@@ -73,6 +73,7 @@ const WizardStep = ({
               <Box>
                 {finalStep ? (
                   <WizardSubmit
+                    isSubmitting={isSubmitting}
                     setTouched={setTouched}
                     submitForm={submitForm}
                     validateForm={validateForm}

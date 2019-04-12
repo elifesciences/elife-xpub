@@ -28,6 +28,8 @@ class FilesHelper {
       type: 'MANUSCRIPT_SOURCE_PENDING',
       mimeType,
     }).save()
+    const id = fileEntity.id
+    logger.info(`~~~~~ ${JSON.stringify(await FileModel.find(id), null, 4)}`)
     return {
       stream,
       fileEntity,

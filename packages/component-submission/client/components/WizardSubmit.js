@@ -5,7 +5,7 @@ import {
   ModalHistoryState,
 } from '@elifesciences/component-elife-ui/client/molecules'
 
-const WizardSubmit = ({ setTouched, submitForm, validateForm }) => (
+const WizardSubmit = ({ isSubmitting, setTouched, submitForm, validateForm }) => (
   <ModalHistoryState>
     {({ showModal, hideModal, isModalVisible }) => (
       <React.Fragment>
@@ -26,8 +26,14 @@ const WizardSubmit = ({ setTouched, submitForm, validateForm }) => (
           Submit
         </Button>
         <ModalDialog
-          acceptText="Confirm"
-          onAccept={submitForm}
+          acceptText={isSubmitting ? "X" : "Confirm"}
+          onAccept={
+            () => {
+              if (!isSubmitting) {
+                submitForm()
+              }
+            }
+          }
           onCancel={hideModal}
           open={isModalVisible()}
         >

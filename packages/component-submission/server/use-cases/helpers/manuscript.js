@@ -52,27 +52,31 @@ class ManuscriptHelper {
     await fileEntity.updateStatus('UPLOADED')
 
     logger.info(
-      `Manuscript Upload fileContents::end ${filename} | ${manuscriptId}`,
+      `Manuscript Upload fileContents::end ${filename} | ${manuscriptId} | ${fileId}`,
     )
 
-    logger.info(`Manuscript Upload S3::start ${filename} | ${manuscriptId}`)
+    logger.info(`Manuscript Upload S3::start ${filename} | ${manuscriptId} | ${fileId}`)
 
     fileEntity = await FileModel.find(fileId)
+
+    logger.info(`got file: ${fileId}`)
 
     try {
       await this.storage.putContent(fileEntity, fileContent, {
         size: fileSize,
       })
+      logger.info(`put content file: ${fileId}`)
       await fileEntity.updateStatus('STORED')
     } catch (err) {
       logger.error(
-        `Manuscript was not uploaded to S3: ${err} | ${manuscriptId}`,
+        `Manuscript was not uploaded to S3: ${err} | ${manuscriptId} | ${fileId}`,
       )
+      logger.info(`delete  file: ${fileId}`)
       await fileEntity.delete()
       throw err
     }
 
-    logger.info(`Manuscript Upload S3::end ${filename} | ${manuscriptId}`)
+    logger.info(`Manuscript Upload S3::end ${filename} | ${manuscriptId} | ${fileId}`)
 
     const title = await this.filesHelper.extractFileTitle(
       fileContent,
@@ -90,7 +94,7 @@ class ManuscriptHelper {
     logger.info(
       `Manuscript Upload Manuscript::saved ${
         manuscript.meta.title
-      } | ${manuscriptId}`,
+      } | ${manuscriptId} | ${fileId}`,
     )
   }
 }

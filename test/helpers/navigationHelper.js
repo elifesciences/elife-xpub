@@ -87,10 +87,12 @@ class NavigationHelper {
 
   async uploadManuscript(manuscript) {
     await this.t.setFilesToUpload(files.manuscriptUpload, manuscript.file)
+    await this.wait(30000)
   }
 
   async uploadSupportingFiles(supportingFiles) {
     await this.t.setFilesToUpload(files.supportingFilesUpload, supportingFiles)
+    await this.wait(30000)
   }
 
   async addManuscriptMetadata() {
@@ -137,10 +139,12 @@ class NavigationHelper {
 
   async submit() {
     await this.t.click(wizardStep.submit)
+    await this.t.wait(1000)
   }
 
   async accept() {
     await this.t.click(wizardStep.accept)
+    await this.t.wait(60000)
   }
 
   async thankyou() {

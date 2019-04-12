@@ -136,7 +136,7 @@ class Manuscript extends BaseModel {
     })
 
     if (!manuscript) {
-      throw new Error(`${this.name} not found`)
+      throw new Error(`${this.name} not found, with id=${id}`)
     }
     // todo why does eager loading sometimes not work?
     await manuscript.$loadRelated('[teams, files]')
