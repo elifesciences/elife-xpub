@@ -7,21 +7,21 @@ import {
   TrackedRoute,
 } from '@elifesciences/component-elife-app/client'
 
-import SubmissionOperations from '../../components/SubmissionOperations'
-import AuthorPageContainer from '../../components/steps/Author'
-import FilesPageContainer from '../../components/steps/Files'
-import SubmissionPage from '../../components/steps/Submission'
-import EditorsPageContainer from '../../components/steps/Editors'
-import DisclosurePage from '../../components/steps/Disclosure'
-import authorPageSchema from '../../components/steps/Author/schema'
-import filesPageSchema from '../../components/steps/Files/schema'
-import submissionPageSchema from '../../components/steps/Submission/schema'
-import editorsPageSchema from '../../components/steps/Editors/schema'
-import disclosurePageSchema from '../../components/steps/Disclosure/schema'
-import WizardStep from '../../components/WizardStep'
+import SubmissionOperations from '../components/SubmissionOperations'
+import AuthorPageContainer from '../components/steps/Author'
+import FilesPageContainer from '../components/steps/Files'
+import SubmissionPage from '../components/steps/Submission'
+import EditorsPageContainer from '../components/steps/Editors'
+import DisclosurePage from '../components/steps/Disclosure'
+import authorPageSchema from '../components/steps/Author/schema'
+import filesPageSchema from '../components/steps/Files/schema'
+import submissionPageSchema from '../components/steps/Submission/schema'
+import editorsPageSchema from '../components/steps/Editors/schema'
+import disclosurePageSchema from '../components/steps/Disclosure/schema'
+import WizardStep from '../components/WizardStep'
 
-import withGQL from '../../graphql/withGQL'
-import { ON_UPLOAD_PROGRESS } from '../../components/operations'
+import withGQL from '../graphql/withGQL'
+import { ON_UPLOAD_PROGRESS } from '../components/operations'
 
 const SubmissionWizard = ({ match, history, data }) => (
   <SubmissionOperations data={data} manuscriptId={match.params.id}>
