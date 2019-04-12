@@ -21,10 +21,20 @@ import disclosurePageSchema from '../components/steps/Disclosure/schema'
 import WizardStep from '../components/WizardStep'
 
 import withGQL from '../graphql/withGQL'
-import { ON_UPLOAD_PROGRESS } from '../components/operations'
+import { ON_UPLOAD_PROGRESS } from '../graphql/mutations'
 
-const SubmissionWizard = ({ match, history, data }) => (
-  <SubmissionOperations data={data} manuscriptId={match.params.id}>
+const SubmissionWizard = ({
+  match,
+  history,
+  data,
+  updateManuscript: updateManuscriptMutation,
+  submitManuscript: submitManuscriptMutation,
+}) => (
+  <SubmissionOperations
+    data={data}
+    submitManuscript={submitManuscriptMutation}
+    updateManuscript={updateManuscriptMutation}
+  >
     {({ updateManuscript, submitManuscript, initialValues }) => (
       <Subscription
         subscription={ON_UPLOAD_PROGRESS}
