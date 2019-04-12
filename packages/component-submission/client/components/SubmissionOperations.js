@@ -1,46 +1,11 @@
-import { cloneDeep } from 'lodash'
-import { graphql, compose } from 'react-apollo'
 import React from 'react'
-import omitDeep from 'omit-deep-lodash'
+import { graphql, compose } from 'react-apollo'
 import { ALL_MANUSCRIPTS } from '@elifesciences/component-dashboard/client/graphql/queries'
 import { Loading } from '@elifesciences/component-elife-ui/client/atoms'
 import { ErrorPage } from '@elifesciences/component-elife-app/client'
 
 import { UPDATE_MANUSCRIPT, SUBMIT_MANUSCRIPT } from './operations'
-import CosubmissionModifier from './formDataModifiers/CosubmissionModifier'
-import EditorSuggestionsModifier from './formDataModifiers/EditorSuggestionsModifier'
-
-const dataModifiers = [
-  new CosubmissionModifier(),
-  new EditorSuggestionsModifier(),
-]
-
-function runMutation(formValues, mutation, { refetchQueries = [] } = {}) {
-  const omitList = [
-    '__typename',
-    'files',
-    'teams',
-    'status',
-    'clientStatus',
-    'fileStatus',
-    'lastStepVisited',
-  ]
-
-  dataModifiers.forEach(modifier => {
-    omitList.push(...modifier.omitList())
-  })
-
-  const modifiedValues = omitDeep(formValues, omitList)
-
-  dataModifiers.forEach(modifier => {
-    modifier.fromForm(modifiedValues, formValues)
-  })
-
-  return mutation({
-    refetchQueries,
-    variables: { data: modifiedValues },
-  })
-}
+import { parseFormToOutputData, parseInputToFormData } from '../utils'
 
 const SubmissionOperations = ({
   children,
@@ -57,17 +22,17 @@ const SubmissionOperations = ({
     return <ErrorPage error={data.error} />
   }
 
-  const initialValues = cloneDeep(data.manuscript)
-  dataModifiers.forEach(modifier => {
-    modifier.toForm(initialValues)
-  })
-
   return children({
-    initialValues,
-    updateManuscript: newValues => runMutation(newValues, updateManuscript),
-    submitManuscript: newValues =>
-      runMutation(newValues, submitManuscript, {
+    initialValues: parseInputToFormData(data.manuscript),
+    updateManuscript: formValues =>
+      updateManuscript({
         refetchQueries: [{ query: ALL_MANUSCRIPTS }],
+        variables: { data: parseFormToOutputData(formValues) },
+      }),
+    submitManuscript: formValues =>
+      submitManuscript({
+        refetchQueries: [{ query: ALL_MANUSCRIPTS }],
+        variables: { data: parseFormToOutputData(formValues) },
       }),
   })
 }
