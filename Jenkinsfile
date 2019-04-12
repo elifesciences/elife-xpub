@@ -89,6 +89,7 @@ elifePipeline {
                 }, 'test:browser', commit)
             } finally {
                 archiveArtifacts artifacts: "build/screenshots/**/*", allowEmptyArchive: true
+                sh "aws --endpoint-url='http://localhost:4569' s3 ls"
                 sh "aws --endpoint-url='http://localhost:4569' s3 ls test --recursive"
                 sh "IMAGE_TAG=${commit} docker-compose -f docker-compose.yml -f docker-compose.ci.yml down -v"
             }
