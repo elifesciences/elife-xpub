@@ -10,10 +10,18 @@ describe('Manuscript', () => {
   let userId
 
   beforeEach(async () => {
+    // eslint-disable-next-line no-console
+    console.log('createTables::start')
     await createTables(true)
+    // eslint-disable-next-line no-console
+    console.log('createTables::end')
     const profileId = 'ewwboc7m'
     const identities = [{ type: 'elife', identifier: profileId }]
+    // eslint-disable-next-line no-console
+    console.log('create new User::start')
     const user = await new User({ identities }).save()
+    // eslint-disable-next-line no-console
+    console.log('create new User::end')
     userId = user.id
   })
 
