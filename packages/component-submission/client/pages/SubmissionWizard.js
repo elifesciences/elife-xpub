@@ -37,6 +37,8 @@ const SubmissionWizard = ({
   uploadProgress,
   uploadManuscriptFile,
   deleteManuscriptFile,
+  uploadSupportingFile,
+  deleteSupportingFiles,
 }) => (
   <Switch>
     <TrackedRoute
@@ -46,6 +48,7 @@ const SubmissionWizard = ({
         <WizardStep
           component={FilesPageContainer}
           deleteManuscriptFile={deleteManuscriptFile}
+          deleteSupportingFiles={deleteSupportingFiles}
           handleAutoSave={updateManuscript}
           handleButtonClick={updateManuscript}
           history={history}
@@ -56,6 +59,7 @@ const SubmissionWizard = ({
           title="Write your cover letter and upload your manuscript"
           validationSchema={filesPageSchema}
           uploadManuscriptFile={uploadManuscriptFile}
+          uploadSupportingFile={uploadSupportingFile}
         />
       )}
     />

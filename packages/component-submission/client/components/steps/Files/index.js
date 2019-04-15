@@ -1,48 +1,10 @@
 import React from 'react'
-import gql from 'graphql-tag'
-import { Mutation } from 'react-apollo'
 import { Box } from '@rebass/grid'
 import { ValidatedField } from '@elifesciences/component-elife-ui/client/atoms'
 import CoverLetterEditor from './CoverLetterEditor'
 import ManuscriptUpload from './ManuscriptUpload'
 import SupportingUpload from './SupportingUpload'
 import { errorMessageMapping, manuscriptFileTypes } from './utils'
-
-const UPLOAD_SUPPORTING_MUTATION = gql`
-  mutation UploadFile($id: ID!, $file: Upload!) {
-    uploadSupportingFile(id: $id, file: $file) {
-      id
-      meta {
-        title
-      }
-      files {
-        filename
-        type
-        status
-        id
-      }
-      fileStatus
-    }
-  }
-`
-
-const DELETE_SUPPORTING_FILES_MUTATION = gql`
-  mutation UploadFile($id: ID!) {
-    removeSupportingFiles(id: $id) {
-      id
-      files {
-        filename
-        type
-        status
-        id
-      }
-    }
-  }
-`
-
-function getProgress(uploadProgress) {
-  return !uploadProgress ? 0 : uploadProgress
-}
 
 export default class FilesPageContainer extends React.Component {
   constructor(props) {
@@ -125,7 +87,9 @@ export default class FilesPageContainer extends React.Component {
       errors,
       touched,
       values,
-      manuscriptUploadProgress,
+      manuscriptUploadProgress = 0,
+      uploadSupportingFile,
+      deleteSupportingFiles,
     } = this.props
 
     const manuscriptFile = this.getManuscriptSourceFile()
@@ -147,9 +111,10 @@ export default class FilesPageContainer extends React.Component {
             conversion={{
               converting:
                 this.state.manuscriptUploading ||
-                (manuscriptUploadProgress && manuscriptUploadProgress < 100),
+                (manuscriptUploadProgress > 0 &&
+                  manuscriptUploadProgress < 100),
               completed: hasManuscript,
-              progress: getProgress(manuscriptUploadProgress),
+              progress: manuscriptUploadProgress,
               error: this.state.manuscriptUploadingError,
             }}
             data-test-id="upload"
@@ -159,42 +124,34 @@ export default class FilesPageContainer extends React.Component {
           />
         </Box>
         <Box width={1}>
-          <Mutation mutation={UPLOAD_SUPPORTING_MUTATION}>
-            {uploadSupportFiles => (
-              <Mutation mutation={DELETE_SUPPORTING_FILES_MUTATION}>
-                {removeSupportFiles => (
-                  <SupportingUpload
-                    data-test-id="supportingFilesUpload"
-                    files={values.files.filter(
-                      file => file.type === manuscriptFileTypes.SUPPORTING_FILE,
-                    )}
-                    hasManuscript={hasManuscript}
-                    removeFiles={() =>
-                      removeSupportFiles({
-                        variables: { id: values.id },
-                      })
-                    }
-                    uploadFile={file =>
-                      new Promise((resolve, reject) => {
-                        setFieldValue('fileStatus', 'CHANGING')
-                        return uploadSupportFiles({
-                          variables: { file, id: values.id },
-                        })
-                          .then(data => {
-                            setFieldValue(
-                              'fileStatus',
-                              data.data.uploadSupportingFile.fileStatus,
-                            )
-                            resolve(data)
-                          })
-                          .catch(err => reject(err))
-                      })
-                    }
-                  />
-                )}
-              </Mutation>
+          <SupportingUpload
+            data-test-id="supportingFilesUpload"
+            files={values.files.filter(
+              file => file.type === manuscriptFileTypes.SUPPORTING_FILE,
             )}
-          </Mutation>
+            hasManuscript={hasManuscript}
+            removeFiles={() =>
+              deleteSupportingFiles({
+                variables: { id: values.id },
+              })
+            }
+            uploadFile={file =>
+              new Promise((resolve, reject) => {
+                setFieldValue('fileStatus', 'CHANGING')
+                return uploadSupportingFile({
+                  variables: { file, id: values.id },
+                })
+                  .then(data => {
+                    setFieldValue(
+                      'fileStatus',
+                      data.data.uploadSupportingFile.fileStatus,
+                    )
+                    resolve(data)
+                  })
+                  .catch(err => reject(err))
+              })
+            }
+          />
         </Box>
         <ValidatedField
           data-test-id="ongoing-upload-error"
