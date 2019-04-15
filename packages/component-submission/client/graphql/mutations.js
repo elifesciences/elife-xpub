@@ -19,3 +19,67 @@ export const SUBMIT_MANUSCRIPT = gql`
   }
   ${manuscriptFragment}
 `
+
+export const UPLOAD_MANUSCRIPT_FILE = gql`
+  mutation UploadFile($id: ID!, $file: Upload!, $fileSize: Int!) {
+    uploadManuscript(id: $id, file: $file, fileSize: $fileSize) {
+      id
+      meta {
+        title
+      }
+      files {
+        filename
+        type
+        status
+        id
+      }
+      fileStatus
+    }
+  }
+`
+
+export const UPLOAD_SUPPORTING_FILE = gql`
+  mutation UploadFile($id: ID!, $file: Upload!) {
+    uploadSupportingFile(id: $id, file: $file) {
+      id
+      meta {
+        title
+      }
+      files {
+        filename
+        type
+        status
+        id
+      }
+      fileStatus
+    }
+  }
+`
+
+export const DELETE_MANUSCRIPT_FILE = gql`
+  mutation UploadFile($id: ID!) {
+    removeUploadedManuscript(id: $id) {
+      id
+      files {
+        filename
+        type
+        status
+        id
+      }
+    }
+  }
+`
+
+export const DELETE_SUPPORTING_FILES = gql`
+  mutation UploadFile($id: ID!) {
+    removeSupportingFiles(id: $id) {
+      id
+      files {
+        filename
+        type
+        status
+        id
+      }
+    }
+  }
+`
