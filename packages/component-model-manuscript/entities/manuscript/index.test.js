@@ -10,25 +10,14 @@ describe('Manuscript', () => {
   let userId
 
   beforeEach(async () => {
-    // eslint-disable-next-line no-console
-    console.time('test took')
-    console.log('createTables::start', new Date().toISOString())
     await createTables(true)
     // eslint-disable-next-line no-console
-    console.log('createTables::end', new Date().toISOString())
     const profileId = 'ewwboc7m'
     const identities = [{ type: 'elife', identifier: profileId }]
     // eslint-disable-next-line no-console
-    console.log('create new User::start', new Date().toISOString())
     const user = await new User({ identities }).save()
     // eslint-disable-next-line no-console
-    console.log('create new User::end', new Date().toISOString())
     userId = user.id
-  })
-
-  afterEach(() => {
-    console.log('afterEach::end', new Date().toISOString())
-    console.timeEnd('test took')
   })
 
   describe('applyInput()', () => {
