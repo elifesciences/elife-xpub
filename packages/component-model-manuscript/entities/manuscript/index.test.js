@@ -149,8 +149,8 @@ describe('Manuscript', () => {
 
   describe('get fileStatus()', () => {
     describe('given there are no files', () => {
-      expect(dbState).toBe('INITIALIZED')
       it('returns READY', () => {
+        expect(dbState).toBe('INITIALIZED')
         const manuscript = new Manuscript({
           createdBy: userId,
         })
