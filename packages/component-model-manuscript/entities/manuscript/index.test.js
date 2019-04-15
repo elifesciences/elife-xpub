@@ -11,12 +11,9 @@ describe('Manuscript', () => {
 
   beforeEach(async () => {
     await createTables(true)
-    // eslint-disable-next-line no-console
     const profileId = 'ewwboc7m'
     const identities = [{ type: 'elife', identifier: profileId }]
-    // eslint-disable-next-line no-console
     const user = await new User({ identities }).save()
-    // eslint-disable-next-line no-console
     userId = user.id
   })
 
