@@ -28,9 +28,9 @@ test('Interrupt and resume Submission', async t => {
   await t
     .click(author.orcidPrefill)
     .expect(author.firstNameField.value)
-    .eql('Tamlyn')
+    .eql('Aaron')
     .expect(author.secondNameField.value)
-    .eql('Rhodes')
+    .eql('Swartz')
     .expect(author.emailField.value)
     .eql('f72c502e0d657f363b5f2dc79dd8ceea')
     .expect(author.institutionField.value)

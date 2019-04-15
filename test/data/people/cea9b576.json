@@ -1,0 +1,36 @@
+{
+  "id": "cea9b576",
+  "type": {
+    "id": "reviewing-editor",
+    "label": "Reviewing Editor"
+  },
+  "name": {
+    "preferred": "Laura Colgin",
+    "index": "Colgin, Laura"
+  },
+  "research": {
+    "focuses": [
+      "Brain rhythms",
+      "memory operations",
+      "entorhinal-hippocampal network",
+      "aberrant rhythmic activity"
+    ],
+    "expertises": [
+      {
+        "id": "neuroscience",
+        "name": "Neuroscience"
+      }
+    ]
+  },
+  "affiliations": [
+    {
+      "name": ["The University of Texas at Austin"],
+      "address": {
+        "formatted": ["United States"],
+        "components": {
+          "country": "United States"
+        }
+      }
+    }
+  ]
+}

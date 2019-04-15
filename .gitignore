@@ -27,3 +27,4 @@ test/screenshots/
 .idea
 migrations-*
 xpub.log
+build/

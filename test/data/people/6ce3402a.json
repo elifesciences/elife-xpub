@@ -1,0 +1,36 @@
+{
+  "id": "6ce3402a",
+  "type": {
+    "id": "reviewing-editor",
+    "label": "Reviewing Editor"
+  },
+  "name": {
+    "preferred": "Alejandro Sanchez Alvarado",
+    "index": "Sanchez Alvarado, Alejandro"
+  },
+  "research": {
+    "focuses": ["regeneration"],
+    "organisms": ["planaria"],
+    "expertises": [
+      {
+        "id": "cell-biology",
+        "name": "Cell Biology"
+      },
+      {
+        "id": "stem-cells-regenerative-medicine",
+        "name": "Stem Cells and Regenerative Medicine"
+      }
+    ]
+  },
+  "affiliations": [
+    {
+      "name": ["Stowers Institute for Medical Research"],
+      "address": {
+        "formatted": ["United States"],
+        "components": {
+          "country": "United States"
+        }
+      }
+    }
+  ]
+}

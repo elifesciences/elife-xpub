@@ -1,0 +1,54 @@
+{
+  "id": "ffecc910",
+  "type": {
+    "id": "senior-editor",
+    "label": "Senior Editor"
+  },
+  "name": {
+    "preferred": "Naama Barkai",
+    "index": "Barkai, Naama"
+  },
+  "image": {
+    "uri": "https://iiif.elifesciences.org/journal-cms/person%2F2014-08%2Fnaama_crop.jpg",
+    "alt": "Naama Barkai",
+    "source": {
+      "mediaType": "image/jpeg",
+      "uri": "https://iiif.elifesciences.org/journal-cms/person%2F2014-08%2Fnaama_crop.jpg/full/full/0/default.jpg",
+      "filename": "naama_crop.jpg"
+    },
+    "size": {
+      "width": 2973,
+      "height": 1964
+    },
+    "focalPoint": {
+      "x": 50,
+      "y": 50
+    }
+  },
+  "profile": [
+    {
+      "text": "Naama Barkai is a systems and computational biologist interested in how bio-molecular circuits are designed. She joined the Weizmann Institute in 1999, following a post-doc (Princeton) and graduate studies (Hebrew University) in physics. She is currently chair of the Department of Molecular Genetics, and the head of the Azrieli and Kahan Centers for Systems Biology at the Weizmann Institute. In 2013, Barkai was elected to a Vallee Foundation Visiting Professorship and awarded the Abisch Frankel prize.",
+      "type": "paragraph"
+    }
+  ],
+  "research": {
+    "focuses": [
+      "systems biology",
+      "modeling",
+      "functional genomics",
+      "yeast genetics",
+      "morphogen gradients"
+    ],
+    "expertises": [
+      {
+        "id": "computational-systems-biology",
+        "name": "Computational and Systems Biology"
+      },
+      {
+        "id": "physics-living-systems",
+        "name": "Physics of Living Systems"
+      }
+    ]
+  },
+  "competingInterests": "Naama Barkai\u0027s main funding sources are from the European Research Council (ERC), the Human Frontier Science Program (HFSP), the Israel Science Foundation (ISF), Minerva, and the Bi-national Science Foundation (BSF). Barkai also serves on the editorial board of Development."
+}
