@@ -27,6 +27,12 @@ services:
     ports:
       - 4569:4569
 
+  sftp:
+    image: atmoz/sftp:alpine
+    ports:
+      - "2222:22"
+    command: test:tset:1001
+
   api-dummy:
     build:
       dockerfile: ./Dockerfile-api-dummy
