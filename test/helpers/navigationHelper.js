@@ -32,10 +32,12 @@ class NavigationHelper {
   }
 
   async startAtRedirect() {
+    await this.wait(1000)
     await this.t.navigateTo(redirect.url).click(redirect.button)
     if (Selector(cookie.button)) {
       await this.t.click(Selector(cookie.button))
     }
+    await this.wait(1000)
   }
 
   async login() {
@@ -87,12 +89,10 @@ class NavigationHelper {
 
   async uploadManuscript(manuscript) {
     await this.t.setFilesToUpload(files.manuscriptUpload, manuscript.file)
-    await this.wait(10000)
   }
 
   async uploadSupportingFiles(supportingFiles) {
     await this.t.setFilesToUpload(files.supportingFilesUpload, supportingFiles)
-    await this.wait(10000)
   }
 
   async addManuscriptMetadata() {
@@ -139,16 +139,17 @@ class NavigationHelper {
 
   async submit() {
     await this.t.click(wizardStep.submit)
-    await this.wait(5000)
   }
 
   async accept() {
+    await this.wait(1000)
     await this.t.click(wizardStep.accept)
-    await this.wait(5000)
   }
 
   async thankyou() {
+    await this.wait(1000)
     await this.t.click(thankyou.finish)
+    await this.wait(1000)
   }
 
   async paricialSubmissionThankyou(manuscript) {
