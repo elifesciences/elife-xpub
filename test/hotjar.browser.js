@@ -1,6 +1,4 @@
 import { Selector } from 'testcafe'
-import config from 'config'
-import { startSshServer } from '@elifesciences/component-meca/'
 import {
   editors,
   profile,
@@ -24,10 +22,6 @@ const manuscript = {
 }
 
 test('test suppressions', async t => {
-  const { server } = await startSshServer(
-    config.get('meca.sftp.connectionOptions.port'),
-  )
-
   const navigationHelper = new NavigationHelper(t)
 
   navigationHelper.login()
@@ -99,8 +93,4 @@ test('test suppressions', async t => {
       'data-hj-suppress': '',
     })
     .ok()
-
-  await new Promise((resolve, reject) =>
-    server.close(err => (err ? reject(err) : resolve())),
-  )
 })

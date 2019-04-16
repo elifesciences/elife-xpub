@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { Box } from '@rebass/grid'
 import { th } from '@pubsweet/ui-toolkit'
@@ -20,13 +21,14 @@ const EmptyListParagraph = styled(Box)`
   margin-bottom: 24px;
 `
 
-const DashboardList = ({ manuscripts }) =>
+const DashboardList = ({ manuscripts, deleteSubmission }) =>
   manuscripts.length > 0 ? (
     manuscripts.map((manuscript, index) => (
       <DashboardListItem
         index={index}
         key={manuscript.id}
         manuscript={manuscript}
+        onDelete={() => deleteSubmission(manuscript.id)}
       />
     ))
   ) : (
@@ -40,5 +42,21 @@ const DashboardList = ({ manuscripts }) =>
       </EmptyListSmallParagraph>
     </EmptyListMessage>
   )
+
+DashboardList.propTypes = {
+  manuscripts: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      meta: PropTypes.shape({
+        title: PropTypes.string,
+      }).isRequired,
+    }),
+  ),
+  deleteSubmission: PropTypes.func.isRequired,
+}
+
+DashboardList.defaultProps = {
+  manuscripts: [],
+}
 
 export default DashboardList

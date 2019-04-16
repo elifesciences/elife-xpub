@@ -1,0 +1,46 @@
+{
+  "id": "510b7c69",
+  "type": {
+    "id": "reviewing-editor",
+    "label": "Reviewing Editor"
+  },
+  "name": {
+    "preferred": "Allan Spradling",
+    "index": "Spradling, Allan"
+  },
+  "research": {
+    "focuses": [
+      "stem cell differentiation and morphogenesis",
+      "ovary",
+      "female reproduction",
+      "polyploid cell",
+      "epigenetics"
+    ],
+    "organisms": ["Drosophila"],
+    "expertises": [
+      {
+        "id": "developmental-biology",
+        "name": "Developmental Biology"
+      },
+      {
+        "id": "stem-cells-regenerative-medicine",
+        "name": "Stem Cells and Regenerative Medicine"
+      },
+      {
+        "id": "chromosomes-gene-expression",
+        "name": "Chromosomes and Gene Expression"
+      }
+    ]
+  },
+  "affiliations": [
+    {
+      "name": ["Carnegie Institution for Science"],
+      "address": {
+        "formatted": ["United States"],
+        "components": {
+          "country": "United States"
+        }
+      }
+    }
+  ]
+}
