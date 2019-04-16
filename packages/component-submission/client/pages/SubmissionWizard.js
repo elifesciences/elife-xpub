@@ -54,6 +54,7 @@ const SubmissionWizard = ({
           history={history}
           initialValues={initialValues}
           manuscriptUploadProgress={uploadProgress.manuscriptUploadProgress}
+          nextUrl={`${match.url}/submission`}
           previousUrl={`${match.url}/author`}
           step={1}
           title="Write your cover letter and upload your manuscript"
