@@ -12,7 +12,7 @@ import {
 
 import PeoplePickerControl from '@elifesciences/component-submission/client/components/PeoplePicker/PeoplePickerControl'
 import TwoColumnLayout from '@elifesciences/component-elife-ui/client/global/layout/TwoColumnLayout'
-import { limits } from './schema'
+import { EDITOR_LIMITS } from '../../../utils/constants'
 
 const OptionalExclude = ({
   boxVisible,
@@ -90,8 +90,8 @@ class EditorsPage extends React.Component {
   handleSuggestedReviewersChanged = event => {
     this.props.handleChange(event)
 
-    const MAX_REVIEWERS = limits.suggestedReviewers.max
-    const MIN_REVIEWERS = limits.suggestedReviewers.min
+    const MAX_REVIEWERS = EDITOR_LIMITS.suggestedReviewers.max
+    const MIN_REVIEWERS = EDITOR_LIMITS.suggestedReviewers.min
 
     const itemIsBlank = item => item.name + item.email === ''
 
@@ -155,8 +155,8 @@ class EditorsPage extends React.Component {
           <Box data-test-id="suggested-senior-editors" mb={2}>
             <PeoplePickerControl
               initialSelection={values.suggestedSeniorEditors}
-              maxSelection={limits.suggestedSeniorEditors.max}
-              minSelection={limits.suggestedSeniorEditors.min}
+              maxSelection={EDITOR_LIMITS.suggestedSeniorEditors.max}
+              minSelection={EDITOR_LIMITS.suggestedSeniorEditors.min}
               modalName="suggestedSeniorEditors"
               modalTitle="Suggest Senior Editors"
               onRequestRemove={person =>
@@ -188,8 +188,8 @@ class EditorsPage extends React.Component {
 
             <PeoplePickerControl
               initialSelection={values.opposedSeniorEditors}
-              maxSelection={limits.opposedSeniorEditors.max}
-              minSelection={limits.opposedSeniorEditors.min}
+              maxSelection={EDITOR_LIMITS.opposedSeniorEditors.max}
+              minSelection={EDITOR_LIMITS.opposedSeniorEditors.min}
               modalName="opposedSeniorEditors"
               modalTitle="Exclude Senior Editors"
               onRequestRemove={person =>
@@ -224,8 +224,8 @@ class EditorsPage extends React.Component {
           <Box data-test-id="suggested-reviewing-editors" mb={2}>
             <PeoplePickerControl
               initialSelection={values.suggestedReviewingEditors}
-              maxSelection={limits.suggestedReviewingEditors.max}
-              minSelection={limits.suggestedReviewingEditors.min}
+              maxSelection={EDITOR_LIMITS.suggestedReviewingEditors.max}
+              minSelection={EDITOR_LIMITS.suggestedReviewingEditors.min}
               modalName="suggestedReviewingEditors"
               modalTitle="Suggest Reviewing Editors"
               onRequestRemove={person =>
@@ -259,8 +259,8 @@ class EditorsPage extends React.Component {
 
             <PeoplePickerControl
               initialSelection={values.opposedReviewingEditors}
-              maxSelection={limits.opposedReviewingEditors.max}
-              minSelection={limits.opposedReviewingEditors.min}
+              maxSelection={EDITOR_LIMITS.opposedReviewingEditors.max}
+              minSelection={EDITOR_LIMITS.opposedReviewingEditors.min}
               modalName="opposedReviewingEditors"
               modalTitle="Exclude Reviewing Editors"
               onRequestRemove={person =>
@@ -298,20 +298,12 @@ class EditorsPage extends React.Component {
             <Box data-test-id="suggestedReviewerInputGroup" key={index} mb={2}>
               <TwoColumnLayout bottomSpacing={false}>
                 <ValidatedField
-                  label={
-                    index < limits.suggestedReviewers.min
-                      ? `Reviewer ${index + 1} name`
-                      : `Reviewer ${index + 1} name (optional)`
-                  }
+                  label={`Reviewer ${index + 1} name (optional)`}
                   name={`suggestedReviewers.${index}.name`}
                   onChange={this.handleSuggestedReviewersChanged}
                 />
                 <ValidatedField
-                  label={
-                    index < limits.suggestedReviewers.min
-                      ? `Reviewer ${index + 1} email`
-                      : `Reviewer ${index + 1} email (optional)`
-                  }
+                  label={`Reviewer ${index + 1} email (optional)`}
                   name={`suggestedReviewers.${index}.email`}
                   onChange={this.handleSuggestedReviewersChanged}
                   type="email"

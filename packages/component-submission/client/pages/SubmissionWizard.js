@@ -14,18 +14,22 @@ import {
 import { Loading } from '@elifesciences/component-elife-ui/client/atoms'
 
 import AuthorPageContainer from '../components/steps/Author'
-import FilesPageContainer from '../components/steps/Files'
 import SubmissionPage from '../components/steps/Submission'
 import EditorsPageContainer from '../components/steps/Editors'
 import DisclosurePage from '../components/steps/Disclosure'
-import authorPageSchema from '../components/steps/Author/schema'
-import filesPageSchema from '../components/steps/Files/schema'
-import submissionPageSchema from '../components/steps/Submission/schema'
-import editorsPageSchema from '../components/steps/Editors/schema'
-import disclosurePageSchema from '../components/steps/Disclosure/schema'
+
 import WizardStep from '../components/WizardStep'
 
-import withGQL from '../graphql/withGQL'
+import FilesStepPage from './FilesStepPage'
+
+import wizardSchema, {
+  authorSchema,
+  filesSchema,
+  submissionSchema,
+  editorsSchema,
+} from '../utils/ValidationSchemas'
+
+import wizardWithGQL from '../graphql/wizardWithGQL'
 import { parseFormToOutputData, parseInputToFormData } from '../utils'
 
 const SubmissionWizard = ({
@@ -34,11 +38,6 @@ const SubmissionWizard = ({
   updateManuscript,
   submitManuscript,
   initialValues,
-  uploadProgress,
-  uploadManuscriptFile,
-  deleteManuscriptFile,
-  uploadSupportingFile,
-  deleteSupportingFiles,
 }) => (
   <Switch>
     <TrackedRoute
@@ -46,20 +45,16 @@ const SubmissionWizard = ({
       path={`${match.path}/files`}
       render={() => (
         <WizardStep
-          component={FilesPageContainer}
-          deleteManuscriptFile={deleteManuscriptFile}
-          deleteSupportingFiles={deleteSupportingFiles}
+          component={FilesStepPage}
           handleAutoSave={updateManuscript}
           handleButtonClick={updateManuscript}
           history={history}
           initialValues={initialValues}
-          manuscriptUploadProgress={uploadProgress.manuscriptUploadProgress}
+          nextUrl={`${match.url}/submission`}
           previousUrl={`${match.url}/author`}
           step={1}
           title="Write your cover letter and upload your manuscript"
-          validationSchema={filesPageSchema}
-          uploadManuscriptFile={uploadManuscriptFile}
-          uploadSupportingFile={uploadSupportingFile}
+          validationSchema={filesSchema}
         />
       )}
     />
@@ -76,7 +71,7 @@ const SubmissionWizard = ({
           previousUrl={`${match.url}/files`}
           step={2}
           title="Help us get your work seen by the right people"
-          validationSchema={submissionPageSchema}
+          validationSchema={submissionSchema}
         />
       )}
     />
@@ -93,7 +88,7 @@ const SubmissionWizard = ({
           previousUrl={`${match.url}/submission`}
           step={3}
           title="Who should review your work?"
-          validationSchema={editorsPageSchema}
+          validationSchema={editorsSchema}
         />
       )}
     />
@@ -111,7 +106,7 @@ const SubmissionWizard = ({
           previousUrl={`${match.url}/editors`}
           step={4}
           title="Disclosure of data to editors"
-          validationSchema={disclosurePageSchema}
+          validationSchema={wizardSchema}
         />
       )}
     />
@@ -127,7 +122,7 @@ const SubmissionWizard = ({
           nextUrl={`${match.url}/files`}
           step={0}
           title="Your details"
-          validationSchema={authorPageSchema}
+          validationSchema={authorSchema}
         />
       )}
     />
@@ -141,7 +136,7 @@ const SubmissionWizard = ({
 )
 
 export default compose(
-  withGQL,
+  wizardWithGQL,
   // TODO: This error / loading branch wrapper is a common thing across app. Should be turned into an import
   branch(
     props => props.data && (props.data.loading && !props.data.manuscripts),

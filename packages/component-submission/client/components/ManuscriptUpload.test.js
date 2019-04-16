@@ -3,7 +3,7 @@ import { mount, shallow } from 'enzyme'
 import { MemoryRouter } from 'react-router-dom'
 import { ThemeProvider } from 'styled-components'
 import theme from '@elifesciences/elife-theme'
-import { errorMessageMapping } from './utils'
+import { errorMessageMapping } from '../utils/constants'
 
 import ManuscriptUpload from './ManuscriptUpload'
 

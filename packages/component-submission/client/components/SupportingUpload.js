@@ -9,7 +9,7 @@ import {
   errorMessageMapping,
   MAX_SUPPORTING_FILES,
   MAX_FILE_SIZE,
-} from './utils'
+} from '../utils/constants'
 
 const UploadLink = styled.span`
   color: ${th('colorPrimary')};
