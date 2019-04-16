@@ -144,7 +144,7 @@ test('Ability to progress through the wizard is tied to validation', async t => 
 
   navigationHelper.navigateForward()
   // without this wait the tests sometimes fail on CI ¯\_(ツ)_/¯
-  navigationHelper.wait(1000)
+  navigationHelper.wait(2000)
 
   await t
     .expect(getPageUrl())

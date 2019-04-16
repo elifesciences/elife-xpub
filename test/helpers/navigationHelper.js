@@ -33,17 +33,20 @@ class NavigationHelper {
 
   async startAtRedirect() {
     await this.wait(1000)
-    await this.t.navigateTo(redirect.url).click(redirect.button)
+    await this.t
+      .navigateTo(redirect.url)
+      .click(redirect.button, { timeout: 5000 })
+
     if (Selector(cookie.button)) {
-      await this.t.click(Selector(cookie.button))
+      await this.t.click(Selector(cookie.button, { timeout: 5000 }))
     }
-    await this.wait(1000)
   }
 
   async login() {
-    await this.t.navigateTo(login.url).click(login.button)
+    await this.t.navigateTo(login.url).click(login.button, { timeout: 5000 })
+
     if (Selector(cookie.button)) {
-      await this.t.click(Selector(cookie.button))
+      await this.t.click(Selector(cookie.button, { timeout: 5000 }))
     }
   }
 
@@ -133,23 +136,20 @@ class NavigationHelper {
 
   async consentDisclosure() {
     await this.t
-      .typeText(disclosure.submitterName, 'Joe Bloggs')
-      .click(disclosure.consentCheckbox)
+      .typeText(disclosure.submitterName, 'Joe Bloggs', { timeout: 5000 })
+      .click(disclosure.consentCheckbox, { timeout: 5000 })
   }
 
   async submit() {
-    await this.t.click(wizardStep.submit)
+    await this.t.click(wizardStep.submit, { timeout: 5000 })
   }
 
   async accept() {
-    await this.wait(1000)
-    await this.t.click(wizardStep.accept)
+    await this.t.click(wizardStep.accept, { timeout: 5000 })
   }
 
   async thankyou() {
-    await this.wait(1000)
-    await this.t.click(thankyou.finish)
-    await this.wait(1000)
+    await this.t.click(thankyou.finish, { timeout: 5000 })
   }
 
   async paricialSubmissionThankyou(manuscript) {
