@@ -31,7 +31,7 @@ async function submitManuscript(_, { data }, { user, ip }) {
 
   manuscript.applyInput(manuscriptInput)
 
-  const sourceFile = manuscript.getSource()
+  const sourceFile = await manuscript.getSource()
   if (!sourceFile) {
     throw new Error('Manuscript has no source file', {
       manuscriptId: manuscript.id,
