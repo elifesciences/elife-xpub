@@ -1,4 +1,4 @@
-const { S3Storage } = require('@elifesciences/xpub-client')
+const { S3Storage } = require('@elifesciences/component-service-s3')
 const User = require('@elifesciences/component-model-user').model
 
 const { SupportingFiles } = require('../use-cases')

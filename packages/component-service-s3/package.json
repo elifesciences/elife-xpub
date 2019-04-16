@@ -1,5 +1,5 @@
 {
-  "name": "@elifesciences/xpub-client",
+  "name": "@elifesciences/component-service-s3",
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT"

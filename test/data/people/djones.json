@@ -1,0 +1,20 @@
+{
+  "id": "djones",
+  "type": {
+    "id": "reviewing-editor",
+    "label": "Reviewing Editor"
+  },
+  "name": {
+    "preferred": "Dai Jones",
+    "index": "Jones, Dai"
+  },
+  "research": {
+    "expertises": [
+      {
+        "id": "cell-biology",
+        "name": "Cell Biology"
+      }
+    ],
+    "focuses": ["Cell polarity"]
+  }
+}

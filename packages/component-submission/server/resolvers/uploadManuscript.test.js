@@ -10,14 +10,15 @@ const stream = require('stream')
 const logger = require('@pubsweet/logger')
 const { createTables } = require('@pubsweet/db-manager')
 const mailer = require('@pubsweet/component-send-email')
-const startS3rver = require('../../../../server/xpub-server/test/mock-s3-server')
 const User = require('@elifesciences/component-model-user').model
 const Manuscript = require('@elifesciences/component-model-manuscript').model
-const scienceBeamApi = require('../../../../server/xpub-client/scienceBeamApi')
+const startS3Server = require('@elifesciences/component-service-s3/mock')
+
+const ScienceBeamApi = require('../services/scienceBeamApi')
 const { Mutation } = require('.')
 const { userData, badUserData } = require('./index.test.data')
 const replaySetup = require('../../../../test/helpers/replay-setup')
-const { S3Storage } = require('@elifesciences/xpub-client')
+const { S3Storage } = require('@elifesciences/component-service-s3')
 
 describe('Manuscripts', () => {
   const profileId = userData.identities[0].identifier
@@ -39,7 +40,7 @@ describe('Manuscripts', () => {
     let s3Server
 
     beforeEach(async () => {
-      const server = await startS3rver({
+      const server = await startS3Server({
         ...config.get('aws.credentials'),
         ...config.get('aws.s3'),
       })
@@ -129,7 +130,7 @@ describe('Manuscripts', () => {
         mimetype: 'application/pdf',
       }
 
-      jest.spyOn(scienceBeamApi, 'extractSemantics').mockRejectedValueOnce({
+      jest.spyOn(ScienceBeamApi, 'extractSemantics').mockRejectedValueOnce({
         error: {
           code: 'ETIMEDOUT',
           connect: false,

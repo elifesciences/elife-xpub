@@ -6,7 +6,6 @@ import { differenceInCalendarDays, format } from 'date-fns'
 import { th } from '@pubsweet/ui-toolkit'
 import { H2 } from '@pubsweet/ui'
 import PropTypes from 'prop-types'
-import { Mutation } from 'react-apollo'
 import { Icon } from '@elifesciences/component-elife-ui/client/atoms'
 import {
   ModalDialog,
@@ -14,8 +13,6 @@ import {
 } from '@elifesciences/component-elife-ui/client/molecules'
 import media from '@elifesciences/component-elife-ui/client/global/layout/media'
 
-import { DELETE_MANUSCRIPT } from '../graphql/mutations'
-import { ALL_MANUSCRIPTS } from '../graphql/queries'
 import ManuscriptStatus from './ManuscriptStatus'
 
 export const dashboardDateText = date => {
@@ -133,37 +130,38 @@ const ItemContent = styled(Box)`
   justify-content: space-between;
 `};
 `
+export const DashboardListItemContent = ({ manuscript, title }) => {
+  const { clientStatus, updated } = manuscript
+  const date = new Date(updated)
+  return (
+    <ItemContent>
+      <TitleBox
+        color={mapColor(clientStatus)}
+        data-hj-suppress=""
+        data-test-id="title"
+        mb={3}
+      >
+        {title}
+      </TitleBox>
+      <ManuscriptStatus statusCode={clientStatus} />
+      <DateBox>
+        <time>{dashboardDateText(date)}</time>
+        <AbsoluteDate>{format(date, 'ddd D MMM YYYY')}</AbsoluteDate>
+      </DateBox>
+    </ItemContent>
+  )
+}
 
-const DashboardListItem = ({ manuscript }) => {
+const DashboardListItem = ({ manuscript, onDelete }) => {
   const title = manuscript.meta.title || '(Untitled)'
-
-  const renderItemContent = () => {
-    const { clientStatus, updated } = manuscript
-    const date = new Date(updated)
-    return (
-      <ItemContent>
-        <TitleBox
-          color={mapColor(clientStatus)}
-          data-hj-suppress=""
-          data-test-id="title"
-          mb={3}
-        >
-          {title}
-        </TitleBox>
-        <ManuscriptStatus statusCode={clientStatus} />
-        <DateBox>
-          <time>{dashboardDateText(date)}</time>
-          <AbsoluteDate>{format(date, 'ddd D MMM YYYY')}</AbsoluteDate>
-        </DateBox>
-      </ItemContent>
-    )
-  }
 
   return (
     <Root py={3}>
       {manuscript.clientStatus === 'SUBMITTED' ? (
         <Fragment>
-          <DashboardLinkFake>{renderItemContent()}</DashboardLinkFake>
+          <DashboardLinkFake>
+            <DashboardListItemContent manuscript={manuscript} title={title} />
+          </DashboardLinkFake>
           <ButtonContainer />
         </Fragment>
       ) : (
@@ -174,7 +172,10 @@ const DashboardListItem = ({ manuscript }) => {
                 data-test-id="continue-submission"
                 to={`${manuscript.lastStepVisited}`}
               >
-                {renderItemContent()}
+                <DashboardListItemContent
+                  manuscript={manuscript}
+                  title={title}
+                />
               </DashboardLink>
               <ButtonContainer>
                 <StyledRemoveIcon
@@ -182,28 +183,21 @@ const DashboardListItem = ({ manuscript }) => {
                   onClick={() => showModal()}
                 />
               </ButtonContainer>
-              <Mutation mutation={DELETE_MANUSCRIPT}>
-                {deleteManuscript => (
-                  <ModalDialog
-                    acceptText="Delete"
-                    attention
-                    onAccept={() => {
-                      hideModal()
-                      deleteManuscript({
-                        variables: { id: manuscript.id },
-                        refetchQueries: [{ query: ALL_MANUSCRIPTS }],
-                      })
-                    }}
-                    onCancel={hideModal}
-                    open={isModalVisible()}
-                  >
-                    <H2>Confirm delete submission?</H2>
-                    Your submission &quot;
-                    {title}
-                    &quot; will be deleted permanently
-                  </ModalDialog>
-                )}
-              </Mutation>
+              <ModalDialog
+                acceptText="Delete"
+                attention
+                onAccept={() => {
+                  hideModal()
+                  onDelete()
+                }}
+                onCancel={hideModal}
+                open={isModalVisible()}
+              >
+                <H2>Confirm delete submission?</H2>
+                Your submission &quot;
+                {title}
+                &quot; will be deleted permanently
+              </ModalDialog>
             </Fragment>
           )}
         </ModalHistoryState>
@@ -218,8 +212,9 @@ DashboardListItem.propTypes = {
       title: PropTypes.string,
     }).isRequired,
     clientStatus: PropTypes.string.isRequired,
-    created: PropTypes.string.isRequired,
+    updated: PropTypes.string.isRequired,
   }).isRequired,
+  onDelete: PropTypes.func.isRequired,
 }
 
 export default DashboardListItem

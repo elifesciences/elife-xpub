@@ -1,6 +1,6 @@
 import * as yup from 'yup'
 
-const schema = yup.object().shape({
+const submissionPageSchema = {
   meta: yup.object().shape({
     title: yup.string().required('Title is required'),
     articleType: yup.string().required('Article type is required'),
@@ -24,6 +24,6 @@ const schema = yup.object().shape({
     .string()
     .notOneOf(['', undefined], 'Article title is required')
     .nullable(),
-})
+}
 
-export { schema }
+export default submissionPageSchema

@@ -1,0 +1,60 @@
+{
+  "id": "62b2a06c",
+  "type": {
+    "id": "senior-editor",
+    "label": "Senior Editor"
+  },
+  "name": {
+    "surname": "Dulac",
+    "givenNames": "Catherine",
+    "preferred": "Catherine Dulac",
+    "index": "Dulac, Catherine"
+  },
+  "image": {
+    "uri": "https://iiif.elifesciences.org/journal-cms/person%2F2012-03%2Fkegley120208elife0135a.jpg",
+    "alt": "Catherine Dulac",
+    "source": {
+      "mediaType": "image/jpeg",
+      "uri": "https://iiif.elifesciences.org/journal-cms/person%2F2012-03%2Fkegley120208elife0135a.jpg/full/full/0/default.jpg",
+      "filename": "kegley120208elife0135a.jpg"
+    },
+    "size": {
+      "width": 4256,
+      "height": 2832
+    },
+    "focalPoint": {
+      "x": 50,
+      "y": 50
+    }
+  },
+  "profile": [
+    {
+      "text": "Catherine Dulac is a Howard Hughes Medical Institute Investigator, Higgins Professor of Molecular and Cellular Biology, and Chair of the Department of Molecular and Cellular Biology in the Faculty of Arts \u0026amp; Sciences at Harvard University. Her work explores the molecular biology of pheromone detection and signaling in mammals, and the neural mechanisms underlying age-, species-, and sex-specific behaviors. She graduated from the Ecole Normale Sup\u00e9rieure, Paris; received her PhD from the University of Paris VI at the Institute of Molecular and Cellular Embryology (Nogent-sur-Marne); and was a postdoctoral fellow at Columbia University. She is a Fellow of the American Academy of Arts and Sciences; of the American Association for the Advancement of Science; and a member of the French Academy of Sciences, Institute of France. She is a recipient of the Liliane Bettencourt Prize, the Richard Lounsbery Award, the Perl/UNC Neuroscience Prize and the IPSEN Foundation Neuronal Plasticity prize.",
+      "type": "paragraph"
+    }
+  ],
+  "research": {
+    "focuses": [
+      "cellular and molecular neuroscience",
+      "molecular and genetic basis of sex and species-specific social behavior"
+    ],
+    "expertises": [
+      {
+        "id": "neuroscience",
+        "name": "Neuroscience"
+      }
+    ]
+  },
+  "affiliations": [
+    {
+      "name": ["Harvard University"],
+      "address": {
+        "formatted": ["United States"],
+        "components": {
+          "country": "United States"
+        }
+      }
+    }
+  ],
+  "competingInterests": "Catherine Dulac receives funding from the Howard Hughes Medical Institute and the National Institutes of Health. She is a member of the editorial boards of Current Opinion in Neurobiology and The Journal of Comparative Neurology. She is a member of selection committees for the following awards and prizes: McKnight Foundation Technical Innovation Award, Radcliffe Institute for Advanced Study Fellowship Program, The Esther A. and Joseph Klingenstein Fund, the New York Stem Cell Foundation Innovator Awards in Neuroscience, the Smith Family Awards Program for Excellence in Biomedical Research and the Searle Scholars. She also serves on the Scientific Advisory Boards for the following organizations: Senomyx, Allen Institute, Friedrich Miescher Institute for Biomedical Research, and the Max Planck Institute for Medical Research. She is a member of the Visiting Committee for MIT\u2019s Department of Brain and Cognitive Sciences, and she serves as a reviewer for the National Institutes of Health Somatosensory and Chemosensory Study Section."
+}

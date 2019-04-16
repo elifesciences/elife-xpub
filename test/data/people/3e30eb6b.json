@@ -1,0 +1,68 @@
+{
+  "id": "3e30eb6b",
+  "type": {
+    "id": "senior-editor",
+    "label": "Senior Editor"
+  },
+  "name": {
+    "surname": "Behrens",
+    "givenNames": "Timothy",
+    "preferred": "Timothy Behrens",
+    "index": "Behrens, Timothy"
+  },
+  "image": {
+    "uri": "https://iiif.elifesciences.org/journal-cms/person%2F2014-04%2Ftbmug20copy202.jpg",
+    "alt": "Timothy Behrens",
+    "source": {
+      "mediaType": "image/jpeg",
+      "uri": "https://iiif.elifesciences.org/journal-cms/person%2F2014-04%2Ftbmug20copy202.jpg/full/full/0/default.jpg",
+      "filename": "tbmug20copy202.jpg"
+    },
+    "size": {
+      "width": 823,
+      "height": 1024
+    },
+    "focalPoint": {
+      "x": 50,
+      "y": 50
+    }
+  },
+  "profile": [
+    {
+      "text": "Tim Behrens is Professor of Computational Neuroscience at Oxford University and University College London, and a Wellcome Trust Senior Research Fellow. His work investigating the neural mechanisms that control behaviour has made an impact across scales from cells to brain regions across mammalian species. He has also developed widely used approaches for measuring brain connections non-invasively that have been taken up by the Human Connectome Project, where he is a senior investigator and chair of the anatomical connectivity team.",
+      "type": "paragraph"
+    }
+  ],
+  "research": {
+    "focuses": [
+      "brain imaging",
+      "fMRI",
+      "learning",
+      "cognition",
+      "behavioural neuroscience",
+      "learning and decision making",
+      "brain connectivity",
+      "computational neuroscience",
+      "neural coding"
+    ],
+    "organisms": ["macaque monkeys"],
+    "expertises": [
+      {
+        "id": "neuroscience",
+        "name": "Neuroscience"
+      }
+    ]
+  },
+  "affiliations": [
+    {
+      "name": ["University of Oxford"],
+      "address": {
+        "formatted": ["United Kingdom"],
+        "components": {
+          "country": "United Kingdom"
+        }
+      }
+    }
+  ],
+  "competingInterests": "Tim Behrens receives funding from the Wellcome Trust, the James S McDonnell Foundation, the National Institute of Health, and the UK Engineering and Physical Sciences Research Council. He is on the editorial board of PLOS Biology."
+}
