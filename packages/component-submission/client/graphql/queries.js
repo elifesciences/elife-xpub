@@ -10,3 +10,13 @@ export const GET_MANUSCRIPT = gql`
   }
   ${manuscriptFragment}
 `
+
+export const GET_MANUSCRIPT_TITLE = gql`
+  query GetManuscript($id: ID!) {
+    manuscript(id: $id) {
+      meta {
+        title
+      }
+    }
+  }
+`

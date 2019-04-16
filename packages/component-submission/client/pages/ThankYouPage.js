@@ -1,34 +1,63 @@
 import React from 'react'
-import gql from 'graphql-tag'
-import { Query } from 'react-apollo'
-import { Loading } from '@elifesciences/component-elife-ui/client/atoms'
+import { compose, branch, renderComponent } from 'recompose'
+import styled from 'styled-components'
+import { Box } from '@rebass/grid'
+import config from 'config'
+import { H1 } from '@pubsweet/ui'
 import { ErrorPage } from '@elifesciences/component-elife-app/client'
+import {
+  NativeLink,
+  ButtonLink,
+  Paragraph,
+  Loading,
+} from '@elifesciences/component-elife-ui/client/atoms'
 
-import ThankYou from '../components/ThankYou'
+import thankYouWithGQL from '../graphql/thankYouWithGQL'
 
-const MANUSCRIPT_TITLE = gql`
-  query GetManuscript($id: ID!) {
-    manuscript(id: $id) {
-      meta {
-        title
-      }
+const CenteredContent = styled(Box)`
+  text-align: center;
+`
+
+const BookmarkLink = styled(NativeLink)`
+  display: inline-block;
+  clear: both;
+`
+
+export class ThankYouPage extends React.Component {
+  componentDidMount() {
+    if (config.hotJar.enabled) {
+      window.hj('trigger', 'thank_you_page_hotjar_feedback')
     }
   }
-`
-const ThankYouPage = ({ match }) => (
-  <Query query={MANUSCRIPT_TITLE} variables={{ id: match.params.id }}>
-    {({ data, loading, error }) => {
-      if (loading) {
-        return <Loading />
-      }
 
-      if (error) {
-        return <ErrorPage error={error.message} />
-      }
+  render() {
+    const { data } = this.props
+    return (
+      <CenteredContent mx="auto" width={[1, 1, 1, 600]}>
+        <H1>Thank you</H1>
+        <Paragraph.Reading data-hj-suppress="" data-test-id="title">
+          Your submission, &quot;
+          {data.manuscript.meta.title}
+          &quot; has been received.
+        </Paragraph.Reading>
+        <Paragraph.Reading>
+          You will be informed of a decision soon.
+        </Paragraph.Reading>
+        <Paragraph.Small secondary>
+          You may want to bookmark the link below to check the progress of your
+          submission.
+          <BookmarkLink href="/">elifesciences.org/submissions</BookmarkLink>
+        </Paragraph.Small>
+        <ButtonLink data-test-id="finish" primary to="/">
+          Finish
+        </ButtonLink>
+      </CenteredContent>
+    )
+  }
+}
 
-      return <ThankYou title={data.manuscript.meta.title} />
-    }}
-  </Query>
-)
-
-export default ThankYouPage
+export default compose(
+  thankYouWithGQL,
+  branch(props => props.data && props.data.loading, renderComponent(Loading)),
+  branch(props => !props.data || props.data.error, renderComponent(ErrorPage)),
+)(ThankYouPage)
