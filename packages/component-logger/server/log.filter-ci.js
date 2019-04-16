@@ -25,7 +25,9 @@ describe('CI test for log filtering', () => {
 
   it('should not have any email addresses inside the server logs', async () => {
     lines.forEach(line => {
-      const matches = line.match(/[^\s@]+@[^@,"]+\.[^\s@,"]+/g)
+      const matches = line.match(
+        /[\w\d!#$%&'*+\-/=?^_`{|}~@]+@[\w\d-]+\.[^\s@,"]+/g,
+      )
       if (matches) {
         console.log(`FOUND ${matches.length} emails`)
         matches.forEach(m => {
