@@ -1,3 +1,5 @@
+// This is not named .test.js because it shouldnt be run with
+// the unit tests as there will be no logs to parse
 const readline = require('readline')
 const fs = require('fs')
 
