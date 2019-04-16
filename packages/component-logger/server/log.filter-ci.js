@@ -28,12 +28,7 @@ describe('CI test for log filtering', () => {
       const matches = line.match(
         /[\w\d!#$%&'*+\-/=?^_`{|}~@]+@[\w\d-]+\.[^\s@,"]+/g,
       )
-      if (matches) {
-        console.log(`FOUND ${matches.length} emails`)
-        matches.forEach(m => {
-          expect(m).toBe('***@***.***')
-        })
-      }
+      expect(matches).toBeNull()
     })
   })
 })
