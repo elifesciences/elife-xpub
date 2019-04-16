@@ -1,5 +1,3 @@
-import config from 'config'
-import { startSshServer } from '@elifesciences/component-meca/'
 import { profile, files } from './pageObjects'
 import setFixtureHooks from './helpers/set-fixture-hooks'
 import NavigationHelper from './helpers/navigationHelper'
@@ -23,10 +21,6 @@ const manuscript = {
 }
 
 test('should display an error when files are still uploading', async t => {
-  const { server } = await startSshServer(
-    config.get('meca.sftp.connectionOptions.port'),
-  )
-
   const navigationHelper = new NavigationHelper(t)
 
   navigationHelper.login()
@@ -45,8 +39,4 @@ test('should display an error when files are still uploading', async t => {
   navigationHelper.uploadSupportingFiles(manuscript.supportingFiles)
   navigationHelper.navigateForward()
   await t.expect(files.ongoingFileUploadError.count).eql(1)
-
-  await new Promise((resolve, reject) =>
-    server.close(err => (err ? reject(err) : resolve())),
-  )
 })

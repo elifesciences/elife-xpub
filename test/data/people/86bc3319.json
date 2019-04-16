@@ -1,0 +1,73 @@
+{
+  "id": "86bc3319",
+  "type": {
+    "id": "senior-editor",
+    "label": "Senior Editor"
+  },
+  "name": {
+    "preferred": "Aviv Regev",
+    "index": "Regev, Aviv"
+  },
+  "image": {
+    "uri": "https://iiif.elifesciences.org/journal-cms/person%2F2017-09%2Ffilepici_0103.jpg",
+    "alt": "Aviv Regev",
+    "source": {
+      "mediaType": "image/jpeg",
+      "uri": "https://iiif.elifesciences.org/journal-cms/person%2F2017-09%2Ffilepici_0103.jpg/full/full/0/default.jpg",
+      "filename": "filepici_0103.jpg"
+    },
+    "size": {
+      "width": 1500,
+      "height": 2100
+    },
+    "focalPoint": {
+      "x": 50,
+      "y": 50
+    }
+  },
+  "profile": [
+    {
+      "text": "Aviv Regev is a computational biologist who joined the Broad Institute as a core member and MIT as a faculty member in 2006. Her work investigates how complex molecular networks function and evolve in the face of genetic and environmental changes, over time-scales ranging from minutes to millions of years. Regev received her MSc from Tel Aviv University, studying biology, computer science, and mathematics in the Interdisciplinary Program for the Fostering of Excellence, where she undertook research in both theoretical and experimental biology. She received her PhD in computational biology from Tel Aviv University. Prior to joining the Broad Institute, Regev was a fellow at the Bauer Center for Genomics Research at Harvard University, where she developed new approaches to the reconstruction of regulatory networks and modules from genomic data. Regev is also an associate professor in the Department of Biology at MIT\u00e2\u0080\u00a8and director of the Klarman Cell Observatory at the Broad. Regev is the Director of the Cell Circuits Program at the Broad and a lead principal investigator for the Center for Cell Circuits at the Broad Institute, a Center of Excellence in Genomic Science (CEGS). Regev has been a Howard Hughes Medical Institute (HHMI) Early Career Scientist since 2009, and was named a Howard Hughes Medical Institute (HHMI) Investigator in 2013. She is a recipient of the NIH Director\u2019s Pioneer Award, a Sloan fellowship from the Sloan Foundation, the Overton Prize from the International Society for Computational Biology, and the Earl and Thressa Stadtman Scholar Award from the American Society for Biochemistry and Molecular Biology (ASBMB).",
+      "type": "paragraph"
+    },
+    {
+      "text": "(Image Credit: Maria Nemchuk)",
+      "type": "paragraph"
+    }
+  ],
+  "research": {
+    "focuses": [
+      "systems biology",
+      "molecular networks",
+      "computational biology",
+      "single cell genomics",
+      "regulatory networks",
+      "systems immunology",
+      "gene regulation",
+      "evolution"
+    ],
+    "expertises": [
+      {
+        "id": "computational-systems-biology",
+        "name": "Computational and Systems Biology"
+      },
+      {
+        "id": "genetics-genomics",
+        "name": "Genetics and Genomics"
+      },
+      {
+        "id": "chromosomes-gene-expression",
+        "name": "Chromosomes and Gene Expression"
+      },
+      {
+        "id": "evolutionary-biology",
+        "name": "Evolutionary Biology"
+      },
+      {
+        "id": "cancer-biology",
+        "name": "Cancer Biology"
+      }
+    ]
+  },
+  "competingInterests": "Aviv Regev receives funding from the Howard Hughes Medical Institute, the National Institutes of Health, and the Sloan Foundation. She is on the external advisory board of the San Diego Center for Systems Biology, the FAS Center for Systems Biology at Harvard, the Simons Institute for the Theory of Computing, the Jackson Laboratory, the European Molecular Biology Lab (EMBL), the SciLife Lab in Sweden, and ThermoFisher Scientific. She is on the advisory editorial board of Molecular Systems Biology and is an editorial board member of Genome Biology and Development. Regev is a consultant for Syros Phramaceuticals, GenePeeks, and CTIG (Cancer Therapeutics Innovation Group). Regev also worked for several years in the biotech industry in Israel, where she established and directed a bioinformatics research and development team at QBI, a functional genomics company."
+}

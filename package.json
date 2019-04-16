@@ -36,7 +36,7 @@
     "start:styleguide": "docker-compose run --no-deps -p 6060:6060 app yarn run styleguide",
     "stop:services": "docker-compose down -v",
     "styleguide": "styleguidist server",
-    "test": "NODE_CONFIG_ENV=test jest --runInBand",
+    "test": "NODE_CONFIG_ENV=unit-test jest --runInBand",
     "test:browser": "NODE_CONFIG_ENV=test NODE_ENV=production DEBUG=replay testcafe --concurrency 1 \"${BROWSER:-chrome}\" 'test/**/*.browser.js'",
     "test:dependencies": "node scripts/check-duplicate-packages.js react react-dom styled-components pubsweet-server",
     "update": "yarn upgrade-interactive --latest"
@@ -91,7 +91,8 @@
     ]
   },
   "resolutions": {
-    "lodash": ">=4.17.11"
+    "lodash": ">=4.17.11",
+    "pubsweet-server": "^10.1.4"
   },
   "workspaces": [
     "client/*",
@@ -117,6 +118,7 @@
     "newrelic": "^4.8.1",
     "omit-deep-lodash": "^1.1.2",
     "prop-types": "^15.6.2",
+    "pubsweet": "^4.0.4",
     "pubsweet-client": "^8.0.0",
     "pubsweet-server": "^10.1.4",
     "pug": "^2.0.3",
@@ -182,7 +184,6 @@
     "mime": "^2.3.1",
     "pdf2json": "^1.1.8",
     "prettier": "^1.8.2",
-    "pubsweet": "^3.0.13",
     "react-styleguidist": "^7.1.0",
     "replay": "^2.1.4",
     "string-replace-loader": "^2.1.1",
@@ -192,7 +193,7 @@
     "testcafe": "^0.21.1",
     "testcafe-browser-provider-browserstack": "^1.5.1",
     "uglifyjs-webpack-plugin": "^1.1.2",
-    "webpack": "^3.8.1",
+    "webpack": "^4.29.6",
     "webpack-dev-middleware": "^3.1.3",
     "webpack-hot-middleware": "^2.22.1"
   }

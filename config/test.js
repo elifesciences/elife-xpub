@@ -9,10 +9,8 @@ module.exports = {
       database: 'test',
       idleTimeoutMillis: 800, // Stops open handles in tests
     },
-    port: 4000,
-    baseUrl: deferConfig(
-      cfg => `http://localhost:${cfg['pubsweet-server'].port}`,
-    ),
+    port: 3000,
+    baseUrl: deferConfig(cfg => `http://app:${cfg['pubsweet-server'].port}`),
     uploads: 'test/temp/uploads',
     secret: 'test',
     logger,
@@ -31,19 +29,22 @@ module.exports = {
       params: {
         Bucket: 'test',
       },
-      endpoint: new AWS.Endpoint(
-        // randomise port to avoid conflicts in parallel test runs
-        `http://localhost:${Math.floor(Math.random() * 50000) + 15000}`,
-      ),
+      endpoint: new AWS.Endpoint('http://fakes3:4569/'),
     },
   },
   fileUpload: {
     maxSizeMB: 10,
   },
+  server: {
+    api: {
+      secret: '',
+      url: 'http://api-dummy:8080/',
+    },
+  },
   meca: {
     sftp: {
       connectionOptions: {
-        host: 'localhost',
+        host: 'sftp',
         port: 3022,
         username: 'test',
         password: 'tset',

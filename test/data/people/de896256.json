@@ -1,0 +1,45 @@
+{
+  "id": "de896256",
+  "type": {
+    "id": "reviewing-editor",
+    "label": "Reviewing Editor"
+  },
+  "name": {
+    "surname": "Solnica-Krezel",
+    "givenNames": "Lilianna",
+    "preferred": "Lilianna Solnica-Krezel",
+    "index": "Solnica-Krezel, Lilianna"
+  },
+  "research": {
+    "focuses": [
+      "gastrulation",
+      "vertebrate embryogenesis",
+      "patterning",
+      "cell movement",
+      "cell signalling",
+      "morphogenesis"
+    ],
+    "organisms": ["zebrafish"],
+    "expertises": [
+      {
+        "id": "developmental-biology",
+        "name": "Developmental Biology"
+      },
+      {
+        "id": "stem-cells-regenerative-medicine",
+        "name": "Stem Cells and Regenerative Medicine"
+      }
+    ]
+  },
+  "affiliations": [
+    {
+      "name": ["Washington University School of Medicine"],
+      "address": {
+        "formatted": ["United States"],
+        "components": {
+          "country": "United States"
+        }
+      }
+    }
+  ]
+}
