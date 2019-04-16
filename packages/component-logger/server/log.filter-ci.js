@@ -11,13 +11,13 @@ describe('CI test for log filtering', () => {
       input: fs.createReadStream(`${logPath}/xpub.log`),
       console: false,
     })
-    rl.on('line', (line) => {
+    rl.on('line', line => {
       lines.push(line)
     })
       .on('close', () => {
         done()
       })
-      .on('error', (e) => {
+      .on('error', e => {
         console.log('error', e)
       })
   })
@@ -26,6 +26,7 @@ describe('CI test for log filtering', () => {
     lines.forEach(line => {
       const matches = line.match(/[^\s@]+@[^@,"]+\.[^\s@,"]+/g)
       if (matches) {
+        console.log(`FOUND ${matches.length} emails`)
         matches.forEach(m => {
           expect(m).toBe('***@***.***')
         })
