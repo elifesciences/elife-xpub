@@ -1,4 +1,5 @@
-const { createTables } = require('@pubsweet/db-manager')
+const { migrate } = require('@pubsweet/db-manager')
+const { db } = require('pubsweet-server')
 const uuid = require('uuid')
 const Team = require('@elifesciences/component-model-team').model
 const User = require('@elifesciences/component-model-user').model
@@ -8,7 +9,30 @@ const Manuscript = require('.')
 
 let logs = []
 
-afterEach(() => {
+const createTables = async clobber => {
+  const { rows } = await db.raw(`
+    SELECT tablename
+    FROM pg_tables
+    WHERE schemaname = current_schema
+  `)
+
+  if (rows.length) {
+    if (clobber) {
+      // TODO this is dangerous, change it
+      const dropQuery = rows
+        .map(row => `DROP TABLE "${row.tablename}" CASCADE`)
+        .join(';')
+      await db.raw(`START TRANSACTION; ${dropQuery}; COMMIT;`)
+    } else {
+      throw new Error('Target database already exists, not clobbering')
+    }
+  }
+
+  // run migrations
+  await migrate()
+}
+
+afterAll(() => {
   console.log(JSON.stringify(logs, null, 4))
   logs = []
 })
