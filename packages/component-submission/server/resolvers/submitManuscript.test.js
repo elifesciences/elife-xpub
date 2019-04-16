@@ -80,7 +80,7 @@ describe('Manuscripts', () => {
       )
 
       expect(returnedManuscript.status).toBe(
-        Manuscript.statuses.MECA_EXPORT_PENDING,
+        Manuscript.statuses.MECA_EXPORT_SUCCEEDED,
       )
 
       const storedManuscript = await Manuscript.find(id, userId)

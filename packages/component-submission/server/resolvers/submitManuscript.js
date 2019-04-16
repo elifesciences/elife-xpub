@@ -32,7 +32,7 @@ async function submitManuscript(_, { data }, { user, ip }) {
 
   manuscriptModel.applyInput(manuscriptInput)
 
-  const sourceFile = manuscriptModel.getSource()
+  const sourceFile = await manuscriptModel.getSource()
   if (!sourceFile) {
     throw new Error('Manuscript has no source file', {
       manuscriptId: manuscriptModel.id,
@@ -59,7 +59,7 @@ async function submitManuscript(_, { data }, { user, ip }) {
       logger.info(`Manuscript ${manuscriptModel.id} successfully exported`)
       const notify = new Notification(config)
       await notify.sendFinalSubmissionEmail(manuscriptModel)
-      ManuscriptModel.updateStatus(
+      return ManuscriptModel.updateStatus(
         manuscriptModel.id,
         ManuscriptModel.statuses.MECA_EXPORT_SUCCEEDED,
       )
