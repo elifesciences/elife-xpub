@@ -32,7 +32,6 @@ class NavigationHelper {
   }
 
   async startAtRedirect() {
-    await this.wait(1000)
     await this.t
       .navigateTo(redirect.url)
       .click(redirect.button, { timeout: 5000 })
@@ -40,6 +39,7 @@ class NavigationHelper {
     if (Selector(cookie.button)) {
       await this.t.click(Selector(cookie.button, { timeout: 5000 }))
     }
+    await this.wait(1000)
   }
 
   async login() {
