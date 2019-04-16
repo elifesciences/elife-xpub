@@ -90,8 +90,7 @@
     ]
   },
   "resolutions": {
-    "lodash": ">=4.17.11",
-    "pubsweet-server": "^10.1.4"
+    "lodash": ">=4.17.11"
   },
   "workspaces": [
     "client/*",
@@ -100,9 +99,10 @@
   ],
   "dependencies": {
     "@elifesciences/elife-theme": "^1.0.0",
-    "@pubsweet/component-send-email": "^0.2.13",
-    "@pubsweet/ui": "^9.0.3",
-    "@pubsweet/ui-toolkit": "^2.0.3",
+    "@pubsweet/base-model": "^3.0.5",
+    "@pubsweet/component-send-email": "^0.2.14",
+    "@pubsweet/ui": "^10.1.0",
+    "@pubsweet/ui-toolkit": "^2.1.5",
     "@rebass/grid": "^6.0.0-7",
     "apollo-link-state": "^0.4.1",
     "config": "^2.0.1",
@@ -117,9 +117,9 @@
     "newrelic": "^4.8.1",
     "omit-deep-lodash": "^1.1.2",
     "prop-types": "^15.6.2",
-    "pubsweet": "^4.0.4",
-    "pubsweet-client": "^8.0.0",
-    "pubsweet-server": "^10.1.4",
+    "pubsweet": "^4.1.0",
+    "pubsweet-client": "^9.2.0",
+    "pubsweet-server": "^13.3.0",
     "pug": "^2.0.3",
     "react": "^16.4.2",
     "react-apollo": "^2.1.11",
