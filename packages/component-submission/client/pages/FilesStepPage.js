@@ -8,7 +8,7 @@ import SupportingUpload from '../components/SupportingUpload'
 import { errorMessageMapping, manuscriptFileTypes } from '../utils/constants'
 import filesWithGQL from '../graphql/filesWithGQL'
 
-class FilesStepPage extends React.Component {
+export class FilesStepPage extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
