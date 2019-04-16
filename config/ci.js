@@ -1,6 +1,7 @@
 const AWS = require('aws-sdk')
 
 module.exports = {
+  configTag: 'ci',
   aws: {
     s3: {
       endpoint: new AWS.Endpoint('http://localhost:4569'),
@@ -12,6 +13,6 @@ module.exports = {
     },
   },
   googleAnalytics: {
-    debug: true
-  }
+    debug: true,
+  },
 }
