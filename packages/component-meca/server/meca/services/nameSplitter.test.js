@@ -1,5 +1,4 @@
-const { createTables } = require('@pubsweet/db-manager')
-const { db } = require('pubsweet-server')
+const { db, createTables } = require('@pubsweet/db-manager')
 const splitter = require('./nameSplitter')
 
 const existingNames = [

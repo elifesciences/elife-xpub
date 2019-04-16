@@ -16,7 +16,7 @@ logs/*
 log.txt
 _build*
 uploads/
-config/local*.*
+config/local*
 test/screenshots/
 .config
 .local

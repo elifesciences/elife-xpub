@@ -1,4 +1,4 @@
-const { db } = require('pubsweet-server')
+const { db } = require('@pubsweet/db-manager')
 
 module.exports = async fullName => {
   const [result] = await db
