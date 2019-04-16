@@ -1,0 +1,67 @@
+{
+  "id": "0da30b85",
+  "type": {
+    "id": "senior-editor",
+    "label": "Senior Editor"
+  },
+  "name": {
+    "surname": "Dikic",
+    "givenNames": "Ivan",
+    "preferred": "Ivan Dikic",
+    "index": "Dikic, Ivan"
+  },
+  "image": {
+    "uri": "https://iiif.elifesciences.org/journal-cms/person%2F2018-01%2Fa06w3779.jpg",
+    "alt": "",
+    "source": {
+      "mediaType": "image/jpeg",
+      "uri": "https://iiif.elifesciences.org/journal-cms/person%2F2018-01%2Fa06w3779.jpg/full/full/0/default.jpg",
+      "filename": "a06w3779.jpg"
+    },
+    "size": {
+      "width": 3600,
+      "height": 2400
+    },
+    "focalPoint": {
+      "x": 50,
+      "y": 50
+    }
+  },
+  "profile": [
+    {
+      "text": "Ivan Dikic is a Professor and Chairman of Institute of Biochemistry II at the Medical School Goethe University and a member of the Buchmann Institute for Molecular Life Sciences in Frankfurt. He was trained as a medical doctor at Zagreb University and obtained his PhD in molecular biology with Joseph Schlessinger. His career is focused on studying intracellular signaling initially via protein tyrosine kinases where he revealed how multiple monoubiquitination controls EGFR endocytosis. His lab has pioneered a concept of Ubiquitin as a multivalent cellular signal that regulates multitude of physiological and pathophysiological processes including DNA repair, inflammation, cancer, infection and proteasomal degradation. Ivan\u2019s group also provided structural and functional evidence for a new type of Ub chains that are Met1-linked (called linear ubiquitination) in promoting the NF-kB signaling. His current interests focus on selective autophagy, which is essential for the clearance of protein aggregates, pathogens, and damaged mitochondria from the cell. He has received many awards for his work including the AACR Award for Outstanding Achievement in Cancer Research, the Award of European Association for Cancer Research, the Hans Krebs Prize, the Leibniz Award and the Ernst Jung Award in Medicine. He is a Member of the German Academy for Sciences Leopoldina, Academia Europaea, Croatian Academy of Medical Sciences and the European Molecular Biology Organization.",
+      "type": "paragraph"
+    }
+  ],
+  "research": {
+    "focuses": [
+      "ubiquitination",
+      "autophagy",
+      "endocytosis",
+      "inflammation",
+      "cancer biology"
+    ],
+    "expertises": [
+      {
+        "id": "biochemistry-chemical-biology",
+        "name": "Biochemistry and Chemical Biology"
+      },
+      {
+        "id": "cell-biology",
+        "name": "Cell Biology"
+      }
+    ]
+  },
+  "affiliations": [
+    {
+      "name": ["Goethe University Frankfurt"],
+      "address": {
+        "formatted": ["Germany"],
+        "components": {
+          "country": "Germany"
+        }
+      }
+    }
+  ],
+  "competingInterests": "Ivan Dikic receives funding from the Deutsche Forshungsemeinschaft and European Union, and serves as a Scientific Advisory Board member of the Novo Nordisk Foundation Center of Protein Research Copenhagen, MRC Phosphorylation and Ubiquitination Unit Dundee, DKFZ-ZMBH Allianz. He is a chairman of the EMBO Publication Committee and is on the editorial boards of Cell, Molecular Cell, Developmental Cell, EMBO Journal, EMBO Reports, BMC Biology, Biochemical Journal, and Cell Death and Differentiation."
+}

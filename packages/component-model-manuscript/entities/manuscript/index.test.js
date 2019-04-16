@@ -8,9 +8,12 @@ const Manuscript = require('.')
 
 describe('Manuscript', () => {
   let userId
+  let dbState = 'UNINITIALIZED'
 
   beforeEach(async () => {
+    dbState = 'INITIALIZING....'
     await createTables(true)
+    dbState = 'INITIALIZED'
     const profileId = 'ewwboc7m'
     const identities = [{ type: 'elife', identifier: profileId }]
     const user = await new User({ identities }).save()
@@ -19,6 +22,7 @@ describe('Manuscript', () => {
 
   describe('applyInput()', () => {
     it('picks only whitelisted properties', () => {
+      expect(dbState).toBe('INITIALIZED')
       const manuscript = new Manuscript({
         meta: {
           title: 'Apples',
@@ -42,6 +46,7 @@ describe('Manuscript', () => {
     })
 
     it('throws an error if selected editor is opposed', () => {
+      expect(dbState).toBe('INITIALIZED')
       const manuscript = new Manuscript({})
       const conflictingInput = {
         suggestedSeniorEditors: ['1'],
@@ -51,6 +56,7 @@ describe('Manuscript', () => {
     })
 
     it('updates teams', () => {
+      expect(dbState).toBe('INITIALIZED')
       const manuscript = new Manuscript({
         teams: [
           {
@@ -144,6 +150,7 @@ describe('Manuscript', () => {
   describe('get fileStatus()', () => {
     describe('given there are no files', () => {
       it('returns READY', () => {
+        expect(dbState).toBe('INITIALIZED')
         const manuscript = new Manuscript({
           createdBy: userId,
         })
@@ -165,21 +172,25 @@ describe('Manuscript', () => {
       })
 
       it('returns READY when the file is stored', async () => {
+        expect(dbState).toBe('INITIALIZED')
         manuscript = await setStatusOfFirstFile('STORED')
         expect(manuscript.fileStatus).toEqual('READY')
       })
 
       it('returns READY when the file upload was cancelled', async () => {
+        expect(dbState).toBe('INITIALIZED')
         manuscript = await setStatusOfFirstFile('CANCELLED')
         expect(manuscript.fileStatus).toEqual('READY')
       })
 
       it('returns CHANGING when the file has been uploaded to the app server', async () => {
+        expect(dbState).toBe('INITIALIZED')
         manuscript = await setStatusOfFirstFile('UPLOADED')
         expect(manuscript.fileStatus).toEqual('CHANGING')
       })
 
       it('returns CHANGING when the file has been created in the database', async () => {
+        expect(dbState).toBe('INITIALIZED')
         manuscript = await setStatusOfFirstFile('CREATED')
         expect(manuscript.fileStatus).toEqual('CHANGING')
       })
@@ -203,42 +214,49 @@ describe('Manuscript', () => {
       })
 
       it('returns READY when both files are stored', async () => {
+        expect(dbState).toBe('INITIALIZED')
         manuscript = await setStatusOfFirstFile('STORED')
         manuscript = await setStatusOfSecondFile('STORED')
         expect(manuscript.fileStatus).toEqual('READY')
       })
 
       it('returns READY when both files are cancelled', async () => {
+        expect(dbState).toBe('INITIALIZED')
         manuscript = await setStatusOfFirstFile('CANCELLED')
         manuscript = await setStatusOfSecondFile('CANCELLED')
         expect(manuscript.fileStatus).toEqual('READY')
       })
 
       it('returns READY when one file is stored and once is cancelled', async () => {
+        expect(dbState).toBe('INITIALIZED')
         manuscript = await setStatusOfFirstFile('STORED')
         manuscript = await setStatusOfSecondFile('CANCELLED')
         expect(manuscript.fileStatus).toEqual('READY')
       })
 
       it('returns CHANGING when one file has been uploaded to the app server', async () => {
+        expect(dbState).toBe('INITIALIZED')
         manuscript = await setStatusOfFirstFile('STORED')
         manuscript = await setStatusOfSecondFile('UPLOADED')
         expect(manuscript.fileStatus).toEqual('CHANGING')
       })
 
       it('returns CHANGING when one file has been created in the database', async () => {
+        expect(dbState).toBe('INITIALIZED')
         manuscript = await setStatusOfFirstFile('STORED')
         manuscript = await setStatusOfSecondFile('CREATED')
         expect(manuscript.fileStatus).toEqual('CHANGING')
       })
 
       it('returns CHANGING when both files have been uploaded to the app server', async () => {
+        expect(dbState).toBe('INITIALIZED')
         manuscript = await setStatusOfFirstFile('UPLOADED')
         manuscript = await setStatusOfSecondFile('UPLOADED')
         expect(manuscript.fileStatus).toEqual('CHANGING')
       })
 
       it('returns CHANGING when both files have been created in the database', async () => {
+        expect(dbState).toBe('INITIALIZED')
         manuscript = await setStatusOfFirstFile('CREATED')
         manuscript = await setStatusOfSecondFile('CREATED')
         expect(manuscript.fileStatus).toEqual('CHANGING')
@@ -248,6 +266,7 @@ describe('Manuscript', () => {
 
   describe('addTeam()', () => {
     it('adds team', () => {
+      expect(dbState).toBe('INITIALIZED')
       const team = {
         id: 1,
         role: 'author',
@@ -260,6 +279,7 @@ describe('Manuscript', () => {
     })
 
     it('updates team with same role', () => {
+      expect(dbState).toBe('INITIALIZED')
       const manuscript = new Manuscript({
         teams: [
           {
@@ -305,6 +325,7 @@ describe('Manuscript', () => {
 
   describe('find()', () => {
     it('finds by manuscript id', async () => {
+      expect(dbState).toBe('INITIALIZED')
       const manuscript = new Manuscript({
         createdBy: userId,
       })
@@ -314,6 +335,7 @@ describe('Manuscript', () => {
     })
 
     it('eager loads relations', async () => {
+      expect(dbState).toBe('INITIALIZED')
       const manuscript = new Manuscript({
         createdBy: userId,
       })
@@ -326,14 +348,17 @@ describe('Manuscript', () => {
       expect(loadedManuscript.teams).toHaveLength(1)
     })
 
-    it('throws if nothing matches', () =>
+    it('throws if nothing matches', () => {
+      expect(dbState).toBe('INITIALIZED')
       expect(
         Manuscript.find('f05bbbf9-ddf4-494f-a8da-84957e2708ee', userId),
-      ).rejects.toThrow('Manuscript not found'))
+      ).rejects.toThrow('Manuscript not found')
+    })
   })
 
   describe('Manuscript.findByStatus()', () => {
     it('finds by status', async () => {
+      expect(dbState).toBe('INITIALIZED')
       const manuscript = new Manuscript({
         createdBy: userId,
       })
@@ -343,6 +368,7 @@ describe('Manuscript', () => {
     })
 
     it('eager loads relations', async () => {
+      expect(dbState).toBe('INITIALIZED')
       const manuscript = new Manuscript({
         createdBy: userId,
       })
@@ -355,12 +381,15 @@ describe('Manuscript', () => {
       expect(loadedManuscripts[0].teams).toHaveLength(1)
     })
 
-    it('returns empty array if nothing matches', () =>
-      expect(Manuscript.findByStatus('FAKE', userId)).resolves.toEqual([]))
+    it('returns empty array if nothing matches', () => {
+      expect(dbState).toBe('INITIALIZED')
+      expect(Manuscript.findByStatus('FAKE', userId)).resolves.toEqual([])
+    })
   })
 
   describe('Manuscript.updateStatus', () => {
     it('updates status', async () => {
+      expect(dbState).toBe('INITIALIZED')
       const manuscript = await new Manuscript({
         meta: {
           title: 'Title',
@@ -380,6 +409,7 @@ describe('Manuscript', () => {
     })
 
     it("adds an entry to the manuscript's audit log", async () => {
+      expect(dbState).toBe('INITIALIZED')
       const manuscript = await new Manuscript({
         createdBy: userId,
       }).save()
@@ -398,14 +428,17 @@ describe('Manuscript', () => {
       })
     })
 
-    it('fails to update non-existent manuscript', () =>
+    it('fails to update non-existent manuscript', () => {
+      expect(dbState).toBe('INITIALIZED')
       expect(
         Manuscript.updateStatus('f05bbbf9-ddf4-494f-a8da-84957e2708ee', 'NEXT'),
-      ).rejects.toThrow('Manuscript not found'))
+      ).rejects.toThrow('Manuscript not found')
+    })
   })
 
   describe('refresh()', () => {
     it('refreshes manuscript', async () => {
+      expect(dbState).toBe('INITIALIZED')
       const ms = await getThreeVersions(userId)
 
       // update and save v3
@@ -426,6 +459,7 @@ describe('Manuscript', () => {
 
   describe('save()', () => {
     it('returns promise of self', async () => {
+      expect(dbState).toBe('INITIALIZED')
       const manuscript = new Manuscript({
         createdBy: userId,
       })
@@ -433,6 +467,7 @@ describe('Manuscript', () => {
     })
 
     it('populates ID', async () => {
+      expect(dbState).toBe('INITIALIZED')
       const manuscript = new Manuscript({
         createdBy: userId,
       })
@@ -442,6 +477,7 @@ describe('Manuscript', () => {
     })
 
     it('maintains loaded relations', async () => {
+      expect(dbState).toBe('INITIALIZED')
       const manuscript = new Manuscript({
         createdBy: userId,
       })
@@ -454,6 +490,7 @@ describe('Manuscript', () => {
     })
 
     it('deletes related entities not on the manuscript', async () => {
+      expect(dbState).toBe('INITIALIZED')
       const manuscript = new Manuscript({
         createdBy: userId,
       })
@@ -478,15 +515,18 @@ describe('Manuscript', () => {
       expect(manuscript.teams[0].role).toEqual('bar')
     })
 
-    it('fails to update non-existent manuscript', () =>
+    it('fails to update non-existent manuscript', () => {
+      expect(dbState).toBe('INITIALIZED')
       expect(
         new Manuscript({
           id: 'f05bbbf9-ddf4-494f-a8da-84957e2708ee',
           status: 'INITIAL',
         }).save(),
-      ).rejects.toThrow())
+      ).rejects.toThrow()
+    })
 
     it('does not overwrite an updated manuscript', async () => {
+      expect(dbState).toBe('INITIALIZED')
       const ms = await getThreeVersions(userId)
 
       // update and save v3
@@ -509,6 +549,7 @@ describe('Manuscript', () => {
 
   describe('Manuscript.all()', () => {
     it("returns users's manuscripts only", async () => {
+      expect(dbState).toBe('INITIALIZED')
       const secondUserId = uuid()
       await new Manuscript({
         createdBy: userId,
@@ -520,6 +561,7 @@ describe('Manuscript', () => {
       expect(loadedManuscripts).toHaveLength(1)
     })
     it('returns in the correct order', async () => {
+      expect(dbState).toBe('INITIALIZED')
       const originalDate = Date
       const createManuscript = async (createdDate, title) => {
         // Mock Date so the created by can be controlled

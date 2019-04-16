@@ -1,0 +1,41 @@
+{
+  "id": "e8d8b1dd",
+  "type": {
+    "id": "reviewing-editor",
+    "label": "Reviewing Editor"
+  },
+  "name": {
+    "preferred": "Abby Dernburg",
+    "index": "Dernburg, Abby"
+  },
+  "research": {
+    "focuses": [
+      "meiosis",
+      "synapsis",
+      "meiotic recombination",
+      "chromosome dynamics"
+    ],
+    "organisms": ["\u003Ci\u003EC. elegans\u003C/i\u003E"],
+    "expertises": [
+      {
+        "id": "cell-biology",
+        "name": "Cell Biology"
+      },
+      {
+        "id": "chromosomes-gene-expression",
+        "name": "Chromosomes and Gene Expression"
+      }
+    ]
+  },
+  "affiliations": [
+    {
+      "name": ["University of California, Berkeley"],
+      "address": {
+        "formatted": ["United States"],
+        "components": {
+          "country": "United States"
+        }
+      }
+    }
+  ]
+}

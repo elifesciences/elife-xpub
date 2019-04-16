@@ -1,0 +1,20 @@
+{
+  "id": "jqpublic",
+  "type": {
+    "id": "reviewing-editor",
+    "label": "Reviewing Editor"
+  },
+  "name": {
+    "preferred": "John Q. Public",
+    "index": "Public, John Q."
+  },
+  "research": {
+    "expertises": [
+      {
+        "id": "cell-biology",
+        "name": "Cell Biology"
+      }
+    ],
+    "focuses": ["Endocytosis", "Secretion"]
+  }
+}
