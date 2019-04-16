@@ -19,7 +19,6 @@ async function submitManuscript(_, { data }, { user, ip }) {
     )
   }
 
-
   const manuscriptInput = Manuscript.removeOptionalBlankReviewers(data)
   const { error: errorManuscript } = Joi.validate(
     manuscriptInput,
