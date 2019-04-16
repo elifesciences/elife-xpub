@@ -1,7 +1,3 @@
-import { startServer, setup, teardown } from './setup'
+import { setup } from './setup'
 
-export default chosenFixture =>
-  chosenFixture
-    .before(startServer)
-    .beforeEach(setup)
-    .afterEach(teardown)
+export default chosenFixture => chosenFixture.beforeEach(setup)

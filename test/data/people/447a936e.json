@@ -1,0 +1,32 @@
+{
+  "id": "447a936e",
+  "type": {
+    "id": "reviewing-editor",
+    "label": "Reviewing Editor"
+  },
+  "name": {
+    "preferred": "Alison Goate",
+    "index": "Goate, Alison"
+  },
+  "research": {
+    "focuses": ["dementia", "addiction"],
+    "organisms": ["human"],
+    "expertises": [
+      {
+        "id": "neuroscience",
+        "name": "Neuroscience"
+      }
+    ]
+  },
+  "affiliations": [
+    {
+      "name": ["The Icahn School of Medicine at Mount Sinai"],
+      "address": {
+        "formatted": ["United States"],
+        "components": {
+          "country": "United States"
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "id": "bcooper",
+  "type": {
+    "id": "reviewing-editor",
+    "label": "Reviewing Editor"
+  },
+  "name": {
+    "preferred": "Ben Cooper",
+    "index": "Cooper, Ben"
+  },
+  "orcid": "0000-0002-9445-7217",
+  "research": {
+    "expertises": [
+      {
+        "id": "computational-systems-biology",
+        "name": "Computational and Systems Biology"
+      },
+      {
+        "id": "epidemiology-global-health",
+        "name": "Epidemiology and Global Health"
+      }
+    ],
+    "focuses": [
+      "Population biology of communicable diseases",
+      "Antimicrobial resistance",
+      "Epidemiological methods"
+    ]
+  }
+}

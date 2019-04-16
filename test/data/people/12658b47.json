@@ -1,0 +1,39 @@
+{
+  "id": "12658b47",
+  "type": {
+    "id": "reviewing-editor",
+    "label": "Reviewing Editor"
+  },
+  "name": {
+    "surname": "Bloodgood",
+    "givenNames": "Brenda",
+    "preferred": "Brenda Bloodgood",
+    "index": "Bloodgood, Brenda"
+  },
+  "research": {
+    "focuses": [
+      "synaptic signaling",
+      "activity-dependent gene expression",
+      "animal behavior and disease states",
+      "hippocampus"
+    ],
+    "organisms": ["mouse"],
+    "expertises": [
+      {
+        "id": "neuroscience",
+        "name": "Neuroscience"
+      }
+    ]
+  },
+  "affiliations": [
+    {
+      "name": ["University of California, San Diego"],
+      "address": {
+        "formatted": ["United States"],
+        "components": {
+          "country": "United States"
+        }
+      }
+    }
+  ]
+}

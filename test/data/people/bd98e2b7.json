@@ -1,0 +1,34 @@
+{
+  "id": "bd98e2b7",
+  "type": {
+    "id": "reviewing-editor",
+    "label": "Reviewing Editor"
+  },
+  "name": {
+    "surname": "Diedrichsen",
+    "givenNames": "J\u00f6rn",
+    "preferred": "J\u00f6rn Diedrichsen",
+    "index": "Diedrichsen, J\u00f6rn"
+  },
+  "research": {
+    "focuses": ["motor control", "fMRI"],
+    "organisms": ["human"],
+    "expertises": [
+      {
+        "id": "neuroscience",
+        "name": "Neuroscience"
+      }
+    ]
+  },
+  "affiliations": [
+    {
+      "name": ["University of Western Ontario"],
+      "address": {
+        "formatted": ["Canada"],
+        "components": {
+          "country": "Canada"
+        }
+      }
+    }
+  ]
+}

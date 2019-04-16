@@ -1,0 +1,45 @@
+{
+  "id": "jpublic",
+  "type": {
+    "id": "senior-editor",
+    "label": "Senior Editor"
+  },
+  "name": {
+    "givenNames": "Jane",
+    "surname": "Public",
+    "preferred": "Jane Public",
+    "index": "Public, Jane"
+  },
+  "emailAddresses": [
+    {
+      "value": "j.public@orcid.org",
+      "access": "public"
+    }
+  ],
+  "orcid": "0000-0002-1825-0097",
+  "research": {
+    "expertises": [
+      {
+        "id": "biophysics-structural-biology",
+        "name": "Biophysics and Structural Biology"
+      },
+      {
+        "id": "immunology",
+        "name": "Immunology"
+      }
+    ],
+    "focuses": ["Structural biology", "Immunology", "HIV"],
+    "organisms": ["Human cells"]
+  },
+  "profile": [
+    {
+      "type": "paragraph",
+      "text": "Nam blandit nisl sit amet lectus rutrum, eu consectetur velit aliquet. Fusce sit amet justo dictum libero laoreet iaculis viverra ut sapien. Nunc eget dignissim turpis. Sed vitae ipsum erat. Proin efficitur, augue a eleifend porta, ante sapien dignissim nibh, quis aliquam libero neque at dolor. Nunc nec erat vel nisl gravida volutpat. Nulla magna neque, maximus ac felis in, rhoncus suscipit magna. Vestibulum aliquam fringilla tempus. Nulla accumsan vel neque sit amet ullamcorper. Cras pulvinar nibh sed augue placerat venenatis."
+    },
+    {
+      "type": "paragraph",
+      "text": "Proin ut placerat leo, in placerat ex. Fusce orci nunc, mattis sed neque vitae, bibendum eleifend dui. Pellentesque vitae nulla at lectus imperdiet maximus. Proin fringilla iaculis lacus, id sollicitudin odio lacinia quis. Donec a ante massa. Suspendisse potenti. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Nulla ut varius est. Phasellus arcu libero, vulputate vitae ligula vel, placerat placerat nisi. Phasellus lorem sem, lacinia vitae felis vitae, maximus pretium metus. Etiam neque est, tempor commodo enim sit amet, semper dictum nisi. Nullam ullamcorper at augue volutpat faucibus. Curabitur suscipit neque id magna faucibus commodo."
+    }
+  ],
+  "competingInterests": "Integer at tempor diam, <i>tincidunt viverra nisi</i>. Nullam vitae nulla varius ipsum pretium condimentum in vitae mauris. Praesent convallis egestas velit, non aliquet turpis aliquam sed. Nunc sed mi elementum, mollis nibh et, interdum tellus. Fusce ornare leo diam, nec consectetur ligula aliquam sed. Phasellus metus lacus, blandit eget facilisis sit amet, efficitur sit amet tortor. Nam bibendum nunc in nisl blandit, scelerisque tristique orci fringilla. Integer egestas et odio sit amet porttitor. Nullam laoreet, orci at laoreet sagittis, tortor odio scelerisque ante, sed tempor lorem ante nec ex. Maecenas commodo diam sit amet justo hendrerit, sit amet interdum est efficitur. Morbi tristique lacinia mi in facilisis."
+}

@@ -1,0 +1,40 @@
+{
+  "id": "5164e35c",
+  "type": {
+    "id": "reviewing-editor",
+    "label": "Reviewing Editor"
+  },
+  "name": {
+    "preferred": "Alexander Borst",
+    "index": "Borst, Alexander"
+  },
+  "research": {
+    "focuses": [
+      "visual processing",
+      "systems neuroscience",
+      "computational neuroscience"
+    ],
+    "organisms": ["Drosophila"],
+    "expertises": [
+      {
+        "id": "computational-systems-biology",
+        "name": "Computational and Systems Biology"
+      },
+      {
+        "id": "neuroscience",
+        "name": "Neuroscience"
+      }
+    ]
+  },
+  "affiliations": [
+    {
+      "name": ["Max Planck Institute of Neurobiology"],
+      "address": {
+        "formatted": ["Germany"],
+        "components": {
+          "country": "Germany"
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,38 @@
+{
+  "id": "8efd635a",
+  "type": {
+    "id": "reviewing-editor",
+    "label": "Reviewing Editor"
+  },
+  "name": {
+    "preferred": "Ambra Pozzi",
+    "index": "Pozzi, Ambra"
+  },
+  "research": {
+    "focuses": [
+      "integrins",
+      "extracellular matrix",
+      "mechanisms of fibrosis",
+      "receptor tyrosine kinases",
+      "kidney",
+      "cell signalling and translation"
+    ],
+    "expertises": [
+      {
+        "id": "cell-biology",
+        "name": "Cell Biology"
+      }
+    ]
+  },
+  "affiliations": [
+    {
+      "name": ["Vanderbilt University"],
+      "address": {
+        "formatted": ["United States"],
+        "components": {
+          "country": "United States"
+        }
+      }
+    }
+  ]
+}
