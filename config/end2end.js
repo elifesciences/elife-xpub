@@ -3,6 +3,7 @@ const logger = require('@elifesciences/component-logger').mockLogger
 logger.transports.console.level = 'debug'
 
 module.exports = {
+  configTag: 'end2end',
   'pubsweet-server': {
     logger,
   },

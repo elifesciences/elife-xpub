@@ -3,6 +3,7 @@ const AWS = require('aws-sdk')
 const logger = require('@elifesciences/component-logger').mockLogger
 
 module.exports = {
+  configTag: 'test',
   'pubsweet-server': {
     db: {
       database: 'test',
