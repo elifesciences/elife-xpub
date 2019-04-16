@@ -1,10 +1,11 @@
 const readline = require('readline')
 const fs = require('fs')
 
-const logPath = process.env.XPUB_LOG_PATH || './'
+const logPath = process.env.XPUB_LOG_PATH || '../..'
 
 describe('CI test for log filtering', () => {
   const lines = []
+  jest.setTimeout(30000)
 
   beforeAll(async done => {
     const rl = readline.createInterface({
