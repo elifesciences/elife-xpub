@@ -9,15 +9,23 @@ const Manuscript = require('.')
 describe('Manuscript', () => {
   let userId
   let dbState = 'UNINITIALIZED'
+  let msStart = 0
 
   beforeEach(async () => {
     dbState = 'INITIALIZING....'
+    msStart = Date.now()
     await createTables(true)
     dbState = 'INITIALIZED'
+    console.log(`createTables took ${Date.now() - msStart} ms`)
     const profileId = 'ewwboc7m'
     const identities = [{ type: 'elife', identifier: profileId }]
     const user = await new User({ identities }).save()
     userId = user.id
+  })
+
+  afterEach(() => {
+    dbState = 'AFTER'
+    msStart = 0
   })
 
   describe('applyInput()', () => {
