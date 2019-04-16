@@ -73,21 +73,27 @@ describe('Manuscripts', () => {
     })
 
     it('stores data with new status', async () => {
-      const returnedManuscript = await Mutation.submitManuscript(
+      const promisedManuscript = Mutation.submitManuscript(
         {},
         { data: { ...manuscriptInput, id } },
         { user: profileId },
       )
 
-      expect(returnedManuscript.status).toBe(
-        Manuscript.statuses.MECA_EXPORT_PENDING,
-      )
+      const beforeManuscript = await Manuscript.find(id, userId)
+      expect(beforeManuscript.status).toBe(Manuscript.statuses.INITIAL)
 
-      const storedManuscript = await Manuscript.find(id, userId)
+      return promisedManuscript.then(async returnedManuscript => {
+        // when the submission resolves it should succeed
+        expect(returnedManuscript.status).toBe(
+          Manuscript.statuses.MECA_EXPORT_SUCCEEDED,
+        )
 
-      expect(storedManuscript).toMatchObject({
-        ...expectedManuscript,
-        status: expect.stringMatching(/^MECA_EXPORT_(SUCCEEDED|PENDING)/),
+        const storedManuscript = await Manuscript.find(id, userId)
+
+        expect(storedManuscript).toMatchObject({
+          ...expectedManuscript,
+          status: 'MECA_EXPORT_SUCCEEDED',
+        })
       })
     })
 
