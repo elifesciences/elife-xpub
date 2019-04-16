@@ -145,7 +145,7 @@ class NavigationHelper {
   }
 
   async accept() {
-    await this.t.click(wizardStep.accept, { timeout: 5000 })
+    await this.t.click(wizardStep.accept, { timeout: 10000 })
   }
 
   async thankyou() {
