@@ -62,7 +62,7 @@ export const editorsSchema = {
   ),
   suggestedReviewers: yup.array(
     yup.object({
-      name: yup.string(),
+      name: yup.string().required('Name is required'),
       email: yup.string().email('Must be a valid email'),
     }),
   ),

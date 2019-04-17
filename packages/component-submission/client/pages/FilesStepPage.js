@@ -8,7 +8,7 @@ import SupportingUpload from '../components/SupportingUpload'
 import { errorMessageMapping, manuscriptFileTypes } from '../utils/constants'
 import filesWithGQL from '../graphql/filesWithGQL'
 
-export class FilesStepPage extends React.Component {
+export class FilesStepPageComponent extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -171,4 +171,4 @@ export default compose(
   withProps(props => ({
     manuscriptUploadProgress: props.uploadProgress.manuscriptUploadProgress,
   })),
-)(FilesStepPage)
+)(FilesStepPageComponent)

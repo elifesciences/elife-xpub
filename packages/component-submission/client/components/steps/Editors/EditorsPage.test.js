@@ -6,7 +6,7 @@ import { MemoryRouter } from 'react-router-dom'
 
 import theme from '@elifesciences/elife-theme'
 import EditorsPage from './EditorsPage'
-import { schema } from './schema'
+import { editorsSchema } from '../../../utils/ValidationSchemas'
 
 const formValues = {
   suggestedSeniorEditors: [
@@ -42,7 +42,7 @@ function makeWrapper(props) {
               {...formProps}
             />
           )}
-          validationSchema={schema}
+          validationSchema={editorsSchema}
           {...props}
         />
       </MemoryRouter>

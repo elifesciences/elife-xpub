@@ -1,6 +1,6 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import { FilesStepPage } from './FilesStepPage'
+import { FilesStepPageComponent } from './FilesStepPage'
 
 const mockValues = {
   files: [
@@ -35,7 +35,7 @@ const deleteResponse = {
 
 function createWrapper(valueOverrides, propOverrides) {
   return shallow(
-    <FilesStepPage
+    <FilesStepPageComponent
       {...{
         values: { ...mockValues, ...valueOverrides },
         errors: {},
