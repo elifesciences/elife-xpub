@@ -13,14 +13,14 @@ import {
 } from '@elifesciences/component-elife-app/client'
 import { Loading } from '@elifesciences/component-elife-ui/client/atoms'
 
-import AuthorPageContainer from '../components/steps/Author'
-import SubmissionPage from '../components/steps/Submission'
 import EditorsPageContainer from '../components/steps/Editors'
 import DisclosurePage from '../components/steps/Disclosure'
 
 import WizardStep from '../components/WizardStep'
 
+import AuthorStepPage from './AuthorStepPage'
 import FilesStepPage from './FilesStepPage'
+import SubmissionPage from './SubmissionPage'
 
 import wizardSchema, {
   authorSchema,
@@ -114,7 +114,7 @@ const SubmissionWizard = ({
       path={`${match.path}/author`}
       render={() => (
         <WizardStep
-          component={AuthorPageContainer}
+          component={AuthorStepPage}
           handleAutoSave={updateManuscript}
           handleButtonClick={updateManuscript}
           history={history}
