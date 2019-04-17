@@ -1,4 +1,3 @@
-const { migrate } = require('@pubsweet/db-manager')
 const { db } = require('pubsweet-server')
 const uuid = require('uuid')
 const Team = require('@elifesciences/component-model-team').model
@@ -15,42 +14,13 @@ const createTables = async clobber => {
     FROM pg_tables
     WHERE schemaname = current_schema
   `)
-  logs.push(`ROWS FOUND: ${rows.length}`)
-  if (rows.length) {
-    if (clobber) {
-      // TODO this is dangerous, change it
-      // const promises = rows.map((row) =>
-      // await db.raw(`DROP TABLE IF EXISTS "${row.tablename}" CASCADE`)
-      // )
-
-      logs.push(`DROP START`)
-      const dropQuery = rows
-        .map(row => `DROP TABLE "${row.tablename}" CASCADE`)
-        .join(';')
-      await db.raw(`START TRANSACTION; ${dropQuery}; COMMIT;`)
-      logs.push(`DROP DONE`)
-
-      // await Promise.all(promises)
-    } else {
-      throw new Error('Target database already exists, not clobbering')
-    }
-  }
-
-  logs.push(`MIGRATE START`)
-  // run migrations
-  await migrate()
-  logs.push(`MIGRATE DONE`)
+  logs.push(`TRUNCATE START`)
+  const truncateQuery = `START TRANSACTION;
+        ${rows.map(row => `TRUNCATE "${row.tablename}" CASCADE`).join(';')};
+        COMMIT`
+  await db.raw(truncateQuery)
+  logs.push(`TRUNCATE DONE`)
 }
-
-beforeAll(async () => {
-  logs.push(`BEFORE ALL`)
-  const { rows } = await db.raw(`
-    SELECT tablename
-    FROM pg_tables
-    WHERE schemaname = current_schema
-  `)
-  logs.push(`BEFORE ALL ROWS FOUND: ${rows ? rows.length : 0}`)
-})
 
 afterEach(() => {
   console.log(JSON.stringify(logs, null, 4))
