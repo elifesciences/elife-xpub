@@ -19,17 +19,27 @@ const createTables = async clobber => {
   if (rows.length) {
     if (clobber) {
       // TODO this is dangerous, change it
+      // const promises = rows.map((row) =>
+      // await db.raw(`DROP TABLE IF EXISTS "${row.tablename}" CASCADE`)
+      // )
+
+      logs.push(`DROP START`)
       const dropQuery = rows
         .map(row => `DROP TABLE "${row.tablename}" CASCADE`)
         .join(';')
       await db.raw(`START TRANSACTION; ${dropQuery}; COMMIT;`)
+      logs.push(`DROP DONE`)
+
+      // await Promise.all(promises)
     } else {
       throw new Error('Target database already exists, not clobbering')
     }
   }
 
+  logs.push(`MIGRATE START`)
   // run migrations
   await migrate()
+  logs.push(`MIGRATE DONE`)
 }
 
 afterAll(() => {
