@@ -1,4 +1,4 @@
-const { createTables } = require('@pubsweet/db-manager')
+const { createTables } = require('@elifesciences/component-model')
 const startS3Server = require('@elifesciences/component-service-s3/mock')
 const xml2json = require('xml2json')
 const JsZip = require('jszip')

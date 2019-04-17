@@ -1,4 +1,4 @@
-const { createTables } = require('@pubsweet/db-manager')
+const { createTables } = require('@elifesciences/component-model')
 const User = require('.')
 const replaySetup = require('../../../../test/helpers/replay-setup')
 

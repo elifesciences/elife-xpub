@@ -1,4 +1,4 @@
-const { db } = require('pubsweet-server')
+const { createTables } = require('@elifesciences/component-model')
 const uuid = require('uuid')
 const Team = require('@elifesciences/component-model-team').model
 const User = require('@elifesciences/component-model-user').model
@@ -7,20 +7,6 @@ const AuditLog = require('@elifesciences/component-model-audit-log').model
 const Manuscript = require('.')
 
 let logs = []
-
-const createTables = async clobber => {
-  const { rows } = await db.raw(`
-    SELECT tablename
-    FROM pg_tables
-    WHERE schemaname = current_schema
-  `)
-  logs.push(`TRUNCATE START`)
-  const truncateQuery = `START TRANSACTION;
-        ${rows.map(row => `TRUNCATE "${row.tablename}" CASCADE`).join(';')};
-        COMMIT`
-  await db.raw(truncateQuery)
-  logs.push(`TRUNCATE DONE`)
-}
 
 afterEach(() => {
   console.log(JSON.stringify(logs, null, 4))

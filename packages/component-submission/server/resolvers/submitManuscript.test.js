@@ -5,7 +5,7 @@ jest.mock('@elifesciences/component-meca', () => ({
 
 const lodash = require('lodash')
 const logger = require('@pubsweet/logger')
-const { createTables } = require('@pubsweet/db-manager')
+const { createTables } = require('@elifesciences/component-model')
 const mailer = require('@pubsweet/component-send-email')
 const { mecaExport } = require('@elifesciences/component-meca')
 const User = require('@elifesciences/component-model-user').model

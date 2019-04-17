@@ -1,4 +1,4 @@
-const { createTables } = require('@pubsweet/db-manager')
+const { createTables } = require('@elifesciences/component-model')
 const AuditLog = require('@elifesciences/component-model-audit-log').model
 const User = require('@elifesciences/component-model-user').model
 const Manuscript = require('@elifesciences/component-model-manuscript').model
