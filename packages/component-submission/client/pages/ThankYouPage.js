@@ -23,7 +23,7 @@ const BookmarkLink = styled(NativeLink)`
   clear: both;
 `
 
-export class ThankYouPage extends React.Component {
+export class ThankYouPageComponent extends React.Component {
   componentDidMount() {
     if (config.hotJar.enabled) {
       window.hj('trigger', 'thank_you_page_hotjar_feedback')
@@ -60,4 +60,4 @@ export default compose(
   thankYouWithGQL,
   branch(props => props.data && props.data.loading, renderComponent(Loading)),
   branch(props => !props.data || props.data.error, renderComponent(ErrorPage)),
-)(ThankYouPage)
+)(ThankYouPageComponent)

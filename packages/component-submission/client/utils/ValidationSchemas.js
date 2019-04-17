@@ -62,8 +62,11 @@ export const editorsSchema = {
   ),
   suggestedReviewers: yup.array(
     yup.object({
-      name: yup.string().required('Name is required'),
       email: yup.string().email('Must be a valid email'),
+      name: yup.string().when('email', {
+        is: value => value && value.length > 0,
+        then: yup.string().required('Name is required'),
+      }),
     }),
   ),
   opposedReviewers: yup.array(

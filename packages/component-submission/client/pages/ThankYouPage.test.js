@@ -1,6 +1,6 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import { ThankYouPage } from './ThankYouPage'
+import { ThankYouPageComponent } from './ThankYouPage'
 
 describe('ThankYou', () => {
   it('has a hotjar supress attribute on the element around the title', () => {
@@ -8,7 +8,7 @@ describe('ThankYou', () => {
     global.window.hj = jest.fn
 
     const wrapper = shallow(
-      <ThankYouPage
+      <ThankYouPageComponent
         data={{
           manuscript: {
             meta: {
