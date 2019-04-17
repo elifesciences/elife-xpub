@@ -15,7 +15,7 @@ const createTables = async clobber => {
     FROM pg_tables
     WHERE schemaname = current_schema
   `)
-
+  logs.push(`ROWS FOUND: ${rows.length}`)
   if (rows.length) {
     if (clobber) {
       // TODO this is dangerous, change it
@@ -42,7 +42,17 @@ const createTables = async clobber => {
   logs.push(`MIGRATE DONE`)
 }
 
-afterAll(() => {
+beforeAll(async () => {
+  logs.push(`BEFORE ALL`)
+  const { rows } = await db.raw(`
+    SELECT tablename
+    FROM pg_tables
+    WHERE schemaname = current_schema
+  `)
+  logs.push(`BEFORE ALL ROWS FOUND: ${rows ? rows.length : 0}`)
+})
+
+afterEach(() => {
   console.log(JSON.stringify(logs, null, 4))
   logs = []
 })
