@@ -20,3 +20,15 @@ export const GET_MANUSCRIPT_TITLE = gql`
     }
   }
 `
+
+export const EDITOR_LIST_QUERY = gql`
+  query EditorList($role: String!) {
+    editors(role: $role) {
+      id
+      name
+      aff
+      focuses
+      expertises
+    }
+  }
+`

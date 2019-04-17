@@ -1,5 +1,6 @@
 import { cloneDeep } from 'lodash'
 import React from 'react'
+import { compose } from 'recompose'
 import { Box } from '@rebass/grid'
 import { ErrorText } from '@pubsweet/ui'
 import { FormH3 } from '@elifesciences/component-elife-ui/client/atoms/FormHeadings'
@@ -12,7 +13,8 @@ import {
 
 import PeoplePickerControl from '@elifesciences/component-submission/client/components/PeoplePicker/PeoplePickerControl'
 import TwoColumnLayout from '@elifesciences/component-elife-ui/client/global/layout/TwoColumnLayout'
-import { EDITOR_LIMITS } from '../../../utils/constants'
+import { EDITOR_LIMITS } from '../utils/constants'
+import editorsWithGQL from '../graphql/editorsWithGQL'
 
 const OptionalExclude = ({
   boxVisible,
@@ -40,7 +42,7 @@ const ValidationMessage = ({ message }) => (
   <div aria-live="polite">{message && <ErrorText>{message}</ErrorText>}</div>
 )
 
-class EditorsPage extends React.Component {
+export class EditorsStepPageComponent extends React.Component {
   state = {
     boxVisibility: {},
   }
@@ -134,7 +136,7 @@ class EditorsPage extends React.Component {
     })
   }
 
-  filterEditors = (editors, toFilter) => {
+  filterEditors = (editors = [], toFilter) => {
     const toFilterIds = toFilter.map(item => item.id)
     return editors.filter(editor => toFilterIds.indexOf(editor.id) === -1)
   }
@@ -166,7 +168,7 @@ class EditorsPage extends React.Component {
                 this.setSelection('suggestedSeniorEditors', selection)
               }
               people={this.filterEditors(
-                seniorEditors,
+                seniorEditors.editors,
                 values.opposedSeniorEditors,
               )}
             />
@@ -199,7 +201,7 @@ class EditorsPage extends React.Component {
                 this.setSelection('opposedSeniorEditors', selection)
               }
               people={this.filterEditors(
-                seniorEditors,
+                seniorEditors.editors,
                 values.suggestedSeniorEditors,
               )}
             />
@@ -235,7 +237,7 @@ class EditorsPage extends React.Component {
                 this.setSelection('suggestedReviewingEditors', selection)
               }
               people={this.filterEditors(
-                reviewingEditors,
+                reviewingEditors.editors,
                 values.opposedReviewingEditors,
               )}
             />
@@ -270,7 +272,7 @@ class EditorsPage extends React.Component {
                 this.setSelection('opposedReviewingEditors', selection)
               }
               people={this.filterEditors(
-                reviewingEditors,
+                reviewingEditors.editors,
                 values.suggestedReviewingEditors,
               )}
             />
@@ -356,4 +358,4 @@ class EditorsPage extends React.Component {
   }
 }
 
-export default EditorsPage
+export default compose(editorsWithGQL)(EditorsStepPageComponent)
