@@ -7,10 +7,6 @@ import db from 'pubsweet-server/src/db'
 import replaySetup from './replay-setup'
 
 export async function setup(t) {
-  console.log('test/helpers/setup.js::setup')
-
-  console.log('test/helpers/setup.js::setup truncate query')
-
   const { rows } = await db.raw(`
     SELECT tablename
     FROM pg_tables
@@ -23,6 +19,5 @@ export async function setup(t) {
 
   await db.raw(truncateQuery)
 
-  console.log('test/helpers/setup.js::setup replaySetup')
   replaySetup('success')
 }

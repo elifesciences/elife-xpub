@@ -63,7 +63,7 @@ test('Happy path', async t => {
   await t
     .expect(files.supportingFile.count)
     .eql(1)
-    .click(files.supportingFilesRemove)
+    .click(files.supportingFilesRemove, { timeout: 5000 })
 
   navigationHelper.uploadSupportingFiles(manuscript.supportingFiles)
   await t.expect(files.supportingFile.count).eql(2)
