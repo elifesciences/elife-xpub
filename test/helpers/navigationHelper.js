@@ -148,7 +148,7 @@ class NavigationHelper {
   async submit() {
     await this.t.click(wizardStep.submit, OPTS)
     // wait for "accept" button to show
-    await this.t.waitForElement('accept')
+    await this.waitForElement('accept')
   }
 
   async accept() {
