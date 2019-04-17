@@ -44,6 +44,7 @@ test('test suppressions', async t => {
   navigationHelper.fillCoverletter('\nPlease consider this for publication')
   navigationHelper.uploadManuscript(manuscript)
   navigationHelper.wait(1000)
+  // TODO ... this wait is bad
   navigationHelper.navigateForward()
 
   // submission metadata
@@ -78,9 +79,11 @@ test('test suppressions', async t => {
       'data-hj-suppress': '',
     })
     .ok()
-  navigationHelper.consentDisclosure()
-  navigationHelper.submit()
-  navigationHelper.accept()
+
+  await navigationHelper.consentDisclosure()
+  await navigationHelper.submit()
+  await navigationHelper.accept()
+
   await t
     .expect(thankyou.title, {
       'data-hj-suppress': '',

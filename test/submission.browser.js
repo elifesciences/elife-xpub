@@ -110,10 +110,10 @@ test('Happy path', async t => {
   navigationHelper.navigateForward()
 
   // consenting to data disclosure
-  navigationHelper.consentDisclosure()
-  navigationHelper.submit()
-  navigationHelper.accept()
-  navigationHelper.thankyou()
+  await navigationHelper.consentDisclosure()
+  await navigationHelper.submit()
+  await navigationHelper.accept()
+  await navigationHelper.thankyou()
 
   // dashboard
   await t
