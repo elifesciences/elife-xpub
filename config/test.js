@@ -45,7 +45,7 @@ module.exports = {
     sftp: {
       connectionOptions: {
         host: 'sftp',
-        port: 3022,
+        port: 22,
         username: 'test',
         password: 'tset',
       },
