@@ -14,6 +14,9 @@ import {
   cookie,
 } from '../pageObjects'
 
+const DEFAULT_TIMEOUT = 5000
+const OPTS = { timeout: DEFAULT_TIMEOUT }
+
 class NavigationHelper {
   constructor(t) {
     this.t = t
@@ -32,21 +35,19 @@ class NavigationHelper {
   }
 
   async startAtRedirect() {
-    await this.t
-      .navigateTo(redirect.url)
-      .click(redirect.button, { timeout: 5000 })
+    await this.t.navigateTo(redirect.url).click(redirect.button, OPTS)
 
     if (Selector(cookie.button)) {
-      await this.t.click(Selector(cookie.button, { timeout: 5000 }))
+      await this.t.click(Selector(cookie.button, OPTS))
     }
     await this.wait(1000)
   }
 
   async login() {
-    await this.t.navigateTo(login.url).click(login.button, { timeout: 5000 })
+    await this.t.navigateTo(login.url).click(login.button, OPTS)
 
     if (Selector(cookie.button)) {
-      await this.t.click(Selector(cookie.button, { timeout: 5000 }))
+      await this.t.click(Selector(cookie.button, OPTS))
     }
   }
 
@@ -136,20 +137,30 @@ class NavigationHelper {
 
   async consentDisclosure() {
     await this.t
-      .typeText(disclosure.submitterName, 'Joe Bloggs', { timeout: 5000 })
-      .click(disclosure.consentCheckbox, { timeout: 5000 })
+      .typeText(disclosure.submitterName, 'Joe Bloggs', OPTS)
+      .click(disclosure.consentCheckbox, OPTS)
+  }
+
+  async waitForElement(name) {
+    await this.t.expect(Selector(`[data-test-id="${name}"]`, OPTS))
   }
 
   async submit() {
-    await this.t.click(wizardStep.submit, { timeout: 5000 })
+    await this.t.click(wizardStep.submit, OPTS)
+    // wait for "accept" button to show
+    await this.t.waitForElement('accept')
   }
 
   async accept() {
-    await this.t.click(wizardStep.accept, { timeout: 10000 })
+    await this.t.click(wizardStep.accept, OPTS)
+    // wait for "finish" button to show
+    await this.waitForElement('finish')
   }
 
   async thankyou() {
-    await this.t.click(thankyou.finish, { timeout: 5000 })
+    await this.t.click(thankyou.finish, OPTS)
+    // wait for "desktop-new-submission" button to show
+    await this.waitForElement('desktop-new-submission')
   }
 
   async paricialSubmissionThankyou(manuscript) {
