@@ -30,6 +30,7 @@ import wizardSchema, {
 } from '../utils/ValidationSchemas'
 
 import wizardWithGQL from '../graphql/wizardWithGQL'
+
 import { parseFormToOutputData, parseInputToFormData } from '../utils'
 
 const SubmissionWizard = ({
