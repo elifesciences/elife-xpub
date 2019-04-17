@@ -14,6 +14,10 @@ elifePipeline {
             dockerComposeBuild(commit)
         }
 
+        stage 'Clean Artifacts', {
+            sh "rm -rf ./build/*"
+        }
+
         stage 'Project tests', {
             def actions = [
                 'lint': {
