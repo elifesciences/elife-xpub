@@ -43,8 +43,6 @@ test('test suppressions', async t => {
     .ok()
   navigationHelper.fillCoverletter('\nPlease consider this for publication')
   navigationHelper.uploadManuscript(manuscript)
-  navigationHelper.wait(1000)
-  // TODO ... this wait is bad
   navigationHelper.navigateForward()
 
   // submission metadata
@@ -80,9 +78,9 @@ test('test suppressions', async t => {
     })
     .ok()
 
-  await navigationHelper.consentDisclosure()
-  await navigationHelper.submit()
-  await navigationHelper.accept()
+  navigationHelper.consentDisclosure()
+  navigationHelper.submit()
+  navigationHelper.accept()
 
   await t
     .expect(thankyou.title, {

@@ -57,7 +57,6 @@ test('Happy path', async t => {
   // uploading files - manuscript and cover letter
   navigationHelper.fillCoverletter('\nPlease consider this for publication')
   navigationHelper.uploadManuscript(manuscript)
-  navigationHelper.wait(1000)
   navigationHelper.uploadSupportingFiles(manuscript.supportingFiles[0])
 
   await t
@@ -110,10 +109,10 @@ test('Happy path', async t => {
   navigationHelper.navigateForward()
 
   // consenting to data disclosure
-  await navigationHelper.consentDisclosure()
-  await navigationHelper.submit()
-  await navigationHelper.accept()
-  await navigationHelper.thankyou()
+  navigationHelper.consentDisclosure()
+  navigationHelper.submit()
+  navigationHelper.accept()
+  navigationHelper.thankyou()
 
   // dashboard
   await t
