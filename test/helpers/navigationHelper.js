@@ -15,7 +15,6 @@ import {
 } from '../pageObjects'
 
 const DEFAULT_TIMEOUT = 5000
-const FILE_TIMEOUT = 60000
 const OPTS = { timeout: DEFAULT_TIMEOUT }
 
 class NavigationHelper {
@@ -95,8 +94,8 @@ class NavigationHelper {
   async uploadManuscript(manuscript) {
     await this.t.setFilesToUpload(files.manuscriptUpload, manuscript.file)
     await this.t
-      .expect(files.dropzoneMessage.textContent)
-      .contains('Replace', { timeout: FILE_TIMEOUT })
+      .expect(files.dropzoneMessage.textContent, OPTS)
+      .contains('Replace', OPTS)
   }
 
   async uploadSupportingFiles(supportingFiles) {
