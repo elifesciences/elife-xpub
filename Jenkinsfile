@@ -12,6 +12,7 @@ elifePipeline {
         stage 'Build image', {
             // TODO: pull existing docker image if caching is not already effective
             dockerComposeBuild(commit)
+            sh "IMAGE_TAG=${commit} NODE_ENV=production NODE_CONFIG_ENV=unit-test docker-compose -f docker-compose.yml -f docker-compose.ci.yml up -d postgres"
         }
 
         stage 'Project tests', {
@@ -89,10 +90,9 @@ elifePipeline {
                 }, 'test:browser', commit)
             } finally {
                 archiveArtifacts artifacts: "build/screenshots/**/*,build/logs/**/*,build/*.zip", allowEmptyArchive: true
-                sh "sudo rm -rf ./build/*"
-                sh "aws --endpoint-url='http://localhost:4569' s3 ls"
                 sh "aws --endpoint-url='http://localhost:4569' s3 ls s3://test --recursive"
                 sh "IMAGE_TAG=${commit} docker-compose -f docker-compose.yml -f docker-compose.ci.yml down -v"
+                sh "sudo rm -rf ./build/*"
             }
         }
 
