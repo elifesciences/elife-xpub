@@ -6,13 +6,6 @@ const File = require('@elifesciences/component-model-file').model
 const AuditLog = require('@elifesciences/component-model-audit-log').model
 const Manuscript = require('.')
 
-let logs = []
-
-afterEach(() => {
-  console.log(JSON.stringify(logs, null, 4))
-  logs = []
-})
-
 describe('Manuscript', () => {
   let userId
   let dbState = 'UNINITIALIZED'
