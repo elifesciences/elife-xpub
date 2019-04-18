@@ -93,9 +93,6 @@ class NavigationHelper {
 
   async uploadManuscript(manuscript) {
     await this.t.setFilesToUpload(files.manuscriptUpload, manuscript.file)
-    await this.t
-      .expect(files.dropzoneMessage.textContent, OPTS)
-      .contains('Replace', OPTS)
   }
 
   async uploadSupportingFiles(supportingFiles) {
