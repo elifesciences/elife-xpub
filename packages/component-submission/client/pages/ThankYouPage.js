@@ -1,27 +1,29 @@
 import React from 'react'
+import { compose, branch, renderComponent } from 'recompose'
 import styled from 'styled-components'
 import { Box } from '@rebass/grid'
-import PropTypes from 'prop-types'
-import { H1 } from '@pubsweet/ui'
 import config from 'config'
-
+import { H1 } from '@pubsweet/ui'
+import { ErrorPage } from '@elifesciences/component-elife-app/client'
 import {
   NativeLink,
   ButtonLink,
   Paragraph,
+  Loading,
 } from '@elifesciences/component-elife-ui/client/atoms'
+
+import thankYouWithGQL from '../graphql/thankYouWithGQL'
 
 const CenteredContent = styled(Box)`
   text-align: center;
 `
-const SubText = styled(Paragraph.Small).attrs({ secondary: true })``
 
 const BookmarkLink = styled(NativeLink)`
   display: inline-block;
   clear: both;
 `
 
-class ThankYou extends React.Component {
+export class ThankYouPageComponent extends React.Component {
   componentDidMount() {
     if (config.hotJar.enabled) {
       window.hj('trigger', 'thank_you_page_hotjar_feedback')
@@ -29,23 +31,23 @@ class ThankYou extends React.Component {
   }
 
   render() {
-    const { title } = this.props
+    const { data } = this.props
     return (
       <CenteredContent mx="auto" width={[1, 1, 1, 600]}>
         <H1>Thank you</H1>
         <Paragraph.Reading data-hj-suppress="" data-test-id="title">
           Your submission, &quot;
-          {title}
+          {data.manuscript.meta.title}
           &quot; has been received.
         </Paragraph.Reading>
         <Paragraph.Reading>
           You will be informed of a decision soon.
         </Paragraph.Reading>
-        <SubText>
+        <Paragraph.Small secondary>
           You may want to bookmark the link below to check the progress of your
           submission.
           <BookmarkLink href="/">elifesciences.org/submissions</BookmarkLink>
-        </SubText>
+        </Paragraph.Small>
         <ButtonLink data-test-id="finish" primary to="/">
           Finish
         </ButtonLink>
@@ -54,8 +56,8 @@ class ThankYou extends React.Component {
   }
 }
 
-ThankYou.propTypes = {
-  title: PropTypes.string.isRequired,
-}
-
-export default ThankYou
+export default compose(
+  thankYouWithGQL,
+  branch(props => props.data && props.data.loading, renderComponent(Loading)),
+  branch(props => !props.data || props.data.error, renderComponent(ErrorPage)),
+)(ThankYouPageComponent)

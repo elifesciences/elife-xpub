@@ -2,6 +2,15 @@ import config from 'config'
 
 export const MAX_SUPPORTING_FILES = 10
 export const MAX_FILE_SIZE = config.fileUpload.maxSizeMB
+export const MIN_COVERLETTER_WORDS = 60
+
+export const EDITOR_LIMITS = {
+  suggestedSeniorEditors: { min: 2, max: 6 },
+  opposedSeniorEditors: { min: 0, max: 1 },
+  suggestedReviewingEditors: { min: 2, max: 6 },
+  opposedReviewingEditors: { min: 0, max: 2 },
+  suggestedReviewers: { min: 0, max: 6 },
+}
 
 export const errorMessageMapping = {
   EMPTY: 'Please upload a manuscript.',

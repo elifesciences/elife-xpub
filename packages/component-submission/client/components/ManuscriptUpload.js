@@ -10,7 +10,7 @@ import {
   ActionText,
   Icon,
 } from '@elifesciences/component-elife-ui/client/atoms'
-import { errorMessageMapping, MAX_FILE_SIZE } from './utils'
+import { errorMessageMapping, MAX_FILE_SIZE } from '../utils/constants'
 
 const UploadIcon = props => (
   <Icon
