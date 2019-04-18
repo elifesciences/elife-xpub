@@ -6,41 +6,18 @@ const File = require('@elifesciences/component-model-file').model
 const AuditLog = require('@elifesciences/component-model-audit-log').model
 const Manuscript = require('.')
 
-let logs = []
-
-afterEach(() => {
-  console.log(JSON.stringify(logs, null, 4))
-  logs = []
-})
-
 describe('Manuscript', () => {
   let userId
   let dbState = 'UNINITIALIZED'
-  let msStart = 0
 
   beforeEach(async () => {
-    logs.push('beforeEach')
     dbState = 'INITIALIZING....'
-    msStart = Date.now()
-    try {
-      await createTables(true)
-    } catch (error) {
-      const msg = JSON.stringify(error, null, 4)
-      logs.push(msg)
-      console.error(msg)
-      throw error
-    }
-    logs.push(`createTables took ${Date.now() - msStart} ms`)
+    await createTables(true)
     dbState = 'INITIALIZED'
     const profileId = 'ewwboc7m'
     const identities = [{ type: 'elife', identifier: profileId }]
     const user = await new User({ identities }).save()
     userId = user.id
-  })
-
-  afterEach(() => {
-    logs.push(`test took ${Date.now() - msStart} ms`)
-    msStart = 0
   })
 
   describe('applyInput()', () => {

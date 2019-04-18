@@ -12,7 +12,6 @@ elifePipeline {
         stage 'Build image', {
             // TODO: pull existing docker image if caching is not already effective
             dockerComposeBuild(commit)
-            sh "IMAGE_TAG=${commit} NODE_ENV=production NODE_CONFIG_ENV=unit-test docker-compose -f docker-compose.yml -f docker-compose.ci.yml up -d postgres"
         }
 
         stage 'Project tests', {
