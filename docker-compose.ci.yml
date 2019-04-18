@@ -57,9 +57,11 @@ services:
 
   sftp:
     image: atmoz/sftp:alpine
+    volumes:
+      - ./build:/home/test/upload
     ports:
       - "2222:22"
-    command: test:tset:1001
+    command: test:tset:1000
 
   postgres:
     image: postgres:10.4

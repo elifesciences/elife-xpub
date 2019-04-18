@@ -49,7 +49,7 @@ module.exports = {
         username: 'test',
         password: 'tset',
       },
-      remotePath: '/test',
+      remotePath: '/upload',
     },
     apiKey: 'abcd1234',
     email: {
