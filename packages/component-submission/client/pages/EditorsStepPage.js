@@ -1,5 +1,6 @@
 import { cloneDeep } from 'lodash'
 import React from 'react'
+import { compose } from 'recompose'
 import { Box } from '@rebass/grid'
 import { ErrorText } from '@pubsweet/ui'
 import { FormH3 } from '@elifesciences/component-elife-ui/client/atoms/FormHeadings'
@@ -12,7 +13,8 @@ import {
 
 import PeoplePickerControl from '@elifesciences/component-submission/client/components/PeoplePicker/PeoplePickerControl'
 import TwoColumnLayout from '@elifesciences/component-elife-ui/client/global/layout/TwoColumnLayout'
-import { limits } from './schema'
+import { EDITOR_LIMITS } from '../utils/constants'
+import editorsWithGQL from '../graphql/editorsWithGQL'
 
 const OptionalExclude = ({
   boxVisible,
@@ -40,7 +42,7 @@ const ValidationMessage = ({ message }) => (
   <div aria-live="polite">{message && <ErrorText>{message}</ErrorText>}</div>
 )
 
-class EditorsPage extends React.Component {
+export class EditorsStepPageComponent extends React.Component {
   state = {
     boxVisibility: {},
   }
@@ -87,54 +89,59 @@ class EditorsPage extends React.Component {
     this.props.setFieldTouched(name, true)
   }
 
+  suggestedReviewerItemIsBlank = item => item.name + item.email === ''
+
+  getTrailingBlankReviewerCount = reviewers => {
+    let blankRows = 0
+    for (let index = reviewers.length - 1; index >= 0; index -= 1) {
+      const item = reviewers[index]
+      if (this.suggestedReviewerItemIsBlank(item)) {
+        blankRows += 1
+      } else {
+        break
+      }
+    }
+    return blankRows
+  }
+
+  calculateNewSuggestedReviewersFieldValue = reviewers => {
+    const MAX_REVIEWERS = EDITOR_LIMITS.suggestedReviewers.max
+    const MIN_REVIEWERS = EDITOR_LIMITS.suggestedReviewers.min
+    const newReviewers = cloneDeep(reviewers)
+
+    const trailingBlankRows = this.getTrailingBlankReviewerCount(reviewers)
+
+    if (trailingBlankRows === 0) {
+      if (reviewers.length < MAX_REVIEWERS) {
+        newReviewers.push({ name: '', email: '' })
+      }
+    } else if (trailingBlankRows > 1) {
+      const rowsToRemove = trailingBlankRows - 1
+      if (reviewers.length - rowsToRemove >= MIN_REVIEWERS) {
+        newReviewers.splice(newReviewers.length - rowsToRemove, rowsToRemove)
+      }
+    }
+
+    return newReviewers
+  }
   handleSuggestedReviewersChanged = event => {
     this.props.handleChange(event)
-
-    const MAX_REVIEWERS = limits.suggestedReviewers.max
-    const MIN_REVIEWERS = limits.suggestedReviewers.min
-
-    const itemIsBlank = item => item.name + item.email === ''
-
     // defer the execution of the function until the default change has been
     // handled so we're operating on the updated
     // "this.props.values.suggestedReviewers"
     this.setState({}, () => {
       const reviewers = this.props.values.suggestedReviewers
 
-      // logic only kicks in for the optional reviewers
       if (reviewers) {
-        // first count the blanks at the end
-        let numBlanks = 0
-        for (let index = reviewers.length - 1; index >= 0; index -= 1) {
-          const item = reviewers[index]
-          if (itemIsBlank(item)) {
-            numBlanks += 1
-          } else {
-            break
-          }
-        }
-
-        // if we have no blanks then add if one if less than max
-        if (numBlanks === 0) {
-          if (reviewers.length < MAX_REVIEWERS) {
-            const newReviewers = cloneDeep(reviewers)
-            newReviewers.push({ name: '', email: '' })
-            this.props.setFieldValue('suggestedReviewers', newReviewers)
-          }
-        } else if (numBlanks > 1) {
-          const numToGo = numBlanks - 1
-          if (reviewers.length - numToGo >= MIN_REVIEWERS) {
-            // we have more than one blank line so tidy up
-            const newReviewers = cloneDeep(reviewers)
-            newReviewers.splice(newReviewers.length - numToGo, numToGo)
-            this.props.setFieldValue('suggestedReviewers', newReviewers)
-          }
-        }
+        this.props.setFieldValue(
+          'suggestedReviewers',
+          this.calculateNewSuggestedReviewersFieldValue(reviewers),
+        )
       }
     })
   }
 
-  filterEditors = (editors, toFilter) => {
+  filterEditors = (editors = [], toFilter) => {
     const toFilterIds = toFilter.map(item => item.id)
     return editors.filter(editor => toFilterIds.indexOf(editor.id) === -1)
   }
@@ -155,8 +162,8 @@ class EditorsPage extends React.Component {
           <Box data-test-id="suggested-senior-editors" mb={2}>
             <PeoplePickerControl
               initialSelection={values.suggestedSeniorEditors}
-              maxSelection={limits.suggestedSeniorEditors.max}
-              minSelection={limits.suggestedSeniorEditors.min}
+              maxSelection={EDITOR_LIMITS.suggestedSeniorEditors.max}
+              minSelection={EDITOR_LIMITS.suggestedSeniorEditors.min}
               modalName="suggestedSeniorEditors"
               modalTitle="Suggest Senior Editors"
               onRequestRemove={person =>
@@ -166,7 +173,7 @@ class EditorsPage extends React.Component {
                 this.setSelection('suggestedSeniorEditors', selection)
               }
               people={this.filterEditors(
-                seniorEditors,
+                seniorEditors.editors,
                 values.opposedSeniorEditors,
               )}
             />
@@ -188,8 +195,8 @@ class EditorsPage extends React.Component {
 
             <PeoplePickerControl
               initialSelection={values.opposedSeniorEditors}
-              maxSelection={limits.opposedSeniorEditors.max}
-              minSelection={limits.opposedSeniorEditors.min}
+              maxSelection={EDITOR_LIMITS.opposedSeniorEditors.max}
+              minSelection={EDITOR_LIMITS.opposedSeniorEditors.min}
               modalName="opposedSeniorEditors"
               modalTitle="Exclude Senior Editors"
               onRequestRemove={person =>
@@ -199,7 +206,7 @@ class EditorsPage extends React.Component {
                 this.setSelection('opposedSeniorEditors', selection)
               }
               people={this.filterEditors(
-                seniorEditors,
+                seniorEditors.editors,
                 values.suggestedSeniorEditors,
               )}
             />
@@ -224,8 +231,8 @@ class EditorsPage extends React.Component {
           <Box data-test-id="suggested-reviewing-editors" mb={2}>
             <PeoplePickerControl
               initialSelection={values.suggestedReviewingEditors}
-              maxSelection={limits.suggestedReviewingEditors.max}
-              minSelection={limits.suggestedReviewingEditors.min}
+              maxSelection={EDITOR_LIMITS.suggestedReviewingEditors.max}
+              minSelection={EDITOR_LIMITS.suggestedReviewingEditors.min}
               modalName="suggestedReviewingEditors"
               modalTitle="Suggest Reviewing Editors"
               onRequestRemove={person =>
@@ -235,7 +242,7 @@ class EditorsPage extends React.Component {
                 this.setSelection('suggestedReviewingEditors', selection)
               }
               people={this.filterEditors(
-                reviewingEditors,
+                reviewingEditors.editors,
                 values.opposedReviewingEditors,
               )}
             />
@@ -259,8 +266,8 @@ class EditorsPage extends React.Component {
 
             <PeoplePickerControl
               initialSelection={values.opposedReviewingEditors}
-              maxSelection={limits.opposedReviewingEditors.max}
-              minSelection={limits.opposedReviewingEditors.min}
+              maxSelection={EDITOR_LIMITS.opposedReviewingEditors.max}
+              minSelection={EDITOR_LIMITS.opposedReviewingEditors.min}
               modalName="opposedReviewingEditors"
               modalTitle="Exclude Reviewing Editors"
               onRequestRemove={person =>
@@ -270,7 +277,7 @@ class EditorsPage extends React.Component {
                 this.setSelection('opposedReviewingEditors', selection)
               }
               people={this.filterEditors(
-                reviewingEditors,
+                reviewingEditors.editors,
                 values.suggestedReviewingEditors,
               )}
             />
@@ -298,20 +305,12 @@ class EditorsPage extends React.Component {
             <Box data-test-id="suggestedReviewerInputGroup" key={index} mb={2}>
               <TwoColumnLayout bottomSpacing={false}>
                 <ValidatedField
-                  label={
-                    index < limits.suggestedReviewers.min
-                      ? `Reviewer ${index + 1} name`
-                      : `Reviewer ${index + 1} name (optional)`
-                  }
+                  label={`Reviewer ${index + 1} name (optional)`}
                   name={`suggestedReviewers.${index}.name`}
                   onChange={this.handleSuggestedReviewersChanged}
                 />
                 <ValidatedField
-                  label={
-                    index < limits.suggestedReviewers.min
-                      ? `Reviewer ${index + 1} email`
-                      : `Reviewer ${index + 1} email (optional)`
-                  }
+                  label={`Reviewer ${index + 1} email (optional)`}
                   name={`suggestedReviewers.${index}.email`}
                   onChange={this.handleSuggestedReviewersChanged}
                   type="email"
@@ -364,4 +363,4 @@ class EditorsPage extends React.Component {
   }
 }
 
-export default EditorsPage
+export default compose(editorsWithGQL)(EditorsStepPageComponent)

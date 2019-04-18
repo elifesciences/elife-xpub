@@ -7,8 +7,8 @@ import {
   Textarea,
 } from '@elifesciences/component-elife-ui/client/atoms'
 
-import SubjectAreaDropdown from './SubjectAreaDropdown'
-import OptionalSection from './OptionalSection'
+import SubjectAreaDropdown from '../components/SubjectAreaDropdown'
+import OptionalSection from '../components/OptionalSection'
 
 const SubmissionPage = ({ values, setFieldValue, setFieldTouched }) => (
   <React.Fragment>

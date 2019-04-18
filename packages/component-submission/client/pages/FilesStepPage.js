@@ -1,15 +1,18 @@
 import React from 'react'
 import { Box } from '@rebass/grid'
+import { compose, withProps } from 'recompose'
 import { ValidatedField } from '@elifesciences/component-elife-ui/client/atoms'
-import CoverLetterEditor from './CoverLetterEditor'
-import ManuscriptUpload from './ManuscriptUpload'
-import SupportingUpload from './SupportingUpload'
-import { errorMessageMapping, manuscriptFileTypes } from './utils'
+import CoverLetterEditor from '../components/CoverLetterEditor'
+import ManuscriptUpload from '../components/ManuscriptUpload'
+import SupportingUpload from '../components/SupportingUpload'
+import { errorMessageMapping, manuscriptFileTypes } from '../utils/constants'
+import filesWithGQL from '../graphql/filesWithGQL'
 
-export default class FilesPageContainer extends React.Component {
+export class FilesStepPageComponent extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
+      // Revisit this once https://github.com/apollographql/react-apollo/issues/2952 has been implemented.
       manuscriptUploading: false,
       manuscriptUploadingError: null,
     }
@@ -162,3 +165,10 @@ export default class FilesPageContainer extends React.Component {
     )
   }
 }
+
+export default compose(
+  filesWithGQL,
+  withProps(props => ({
+    manuscriptUploadProgress: props.uploadProgress.manuscriptUploadProgress,
+  })),
+)(FilesStepPageComponent)
