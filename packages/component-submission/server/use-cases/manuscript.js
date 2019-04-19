@@ -26,9 +26,10 @@ class Manuscript {
     const predictor = new UploadPredictor(fileSize)
 
     // ensure user can view manuscript
-    await ManuscriptModel.find(manuscriptId, this.userId)
+    const ms = await ManuscriptModel.find(manuscriptId, this.userId)
 
     const fileData = await FilesHelper.getFileData(file, manuscriptId)
+    await ManuscriptHelper.clearPendingFile(ms)
 
     const pubsub = await this.pubsubManager.getPubsub()
 
@@ -55,6 +56,7 @@ class Manuscript {
         progress,
         manuscriptId,
       )
+      logger.error(`uploadManuscriptFile threw this error: ${error}`)
       const manuscript = await ManuscriptModel.find(manuscriptId, this.userId)
       await ManuscriptHelper.clearPendingFile(manuscript)
       throw error

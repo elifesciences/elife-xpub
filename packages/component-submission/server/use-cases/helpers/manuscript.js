@@ -18,6 +18,7 @@ class ManuscriptHelper {
     )
 
     if (pendingFileIndex >= 0) {
+      logger.info(`clearPendingFile required on ${manuscript.id}`)
       const pendingFile = await FileModel.find(
         manuscript.files[pendingFileIndex].id,
       )

@@ -179,7 +179,23 @@ class FilesHelper {
       f => f.type === 'MANUSCRIPT_SOURCE_PENDING',
     )
     if (sourceList.length !== 1 || pendingList.length !== 0) {
-      logger.error(`Validation failed ${JSON.stringify(manuscript, null, 4)}`)
+      logger.error(
+        `Validation failed: sourceList ${JSON.stringify(sourceList, null, 4)}`,
+      )
+      logger.error(
+        `Validation failed: pendingList ${JSON.stringify(
+          pendingList,
+          null,
+          4,
+        )}`,
+      )
+      logger.error(
+        `Validation failed on manuscript ${JSON.stringify(
+          manuscript,
+          null,
+          4,
+        )}`,
+      )
       throw new Error(`Validation Failure on ${manuscript.id}`)
     }
   }
