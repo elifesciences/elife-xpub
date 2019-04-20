@@ -22,12 +22,19 @@ elifePipeline {
                     }, 'lint', commit)
                 },
                 'test': {
-                    withCommitStatus({
-                        sh "IMAGE_TAG=${commit} NODE_ENV=production NODE_CONFIG_ENV=unit-test docker-compose -f docker-compose.yml -f docker-compose.ci.yml up -d postgres"
-                        sh "IMAGE_TAG=${commit} NODE_ENV=production NODE_CONFIG_ENV=unit-test docker-compose -f docker-compose.yml -f docker-compose.ci.yml run --rm --name elife-xpub_wait_postgres app bash -c './scripts/wait-for-it.sh postgres:5432'"
-                        sh "IMAGE_TAG=${commit} NODE_ENV=production NODE_CONFIG_ENV=unit-test docker-compose -f docker-compose.yml -f docker-compose.ci.yml run --rm --name elife-xpub_app_test app npx pubsweet migrate"
-                        sh "IMAGE_TAG=${commit} NODE_ENV=production NODE_CONFIG_ENV=unit-test docker-compose -f docker-compose.yml -f docker-compose.ci.yml run --rm --name elife-xpub_app_test app npm test"
-                    }, 'test', commit)
+                  try {
+                      withCommitStatus({
+                          sh "IMAGE_TAG=${commit} NODE_ENV=production NODE_CONFIG_ENV=unit-test docker-compose -f docker-compose.yml -f docker-compose.ci.yml up -d postgres"
+                          sh "IMAGE_TAG=${commit} NODE_ENV=production NODE_CONFIG_ENV=unit-test docker-compose -f docker-compose.yml -f docker-compose.ci.yml run --rm --name elife-xpub_wait_postgres app bash -c './scripts/wait-for-it.sh postgres:5432'"
+                          sh "IMAGE_TAG=${commit} NODE_ENV=production NODE_CONFIG_ENV=unit-test docker-compose -f docker-compose.yml -f docker-compose.ci.yml run --rm --name elife-xpub_app_test app npx pubsweet migrate"
+                          sh "IMAGE_TAG=${commit} NODE_ENV=production NODE_CONFIG_ENV=unit-test docker-compose -f docker-compose.yml -f docker-compose.ci.yml run --rm --name elife-xpub_app_test app npm test"
+                      }, 'test', commit)
+                  } finally {
+                      sh "docker logs elifexpub_postgres_1 > build/logs/unit-postgres-output.txt"
+                      archiveArtifacts artifacts: "build/logs/**/*", allowEmptyArchive: true
+                      sh "IMAGE_TAG=${commit} docker-compose -f docker-compose.yml -f docker-compose.ci.yml down -v"
+                      sh "sudo rm -rf ./build/*"
+                  }
                 },
                 'test:dependencies': {
                     withCommitStatus({
@@ -88,7 +95,11 @@ elifePipeline {
                     sh "IMAGE_TAG=${commit} NODE_ENV=production NODE_CONFIG_ENV=unit-test docker-compose -f docker-compose.yml -f docker-compose.ci.yml run --rm --name elife-xpub_app_test app bash -c 'scripts/pipeline-log-filter-test.sh'"
                 }, 'test:browser', commit)
             } finally {
-                archiveArtifacts artifacts: "build/screenshots/**/*,build/logs/**/*,build/*.zip", allowEmptyArchive: true
+                sh "docker logs elifexpub_app_1 > build/logs/app-output.txt"
+                sh "docker logs elifexpub_postgres_1 > build/logs/postgres-output.txt"
+                sh "docker logs elifexpub_sftp_1 > build/logs/sftp-output.txt"
+                sh "docker logs elifexpub_fakes3_1 > build/logs/fakes3-output.txt"
+                archiveArtifacts artifacts: "build/screenshots/**/*,build/logs/**/*,build/meca/*.zip", allowEmptyArchive: true
                 sh "aws --endpoint-url='http://localhost:4569' s3 ls s3://test --recursive"
                 sh "IMAGE_TAG=${commit} docker-compose -f docker-compose.yml -f docker-compose.ci.yml down -v"
                 sh "sudo rm -rf ./build/*"
