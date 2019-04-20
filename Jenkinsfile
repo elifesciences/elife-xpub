@@ -30,6 +30,7 @@ elifePipeline {
                           sh "IMAGE_TAG=${commit} NODE_ENV=production NODE_CONFIG_ENV=unit-test docker-compose -f docker-compose.yml -f docker-compose.ci.yml run --rm --name elife-xpub_app_test app npm test"
                       }, 'test', commit)
                   } finally {
+                      sh "sudo docker ps -a"
                       sh "sudo sh -c \"docker logs elifexpub_postgres_1 > build/logs/unit-postgres-output.txt\""
                       archiveArtifacts artifacts: "build/logs/**/*", allowEmptyArchive: true
                       sh "IMAGE_TAG=${commit} docker-compose -f docker-compose.yml -f docker-compose.ci.yml down -v"
