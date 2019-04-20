@@ -32,7 +32,9 @@ async function submitManuscript(_, { data }, { user, ip }) {
   manuscript.applyInput(manuscriptInput)
 
   logger.info(`Submitting ${manuscript.id}`)
-  logger.info(await manuscript.files)
+  manuscript.files.forEach(file =>
+    logger.info(`File: ${file.id} | ${file.type}`),
+  )
 
   const sourceFile = await manuscript.getSource()
   if (!sourceFile) {

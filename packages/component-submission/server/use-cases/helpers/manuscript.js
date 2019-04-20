@@ -40,9 +40,7 @@ class ManuscriptHelper {
       `Manuscript Upload Size: ${filename}, ${fileSize} | ${manuscriptId}`,
     )
 
-    logger.info(
-      `Manuscript Upload fileContents::start ${filename} | ${manuscriptId}`,
-    )
+    logger.info(`uploadFileToServer::start ${filename} | ${manuscriptId}`)
     const fileContent = await FilesHelper.uploadFileToServer(
       stream,
       fileSize,
@@ -52,11 +50,9 @@ class ManuscriptHelper {
     fileEntity = await FileModel.find(fileId)
     await fileEntity.updateStatus('UPLOADED')
 
-    logger.info(
-      `Manuscript Upload fileContents::end ${filename} | ${manuscriptId}`,
-    )
+    logger.info(`uploadFileToServer::end ${filename} | ${manuscriptId}`)
 
-    logger.info(`Manuscript Upload S3::start ${filename} | ${manuscriptId}`)
+    logger.info(`S3.putContent::start ${filename} | ${manuscriptId}`)
 
     fileEntity = await FileModel.find(fileId)
 
@@ -66,14 +62,12 @@ class ManuscriptHelper {
       })
       await fileEntity.updateStatus('STORED')
     } catch (err) {
-      logger.error(
-        `Manuscript was not uploaded to S3: ${err} | ${manuscriptId}`,
-      )
+      logger.error(`S3.putContent::start ${err} | ${manuscriptId}`)
       await fileEntity.delete()
       throw err
     }
 
-    logger.info(`Manuscript Upload S3::end ${filename} | ${manuscriptId}`)
+    logger.info(`S3.putContent::end ${filename} | ${manuscriptId}`)
 
     const title = await this.filesHelper.extractFileTitle(
       fileContent,
@@ -81,18 +75,28 @@ class ManuscriptHelper {
       mimeType,
       manuscriptId,
     )
-    let manuscript = await ManuscriptModel.find(manuscriptId, this.userId)
-    FilesHelper.cleanOldManuscript(manuscript)
 
-    manuscript = await FilesHelper.setManuscriptMetadata(manuscript, title)
+    try {
+      let manuscript = await ManuscriptModel.find(manuscriptId, this.userId)
 
-    FilesHelper.validateManuscriptSource(manuscript)
+      await FilesHelper.swapPendingToSource(manuscript.files)
 
-    logger.info(
-      `Manuscript Upload Manuscript::saved ${
-        manuscript.meta.title
-      } | ${manuscriptId}`,
-    )
+      manuscript = await ManuscriptModel.find(manuscriptId, this.userId)
+      manuscript.files.forEach(file =>
+        logger.info(`New Files: ${file.id} | ${file.type}`),
+      )
+      manuscript.meta.title = title
+      await manuscript.save()
+
+      if (!FilesHelper.validateManuscriptSource(manuscript.files)) {
+        throw new Error(`Validation Failure on ${manuscript.id}`)
+      }
+    } catch (error) {
+      logger.error(`Error during final update: ${error}`)
+      throw error
+    }
+
+    logger.info(`Manuscript Upload::saved ${title} | ${manuscriptId}`)
   }
 }
 
