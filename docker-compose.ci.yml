@@ -58,7 +58,7 @@ services:
   sftp:
     image: atmoz/sftp:alpine
     volumes:
-      - ./build/meca:/home/test/upload
+      - ./build:/home/test/upload
     ports:
       - "2222:22"
     command: test:tset:1000
