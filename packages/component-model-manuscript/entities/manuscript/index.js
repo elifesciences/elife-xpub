@@ -5,7 +5,6 @@ const logger = require('@pubsweet/logger')
 const emptyManuscript = require('./helpers/empty')
 const AuditLog = require('@elifesciences/component-model-audit-log').model
 
-// Temporarily commented out see #1162
 const integrityError = (property, value, message) =>
   new Error(
     `Data Integrity Error property ${property} set to ${value}: ${message}`,

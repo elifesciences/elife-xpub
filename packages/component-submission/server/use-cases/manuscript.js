@@ -86,7 +86,20 @@ class Manuscript {
 
     manuscript.applyInput(data)
 
-    await manuscript.save()
+    try {
+      // In the case of auto-save this can be expected to fail when
+      // there is also another operation (file upload or submit) in progress
+      await manuscript.save()
+    } catch (error) {
+      const expected = 'Data Integrity Error'
+      if (error.message.startsWith(expected)) {
+        logger.error(`Expected a ${expected}, ${error.message}`)
+      } else {
+        // not an error we were expecting.
+        throw error
+      }
+    }
+
     logger.debug(`Updated manuscript`, {
       manuscriptId: data.id,
       userId: this.userId,
