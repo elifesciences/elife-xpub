@@ -93,8 +93,8 @@ class NavigationHelper {
   }
 
   async uploadManuscript(manuscript) {
-    await this.t.setFilesToUpload(files.manuscriptUpload, manuscript.file)
     await this.t
+      .setFilesToUpload(files.manuscriptUpload, manuscript.file)
       .expect(files.dropzoneMessage.textContent)
       .contains('Replace', { timeout: FILE_TIMEOUT })
   }
