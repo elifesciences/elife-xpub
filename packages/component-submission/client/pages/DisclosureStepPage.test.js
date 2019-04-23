@@ -1,6 +1,6 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import DisclosurePage from '.'
+import DisclosurePage from './DisclosureStepPage'
 
 describe('DisclosurePage', () => {
   const values = {
