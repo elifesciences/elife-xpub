@@ -5,15 +5,14 @@ import styled from 'styled-components'
 import { th } from '@pubsweet/ui-toolkit'
 
 import {
+  FormH3,
   Paragraph,
   NativeLink,
   ValidatedField,
   ControlledCheckbox,
 } from '@elifesciences/component-elife-ui/client/atoms'
-import { FormH3 } from '@elifesciences/component-elife-ui/client/atoms/FormHeadings'
 
-import { getErrorStepsFromErrors } from '../logic/getErrorStepsFromErrors'
-import convertArrayToReadableList from '../logic/convertArrayToReadableList'
+import { getErrorStepsFromErrors, convertArrayToReadableList } from '../utils'
 
 const ErrorMessage = styled.div`
   color: ${th('colorError')};
@@ -22,7 +21,7 @@ const ErrorMessage = styled.div`
 const localDate = parse(new Date())
 const formattedLocalDate = format(localDate, 'MMM D, YYYY')
 
-const DisclosurePage = ({ values, errors }) => {
+const DisclosureStepPage = ({ values, errors }) => {
   const formattedArticleType = values.meta.articleType
     .toUpperCase()
     .replace(/-+/g, ' ')
@@ -94,4 +93,4 @@ const DisclosurePage = ({ values, errors }) => {
   )
 }
 
-export default DisclosurePage
+export default DisclosureStepPage

@@ -13,11 +13,10 @@ import {
 } from '@elifesciences/component-elife-app/client'
 import { Loading } from '@elifesciences/component-elife-ui/client/atoms'
 
-import DisclosurePage from '../components/steps/Disclosure'
-
 import WizardStep from '../components/WizardStep'
 
 import AuthorStepPage from './AuthorStepPage'
+import DisclosureStepPage from './DisclosureStepPage'
 import FilesStepPage from './FilesStepPage'
 import EditorsStepPage from './EditorsStepPage'
 import SubmissionPage from './SubmissionPage'
@@ -97,7 +96,7 @@ const SubmissionWizard = ({
       path={`${match.path}/disclosure`}
       render={() => (
         <WizardStep
-          component={DisclosurePage}
+          component={DisclosureStepPage}
           finalStep
           handleAutoSave={updateManuscript}
           handleButtonClick={submitManuscript}

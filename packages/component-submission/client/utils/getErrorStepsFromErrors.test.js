@@ -1,18 +1,18 @@
 import {
-  stepName,
-  fieldToStepMap,
   getStepFromFieldName,
   getErrorStepsFromErrors,
 } from './getErrorStepsFromErrors'
 
+import { STEP_NAMES, FIELD_TO_STEP_MAP } from './constants'
+
 describe('getStepFromFieldName', () => {
   it('returns the correct step when  passed field name', () => {
-    expect(getStepFromFieldName('author')).toEqual(stepName.AUTHOR)
-    expect(getStepFromFieldName('fileStatus')).toEqual(stepName.FILES)
-    expect(getStepFromFieldName('meta')).toEqual(stepName.SUBMISSION)
-    expect(getStepFromFieldName('opposedReviewers')).toEqual(stepName.EDITORS)
+    expect(getStepFromFieldName('author')).toEqual(STEP_NAMES.AUTHOR)
+    expect(getStepFromFieldName('fileStatus')).toEqual(STEP_NAMES.FILES)
+    expect(getStepFromFieldName('meta')).toEqual(STEP_NAMES.SUBMISSION)
+    expect(getStepFromFieldName('opposedReviewers')).toEqual(STEP_NAMES.EDITORS)
     expect(getStepFromFieldName('submitterSignature')).toEqual(
-      stepName.DISCLOSURE,
+      STEP_NAMES.DISCLOSURE,
     )
   })
 })
@@ -22,8 +22,8 @@ describe('getErrorStepsFromErrors', () => {
     expect(getErrorStepsFromErrors()).toHaveLength(0)
   })
   it('returns the correct number of steps when passed duplicate step fields', () => {
-    expect(getErrorStepsFromErrors(fieldToStepMap)).toHaveLength(
-      Object.keys(stepName).length,
+    expect(getErrorStepsFromErrors(FIELD_TO_STEP_MAP)).toHaveLength(
+      Object.keys(STEP_NAMES).length,
     )
   })
   it('returns correct steps when passed error values', () => {
