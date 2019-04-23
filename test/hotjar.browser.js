@@ -43,7 +43,6 @@ test('test suppressions', async t => {
     .ok()
   navigationHelper.fillCoverletter('\nPlease consider this for publication')
   navigationHelper.uploadManuscript(manuscript)
-  await navigationHelper.wait(2000)
   navigationHelper.navigateForward()
 
   // submission metadata

@@ -34,7 +34,7 @@ elifePipeline {
                       sh "sudo sh -c \"docker logs elife-xpub_postgres_1 > build/logs/unit-postgres-output.txt\""
                       archiveArtifacts artifacts: "build/logs/**/*", allowEmptyArchive: true
                       sh "IMAGE_TAG=${commit} docker-compose -f docker-compose.yml -f docker-compose.ci.yml down -v"
-                      sh "sudo rm -rf ./build/*"
+                      sh "sudo rm -rf ./build/* || true"
                   }
                 },
                 'test:dependencies': {
@@ -104,7 +104,7 @@ elifePipeline {
                 archiveArtifacts artifacts: "build/screenshots/**/*,build/logs/**/*,build/meca/*.zip", allowEmptyArchive: true
                 sh "aws --endpoint-url='http://localhost:4569' s3 ls s3://test --recursive"
                 sh "IMAGE_TAG=${commit} docker-compose -f docker-compose.yml -f docker-compose.ci.yml down -v"
-                sh "sudo rm -rf ./build/*"
+                sh "sudo rm -rf ./build/* || true"
             }
         }
 

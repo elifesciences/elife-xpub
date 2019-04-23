@@ -15,6 +15,7 @@ import {
 } from '../pageObjects'
 
 const DEFAULT_TIMEOUT = 5000
+const FILE_TIMEOUT = 60000
 const OPTS = { timeout: DEFAULT_TIMEOUT }
 
 class NavigationHelper {
@@ -23,11 +24,11 @@ class NavigationHelper {
   }
 
   async navigateForward() {
-    await this.t.click(wizardStep.next)
+    await this.t.click(wizardStep.next, OPTS)
   }
 
   async navigateBack() {
-    await this.t.click(wizardStep.back)
+    await this.t.click(wizardStep.back, OPTS)
   }
 
   async wait(time) {
@@ -93,6 +94,9 @@ class NavigationHelper {
 
   async uploadManuscript(manuscript) {
     await this.t.setFilesToUpload(files.manuscriptUpload, manuscript.file)
+    await this.t
+      .expect(files.dropzoneMessage.textContent)
+      .contains('Replace', { timeout: FILE_TIMEOUT })
   }
 
   async uploadSupportingFiles(supportingFiles) {
