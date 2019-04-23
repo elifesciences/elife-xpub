@@ -5,11 +5,10 @@ const logger = require('@pubsweet/logger')
 const emptyManuscript = require('./helpers/empty')
 const AuditLog = require('@elifesciences/component-model-audit-log').model
 
-// Temporarily commented out see #1162
-// const integrityError = (property, value, message) =>
-//   new Error(
-//     `Data Integrity Error property ${property} set to ${value}: ${message}`,
-//   )
+const integrityError = (property, value, message) =>
+  new Error(
+    `Data Integrity Error property ${property} set to ${value}: ${message}`,
+  )
 
 const mergeObjects = (...inputs) =>
   lodash.mergeWith(
@@ -204,12 +203,12 @@ class Manuscript extends BaseModel {
               this.updated
             }`,
           )
-          // Temporarily commented out see #1162
-          // throw integrityError(
-          //   'updated',
-          //   this.updated,
-          //   'is older than the one stored in the database!',
-          // )
+          // Autosave is broken so can fail here
+          throw integrityError(
+            'updated',
+            this.updated,
+            'is older than the one stored in the database!',
+          )
         }
 
         await simpleSave(trx)

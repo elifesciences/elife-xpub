@@ -2,6 +2,35 @@ const logger = require('@pubsweet/logger')
 const FileModel = require('@elifesciences/component-model-file').model
 const SemanticExtractionModel = require('@elifesciences/component-model-semantic-extraction')
 
+const cleanOldManuscript = async fileList => {
+  const oldFileIndex = fileList.findIndex(
+    element => element.type === 'MANUSCRIPT_SOURCE',
+  )
+
+  if (oldFileIndex >= 0) {
+    logger.info(
+      `Manuscript old index ${fileList[oldFileIndex].id} | ${
+        fileList[oldFileIndex].filename
+      }`,
+    )
+    const oldFile = await FileModel.find(fileList[oldFileIndex].id)
+    await oldFile.delete()
+    logger.info(`cleanOldManiscript now done`)
+  }
+}
+
+const setPendingToSource = async fileList =>
+  new Promise(async resolve => {
+    const pendingFileIndex = fileList.findIndex(
+      element => element.type === 'MANUSCRIPT_SOURCE_PENDING',
+    )
+    const newFile = await FileModel.find(fileList[pendingFileIndex].id)
+    newFile.type = 'MANUSCRIPT_SOURCE'
+    await newFile.save()
+    logger.info(`Manuscript new index ${newFile.id} | ${newFile.filename}`)
+    resolve(newFile)
+  })
+
 class FilesHelper {
   constructor(config, scienceBeamApi) {
     this.config = config
@@ -115,6 +144,11 @@ class FilesHelper {
         filename,
         mimeType,
       )
+      const semanticExtractionEntity = SemanticExtractionModel.createTitleEntity(
+        manuscriptId,
+        title,
+      )
+      await semanticExtractionEntity.save()
     } catch (error) {
       let errorMessage = ''
       if (error.error.code === 'ETIMEDOUT' || error.error.connect === false) {
@@ -129,59 +163,34 @@ class FilesHelper {
       })
     }
 
-    const semanticExtractionEntity = SemanticExtractionModel.createTitleEntity(
-      manuscriptId,
-      title,
-    )
-    await semanticExtractionEntity.save()
-
     return title
   }
 
-  static async cleanOldManuscript(manuscript) {
-    const oldFileIndex = manuscript.files.findIndex(
-      element => element.type === 'MANUSCRIPT_SOURCE',
-    )
-
-    if (oldFileIndex >= 0) {
-      logger.info(
-        `Manuscript Upload found index ${oldFileIndex} ${
-          manuscript.files[oldFileIndex].filename
-        } | ${manuscript.id}`,
-      )
-      const oldFile = await FileModel.find(manuscript.files[oldFileIndex].id)
-      manuscript.files.splice(oldFileIndex, 1)
-      await oldFile.delete()
-    }
+  static async swapPendingToSource(fileList) {
+    await cleanOldManuscript(fileList)
+    return setPendingToSource(fileList)
   }
 
-  static async setManuscriptMetadata(initialManuscript, title) {
-    return new Promise(async resolve => {
-      const manuscript = initialManuscript
-      const pendingFileIndex = manuscript.files.findIndex(
-        element => element.type === 'MANUSCRIPT_SOURCE_PENDING',
-      )
-      manuscript.files[pendingFileIndex].type = 'MANUSCRIPT_SOURCE'
-      logger.info(
-        `Manuscript Upload Manuscript::save ${title} | ${manuscript.id}`,
-      )
-      manuscript.meta.title = title
-      await manuscript.save()
-      resolve(manuscript)
-    })
-  }
-
-  static validateManuscriptSource(manuscript) {
-    const sourceList = manuscript.files.filter(
-      f => f.type === 'MANUSCRIPT_SOURCE',
-    )
-    const pendingList = manuscript.files.filter(
+  static validateManuscriptSource(fileList) {
+    const sourceList = fileList.filter(f => f.type === 'MANUSCRIPT_SOURCE')
+    const pendingList = fileList.filter(
       f => f.type === 'MANUSCRIPT_SOURCE_PENDING',
     )
-    if (sourceList.length !== 1 || pendingList.length !== 0) {
-      logger.error(`Validation failed ${JSON.stringify(manuscript, null, 4)}`)
-      throw new Error(`Validation Failure on ${manuscript.id}`)
+
+    const valid = sourceList.length === 1 && pendingList.length === 0
+    if (!valid) {
+      logger.error(
+        `Validation failed: sourceList ${JSON.stringify(sourceList, null, 4)}`,
+      )
+      logger.error(
+        `Validation failed: pendingList ${JSON.stringify(
+          pendingList,
+          null,
+          4,
+        )}`,
+      )
     }
+    return valid
   }
 }
 
