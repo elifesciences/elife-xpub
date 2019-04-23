@@ -8,7 +8,7 @@ import { hotjar } from 'react-hotjar'
 
 import { configureStore, Root } from 'pubsweet-client'
 
-import * as AuthorDetailsSchema from '@elifesciences/component-submission/client/components/steps/Author/schema'
+import { authorSchema } from '@elifesciences/component-submission/client/utils/ValidationSchemas'
 import theme, { GlobalStyle } from '@elifesciences/elife-theme'
 
 import Routes from './routes'
@@ -31,7 +31,7 @@ if (config.hotJar.enabled) {
 const makeApolloConfig = ({ cache, link }) => {
   const clientStateLink = withClientState({
     cache,
-    ...AuthorDetailsSchema.clientStateConfig,
+    ...authorSchema.clientStateConfig,
   })
 
   return {

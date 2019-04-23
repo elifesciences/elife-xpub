@@ -2,7 +2,7 @@ jest.mock('@pubsweet/logger')
 
 const config = require('config')
 const fs = require('fs-extra')
-const { createTables } = require('@pubsweet/db-manager')
+const { createTables } = require('@elifesciences/component-model')
 const mailer = require('@pubsweet/component-send-email')
 const User = require('@elifesciences/component-model-user').model
 const Manuscript = require('@elifesciences/component-model-manuscript').model

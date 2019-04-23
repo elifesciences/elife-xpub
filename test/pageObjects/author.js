@@ -3,7 +3,7 @@ import { Selector } from 'testcafe'
 
 const author = {
   url: new RegExp(
-    `${config.get('pubsweet-server.baseUrl')}/submit/[a-f0-9-]{36}`,
+    `${config.get('pubsweet-server.baseUrl')}/submit/[a-f0-9-]{36}/author`,
   ),
   orcidPrefill: Selector('[data-test-id=orcid-prefill]'),
   firstNameField: Selector('[name="author.firstName"]'),

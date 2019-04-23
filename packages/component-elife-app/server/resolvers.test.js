@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken')
 const config = require('config')
-const { createTables } = require('@pubsweet/db-manager')
+const { createTables } = require('@elifesciences/component-model')
 const { Mutation } = require('./resolvers')
 const replaySetup = require('../../../test/helpers/replay-setup')
 

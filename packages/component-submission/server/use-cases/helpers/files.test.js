@@ -1,7 +1,7 @@
 const config = require('config')
 const uuid = require('uuid')
 const stream = require('stream')
-const { createTables } = require('@pubsweet/db-manager')
+const { createTables } = require('@elifesciences/component-model')
 const logger = require('@pubsweet/logger')
 const SemanticExtraction = require('@elifesciences/component-model-semantic-extraction')
 const ManuscriptModel = require('@elifesciences/component-model-manuscript')

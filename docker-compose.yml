@@ -31,7 +31,7 @@ services:
     image: atmoz/sftp:alpine
     ports:
       - "2222:22"
-    command: test:tset:1001
+    command: test:tset:1000
 
   api-dummy:
     build:

@@ -5,6 +5,7 @@ const path = require('path')
 winston.level = 'debug'
 
 module.exports = {
+  configTag: 'development',
   'pubsweet-server': {
     baseUrl: deferConfig(
       cfg => `http://localhost:${cfg['pubsweet-server'].port}`,

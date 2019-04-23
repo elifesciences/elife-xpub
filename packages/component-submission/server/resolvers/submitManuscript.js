@@ -32,6 +32,11 @@ async function submitManuscript(_, { data }, { user, ip }) {
 
   manuscriptModel.applyInput(manuscriptInput)
 
+  logger.info(`Submitting ${manuscriptModel.id}`)
+  manuscriptModel.files.forEach(file =>
+    logger.info(`File: ${file.id} | ${file.type}`),
+  )
+
   const sourceFile = await manuscriptModel.getSource()
   if (!sourceFile) {
     throw new Error('Manuscript has no source file', {
@@ -54,7 +59,8 @@ async function submitManuscript(_, { data }, { user, ip }) {
     ManuscriptModel.statuses.MECA_EXPORT_PENDING,
   )
 
-  await mecaExport(manuscriptModel, S3Storage.getContent, ip)
+  // This function can take a while so do not await this (apart from in tests)
+  return mecaExport(manuscript, S3Storage.getContent, ip)
     .then(async () => {
       logger.info(`Manuscript ${manuscriptModel.id} successfully exported`)
       const notify = new Notification(config)
@@ -84,8 +90,6 @@ ${err}`,
     .catch(err => {
       logger.error('Error handling MECA export failure', err)
     })
-
-  return manuscript.getView(data.id)
 }
 
 module.exports = submitManuscript

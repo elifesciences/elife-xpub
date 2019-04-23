@@ -2,6 +2,7 @@ const path = require('path')
 const logger = require('winston')
 
 module.exports = {
+  configTag: 'default',
   authsome: {
     isPublic: true,
     mode: path.resolve(__dirname, 'non-serializable/authsome.js'),
@@ -11,6 +12,7 @@ module.exports = {
     components: [
       '@elifesciences/component-meca',
       '@elifesciences/component-elife-app',
+      '@elifesciences/component-logger',
       '@elifesciences/component-model-semantic-extraction',
       '@elifesciences/component-model-manuscript',
       '@elifesciences/component-model-file',
@@ -40,6 +42,7 @@ module.exports = {
     enableExperimentalGraphql: true,
     morganLogFormat:
       ':remote-addr [:date[clf]] :method :url :status :graphql[operation] :res[content-length] :response-time ms',
+    secret: 'default-secret-that-needs-changing',
   },
   'pubsweet-client': {
     isPublic: true,

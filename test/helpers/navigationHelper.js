@@ -14,17 +14,21 @@ import {
   cookie,
 } from '../pageObjects'
 
+const DEFAULT_TIMEOUT = 5000
+const FILE_TIMEOUT = 60000
+const OPTS = { timeout: DEFAULT_TIMEOUT }
+
 class NavigationHelper {
   constructor(t) {
     this.t = t
   }
 
   async navigateForward() {
-    await this.t.click(wizardStep.next)
+    await this.t.click(wizardStep.next, OPTS)
   }
 
   async navigateBack() {
-    await this.t.click(wizardStep.back)
+    await this.t.click(wizardStep.back, OPTS)
   }
 
   async wait(time) {
@@ -32,16 +36,19 @@ class NavigationHelper {
   }
 
   async startAtRedirect() {
-    await this.t.navigateTo(redirect.url).click(redirect.button)
+    await this.t.navigateTo(redirect.url).click(redirect.button, OPTS)
+
     if (Selector(cookie.button)) {
-      await this.t.click(Selector(cookie.button))
+      await this.t.click(Selector(cookie.button, OPTS))
     }
+    await this.wait(1000)
   }
 
   async login() {
-    await this.t.navigateTo(login.url).click(login.button)
+    await this.t.navigateTo(login.url).click(login.button, OPTS)
+
     if (Selector(cookie.button)) {
-      await this.t.click(Selector(cookie.button))
+      await this.t.click(Selector(cookie.button, OPTS))
     }
   }
 
@@ -86,7 +93,10 @@ class NavigationHelper {
   }
 
   async uploadManuscript(manuscript) {
-    await this.t.setFilesToUpload(files.manuscriptUpload, manuscript.file)
+    await this.t
+      .setFilesToUpload(files.manuscriptUpload, manuscript.file)
+      .expect(files.dropzoneMessage.textContent)
+      .contains('Replace', { timeout: FILE_TIMEOUT })
   }
 
   async uploadSupportingFiles(supportingFiles) {
@@ -131,20 +141,30 @@ class NavigationHelper {
 
   async consentDisclosure() {
     await this.t
-      .typeText(disclosure.submitterName, 'Joe Bloggs')
-      .click(disclosure.consentCheckbox)
+      .typeText(disclosure.submitterName, 'Joe Bloggs', OPTS)
+      .click(disclosure.consentCheckbox, OPTS)
+  }
+
+  async waitForElement(name) {
+    await this.t.expect(Selector(`[data-test-id="${name}"]`, OPTS))
   }
 
   async submit() {
-    await this.t.click(wizardStep.submit)
+    await this.t.click(wizardStep.submit, OPTS)
+    // wait for "accept" button to show
+    await this.waitForElement('accept')
   }
 
   async accept() {
-    await this.t.click(wizardStep.accept)
+    await this.t.click(wizardStep.accept, OPTS)
+    // wait for "finish" button to show
+    await this.waitForElement('finish')
   }
 
   async thankyou() {
-    await this.t.click(thankyou.finish)
+    await this.t.click(thankyou.finish, OPTS)
+    // wait for "desktop-new-submission" button to show
+    await this.waitForElement('desktop-new-submission')
   }
 
   async paricialSubmissionThankyou(manuscript) {
