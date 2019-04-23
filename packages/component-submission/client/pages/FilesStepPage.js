@@ -1,13 +1,22 @@
 import React from 'react'
 import { Box } from '@rebass/grid'
+import styled from 'styled-components'
+import { th } from '@pubsweet/ui-toolkit'
 import { compose, withProps } from 'recompose'
-import { ValidatedField } from '@elifesciences/component-elife-ui/client/atoms'
+import {
+  ValidatedField,
+  FormH2,
+  Paragraph,
+} from '@elifesciences/component-elife-ui/client/atoms'
 import CoverLetterEditor from '../components/CoverLetterEditor'
 import ManuscriptUpload from '../components/ManuscriptUpload'
 import SupportingUpload from '../components/SupportingUpload'
 import { errorMessageMapping, manuscriptFileTypes } from '../utils/constants'
 import filesWithGQL from '../graphql/filesWithGQL'
 
+const SmallUL = styled.ul`
+  font-size: ${th('fontSizeBaseSmall')};
+`
 export class FilesStepPageComponent extends React.Component {
   constructor(props) {
     super(props)
@@ -101,6 +110,28 @@ export class FilesStepPageComponent extends React.Component {
     return (
       <React.Fragment>
         <Box mb={3} width={1}>
+          <FormH2>Your cover letter</FormH2>
+          <Paragraph.Small secondary>
+            Please enter or paste in your cover letter below. Your work is more
+            likely to progress if you can consider the following questions:
+          </Paragraph.Small>
+          <SmallUL>
+            <li>
+              How will your work make others in the field think differently and
+              move the field forward?
+            </li>
+            <li>
+              How does your work relate to the current literature on the topic?
+            </li>
+            <li>
+              Who do you consider to be the most relevant audience for this
+              work?
+            </li>
+            <li>
+              Have you made clear in the letter what the work has and has not
+              achieved?
+            </li>
+          </SmallUL>
           <ValidatedField
             component={CoverLetterEditor}
             id="coverLetter"
@@ -110,6 +141,7 @@ export class FilesStepPageComponent extends React.Component {
           />
         </Box>
         <Box mb={3} width={1}>
+          <FormH2>Your manuscript file</FormH2>
           <ManuscriptUpload
             conversion={{
               converting:
