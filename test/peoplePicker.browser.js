@@ -44,8 +44,8 @@ test('People Picker', async t => {
     .click(wizardStep.next)
 
   // uploading files - manuscript and cover letter
+  navigationHelper.fillCoverletter()
   await t
-    .typeText(files.editor, '\nPlease consider this for publication')
     .setFilesToUpload(files.manuscriptUpload, manuscript.file)
     // wait for editor onChange
     .wait(1000)

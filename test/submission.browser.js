@@ -55,7 +55,7 @@ test('Happy path', async t => {
   navigationHelper.navigateForward()
 
   // uploading files - manuscript and cover letter
-  navigationHelper.fillCoverletter('\nPlease consider this for publication')
+  navigationHelper.fillCoverletter()
   navigationHelper.uploadManuscript(manuscript)
   navigationHelper.uploadSupportingFiles(manuscript.supportingFiles[0])
 
