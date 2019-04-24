@@ -1,10 +1,5 @@
 import * as yup from 'yup'
-import {
-  MIN_COVERLETTER_WORDS,
-  EDITOR_LIMITS,
-  errorMessageMapping,
-} from './constants'
-import stripHtml from './stripHtml'
+import { EDITOR_LIMITS, errorMessageMapping } from './constants'
 
 export const authorSchema = {
   author: yup.object().shape({
@@ -21,11 +16,7 @@ export const authorSchema = {
 export const filesSchema = {
   coverLetter: yup
     .string()
-    .test(
-      'hasContent',
-      `Your cover letter should be at least ${MIN_COVERLETTER_WORDS} words long`,
-      value => stripHtml(value).split(/\s+/).length > MIN_COVERLETTER_WORDS,
-    ),
+    .required('Please write or paste in your cover letter.'),
   files: yup.array().min(1, errorMessageMapping.EMPTY),
   fileStatus: yup
     .string()

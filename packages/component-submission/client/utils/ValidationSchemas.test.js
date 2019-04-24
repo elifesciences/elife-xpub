@@ -1,7 +1,12 @@
 import * as yup from 'yup'
 import { yupToFormErrors } from 'formik'
 
-import { disclosureSchema, editorsSchema } from './ValidationSchemas'
+import {
+  disclosureSchema,
+  editorsSchema,
+  filesSchema,
+} from './ValidationSchemas'
+import { errorMessageMapping } from './constants'
 
 describe('Editors Schema', () => {
   const schema = yup.object().shape(editorsSchema)
@@ -103,6 +108,69 @@ describe('Disclosure Schema', () => {
 
     expect(errors).toEqual({
       disclosureConsent: 'We are unable to proceed without your consent',
+    })
+  })
+})
+
+describe('Files schema', () => {
+  const schema = yup.object().shape(filesSchema)
+  it('allows valid data', () => {
+    const validData = {
+      coverLetter: 'Please accept my submission.',
+      files: [{}],
+      fileStatus: 'READY',
+    }
+    expect(() => schema.validateSync(validData)).not.toThrow()
+  })
+  it('returns correct error message when cover letter is empty', () => {
+    const invalidData = {
+      coverLetter: '',
+      files: [{}],
+      fileStatus: 'READY',
+    }
+    let errors
+    try {
+      schema.validateSync(invalidData, { abortEarly: false })
+    } catch (e) {
+      errors = yupToFormErrors(e)
+    }
+
+    expect(errors).toEqual({
+      coverLetter: 'Please write or paste in your cover letter.',
+    })
+  })
+  it('returns correct error message when files are not all uploaded and saved', () => {
+    const invalidData = {
+      coverLetter: 'Please accept my submission.',
+      files: [{}],
+      fileStatus: 'UPLOADED',
+    }
+    let errors
+    try {
+      schema.validateSync(invalidData, { abortEarly: false })
+    } catch (e) {
+      errors = yupToFormErrors(e)
+    }
+
+    expect(errors).toEqual({
+      fileStatus: 'Please wait until all files have uploaded.',
+    })
+  })
+  it('returns the correct error message when there are no files stored', () => {
+    const invalidData = {
+      coverLetter: 'Please accept my submission.',
+      files: [],
+      fileStatus: 'READY',
+    }
+    let errors
+    try {
+      schema.validateSync(invalidData, { abortEarly: false })
+    } catch (e) {
+      errors = yupToFormErrors(e)
+    }
+
+    expect(errors).toEqual({
+      files: errorMessageMapping.EMPTY,
     })
   })
 })
