@@ -142,6 +142,10 @@ export default compose(
     renderComponent(Loading),
   ),
   branch(props => !props.data || props.data.error, renderComponent(ErrorPage)),
+  branch(
+    props => props.data.manuscript.clientStatus !== 'CONTINUE_SUBMISSION',
+    () => () => <Redirect to="/" />,
+  ),
   withProps(props => ({
     initialValues: parseInputToFormData(props.data.manuscript),
   })),

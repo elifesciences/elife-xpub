@@ -78,7 +78,7 @@ export default compose(
   ),
   branch(
     props => !props.data || props.data.error,
-    props => <div>{props.error}</div>,
+    props => () => <div>{props.error}</div>,
   ),
   withHandlers({
     createNewSubmission: props => () =>
