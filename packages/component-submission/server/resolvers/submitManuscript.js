@@ -64,7 +64,7 @@ async function submitManuscript(_, { data }, { user, ip }) {
       const manuscript = new Manuscript(config, userUuid, S3Storage)
       const notify = new Notification(config)
       await notify.sendFinalSubmissionEmail(manuscriptModel)
-      ManuscriptModel.updateStatus(
+      await ManuscriptModel.updateStatus(
         manuscriptModel.id,
         ManuscriptModel.statuses.MECA_EXPORT_SUCCEEDED,
       )
