@@ -86,10 +86,6 @@ Array [
   "titles.contact-us",
   "titles.login",
   "titles.submit",
-  "dbManager.username",
-  "dbManager.password",
-  "dbManager.email",
-  "dbManager.admin",
   "forever.watchDirectory",
 ]
 `;
