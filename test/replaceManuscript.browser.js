@@ -57,8 +57,8 @@ test('Replace Manuscript on the Submission', async t => {
     .click(wizardStep.next)
 
   // uploading files - manuscript and cover letter
+  navigationHelper.fillCoverletter()
   await t
-    .typeText(files.editor, '\nPlease consider this for publication')
     // Test file type validation is working
     .setFilesToUpload(files.manuscriptUpload, unsupportedManuscriptFile.file)
     .expect(files.dropzoneMessage.textContent)
