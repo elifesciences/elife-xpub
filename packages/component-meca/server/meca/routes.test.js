@@ -1,4 +1,4 @@
-const { createTables } = require('@pubsweet/db-manager')
+const { createTables } = require('@elifesciences/component-model')
 const config = require('config')
 const logger = require('@pubsweet/logger')
 const mailer = require('@pubsweet/component-send-email')

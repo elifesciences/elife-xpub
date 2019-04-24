@@ -13063,7 +13063,7 @@ replace-ext@1.0.0:
   resolved "https://registry.yarnpkg.com/replace-ext/-/replace-ext-1.0.0.tgz#de63128373fcbf7c3ccfa4de5a480c45a67958eb"
   integrity sha1-3mMSg3P8v3w8z6TeWkgMRaZ5WOs=
 
-replay@^2.1.4, replay@^2.3.0:
+replay@^2.3.0, replay@^2.4.0:
   version "2.4.0"
   resolved "https://registry.yarnpkg.com/replay/-/replay-2.4.0.tgz#8100e7b5733b1b30477e265a3e3b329265f667cc"
   integrity sha512-Ij6gKW+DijjTchAJCjdLU2YbjthwyhP6CClSrJxeZvRk9/QSysJo/CRUT1WJSWaH8ZlYk1yFEw6Cu/WEag+wwQ==

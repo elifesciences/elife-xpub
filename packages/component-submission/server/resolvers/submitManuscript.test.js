@@ -5,7 +5,7 @@ jest.mock('@elifesciences/component-meca', () => ({
 
 const lodash = require('lodash')
 const logger = require('@pubsweet/logger')
-const { createTables } = require('@pubsweet/db-manager')
+const { createTables } = require('@elifesciences/component-model')
 const mailer = require('@pubsweet/component-send-email')
 const { mecaExport } = require('@elifesciences/component-meca')
 const User = require('@elifesciences/component-model-user').model
@@ -51,7 +51,8 @@ describe('Manuscripts', () => {
     beforeAll(() =>
       jest
         .spyOn(S3Storage, 'getContent')
-        .mockImplementation(() => 'A real PDF'))
+        .mockImplementation(() => 'A real PDF'),
+    )
 
     afterAll(() => S3Storage.getContent.mockRestore())
 
@@ -73,21 +74,27 @@ describe('Manuscripts', () => {
     })
 
     it('stores data with new status', async () => {
-      const returnedManuscript = await Mutation.submitManuscript(
+      const promisedManuscript = Mutation.submitManuscript(
         {},
         { data: { ...manuscriptInput, id } },
         { user: profileId },
       )
 
-      expect(returnedManuscript.status).toBe(
-        Manuscript.statuses.MECA_EXPORT_PENDING,
-      )
+      const beforeManuscript = await Manuscript.find(id, userId)
+      expect(beforeManuscript.status).toBe(Manuscript.statuses.INITIAL)
 
-      const storedManuscript = await Manuscript.find(id, userId)
+      return promisedManuscript.then(async returnedManuscript => {
+        // when the submission resolves it should succeed
+        expect(returnedManuscript.status).toBe(
+          Manuscript.statuses.MECA_EXPORT_SUCCEEDED,
+        )
 
-      expect(storedManuscript).toMatchObject({
-        ...expectedManuscript,
-        status: expect.stringMatching(/^MECA_EXPORT_(SUCCEEDED|PENDING)/),
+        const storedManuscript = await Manuscript.find(id, userId)
+
+        expect(storedManuscript).toMatchObject({
+          ...expectedManuscript,
+          status: 'MECA_EXPORT_SUCCEEDED',
+        })
       })
     })
 

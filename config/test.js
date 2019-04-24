@@ -3,6 +3,7 @@ const AWS = require('aws-sdk')
 const logger = require('@elifesciences/component-logger').mockLogger
 
 module.exports = {
+  configTag: 'test',
   'pubsweet-server': {
     db: {
       database: 'test',
@@ -44,11 +45,11 @@ module.exports = {
     sftp: {
       connectionOptions: {
         host: 'sftp',
-        port: 3022,
+        port: 22,
         username: 'test',
         password: 'tset',
       },
-      remotePath: '/test',
+      remotePath: '/upload',
     },
     apiKey: 'abcd1234',
     email: {

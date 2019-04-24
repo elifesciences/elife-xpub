@@ -57,13 +57,12 @@ test('Happy path', async t => {
   // uploading files - manuscript and cover letter
   navigationHelper.fillCoverletter('\nPlease consider this for publication')
   navigationHelper.uploadManuscript(manuscript)
-  navigationHelper.wait(1000)
   navigationHelper.uploadSupportingFiles(manuscript.supportingFiles[0])
 
   await t
     .expect(files.supportingFile.count)
     .eql(1)
-    .click(files.supportingFilesRemove)
+    .click(files.supportingFilesRemove, { timeout: 60000 })
 
   navigationHelper.uploadSupportingFiles(manuscript.supportingFiles)
   await t.expect(files.supportingFile.count).eql(2)
@@ -144,7 +143,7 @@ test('Ability to progress through the wizard is tied to validation', async t => 
 
   navigationHelper.navigateForward()
   // without this wait the tests sometimes fail on CI ¯\_(ツ)_/¯
-  navigationHelper.wait(1000)
+  navigationHelper.wait(2000)
 
   await t
     .expect(getPageUrl())
