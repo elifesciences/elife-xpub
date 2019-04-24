@@ -8,6 +8,7 @@ const ManuscriptModel = require('@elifesciences/component-model-manuscript')
   .model
 const { S3Storage } = require('@elifesciences/component-service-s3')
 const manuscriptInputSchema = require('../helpers/manuscriptInputValidationSchema')
+const { Manuscript } = require('../use-cases')
 const { Notification } = require('../services')
 
 async function submitManuscript(_, { data }, { user, ip }) {
@@ -60,12 +61,15 @@ async function submitManuscript(_, { data }, { user, ip }) {
   return mecaExport(manuscriptModel, S3Storage.getContent, ip)
     .then(async () => {
       logger.info(`Manuscript ${manuscriptModel.id} successfully exported`)
+      const manuscript = new Manuscript(config, userUuid, S3Storage)
       const notify = new Notification(config)
       await notify.sendFinalSubmissionEmail(manuscriptModel)
-      return ManuscriptModel.updateStatus(
+      ManuscriptModel.updateStatus(
         manuscriptModel.id,
         ManuscriptModel.statuses.MECA_EXPORT_SUCCEEDED,
       )
+
+      return manuscript.getView(manuscriptModel.id)
     })
     .catch(async err => {
       logger.error('MECA export failed', err)

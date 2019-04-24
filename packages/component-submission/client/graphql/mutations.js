@@ -28,6 +28,7 @@ export const UPLOAD_MANUSCRIPT_FILE = gql`
         title
       }
       files {
+        downloadLink
         filename
         type
         status
@@ -46,6 +47,7 @@ export const UPLOAD_SUPPORTING_FILE = gql`
         title
       }
       files {
+        downloadLink
         filename
         type
         status
@@ -61,6 +63,7 @@ export const DELETE_MANUSCRIPT_FILE = gql`
     removeUploadedManuscript(id: $id) {
       id
       files {
+        downloadLink
         filename
         type
         status
@@ -75,6 +78,7 @@ export const DELETE_SUPPORTING_FILES = gql`
     removeSupportingFiles(id: $id) {
       id
       files {
+        downloadLink
         filename
         type
         status
