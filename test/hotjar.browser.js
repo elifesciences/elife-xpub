@@ -41,7 +41,7 @@ test('test suppressions', async t => {
       'data-hj-suppress': '',
     })
     .ok()
-  navigationHelper.fillCoverletter('\nPlease consider this for publication')
+  navigationHelper.fillCoverletter()
   navigationHelper.uploadManuscript(manuscript)
   navigationHelper.navigateForward()
 

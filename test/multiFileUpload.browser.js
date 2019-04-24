@@ -34,7 +34,7 @@ test('should display an error when files are still uploading', async t => {
   navigationHelper.navigateForward()
 
   // files' page
-  navigationHelper.fillCoverletter('\nPlease consider this for publication')
+  navigationHelper.fillCoverletter()
   navigationHelper.uploadManuscript(manuscript)
   navigationHelper.uploadSupportingFiles(manuscript.supportingFiles)
   navigationHelper.navigateForward()

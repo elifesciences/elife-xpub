@@ -89,7 +89,10 @@ class NavigationHelper {
   }
 
   async fillCoverletter(text) {
-    await this.t.typeText(files.editor, text)
+    await this.t.typeText(
+      files.editor,
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas semper ante sed volutpat tincidunt.\n\n Nullam rutrum tortor in libero cursus, sit amet dictum ex consectetur. In eget quam ac felis suscipit sodales euismod ac urna. Donec varius mollis sapien ac pharetra. Sed non nunc neque.\n\n Aenean at lorem nisi. Etiam tempor, turpis vitae fringilla sodales, ante felis posuere eros, et imperdiet ante nisi vel tellus.',
+    )
   }
 
   async uploadManuscript(manuscript) {
@@ -177,9 +180,7 @@ class NavigationHelper {
     this.navigateForward()
 
     // files' page
-    this.fillCoverletter(
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas semper ante sed volutpat tincidunt.\n Nullam rutrum tortor in libero cursus, sit amet dictum ex consectetur. In eget quam ac felis suscipit sodales euismod ac urna. Donec varius mollis sapien ac pharetra. Sed non nunc neque.\n Aenean at lorem nisi. Etiam tempor, turpis vitae fringilla sodales, ante felis posuere eros, et imperdiet ante nisi vel tellus.',
-    )
+    this.fillCoverletter()
     this.uploadManuscript(manuscript)
     this.wait(1000)
     this.navigateForward()
