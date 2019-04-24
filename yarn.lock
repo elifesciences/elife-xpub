@@ -361,23 +361,6 @@
     aws-sdk "^2.185.0"
     nodemailer "^4.4.2"
 
-"@pubsweet/db-manager@^2.1.3":
-  version "2.3.0"
-  resolved "https://registry.yarnpkg.com/@pubsweet/db-manager/-/db-manager-2.3.0.tgz#718ebe7438de3b2578e75b9c1aef517d213854be"
-  integrity sha512-ISxX/1T3KHVUA6EMuKtzdzzB4EC/CohESGfe+ZGwdVKs90jvDI5rbW+KvDE+SSoEU5oHnVCz4uze0WK7jGcT/A==
-  dependencies:
-    "@pubsweet/logger" "^0.2.13"
-    "@pubsweet/models" "^0.2.0"
-    fs-extra "^4.0.2"
-    isomorphic-fetch "^2.2.1"
-    joi "^14.3.0"
-    knex "^0.16.3"
-    lodash "^4.17.11"
-    objection "^1.5.3"
-    pg "^7.8.0"
-    tmp-promise "^1.0.5"
-    umzug "^2.1.0"
-
 "@pubsweet/db-manager@^3.0.4":
   version "3.0.4"
   resolved "https://registry.yarnpkg.com/@pubsweet/db-manager/-/db-manager-3.0.4.tgz#fa2ed105489e2e48f51797f4fb0c131a678ba82a"
@@ -401,7 +384,7 @@
   dependencies:
     http-status-codes "^1.3.0"
 
-"@pubsweet/logger@^0.2.13", "@pubsweet/logger@^0.2.18":
+"@pubsweet/logger@^0.2.18":
   version "0.2.18"
   resolved "https://registry.yarnpkg.com/@pubsweet/logger/-/logger-0.2.18.tgz#b5fb777987e87feef8bdae0297786dd54092cfbc"
   integrity sha512-AwctcyHUXd7YF3tw3IQdxKTZEKOuMNszX2uxeXR3j8YfKvi55Wuv4QtR6bLXwiA4oqTkdZg30o25dbOxwQS/1w==
@@ -410,7 +393,7 @@
     joi "^14.3.0"
     lodash "^4.17.4"
 
-"@pubsweet/models@^0.2.0", "@pubsweet/models@^0.2.5":
+"@pubsweet/models@^0.2.5":
   version "0.2.5"
   resolved "https://registry.yarnpkg.com/@pubsweet/models/-/models-0.2.5.tgz#3fa493157d5d95c466b6cc5bf4ead7381c8ff5a1"
   integrity sha512-hGFz8k/XJad8KiuPTOw4vd/LIuUcMcsnfLGOGx7VgsG57tXn3WGj/oDosve204Ip9ZnuoK4BHyI/y4dY3czKgw==

@@ -8,6 +8,7 @@
   "scripts": {},
   "keywords": [],
   "peerDependencies": {
-    "pubsweet-server": ">=2.0.0"
+    "pubsweet-server": ">=2.0.0",
+    "@pubsweet/models": "^0.2.5"
   }
 }
