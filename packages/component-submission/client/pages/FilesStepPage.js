@@ -112,8 +112,7 @@ export class FilesStepPageComponent extends React.Component {
         <Box mb={3} width={1}>
           <FormH2>Your cover letter</FormH2>
           <Paragraph.Small secondary>
-            Please enter or paste in your cover letter below. Your work is more
-            likely to progress if you can consider the following questions:
+            To help with the initial evaluation of your submission, you should aim to answer the following questions in your cover letter:
           </Paragraph.Small>
           <SmallUL>
             <li>
@@ -132,6 +131,9 @@ export class FilesStepPageComponent extends React.Component {
               achieved?
             </li>
           </SmallUL>
+          <Paragraph.Small secondary>
+            In addition, please upload any related studies that you have published recently or have under consideration elsewhere as supporting files and describe them in your cover letter.
+          </Paragraph.Small>
           <ValidatedField
             component={CoverLetterEditor}
             id="coverLetter"
