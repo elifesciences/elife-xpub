@@ -73,7 +73,7 @@ class Manuscript {
       `Manuscript Upload Time, Actual (${actualTime}) , Predicted (${predictor.getPredictedTime()}) | ${manuscriptId}`,
     )
 
-    return ManuscriptModel.find(manuscriptId, this.userId)
+    return this.getView(manuscriptId)
   }
 
   async update(data) {
@@ -104,6 +104,18 @@ class Manuscript {
       manuscriptId: data.id,
       userId: this.userId,
     })
+
+    return this.getView(data.id)
+  }
+
+  async getView(manuscriptId) {
+    const manuscript = await ManuscriptModel.find(manuscriptId, this.userId)
+
+    // eslint-disable-next-line no-restricted-syntax
+    for (const file of manuscript.files) {
+      // eslint-disable-next-line no-param-reassign
+      file.downloadLink = this.storage.getDownloadLink(file)
+    }
 
     return manuscript
   }
