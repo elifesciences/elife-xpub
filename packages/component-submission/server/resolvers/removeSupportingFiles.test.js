@@ -47,7 +47,7 @@ describe('Manuscripts', () => {
   beforeEach(async () => {
     const profileId = userData.identities[0].identifier
     await createTables(true)
-    const user = await User.createWithIdenitity(profileId)
+    const user = await User.createWithIdentity(profileId)
     userId = user.id
   })
 
