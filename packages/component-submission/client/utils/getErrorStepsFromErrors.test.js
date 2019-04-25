@@ -9,7 +9,7 @@ describe('getStepFromFieldName', () => {
   it('returns the correct step when  passed field name', () => {
     expect(getStepFromFieldName('author')).toEqual(STEP_NAMES.AUTHOR)
     expect(getStepFromFieldName('fileStatus')).toEqual(STEP_NAMES.FILES)
-    expect(getStepFromFieldName('meta')).toEqual(STEP_NAMES.SUBMISSION)
+    expect(getStepFromFieldName('meta')).toEqual(STEP_NAMES.DETAILS)
     expect(getStepFromFieldName('opposedReviewers')).toEqual(STEP_NAMES.EDITORS)
     expect(getStepFromFieldName('submitterSignature')).toEqual(
       STEP_NAMES.DISCLOSURE,
@@ -34,7 +34,11 @@ describe('getErrorStepsFromErrors', () => {
     }
 
     expect(getErrorStepsFromErrors(dummyError)).toEqual(
-      expect.arrayContaining(['Files', 'Submission', 'Editors']),
+      expect.arrayContaining([
+        STEP_NAMES.FILES,
+        STEP_NAMES.DETAILS,
+        STEP_NAMES.EDITORS,
+      ]),
     )
   })
 })
