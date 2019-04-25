@@ -125,11 +125,7 @@ const SubmissionWizard = ({
         />
       )}
     />
-    <Redirect
-      exact
-      from="/submit/:id"
-      to={`/submit/${match.params.id}/author`}
-    />
+    <Redirect from="/submit/:id" to={`/submit/${match.params.id}/author`} />
     <ErrorPage error="404: page not found" />
   </Switch>
 )
