@@ -29,6 +29,17 @@ class User extends BaseModel {
     }
   }
 
+  static async createWithIdentity(identifier, type = 'elife') {
+    // TODO : should this be done in one transaction
+    const user = await new User({ defaultIdentity: type }).save()
+    await new Identity({
+      type,
+      identifier,
+      userId: user.id,
+    }).save()
+    return user
+  }
+
   static async findOrCreate(profileId) {
     let [user] = await User.query()
       // todo why does joinEager sometimes throw an error
@@ -36,13 +47,7 @@ class User extends BaseModel {
       .where('identities.identifier', profileId)
 
     if (!user) {
-      user = await new User({ defaultIdentity: 'elife' }).save()
-      const idObject = {
-        type: 'elife',
-        identifier: profileId,
-        userId: user.id,
-      }
-      await new Identity(idObject).save()
+      user = await User.createWithIdentity(profileId)
     }
 
     await user.extendWithApiData()

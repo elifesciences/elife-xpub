@@ -29,8 +29,7 @@ describe('upload', () => {
   beforeEach(async () => {
     await createTables(true)
     const profileId = 'ewwboc7m'
-    const identities = [{ type: 'elife', identifier: profileId }]
-    const user = await new User({ identities }).save()
+    const user = await User.createWithIdentity(profileId)
     userId = user.id
   })
 
