@@ -1,14 +1,7 @@
 const lodash = require('lodash')
-const { transaction } = require('objection')
 const BaseModel = require('@pubsweet/base-model')
-const logger = require('@pubsweet/logger')
 const emptyManuscript = require('./helpers/empty')
 const AuditLog = require('@elifesciences/component-model-audit-log').model
-
-const integrityError = (property, value, message) =>
-  new Error(
-    `Data Integrity Error property ${property} set to ${value}: ${message}`,
-  )
 
 const mergeObjects = (...inputs) =>
   lodash.mergeWith(
@@ -181,46 +174,6 @@ class Manuscript extends BaseModel {
     const instanceUpdateTime = new Date(this.updated).getTime()
 
     return instanceUpdateTime < storedUpdateTime
-  }
-
-  async save() {
-    const simpleSave = async (trx = null) => {
-      // save manuscript and all relations
-      // note that this also deletes any related entities that are not present
-      await this.$query(trx).upsertGraphAndFetch(this)
-      // reload related entities
-      await this.$loadRelated('[teams, files]', null, trx)
-    }
-
-    if (this.created && this.updated) {
-      let trx
-      try {
-        trx = await transaction.start(BaseModel.knex())
-
-        if (await this.needsRefresh(trx)) {
-          logger.error(
-            `Attempt to save Manuscript ${this.id} with updated=${
-              this.updated
-            }`,
-          )
-          // Autosave is broken so can fail here
-          throw integrityError(
-            'updated',
-            this.updated,
-            'is older than the one stored in the database!',
-          )
-        }
-
-        await simpleSave(trx)
-        await trx.commit()
-      } catch (err) {
-        await trx.rollback()
-        throw err
-      }
-    } else {
-      await simpleSave()
-    }
-    return this
   }
 
   static async updateStatus(id, status) {

@@ -9,8 +9,7 @@ describe('Manuscripts', () => {
   let userId
   beforeEach(async () => {
     await createTables(true)
-    const user = new User(userData)
-    await user.save()
+    const user = await User.createWithIdentity(profileId)
     userId = user.id
   })
 

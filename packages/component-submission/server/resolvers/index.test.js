@@ -21,7 +21,7 @@ describe('Manuscripts', () => {
       fs.remove(config.get('pubsweet-server.uploads')),
       createTables(true),
     ])
-    const user = await new User(userData).save()
+    const user = await User.createWithIdentity(profileId)
     userId = user.id
     mailer.clearMails()
   })
