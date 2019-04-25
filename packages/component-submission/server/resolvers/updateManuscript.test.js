@@ -22,8 +22,8 @@ describe('Manuscript resolvers', () => {
     replaySetup('success')
     await createTables(true)
     const [user] = await Promise.all([
-      new User(userData).save(),
-      new User(badUserData).save(),
+      User.createWithIdentity(profileId),
+      User.createWithIdentity(badProfileId),
     ])
     userId = user.id
   })
