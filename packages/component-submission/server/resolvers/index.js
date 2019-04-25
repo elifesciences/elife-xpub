@@ -128,7 +128,8 @@ const resolvers = {
     __resolveType: assignee => {
       if (assignee.focuses !== undefined) return 'EditorAlias'
       if (assignee.expertises !== undefined) return 'EditorAlias'
-      if (assignee.name !== undefined) return 'ReviewerAlias'
+      if (assignee.name !== undefined || assignee.email !== undefined)
+        return 'ReviewerAlias'
       if (assignee.firstName !== undefined) return 'AuthorAlias'
       return null
     },
