@@ -79,13 +79,13 @@ describe('related objects behave as we expect', () => {
       )
 
       // fetch the list of ordered manuscripts and check in the correct order
-      // const orderedList = await Manuscript.all(userId)
+      const orderedList = await Manuscript.all(userId)
 
-      // orderedList.forEach((manuscript, index) => {
-      // The check should be this... (but it fails)
-      // expect(manuscript.submitterSignature).toEqual(index.toString())
-      // expect(manuscript.submitterSignature).toEqual("")
-      // })
+      orderedList.forEach(async (manuscript, index) => {
+        // The check should be this... (but it fails)
+        const ms = await Manuscript.find(manuscript.id, userId)
+        expect(ms.submitterSignature).toEqual(index.toString())
+      })
     })
 
     it('is initialised without any files', async () => {
@@ -118,29 +118,38 @@ describe('related objects behave as we expect', () => {
       expect(manuscript.files[0].type).toBe('updated')
     })
 
-    it('manuscript property updates are reflected on the file', async () => {
-      const manuscript = await createManuscriptWithOneFile(userId)
+    it('manuscript property updates are not reflected on the file', async () => {
+      let manuscript = await createManuscriptWithOneFile(userId)
 
       manuscript.files[0].type = 'updated'
       await manuscript.save()
-      const file = await File.find(manuscript.files[0].id)
 
+      manuscript = await Manuscript.find(manuscript.id, userId)
+      expect(manuscript.files[0].type).toBe('test_file')
+
+      manuscript.files[0].type = 'updated'
+      await manuscript.files[0].save()
+
+      const file = await File.find(manuscript.files[0].id)
       expect(file.type).toBe('updated')
-      expect(manuscript.files[0].type).toBe('updated')
     })
 
     it('files are replaced on the manuscript', async () => {
       let manuscript = await createManuscriptWithOneFile(userId)
       const oldFileId = manuscript.files[0].id
+      await manuscript.files[0].delete()
+
       const file = new File({
         manuscriptId: manuscript.id,
         filename: 'test2.txt',
         url: '-',
         type: 'test2_file',
       })
+      await file.save()
       manuscript.files[0] = file
       await manuscript.save()
 
+      manuscript = await Manuscript.find(manuscript.id, userId)
       // in memory
       expect(manuscript.files).toHaveLength(1)
       expect(manuscript.files[0].filename).toBe('test2.txt')
@@ -181,17 +190,12 @@ describe('related objects behave as we expect', () => {
       expect(file.status).toBe('UPLOADED')
 
       file.status = 'STORED'
-      // saving at this point causes pubsweet to throw a ValidationError
-      // This should be fixed the next time we upgrade and so the
-      // behaviour will change
-      expect(file.save()).rejects.toThrow()
+      await file.save()
 
       // re-query
       file = await File.find(fileId)
       expect(file).toHaveProperty('id')
-      // the following is really not expected
-      // but is how things work with the current bug
-      expect(file.status).toBe('UPLOADED')
+      expect(file.status).toBe('STORED')
     })
 
     it('successive entity changes need re-queries', async () => {
