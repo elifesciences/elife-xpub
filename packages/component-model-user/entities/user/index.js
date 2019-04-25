@@ -1,4 +1,5 @@
 const BaseModel = require('@pubsweet/base-model')
+const Identity = require('@elifesciences/component-model-identity')
 const api = require('./helpers/elife-api')
 
 class User extends BaseModel {
@@ -19,7 +20,7 @@ class User extends BaseModel {
     return {
       identities: {
         relation: BaseModel.HasManyRelation,
-        modelClass: require('@elifesciences/component-model-identity'),
+        modelClass: Identity,
         join: {
           from: 'user.id',
           to: 'identity.userId',
@@ -35,10 +36,13 @@ class User extends BaseModel {
       .where('identities.identifier', profileId)
 
     if (!user) {
-      user = await new User({
-        defaultIdentity: 'elife',
-        identities: [{ type: 'elife', identifier: profileId }],
-      }).save()
+      user = await new User({ defaultIdentity: 'elife' }).save()
+      const idObject = {
+        type: 'elife',
+        identifier: profileId,
+        userId: user.id,
+      }
+      await new Identity(idObject).save()
     }
 
     await user.extendWithApiData()
@@ -86,7 +90,8 @@ class User extends BaseModel {
   }
 
   async save() {
-    return this.$query().upsertGraphAndFetch(this)
+    return super.save()
+    // return this.$query().upsertGraphAndFetch(this)
   }
 }
 
