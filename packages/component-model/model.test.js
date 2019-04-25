@@ -41,7 +41,9 @@ describe('related objects behave as we expect', () => {
       const now = new Date().toISOString()
 
       expect(manuscript).toHaveProperty('created')
-      expect(manuscript.created.substring(0, 11)).toBe(now.substring(0, 11))
+      expect(manuscript.created.toISOString().substring(0, 11)).toBe(
+        now.substring(0, 11),
+      )
     })
 
     it('manuscripts have their updated time changed', async () => {
