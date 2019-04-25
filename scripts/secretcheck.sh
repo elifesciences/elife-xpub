@@ -1,37 +1,39 @@
 #!/bin/bash
 
 # If the aws credentials file does not exist then just exit ok
-AWS_FILE=~/.aws/credentials
-if [ ! -f ${AWS_FILE} ]
+aws_file=~/.aws/credentials
+if [ ! -f ${aws_file} ]
 then
   echo "No AWS Credentials to check"
   exit 0
 fi
 
-ROOT=.
-AWS_SECRET=$(grep secret ${AWS_FILE} | cut -d '=' -f2)
-AWS_KEY=$(grep key_id ~/.aws/credentials | cut -d '=' -f2)
+root=.
+aws_secret=$(grep secret ${aws_file} | cut -d '=' -f2)
+aws_key=$(grep key_id ~/.aws/credentials | cut -d '=' -f2)
 
-SECRETS=(${AWS_SECRET} ${AWS_KEY})
+secrets=(${aws_secret} ${aws_key})
 
 echo "Searching for secrets... "
 
-for var in "${SECRETS[@]}"
+for i in "${!secrets[@]}"
 do
-  # Perfrom a seacrch for this secret
+  secret=${secrets[$i]}
+  echo -n "... for secret [$i] "
+  # Perfrom a search for this secret
   if [ $(which ag) ]
   then
-    RESULT=$(ag -l ${AWS_SECRET} ${ROOT})
+    result=$(ag -l ${secret} ${root})
   else 
     echo "   *** if this is slow then install: https://github.com/ggreer/the_silver_searcher#installing"
-    RESULT=$(find ${ROOT} -type f -exec grep -l ${AWS_SECRET} {} \;)
+    result=$(grep -rl ${secret} ${root})
   fi
 
   # Action based on finding secret
-  if [ ${#RESULT} -gt 0 ]
+  if [ ${#result} -gt 0 ]
   then
     echo -n "✖ Found a secret here: "
-    echo ${RESULT}
+    echo ${result}
     exit 1
   else
     echo "✔ Not Found"
