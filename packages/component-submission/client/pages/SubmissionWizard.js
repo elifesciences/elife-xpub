@@ -50,7 +50,7 @@ const SubmissionWizard = ({
           handleButtonClick={updateManuscript}
           history={history}
           initialValues={initialValues}
-          nextUrl={`${match.url}/submission`}
+          nextUrl={`${match.url}/details`}
           previousUrl={`${match.url}/author`}
           step={1}
           validationSchema={filesSchema}
@@ -58,7 +58,7 @@ const SubmissionWizard = ({
       )}
     />
     <TrackedRoute
-      path={`${match.path}/submission`}
+      path={`${match.path}/details`}
       render={() => (
         <WizardStep
           component={SubmissionPage}
