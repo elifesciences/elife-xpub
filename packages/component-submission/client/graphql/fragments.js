@@ -48,6 +48,7 @@ export const manuscriptFragment = gql`
     }
     opposedReviewersReason
     files {
+      downloadLink
       filename
       type
       status

@@ -4132,6 +4132,13 @@ debug@^3.0.0, debug@^3.1.0, debug@^3.2.6:
   dependencies:
     ms "^2.1.1"
 
+debug@^4.0.1:
+  version "4.1.1"
+  resolved "https://registry.yarnpkg.com/debug/-/debug-4.1.1.tgz#3b72260255109c6b589cee050f1d516139664791"
+  integrity sha512-pYAIzeRo8J6KPEaJ0VWOh5Pzkbw/RetuzehGM7QRRX5he4fPHx2rdKMB256ehJCkX+XRQm16eZLqLNS8RSZXZw==
+  dependencies:
+    ms "^2.1.1"
+
 decamelize-keys@^1.0.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/decamelize-keys/-/decamelize-keys-1.1.0.tgz#d171a87933252807eb3cb61dc1c1445d078df2d9"
@@ -13047,6 +13054,15 @@ replace-ext@1.0.0:
   integrity sha1-3mMSg3P8v3w8z6TeWkgMRaZ5WOs=
 
 replay@^2.3.0, replay@^2.4.0:
+  version "2.4.0"
+  resolved "https://registry.yarnpkg.com/replay/-/replay-2.4.0.tgz#8100e7b5733b1b30477e265a3e3b329265f667cc"
+  integrity sha512-Ij6gKW+DijjTchAJCjdLU2YbjthwyhP6CClSrJxeZvRk9/QSysJo/CRUT1WJSWaH8ZlYk1yFEw6Cu/WEag+wwQ==
+  dependencies:
+    babel-runtime "^6.26.0"
+    debug "^4.0.1"
+    js-string-escape "^1.0.1"
+
+replay@^2.4.0:
   version "2.4.0"
   resolved "https://registry.yarnpkg.com/replay/-/replay-2.4.0.tgz#8100e7b5733b1b30477e265a3e3b329265f667cc"
   integrity sha512-Ij6gKW+DijjTchAJCjdLU2YbjthwyhP6CClSrJxeZvRk9/QSysJo/CRUT1WJSWaH8ZlYk1yFEw6Cu/WEag+wwQ==

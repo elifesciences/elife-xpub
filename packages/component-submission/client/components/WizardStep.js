@@ -58,7 +58,7 @@ const WizardStep = ({
               <ProgressBar currentStep={step} />
             </Box>
 
-            <FormH2>{title}</FormH2>
+            {title && <FormH2>{title}</FormH2>}
 
             <FormComponent values={values} {...formProps} {...wizardProps} />
 

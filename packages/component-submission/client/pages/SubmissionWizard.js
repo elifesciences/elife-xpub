@@ -50,16 +50,15 @@ const SubmissionWizard = ({
           handleButtonClick={updateManuscript}
           history={history}
           initialValues={initialValues}
-          nextUrl={`${match.url}/submission`}
+          nextUrl={`${match.url}/details`}
           previousUrl={`${match.url}/author`}
           step={1}
-          title="Write your cover letter and upload your manuscript"
           validationSchema={filesSchema}
         />
       )}
     />
     <TrackedRoute
-      path={`${match.path}/submission`}
+      path={`${match.path}/details`}
       render={() => (
         <WizardStep
           component={SubmissionPage}
@@ -85,7 +84,7 @@ const SubmissionWizard = ({
           history={history}
           initialValues={initialValues}
           nextUrl={`${match.url}/disclosure`}
-          previousUrl={`${match.url}/submission`}
+          previousUrl={`${match.url}/details`}
           step={3}
           title="Who should review your work?"
           validationSchema={editorsSchema}
@@ -126,11 +125,7 @@ const SubmissionWizard = ({
         />
       )}
     />
-    <Redirect
-      exact
-      from="/submit/:id"
-      to={`/submit/${match.params.id}/author`}
-    />
+    <Redirect from="/submit/:id" to={`/submit/${match.params.id}/author`} />
     <ErrorPage error="404: page not found" />
   </Switch>
 )
@@ -143,6 +138,10 @@ export default compose(
     renderComponent(Loading),
   ),
   branch(props => !props.data || props.data.error, renderComponent(ErrorPage)),
+  branch(
+    props => props.data.manuscript.clientStatus !== 'CONTINUE_SUBMISSION',
+    () => () => <Redirect to="/" />,
+  ),
   withProps(props => ({
     initialValues: parseInputToFormData(props.data.manuscript),
   })),
