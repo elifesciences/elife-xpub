@@ -1,9 +1,4 @@
 const DataAccessModel = require('.')
-const createTestData = require('test-data')
-
-beforeEach(() => {
-  createTestData()
-})
 
 describe('DataAccessModel extends PubSweet BaseModel', () => {
   it('should not-recursively save when save() is called', () => {

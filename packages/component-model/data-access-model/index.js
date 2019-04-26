@@ -1,13 +1,31 @@
 const BaseModel = require('@pubsweet/base-model')
 
-// const parseEagerRelations = relations =>
-// Array.isArray(relations) ? `[${relations.join(', ')}]` : relations
-
 class DataAccessModel extends BaseModel {
-  async saveRecursively(trx = null) {
-    return this.constructor.query().upsertGraphAndFetch(this)
-    //     this.getRelated...
-    //     await this.$loadRelated('[teams, files]', null, trx)
+  async saveRecursively() {
+    const relations = Object.keys(this.constructor.relationMappings)
+    const strRelations = `[${relations.join(', ')}]`
+
+    const incoming =relations.map( (key) => `${key} length= ${this[key].length}` )
+
+    const options = {
+      insert: true,
+      relate: true,
+      noDelete: true
+    }
+
+    this.constructor.query().upsertGraph(this)
+    const before = relations.map( (key) => `${key} length= ${this[key].length}` )
+
+    // load
+    await this.$loadRelated(strRelations)
+    const after = relations.map( (key) => `${key} length= ${this[key].length}` )
+    console.log(`
+    ${this.constructor.name}
+    ${incoming}
+    ${before}
+    ${after}
+    `)
+    return this
   }
 }
 
