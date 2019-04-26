@@ -1,4 +1,3 @@
-# built from ./Dockerfile-base
 FROM node:10
 
 WORKDIR /
