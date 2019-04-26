@@ -1,5 +1,5 @@
-const { DataAccessModel } = require('@elifesciences/component-model')
 const Identity = require('@elifesciences/component-model-identity')
+const { DataAccessModel } = require('@elifesciences/component-model')
 const api = require('./helpers/elife-api')
 
 class User extends DataAccessModel {
