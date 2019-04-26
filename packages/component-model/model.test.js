@@ -1,6 +1,7 @@
 const uuid = require('uuid')
 const Manuscript = require('@elifesciences/component-model-manuscript').model
 const File = require('@elifesciences/component-model-file').model
+const Team = require('@elifesciences/component-model-team').model
 const { createTables } = require('@elifesciences/component-model')
 
 describe('creating getters still allows models to be saved', () => {
@@ -33,6 +34,54 @@ describe('related objects behave as we expect', () => {
   beforeEach(async () => {
     userId = uuid()
     await createTables(true)
+  })
+  describe('manuscript <-> team', () => {
+    it('adds a team to manuscript when team is saved', async () => {
+      let manuscript = await createInitialManuscript(userId)
+      expect(manuscript.teams).toHaveLength(0)
+
+      // create a team and make sure it's not on the manuscript
+      const team = new Team({
+        role: 'foo',
+        teamMembers: [],
+        objectType: 'manuscript',
+        objectId: manuscript.id,
+      })
+      await team.save()
+
+      expect(manuscript.teams).toHaveLength(0)
+      manuscript = await Manuscript.find(manuscript.id, userId)
+      expect(manuscript.teams).toHaveLength(1)
+    })
+
+    it('adds a team to manuscript when saving recursively', async () => {
+      let manuscript = await createInitialManuscript(userId)
+      expect(manuscript.teams).toHaveLength(0)
+
+      // create a team and make sure it's not on the manuscript
+      const team = new Team({
+        role: 'foo',
+        teamMembers: [],
+        objectType: 'manuscript',
+        objectId: manuscript.id,
+      })
+      manuscript.teams.push(team)
+      expect(manuscript.teams).toHaveLength(1)
+
+      // a normal save will not save related items...
+      await manuscript.save()
+      manuscript = await Manuscript.find(manuscript.id, userId)
+      expect(manuscript.teams).toHaveLength(0)
+
+      // re-rearrage
+      manuscript.teams.push(team)
+
+      // a recursive save will save the teams too
+      await manuscript.saveRecursively()
+      manuscript = await Manuscript.find(manuscript.id, userId)
+      expect(manuscript.teams).toHaveLength(1)
+      expect(manuscript.teams[0].role).toEqual('foo')
+    })
   })
 
   describe('manuscript <-> file', () => {
