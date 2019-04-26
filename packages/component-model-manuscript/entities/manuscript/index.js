@@ -1,5 +1,5 @@
+const { DataAccessModel } = require('@elifesciences/component-model')
 const lodash = require('lodash')
-const BaseModel = require('@pubsweet/base-model')
 const emptyManuscript = require('./helpers/empty')
 const AuditLog = require('@elifesciences/component-model-audit-log').model
 
@@ -15,7 +15,7 @@ const mergeObjects = (...inputs) =>
     },
   )
 
-class Manuscript extends BaseModel {
+class Manuscript extends DataAccessModel {
   static get tableName() {
     return 'manuscript'
   }
@@ -66,7 +66,7 @@ class Manuscript extends BaseModel {
   static get relationMappings() {
     return {
       files: {
-        relation: BaseModel.HasManyRelation,
+        relation: DataAccessModel.HasManyRelation,
         modelClass: require('@elifesciences/component-model-file').model,
         join: {
           from: 'manuscript.id',
@@ -74,7 +74,7 @@ class Manuscript extends BaseModel {
         },
       },
       teams: {
-        relation: BaseModel.HasManyRelation,
+        relation: DataAccessModel.HasManyRelation,
         modelClass: require('@elifesciences/component-model-team').model,
         join: {
           from: 'manuscript.id',

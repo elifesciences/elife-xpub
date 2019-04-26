@@ -1,8 +1,8 @@
-const BaseModel = require('@pubsweet/base-model')
+const { DataAccessModel } = require('@elifesciences/component-model')
 const Identity = require('@elifesciences/component-model-identity')
 const api = require('./helpers/elife-api')
 
-class User extends BaseModel {
+class User extends DataAccessModel {
   static get tableName() {
     return 'user'
   }
@@ -19,7 +19,7 @@ class User extends BaseModel {
   static get relationMappings() {
     return {
       identities: {
-        relation: BaseModel.HasManyRelation,
+        relation: DataAccessModel.HasManyRelation,
         modelClass: Identity,
         join: {
           from: 'user.id',

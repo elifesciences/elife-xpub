@@ -509,7 +509,8 @@ describe('Manuscript', () => {
         role: 'bar',
         teamMembers: [],
       })
-      await manuscript.save()
+      expect(manuscript.teams).toHaveLength(1)
+      await manuscript.saveRecursively()
       expect(manuscript.teams).toHaveLength(1)
       expect(manuscript.teams[0].role).toEqual('bar')
     })

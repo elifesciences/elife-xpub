@@ -1,6 +1,6 @@
-const BaseModel = require('@pubsweet/base-model')
+const { DataAccessModel } = require('@elifesciences/component-model')
 
-class Team extends BaseModel {
+class Team extends DataAccessModel {
   static get tableName() {
     return 'team'
   }
