@@ -4,5 +4,5 @@ const DataAccessModel = require('./data-access-model')
 
 module.exports = {
   createTables,
-  DataAccessModel
+  DataAccessModel,
 }
