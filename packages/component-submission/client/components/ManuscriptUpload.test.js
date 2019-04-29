@@ -84,12 +84,6 @@ describe('ManuscriptUpload Content', () => {
     })
 
     wrapper.update()
-    expect(wrapper.find('[data-test-conversion="failed"]').exists()).toEqual(
-      false,
-    )
-    expect(wrapper.find('[data-test-conversion="completed"]').exists()).toEqual(
-      true,
-    )
     expect(wrapper.find('a').prop('href')).toBe(manuscriptDownloadLink)
   })
 

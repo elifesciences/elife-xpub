@@ -74,6 +74,7 @@ test('Happy path', async t => {
     .eql(3)
     .expect(files.supportingFileError.count)
     .eql(1)
+  await t.expect(files.manuscriptDownloadLink.hasAttribute('href')).eql(true)
   navigationHelper.navigateForward()
 
   // adding manuscript metadata

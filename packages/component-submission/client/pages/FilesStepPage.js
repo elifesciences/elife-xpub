@@ -159,6 +159,7 @@ export class FilesStepPageComponent extends React.Component {
               error: this.state.manuscriptUploadingError,
             }}
             data-test-id="upload"
+            downloadLink={manuscriptFile.downloadLink}
             fileName={manuscriptFile.filename}
             formError={touched.files && errors.files}
             onDrop={this.onFileDrop}

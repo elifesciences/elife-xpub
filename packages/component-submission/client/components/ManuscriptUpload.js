@@ -136,7 +136,15 @@ const DropzoneContent = ({
           data-test-id="dropzoneMessage"
         >
           Success! <ActionText onClick={dropzoneOpen}>Replace</ActionText> your
-          manuscript file or <NativeLink href={downloadLink} /> to check it.
+          manuscript file or{' '}
+          <NativeLink
+            data-test-id="manusctipt-download-link"
+            href={downloadLink}
+          >
+            {' '}
+            download{' '}
+          </NativeLink>
+          to check it.
         </UploadInstruction>
       </React.Fragment>
     )
