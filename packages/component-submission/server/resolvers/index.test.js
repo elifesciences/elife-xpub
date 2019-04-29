@@ -6,7 +6,7 @@ const { createTables } = require('@elifesciences/component-model')
 const mailer = require('@pubsweet/component-send-email')
 const User = require('@elifesciences/component-model-user').model
 const Manuscript = require('@elifesciences/component-model-manuscript').model
-const { Query } = require('.')
+const { Query, Assignee } = require('.')
 const { userData } = require('./index.test.data')
 
 const replaySetup = require('../../../../test/helpers/replay-setup')
@@ -68,6 +68,20 @@ describe('component-submission resolvers', () => {
           'Neuroscience',
         ],
       })
+    })
+  })
+
+  describe('assignees', () => {
+    it('resolves assignees correctly', async () => {
+      expect(Assignee.__resolveType({ focuses: 'focus' })).toBe('EditorAlias')
+      expect(Assignee.__resolveType({ expertises: 'expertise' })).toBe(
+        'EditorAlias',
+      )
+      expect(Assignee.__resolveType({ name: 'john' })).toBe('ReviewerAlias')
+      expect(Assignee.__resolveType({ email: 'john.smith@example.com' })).toBe(
+        'ReviewerAlias',
+      )
+      expect(Assignee.__resolveType({ firstName: 'john' })).toBe('AuthorAlias')
     })
   })
 })
