@@ -112,7 +112,9 @@ export class FilesStepPageComponent extends React.Component {
         <Box mb={3} width={1}>
           <FormH2>Your cover letter</FormH2>
           <Paragraph.Small secondary>
-            Please enter or paste in your cover letter below. To help with the initial evaluation of your submission, you should aim to answer the following questions:
+            Please enter or paste in your cover letter below. To help with the
+            initial evaluation of your submission, you should aim to answer the
+            following questions:
           </Paragraph.Small>
           <SmallUL>
             <li>
@@ -132,7 +134,9 @@ export class FilesStepPageComponent extends React.Component {
             </li>
           </SmallUL>
           <Paragraph.Small secondary>
-            In addition, please upload any related studies that you have published recently or have under consideration elsewhere as supporting files and describe them in your cover letter.
+            In addition, please upload any related studies that you have
+            published recently or have under consideration elsewhere as
+            supporting files and describe them in your cover letter.
           </Paragraph.Small>
           <ValidatedField
             component={CoverLetterEditor}
@@ -155,6 +159,7 @@ export class FilesStepPageComponent extends React.Component {
               error: this.state.manuscriptUploadingError,
             }}
             data-test-id="upload"
+            downloadLink={manuscriptFile.downloadLink}
             fileName={manuscriptFile.filename}
             formError={touched.files && errors.files}
             onDrop={this.onFileDrop}

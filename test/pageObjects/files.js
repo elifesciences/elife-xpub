@@ -14,6 +14,7 @@ const files = {
   fileName: Selector('[data-test-id=fileName]'),
   dropzoneMessage: Selector('[data-test-id=dropzoneMessage]'),
   ongoingFileUploadError: Selector('[data-test-id=ongoing-upload-error]'),
+  manuscriptDownloadLink: Selector('[data-test-id=manusctipt-download-link]'),
 }
 
 export default files

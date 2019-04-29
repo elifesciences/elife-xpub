@@ -19,6 +19,7 @@ const makeWrapper = props => mount(<WrappedComponent {...props} />)
 
 const manuscriptUpload = 'Upload your manuscript or drag it here.'
 const manuscriptUploadSuccess = 'Success!'
+const manuscriptDownloadLink = 'sometestlink'
 const manuscriptUploading = 'Manuscript is uploading'
 
 describe('ManuscriptUpload Content', () => {
@@ -73,6 +74,17 @@ describe('ManuscriptUpload Content', () => {
     expect(wrapper.find('ManuscriptUpload').text()).toContain(
       manuscriptUploadSuccess,
     )
+  })
+
+  it('displays the preview link if downloadLink is set', () => {
+    const wrapper = makeWrapper()
+    wrapper.setProps({
+      conversion: { completed: true },
+      downloadLink: manuscriptDownloadLink,
+    })
+
+    wrapper.update()
+    expect(wrapper.find('a').prop('href')).toBe(manuscriptDownloadLink)
   })
 
   it('displays uploading if conversion.converting is set', () => {
