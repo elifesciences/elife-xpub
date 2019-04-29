@@ -1,5 +1,8 @@
-# built from ./Dockerfile-base
-FROM xpub/xpub:20181213-1147
+FROM node:8.14.0
+
+ENV HOME "/home/xpub"
+
+RUN mkdir -p ${HOME}
 
 WORKDIR ${HOME}
 

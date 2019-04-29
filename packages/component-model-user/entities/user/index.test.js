@@ -1,4 +1,4 @@
-const { createTables } = require('@pubsweet/db-manager')
+const { createTables } = require('@elifesciences/component-model')
 const User = require('.')
 const replaySetup = require('../../../../test/helpers/replay-setup')
 
@@ -30,9 +30,7 @@ describe('User manager', () => {
     })
 
     it('loads existing user if found', async () => {
-      const savedUser = await new User({
-        identities: [{ type: 'elife', identifier: profileId }],
-      }).save()
+      const savedUser = await User.createWithIdentity(profileId)
       const loadedUser = await User.findOrCreate(profileId)
 
       expect(loadedUser).toMatchObject({
@@ -59,10 +57,12 @@ describe('User manager', () => {
 
   describe('save()', () => {
     it('saves identities with user', async () => {
-      const identities = [{ type: 'elife', identifier: profileId }]
-      await new User({ identities }).save()
+      await User.createWithIdentity(profileId)
+
       const loadedUser = await User.findOrCreate(profileId)
-      expect(loadedUser.identities).toMatchObject(identities)
+      expect(loadedUser.identities).toMatchObject([
+        { type: 'elife', identifier: profileId },
+      ])
     })
 
     it('fails to update non-existent user', () =>

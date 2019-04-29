@@ -32,9 +32,9 @@ test('People Picker', async t => {
   await t
     .click(author.orcidPrefill)
     .expect(author.firstNameField.value)
-    .eql('Tamlyn')
+    .eql('Aaron')
     .expect(author.secondNameField.value)
-    .eql('Rhodes')
+    .eql('Swartz')
     .expect(author.emailField.value)
     .eql('f72c502e0d657f363b5f2dc79dd8ceea')
     .expect(author.institutionField.value)
@@ -44,8 +44,8 @@ test('People Picker', async t => {
     .click(wizardStep.next)
 
   // uploading files - manuscript and cover letter
+  navigationHelper.fillCoverletter()
   await t
-    .typeText(files.editor, '\nPlease consider this for publication')
     .setFilesToUpload(files.manuscriptUpload, manuscript.file)
     // wait for editor onChange
     .wait(1000)

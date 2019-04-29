@@ -1,4 +1,4 @@
-const { createTables } = require('@pubsweet/db-manager')
+const { createTables } = require('@elifesciences/component-model')
 const config = require('config')
 const logger = require('@pubsweet/logger')
 const mailer = require('@pubsweet/component-send-email')
@@ -25,8 +25,7 @@ describe('MECA HTTP callback handler', () => {
     jest.clearAllMocks()
     await createTables(true)
     const profileId = 'ewwboc7m'
-    const identities = [{ type: 'elife', identifier: profileId }]
-    const user = await new User({ identities }).save()
+    const user = await User.createWithIdentity(profileId)
     userId = user.id
     mailer.clearMails()
   })

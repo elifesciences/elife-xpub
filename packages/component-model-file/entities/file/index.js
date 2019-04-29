@@ -21,8 +21,13 @@ class File extends BaseModel {
           enum: ['CREATED', 'UPLOADED', 'STORED', 'CANCELLED'],
           default: 'CREATED',
         },
+        downloadLink: { type: ['string', 'null'] },
       },
     }
+  }
+
+  static get virtualAttributes() {
+    return ['downloadLink']
   }
 
   async save() {

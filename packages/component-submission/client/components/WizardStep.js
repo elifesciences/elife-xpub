@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { Formik } from 'formik'
+import * as yup from 'yup'
 import { Box, Flex } from '@rebass/grid'
 import { Button } from '@pubsweet/ui'
 import { ButtonLink } from '@elifesciences/component-elife-ui/client/atoms'
@@ -57,7 +58,7 @@ const WizardStep = ({
               <ProgressBar currentStep={step} />
             </Box>
 
-            <FormH2>{title}</FormH2>
+            {title && <FormH2>{title}</FormH2>}
 
             <FormComponent values={values} {...formProps} {...wizardProps} />
 
@@ -87,7 +88,7 @@ const WizardStep = ({
         </BoxNoMinWidth>
       </Flex>
     )}
-    validationSchema={validationSchema}
+    validationSchema={yup.object().shape(validationSchema)}
   />
 )
 

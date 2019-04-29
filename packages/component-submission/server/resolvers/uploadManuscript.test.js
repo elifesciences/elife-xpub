@@ -8,7 +8,7 @@ const config = require('config')
 const fs = require('fs-extra')
 const stream = require('stream')
 const logger = require('@pubsweet/logger')
-const { createTables } = require('@pubsweet/db-manager')
+const { createTables } = require('@elifesciences/component-model')
 const mailer = require('@pubsweet/component-send-email')
 const User = require('@elifesciences/component-model-user').model
 const Manuscript = require('@elifesciences/component-model-manuscript').model
@@ -29,8 +29,8 @@ describe('Manuscripts', () => {
     replaySetup('success')
     await createTables(true)
     const [user] = await Promise.all([
-      new User(userData).save(),
-      new User(badUserData).save(),
+      User.createWithIdentity(profileId),
+      User.createWithIdentity(badProfileId),
     ])
     userId = user.id
     mailer.clearMails()

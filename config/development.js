@@ -5,6 +5,7 @@ const path = require('path')
 winston.level = 'debug'
 
 module.exports = {
+  configTag: 'development',
   'pubsweet-server': {
     baseUrl: deferConfig(
       cfg => `http://localhost:${cfg['pubsweet-server'].port}`,
@@ -17,15 +18,6 @@ module.exports = {
       ':method :url :status :graphql[operation] :res[content-length] :response-time ms',
   },
 
-  dbManager: {
-    // these details are not used but are required to
-    // trigger auto migrations when starting pubsweet
-    username: 'admin',
-    password: 'password',
-    email: 'admin@example.com',
-    admin: true,
-  },
-
   login: {
     // in development bypass login and use this user
     url: '/mock-token-exchange/ewwboc7m',
@@ -33,7 +25,7 @@ module.exports = {
   },
 
   forever: {
-    watchDirectory: path.resolve(__dirname, '..', 'server'),
+    watchDirectory: path.resolve(__dirname, '..', 'packages'),
   },
 
   aws: {
@@ -47,9 +39,6 @@ module.exports = {
         Bucket: 'test-bucket',
       },
     },
-  },
-  fileUpload: {
-    maxSizeMB: 10,
   },
   meca: {
     s3: {

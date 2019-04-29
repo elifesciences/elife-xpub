@@ -42,6 +42,13 @@ class S3Storage {
       .promise()
     return Body
   }
+
+  static getDownloadLink(fileObject) {
+    return s3.getSignedUrl('getObject', {
+      Bucket: config.get('aws.s3.params.Bucket'),
+      Key: `${fileObject.url}/${fileObject.id}`,
+    })
+  }
 }
 
 module.exports = S3Storage

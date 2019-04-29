@@ -3,6 +3,7 @@ import setFixtureHooks from './helpers/set-fixture-hooks'
 import NavigationHelper from './helpers/navigationHelper'
 
 const f = fixture('Submission')
+const FILE_TIMEOUT = 60000
 setFixtureHooks(f)
 
 const manuscript = {
@@ -44,9 +45,9 @@ test('Replace Manuscript on the Submission', async t => {
   await t
     .click(author.orcidPrefill)
     .expect(author.firstNameField.value)
-    .eql('Tamlyn')
+    .eql('Aaron')
     .expect(author.secondNameField.value)
-    .eql('Rhodes')
+    .eql('Swartz')
     .expect(author.emailField.value)
     .eql('f72c502e0d657f363b5f2dc79dd8ceea')
     .expect(author.institutionField.value)
@@ -56,20 +57,22 @@ test('Replace Manuscript on the Submission', async t => {
     .click(wizardStep.next)
 
   // uploading files - manuscript and cover letter
+  navigationHelper.fillCoverletter()
   await t
-    .typeText(files.editor, '\nPlease consider this for publication')
     // Test file type validation is working
     .setFilesToUpload(files.manuscriptUpload, unsupportedManuscriptFile.file)
-    .wait(2000)
     .expect(files.dropzoneMessage.textContent)
-    .contains('That file is not supported.')
+    .contains('That file is not supported.', { timeout: 5000 })
     .setFilesToUpload(files.manuscriptUpload, manuscript.file)
+    .expect(files.dropzoneMessage.textContent)
+    .contains('Replace', { timeout: FILE_TIMEOUT })
     .expect(files.fileName.textContent)
     .eql(manuscript.fileName)
-    // wait for editor onChange
-    .wait(2000)
+
+  await t
     .setFilesToUpload(files.manuscriptUpload, manuscriptReplacement.file)
-    .wait(2000)
+    .expect(files.dropzoneMessage.textContent)
+    .contains('Replace', { timeout: FILE_TIMEOUT })
     .expect(files.fileName.textContent)
     .eql(manuscriptReplacement.fileName)
 })

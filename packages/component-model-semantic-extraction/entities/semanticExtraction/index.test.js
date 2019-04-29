@@ -1,4 +1,4 @@
-const { createTables } = require('@pubsweet/db-manager')
+const { createTables } = require('@elifesciences/component-model')
 const uuid = require('uuid')
 const SemanticExtraction = require('.')
 

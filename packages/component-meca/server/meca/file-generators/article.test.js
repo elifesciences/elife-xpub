@@ -1,4 +1,4 @@
-const { createTables } = require('@pubsweet/db-manager')
+const { createTables } = require('@elifesciences/component-model')
 const path = require('path')
 const { db } = require('pubsweet-server')
 const Replay = require('replay')

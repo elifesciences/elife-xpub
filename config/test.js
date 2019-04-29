@@ -1,20 +1,19 @@
 const { deferConfig } = require('config/defer')
 const AWS = require('aws-sdk')
-const { mockLogger } = require('@elifesciences/component-logger')
+const logger = require('@elifesciences/component-logger').mockLogger
 
 module.exports = {
+  configTag: 'test',
   'pubsweet-server': {
     db: {
       database: 'test',
       idleTimeoutMillis: 800, // Stops open handles in tests
     },
-    port: 4000,
-    baseUrl: deferConfig(
-      cfg => `http://localhost:${cfg['pubsweet-server'].port}`,
-    ),
+    port: 3000,
+    baseUrl: deferConfig(cfg => `http://app:${cfg['pubsweet-server'].port}`),
     uploads: 'test/temp/uploads',
     secret: 'test',
-    mockLogger,
+    logger,
   },
   login: {
     url: '/mock-token-exchange/ewwboc7m',
@@ -30,24 +29,27 @@ module.exports = {
       params: {
         Bucket: 'test',
       },
-      endpoint: new AWS.Endpoint(
-        // randomise port to avoid conflicts in parallel test runs
-        `http://localhost:${Math.floor(Math.random() * 50000) + 15000}`,
-      ),
+      endpoint: new AWS.Endpoint('http://fakes3:4569/'),
     },
   },
   fileUpload: {
     maxSizeMB: 10,
   },
+  server: {
+    api: {
+      secret: '',
+      url: 'http://api-dummy:8080/',
+    },
+  },
   meca: {
     sftp: {
       connectionOptions: {
-        host: 'localhost',
-        port: 3022,
+        host: 'sftp',
+        port: 22,
         username: 'test',
         password: 'tset',
       },
-      remotePath: '/test',
+      remotePath: '/upload',
     },
     apiKey: 'abcd1234',
     email: {

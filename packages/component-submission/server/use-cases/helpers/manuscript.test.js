@@ -1,4 +1,4 @@
-const { createTables } = require('@pubsweet/db-manager')
+const { createTables } = require('@elifesciences/component-model')
 const User = require('@elifesciences/component-model-user').model
 const Manuscript = require('@elifesciences/component-model-manuscript').model
 const File = require('@elifesciences/component-model-file').model
@@ -10,8 +10,7 @@ describe('clearPendingFile()', () => {
   beforeEach(async () => {
     await createTables(true)
     const profileId = 'ewwboc7m'
-    const identities = [{ type: 'elife', identifier: profileId }]
-    const user = await new User({ identities }).save()
+    const user = await User.createWithIdentity(profileId)
     userId = user.id
   })
 

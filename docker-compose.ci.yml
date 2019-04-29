@@ -1,16 +1,15 @@
 version: '3'
 
 services:
-  app:
+  test_browser:
     build:
       dockerfile: ./Dockerfile
       args:
         CI_COMMIT_SHA: ${IMAGE_TAG}
     image: elifesciences/elife-xpub:${IMAGE_TAG}
-    # no need to start the up in any scenario, yet
-    command: sh -c "npx pubsweet server"
+    command: sh -c "./scripts/wait-for-app.sh app:3000 ; socat -d tcp-listen:10081,reuseaddr,fork tcp:localhost:10080 & npm run test:browser -- --screenshots /tmp/screenshots --screenshots-on-fails"
     depends_on:
-      - postgres
+      - app
     environment:
       BROWSER:
       NODE_ENV:
@@ -22,6 +21,47 @@ services:
       PUBSWEET_SECRET:
     volumes:
       - ./build/screenshots:/tmp/screenshots
+
+  app:
+    build:
+      dockerfile: ./Dockerfile
+      args:
+        CI_COMMIT_SHA: ${IMAGE_TAG}
+    image: elifesciences/elife-xpub:${IMAGE_TAG}
+    # no need to start the up in any scenario, yet
+    command: sh -c "npx pubsweet server"
+    depends_on:
+      - postgres
+      - api-dummy
+      - fakes3
+      - sftp
+    environment:
+      BROWSER:
+      NODE_ENV:
+      NODE_CONFIG_ENV:
+      PGHOST:
+      PGUSER:
+      PGPASSWORD:
+      PGDATABASE:
+      PUBSWEET_SECRET:
+    volumes:
+      - ./build/screenshots:/tmp/screenshots
+      - ./build/logs/:/var/log/xpub
+
+  api-dummy:
+    build:
+      dockerfile: ./Dockerfile-api-dummy
+      context: .
+    ports:
+      - 8080:8080
+
+  sftp:
+    image: atmoz/sftp:alpine
+    volumes:
+      - ./build:/home/test/upload
+    ports:
+      - "2222:22"
+    command: test:tset:1000
 
   postgres:
     image: postgres:10.4

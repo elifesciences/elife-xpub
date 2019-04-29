@@ -12,6 +12,7 @@ import {
 import DashboardContent from '../components/DashboardContent'
 import DashboardList from '../components/DashboardList'
 import Archived from '../components/ArchivedPanel'
+import NewSubmitterScreen from '../components/NewSubmitterScreen'
 import withGQL from '../graphql/withGQL'
 
 const DesktopSubmitContainer = styled(Box)`
@@ -77,7 +78,7 @@ export default compose(
   ),
   branch(
     props => !props.data || props.data.error,
-    props => <div>{props.error}</div>,
+    props => () => <div>{props.error}</div>,
   ),
   withHandlers({
     createNewSubmission: props => () =>
@@ -91,4 +92,8 @@ export default compose(
     deleteSubmission: props => manuscriptId =>
       props.deleteManuscript({ variables: { id: manuscriptId } }),
   }),
+  branch(
+    props => !props.data.manuscripts.length,
+    renderComponent(NewSubmitterScreen),
+  ),
 )(DashboardPage)

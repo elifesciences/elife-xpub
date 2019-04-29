@@ -1,6 +1,6 @@
 jest.mock('@pubsweet/logger')
 
-const { createTables } = require('@pubsweet/db-manager')
+const { createTables } = require('@elifesciences/component-model')
 const User = require('@elifesciences/component-model-user').model
 const Manuscript = require('@elifesciences/component-model-manuscript').model
 const { Mutation } = require('.')
@@ -22,8 +22,8 @@ describe('Manuscript resolvers', () => {
     replaySetup('success')
     await createTables(true)
     const [user] = await Promise.all([
-      new User(userData).save(),
-      new User(badUserData).save(),
+      User.createWithIdentity(profileId),
+      User.createWithIdentity(badProfileId),
     ])
     userId = user.id
   })

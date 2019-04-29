@@ -1,6 +1,11 @@
 version: '3'
 
 services:
+  test_browser:
+    build:
+      context: .
+      dockerfile: ./Dockerfile-development
+
   app:
     build:
       context: .
@@ -16,6 +21,21 @@ services:
       - 5432:5432
 
   fakes3:
+    # specify the domain name as otherwise the bucket name is overriden with the domain name
+    entrypoint: /usr/local/bin/fakes3 -r /fakes3_root -p 4569 -H fakes3
     image: lphoward/fake-s3
     ports:
       - 4569:4569
+
+  sftp:
+    image: atmoz/sftp:alpine
+    ports:
+      - "2222:22"
+    command: test:tset:1000
+
+  api-dummy:
+    build:
+      dockerfile: ./Dockerfile-api-dummy
+      context: .
+    ports:
+      - 8080:8080

@@ -1,5 +1,6 @@
 const BaseModel = require('@pubsweet/base-model')
 const api = require('./helpers/elife-api')
+const Identity = require('@elifesciences/component-model-identity')
 
 class User extends BaseModel {
   static get tableName() {
@@ -19,13 +20,24 @@ class User extends BaseModel {
     return {
       identities: {
         relation: BaseModel.HasManyRelation,
-        modelClass: require('@elifesciences/component-model-identity'),
+        modelClass: Identity,
         join: {
           from: 'user.id',
           to: 'identity.userId',
         },
       },
     }
+  }
+
+  static async createWithIdentity(identifier, type = 'elife') {
+    // TODO : should this be done in one transaction
+    const user = await new User({ defaultIdentity: type }).save()
+    await new Identity({
+      type,
+      identifier,
+      userId: user.id,
+    }).save()
+    return user
   }
 
   static async findOrCreate(profileId) {
@@ -35,10 +47,7 @@ class User extends BaseModel {
       .where('identities.identifier', profileId)
 
     if (!user) {
-      user = await new User({
-        defaultIdentity: 'elife',
-        identities: [{ type: 'elife', identifier: profileId }],
-      }).save()
+      user = await User.createWithIdentity(profileId)
     }
 
     await user.extendWithApiData()

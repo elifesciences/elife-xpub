@@ -25,4 +25,5 @@ export const MenuButton = {
 
 export const Editor = css`
   border-radius: 0 0 ${th('borderRadius')} ${th('borderRadius')};
+  min-height: 12em;
 `

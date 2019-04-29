@@ -1,0 +1,11 @@
+{
+  "id": "fbloggs",
+  "type": {
+    "id": "leadership",
+    "label": "Leadership"
+  },
+  "name": {
+    "preferred": "Fred Bloggs III",
+    "index": "Bloggs, Fred, III"
+  }
+}
