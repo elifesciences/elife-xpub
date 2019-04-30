@@ -18,7 +18,7 @@ const WrappedComponent = props => (
 const makeWrapper = props => mount(<WrappedComponent {...props} />)
 
 const manuscriptUpload = 'Upload your manuscript or drag it here.'
-const manuscriptUploadSuccess = 'Success!'
+const manuscriptUploadSuccess = 'Replace your manuscript file or preview it.'
 const manuscriptDownloadLink = 'sometestlink'
 const manuscriptUploading = 'Manuscript is uploading'
 
