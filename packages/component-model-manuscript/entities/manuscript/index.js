@@ -128,7 +128,7 @@ class Manuscript extends BaseModel {
     return 6
   }
 
-  static async find(id, user) {
+  static async find(id, user, related = '[teams, files]') {
     const [manuscript] = await this.query().where({
       'manuscript.id': id,
       'manuscript.created_by': user,
@@ -138,7 +138,7 @@ class Manuscript extends BaseModel {
       throw new Error(`${this.name} not found`)
     }
     // todo why does eager loading sometimes not work?
-    await manuscript.$loadRelated('[teams, files]')
+    await manuscript.$loadRelated(related)
 
     return manuscript
   }
@@ -150,7 +150,7 @@ class Manuscript extends BaseModel {
     })
     // todo why do I need to do this?
     await Promise.all(
-      manuscripts.map(manuscript => manuscript.$loadRelated('[teams, files ]')),
+      manuscripts.map(manuscript => manuscript.$loadRelated('[teams, files]')),
     )
     return manuscripts
   }
@@ -187,7 +187,7 @@ class Manuscript extends BaseModel {
     const simpleSave = async (trx = null) => {
       // save manuscript and all relations
       // note that this also deletes any related entities that are not present
-      await this.$query(trx).upsertGraphAndFetch(this)
+      await this.$query(trx).upsertGraphAndFetch(this, { noDelete: true })
       // reload related entities
       await this.$loadRelated('[teams, files]', null, trx)
     }
