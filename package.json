@@ -18,6 +18,7 @@
     }
   },
   "scripts": {
+    "app:browser": "NODE_CONFIG_ENV=test NODE_ENV=production pubsweet migrate; pubsweet server",
     "build": "NODE_ENV=production pubsweet build",
     "build:styleguide": "styleguidist build",
     "clean": "find . -type d -name node_modules -exec rm -rf {} \\;",
@@ -38,7 +39,7 @@
     "stop:services": "docker-compose down -v",
     "styleguide": "styleguidist server",
     "test": "NODE_CONFIG_ENV=unit-test jest --runInBand",
-    "test:browser": "NODE_CONFIG_ENV=test NODE_ENV=production testcafe --speed 1 --concurrency 1 \"${BROWSER:-chrome}\" 'test/**/*.browser.js'",
+    "test:browser": "NODE_CONFIG_ENV=test NODE_ENV=production testcafe --concurrency 1 \"${BROWSER:-chrome}\" 'test/**/*.browser.js'",
     "test:dependencies": "node scripts/check-duplicate-packages.js react react-dom styled-components pubsweet-server",
     "update": "yarn upgrade-interactive --latest"
   },
