@@ -56,3 +56,16 @@ export const FIELD_TO_STEP_MAP = {
   suggestedReviewingEditors: STEP_NAMES.EDITORS,
   suggestedSeniorEditors: STEP_NAMES.EDITORS,
 }
+
+export const FORM_FIELDS_TO_OMIT = [
+  '__typename',
+  'files',
+  'teams',
+  'status',
+  'clientStatus',
+  'fileStatus',
+  'lastStepVisited',
+  // cosubmitters
+  'firstCosubmissionTitle',
+  'secondCosubmissionTitle',
+]

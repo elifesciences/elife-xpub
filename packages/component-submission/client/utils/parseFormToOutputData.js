@@ -1,4 +1,5 @@
 import omitDeep from 'omit-deep-lodash'
+import { FORM_FIELDS_TO_OMIT } from './constants'
 
 export function parseCosubmissionFormData(values) {
   const { firstCosubmissionTitle, secondCosubmissionTitle } = values
@@ -33,21 +34,8 @@ export function parseEditorSuggestionsData(values) {
 }
 
 function parseFormToOutputData(formValues) {
-  const formFieldsToOmit = [
-    '__typename',
-    'files',
-    'teams',
-    'status',
-    'clientStatus',
-    'fileStatus',
-    'lastStepVisited',
-    // cosubmitters
-    'firstCosubmissionTitle',
-    'secondCosubmissionTitle',
-  ]
-
   return {
-    ...omitDeep(formValues, formFieldsToOmit),
+    ...omitDeep(formValues, FORM_FIELDS_TO_OMIT),
     ...parseCosubmissionFormData(formValues),
     ...parseEditorSuggestionsData(formValues),
   }
