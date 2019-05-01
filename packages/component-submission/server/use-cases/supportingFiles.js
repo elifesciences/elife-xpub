@@ -57,18 +57,20 @@ class SupportingFiles {
 
     if (files && files.length > 0) {
       let modified = false
-      files
-        .filter(file => file.type === 'SUPPORTING_FILE')
-        .forEach(async file => {
-          try {
-            modified = true
-            await file.updateStatus('CANCELLED')
-            await this.storage.deleteContent(file)
-            await file.delete()
-          } catch (err) {
-            logger.error(`Unable to delete file ${file.id}`, err)
-          }
-        })
+      Promise.all(
+        files
+          .filter(file => file.type === 'SUPPORTING_FILE')
+          .map(async file => {
+            try {
+              modified = true
+              await file.updateStatus('CANCELLED')
+              await this.storage.deleteContent(file)
+              await file.delete()
+            } catch (err) {
+              logger.error(`Unable to delete file ${file.id}`, err)
+            }
+          }),
+      )
       if (modified) {
         manuscript.files = filesWithoutSupporting
         manuscript = await manuscript.save()
