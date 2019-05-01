@@ -77,6 +77,7 @@ class Manuscript {
   }
 
   async update(data) {
+    // files are handled separately in remove/upload functionality, so only load teams
     const manuscript = await ManuscriptModel.find(
       data.id,
       this.userId,
