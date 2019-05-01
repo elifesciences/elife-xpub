@@ -57,7 +57,7 @@ class SupportingFiles {
 
     if (files && files.length > 0) {
       let modified = false
-      Promise.all(
+      await Promise.all(
         files
           .filter(file => file.type === 'SUPPORTING_FILE')
           .map(async file => {
