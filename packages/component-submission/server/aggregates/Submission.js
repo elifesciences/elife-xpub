@@ -8,7 +8,6 @@ class Submission {
   async initialize(manuscriptId, userId) {
     this.manuscript = await this.ManuscriptModel.find(manuscriptId, userId)
     this.files = await this.FileModel.findByManuscriptId(manuscriptId)
-    console.log(this.manuscript, this.files)
     return this
   }
 
