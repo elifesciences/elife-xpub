@@ -148,7 +148,6 @@ class Manuscript extends BaseModel {
       'manuscript.status': status,
       'manuscript.created_by': user,
     })
-    // todo why do I need to do this?
     await Promise.all(
       manuscripts.map(manuscript => manuscript.$loadRelated('[teams, files]')),
     )
