@@ -81,10 +81,11 @@ class ManuscriptHelper {
 
       await FilesHelper.swapPendingToSource(manuscript.files)
 
-      manuscript = await ManuscriptModel.find(manuscriptId, this.userId)
       manuscript.files.forEach(file =>
         logger.info(`New Files: ${file.id} | ${file.type}`),
       )
+
+      manuscript = await ManuscriptModel.find(manuscriptId, this.userId)
       manuscript.meta.title = title
       await manuscript.save()
 

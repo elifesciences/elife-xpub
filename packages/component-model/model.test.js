@@ -127,7 +127,7 @@ describe('related objects behave as we expect', () => {
       expect(manuscript.files[0].type).toBe('updated')
     })
 
-    it('files are replaced on the manuscript', async () => {
+    it('files are not replaced on the manuscript', async () => {
       let manuscript = await createManuscriptWithOneFile(userId)
       const oldFileId = manuscript.files[0].id
       const file = new File({
@@ -140,16 +140,18 @@ describe('related objects behave as we expect', () => {
       await manuscript.save()
 
       // in memory
-      expect(manuscript.files).toHaveLength(1)
-      expect(manuscript.files[0].filename).toBe('test2.txt')
-      expect(File.find(oldFileId)).rejects.toThrow()
+      expect(manuscript.files).toHaveLength(2)
+      expect(manuscript.files[0].filename).toBe('test.txt')
+      expect(manuscript.files[1].filename).toBe('test2.txt')
+      expect(File.find(oldFileId)).toBeTruthy()
 
       manuscript = await Manuscript.find(manuscript.id, userId)
 
       // from database
-      expect(manuscript.files).toHaveLength(1)
-      expect(manuscript.files[0].filename).toBe('test2.txt')
-      expect(File.find(oldFileId)).rejects.toThrow()
+      expect(manuscript.files).toHaveLength(2)
+      expect(manuscript.files[0].filename).toBe('test.txt')
+      expect(manuscript.files[1].filename).toBe('test2.txt')
+      expect(File.find(oldFileId)).toBeTruthy()
     })
 
     it('mutates the manuscript when save() is called', async () => {

@@ -77,7 +77,12 @@ class Manuscript {
   }
 
   async update(data) {
-    const manuscript = await ManuscriptModel.find(data.id, this.userId)
+    // files are handled separately in remove/upload functionality, so only load teams
+    const manuscript = await ManuscriptModel.find(
+      data.id,
+      this.userId,
+      '[teams]',
+    )
     if (manuscript.status !== ManuscriptModel.statuses.INITIAL) {
       throw new Error(
         `Cannot update manuscript with status of ${manuscript.status}`,
