@@ -9,28 +9,27 @@ import {
 import { errorMessageMapping } from './constants'
 
 describe('Editors Schema', () => {
+  const validEditorData = {
+    suggestedSeniorEditors: [{ id: 1 }, { id: 2 }],
+    opposedSeniorEditors: [],
+    opposedSeniorEditorsReason: '',
+    suggestedReviewingEditors: [{ id: 1 }, { id: 2 }],
+    opposedReviewingEditors: [{ id: 3 }],
+    opposedReviewingEditorsReason: 'Just because',
+    suggestedReviewers: [
+      { name: 'A', email: 'a@here.com' },
+      { name: 'B', email: 'b@here.com' },
+      { name: 'C', email: 'c@here.com' },
+    ],
+    opposedReviewers: [
+      { name: 'D', email: 'd@here.com' },
+      { name: 'E', email: 'e@here.com' },
+    ],
+    opposedReviewersReason: 'Some conflict',
+  }
   const schema = yup.object().shape(editorsSchema)
   it('allows valid data', () => {
-    const validData = {
-      suggestedSeniorEditors: [{ id: 1 }, { id: 2 }],
-      opposedSeniorEditors: [],
-      opposedSeniorEditorsReason: '',
-      suggestedReviewingEditors: [{ id: 1 }, { id: 2 }],
-      opposedReviewingEditors: [{ id: 3 }],
-      opposedReviewingEditorsReason: 'Just because',
-      suggestedReviewers: [
-        { name: 'A', email: 'a@here.com' },
-        { name: 'B', email: 'b@here.com' },
-        { name: 'C', email: 'c@here.com' },
-      ],
-      opposedReviewers: [
-        { name: 'D', email: 'd@here.com' },
-        { name: 'E', email: 'e@here.com' },
-      ],
-      opposedReviewersReason: 'Some conflict',
-    }
-
-    expect(() => schema.validateSync(validData)).not.toThrow()
+    expect(() => schema.validateSync(validEditorData)).not.toThrow()
   })
 
   it('stops invalid data', () => {
@@ -63,6 +62,36 @@ describe('Editors Schema', () => {
       suggestedReviewingEditors: 'Please suggest at least 2 editors',
       suggestedSeniorEditors: 'Please suggest at least 2 editors',
       opposedReviewersReason: 'Please provide a reason for exclusion',
+    })
+  })
+
+  it('stops invalid suggested reviewer with no name', () => {
+    const testData = { ...validEditorData }
+    testData.suggestedReviewers = [{ name: '', email: 'email@email.com' }]
+    let errors
+    try {
+      schema.validateSync(testData, { abortEarly: false })
+    } catch (e) {
+      errors = yupToFormErrors(e)
+    }
+
+    expect(errors).toEqual({
+      suggestedReviewers: [{ name: 'Name is required' }],
+    })
+  })
+
+  it('stops invalid suggested reviewer with no email', () => {
+    const testData = { ...validEditorData }
+    testData.suggestedReviewers = [{ name: 'Name', email: '' }]
+    let errors
+    try {
+      schema.validateSync(testData, { abortEarly: false })
+    } catch (e) {
+      errors = yupToFormErrors(e)
+    }
+
+    expect(errors).toEqual({
+      suggestedReviewers: [{ email: 'Email is required' }],
     })
   })
 })

@@ -52,13 +52,24 @@ export const editorsSchema = {
     'opposedReviewingEditors',
   ),
   suggestedReviewers: yup.array(
-    yup.object({
-      email: yup.string().email('Must be a valid email'),
-      name: yup.string().when('email', {
-        is: value => value && value.length > 0,
-        then: yup.string().required('Name is required'),
-      }),
-    }),
+    yup.object().shape(
+      {
+        name: yup.string().when('email', {
+          is: email => email && email.length > 0,
+          then: yup.string().required('Name is required'),
+          otherwise: yup.string(),
+        }),
+        email: yup.string().when('name', {
+          is: name => name && name.length > 0,
+          then: yup
+            .string()
+            .email('Must be a valid email')
+            .required('Email is required'),
+          otherwise: yup.string().email('Must be a valid email'),
+        }),
+      },
+      ['name', 'email'],
+    ),
   ),
   opposedReviewers: yup.array(
     yup.object({
