@@ -27,13 +27,9 @@ class Manuscript extends BaseModel {
     return 'manuscript'
   }
 
-  constructor(props) {
-    super(lodash.merge({}, emptyManuscript, props))
-  }
-
   static get schema() {
     return {
-      required: ['createdBy'],
+      required: ['createdBy', 'status'],
       properties: {
         createdBy: { type: 'uuid' },
         journalId: { type: 'uuid' },
@@ -68,6 +64,10 @@ class Manuscript extends BaseModel {
   static get jsonAttributes() {
     // tell objection to serialise arrays as a postgres array rather than JSON
     return []
+  }
+
+  static makeInitial(props) {
+    return new this(lodash.merge({}, emptyManuscript, props))
   }
 
   static get relationMappings() {

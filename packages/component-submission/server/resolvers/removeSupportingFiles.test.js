@@ -19,16 +19,14 @@ const expectRemoveSupportingFilesDoesNothing = async (manuscriptIn, userId) => {
   manuscript = await Manuscript.find(manuscript.id, userId)
   const files = new SupportingFiles(dummyStorage, manuscript.id, userId)
   const mutatedManuscript = await files.removeAll()
-  const strManuscript = JSON.stringify(manuscript, null, 4)
-  const strMutated = JSON.stringify(mutatedManuscript, null, 4)
-  expect(strManuscript).toEqual(strMutated)
+  expect(manuscript.toJSON()).toEqual(mutatedManuscript.toJSON())
 }
 
 const expectRemoveSupportingFilesLeavesManuscript = async (
   fileList,
   userId,
 ) => {
-  let manuscript = new Manuscript({
+  let manuscript = Manuscript.makeInitial({
     createdBy: userId,
     files: fileList,
   })
@@ -65,7 +63,7 @@ describe('Manuscripts', () => {
         url: 'supporting/',
       }
 
-      let manuscript = new Manuscript({
+      let manuscript = Manuscript.makeInitial({
         createdBy: userId,
         files: [fakeSupport, fakeSupport, fakeManuscript],
       })
@@ -80,13 +78,17 @@ describe('Manuscripts', () => {
       const audits = await AuditLog.all()
       expect(audits).toHaveLength(2)
       expect(audits[0].value).toBe('CANCELLED')
-      expect(audits[0].objectId).toBe(manuscript.files[0].id)
       expect(audits[1].value).toBe('CANCELLED')
-      expect(audits[1].objectId).toBe(manuscript.files[1].id)
+      expect(audits.map(audit => audit.objectId).sort()).toEqual(
+        [manuscript.files[0].id, manuscript.files[1].id].sort(),
+      )
     })
 
     it('does not change the manuscript when no files to remove', async () => {
-      const manuscript = new Manuscript({ createdBy: userId, files: [] })
+      const manuscript = Manuscript.makeInitial({
+        createdBy: userId,
+        files: [],
+      })
 
       await expectRemoveSupportingFilesDoesNothing(manuscript, userId)
     })
@@ -97,7 +99,7 @@ describe('Manuscripts', () => {
         type: 'MANUSCRIPT_SOURCE',
         url: 'manuscript/',
       }
-      const manuscript = new Manuscript({
+      const manuscript = Manuscript.makeInitial({
         createdBy: userId,
         files: [fakeManuscript],
       })

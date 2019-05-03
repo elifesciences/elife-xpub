@@ -30,7 +30,9 @@ describe('Manuscript resolvers', () => {
 
   describe('updateManuscript', () => {
     it("fails if manuscript doesn't belong to user", async () => {
-      const manuscript = await new Manuscript({ createdBy: userId }).save()
+      const manuscript = await Manuscript.makeInitial({
+        createdBy: userId,
+      }).save()
       await expect(
         Mutation.updateManuscript(
           {},
@@ -41,7 +43,7 @@ describe('Manuscript resolvers', () => {
     })
 
     it('fails if manuscript has already been submitted', async () => {
-      const manuscript = await new Manuscript({
+      const manuscript = await Manuscript.makeInitial({
         createdBy: userId,
         status: Manuscript.statuses.MECA_EXPORT_PENDING,
       }).save()
@@ -57,7 +59,9 @@ describe('Manuscript resolvers', () => {
     })
 
     it('updates the current submission for user with data', async () => {
-      const manuscript = await new Manuscript({ createdBy: userId }).save()
+      const manuscript = await Manuscript.makeInitial({
+        createdBy: userId,
+      }).save()
 
       await Mutation.updateManuscript(
         {},

@@ -18,7 +18,7 @@ const resolvers = {
         throw new Error('Not logged in')
       }
       const userUuid = await User.getUuidForProfile(user)
-      const manuscript = new Manuscript({ createdBy: userUuid })
+      const manuscript = Manuscript.makeInitial({ createdBy: userUuid })
       manuscript.setDefaults()
       return manuscript.save()
     },

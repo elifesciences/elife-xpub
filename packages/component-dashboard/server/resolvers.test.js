@@ -23,7 +23,7 @@ describe('component-dashboard resolvers', () => {
 
   describe('Mutations:deleteManuscript', () => {
     it("fails if manuscript doesn't belong to user", async () => {
-      const blankManuscript = new Manuscript({ createdBy: userId })
+      const blankManuscript = Manuscript.makeInitial({ createdBy: userId })
       const manuscript = await blankManuscript.save()
 
       await expect(
@@ -36,7 +36,7 @@ describe('component-dashboard resolvers', () => {
     })
 
     it('removes manuscript from database', async () => {
-      const blankManuscript = new Manuscript({ createdBy: userId })
+      const blankManuscript = Manuscript.makeInitial({ createdBy: userId })
       const manuscript = await blankManuscript.save()
       await Mutation.deleteManuscript(
         {},

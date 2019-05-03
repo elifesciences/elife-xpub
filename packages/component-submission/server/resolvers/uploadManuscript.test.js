@@ -52,7 +52,7 @@ describe('Manuscripts', () => {
     })
 
     it("fails if manuscript doesn't belong to user", async () => {
-      const blankManuscript = new Manuscript()
+      const blankManuscript = Manuscript.makeInitial()
       blankManuscript.createdBy = userId
       const manuscript = await blankManuscript.save()
 
@@ -66,7 +66,7 @@ describe('Manuscripts', () => {
     })
 
     it('saves manuscript to S3', async () => {
-      const blankManuscript = new Manuscript({ createdBy: userId })
+      const blankManuscript = Manuscript.makeInitial({ createdBy: userId })
       const { id } = await blankManuscript.save()
       const fileUpload = {
         filename: 'manuscript.pdf',
@@ -97,7 +97,7 @@ describe('Manuscripts', () => {
         .mockImplementationOnce(() =>
           Promise.reject(new Error('Failed to persist file')),
         )
-      const blankManuscript = new Manuscript({ createdBy: userId })
+      const blankManuscript = Manuscript.makeInitial({ createdBy: userId })
       const { id } = await blankManuscript.save()
       const file = {
         filename: 'manuscript.pdf',
@@ -120,7 +120,7 @@ describe('Manuscripts', () => {
 
     it('sets empty title if ScienceBeam fails', async () => {
       jest.spyOn(logger, 'warn').mockImplementationOnce(() => {})
-      const blankManuscript = new Manuscript({ createdBy: userId })
+      const blankManuscript = Manuscript.makeInitial({ createdBy: userId })
       const { id } = await blankManuscript.save()
       const file = {
         filename: 'manuscript.pdf',
@@ -153,7 +153,7 @@ describe('Manuscripts', () => {
     })
 
     it('extracts title from PDF', async () => {
-      const blankManuscript = new Manuscript({ createdBy: userId })
+      const blankManuscript = Manuscript.makeInitial({ createdBy: userId })
       const { id } = await blankManuscript.save()
       const file = {
         filename: 'manuscript.pdf',
@@ -180,7 +180,7 @@ describe('Manuscripts', () => {
     it(`fails if manuscript size is bigger than ${config.get(
       'fileUpload.maxSizeMB',
     )}MB`, async () => {
-      const blankManuscript = new Manuscript({ createdBy: userId })
+      const blankManuscript = Manuscript.makeInitial({ createdBy: userId })
       const { id } = await blankManuscript.save()
 
       const maxFileSize = config.get('fileUpload.maxSizeMB')
@@ -202,7 +202,7 @@ describe('Manuscripts', () => {
     })
 
     it('replaces old manuscript file with new manuscript file', async () => {
-      const blankManuscript = new Manuscript({ createdBy: userId })
+      const blankManuscript = Manuscript.makeInitial({ createdBy: userId })
       const { id } = await blankManuscript.save()
       const createFile = fileName => ({
         filename: fileName,

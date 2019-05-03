@@ -33,7 +33,7 @@ describe('Manuscripts', () => {
         meta: { title: 'title' },
         status: 'INITIAL',
       }
-      const { id } = await new Manuscript(manuscriptData).save()
+      const { id } = await Manuscript.makeInitial(manuscriptData).save()
 
       const manuscript = await Query.manuscript({}, { id }, { user: profileId })
       expect(manuscript).toMatchObject(manuscriptData)

@@ -19,7 +19,7 @@ describe('creating getters still allows models to be saved', () => {
   })
 
   it('should save successfully', async () => {
-    const instance = new ModelWithGetter({
+    const instance = ModelWithGetter.makeInitial({
       createdBy: userId,
     })
     await instance.save()
@@ -283,7 +283,7 @@ async function createManuscriptWithOneFile(userId) {
 }
 
 async function createInitialManuscript(userId, title = 'Alpha') {
-  const manuscript = new Manuscript({
+  const manuscript = Manuscript.makeInitial({
     createdBy: userId,
     meta: {
       title,
