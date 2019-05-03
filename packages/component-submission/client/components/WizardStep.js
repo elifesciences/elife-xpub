@@ -24,7 +24,7 @@ class WizardStep extends React.Component {
   }
 
   setSubmissionAttempted = (value = true) => {
-    this.state.submissionAttempted = value
+    this.setState({ submissionAttempted: value })
   }
 
   render() {
