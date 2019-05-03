@@ -21,7 +21,7 @@ const ErrorMessage = styled.div`
 const localDate = parse(new Date())
 const formattedLocalDate = format(localDate, 'MMM D, YYYY')
 
-const DisclosureStepPage = ({ values, errors }) => {
+const DisclosureStepPage = ({ values, errors, isSubmissionAttempted }) => {
   const formattedArticleType = values.meta.articleType
     .toUpperCase()
     .replace(/-+/g, ' ')
@@ -80,15 +80,16 @@ const DisclosureStepPage = ({ values, errors }) => {
         name="disclosureConsent"
       />
 
-      {!!Object.keys(errors).length && (
-        <ErrorMessage data-test-id="test-error-message">
-          We&apos;re sorry but there appears to be one or more errors in your
-          submission that require attention before you can submit. Please use
-          the back button to review the{' '}
-          {convertArrayToReadableList(getErrorStepsFromErrors(errors))} steps
-          before trying again.
-        </ErrorMessage>
-      )}
+      {!!Object.keys(errors).length &&
+        isSubmissionAttempted && (
+          <ErrorMessage data-test-id="test-error-message">
+            We&apos;re sorry but there appears to be one or more errors in your
+            submission that require attention before you can submit. Please use
+            the back button to review the{' '}
+            {convertArrayToReadableList(getErrorStepsFromErrors(errors))} steps
+            before trying again.
+          </ErrorMessage>
+        )}
     </React.Fragment>
   )
 }
