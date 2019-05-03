@@ -4,8 +4,8 @@ const File = require('@elifesciences/component-model-file').model
 const Submission = require('./Submission')
 
 const createMockObject = (values = {}) => ({
-  values,
-  toJSON: () => values,
+  ...values,
+  toJSON: jest.fn(() => values),
 })
 
 describe('Submission', () => {
@@ -38,11 +38,8 @@ describe('Submission', () => {
         services: {},
       }).initialize()
 
-      console.log(createMockObject({ url: 'url' }).toJSON())
-      expect(submission.files).toBe([{ url: 'url' }])
-      expect(submission.manuscript).toEqual(
-        createMockObject({ title: 'A Title' }),
-      )
+      expect(submission.manuscript.title).toBe('A Title')
+      expect(submission.files[0]).toEqual(createMockObject({ url: 'url' }))
     })
   })
 })
