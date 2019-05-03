@@ -209,11 +209,11 @@ test('Ability to progress through the wizard is tied to validation', async t => 
     .match(editors.url, 'Validation errors prevent progress to the next page')
 
   navigationHelper.openEditorsPicker()
-  navigationHelper.selectPeople([0, 2, 3, 5, 7, 9])
+  navigationHelper.selectPeople([0, 2])
   navigationHelper.closePeoplePicker()
 
   navigationHelper.openReviewerPicker()
-  navigationHelper.selectPeople([1, 4, 6, 8, 10, 11])
+  navigationHelper.selectPeople([1, 4])
   navigationHelper.closePeoplePicker()
 
   navigationHelper.navigateForward()
