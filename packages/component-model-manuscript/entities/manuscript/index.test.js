@@ -22,7 +22,7 @@ describe('Manuscript', () => {
   describe('applyInput()', () => {
     it('picks only whitelisted properties', () => {
       expect(dbState).toBe('INITIALIZED')
-      const manuscript = new Manuscript({
+      const manuscript = Manuscript.makeInitial({
         meta: {
           title: 'Apples',
         },
@@ -46,7 +46,7 @@ describe('Manuscript', () => {
 
     it('throws an error if selected editor is opposed', () => {
       expect(dbState).toBe('INITIALIZED')
-      const manuscript = new Manuscript({})
+      const manuscript = Manuscript.makeInitial({})
       const conflictingInput = {
         suggestedSeniorEditors: ['1'],
         opposedSeniorEditors: ['1'],
@@ -56,7 +56,7 @@ describe('Manuscript', () => {
 
     it('updates teams', () => {
       expect(dbState).toBe('INITIALIZED')
-      const manuscript = new Manuscript({
+      const manuscript = Manuscript.makeInitial({
         teams: [
           {
             id: 1,
@@ -150,7 +150,7 @@ describe('Manuscript', () => {
     describe('given there are no files', () => {
       it('returns READY', () => {
         expect(dbState).toBe('INITIALIZED')
-        const manuscript = new Manuscript({
+        const manuscript = Manuscript.makeInitial({
           createdBy: userId,
         })
         manuscript.files = []
@@ -270,7 +270,7 @@ describe('Manuscript', () => {
         id: 1,
         role: 'author',
       }
-      const manuscript = new Manuscript({
+      const manuscript = Manuscript.makeInitial({
         teams: [],
       })
       manuscript.addTeam(team)
@@ -279,7 +279,7 @@ describe('Manuscript', () => {
 
     it('updates team with same role', () => {
       expect(dbState).toBe('INITIALIZED')
-      const manuscript = new Manuscript({
+      const manuscript = Manuscript.makeInitial({
         teams: [
           {
             id: 1,
@@ -325,7 +325,7 @@ describe('Manuscript', () => {
   describe('find()', () => {
     it('finds by manuscript id', async () => {
       expect(dbState).toBe('INITIALIZED')
-      const manuscript = new Manuscript({
+      const manuscript = Manuscript.makeInitial({
         createdBy: userId,
       })
       await manuscript.save()
@@ -335,7 +335,7 @@ describe('Manuscript', () => {
 
     it('eager loads relations', async () => {
       expect(dbState).toBe('INITIALIZED')
-      const manuscript = new Manuscript({
+      const manuscript = Manuscript.makeInitial({
         createdBy: userId,
       })
       manuscript.addTeam({
@@ -358,7 +358,7 @@ describe('Manuscript', () => {
   describe('Manuscript.findByStatus()', () => {
     it('finds by status', async () => {
       expect(dbState).toBe('INITIALIZED')
-      const manuscript = new Manuscript({
+      const manuscript = Manuscript.makeInitial({
         createdBy: userId,
       })
       await manuscript.save()
@@ -368,7 +368,7 @@ describe('Manuscript', () => {
 
     it('eager loads relations', async () => {
       expect(dbState).toBe('INITIALIZED')
-      const manuscript = new Manuscript({
+      const manuscript = Manuscript.makeInitial({
         createdBy: userId,
       })
       manuscript.addTeam({
@@ -389,7 +389,7 @@ describe('Manuscript', () => {
   describe('Manuscript.updateStatus', () => {
     it('updates status', async () => {
       expect(dbState).toBe('INITIALIZED')
-      const manuscript = await new Manuscript({
+      const manuscript = await Manuscript.makeInitial({
         meta: {
           title: 'Title',
         },
@@ -409,7 +409,7 @@ describe('Manuscript', () => {
 
     it("adds an entry to the manuscript's audit log", async () => {
       expect(dbState).toBe('INITIALIZED')
-      const manuscript = await new Manuscript({
+      const manuscript = await Manuscript.makeInitial({
         createdBy: userId,
       }).save()
       const loadedManuscript = await Manuscript.updateStatus(
@@ -459,7 +459,7 @@ describe('Manuscript', () => {
   describe('save()', () => {
     it('returns promise of self', async () => {
       expect(dbState).toBe('INITIALIZED')
-      const manuscript = new Manuscript({
+      const manuscript = Manuscript.makeInitial({
         createdBy: userId,
       })
       await expect(manuscript.save()).resolves.toBe(manuscript)
@@ -467,7 +467,7 @@ describe('Manuscript', () => {
 
     it('populates ID', async () => {
       expect(dbState).toBe('INITIALIZED')
-      const manuscript = new Manuscript({
+      const manuscript = Manuscript.makeInitial({
         createdBy: userId,
       })
       expect(manuscript.id).toBeUndefined()
@@ -477,7 +477,7 @@ describe('Manuscript', () => {
 
     it('maintains loaded relations', async () => {
       expect(dbState).toBe('INITIALIZED')
-      const manuscript = new Manuscript({
+      const manuscript = Manuscript.makeInitial({
         createdBy: userId,
       })
       manuscript.addTeam({
@@ -490,7 +490,7 @@ describe('Manuscript', () => {
 
     it('does not delete related entities not on the manuscript', async () => {
       expect(dbState).toBe('INITIALIZED')
-      const manuscript = new Manuscript({
+      const manuscript = Manuscript.makeInitial({
         createdBy: userId,
       })
       await manuscript.save()
@@ -518,7 +518,7 @@ describe('Manuscript', () => {
     it('fails to update non-existent manuscript', () => {
       expect(dbState).toBe('INITIALIZED')
       expect(
-        new Manuscript({
+        Manuscript.makeInitial({
           id: 'f05bbbf9-ddf4-494f-a8da-84957e2708ee',
           status: 'INITIAL',
         }).save(),
@@ -551,10 +551,10 @@ describe('Manuscript', () => {
     it("returns users's manuscripts only", async () => {
       expect(dbState).toBe('INITIALIZED')
       const secondUserId = uuid()
-      await new Manuscript({
+      await Manuscript.makeInitial({
         createdBy: userId,
       }).save()
-      await new Manuscript({
+      await Manuscript.makeInitial({
         createdBy: secondUserId,
       }).save()
       const loadedManuscripts = await Manuscript.all(userId)
@@ -570,7 +570,7 @@ describe('Manuscript', () => {
         global.Date.now = originalDate.now
         global.Date.UTC = originalDate.UTC
 
-        await new Manuscript({
+        await Manuscript.makeInitial({
           meta: {
             title,
           },
@@ -597,7 +597,7 @@ describe('Manuscript', () => {
 const getDbTime = time => new Date(time).getTime()
 
 const getThreeVersions = async userId => {
-  const v1 = await new Manuscript({
+  const v1 = await Manuscript.makeInitial({
     createdBy: userId,
     meta: {
       title: 'Version1',
@@ -632,7 +632,7 @@ const addFileToManuscript = async manuscript => {
 }
 
 const createInitialManuscript = async (userId, title = 'Alpha') => {
-  const manuscript = new Manuscript({
+  const manuscript = Manuscript.makeInitial({
     createdBy: userId,
     meta: {
       title,

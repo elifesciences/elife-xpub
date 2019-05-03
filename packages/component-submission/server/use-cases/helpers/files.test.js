@@ -33,7 +33,9 @@ describe('FilesHelper', () => {
     it('returns the file stream and file entity', async () => {
       const userId = uuid()
       await createTables(true)
-      const { id } = await new ManuscriptModel({ createdBy: userId }).save()
+      const { id } = await ManuscriptModel.makeInitial({
+        createdBy: userId,
+      }).save()
       const file = {
         stream: {},
         filename: 'filename',
@@ -188,7 +190,9 @@ describe('FilesHelper', () => {
       const userId = uuid()
       await createTables(true)
 
-      const { id } = await new ManuscriptModel({ createdBy: userId }).save()
+      const { id } = await ManuscriptModel.makeInitial({
+        createdBy: userId,
+      }).save()
 
       await filesHelper.extractFileTitle(null, null, null, id)
 

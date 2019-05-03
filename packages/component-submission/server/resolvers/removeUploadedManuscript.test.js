@@ -16,7 +16,10 @@ describe('Manuscripts', () => {
 
   describe('removeUploadedManuscript', () => {
     it('returns the original Manuscript when there is no file to remove', async () => {
-      const manuscript = new Manuscript({ createdBy: userId, files: [] })
+      const manuscript = Manuscript.makeInitial({
+        createdBy: userId,
+        files: [],
+      })
       const { id } = await manuscript.save()
       const mutatedManuscript = await Mutation.removeUploadedManuscript(
         {},
@@ -32,7 +35,7 @@ describe('Manuscripts', () => {
         type: 'MANUSCRIPT_SOURCE',
         url: 'manuscript/',
       }
-      const manuscript = new Manuscript({
+      const manuscript = Manuscript.makeInitial({
         createdBy: userId,
         files: [fakeFile],
       })

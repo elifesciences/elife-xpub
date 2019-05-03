@@ -53,7 +53,9 @@ describe('MECA HTTP callback handler', () => {
   })
 
   it('updates manuscript status on success', async () => {
-    const manuscript = await new Manuscript({ createdBy: userId }).save()
+    const manuscript = await Manuscript.makeInitial({
+      createdBy: userId,
+    }).save()
     const request = makeApp()
     expect(manuscript.status).toBe(Manuscript.statuses.INITIAL)
     await request
@@ -68,7 +70,9 @@ describe('MECA HTTP callback handler', () => {
   })
 
   it('updates manuscript status on failure', async () => {
-    const manuscript = await new Manuscript({ createdBy: userId }).save()
+    const manuscript = await Manuscript.makeInitial({
+      createdBy: userId,
+    }).save()
     const request = makeApp()
     expect(manuscript.status).toBe(Manuscript.statuses.INITIAL)
     await request
@@ -83,7 +87,9 @@ describe('MECA HTTP callback handler', () => {
   })
 
   it('sends an email on failure', async () => {
-    const manuscript = await new Manuscript({ createdBy: userId }).save()
+    const manuscript = await Manuscript.makeInitial({
+      createdBy: userId,
+    }).save()
     const request = makeApp()
     expect(manuscript.status).toBe(Manuscript.statuses.INITIAL)
     await request
@@ -110,7 +116,9 @@ describe('MECA HTTP callback handler', () => {
   })
 
   it('triggers the auditLog.save', async () => {
-    const manuscript = await new Manuscript({ createdBy: userId }).save()
+    const manuscript = await Manuscript.makeInitial({
+      createdBy: userId,
+    }).save()
     const request = makeApp()
     expect(manuscript.status).toBe(Manuscript.statuses.INITIAL)
     await request

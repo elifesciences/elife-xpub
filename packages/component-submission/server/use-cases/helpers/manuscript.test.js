@@ -15,7 +15,7 @@ describe('clearPendingFile()', () => {
   })
 
   it('removes any file with type MANUSCRIPT_SOURCE_PENDING related to this manuscript', async () => {
-    let manuscript = new Manuscript({ createdBy: userId })
+    let manuscript = Manuscript.makeInitial({ createdBy: userId })
     const { id } = await manuscript.save()
     const fileEntity = new File({
       manuscriptId: id,

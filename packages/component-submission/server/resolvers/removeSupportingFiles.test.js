@@ -28,7 +28,7 @@ const expectRemoveSupportingFilesLeavesManuscript = async (
   fileList,
   userId,
 ) => {
-  let manuscript = new Manuscript({
+  let manuscript = Manuscript.makeInitial({
     createdBy: userId,
     files: fileList,
   })
@@ -65,7 +65,7 @@ describe('Manuscripts', () => {
         url: 'supporting/',
       }
 
-      let manuscript = new Manuscript({
+      let manuscript = Manuscript.makeInitial({
         createdBy: userId,
         files: [fakeSupport, fakeSupport, fakeManuscript],
       })
@@ -86,7 +86,10 @@ describe('Manuscripts', () => {
     })
 
     it('does not change the manuscript when no files to remove', async () => {
-      const manuscript = new Manuscript({ createdBy: userId, files: [] })
+      const manuscript = Manuscript.makeInitial({
+        createdBy: userId,
+        files: [],
+      })
 
       await expectRemoveSupportingFilesDoesNothing(manuscript, userId)
     })
@@ -97,7 +100,7 @@ describe('Manuscripts', () => {
         type: 'MANUSCRIPT_SOURCE',
         url: 'manuscript/',
       }
-      const manuscript = new Manuscript({
+      const manuscript = Manuscript.makeInitial({
         createdBy: userId,
         files: [fakeManuscript],
       })

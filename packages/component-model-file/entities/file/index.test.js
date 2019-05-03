@@ -24,7 +24,7 @@ describe('File', () => {
 
   describe('save()', () => {
     it('should set the status to CREATED', async () => {
-      const manuscript = await new Manuscript({
+      const manuscript = await Manuscript.makeInitial({
         createdBy: userId,
       }).save()
       const file = await new File({
@@ -64,7 +64,7 @@ describe('File', () => {
 
   describe('updateStatus()', () => {
     it('sets file status to value passed', async () => {
-      const manuscript = await new Manuscript({
+      const manuscript = await Manuscript.makeInitial({
         createdBy: userId,
       }).save()
       let file = await new File({

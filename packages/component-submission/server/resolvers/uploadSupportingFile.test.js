@@ -32,7 +32,7 @@ describe('uploadSupportingFile', () => {
   })
 
   it('adds supporting files to the manuscipt', async () => {
-    let manuscript = await new Manuscript({
+    let manuscript = await Manuscript.makeInitial({
       createdBy: userId,
     }).save()
     const { id } = manuscript

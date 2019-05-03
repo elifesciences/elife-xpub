@@ -58,7 +58,7 @@ describe('Manuscripts', () => {
     beforeEach(async () => {
       jest.clearAllMocks()
 
-      initialManuscript = new Manuscript({ createdBy: userId })
+      initialManuscript = Manuscript.makeInitial({ createdBy: userId })
       initialManuscript.files = [
         {
           url: 'fake-path.pdf',
@@ -185,7 +185,7 @@ describe('Manuscripts', () => {
     })
 
     it("fails if manuscript doesn't belong to user", async () => {
-      const blankManuscript = new Manuscript({ createdBy: userId })
+      const blankManuscript = Manuscript.makeInitial({ createdBy: userId })
       const manuscript = await blankManuscript.save()
       await expect(
         Mutation.submitManuscript(
@@ -197,7 +197,7 @@ describe('Manuscripts', () => {
     })
 
     it('fails if manuscript has already been submitted', async () => {
-      const blankManuscript = new Manuscript({
+      const blankManuscript = Manuscript.makeInitial({
         createdBy: userId,
         status: Manuscript.statuses.MECA_EXPORT_PENDING,
       })

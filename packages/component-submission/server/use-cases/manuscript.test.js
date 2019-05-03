@@ -52,7 +52,7 @@ describe('upload', () => {
         }),
     )
 
-    const manuscript = new Manuscript({ createdBy: userId })
+    const manuscript = Manuscript.makeInitial({ createdBy: userId })
     const { id: manuscriptId } = await manuscript.save()
 
     expect.assertions(3)
@@ -80,7 +80,7 @@ describe('upload', () => {
         }),
     )
 
-    const manuscript = new Manuscript({ createdBy: userId })
+    const manuscript = Manuscript.makeInitial({ createdBy: userId })
     const { id: manuscriptId } = await manuscript.save()
 
     expect.assertions(1)
@@ -107,7 +107,7 @@ describe('find', () => {
     const manuscriptController = createMockController(userId, {
       getDownloadLink: () => 'http://example.com/download-link',
     })
-    const manuscript = new Manuscript({ createdBy: userId })
+    const manuscript = Manuscript.makeInitial({ createdBy: userId })
     const { id: manuscriptId } = await manuscript.save()
     const file = new File({
       manuscriptId,
