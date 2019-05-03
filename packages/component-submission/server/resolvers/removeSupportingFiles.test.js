@@ -19,8 +19,6 @@ const expectRemoveSupportingFilesDoesNothing = async (manuscriptIn, userId) => {
   manuscript = await Manuscript.find(manuscript.id, userId)
   const files = new SupportingFiles(dummyStorage, manuscript.id, userId)
   const mutatedManuscript = await files.removeAll()
-  //   const strManuscript = JSON.stringify(manuscript, null, 4)
-  //   const strMutated = JSON.stringify(mutatedManuscript, null, 4)
   expect(manuscript.toJSON()).toEqual(mutatedManuscript.toJSON())
 }
 
