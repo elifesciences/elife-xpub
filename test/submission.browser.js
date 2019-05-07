@@ -3,6 +3,7 @@ import {
   author,
   dashboard,
   editors,
+  disclosure,
   files,
   submission,
   login,
@@ -152,9 +153,102 @@ test('Ability to progress through the wizard is tied to validation', async t => 
 
   navigationHelper.setAuthorEmail('anne.author@life.ac.uk')
   navigationHelper.navigateForward()
+
+  // File upload stage
   await t
     .expect(getPageUrl())
     .match(files.url, 'Entering valid inputs enables progress to the next page')
+
+  navigationHelper.navigateForward()
+  await t
+    .expect(getPageUrl())
+    .match(files.url, 'Validation errors prevent progress to the next page')
+
+  navigationHelper.fillCoverletter()
+  navigationHelper.navigateForward()
+  await t
+    .expect(getPageUrl())
+    .match(files.url, 'Entering valid inputs enables progress to the next page')
+
+  navigationHelper.uploadManuscript(manuscript)
+  navigationHelper.uploadSupportingFiles(manuscript.supportingFiles[0])
+  navigationHelper.navigateForward()
+
+  // Submission metadata entry
+  navigationHelper.wait(2000)
+  await t
+    .expect(getPageUrl())
+    .match(
+      submission.url,
+      'Entering valid inputs enables progress to the next page',
+    )
+
+  navigationHelper.navigateForward()
+  await t
+    .expect(getPageUrl())
+    .match(
+      submission.url,
+      'Validation errors prevent progress to the next page',
+    )
+
+  navigationHelper.addManuscriptMetadata()
+  navigationHelper.navigateForward()
+  // Editors
+  navigationHelper.wait(2000)
+  await t
+    .expect(getPageUrl())
+    .match(
+      editors.url,
+      'Entering valid inputs enables progress to the next page',
+    )
+
+  navigationHelper.navigateForward()
+
+  await t
+    .expect(getPageUrl())
+    .match(editors.url, 'Validation errors prevent progress to the next page')
+
+  navigationHelper.openEditorsPicker()
+  navigationHelper.selectPeople([0, 2])
+  navigationHelper.closePeoplePicker()
+
+  navigationHelper.openReviewerPicker()
+  navigationHelper.selectPeople([1, 4])
+  navigationHelper.closePeoplePicker()
+
+  navigationHelper.navigateForward()
+
+  // Disclosure
+  await t
+    .expect(getPageUrl())
+    .match(
+      disclosure.url,
+      'Entering valid inputs enables progress to the next page',
+    )
+
+  navigationHelper.submit()
+  await t
+    .expect(getPageUrl())
+    .match(
+      disclosure.url,
+      'Validation errors prevent progress to the next page',
+    )
+  await t
+    .expect((await disclosure.validationWarning.textContent).length)
+    .gt(0, 'is visible')
+
+  navigationHelper.consentDisclosure()
+  navigationHelper.submit()
+  navigationHelper.accept()
+  navigationHelper.thankyou()
+
+  // dashboard
+  await t
+    .expect(dashboard.titles.textContent)
+    .eql(manuscript.title)
+    .expect(dashboard.statuses.textContent)
+    // TODO this might cause a race condition
+    .eql('Submitted')
 })
 
 test('Form entries are saved when a user navigates to the next page of the wizard', async t => {

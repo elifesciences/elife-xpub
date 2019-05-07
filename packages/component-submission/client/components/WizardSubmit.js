@@ -5,13 +5,19 @@ import {
   ModalHistoryState,
 } from '@elifesciences/component-elife-ui/client/molecules'
 
-const WizardSubmit = ({ setTouched, submitForm, validateForm }) => (
+const WizardSubmit = ({
+  setTouched,
+  submitForm,
+  validateForm,
+  setSubmissionAttempted,
+}) => (
   <ModalHistoryState>
     {({ showModal, hideModal, isModalVisible }) => (
       <React.Fragment>
         <Button
           data-test-id="submit"
-          onClick={() =>
+          onClick={() => {
+            setSubmissionAttempted()
             validateForm().then(errors => {
               if (Object.keys(errors).length) {
                 setTouched(errors)
@@ -19,7 +25,7 @@ const WizardSubmit = ({ setTouched, submitForm, validateForm }) => (
                 showModal()
               }
             })
-          }
+          }}
           primary
           type="button"
         >
