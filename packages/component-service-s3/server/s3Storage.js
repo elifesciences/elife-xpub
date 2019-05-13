@@ -30,7 +30,7 @@ class S3Storage {
       .putObject({
         Body: content,
         Key: `${fileObject.url}/${fileObject.id}`,
-        ContentType: fileObject.mimetype,
+        ContentType: fileObject.mimeType,
         ContentLength: size,
         ACL: 'private',
       })
