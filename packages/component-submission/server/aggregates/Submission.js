@@ -11,7 +11,7 @@ class Submission {
     return this
   }
 
-  getFilesWithDownloadLink() {
+  _getFilesWithDownloadLink() {
     return this.files
       ? this.files.map(file => ({
           ...file.toJSON(),
@@ -21,10 +21,9 @@ class Submission {
   }
 
   toJSON() {
-    const processedFiles = this.getFilesWithDownloadLink()
     return {
       ...this.manuscript.toJSON(),
-      files: processedFiles.map(file => file.toJSON()),
+      files: this._getFilesWithDownloadLink(),
     }
   }
 }
