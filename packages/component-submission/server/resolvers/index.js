@@ -3,6 +3,7 @@ const logger = require('@pubsweet/logger')
 const User = require('@elifesciences/component-model-user').model
 const ManuscriptModel = require('@elifesciences/component-model-manuscript')
   .model
+const FileModel = require('@elifesciences/component-model-file').model
 const { S3Storage } = require('@elifesciences/component-service-s3')
 const elifeApi = require('@elifesciences/component-model-user/entities/user/helpers/elife-api')
 const {
@@ -16,7 +17,9 @@ const updateManuscript = require('./updateManuscript')
 const uploadManuscript = require('./uploadManuscript')
 const uploadSupportingFile = require('./uploadSupportingFile')
 const removeSupportingFiles = require('./removeSupportingFiles')
-const { Manuscript } = require('../use-cases')
+
+const { Manuscript, getSubmissionUseCase } = require('../use-cases')
+const { SubmissionAggregate } = require('../aggregates')
 
 const { ON_UPLOAD_PROGRESS } = asyncIterators
 
@@ -24,9 +27,19 @@ const resolvers = {
   Query: {
     async manuscript(_, { id }, { user }) {
       const userUuid = await User.getUuidForProfile(user)
-      const manuscript = new Manuscript(config, userUuid, S3Storage)
+      const submissionAggregate = new SubmissionAggregate({
+        models: {
+          Manuscript: ManuscriptModel,
+          File: FileModel,
+        },
+        services: {
+          Storage: S3Storage,
+        },
+      })
 
-      return manuscript.getView(id)
+      return getSubmissionUseCase
+        .initialize({ submissionAggregate })
+        .execute(id, userUuid)
     },
     async editors(_, { role }) {
       return elifeApi.people(role)
