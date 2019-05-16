@@ -19,7 +19,7 @@ const uploadSupportingFile = require('./uploadSupportingFile')
 const removeSupportingFiles = require('./removeSupportingFiles')
 
 const { Manuscript, getSubmissionUseCase } = require('../use-cases')
-const { SubmissionAggregate } = require('../aggregates')
+const { Submission } = require('../aggregates')
 
 const { ON_UPLOAD_PROGRESS } = asyncIterators
 
@@ -27,7 +27,7 @@ const resolvers = {
   Query: {
     async manuscript(_, { id }, { user }) {
       const userUuid = await User.getUuidForProfile(user)
-      const submissionAggregate = new SubmissionAggregate({
+      const submission = new Submission({
         models: {
           Manuscript: ManuscriptModel,
           File: FileModel,
@@ -38,7 +38,7 @@ const resolvers = {
       })
 
       return getSubmissionUseCase
-        .initialize({ submissionAggregate })
+        .initialize({ submission })
         .execute(id, userUuid)
     },
     async editors(_, { role }) {

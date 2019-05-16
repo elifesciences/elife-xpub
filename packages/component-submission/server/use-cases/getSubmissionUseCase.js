@@ -1,9 +1,6 @@
-const initialize = ({ submissionAggregate }) => ({
+const initialize = ({ submission }) => ({
   execute: async (manuscriptId, userId) => {
-    const submission = await submissionAggregate.initialize(
-      manuscriptId,
-      userId,
-    )
+    await submission.initialize(manuscriptId, userId)
     return submission.toJSON()
   },
 })

@@ -1,3 +1,3 @@
 module.exports = {
-  SubmissionAggregate: require('./Submission'),
+  Submission: require('./Submission'),
 }
