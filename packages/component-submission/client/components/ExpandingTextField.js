@@ -52,7 +52,15 @@ class ExpandingTextField extends React.Component {
     this.inputId = `textfield-${Math.round(Math.random() * 1e12).toString(36)}`
   }
 
-  componentDidUpdate(prevProps, prevState) {
+  componentDidMount() {
+    this.calculateHeight(this.props)
+  }
+
+  componentDidUpdate(prevProps) {
+    this.calculateHeight(prevProps)
+  }
+
+  calculateHeight(props) {
     const { lineHeight } = window.getComputedStyle(this.textAreaRef.current)
     const intLineHeight = parseInt(lineHeight, 10)
     const { scrollHeight, value } = this.textAreaRef.current
@@ -60,7 +68,7 @@ class ExpandingTextField extends React.Component {
 
     const constrainedLines = Math.min(lines, this.props.maxRows || lines)
 
-    if (prevProps.value.length > value.length) {
+    if (props.value.length > value.length) {
       // This will force container size to be re-evaluated when the amount of
       // text is reduced
       this.setLines()
