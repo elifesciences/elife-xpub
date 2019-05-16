@@ -33,7 +33,7 @@ class Submission {
         isReady: false,
       },
     ]
-    return [{ status: 'STORED' }]
+    return this.files
       .map(
         file =>
           FILE_STATUSES.find(f => f.uploadStatuses.includes(file.status))
