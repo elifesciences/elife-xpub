@@ -8,12 +8,20 @@ import {
 } from '@elifesciences/component-elife-ui/client/atoms'
 
 import SubjectAreaDropdown from '../components/SubjectAreaDropdown'
+import ExpandingTextField from '../components/ExpandingTextField'
 import OptionalSection from '../components/OptionalSection'
 
 const SubmissionPage = ({ values, setFieldValue, setFieldTouched }) => (
+  // TODO: turn this ValidatedField into a richTextBox
   <React.Fragment>
     <Box mb={3}>
-      <ValidatedField label="Manuscript title" name="meta.title" />
+      <ValidatedField
+        component={ExpandingTextField}
+        data-test-id="manuscript-title-editor"
+        maxRows={3}
+        name="meta.title"
+        placeholder="Manuscript title"
+      />
     </Box>
 
     <Box mb={3} width={[1, 1, 1 / 2, 1 / 2]}>
