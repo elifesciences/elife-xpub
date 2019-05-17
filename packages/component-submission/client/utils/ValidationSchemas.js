@@ -1,5 +1,9 @@
 import * as yup from 'yup'
-import { EDITOR_LIMITS, errorMessageMapping } from './constants'
+import {
+  EDITOR_LIMITS,
+  errorMessageMapping,
+  manuscriptFileTypes,
+} from './constants'
 
 export const authorSchema = {
   author: yup.object().shape({
@@ -17,7 +21,17 @@ export const filesSchema = {
   coverLetter: yup
     .string()
     .required('Please write or paste in your cover letter.'),
-  files: yup.array().min(1, errorMessageMapping.EMPTY),
+  files: yup
+    .array()
+    .min(1, errorMessageMapping.EMPTY)
+    .test(
+      'at-least-one-manuscript',
+      errorMessageMapping.EMPTY,
+      arr =>
+        arr
+          .map(f => f.type === manuscriptFileTypes.MANUSCRIPT_SOURCE)
+          .filter(f => f).length > 0,
+    ),
   fileStatus: yup
     .string()
     .required()
