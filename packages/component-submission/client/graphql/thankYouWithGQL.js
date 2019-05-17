@@ -1,9 +1,9 @@
 import { graphql } from 'react-apollo'
 import { compose } from 'recompose'
-import { GET_MANUSCRIPT_TITLE } from './queries'
+import { getSubmissionTitle } from './queries'
 
 export default compose(
-  graphql(GET_MANUSCRIPT_TITLE, {
+  graphql(getSubmissionTitle, {
     options: props => ({ variables: { id: props.match.params.id } }),
   }),
 )

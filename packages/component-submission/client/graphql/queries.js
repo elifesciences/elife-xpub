@@ -2,8 +2,8 @@ import gql from 'graphql-tag'
 
 import { manuscriptFragment } from './fragments'
 
-export const GET_MANUSCRIPT = gql`
-  query GetManuscript($id: ID!) {
+export const getSubmission = gql`
+  query getSubmission($id: ID!) {
     manuscript(id: $id) {
       ...WholeManuscript
     }
@@ -11,8 +11,8 @@ export const GET_MANUSCRIPT = gql`
   ${manuscriptFragment}
 `
 
-export const GET_MANUSCRIPT_TITLE = gql`
-  query GetManuscript($id: ID!) {
+export const getSubmissionTitle = gql`
+  query getSubmissionTitle($id: ID!) {
     manuscript(id: $id) {
       meta {
         title
