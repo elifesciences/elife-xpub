@@ -1,5 +1,5 @@
 const mergeObjects = require('./mergeObjects')
 
-exports.modules = {
+module.exports = {
   mergeObjects,
 }

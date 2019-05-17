@@ -1,11 +1,11 @@
 const Manuscript = require('@elifesciences/component-model-manuscript').model
 const File = require('@elifesciences/component-model-file').model
-// const { S3Storage } = require('@elifesciences/component-service-s3')
 const Submission = require('./Submission')
 
-const createMockObject = (values = {}) => ({
+const createMockObject = (values = {}, mockSaveFn) => ({
   ...values,
   toJSON: jest.fn(() => values),
+  save: mockSaveFn || jest.fn(),
 })
 
 describe('Submission', () => {
@@ -179,6 +179,23 @@ describe('Submission', () => {
       }).initialize()
 
       expect(submission.filesAreStored()).toBe(false)
+    })
+  })
+  describe('updateManuscript', () => {
+    it('calls save on manuscript', async () => {
+      const mockManuscriptSave = jest.fn()
+      jest
+        .spyOn(Manuscript, 'find')
+        .mockReturnValue(createMockObject({}, mockManuscriptSave))
+      jest.spyOn(File, 'findByManuscriptId')
+
+      const submission = await new Submission({
+        models: { Manuscript, File },
+        services: {},
+      }).initialize()
+
+      submission.updateManuscript({})
+      expect(mockManuscriptSave).toBeCalled()
     })
   })
 })
