@@ -146,7 +146,7 @@ describe('Files schema', () => {
   it('allows valid data', () => {
     const validData = {
       coverLetter: 'Please accept my submission.',
-      files: [{}],
+      files: [{ type: 'MANUSCRIPT_SOURCE' }],
       fileStatus: 'READY',
     }
     expect(() => schema.validateSync(validData)).not.toThrow()
@@ -154,7 +154,7 @@ describe('Files schema', () => {
   it('returns correct error message when cover letter is empty', () => {
     const invalidData = {
       coverLetter: '',
-      files: [{}],
+      files: [{ type: 'MANUSCRIPT_SOURCE' }],
       fileStatus: 'READY',
     }
     let errors
@@ -171,7 +171,7 @@ describe('Files schema', () => {
   it('returns correct error message when files are not all uploaded and saved', () => {
     const invalidData = {
       coverLetter: 'Please accept my submission.',
-      files: [{}],
+      files: [{ type: 'MANUSCRIPT_SOURCE' }],
       fileStatus: 'UPLOADED',
     }
     let errors
@@ -189,6 +189,23 @@ describe('Files schema', () => {
     const invalidData = {
       coverLetter: 'Please accept my submission.',
       files: [],
+      fileStatus: 'READY',
+    }
+    let errors
+    try {
+      schema.validateSync(invalidData, { abortEarly: false })
+    } catch (e) {
+      errors = yupToFormErrors(e)
+    }
+
+    expect(errors).toEqual({
+      files: errorMessageMapping.EMPTY,
+    })
+  })
+  it('returns the correct error message when there are supporting files stored but no manuscripts', () => {
+    const invalidData = {
+      coverLetter: 'Please accept my submission.',
+      files: [{ type: 'SUPPORTING_FILE' }],
       fileStatus: 'READY',
     }
     let errors
