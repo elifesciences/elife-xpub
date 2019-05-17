@@ -1,3 +1,5 @@
+const { mergeObjects } = require('../utils')
+
 class Submission {
   constructor({ models: { Manuscript, File }, services: { Storage } }) {
     this.ManuscriptModel = Manuscript
@@ -48,6 +50,11 @@ class Submission {
       fileStatus: this.filesAreStored() ? 'READY' : 'CHANGING',
       files: this._getFilesWithDownloadLink(),
     }
+  }
+
+  updateManuscript(manuscriptData) {
+    this.manuscript = mergeObjects(this.manuscript, manuscriptData)
+    this.manuscript.save()
   }
 }
 
