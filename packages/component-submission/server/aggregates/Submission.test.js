@@ -1,11 +1,14 @@
 const Manuscript = require('@elifesciences/component-model-manuscript').model
 const File = require('@elifesciences/component-model-file').model
-// const { S3Storage } = require('@elifesciences/component-service-s3')
+
+jest.mock('../utils')
+const utils = require('../utils')
 const Submission = require('./Submission')
 
-const createMockObject = (values = {}) => ({
+const createMockObject = (values = {}, mockSaveFn) => ({
   ...values,
   toJSON: jest.fn(() => values),
+  save: mockSaveFn || jest.fn(),
 })
 
 describe('Submission', () => {
@@ -179,6 +182,43 @@ describe('Submission', () => {
       }).initialize()
 
       expect(submission.filesAreStored()).toBe(false)
+    })
+  })
+  describe('updateManuscript', () => {
+    it('calls save on manuscript', async () => {
+      const mockManuscriptSave = jest.fn()
+      utils.mergeObjects.mockImplementationOnce(
+        jest.fn(manuscript => manuscript),
+      )
+      jest
+        .spyOn(Manuscript, 'find')
+        .mockReturnValue(createMockObject({}, mockManuscriptSave))
+      jest.spyOn(File, 'findByManuscriptId')
+
+      const submission = await new Submission({
+        models: { Manuscript, File },
+        services: {},
+      }).initialize()
+
+      submission.updateManuscript({})
+      expect(mockManuscriptSave).toBeCalled()
+    })
+
+    it('pases the correct parameters to the mergeWith function', async () => {
+      const mockMergeFunction = jest.fn(manuscript => manuscript)
+      utils.mergeObjects.mockImplementationOnce(mockMergeFunction)
+      const mockManuscriptSave = jest.fn()
+      const manuscriptMock = createMockObject({}, mockManuscriptSave)
+      jest.spyOn(Manuscript, 'find').mockReturnValue(manuscriptMock)
+      jest.spyOn(File, 'findByManuscriptId')
+
+      const submission = await new Submission({
+        models: { Manuscript, File },
+        services: {},
+      }).initialize()
+
+      submission.updateManuscript({})
+      expect(mockMergeFunction).toBeCalledWith(manuscriptMock, {})
     })
   })
 })
