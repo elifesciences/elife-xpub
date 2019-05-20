@@ -55,6 +55,8 @@ test('Happy path', async t => {
   navigationHelper.setAuthorEmail('example@example.org')
   navigationHelper.navigateForward()
 
+  await navigationHelper.wait(2000)
+
   // uploading files - manuscript and cover letter
   navigationHelper.fillCoverletter()
   navigationHelper.uploadManuscript(manuscript)
@@ -145,7 +147,7 @@ test('Ability to progress through the wizard is tied to validation', async t => 
 
   navigationHelper.navigateForward()
   // without this wait the tests sometimes fail on CI ¯\_(ツ)_/¯
-  navigationHelper.wait(2000)
+  await navigationHelper.wait(2000)
 
   await t
     .expect(getPageUrl())
@@ -175,7 +177,7 @@ test('Ability to progress through the wizard is tied to validation', async t => 
   navigationHelper.navigateForward()
 
   // Submission metadata entry
-  navigationHelper.wait(2000)
+  await navigationHelper.wait(2000)
   await t
     .expect(getPageUrl())
     .match(
@@ -194,7 +196,7 @@ test('Ability to progress through the wizard is tied to validation', async t => 
   navigationHelper.addManuscriptMetadata()
   navigationHelper.navigateForward()
   // Editors
-  navigationHelper.wait(2000)
+  await navigationHelper.wait(2000)
   await t
     .expect(getPageUrl())
     .match(
@@ -284,15 +286,16 @@ test('redirect page allows you to continue through app', async t => {
   await t.expect(getPageUrl()).contains('/login')
 })
 
-test('Title entry box expands and shrinkg for longer titles', async t => {
+test('Title entry box expands and shrinks for longer titles', async t => {
   const navigationHelper = new NavigationHelper(t)
   navigationHelper.login()
   navigationHelper.newSubmission()
 
   navigationHelper.preFillAuthorDetailsWithOrcid()
   navigationHelper.setAuthorEmail('example@example.org')
-  navigationHelper.navigateForward()
 
+  navigationHelper.navigateForward()
+  await navigationHelper.wait(2000)
   // uploading files - manuscript and cover letter
   navigationHelper.fillCoverletter()
   await navigationHelper.uploadManuscript(manuscript)

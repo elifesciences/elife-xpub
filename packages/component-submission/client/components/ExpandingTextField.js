@@ -45,11 +45,11 @@ class ExpandingTextField extends React.Component {
     this.inputId = `textfield-${Math.round(Math.random() * 1e12).toString(36)}`
     this.textAreaRef = React.createRef()
 
-    this.state = { lines: props.minLines }
+    this.state = {}
   }
 
   componentDidMount() {
-    this.calculateHeight(this.props)
+    this.setLines()
   }
 
   componentDidUpdate(prevProps) {
@@ -89,6 +89,7 @@ class ExpandingTextField extends React.Component {
       readonly,
       inline,
       minLines,
+      name,
       ...props
     } = this.props
 
@@ -103,6 +104,7 @@ class ExpandingTextField extends React.Component {
         )}
         <TextArea
           id={this.inputId}
+          name={name}
           readOnly={readonly}
           ref={this.textAreaRef}
           rows={lines || minLines}
@@ -120,6 +122,7 @@ ExpandingTextField.propTypes = {
   type: PropTypes.string,
   value: PropTypes.string,
   maxRows: PropTypes.number,
+  name: PropTypes.string.isRequired,
   minRows: PropTypes.number,
 }
 
