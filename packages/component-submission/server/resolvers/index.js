@@ -58,6 +58,7 @@ const resolvers = {
         models: {
           Manuscript: ManuscriptModel,
           File: FileModel,
+          Team: TeamModel,
         },
         services: {
           Storage: S3Storage,

@@ -200,203 +200,258 @@ describe('Submission', () => {
 
   describe('updateAuthorTeam', () => {
     it('should update the author', async () => {
-      const author = {
-        role: 'author',
-        teamMembers: [{ alias: 1, meta: { corresponding: true } }],
-      }
       const submission = await createSubmission().initialize()
-      submission.updateAuthorTeam(author)
+      submission.updateAuthorTeam(1)
+
       expect(submission.teams[0]).toEqual({
         objectType: 'manuscript',
-        ...author,
+        role: 'author',
+        teamMembers: [{ alias: 1, meta: { corresponding: true } }],
       })
     })
 
     it('should update the existing author', async () => {
-      const author = {
+      const submission = await createSubmission().initialize()
+      submission.updateAuthorTeam(1)
+      expect(submission.teams[0]).toEqual({
+        objectType: 'manuscript',
         role: 'author',
         teamMembers: [{ alias: 1, meta: { corresponding: true } }],
-      }
-      const author2 = {
+      })
+      submission.updateAuthorTeam(2)
+      expect(submission.teams[0]).toEqual({
+        objectType: 'manuscript',
         role: 'author',
         teamMembers: [{ alias: 2, meta: { corresponding: true } }],
-      }
-      const submission = await createSubmission().initialize()
-      submission.updateAuthorTeam(author)
-      expect(submission.teams[0]).toEqual({
-        objectType: 'manuscript',
-        ...author,
-      })
-      submission.updateAuthorTeam(author2)
-      expect(submission.teams[0]).toEqual({
-        objectType: 'manuscript',
-        ...author2,
       })
     })
   })
 
   describe('updateEditorTeams', () => {
+    const editorOutput = {
+      suggestedSeniorEditor: {
+        role: 'suggestedSeniorEditors',
+        objectType: 'manuscript',
+        teamMembers: [{ meta: { elifePersonId: 1 } }],
+      },
+      opposedSeniorEditor: {
+        role: 'opposedSeniorEditors',
+        objectType: 'manuscript',
+        teamMembers: [{ meta: { elifePersonId: 2 } }],
+      },
+      suggestedReviewingEditor: {
+        role: 'suggestedReviewingEditors',
+        objectType: 'manuscript',
+        teamMembers: [{ meta: { elifePersonId: 3 } }],
+      },
+      opposedReviewingEditor: {
+        role: 'opposedReviewingEditors',
+        objectType: 'manuscript',
+        teamMembers: [{ meta: { elifePersonId: 4 } }],
+      },
+    }
+
+    const editorInput = {
+      suggestedSeniorEditor: [1],
+      opposedSeniorEditor: [2],
+      suggestedReviewingEditor: [3],
+      opposedReviewingEditor: [4],
+    }
+
     it('should update the editor teams', async () => {
-      const editors = {
-        suggestedSeniorEditor: {
-          role: 'suggestedSeniorEditor',
-          teamMembers: [{ meta: { elifePersonId: 1 } }],
-        },
-        opposedSeniorEditor: {
-          role: 'opposedSeniorEditor',
-          teamMembers: [{ meta: { elifePersonId: 2 } }],
-        },
-        suggestedReviewingEditor: {
-          role: 'suggestedReviewingEditor',
-          teamMembers: [{ meta: { elifePersonId: 3 } }],
-        },
-        opposedReviewingEditor: {
-          role: 'opposedReviewingEditor',
-          teamMembers: [{ meta: { elifePersonId: 4 } }],
-        },
-      }
       const submission = await createSubmission().initialize()
-      submission.updateEditorTeams(editors)
+      submission.updateEditorTeams(editorInput)
       const teams = keyBy(submission.teams, 'role')
-      expect(teams.suggestedSeniorEditor).toEqual({
-        objectType: 'manuscript',
-        ...editors.suggestedSeniorEditor,
-      })
-      expect(teams.opposedSeniorEditor).toEqual({
-        objectType: 'manuscript',
-        ...editors.opposedSeniorEditor,
-      })
-      expect(teams.suggestedReviewingEditor).toEqual({
-        objectType: 'manuscript',
-        ...editors.suggestedReviewingEditor,
-      })
-      expect(teams.opposedReviewingEditor).toEqual({
-        objectType: 'manuscript',
-        ...editors.opposedReviewingEditor,
-      })
+      expect(teams.suggestedSeniorEditors).toEqual(
+        editorOutput.suggestedSeniorEditor,
+      )
+      expect(teams.opposedSeniorEditors).toEqual(
+        editorOutput.opposedSeniorEditor,
+      )
+      expect(teams.suggestedReviewingEditors).toEqual(
+        editorOutput.suggestedReviewingEditor,
+      )
+      expect(teams.opposedReviewingEditors).toEqual(
+        editorOutput.opposedReviewingEditor,
+      )
     })
 
     it('should update the existing editor teams', async () => {
-      const editors = {
-        suggestedSeniorEditor: {
-          role: 'suggestedSeniorEditor',
-          teamMembers: [{ meta: { elifePersonId: 1 } }],
-        },
-        opposedSeniorEditor: {
-          role: 'opposedSeniorEditor',
-          teamMembers: [{ meta: { elifePersonId: 2 } }],
-        },
-        suggestedReviewingEditor: {
-          role: 'suggestedReviewingEditor',
-          teamMembers: [{ meta: { elifePersonId: 3 } }],
-        },
-        opposedReviewingEditor: {
-          role: 'opposedReviewingEditor',
-          teamMembers: [{ meta: { elifePersonId: 4 } }],
-        },
-      }
       const editors2 = {
+        suggestedSeniorEditor: [5],
+        opposedSeniorEditor: [6],
+        suggestedReviewingEditor: [7],
+        opposedReviewingEditor: [8],
+      }
+      const editors2Output = {
         suggestedSeniorEditor: {
-          role: 'suggestedSeniorEditor',
+          role: 'suggestedSeniorEditors',
+          objectType: 'manuscript',
           teamMembers: [{ meta: { elifePersonId: 5 } }],
         },
         opposedSeniorEditor: {
-          role: 'opposedSeniorEditor',
+          role: 'opposedSeniorEditors',
+          objectType: 'manuscript',
           teamMembers: [{ meta: { elifePersonId: 6 } }],
         },
         suggestedReviewingEditor: {
-          role: 'suggestedReviewingEditor',
+          role: 'suggestedReviewingEditors',
+          objectType: 'manuscript',
           teamMembers: [{ meta: { elifePersonId: 7 } }],
         },
         opposedReviewingEditor: {
-          role: 'opposedReviewingEditor',
+          role: 'opposedReviewingEditors',
+          objectType: 'manuscript',
           teamMembers: [{ meta: { elifePersonId: 8 } }],
         },
       }
       const submission = await createSubmission().initialize()
-      submission.updateEditorTeams(editors)
+      submission.updateEditorTeams(editorInput)
       submission.updateEditorTeams(editors2)
       const teams = keyBy(submission.teams, 'role')
-      expect(teams.suggestedSeniorEditor).toEqual({
-        objectType: 'manuscript',
-        ...editors2.suggestedSeniorEditor,
-      })
-      expect(teams.opposedSeniorEditor).toEqual({
-        objectType: 'manuscript',
-        ...editors2.opposedSeniorEditor,
-      })
-      expect(teams.suggestedReviewingEditor).toEqual({
-        objectType: 'manuscript',
-        ...editors2.suggestedReviewingEditor,
-      })
-      expect(teams.opposedReviewingEditor).toEqual({
-        objectType: 'manuscript',
-        ...editors2.opposedReviewingEditor,
-      })
+      expect(teams.suggestedSeniorEditors).toEqual(
+        editors2Output.suggestedSeniorEditor,
+      )
+      expect(teams.opposedSeniorEditors).toEqual(
+        editors2Output.opposedSeniorEditor,
+      )
+      expect(teams.suggestedReviewingEditors).toEqual(
+        editors2Output.suggestedReviewingEditor,
+      )
+      expect(teams.opposedReviewingEditors).toEqual(
+        editors2Output.opposedReviewingEditor,
+      )
     })
 
     it('should remove a team', async () => {
-      const editors = {
-        suggestedSeniorEditor: {
-          role: 'suggestedSeniorEditor',
-          teamMembers: [{ meta: { elifePersonId: 1 } }],
-        },
-        opposedSeniorEditor: {
-          role: 'opposedSeniorEditor',
-          teamMembers: [{ meta: { elifePersonId: 2 } }],
-        },
-        suggestedReviewingEditor: {
-          role: 'suggestedReviewingEditor',
-          teamMembers: [{ meta: { elifePersonId: 3 } }],
-        },
-        opposedReviewingEditor: {
-          role: 'opposedReviewingEditor',
-          teamMembers: [{ meta: { elifePersonId: 4 } }],
-        },
-      }
       const editors2 = {
+        suggestedSeniorEditor: [],
+        opposedSeniorEditor: [6],
+        suggestedReviewingEditor: [7],
+        opposedReviewingEditor: [8],
+      }
+      const editors2Output = {
         suggestedSeniorEditor: {
-          role: 'suggestedSeniorEditor',
+          role: 'suggestedSeniorEditors',
+          objectType: 'manuscript',
           teamMembers: [],
         },
         opposedSeniorEditor: {
-          role: 'opposedSeniorEditor',
+          role: 'opposedSeniorEditors',
+          objectType: 'manuscript',
           teamMembers: [{ meta: { elifePersonId: 6 } }],
         },
         suggestedReviewingEditor: {
-          role: 'suggestedReviewingEditor',
+          role: 'suggestedReviewingEditors',
+          objectType: 'manuscript',
           teamMembers: [{ meta: { elifePersonId: 7 } }],
         },
         opposedReviewingEditor: {
-          role: 'opposedReviewingEditor',
+          role: 'opposedReviewingEditors',
+          objectType: 'manuscript',
           teamMembers: [{ meta: { elifePersonId: 8 } }],
         },
       }
       const submission = await createSubmission().initialize()
-      submission.updateEditorTeams(editors)
+      submission.updateEditorTeams(editorInput)
       submission.updateEditorTeams(editors2)
       const teams = keyBy(submission.teams, 'role')
-      expect(teams.suggestedSeniorEditor).toEqual({
-        objectType: 'manuscript',
-        role: 'suggestedSeniorEditor',
-        teamMembers: [],
-      })
-      expect(teams.opposedSeniorEditor).toEqual({
-        objectType: 'manuscript',
-        ...editors2.opposedSeniorEditor,
-      })
-      expect(teams.suggestedReviewingEditor).toEqual({
-        objectType: 'manuscript',
-        ...editors2.suggestedReviewingEditor,
-      })
-      expect(teams.opposedReviewingEditor).toEqual({
-        objectType: 'manuscript',
-        ...editors2.opposedReviewingEditor,
-      })
+      expect(teams.suggestedSeniorEditors).toEqual(
+        editors2Output.suggestedSeniorEditor,
+      )
+      expect(teams.opposedSeniorEditors).toEqual(
+        editors2Output.opposedSeniorEditor,
+      )
+      expect(teams.suggestedReviewingEditors).toEqual(
+        editors2Output.suggestedReviewingEditor,
+      )
+      expect(teams.opposedReviewingEditors).toEqual(
+        editors2Output.opposedReviewingEditor,
+      )
     })
   })
 
   describe('updateReviewerTeams', () => {
-    it('should add a reviewer team', async () => {})
+    const reviewerInput = {
+      suggestedReviewer: [1],
+      opposedReviewer: [2],
+    }
+
+    it('should add reviewer teams', async () => {
+      const reviewerOutput = {
+        suggestedReviewer: {
+          role: 'suggestedReviewers',
+          objectType: 'manuscript',
+          teamMembers: [{ meta: 1 }],
+        },
+        opposedReviewer: {
+          role: 'opposedReviewers',
+          objectType: 'manuscript',
+          teamMembers: [{ meta: 2 }],
+        },
+      }
+      const submission = await createSubmission().initialize()
+
+      submission.updateReviewerTeams(reviewerInput)
+
+      const teams = keyBy(submission.teams, 'role')
+
+      expect(teams.suggestedReviewers).toEqual(reviewerOutput.suggestedReviewer)
+      expect(teams.opposedReviewers).toEqual(reviewerOutput.opposedReviewer)
+    })
+
+    it('should update a reviewer team', async () => {
+      const reviewerOutput = {
+        suggestedReviewer: {
+          role: 'suggestedReviewers',
+          objectType: 'manuscript',
+          teamMembers: [{ meta: 1 }],
+        },
+        opposedReviewer: {
+          role: 'opposedReviewers',
+          objectType: 'manuscript',
+          teamMembers: [{ meta: 3 }],
+        },
+      }
+      const submission = await createSubmission().initialize()
+
+      submission.updateReviewerTeams(reviewerInput)
+      submission.updateReviewerTeams({
+        suggestedReviewer: [1],
+        opposedReviewer: [3],
+      })
+
+      const teams = keyBy(submission.teams, 'role')
+
+      expect(teams.suggestedReviewers).toEqual(reviewerOutput.suggestedReviewer)
+      expect(teams.opposedReviewers).toEqual(reviewerOutput.opposedReviewer)
+    })
+
+    it('should remove a reviewer team', async () => {
+      const reviewerOutput = {
+        suggestedReviewer: {
+          role: 'suggestedReviewers',
+          objectType: 'manuscript',
+          teamMembers: [],
+        },
+        opposedReviewer: {
+          role: 'opposedReviewers',
+          objectType: 'manuscript',
+          teamMembers: [{ meta: 3 }],
+        },
+      }
+      const submission = await createSubmission().initialize()
+
+      submission.updateReviewerTeams(reviewerInput)
+      submission.updateReviewerTeams({
+        suggestedReviewer: [],
+        opposedReviewer: [3],
+      })
+
+      const teams = keyBy(submission.teams, 'role')
+
+      expect(teams.suggestedReviewers).toEqual(reviewerOutput.suggestedReviewer)
+      expect(teams.opposedReviewers).toEqual(reviewerOutput.opposedReviewer)
+    })
   })
 })
