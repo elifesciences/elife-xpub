@@ -1,8 +1,8 @@
 jest.mock('@pubsweet/logger')
 
 const { createTables } = require('@elifesciences/component-model')
-const User = require('@elifesciences/component-model-user').model
-const Manuscript = require('@elifesciences/component-model-manuscript').model
+const { User, Manuscript } = require('@pubsweet/models')
+
 const { Mutation } = require('.')
 const {
   userData,

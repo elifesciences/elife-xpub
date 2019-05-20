@@ -1,7 +1,5 @@
 const { createTables } = require('@elifesciences/component-model')
-const AuditLog = require('@elifesciences/component-model-audit-log').model
-const User = require('@elifesciences/component-model-user').model
-const Manuscript = require('@elifesciences/component-model-manuscript').model
+const { Manuscript, User, AuditLog } = require('@pubsweet/models')
 
 const { SupportingFiles } = require('../use-cases')
 const { userData } = require('./index.test.data')

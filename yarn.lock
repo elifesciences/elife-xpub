@@ -424,6 +424,15 @@
     joi "^14.3.0"
     lodash "^4.17.4"
 
+"@pubsweet/logger@^0.2.20":
+  version "0.2.20"
+  resolved "https://registry.yarnpkg.com/@pubsweet/logger/-/logger-0.2.20.tgz#7e4d575ede19e6f6e2ce9b8cf9ad9fe088e662b4"
+  integrity sha512-J1sV5PE/68Wf6mhMxkj81ZpySLaWMjwd1AIhfNOsWWD8aUGyiu/u+GjUZvGcodo78NVybIGpdwAipKcvnjIVjQ==
+  dependencies:
+    config "^3.0.1"
+    joi "^14.3.0"
+    lodash "^4.17.4"
+
 "@pubsweet/logger@^0.2.8":
   version "0.2.8"
   resolved "https://registry.yarnpkg.com/@pubsweet/logger/-/logger-0.2.8.tgz#3e178d9c7ab0f181df00d1abc655a097f5d8fea9"
@@ -440,6 +449,13 @@
   dependencies:
     objection "^1.5.3"
     pubsweet-server "^13.2.0"
+
+"@pubsweet/models@^0.2.7":
+  version "0.2.7"
+  resolved "https://registry.yarnpkg.com/@pubsweet/models/-/models-0.2.7.tgz#0a0cf77138112e29b49bbf8eec7b8810e9db85b4"
+  integrity sha512-bYhse3dyrZ4J34nJVxU28auuJ/pbKPQgZzfcy0p43Zh7gIxFq0ChPzLSNBib8ot8Q4b1GHpQfw3G+cbTdzCeCw==
+  dependencies:
+    "@pubsweet/logger" "^0.2.20"
 
 "@pubsweet/ui-toolkit@^2.0.1", "@pubsweet/ui-toolkit@^2.0.3":
   version "2.0.3"

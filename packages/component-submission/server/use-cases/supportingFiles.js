@@ -1,6 +1,4 @@
-const ManuscriptModel = require('@elifesciences/component-model-manuscript')
-  .model
-const FileModel = require('@elifesciences/component-model-file').model
+const { Manuscript, File } = require('@pubsweet/models')
 const logger = require('@pubsweet/logger')
 
 class SupportingFiles {
@@ -12,7 +10,7 @@ class SupportingFiles {
 
   async upload(file) {
     const { stream, filename, mimetype: mimeType } = await file
-    let fileEntity = new FileModel({
+    let fileEntity = new File({
       manuscriptId: this.manuscriptId,
       url: `supporting/${this.manuscriptId}`,
       filename,
@@ -33,7 +31,7 @@ class SupportingFiles {
       })
     })
     await fileEntity.updateStatus('UPLOADED')
-    fileEntity = await FileModel.find(fileId)
+    fileEntity = await File.find(fileId)
 
     try {
       await this.storage.putContent(fileEntity, fileContents, {})
@@ -48,12 +46,12 @@ class SupportingFiles {
   }
 
   async removeAll() {
-    let manuscript = await ManuscriptModel.find(this.manuscriptId, this.userId)
+    let manuscript = await Manuscript.find(this.manuscriptId, this.userId)
     const filesWithoutSupporting = manuscript.files.filter(
       file => file.type !== 'SUPPORTING_FILE',
     )
 
-    const files = await FileModel.findByManuscriptId(this.manuscriptId)
+    const files = await File.findByManuscriptId(this.manuscriptId)
 
     if (files && files.length > 0) {
       let modified = false

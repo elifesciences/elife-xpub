@@ -1,14 +1,12 @@
 const config = require('config')
 const logger = require('@pubsweet/logger')
-const User = require('@elifesciences/component-model-user').model
-const ManuscriptModel = require('@elifesciences/component-model-manuscript')
-  .model
-const FileModel = require('@elifesciences/component-model-file').model
+const models = require('@pubsweet/models')
+
 const { S3Storage } = require('@elifesciences/component-service-s3')
 const elifeApi = require('@elifesciences/component-model-user/entities/user/helpers/elife-api')
 const {
   getPubsub,
-  asyncIterators,
+  asyncIterators: { ON_UPLOAD_PROGRESS },
 } = require('pubsweet-server/src/graphql/pubsub')
 
 const removeUploadedManuscript = require('./removeUploadedManuscript')
@@ -21,17 +19,12 @@ const removeSupportingFiles = require('./removeSupportingFiles')
 const { Manuscript, getSubmissionUseCase } = require('../use-cases')
 const { Submission } = require('../aggregates')
 
-const { ON_UPLOAD_PROGRESS } = asyncIterators
-
 const resolvers = {
   Query: {
     async manuscript(_, { id }, { user }) {
-      const userUuid = await User.getUuidForProfile(user)
+      const userUuid = await models.User.getUuidForProfile(user)
       const submission = new Submission({
-        models: {
-          Manuscript: ManuscriptModel,
-          File: FileModel,
-        },
+        models,
         services: {
           Storage: S3Storage,
         },
@@ -60,8 +53,8 @@ const resolvers = {
     removeSupportingFiles,
 
     async savePage(_, vars, { user }) {
-      const userUuid = await User.getUuidForProfile(user)
-      const manuscriptModel = await ManuscriptModel.find(vars.id, userUuid)
+      const userUuid = await models.User.getUuidForProfile(user)
+      const manuscriptModel = await models.Manuscript.find(vars.id, userUuid)
       const manuscript = new Manuscript(config, userUuid, S3Storage)
 
       manuscriptModel.lastStepVisited = vars.url

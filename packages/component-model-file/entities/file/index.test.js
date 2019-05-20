@@ -1,7 +1,7 @@
 const { createTables } = require('@elifesciences/component-model')
+const { Manuscript } = require('@pubsweet/models')
 const uuid = require('uuid')
 const File = require('.')
-const Manuscript = require('@elifesciences/component-model-manuscript').model
 
 describe('File', () => {
   let userId

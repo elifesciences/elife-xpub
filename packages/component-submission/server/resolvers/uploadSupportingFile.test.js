@@ -1,9 +1,7 @@
 const fs = require('fs-extra')
 const config = require('config')
 const { createTables } = require('@elifesciences/component-model')
-const AuditLog = require('@elifesciences/component-model-audit-log').model
-const User = require('@elifesciences/component-model-user').model
-const Manuscript = require('@elifesciences/component-model-manuscript').model
+const { AuditLog, User, Manuscript } = require('@pubsweet/models')
 const startS3rver = require('@elifesciences/component-service-s3/mock')
 
 const { Mutation } = require('.')

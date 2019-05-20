@@ -3,9 +3,7 @@ const uuid = require('uuid')
 const stream = require('stream')
 const { createTables } = require('@elifesciences/component-model')
 const logger = require('@pubsweet/logger')
-const SemanticExtraction = require('@elifesciences/component-model-semantic-extraction')
-const ManuscriptModel = require('@elifesciences/component-model-manuscript')
-  .model
+const { Manuscript, SemanticExtraction } = require('@pubsweet/models')
 const FilesHelper = require('./files')
 const UploadPredictor = require('./upload-predictor')
 
@@ -33,7 +31,7 @@ describe('FilesHelper', () => {
     it('returns the file stream and file entity', async () => {
       const userId = uuid()
       await createTables(true)
-      const { id } = await ManuscriptModel.makeInitial({
+      const { id } = await Manuscript.makeInitial({
         createdBy: userId,
       }).save()
       const file = {
@@ -190,7 +188,7 @@ describe('FilesHelper', () => {
       const userId = uuid()
       await createTables(true)
 
-      const { id } = await ManuscriptModel.makeInitial({
+      const { id } = await Manuscript.makeInitial({
         createdBy: userId,
       }).save()
 

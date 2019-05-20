@@ -2,8 +2,8 @@ const lodash = require('lodash')
 const { transaction } = require('objection')
 const BaseModel = require('@pubsweet/base-model')
 const logger = require('@pubsweet/logger')
+const { AuditLog, File, Team } = require('@pubsweet/models')
 const emptyManuscript = require('./helpers/empty')
-const AuditLog = require('@elifesciences/component-model-audit-log').model
 
 const integrityError = (property, value, message) =>
   new Error(
@@ -74,7 +74,7 @@ class Manuscript extends BaseModel {
     return {
       files: {
         relation: BaseModel.HasManyRelation,
-        modelClass: require('@elifesciences/component-model-file').model,
+        modelClass: File,
         join: {
           from: 'manuscript.id',
           to: 'file.manuscriptId',
@@ -82,7 +82,7 @@ class Manuscript extends BaseModel {
       },
       teams: {
         relation: BaseModel.HasManyRelation,
-        modelClass: require('@elifesciences/component-model-team').model,
+        modelClass: Team,
         join: {
           from: 'manuscript.id',
           to: 'team.objectId',

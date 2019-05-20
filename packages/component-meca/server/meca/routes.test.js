@@ -2,12 +2,10 @@ const { createTables } = require('@elifesciences/component-model')
 const config = require('config')
 const logger = require('@pubsweet/logger')
 const mailer = require('@pubsweet/component-send-email')
+const { AuditLog, User, Manuscript } = require('@pubsweet/models')
 const express = require('express')
 const bodyParser = require('body-parser')
 const supertest = require('supertest')
-const AuditLog = require('@elifesciences/component-model-audit-log').model
-const User = require('@elifesciences/component-model-user').model
-const Manuscript = require('@elifesciences/component-model-manuscript').model
 const routes = require('./routes')
 
 const makeApp = () => {

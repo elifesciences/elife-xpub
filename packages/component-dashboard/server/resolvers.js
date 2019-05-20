@@ -1,8 +1,6 @@
 const logger = require('@pubsweet/logger')
+const { User, Manuscript, File } = require('@pubsweet/models')
 const { S3Storage } = require('@elifesciences/component-service-s3')
-const User = require('@elifesciences/component-model-user').model
-const Manuscript = require('@elifesciences/component-model-manuscript').model
-const File = require('@elifesciences/component-model-file').model
 
 const resolvers = {
   Query: {

@@ -1,13 +1,12 @@
 const config = require('config')
-const User = require('@elifesciences/component-model-user').model
-const FileModel = require('@elifesciences/component-model-file').model
+const { User, File } = require('@pubsweet/models')
 const logger = require('@pubsweet/logger')
 const { S3Storage } = require('@elifesciences/component-service-s3')
 const { Manuscript } = require('../use-cases')
 
 async function removeUploadedManuscript(_, vars, { user }) {
   const userUuid = await User.getUuidForProfile(user)
-  const fileModels = (await FileModel.findByManuscriptId(vars.id)).filter(
+  const fileModels = (await File.findByManuscriptId(vars.id)).filter(
     file => file.type === 'MANUSCRIPT_SOURCE',
   )
 

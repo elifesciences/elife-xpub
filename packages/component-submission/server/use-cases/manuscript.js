@@ -1,6 +1,5 @@
 const logger = require('@pubsweet/logger')
-const ManuscriptModel = require('@elifesciences/component-model-manuscript')
-  .model
+const models = require('@pubsweet/models')
 const { UploadPredictor, FilesHelper, ManuscriptHelper } = require('./helpers')
 
 class Manuscript {
@@ -26,7 +25,7 @@ class Manuscript {
     const predictor = new UploadPredictor(fileSize)
 
     // ensure user can view manuscript
-    await ManuscriptModel.find(manuscriptId, this.userId)
+    await models.Manuscript.find(manuscriptId, this.userId)
 
     const fileData = await FilesHelper.getFileData(file, manuscriptId)
 
@@ -56,7 +55,7 @@ class Manuscript {
         manuscriptId,
       )
       logger.error(`uploadManuscriptFile threw this error: ${error}`)
-      const manuscript = await ManuscriptModel.find(manuscriptId, this.userId)
+      const manuscript = await models.Manuscript.find(manuscriptId, this.userId)
       await ManuscriptHelper.clearPendingFile(manuscript)
       throw error
     }
@@ -78,12 +77,12 @@ class Manuscript {
 
   async update(data) {
     // files are handled separately in remove/upload functionality, so only load teams
-    const manuscript = await ManuscriptModel.find(
+    const manuscript = await models.Manuscript.find(
       data.id,
       this.userId,
       '[teams]',
     )
-    if (manuscript.status !== ManuscriptModel.statuses.INITIAL) {
+    if (manuscript.status !== models.Manuscript.statuses.INITIAL) {
       throw new Error(
         `Cannot update manuscript with status of ${manuscript.status}`,
       )
@@ -114,7 +113,7 @@ class Manuscript {
   }
 
   async getView(manuscriptId) {
-    const manuscript = await ManuscriptModel.find(manuscriptId, this.userId)
+    const manuscript = await models.Manuscript.find(manuscriptId, this.userId)
 
     // eslint-disable-next-line no-restricted-syntax
     for (const file of manuscript.files) {

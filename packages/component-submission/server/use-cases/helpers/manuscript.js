@@ -1,8 +1,6 @@
 const logger = require('@pubsweet/logger')
+const { File, Manuscript } = require('@pubsweet/models')
 const FilesHelper = require('./files')
-const FileModel = require('@elifesciences/component-model-file').model
-const ManuscriptModel = require('@elifesciences/component-model-manuscript')
-  .model
 
 class ManuscriptHelper {
   constructor(config, userId, storage, filesHelper) {
@@ -19,9 +17,7 @@ class ManuscriptHelper {
 
     if (pendingFileIndex >= 0) {
       logger.info(`clearPendingFile required on ${manuscript.id}`)
-      const pendingFile = await FileModel.find(
-        manuscript.files[pendingFileIndex].id,
-      )
+      const pendingFile = await File.find(manuscript.files[pendingFileIndex].id)
       await pendingFile.delete()
       logger.info(
         `Pending file removed ${pendingFileIndex} ${
@@ -47,14 +43,14 @@ class ManuscriptHelper {
       predictor,
     )
 
-    fileEntity = await FileModel.find(fileId)
+    fileEntity = await File.find(fileId)
     await fileEntity.updateStatus('UPLOADED')
 
     logger.info(`uploadFileToServer::end ${filename} | ${manuscriptId}`)
 
     logger.info(`S3.putContent::start ${filename} | ${manuscriptId}`)
 
-    fileEntity = await FileModel.find(fileId)
+    fileEntity = await File.find(fileId)
 
     try {
       await this.storage.putContent(fileEntity, fileContent, {
@@ -77,7 +73,7 @@ class ManuscriptHelper {
     )
 
     try {
-      let manuscript = await ManuscriptModel.find(manuscriptId, this.userId)
+      let manuscript = await Manuscript.find(manuscriptId, this.userId)
 
       await FilesHelper.swapPendingToSource(manuscript.files)
 
@@ -85,7 +81,7 @@ class ManuscriptHelper {
         logger.info(`New Files: ${file.id} | ${file.type}`),
       )
 
-      manuscript = await ManuscriptModel.find(manuscriptId, this.userId)
+      manuscript = await Manuscript.find(manuscriptId, this.userId)
       manuscript.meta.title = title
       await manuscript.save()
 

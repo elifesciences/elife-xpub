@@ -1,5 +1,5 @@
 const logger = require('@pubsweet/logger')
-const FileModel = require('@elifesciences/component-model-file').model
+const { File } = require('@pubsweet/models')
 const SemanticExtractionModel = require('@elifesciences/component-model-semantic-extraction')
 
 const cleanOldManuscript = async fileList => {
@@ -13,7 +13,7 @@ const cleanOldManuscript = async fileList => {
         fileList[oldFileIndex].filename
       }`,
     )
-    const oldFile = await FileModel.find(fileList[oldFileIndex].id)
+    const oldFile = await File.find(fileList[oldFileIndex].id)
     await oldFile.delete()
     logger.info(`cleanOldManiscript now done`)
   }
@@ -24,7 +24,7 @@ const setPendingToSource = async fileList =>
     const pendingFileIndex = fileList.findIndex(
       element => element.type === 'MANUSCRIPT_SOURCE_PENDING',
     )
-    const newFile = await FileModel.find(fileList[pendingFileIndex].id)
+    const newFile = await File.find(fileList[pendingFileIndex].id)
     newFile.type = 'MANUSCRIPT_SOURCE'
     await newFile.save()
     logger.info(`Manuscript new index ${newFile.id} | ${newFile.filename}`)
@@ -50,7 +50,7 @@ class FilesHelper {
   static async getFileData(file, manuscriptId) {
     const { stream, filename, mimetype: mimeType } = await file
 
-    const fileEntity = await new FileModel({
+    const fileEntity = await new File({
       manuscriptId,
       url: `manuscripts/${manuscriptId}`,
       filename,

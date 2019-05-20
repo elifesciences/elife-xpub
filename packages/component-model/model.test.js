@@ -1,6 +1,5 @@
 const uuid = require('uuid')
-const Manuscript = require('@elifesciences/component-model-manuscript').model
-const File = require('@elifesciences/component-model-file').model
+const { Manuscript, File } = require('@pubsweet/models')
 const { createTables } = require('@elifesciences/component-model')
 
 describe('creating getters still allows models to be saved', () => {

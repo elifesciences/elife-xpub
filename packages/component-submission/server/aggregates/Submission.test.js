@@ -1,5 +1,4 @@
-const Manuscript = require('@elifesciences/component-model-manuscript').model
-const File = require('@elifesciences/component-model-file').model
+const { Manuscript, File } = require('@pubsweet/models')
 
 jest.mock('../utils')
 const utils = require('../utils')

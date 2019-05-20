@@ -5,11 +5,10 @@ jest.mock('@elifesciences/component-meca', () => ({
 
 const lodash = require('lodash')
 const logger = require('@pubsweet/logger')
+const { User, Manuscript } = require('@pubsweet/models')
 const { createTables } = require('@elifesciences/component-model')
 const mailer = require('@pubsweet/component-send-email')
 const { mecaExport } = require('@elifesciences/component-meca')
-const User = require('@elifesciences/component-model-user').model
-const Manuscript = require('@elifesciences/component-model-manuscript').model
 const { S3Storage } = require('@elifesciences/component-service-s3')
 
 const { Mutation } = require('.')

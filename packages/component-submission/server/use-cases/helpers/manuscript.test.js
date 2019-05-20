@@ -1,7 +1,6 @@
 const { createTables } = require('@elifesciences/component-model')
-const User = require('@elifesciences/component-model-user').model
-const Manuscript = require('@elifesciences/component-model-manuscript').model
-const File = require('@elifesciences/component-model-file').model
+const { File, Manuscript, User } = require('@pubsweet/models')
+
 const ManuscriptHelper = require('./manuscript')
 
 describe('clearPendingFile()', () => {

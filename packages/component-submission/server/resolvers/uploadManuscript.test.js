@@ -8,10 +8,10 @@ const config = require('config')
 const fs = require('fs-extra')
 const stream = require('stream')
 const logger = require('@pubsweet/logger')
+const { User, Manuscript } = require('@pubsweet/models')
 const { createTables } = require('@elifesciences/component-model')
 const mailer = require('@pubsweet/component-send-email')
-const User = require('@elifesciences/component-model-user').model
-const Manuscript = require('@elifesciences/component-model-manuscript').model
+
 const startS3Server = require('@elifesciences/component-service-s3/mock')
 
 const ScienceBeamApi = require('../services/scienceBeamApi')

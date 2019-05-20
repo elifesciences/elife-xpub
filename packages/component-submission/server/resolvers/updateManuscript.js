@@ -1,5 +1,5 @@
 const config = require('config')
-const User = require('@elifesciences/component-model-user').model
+const { User } = require('@pubsweet/models')
 const { S3Storage } = require('@elifesciences/component-service-s3')
 const { Manuscript } = require('../use-cases')
 

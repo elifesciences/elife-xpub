@@ -1,5 +1,5 @@
 const { S3Storage } = require('@elifesciences/component-service-s3')
-const User = require('@elifesciences/component-model-user').model
+const { User } = require('@pubsweet/models')
 
 const { SupportingFiles } = require('../use-cases')
 
