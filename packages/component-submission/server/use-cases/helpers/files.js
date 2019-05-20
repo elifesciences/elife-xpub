@@ -1,6 +1,5 @@
 const logger = require('@pubsweet/logger')
-const { File } = require('@pubsweet/models')
-const SemanticExtractionModel = require('@elifesciences/component-model-semantic-extraction')
+const { File, SemanticExtraction } = require('@pubsweet/models')
 
 const cleanOldManuscript = async fileList => {
   const oldFileIndex = fileList.findIndex(
@@ -144,7 +143,7 @@ class FilesHelper {
         filename,
         mimeType,
       )
-      const semanticExtractionEntity = SemanticExtractionModel.createTitleEntity(
+      const semanticExtractionEntity = SemanticExtraction.createTitleEntity(
         manuscriptId,
         title,
       )

@@ -1,3 +1,6 @@
 const SemanticExtraction = require('./entities/semanticExtraction')
 
-module.exports = SemanticExtraction
+module.exports = {
+  model: SemanticExtraction,
+  modelName: 'SemanticExtraction',
+}
