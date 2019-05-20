@@ -18,7 +18,8 @@ const SubmissionPage = ({ values, setFieldValue, setFieldTouched }) => (
       <ValidatedField
         component={ExpandingTextField}
         data-test-id="manuscript-title-editor"
-        maxRows={3}
+        label="Manuscript Title"
+        maxRows={4}
         name="meta.title"
         placeholder="Manuscript title"
       />
