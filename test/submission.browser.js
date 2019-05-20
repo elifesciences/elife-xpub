@@ -284,6 +284,59 @@ test('redirect page allows you to continue through app', async t => {
   await t.expect(getPageUrl()).contains('/login')
 })
 
+test('Title entry box expands and shrinkg for longer titles', async t => {
+  const navigationHelper = new NavigationHelper(t)
+  navigationHelper.login()
+  navigationHelper.newSubmission()
+
+  navigationHelper.preFillAuthorDetailsWithOrcid()
+  navigationHelper.setAuthorEmail('example@example.org')
+  navigationHelper.navigateForward()
+
+  // uploading files - manuscript and cover letter
+  navigationHelper.fillCoverletter()
+  await navigationHelper.uploadManuscript(manuscript)
+
+  navigationHelper.navigateForward()
+
+  // adding manuscript metadata
+
+  await t
+    .expect(
+      Selector('textarea[data-test-id="manuscript-title-editor"]').getAttribute(
+        'rows',
+      ),
+    )
+    .eql('1')
+  navigationHelper.fillLongTitle()
+  // The product defined max-height of the titlebox is 4 lines
+
+  await t
+    .expect(Selector('textarea[data-test-id="manuscript-title-editor"]').exists)
+    .eql(true)
+  await t
+    .expect(
+      Selector('textarea[data-test-id="manuscript-title-editor"]').getAttribute(
+        'rows',
+      ),
+    )
+    .eql('4')
+
+  await navigationHelper.setTitle('A one line title')
+  await t
+    .expect(
+      Selector('textarea[data-test-id="manuscript-title-editor"]').getAttribute(
+        'rows',
+      ),
+    )
+    .eql('1')
+
+  navigationHelper.addManuscriptMetadata()
+  navigationHelper.navigateForward()
+
+  // Change the title to something really long and then expect the rows prop of the textarea to increase
+})
+
 test('cookie notice', async t => {
   await t.navigateTo(login.url)
   await t.expect(Selector('[data-test-id="cookieAcceptButton"]').exists).ok()
