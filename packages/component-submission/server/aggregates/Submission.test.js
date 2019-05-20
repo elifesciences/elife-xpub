@@ -1,5 +1,6 @@
 const Manuscript = require('@elifesciences/component-model-manuscript').model
 const File = require('@elifesciences/component-model-file').model
+const Team = require('@elifesciences/component-model-team').model
 
 jest.mock('../utils')
 const utils = require('../utils')
@@ -11,88 +12,92 @@ const createMockObject = (values = {}, mockSaveFn) => ({
   save: mockSaveFn || jest.fn(),
 })
 
+const createSubmission = (args = {}) => {
+  const {
+    models = { Manuscript, File, Team },
+    services = { Storage: { getDownloadLink: jest.fn() } },
+  } = args
+
+  return new Submission({ models, services })
+}
+
 describe('Submission', () => {
+  let mockManuscriptFind, mockFileFind, mockTeamFind
+
+  beforeAll(() => {
+    mockManuscriptFind = jest.spyOn(Manuscript, 'find')
+    mockFileFind = jest.spyOn(File, 'findByManuscriptId')
+    mockTeamFind = jest.spyOn(Team, 'findByManuscriptId')
+  })
+
+  beforeEach(() => {
+    mockManuscriptFind.mockReset()
+    mockManuscriptFind.mockReturnValue(createMockObject())
+    mockFileFind.mockReset()
+    mockFileFind.mockReturnValue([])
+    mockTeamFind.mockReset()
+    mockTeamFind.mockReturnValue([])
+  })
+
   describe('intitialize', () => {
     it('fetches and stores the manuscript and files internally', async () => {
-      const mockManuscriptFind = jest.spyOn(Manuscript, 'find')
       mockManuscriptFind.mockReturnValue('bar')
-      const mockFileFind = jest.spyOn(File, 'findByManuscriptId')
       mockFileFind.mockReturnValue('foo')
+      mockTeamFind.mockReturnValue('baz')
 
-      const submission = await new Submission({
-        models: { Manuscript, File },
-        services: {},
-      }).initialize()
+      const submission = await createSubmission().initialize()
+
       expect(mockManuscriptFind).toHaveBeenCalled()
       expect(mockFileFind).toHaveBeenCalled()
+      expect(mockTeamFind).toHaveBeenCalled()
       expect(submission.files).toEqual('foo')
       expect(submission.manuscript).toEqual('bar')
+      expect(submission.teams).toEqual('baz')
     })
   })
 
   describe('toJSON', () => {
     it('returns related files as a files property of the returned object', async () => {
-      const mockManuscriptFind = jest.spyOn(Manuscript, 'find')
-      mockManuscriptFind.mockReturnValue(createMockObject())
-      const mockFileFind = jest.spyOn(File, 'findByManuscriptId')
       mockFileFind.mockReturnValue([
         createMockObject({ url: 'url1', status: 'STORED' }),
         createMockObject({ url: 'url2', status: 'STORED' }),
       ])
 
-      const submission = await new Submission({
-        models: { Manuscript, File },
-        services: { Storage: { getDownloadLink: jest.fn() } },
-      }).initialize()
+      const submission = await createSubmission().initialize()
 
       expect(submission.toJSON().files).toHaveLength(2)
       expect(submission.toJSON().files[0].url).toBe('url1')
       expect(submission.toJSON().files[1].url).toBe('url2')
     })
     it('returns an empty array for submission.files when there are no related files', async () => {
-      const mockManuscriptFind = jest.spyOn(Manuscript, 'find')
-      mockManuscriptFind.mockReturnValue(createMockObject())
-      const mockFileFind = jest.spyOn(File, 'findByManuscriptId')
-      mockFileFind.mockReturnValue()
-
-      const submission = await new Submission({
-        models: { Manuscript, File },
-        services: { Storage: { getDownloadLink: jest.fn() } },
-      }).initialize()
+      const submission = await createSubmission().initialize()
 
       expect(submission.toJSON().files).toHaveLength(0)
     })
     it('gets a download link for each returned file', async () => {
-      const mockManuscriptFind = jest.spyOn(Manuscript, 'find')
-      mockManuscriptFind.mockReturnValue(createMockObject())
-      const mockFileFind = jest.spyOn(File, 'findByManuscriptId')
       mockFileFind.mockReturnValue([
         createMockObject({ url: 'url1', status: 'STORED' }),
         createMockObject({ url: 'url2', status: 'STORED' }),
       ])
       const mockGetDownloadLink = jest.fn(file => `URL:${file.url}`)
 
-      const submission = await new Submission({
-        models: { Manuscript, File },
+      const submission = await createSubmission({
         services: { Storage: { getDownloadLink: mockGetDownloadLink } },
       }).initialize()
+
       const submissionJSON = submission.toJSON()
       expect(mockGetDownloadLink).toBeCalledTimes(2)
       expect(submissionJSON.files[0].downloadLink).toBe('URL:url1')
       expect(submissionJSON.files[1].downloadLink).toBe('URL:url2')
     })
     it('has a fileStatus of CHANGING if filesAreStored returns false', async () => {
-      const mockManuscriptFind = jest.spyOn(Manuscript, 'find')
-      mockManuscriptFind.mockReturnValue(createMockObject())
-      const mockFileFind = jest.spyOn(File, 'findByManuscriptId')
       mockFileFind.mockReturnValue([
         createMockObject({ url: 'url1', status: 'UPLOADED' }),
         createMockObject({ url: 'url2', status: 'STORED' }),
       ])
       const mockGetDownloadLink = jest.fn(file => `URL:${file.url}`)
 
-      const submission = await new Submission({
-        models: { Manuscript, File },
+      const submission = await createSubmission({
         services: { Storage: { getDownloadLink: mockGetDownloadLink } },
       }).initialize()
       const filesAreStored = jest
@@ -105,17 +110,13 @@ describe('Submission', () => {
       filesAreStored.mockRestore()
     })
     it('has a fileStatus of READY if filesAreStored returns true', async () => {
-      const mockManuscriptFind = jest.spyOn(Manuscript, 'find')
-      mockManuscriptFind.mockReturnValue(createMockObject())
-      const mockFileFind = jest.spyOn(File, 'findByManuscriptId')
       mockFileFind.mockReturnValue([
         createMockObject({ url: 'url1', status: 'UPLOADED' }),
         createMockObject({ url: 'url2', status: 'STORED' }),
       ])
       const mockGetDownloadLink = jest.fn(file => `URL:${file.url}`)
 
-      const submission = await new Submission({
-        models: { Manuscript, File },
+      const submission = await createSubmission({
         services: { Storage: { getDownloadLink: mockGetDownloadLink } },
       }).initialize()
       const filesAreStored = jest
@@ -136,50 +137,32 @@ describe('Submission', () => {
       expect(submission.filesAreStored()).toBe(true)
     })
     it('returns true if all related files are in a STORED or CANCELLED state', async () => {
-      const mockManuscriptFind = jest.spyOn(Manuscript, 'find')
-      mockManuscriptFind.mockReturnValue(createMockObject())
-      const mockFileFind = jest.spyOn(File, 'findByManuscriptId')
       mockFileFind.mockReturnValue([
         createMockObject({ url: 'url1', status: 'CANCELLED' }),
         createMockObject({ url: 'url2', status: 'STORED' }),
       ])
 
-      const submission = await new Submission({
-        models: { Manuscript, File },
-        services: {},
-      }).initialize()
+      const submission = await createSubmission().initialize()
 
       expect(submission.filesAreStored()).toBe(true)
     })
     it('returns false if any related files are in a CREATED state', async () => {
-      const mockManuscriptFind = jest.spyOn(Manuscript, 'find')
-      mockManuscriptFind.mockReturnValue(createMockObject())
-      const mockFileFind = jest.spyOn(File, 'findByManuscriptId')
       mockFileFind.mockReturnValue([
         createMockObject({ url: 'url1', status: 'CREATED' }),
         createMockObject({ url: 'url2', status: 'STORED' }),
       ])
 
-      const submission = await new Submission({
-        models: { Manuscript, File },
-        services: {},
-      }).initialize()
+      const submission = await createSubmission().initialize()
 
       expect(submission.filesAreStored()).toBe(false)
     })
     it('returns false if any related files are in a UPLOADED state', async () => {
-      const mockManuscriptFind = jest.spyOn(Manuscript, 'find')
-      mockManuscriptFind.mockReturnValue(createMockObject())
-      const mockFileFind = jest.spyOn(File, 'findByManuscriptId')
       mockFileFind.mockReturnValue([
         createMockObject({ url: 'url1', status: 'UPLOADED' }),
         createMockObject({ url: 'url2', status: 'STORED' }),
       ])
 
-      const submission = await new Submission({
-        models: { Manuscript, File },
-        services: {},
-      }).initialize()
+      const submission = await createSubmission().initialize()
 
       expect(submission.filesAreStored()).toBe(false)
     })
@@ -193,12 +176,8 @@ describe('Submission', () => {
       jest
         .spyOn(Manuscript, 'find')
         .mockReturnValue(createMockObject({}, mockManuscriptSave))
-      jest.spyOn(File, 'findByManuscriptId')
 
-      const submission = await new Submission({
-        models: { Manuscript, File },
-        services: {},
-      }).initialize()
+      const submission = await createSubmission().initialize()
 
       submission.updateManuscript({})
       expect(mockManuscriptSave).toBeCalled()
@@ -210,15 +189,17 @@ describe('Submission', () => {
       const mockManuscriptSave = jest.fn()
       const manuscriptMock = createMockObject({}, mockManuscriptSave)
       jest.spyOn(Manuscript, 'find').mockReturnValue(manuscriptMock)
-      jest.spyOn(File, 'findByManuscriptId')
 
-      const submission = await new Submission({
-        models: { Manuscript, File },
-        services: {},
-      }).initialize()
+      const submission = await createSubmission().initialize()
 
       submission.updateManuscript({})
       expect(mockMergeFunction).toBeCalledWith(manuscriptMock, {})
     })
   })
+
+  describe('updateAuthorTeam', () => {})
+
+  describe('updateEditorTeams', () => {})
+
+  describe('updateReviewerTeams', () => {})
 })

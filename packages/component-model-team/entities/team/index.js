@@ -24,6 +24,18 @@ class Team extends BaseModel {
     // tell objection to serialise teamMembers as a postgres array rather than JSON
     return []
   }
+
+  static async findByManuscriptId(manuscriptId) {
+    const teams = await this.query().where({
+      object_id: manuscriptId,
+    })
+
+    if (!teams) {
+      throw new Error(`file with manuscript_id ${manuscriptId} not found`)
+    }
+
+    return teams
+  }
 }
 
 module.exports = Team

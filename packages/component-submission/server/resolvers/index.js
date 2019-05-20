@@ -4,6 +4,7 @@ const User = require('@elifesciences/component-model-user').model
 const ManuscriptModel = require('@elifesciences/component-model-manuscript')
   .model
 const FileModel = require('@elifesciences/component-model-file').model
+const TeamModel = require('@elifesciences/component-model-team').model
 const { S3Storage } = require('@elifesciences/component-service-s3')
 const elifeApi = require('@elifesciences/component-model-user/entities/user/helpers/elife-api')
 const {
@@ -13,12 +14,15 @@ const {
 
 const removeUploadedManuscript = require('./removeUploadedManuscript')
 const submitManuscript = require('./submitManuscript')
-const updateManuscript = require('./updateManuscript')
 const uploadManuscript = require('./uploadManuscript')
 const uploadSupportingFile = require('./uploadSupportingFile')
 const removeSupportingFiles = require('./removeSupportingFiles')
 
-const { Manuscript, getSubmissionUseCase } = require('../use-cases')
+const {
+  Manuscript,
+  getSubmissionUseCase,
+  updateSubmissionUseCase,
+} = require('../use-cases')
 const { Submission } = require('../aggregates')
 
 const { ON_UPLOAD_PROGRESS } = asyncIterators
@@ -31,6 +35,7 @@ const resolvers = {
         models: {
           Manuscript: ManuscriptModel,
           File: FileModel,
+          Team: TeamModel,
         },
         services: {
           Storage: S3Storage,
@@ -47,7 +52,23 @@ const resolvers = {
   },
 
   Mutation: {
-    updateManuscript,
+    async updateManuscript(_, { data }, { user }) {
+      const userUuid = await User.getUuidForProfile(user)
+      const submission = new Submission({
+        models: {
+          Manuscript: ManuscriptModel,
+          File: FileModel,
+        },
+        services: {
+          Storage: S3Storage,
+        },
+      })
+
+      return updateSubmissionUseCase
+        .initialize({ submission })
+        .execute(data.id, userUuid)
+    },
+    // updateManuscript,
 
     submitManuscript,
 
