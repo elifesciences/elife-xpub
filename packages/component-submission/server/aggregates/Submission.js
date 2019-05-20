@@ -84,10 +84,10 @@ class Submission {
 
   updateEditorTeams(editorTeams) {
     const {
-      suggestedSeniorEditor = [],
-      opposedSeniorEditor = [],
-      suggestedReviewingEditor = [],
-      opposedReviewingEditor = [],
+      suggestedSeniorEditor = {},
+      opposedSeniorEditor = {},
+      suggestedReviewingEditor = {},
+      opposedReviewingEditor = {},
     } = editorTeams
 
     if (
@@ -96,8 +96,18 @@ class Submission {
     ) {
       throw new Error(`Same editor has been suggested and opposed`)
     }
-
-    editorTeams.forEach(team => this._addTeam(team))
+    if (suggestedSeniorEditor !== {}) {
+      this._addTeam(suggestedSeniorEditor)
+    }
+    if (opposedSeniorEditor !== {}) {
+      this._addTeam(opposedSeniorEditor)
+    }
+    if (suggestedReviewingEditor !== {}) {
+      this._addTeam(suggestedReviewingEditor)
+    }
+    if (opposedReviewingEditor !== {}) {
+      this._addTeam(opposedReviewingEditor)
+    }
   }
 
   updateReviewerTeams(reviewerTeams) {
