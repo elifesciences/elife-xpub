@@ -13,10 +13,14 @@ const manuscriptInputSchema = Joi.object()
       .keys({
         title: Joi.string().required(),
         articleType: Joi.string().required(),
-        subjects: Joi.array()
-          .min(1)
-          .max(2)
-          .required(),
+        subjects: Joi.alternatives().when('articleType', {
+          is: 'feature',
+          then: Joi.array().max(2),
+          otherwise: Joi.array()
+            .min(1)
+            .max(2)
+            .required(),
+        }),
       })
       .required(),
     coverLetter: Joi.string().required(),
