@@ -95,6 +95,17 @@ class NavigationHelper {
     )
   }
 
+  async fillLongTitle() {
+    await this.t.typeText(
+      submission.title,
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas semper ante sed volutpat tincidunt.\n\n Nullam rutrum tortor in libero cursus, sit amet dictum ex consectetur. In eget quam ac felis suscipit sodales euismod ac urna. Donec varius mollis sapien ac pharetra. Sed non nunc neque.\n\n Aenean at lorem nisi. Etiam tempor, turpis vitae fringilla sodales, ante felis posuere eros, et imperdiet ante nisi vel tellus.',
+    )
+  }
+
+  async setTitle(text) {
+    await this.t.selectText(submission.title).typeText(submission.title, text)
+  }
+
   async uploadManuscript(manuscript) {
     await this.t
       .setFilesToUpload(files.manuscriptUpload, manuscript.file)

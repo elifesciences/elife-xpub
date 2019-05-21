@@ -55,6 +55,8 @@ test('Happy path', async t => {
   navigationHelper.setAuthorEmail('example@example.org')
   navigationHelper.navigateForward()
 
+  await navigationHelper.wait(2000)
+
   // uploading files - manuscript and cover letter
   navigationHelper.fillCoverletter()
   navigationHelper.uploadManuscript(manuscript)
@@ -145,7 +147,7 @@ test('Ability to progress through the wizard is tied to validation', async t => 
 
   navigationHelper.navigateForward()
   // without this wait the tests sometimes fail on CI ¯\_(ツ)_/¯
-  navigationHelper.wait(2000)
+  await navigationHelper.wait(2000)
 
   await t
     .expect(getPageUrl())
@@ -175,7 +177,7 @@ test('Ability to progress through the wizard is tied to validation', async t => 
   navigationHelper.navigateForward()
 
   // Submission metadata entry
-  navigationHelper.wait(2000)
+  await navigationHelper.wait(2000)
   await t
     .expect(getPageUrl())
     .match(
@@ -194,7 +196,7 @@ test('Ability to progress through the wizard is tied to validation', async t => 
   navigationHelper.addManuscriptMetadata()
   navigationHelper.navigateForward()
   // Editors
-  navigationHelper.wait(2000)
+  await navigationHelper.wait(2000)
   await t
     .expect(getPageUrl())
     .match(
@@ -282,6 +284,79 @@ test('redirect page allows you to continue through app', async t => {
   const navigationHelper = new NavigationHelper(t)
   navigationHelper.startAtRedirect()
   await t.expect(getPageUrl()).contains('/login')
+})
+
+test('Title entry box expands and shrinks for longer titles', async t => {
+  const navigationHelper = new NavigationHelper(t)
+  navigationHelper.login()
+  navigationHelper.newSubmission()
+
+  await t
+    .expect(author.firstNameField.value)
+    .eql('')
+    .expect(author.secondNameField.value)
+    .eql('')
+    .expect(author.emailField.value)
+    .eql('')
+    .expect(author.institutionField.value)
+    .eql('')
+
+  navigationHelper.preFillAuthorDetailsWithOrcid()
+  await t
+    .expect(author.firstNameField.value)
+    .eql('Aaron')
+    .expect(author.secondNameField.value)
+    .eql('Swartz')
+    .expect(author.emailField.value)
+    .eql('f72c502e0d657f363b5f2dc79dd8ceea')
+    .expect(author.institutionField.value)
+    .eql('Tech team, University of eLife')
+  navigationHelper.setAuthorEmail('example@example.org')
+
+  navigationHelper.navigateForward()
+  await navigationHelper.wait(2000)
+  // uploading files - manuscript and cover letter
+  navigationHelper.fillCoverletter()
+  await navigationHelper.uploadManuscript(manuscript)
+
+  navigationHelper.navigateForward()
+
+  // adding manuscript metadata
+
+  await t
+    .expect(
+      Selector('textarea[data-test-id="manuscript-title-editor"]').getAttribute(
+        'rows',
+      ),
+    )
+    .eql('1')
+  navigationHelper.fillLongTitle()
+  // The product defined max-height of the titlebox is 4 lines
+
+  await t
+    .expect(Selector('textarea[data-test-id="manuscript-title-editor"]').exists)
+    .eql(true)
+  await t
+    .expect(
+      Selector('textarea[data-test-id="manuscript-title-editor"]').getAttribute(
+        'rows',
+      ),
+    )
+    .eql('4')
+
+  await navigationHelper.setTitle('A one line title')
+  await t
+    .expect(
+      Selector('textarea[data-test-id="manuscript-title-editor"]').getAttribute(
+        'rows',
+      ),
+    )
+    .eql('1')
+
+  navigationHelper.addManuscriptMetadata()
+  navigationHelper.navigateForward()
+
+  // Change the title to something really long and then expect the rows prop of the textarea to increase
 })
 
 test('cookie notice', async t => {
