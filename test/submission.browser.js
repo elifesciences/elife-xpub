@@ -291,7 +291,26 @@ test('Title entry box expands and shrinks for longer titles', async t => {
   navigationHelper.login()
   navigationHelper.newSubmission()
 
+  await t
+    .expect(author.firstNameField.value)
+    .eql('')
+    .expect(author.secondNameField.value)
+    .eql('')
+    .expect(author.emailField.value)
+    .eql('')
+    .expect(author.institutionField.value)
+    .eql('')
+
   navigationHelper.preFillAuthorDetailsWithOrcid()
+  await t
+    .expect(author.firstNameField.value)
+    .eql('Aaron')
+    .expect(author.secondNameField.value)
+    .eql('Swartz')
+    .expect(author.emailField.value)
+    .eql('f72c502e0d657f363b5f2dc79dd8ceea')
+    .expect(author.institutionField.value)
+    .eql('Tech team, University of eLife')
   navigationHelper.setAuthorEmail('example@example.org')
 
   navigationHelper.navigateForward()
