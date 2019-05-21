@@ -30,7 +30,6 @@ function getReviewerTeams(data) {
 
 const initialize = ({ submission }) => ({
   execute: async (manuscriptId, userId, data) => {
-    console.log('---', data)
     const manuscriptData = getManuscriptData(data)
     const editorTeams = getEditorTeams(data)
     const reviewerTeams = getReviewerTeams(data)
