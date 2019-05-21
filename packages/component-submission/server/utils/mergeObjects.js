@@ -1,10 +1,9 @@
-const { mergeWith, isArray } = require('lodash')
+const { mergeWith, isArray, clone } = require('lodash')
 
 // In future this might want to live outside of this bounded context
 module.exports = function mergeObjects(source, ...inputs) {
   return mergeWith(
-    {},
-    source,
+    clone(source),
     ...inputs,
     // always replace arrays instead of merging
     (objValue, srcValue) => {

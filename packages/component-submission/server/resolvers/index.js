@@ -67,9 +67,8 @@ const resolvers = {
 
       return updateSubmissionUseCase
         .initialize({ submission })
-        .execute(data.id, userUuid)
+        .execute(data.id, userUuid, data)
     },
-    // updateManuscript,
 
     submitManuscript,
 

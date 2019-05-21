@@ -176,11 +176,13 @@ describe('Submission', () => {
       )
       jest
         .spyOn(Manuscript, 'find')
-        .mockReturnValue(createMockObject({}, mockManuscriptSave))
+        .mockReturnValue(
+          createMockObject({ status: 'INITIAL' }, mockManuscriptSave),
+        )
 
       const submission = await createSubmission().initialize()
 
-      submission.updateManuscript({})
+      await submission.updateManuscript({})
       expect(mockManuscriptSave).toBeCalled()
     })
 
@@ -188,12 +190,15 @@ describe('Submission', () => {
       const mockMergeFunction = jest.fn(manuscript => manuscript)
       utils.mergeObjects.mockImplementationOnce(mockMergeFunction)
       const mockManuscriptSave = jest.fn()
-      const manuscriptMock = createMockObject({}, mockManuscriptSave)
+      const manuscriptMock = createMockObject(
+        { status: 'INITIAL' },
+        mockManuscriptSave,
+      )
       jest.spyOn(Manuscript, 'find').mockReturnValue(manuscriptMock)
 
       const submission = await createSubmission().initialize()
 
-      submission.updateManuscript({})
+      await submission.updateManuscript({})
       expect(mockMergeFunction).toBeCalledWith(manuscriptMock, {})
     })
   })

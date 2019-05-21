@@ -9,7 +9,7 @@ describe('updateSubmissionUseCase', () => {
       updateManuscript: jest.fn(),
       updateAuthorTeam: jest.fn(),
       updateEditorTeams: jest.fn(),
-      updatedReviewerTeams: jest.fn(),
+      updateReviewerTeams: jest.fn(),
     }
     await updateSubmissionUseCase
       .initialize({ submission: mockSubmission })
@@ -24,7 +24,7 @@ describe('updateSubmissionUseCase', () => {
       updateManuscript: jest.fn(),
       updateAuthorTeam: jest.fn(),
       updateEditorTeams: jest.fn(),
-      updatedReviewerTeams: jest.fn(),
+      updateReviewerTeams: jest.fn(),
     }
     await updateSubmissionUseCase
       .initialize({ submission: mockSubmission })
@@ -32,6 +32,6 @@ describe('updateSubmissionUseCase', () => {
     expect(mockSubmission.updateManuscript).toHaveBeenCalled()
     expect(mockSubmission.updateAuthorTeam).toHaveBeenCalled()
     expect(mockSubmission.updateEditorTeams).toHaveBeenCalled()
-    expect(mockSubmission.updatedReviewerTeams).toHaveBeenCalled()
+    expect(mockSubmission.updateReviewerTeams).toHaveBeenCalled()
   })
 })

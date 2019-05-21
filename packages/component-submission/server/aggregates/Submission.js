@@ -68,18 +68,18 @@ class Submission {
     }
   }
 
-  updateManuscript(manuscriptData) {
-    if (this.manuscript.status === this.ManuscriptModel.statuses.INITIAL) {
+  async updateManuscript(manuscriptData) {
+    if (this.manuscript.status !== this.ManuscriptModel.statuses.INITIAL) {
       throw new Error(
         `Cannot update manuscript with status of ${this.manuscript.status}`,
       )
     }
 
     this.manuscript = mergeObjects(this.manuscript, manuscriptData)
-    this.manuscript.save()
+    return this.manuscript.save()
   }
 
-  updateAuthorTeam(author) {
+  async updateAuthorTeam(author) {
     this._addTeam({
       role: 'author',
       teamMembers: [
@@ -91,7 +91,7 @@ class Submission {
     })
   }
 
-  updateEditorTeams(editors) {
+  async updateEditorTeams(editors) {
     const {
       suggestedSeniorEditor = [],
       opposedSeniorEditor = [],
@@ -129,7 +129,7 @@ class Submission {
     })
   }
 
-  updateReviewerTeams(reviewers) {
+  async updateReviewerTeams(reviewers) {
     const { suggestedReviewer = [], opposedReviewer = [] } = reviewers
 
     const shapeReviewer = meta => ({ meta })

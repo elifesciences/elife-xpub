@@ -36,10 +36,10 @@ const initialize = ({ submission }) => ({
 
     await submission.initialize(manuscriptId, userId)
 
-    submission.updateManuscript(manuscriptData)
-    submission.updateAuthorTeam(data.author)
-    submission.updateEditorTeams(editorTeams)
-    submission.updatedReviewerTeams(reviewerTeams)
+    await submission.updateManuscript(manuscriptData)
+    await submission.updateAuthorTeam(data.author)
+    await submission.updateEditorTeams(editorTeams)
+    await submission.updateReviewerTeams(reviewerTeams)
   },
 })
 
