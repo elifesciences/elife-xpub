@@ -86,13 +86,24 @@ export const editorsSchema = {
     ),
   ),
   opposedReviewers: yup.array(
-    yup.object({
-      name: yup.string().required('Name is required'),
-      email: yup
-        .string()
-        .email('Must be a valid email')
-        .required('Email is required'),
-    }),
+    yup.object().shape(
+      {
+        name: yup.string().when('email', {
+          is: email => email && email.length > 0,
+          then: yup.string().required('Name is required'),
+          otherwise: yup.string(),
+        }),
+        email: yup.string().when('name', {
+          is: name => name && name.length > 0,
+          then: yup
+            .string()
+            .email('Must be a valid email')
+            .required('Email is required'),
+          otherwise: yup.string().email('Must be a valid email'),
+        }),
+      },
+      ['name', 'email'],
+    ),
   ),
   opposedReviewersReason: opposedReasonValidator('opposedReviewers'),
 }

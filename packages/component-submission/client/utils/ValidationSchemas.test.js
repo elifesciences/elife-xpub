@@ -41,7 +41,7 @@ describe('Editors Schema', () => {
       opposedReviewingEditors: [{ id: 1 }, { id: 2 }, { id: 3 }],
       opposedReviewingEditorsReason: '',
       suggestedReviewers: [{ name: '', email: 'bloop' }],
-      opposedReviewers: [{ name: 'Jane Doe', email: 'jane@doe.com' }],
+      opposedReviewers: [{ name: '', email: 'boop' }],
       opposedReviewersReason: '',
     }
 
@@ -57,6 +57,9 @@ describe('Editors Schema', () => {
       opposedReviewingEditorsReason: 'Please provide a reason for exclusion',
       opposedSeniorEditorsReason: 'Please provide a reason for exclusion',
       suggestedReviewers: [
+        { email: 'Must be a valid email', name: 'Name is required' },
+      ],
+      opposedReviewers: [
         { email: 'Must be a valid email', name: 'Name is required' },
       ],
       suggestedReviewingEditors: 'Please suggest at least 2 editors',
@@ -92,6 +95,36 @@ describe('Editors Schema', () => {
 
     expect(errors).toEqual({
       suggestedReviewers: [{ email: 'Email is required' }],
+    })
+  })
+
+  it('stops invalid opposed reviewer with no name', () => {
+    const testData = { ...validEditorData }
+    testData.opposedReviewers = [{ name: '', email: 'email@email.com' }]
+    let errors
+    try {
+      schema.validateSync(testData, { abortEarly: false })
+    } catch (e) {
+      errors = yupToFormErrors(e)
+    }
+
+    expect(errors).toEqual({
+      opposedReviewers: [{ name: 'Name is required' }],
+    })
+  })
+
+  it('stops invalid opposed reviewer with no email', () => {
+    const testData = { ...validEditorData }
+    testData.opposedReviewers = [{ name: 'Name', email: '' }]
+    let errors
+    try {
+      schema.validateSync(testData, { abortEarly: false })
+    } catch (e) {
+      errors = yupToFormErrors(e)
+    }
+
+    expect(errors).toEqual({
+      opposedReviewers: [{ email: 'Email is required' }],
     })
   })
 })
