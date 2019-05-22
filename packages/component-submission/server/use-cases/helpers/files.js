@@ -1,6 +1,7 @@
 const logger = require('@pubsweet/logger')
 const FileModel = require('@elifesciences/component-model-file').model
 const SemanticExtractionModel = require('@elifesciences/component-model-semantic-extraction')
+  .model
 
 const cleanOldManuscript = async fileList => {
   const oldFileIndex = fileList.findIndex(
