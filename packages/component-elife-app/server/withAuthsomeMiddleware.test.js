@@ -45,3 +45,6 @@ describe('withAuthsomeMiddleware', () => {
     done()
   })
 })
+// TODO: It evaluates simple policies correctly
+// TODO: It does not modify behaviour of resolvers that are not Mutations, Queries or Subscriptions
+// TODO: When there is more than one policy per use case, and one fails, it does not execute the remainder of the policies
