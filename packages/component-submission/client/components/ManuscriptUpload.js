@@ -140,6 +140,7 @@ const DropzoneContent = ({
           <NativeLink
             data-test-id="manusctipt-download-link"
             href={downloadLink}
+            target="_blank"
           >
             preview{' '}
           </NativeLink>

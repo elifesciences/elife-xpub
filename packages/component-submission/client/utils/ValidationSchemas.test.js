@@ -5,6 +5,7 @@ import {
   disclosureSchema,
   editorsSchema,
   filesSchema,
+  submissionSchema,
 } from './ValidationSchemas'
 import { errorMessageMapping } from './constants'
 
@@ -41,7 +42,7 @@ describe('Editors Schema', () => {
       opposedReviewingEditors: [{ id: 1 }, { id: 2 }, { id: 3 }],
       opposedReviewingEditorsReason: '',
       suggestedReviewers: [{ name: '', email: 'bloop' }],
-      opposedReviewers: [{ name: 'Jane Doe', email: 'jane@doe.com' }],
+      opposedReviewers: [{ name: '', email: 'boop' }],
       opposedReviewersReason: '',
     }
 
@@ -57,6 +58,9 @@ describe('Editors Schema', () => {
       opposedReviewingEditorsReason: 'Please provide a reason for exclusion',
       opposedSeniorEditorsReason: 'Please provide a reason for exclusion',
       suggestedReviewers: [
+        { email: 'Must be a valid email', name: 'Name is required' },
+      ],
+      opposedReviewers: [
         { email: 'Must be a valid email', name: 'Name is required' },
       ],
       suggestedReviewingEditors: 'Please suggest at least 2 editors',
@@ -92,6 +96,36 @@ describe('Editors Schema', () => {
 
     expect(errors).toEqual({
       suggestedReviewers: [{ email: 'Email is required' }],
+    })
+  })
+
+  it('stops invalid opposed reviewer with no name', () => {
+    const testData = { ...validEditorData }
+    testData.opposedReviewers = [{ name: '', email: 'email@email.com' }]
+    let errors
+    try {
+      schema.validateSync(testData, { abortEarly: false })
+    } catch (e) {
+      errors = yupToFormErrors(e)
+    }
+
+    expect(errors).toEqual({
+      opposedReviewers: [{ name: 'Name is required' }],
+    })
+  })
+
+  it('stops invalid opposed reviewer with no email', () => {
+    const testData = { ...validEditorData }
+    testData.opposedReviewers = [{ name: 'Name', email: '' }]
+    let errors
+    try {
+      schema.validateSync(testData, { abortEarly: false })
+    } catch (e) {
+      errors = yupToFormErrors(e)
+    }
+
+    expect(errors).toEqual({
+      opposedReviewers: [{ email: 'Email is required' }],
     })
   })
 })
@@ -217,6 +251,108 @@ describe('Files schema', () => {
 
     expect(errors).toEqual({
       files: errorMessageMapping.EMPTY,
+    })
+  })
+})
+
+describe('Submission Schema', () => {
+  const subSchema = yup.object().shape(submissionSchema)
+  const validSubmission = {
+    meta: {
+      title: 'some text',
+      articleType: 'article',
+      subjects: ['fantasy, sci-fi'],
+    },
+    previouslyDiscussed: 'yes',
+    previouslySubmitted: ['nope'],
+    firstCosubmissionTitle: 'blah',
+  }
+
+  it('allows valid data', () => {
+    expect(() => subSchema.validateSync(validSubmission)).not.toThrow()
+  })
+
+  it('throws the correct errors on the subjects field', () => {
+    const invalidMetaSubmission = Object.assign({}, validSubmission)
+    invalidMetaSubmission.meta.subjects = []
+    let errors
+    try {
+      subSchema.validateSync(invalidMetaSubmission, { abortEarly: false })
+    } catch (e) {
+      errors = yupToFormErrors(e)
+    }
+
+    expect(errors).toEqual({
+      meta: {
+        subjects: 'Subject area(s) required',
+      },
+    })
+    invalidMetaSubmission.meta.subjects.push(...['blah', 'bleigh', 'blob'])
+    try {
+      subSchema.validateSync(invalidMetaSubmission, { abortEarly: false })
+    } catch (e) {
+      errors = yupToFormErrors(e)
+    }
+
+    expect(errors).toEqual({
+      meta: {
+        subjects: 'No more than 2 subject areas',
+      },
+    })
+  })
+
+  it('does not require subjects when the article type is feature', () => {
+    const featureSubmission = Object.assign({}, validSubmission)
+    featureSubmission.meta.articleType = 'feature'
+    delete featureSubmission.meta.subjects
+    expect(() => subSchema.validateSync(featureSubmission)).not.toThrow()
+
+    featureSubmission.meta.subjects = ['blah']
+    expect(() => subSchema.validateSync(featureSubmission)).not.toThrow()
+
+    featureSubmission.meta.subjects.push('bleigh')
+    expect(() => subSchema.validateSync(featureSubmission)).not.toThrow()
+
+    featureSubmission.meta.subjects.push('TOO MANY')
+    let errors
+    try {
+      subSchema.validateSync(featureSubmission, { abortEarly: false })
+    } catch (e) {
+      errors = yupToFormErrors(e)
+    }
+    expect(errors).toEqual({
+      meta: {
+        subjects: 'No more than 2 subject areas',
+      },
+    })
+  })
+
+  it('throws the correct errors on the non subject fields', () => {
+    const invalidMetaSubmission = {
+      meta: {
+        title: '',
+        articleType: '',
+        subjects: ['bleigh'],
+      },
+      previouslyDiscussed: '',
+      previouslySubmitted: [''],
+      firstCosubmissionTitle: '',
+    }
+    let errors
+    try {
+      subSchema.validateSync(invalidMetaSubmission, { abortEarly: false })
+    } catch (e) {
+      errors = yupToFormErrors(e)
+    }
+
+    expect(errors).toEqual({
+      meta: {
+        title: 'Title is required',
+        articleType: 'Article type is required',
+      },
+      previouslyDiscussed: 'Please describe your previous interaction',
+      previouslySubmitted: ['Article title is required'],
+      firstCosubmissionTitle: 'Article title is required',
     })
   })
 })

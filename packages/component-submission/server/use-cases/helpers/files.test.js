@@ -4,6 +4,7 @@ const stream = require('stream')
 const { createTables } = require('@elifesciences/component-model')
 const logger = require('@pubsweet/logger')
 const SemanticExtraction = require('@elifesciences/component-model-semantic-extraction')
+  .model
 const ManuscriptModel = require('@elifesciences/component-model-manuscript')
   .model
 const FilesHelper = require('./files')

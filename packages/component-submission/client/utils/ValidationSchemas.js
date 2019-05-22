@@ -86,13 +86,24 @@ export const editorsSchema = {
     ),
   ),
   opposedReviewers: yup.array(
-    yup.object({
-      name: yup.string().required('Name is required'),
-      email: yup
-        .string()
-        .email('Must be a valid email')
-        .required('Email is required'),
-    }),
+    yup.object().shape(
+      {
+        name: yup.string().when('email', {
+          is: email => email && email.length > 0,
+          then: yup.string().required('Name is required'),
+          otherwise: yup.string(),
+        }),
+        email: yup.string().when('name', {
+          is: name => name && name.length > 0,
+          then: yup
+            .string()
+            .email('Must be a valid email')
+            .required('Email is required'),
+          otherwise: yup.string().email('Must be a valid email'),
+        }),
+      },
+      ['name', 'email'],
+    ),
   ),
   opposedReviewersReason: opposedReasonValidator('opposedReviewers'),
 }
@@ -101,11 +112,19 @@ export const submissionSchema = {
   meta: yup.object().shape({
     title: yup.string().required('Title is required'),
     articleType: yup.string().required('Article type is required'),
-    subjects: yup
-      .array()
-      .min(1, `Choose at least 1 subject area`)
-      .max(2, `No more than 2 subject areas`)
-      .required('Subject area(s) required'),
+    subjects: yup.array().when('articleType', {
+      is: articleType => articleType && articleType === 'feature',
+      then: yup
+        .array()
+        .of(yup.string())
+        .max(2, `No more than 2 subject areas`),
+      otherwise: yup
+        .array()
+        .of(yup.string())
+        .min(1, `Choose at least 1 subject area`)
+        .max(2, `No more than 2 subject areas`)
+        .required('Subject area(s) required'),
+    }),
   }),
   previouslyDiscussed: yup
     .string()

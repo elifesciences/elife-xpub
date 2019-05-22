@@ -1,14 +1,12 @@
 const logger = require('@pubsweet/logger')
 const { S3Storage } = require('@elifesciences/component-service-s3')
-const User = require('@elifesciences/component-model-user').model
-const Manuscript = require('@elifesciences/component-model-manuscript').model
-const File = require('@elifesciences/component-model-file').model
+const models = require('@pubsweet/models')
 
 const resolvers = {
   Query: {
     async manuscripts(_, vars, { user }) {
-      const userUuid = await User.getUuidForProfile(user)
-      return Manuscript.all(userUuid)
+      const userUuid = await models.User.getUuidForProfile(user)
+      return models.Manuscript.all(userUuid)
     },
   },
 
@@ -17,16 +15,16 @@ const resolvers = {
       if (!user) {
         throw new Error('Not logged in')
       }
-      const userUuid = await User.getUuidForProfile(user)
-      const manuscript = Manuscript.makeInitial({ createdBy: userUuid })
+      const userUuid = await models.User.getUuidForProfile(user)
+      const manuscript = models.Manuscript.makeInitial({ createdBy: userUuid })
       manuscript.setDefaults()
       return manuscript.save()
     },
 
     async deleteManuscript(_, { id }, { user }) {
-      const userUuid = await User.getUuidForProfile(user)
-      const manuscript = await Manuscript.find(id, userUuid)
-      const files = await File.findByManuscriptId(id)
+      const userUuid = await models.User.getUuidForProfile(user)
+      const manuscript = await models.Manuscript.find(id, userUuid)
+      const files = await models.File.findByManuscriptId(id)
       if (files) {
         try {
           await files.forEach(file => {
