@@ -66,7 +66,7 @@ const resolvers = {
       })
 
       return updateSubmissionUseCase
-        .initialize({ submission })
+        .initialize({ submission, logger })
         .execute(data.id, userUuid, data)
     },
 

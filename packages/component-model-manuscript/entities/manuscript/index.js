@@ -186,7 +186,7 @@ class Manuscript extends BaseModel {
     const simpleSave = async (trx = null) => {
       // save manuscript and all relations
       // note that this also deletes any related entities that are not present
-      await this.$query(trx).upsertGraphAndFetch(this, { noDelete: '[files]' })
+      await this.$query(trx).upsertGraphAndFetch(this, { noDelete: true })
       // reload related entities
       await this.$loadRelated('[teams, files]', null, trx)
     }

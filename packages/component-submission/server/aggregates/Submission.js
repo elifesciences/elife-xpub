@@ -40,8 +40,9 @@ class Submission {
   async _saveTeams() {
     this.manuscript.teams = this.teams
 
-    return this.manuscript.save()
-    // return this.manuscript.$query().upsertGraphAndFetch(this.manuscript)
+    await this.manuscript.save()
+
+    this.teams = this.manuscript.teams
   }
 
   filesAreStored() {

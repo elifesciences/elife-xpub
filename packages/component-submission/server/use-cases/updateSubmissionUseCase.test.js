@@ -34,4 +34,23 @@ describe('updateSubmissionUseCase', () => {
     expect(mockSubmission.updateEditorTeams).toHaveBeenCalled()
     expect(mockSubmission.updateReviewerTeams).toHaveBeenCalled()
   })
+
+  it('returns a submission json', async () => {
+    const mockSubmission = {
+      initialize: jest.fn(),
+      toJSON: jest.fn().mockReturnValue({ foo: 'bar' }),
+      updateManuscript: jest.fn(),
+      updateAuthorTeam: jest.fn(),
+      updateEditorTeams: jest.fn(),
+      updateReviewerTeams: jest.fn(),
+    }
+    const spy = jest.spyOn(mockSubmission, 'toJSON')
+
+    const result = await updateSubmissionUseCase
+      .initialize({ submission: mockSubmission })
+      .execute(1, 1, { author: 'author' })
+
+    expect(spy).toHaveBeenCalledTimes(1)
+    expect(result).toEqual({ foo: 'bar' })
+  })
 })
