@@ -17,15 +17,15 @@ function getManuscriptData(data) {
 
 function getEditorTeams(data) {
   return pick(data, [
-    'suggestedSeniorEditor',
-    'opposedSeniorEditor',
-    'suggestedReviewingEditor',
-    'opposedReviewingEditor',
+    'suggestedSeniorEditors',
+    'opposedSeniorEditors',
+    'suggestedReviewingEditors',
+    'opposedReviewingEditors',
   ])
 }
 
 function getReviewerTeams(data) {
-  return pick(data, ['suggestedReviewer', 'opposedReviewer'])
+  return pick(data, ['suggestedReviewers', 'opposedReviewers'])
 }
 
 const initialize = ({ submission }) => ({

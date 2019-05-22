@@ -37,6 +37,13 @@ class Submission {
     }
   }
 
+  async _saveTeams() {
+    this.manuscript.teams = this.teams
+
+    return this.manuscript.save()
+    // return this.manuscript.$query().upsertGraphAndFetch(this.manuscript)
+  }
+
   filesAreStored() {
     if (!this.files) return true
 
@@ -89,19 +96,22 @@ class Submission {
         },
       ],
     })
+
+    return this._saveTeams()
   }
 
   async updateEditorTeams(editors) {
     const {
-      suggestedSeniorEditor = [],
-      opposedSeniorEditor = [],
-      suggestedReviewingEditor = [],
-      opposedReviewingEditor = [],
+      suggestedSeniorEditors = [],
+      opposedSeniorEditors = [],
+      suggestedReviewingEditors = [],
+      opposedReviewingEditors = [],
     } = editors
 
     if (
-      intersection(suggestedSeniorEditor, opposedSeniorEditor).length > 0 ||
-      intersection(suggestedReviewingEditor, opposedReviewingEditor).length > 0
+      intersection(suggestedSeniorEditors, opposedSeniorEditors).length > 0 ||
+      intersection(suggestedReviewingEditors, opposedReviewingEditors).length >
+        0
     ) {
       throw new Error(`Same editor has been suggested and opposed`)
     }
@@ -109,40 +119,44 @@ class Submission {
     const shapeEditor = id => ({ meta: { elifePersonId: id } })
 
     this._addTeam({
-      role: 'suggestedSeniorEditors',
-      teamMembers: suggestedSeniorEditor.map(shapeEditor),
+      role: 'suggestedSeniorEditor',
+      teamMembers: suggestedSeniorEditors.map(shapeEditor),
     })
 
     this._addTeam({
-      role: 'opposedSeniorEditors',
-      teamMembers: opposedSeniorEditor.map(shapeEditor),
+      role: 'opposedSeniorEditor',
+      teamMembers: opposedSeniorEditors.map(shapeEditor),
     })
 
     this._addTeam({
-      role: 'suggestedReviewingEditors',
-      teamMembers: suggestedReviewingEditor.map(shapeEditor),
+      role: 'suggestedReviewingEditor',
+      teamMembers: suggestedReviewingEditors.map(shapeEditor),
     })
 
     this._addTeam({
-      role: 'opposedReviewingEditors',
-      teamMembers: opposedReviewingEditor.map(shapeEditor),
+      role: 'opposedReviewingEditor',
+      teamMembers: opposedReviewingEditors.map(shapeEditor),
     })
+
+    return this._saveTeams()
   }
 
   async updateReviewerTeams(reviewers) {
-    const { suggestedReviewer = [], opposedReviewer = [] } = reviewers
+    const { suggestedReviewers = [], opposedReviewers = [] } = reviewers
 
     const shapeReviewer = meta => ({ meta })
 
     this._addTeam({
-      role: 'suggestedReviewers',
-      teamMembers: suggestedReviewer.map(shapeReviewer),
+      role: 'suggestedReviewer',
+      teamMembers: suggestedReviewers.map(shapeReviewer),
     })
 
     this._addTeam({
-      role: 'opposedReviewers',
-      teamMembers: opposedReviewer.map(shapeReviewer),
+      role: 'opposedReviewer',
+      teamMembers: opposedReviewers.map(shapeReviewer),
     })
+
+    return this._saveTeams()
   }
 }
 

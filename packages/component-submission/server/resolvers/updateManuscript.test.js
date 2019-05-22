@@ -1,8 +1,11 @@
 jest.mock('@pubsweet/logger')
 
+const { keyBy } = require('lodash')
 const { createTables } = require('@elifesciences/component-model')
 const User = require('@elifesciences/component-model-user').model
 const Manuscript = require('@elifesciences/component-model-manuscript').model
+const Team = require('@elifesciences/component-model-team').model
+
 const { Mutation } = require('.')
 const {
   userData,
@@ -70,6 +73,74 @@ describe('Manuscript resolvers', () => {
       )
       const actualManuscript = await Manuscript.find(manuscript.id, userId)
       expect(actualManuscript).toMatchObject(expectedManuscript)
+    })
+
+    it('updates the current submission teams', async () => {
+      const manuscript = await Manuscript.makeInitial({
+        createdBy: userId,
+      }).save()
+
+      await Mutation.updateManuscript(
+        {},
+        { data: { id: manuscript.id, ...manuscriptInput } },
+        { user: profileId },
+      )
+      const teams = keyBy(await Team.findByManuscriptId(manuscript.id), 'role')
+
+      expect(teams.author).toMatchObject({
+        role: 'author',
+        objectType: 'manuscript',
+        objectId: manuscript.id,
+        teamMembers: [
+          { alias: manuscriptInput.author, meta: { corresponding: true } },
+        ],
+      })
+      expect(teams.suggestedSeniorEditor).toMatchObject({
+        role: 'suggestedSeniorEditor',
+        objectType: 'manuscript',
+        objectId: manuscript.id,
+        teamMembers: [
+          { meta: { elifePersonId: 'ab12' } },
+          { meta: { elifePersonId: 'cd34' } },
+        ],
+      })
+      expect(teams.opposedSeniorEditor).toMatchObject({
+        role: 'opposedSeniorEditor',
+        objectType: 'manuscript',
+        objectId: manuscript.id,
+        teamMembers: [{ meta: { elifePersonId: 'ij90' } }],
+      })
+      expect(teams.suggestedReviewingEditor).toMatchObject({
+        role: 'suggestedReviewingEditor',
+        objectType: 'manuscript',
+        objectId: manuscript.id,
+        teamMembers: [
+          { meta: { elifePersonId: 'ef56' } },
+          { meta: { elifePersonId: 'gh78' } },
+        ],
+      })
+      expect(teams.opposedReviewingEditor).toMatchObject({
+        role: 'opposedReviewingEditor',
+        objectType: 'manuscript',
+        objectId: manuscript.id,
+        teamMembers: [{ meta: { elifePersonId: 'kl12' } }],
+      })
+      expect(teams.suggestedReviewer).toMatchObject({
+        role: 'suggestedReviewer',
+        objectType: 'manuscript',
+        objectId: manuscript.id,
+        teamMembers: [
+          { meta: manuscriptInput.suggestedReviewers[0] },
+          { meta: manuscriptInput.suggestedReviewers[1] },
+          { meta: manuscriptInput.suggestedReviewers[2] },
+        ],
+      })
+      expect(teams.opposedReviewer).toMatchObject({
+        role: 'opposedReviewer',
+        objectType: 'manuscript',
+        objectId: manuscript.id,
+        teamMembers: [{ meta: manuscriptInput.opposedReviewers[0] }],
+      })
     })
   })
 })
