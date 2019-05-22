@@ -4,13 +4,15 @@ const { AuthorizationError } = require('@pubsweet/errors')
 
 const models = require('@pubsweet/models')
 
+const AUTHORIZATION_ERROR_MESSAGE = 'Operation not permitted :('
+
 const can = async (userId, verb, entity) => {
   const authsome = new Authsome({ mode: authsomeMode }, { models })
 
   const permission = await authsome.can(userId, verb, entity)
 
   if (!permission) {
-    throw new AuthorizationError(`Operation not permitted :(`)
+    throw new AuthorizationError(AUTHORIZATION_ERROR_MESSAGE)
   }
 
   return permission.filter || (id => id)
@@ -41,6 +43,7 @@ const injectMiddleware = (gqlResolvers, useCases, _can = can) =>
           },
           params,
         )
+
         // NOTE: This will throw if the conditions don't pass so no need
         // to actually use the output of `can`
 
@@ -50,4 +53,4 @@ const injectMiddleware = (gqlResolvers, useCases, _can = can) =>
     {},
   )
 
-module.exports = { withAuthsomeMiddleware }
+module.exports = { withAuthsomeMiddleware, AUTHORIZATION_ERROR_MESSAGE }
