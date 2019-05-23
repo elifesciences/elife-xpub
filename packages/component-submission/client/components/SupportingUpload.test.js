@@ -9,11 +9,7 @@ import SupportingUpload from './SupportingUpload'
 const WrappedComponent = props => (
   <ThemeProvider theme={theme}>
     <MemoryRouter>
-      <SupportingUpload
-        data-test-id="test-supporting-upload"
-        onDrop={jest.fn()}
-        {...props}
-      />
+      <SupportingUpload onDrop={jest.fn()} {...props} />
     </MemoryRouter>
   </ThemeProvider>
 )
