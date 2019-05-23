@@ -3,8 +3,8 @@ const BluebirdPromise = require('bluebird')
 // Policy type: (user: string, operation: string, object: any, context?: any) => boolean
 const authsomePolicies = {
   // TODO: Somehow extend this list?
-  isAuthenticated: (userId, _a, _b, _c) => !!userId,
-  isNotAuthenticated: (userId, _a, _b, _c) => !userId,
+  isAuthenticated: userId => !!userId,
+  isNotAuthenticated: userId => !userId,
 }
 
 const authsomeMode = async (userId, { name, policies = [] }, object, context) =>
