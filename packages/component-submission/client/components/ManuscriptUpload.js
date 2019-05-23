@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import ReactGA from 'react-ga'
 import { Flex, Box } from '@rebass/grid'
 import styled from 'styled-components'
 import Dropzone from 'react-dropzone'
@@ -140,6 +141,12 @@ const DropzoneContent = ({
           <NativeLink
             data-test-id="manusctipt-download-link"
             href={downloadLink}
+            onClick={() => {
+              ReactGA.event({
+                category: 'User',
+                action: 'Downloaded manuscript preview',
+              })
+            }}
             target="_blank"
           >
             preview{' '}
