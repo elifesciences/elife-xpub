@@ -1,4 +1,5 @@
 import React from 'react'
+import ReactGA from 'react-ga'
 import { compose, withHandlers } from 'recompose'
 import {
   ActionText,
@@ -39,6 +40,11 @@ export default compose(
       props.setFieldValue('author.lastName', identity.meta.lastName)
       props.setFieldValue('author.email', identity.email)
       props.setFieldValue('author.aff', identity.aff)
+
+      ReactGA.event({
+        category: 'User',
+        action: 'Pre-filled their details',
+      })
     },
   }),
 )(AuthorPage)
