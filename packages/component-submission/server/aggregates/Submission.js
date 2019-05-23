@@ -10,7 +10,11 @@ class Submission {
   }
 
   async initialize(manuscriptId, userId) {
-    this.manuscript = await this.ManuscriptModel.find(manuscriptId, userId)
+    this.manuscript = await this.ManuscriptModel.find(
+      manuscriptId,
+      userId,
+      '[teams]',
+    )
     this.files = await this.FileModel.findByManuscriptId(manuscriptId)
     this.teams = await this.TeamModel.findByManuscriptId(manuscriptId)
 
@@ -84,6 +88,7 @@ class Submission {
     }
 
     this.manuscript = mergeObjects(this.manuscript, manuscriptData)
+
     return this.manuscript.save()
   }
 

@@ -19,7 +19,6 @@ export default class AutoSave extends React.Component {
 
   componentWillUnmount() {
     clearInterval(this.timer)
-    this.save()
   }
 
   save() {
