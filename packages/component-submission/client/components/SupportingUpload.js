@@ -284,14 +284,14 @@ class SupportingUpload extends React.Component {
             </FileBlock>
           ))}
         </StyledDropzone>
-        {hasManuscript &&
+        {(hasManuscript || successfullyUploadedFiles.length > 0) &&
           !this.state.uploading && (
             <React.Fragment>
               <Flex>
                 {successfullyUploadedFiles.length < MAX_SUPPORTING_FILES && (
                   <React.Fragment>
-                    <UploadControl>
-                      Add more{' '}
+                    <UploadControl data-test-id="supporting-files-upload-control">
+                      Add {successfullyUploadedFiles.length > 0 && 'more'}{' '}
                       <UploadLink
                         data-test-id="supportingFilesLink"
                         onClick={() => dropzoneRef.open()}
@@ -319,12 +319,11 @@ class SupportingUpload extends React.Component {
               </Flex>
             </React.Fragment>
           )}
-        {hasManuscript &&
-          successfullyUploadedFiles.length > 9 && (
-            <ValidationText>
-              Maximum {MAX_SUPPORTING_FILES} supporting files
-            </ValidationText>
-          )}
+        {successfullyUploadedFiles.length > MAX_SUPPORTING_FILES - 1 && (
+          <ValidationText data-test-id="supporting-files-validation-text">
+            Maximum {MAX_SUPPORTING_FILES} supporting files
+          </ValidationText>
+        )}
       </React.Fragment>
     )
   }
