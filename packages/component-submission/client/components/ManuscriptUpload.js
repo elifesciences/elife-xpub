@@ -144,7 +144,7 @@ const DropzoneContent = ({
             onClick={() => {
               ReactGA.event({
                 category: 'User',
-                action: 'Downloaded manuiscript preview',
+                action: 'Downloaded manuscript preview',
               })
             }}
             target="_blank"
