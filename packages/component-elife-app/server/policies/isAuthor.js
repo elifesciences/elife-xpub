@@ -1,4 +1,4 @@
-module.exports = async (userId, operation, request, context) => {
+module.exports = (userId, operation, request, context) => {
   const { Manuscript } = context.models
 
   // There must be a more elegant way of doing this
