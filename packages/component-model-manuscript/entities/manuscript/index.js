@@ -143,11 +143,11 @@ class Manuscript extends BaseModel {
     return manuscript
   }
 
-  static async findByIdAndAuthor(id, user, related = '[teams, files]') {
+  static async findById(id, related = '[teams, files]') {
     // This is a copypasta of `find` because `find` might be changed so that it doesn't query by userId
+    // TODO: Once we've got the policies in place, replace `find` with this function
     const [manuscript] = await this.query().where({
       'manuscript.id': id,
-      'manuscript.created_by': user,
     })
 
     if (!manuscript) {
