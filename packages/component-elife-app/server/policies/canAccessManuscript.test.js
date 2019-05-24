@@ -1,14 +1,10 @@
-const {
-  withAuthsomeMiddleware,
-  AUTHORIZATION_ERROR_MESSAGE,
-} = require('../withAuthsomeMiddleware')
+const { AUTHORIZATION_ERROR_MESSAGE } = require('../withAuthsomeMiddleware')
 
 const { canAccessManuscript } = require('.')
+const { injectFakeResolver } = require('./testHelpers')
 const { AuthorizationError } = require('@pubsweet/errors')
 
 describe('policy: canAccessManuscript', async () => {
-  const resolver1Name = 'bobby'
-  const mockResolver = jest.fn(() => ({ authorized: true }))
   const mockManuscript = {
     findById: jest.fn(async m => {
       if (m === 'exampleManuscriptId') {
@@ -18,22 +14,13 @@ describe('policy: canAccessManuscript', async () => {
     }),
   }
 
-  const mockUseCases = {
-    [`${resolver1Name}UseCase`]: {
-      authsomePolicies: ['isAuthenticated', canAccessManuscript],
-    },
-  }
+  const resolver1Name = 'test'
 
-  const mockResolvers = {
-    Mutation: {
-      [resolver1Name]: mockResolver,
-    },
-  }
-
-  const modifiedResolvers = withAuthsomeMiddleware(
-    mockResolvers,
-    mockUseCases,
-    { _models: { Manuscript: mockManuscript } },
+  const modifiedResolvers = injectFakeResolver(
+    resolver1Name,
+    async () => ({ authorized: true }),
+    { Manuscript: mockManuscript },
+    ['isAuthenticated', canAccessManuscript],
   )
 
   it('allows the author of a manuscript to access the resource', async () => {
