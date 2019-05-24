@@ -76,43 +76,6 @@ class Manuscript {
     return this.getView(manuscriptId)
   }
 
-  async update(data) {
-    // files are handled separately in remove/upload functionality, so only load teams
-    const manuscript = await ManuscriptModel.find(
-      data.id,
-      this.userId,
-      '[teams]',
-    )
-    if (manuscript.status !== ManuscriptModel.statuses.INITIAL) {
-      throw new Error(
-        `Cannot update manuscript with status of ${manuscript.status}`,
-      )
-    }
-
-    manuscript.applyInput(data)
-
-    try {
-      // In the case of auto-save this can be expected to fail when
-      // there is also another operation (file upload or submit) in progress
-      await manuscript.save()
-    } catch (error) {
-      const expected = 'Data Integrity Error'
-      if (error.message.startsWith(expected)) {
-        logger.error(`Expected a ${expected}, ${error.message}`)
-      } else {
-        // not an error we were expecting.
-        throw error
-      }
-    }
-
-    logger.debug(`Updated manuscript`, {
-      manuscriptId: data.id,
-      userId: this.userId,
-    })
-
-    return this.getView(data.id)
-  }
-
   async getView(manuscriptId) {
     const manuscript = await ManuscriptModel.find(manuscriptId, this.userId)
 

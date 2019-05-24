@@ -41,13 +41,4 @@ describe('AutoSave', () => {
     jest.advanceTimersByTime(6000)
     expect(onSave).toHaveBeenCalled()
   })
-
-  it('saves on unmount', () => {
-    const onSave = jest.fn()
-    const values = { a: 1 }
-    const wrapper = makeWrapper({ onSave, values, children: 'Some text' })
-    wrapper.setProps({ values: { a: 2 } })
-    wrapper.unmount()
-    expect(onSave).toHaveBeenCalled()
-  })
 })
