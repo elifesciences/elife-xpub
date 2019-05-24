@@ -73,7 +73,7 @@ const resolvers = {
 
       manuscriptModel.lastStepVisited = vars.url
       await manuscriptModel.save()
-      logger.debug(`Updated manuscript`, {
+      logger.debug(`Updated lastStepVisited`, {
         manuscriptId: vars.id,
         userId: userUuid,
         lastStepVisited: vars.url,

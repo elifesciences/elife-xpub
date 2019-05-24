@@ -22,15 +22,15 @@ const createSubmission = (args = {}) => {
   return new Submission({ models, services })
 }
 
+let mockManuscriptFind, mockFileFind, mockTeamFind
+
+beforeAll(() => {
+  mockManuscriptFind = jest.spyOn(Manuscript, 'find')
+  mockFileFind = jest.spyOn(File, 'findByManuscriptId')
+  mockTeamFind = jest.spyOn(Team, 'findByManuscriptId')
+})
+
 describe('Submission', () => {
-  let mockManuscriptFind, mockFileFind, mockTeamFind
-
-  beforeAll(() => {
-    mockManuscriptFind = jest.spyOn(Manuscript, 'find')
-    mockFileFind = jest.spyOn(File, 'findByManuscriptId')
-    mockTeamFind = jest.spyOn(Team, 'findByManuscriptId')
-  })
-
   beforeEach(() => {
     mockManuscriptFind.mockReset()
     mockManuscriptFind.mockReturnValue(createMockObject())
@@ -200,6 +200,17 @@ describe('Submission', () => {
 
       await submission.updateManuscript({})
       expect(mockMergeFunction).toBeCalledWith(manuscriptMock, {})
+    })
+
+    it('throws an error if status is not INITIAL', async () => {
+      const manuscriptMock = createMockObject({ status: 'MECA_EXPORT_PENDING' })
+      jest.spyOn(Manuscript, 'find').mockReturnValue(manuscriptMock)
+
+      const submission = await createSubmission().initialize()
+
+      expect(submission.updateManuscript({})).rejects.toThrow(
+        'Cannot update manuscript with status of MECA_EXPORT_PENDING',
+      )
     })
   })
 
@@ -373,6 +384,17 @@ describe('Submission', () => {
       expect(teams.opposedReviewingEditor).toEqual(
         editors2Output.opposedReviewingEditor,
       )
+    })
+
+    it('should check for conflicting editors', async () => {
+      const submission = await createSubmission().initialize()
+
+      expect(
+        submission.updateEditorTeams({
+          suggestedReviewingEditors: [1, 2],
+          opposedReviewingEditors: [2, 3],
+        }),
+      ).rejects.toThrow('Same editor has been suggested and opposed')
     })
   })
 
