@@ -26,7 +26,7 @@ describe('withAuthsomeMiddleware', () => {
     const modifiedResolvers = withAuthsomeMiddleware(
       mockResolvers,
       mockUseCases,
-      mockCanFn,
+      { _can: mockCanFn, _models: {} },
     )
 
     await modifiedResolvers.Mutation[resolverName](
@@ -40,6 +40,7 @@ describe('withAuthsomeMiddleware', () => {
         'example_user',
         { name: resolverName, policies: [policyString] },
         { original: 'params' },
+        {},
       ],
     ])
 
