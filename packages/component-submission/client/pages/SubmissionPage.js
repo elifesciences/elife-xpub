@@ -49,6 +49,7 @@ const SubmissionPage = ({ values, setFieldValue, setFieldTouched }) => (
     <Box mb={3}>
       <ValidatedField
         component={SubjectAreaDropdown}
+        isOptional={values.meta.articleType === 'feature'}
         label="Subject areas"
         name="meta.subjects"
         onBlur={e => setFieldTouched('meta.subjects', true)}

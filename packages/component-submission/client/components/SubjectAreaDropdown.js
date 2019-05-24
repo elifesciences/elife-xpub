@@ -171,7 +171,7 @@ class SubjectAreaDropdown extends React.Component {
 
   render() {
     const { selectedOptions, hasReachedMultiselectLimit } = this.state
-    const { label, name, onBlur, theme } = this.props
+    const { label, name, onBlur, theme, isOptional } = this.props
 
     const TagRemovalIcon = props => (
       <components.MultiValueRemove {...props}>
@@ -202,7 +202,10 @@ class SubjectAreaDropdown extends React.Component {
       <Root>
         {/* htmlFor matches with react-select's inputId, which applies the correct id to the internal sub-component */}
         {/* eslint-disable-next-line jsx-a11y/label-has-for */}
-        <Label htmlFor="subject-area-select">{label}</Label>
+        <Label htmlFor="subject-area-select">
+          {label}
+          {isOptional && ' (optional)'}
+        </Label>
         {!hasReachedMultiselectLimit && <Select {...selectChildProps} />}
         {hasReachedMultiselectLimit && (
           <div>

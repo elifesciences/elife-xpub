@@ -25,6 +25,36 @@ describe('SubjectAreaDropdown component', () => {
     expect(wrapper.find('[inputId="subject-area-select"]').exists()).toBe(true)
     expect(wrapper.text()).not.toContain('No more than two subject areas')
   })
+  it('has optional in label if isOptional is passed', () => {
+    const wrapper = mount(
+      <SubjectAreaDropdown
+        isOptional
+        label="My label"
+        name="My name"
+        onBlur={handleBlur}
+        onChange={handleChange}
+        savedValues={[]}
+        theme={theme}
+      />,
+    )
+
+    expect(wrapper.find('label').text()).toBe('My label (optional)')
+  })
+
+  it('only outputs label if isOptional is not passed', () => {
+    const wrapper = mount(
+      <SubjectAreaDropdown
+        label="My label"
+        name="My name"
+        onBlur={handleBlur}
+        onChange={handleChange}
+        savedValues={[]}
+        theme={theme}
+      />,
+    )
+
+    expect(wrapper.find('label').text()).toBe('My label')
+  })
 
   describe('Integration with react-select', () => {
     let wrapper, selectWrapper, selectInput
