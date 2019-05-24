@@ -45,6 +45,8 @@ Array [
   "login.enableMock",
   "login.signupUrl",
   "login.legacySubmissionUrl",
+  "logout.isPublic",
+  "logout.redirectUrl",
   "mailer.from",
   "mailer.path",
   "aws.credentials.region",
