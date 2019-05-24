@@ -35,7 +35,7 @@ import { parseFormToOutputData, parseInputToFormData } from '../utils'
 const SubmissionWizard = ({
   match,
   history,
-  updateManuscript,
+  updateSubmission,
   submitManuscript,
   initialValues,
 }) => (
@@ -46,8 +46,8 @@ const SubmissionWizard = ({
       render={() => (
         <WizardStep
           component={FilesStepPage}
-          handleAutoSave={updateManuscript}
-          handleButtonClick={updateManuscript}
+          handleAutoSave={updateSubmission}
+          handleButtonClick={updateSubmission}
           history={history}
           initialValues={initialValues}
           nextUrl={`${match.url}/details`}
@@ -62,8 +62,8 @@ const SubmissionWizard = ({
       render={() => (
         <WizardStep
           component={SubmissionPage}
-          handleAutoSave={updateManuscript}
-          handleButtonClick={updateManuscript}
+          handleAutoSave={updateSubmission}
+          handleButtonClick={updateSubmission}
           history={history}
           initialValues={initialValues}
           nextUrl={`${match.url}/editors`}
@@ -79,8 +79,8 @@ const SubmissionWizard = ({
       render={() => (
         <WizardStep
           component={EditorsStepPage}
-          handleAutoSave={updateManuscript}
-          handleButtonClick={updateManuscript}
+          handleAutoSave={updateSubmission}
+          handleButtonClick={updateSubmission}
           history={history}
           initialValues={initialValues}
           nextUrl={`${match.url}/disclosure`}
@@ -97,8 +97,8 @@ const SubmissionWizard = ({
         <WizardStep
           component={DisclosureStepPage}
           finalStep
-          handleAutoSave={updateManuscript}
-          handleButtonClick={submitManuscript}
+          handleAutoSave={updateSubmission}
+          handleButtonClick={updateSubmission}
           history={history}
           initialValues={initialValues}
           nextUrl={`/thankyou/${match.params.id}`}
@@ -114,8 +114,8 @@ const SubmissionWizard = ({
       render={() => (
         <WizardStep
           component={AuthorStepPage}
-          handleAutoSave={updateManuscript}
-          handleButtonClick={updateManuscript}
+          handleAutoSave={updateSubmission}
+          handleButtonClick={updateSubmission}
           history={history}
           initialValues={initialValues}
           nextUrl={`${match.url}/files`}
@@ -146,8 +146,8 @@ export default compose(
     initialValues: parseInputToFormData(props.data.manuscript),
   })),
   withHandlers({
-    updateManuscript: props => formValues =>
-      props.updateManuscript({
+    updateSubmission: props => formValues =>
+      props.updateSubmission({
         variables: { data: parseFormToOutputData(formValues) },
       }),
     submitManuscript: props => formValues =>

@@ -17,7 +17,7 @@ export default compose(
     options: props => ({ variables: { id: props.match.params.id } }),
   }),
   graphql(UPDATE_MANUSCRIPT, {
-    name: 'updateManuscript',
+    name: 'updateSubmission',
     refetchQueries: [{ query: ALL_MANUSCRIPTS }],
   }),
   graphql(SUBMIT_MANUSCRIPT, {

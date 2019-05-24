@@ -42,7 +42,7 @@ const resolvers = {
   },
 
   Mutation: {
-    async updateManuscript(_, { data }, { user }) {
+    async updateSubmission(_, { data }, { user }) {
       const userUuid = await models.User.getUuidForProfile(user)
       const submission = new Submission({
         models,
