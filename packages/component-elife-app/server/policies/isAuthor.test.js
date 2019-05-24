@@ -11,9 +11,8 @@ describe('policy: isAuthor', async () => {
     findByIdAndAuthor: jest.fn(async (m, u) => {
       if (u === 'a_valid_user' && m === 'exampleManuscriptId') {
         return { ok: true }
-      } 
-        throw new Error('some error')
-      
+      }
+      throw new Error('some error')
     }),
   }
 
@@ -35,7 +34,7 @@ describe('policy: isAuthor', async () => {
     { _models: { Manuscript: mockManuscript } },
   )
 
-  it('allows the author of a manuscript to access the resource', async done => {
+  it('allows the author of a manuscript to access the resource', async () => {
     await expect(
       modifiedResolvers.Mutation[resolver1Name](
         { original: 'params' },
@@ -43,9 +42,8 @@ describe('policy: isAuthor', async () => {
         { user: 'a_valid_user' },
       ),
     ).resolves.toEqual({ authorized: true })
-    done()
   })
-  it('rejects any other user', async done => {
+  it('rejects any other user', async () => {
     await expect(
       modifiedResolvers.Mutation[resolver1Name](
         { original: 'params' },
@@ -53,6 +51,5 @@ describe('policy: isAuthor', async () => {
         { user: 'a_different_user' },
       ),
     ).rejects.toEqual(new AuthorizationError(AUTHORIZATION_ERROR_MESSAGE))
-    done()
   })
 })
