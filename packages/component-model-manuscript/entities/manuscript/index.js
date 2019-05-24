@@ -143,6 +143,22 @@ class Manuscript extends BaseModel {
     return manuscript
   }
 
+  static async findByIdAndAuthor(id, user, related = '[teams, files]') {
+    // This is a copypasta of `find` because `find` might be changed so that it doesn't query by userId
+    const [manuscript] = await this.query().where({
+      'manuscript.id': id,
+      'manuscript.created_by': user,
+    })
+
+    if (!manuscript) {
+      throw new Error(`${this.name} not found`)
+    }
+    // todo why does eager loading sometimes not work?
+    await manuscript.$loadRelated(related)
+
+    return manuscript
+  }
+
   static async findByStatus(status, user) {
     const manuscripts = await this.query().where({
       'manuscript.status': status,
