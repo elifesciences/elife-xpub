@@ -65,5 +65,11 @@ module.exports = app => {
     res.status(200).send({})
   })
 
+  app.post('/graphql', nocache, (req, res, next) => {
+    // eslint-disable-next-line no-console
+    console.log(req.body.variables ? req.body.variables.data : {})
+    next()
+  })
+
   require(`./publicConfig`)(app)
 }
