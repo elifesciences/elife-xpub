@@ -1,3 +1,3 @@
 module.exports = {
-  isAuthor: require('./isAuthor'),
+  canAccessManuscript: require('./canAccessManuscript'),
 }

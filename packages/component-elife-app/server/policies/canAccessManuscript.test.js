@@ -2,15 +2,17 @@ const {
   withAuthsomeMiddleware,
   AUTHORIZATION_ERROR_MESSAGE,
 } = require('../withAuthsomeMiddleware')
+
+const { canAccessManuscript } = require('.')
 const { AuthorizationError } = require('@pubsweet/errors')
 
-describe('policy: isAuthor', async () => {
+describe('policy: canAccessManuscript', async () => {
   const resolver1Name = 'bobby'
   const mockResolver = jest.fn(() => ({ authorized: true }))
   const mockManuscript = {
-    findByIdAndAuthor: jest.fn(async (m, u) => {
-      if (u === 'a_valid_user' && m === 'exampleManuscriptId') {
-        return { ok: true }
+    findById: jest.fn(async m => {
+      if (m === 'exampleManuscriptId') {
+        return { createdBy: 'a_valid_user' }
       }
       throw new Error('some error')
     }),
@@ -18,7 +20,7 @@ describe('policy: isAuthor', async () => {
 
   const mockUseCases = {
     [`${resolver1Name}UseCase`]: {
-      authsomePolicies: ['isAuthenticated', 'isAuthor'],
+      authsomePolicies: ['isAuthenticated', canAccessManuscript],
     },
   }
 
