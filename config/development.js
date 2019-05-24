@@ -23,7 +23,6 @@ module.exports = {
     url: '/mock-token-exchange/ewwboc7m',
     enableMock: true,
   },
-
   forever: {
     watchDirectory: path.resolve(__dirname, '..', 'packages'),
   },
