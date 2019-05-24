@@ -67,7 +67,10 @@ module.exports = app => {
 
   app.post('/graphql', nocache, (req, res, next) => {
     // eslint-disable-next-line no-console
-    console.log(req.body.variables ? req.body.variables.data : {})
+    console.log(
+      req.body.variables ? req.body.variables.data : {},
+      new Date().toISOString(),
+    )
     next()
   })
 
