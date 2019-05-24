@@ -1,10 +1,12 @@
 const BluebirdPromise = require('bluebird')
+const { isAuthor } = require('./policies')
 
-// Policy type: (user: string, operation: string, object: any, context?: any) => boolean
+// Policy type: (user: string, operation: string, request: any, context?: any) => boolean
 const authsomePolicies = {
   // TODO: Somehow extend this list?
   isAuthenticated: userId => !!userId,
   isNotAuthenticated: userId => !userId,
+  isAuthor,
 }
 
 const authsomeMode = async (userId, { name, policies = [] }, object, context) =>
