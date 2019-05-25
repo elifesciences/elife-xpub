@@ -66,11 +66,13 @@ module.exports = app => {
   })
 
   app.post('/graphql', nocache, (req, res, next) => {
-    // eslint-disable-next-line no-console
-    console.log(
-      req.body.variables ? req.body.variables.data : {},
-      new Date().toISOString(),
-    )
+    if (req.body.operationName) {
+      logger.info(
+        new Date().toISOString(),
+        req.body.operationName,
+        req.body.variables ? req.body.variables : {},
+      )
+    }
     next()
   })
 
