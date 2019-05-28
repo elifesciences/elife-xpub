@@ -44,7 +44,7 @@ const initialize = ({ submission, logger }) => ({
     } catch (error) {
       const expected = 'Data Integrity Error'
       if (error.message.startsWith(expected)) {
-        logger.error(`Expected a ${expected}, ${error.message}`, error)
+        logger.error(`Expected a ${expected}, ${error.message}`)
       } else {
         logger.error(error)
         // not an error we were expecting.
