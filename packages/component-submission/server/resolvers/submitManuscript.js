@@ -11,7 +11,45 @@ const manuscriptInputSchema = require('../helpers/manuscriptInputValidationSchem
 const { Manuscript } = require('../use-cases')
 const { Notification } = require('../services')
 
-async function submitManuscript(_, { data }, { user, ip }) {
+function runExport(manuscriptModel, userUuid, ip) {
+  return mecaExport(manuscriptModel, S3Storage.getContent, ip)
+    .then(async () => {
+      logger.info(`Manuscript ${manuscriptModel.id} successfully exported`)
+      const notify = new Notification(config)
+      await notify.sendFinalSubmissionEmail(manuscriptModel)
+      await ManuscriptModel.updateStatus(
+        manuscriptModel.id,
+        ManuscriptModel.statuses.MECA_EXPORT_SUCCEEDED,
+      )
+    })
+    .catch(async err => {
+      logger.error('MECA export failed', err)
+      await ManuscriptModel.updateStatus(
+        manuscriptModel.id,
+        ManuscriptModel.statuses.MECA_EXPORT_FAILED,
+      )
+      return mailer.send({
+        to: config.get('meca.email.recipient'),
+        from: config.get('meca.email.sender'),
+        subject: `${config.get('meca.email.subjectPrefix')}MECA export failed`,
+        text: `Manuscript ID: ${manuscriptModel.id}
+Manuscript title: ${manuscriptModel.meta.title}
+Error:
+
+${err}`,
+      })
+    })
+    .catch(err => {
+      logger.error('Error handling MECA export failure', err)
+    })
+}
+
+async function submitManuscript(
+  _,
+  { data },
+  { user, ip },
+  _runExport = runExport,
+) {
   const userUuid = await User.getUuidForProfile(user)
   let manuscriptModel = await ManuscriptModel.find(data.id, userUuid)
   if (manuscriptModel.status !== ManuscriptModel.statuses.INITIAL) {
@@ -58,39 +96,13 @@ async function submitManuscript(_, { data }, { user, ip }) {
   )
 
   // This function can take a while so do not await this (apart from in tests)
-  return mecaExport(manuscriptModel, S3Storage.getContent, ip)
-    .then(async () => {
-      logger.info(`Manuscript ${manuscriptModel.id} successfully exported`)
-      const manuscript = new Manuscript(config, userUuid, S3Storage)
-      const notify = new Notification(config)
-      await notify.sendFinalSubmissionEmail(manuscriptModel)
-      await ManuscriptModel.updateStatus(
-        manuscriptModel.id,
-        ManuscriptModel.statuses.MECA_EXPORT_SUCCEEDED,
-      )
+  _runExport(manuscriptModel, userUuid, ip)
 
-      return manuscript.getView(manuscriptModel.id)
-    })
-    .catch(async err => {
-      logger.error('MECA export failed', err)
-      await ManuscriptModel.updateStatus(
-        manuscriptModel.id,
-        ManuscriptModel.statuses.MECA_EXPORT_FAILED,
-      )
-      return mailer.send({
-        to: config.get('meca.email.recipient'),
-        from: config.get('meca.email.sender'),
-        subject: `${config.get('meca.email.subjectPrefix')}MECA export failed`,
-        text: `Manuscript ID: ${manuscriptModel.id}
-Manuscript title: ${manuscriptModel.meta.title}
-Error:
+  return (async () => undefined)().then(async () => {
+    const manuscript = new Manuscript(config, userUuid, S3Storage)
 
-${err}`,
-      })
-    })
-    .catch(err => {
-      logger.error('Error handling MECA export failure', err)
-    })
+    return manuscript.getView(manuscriptModel.id)
+  })
 }
 
 module.exports = submitManuscript
