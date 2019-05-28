@@ -98,7 +98,7 @@ const SubmissionWizard = ({
           component={DisclosureStepPage}
           finalStep
           handleAutoSave={updateSubmission}
-          handleButtonClick={updateSubmission}
+          handleButtonClick={submitManuscript}
           history={history}
           initialValues={initialValues}
           nextUrl={`/thankyou/${match.params.id}`}
