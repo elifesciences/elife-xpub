@@ -92,6 +92,9 @@ module.exports = {
     signupUrl: 'https://orcid.org/register',
     legacySubmissionUrl: 'https://submit.elifesciences.org',
   },
+  logout: {
+    isPublic: true,
+  },
   mailer: {
     from: 'dev@example.com',
     path: `${__dirname}/non-serializable/fake-mailer`,

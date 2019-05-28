@@ -14,6 +14,9 @@ module.exports = {
     url: 'https://continuumtest--cdn-journal.elifesciences.org/submit',
     enableMock: false,
   },
+  logout: {
+    redirectUrl: 'https://continuumtest--cdn-journal.elifesciences.org/log-out',
+  },
   mailer: {
     from: 'editorial-staging@elifesciences.org',
     path: `${__dirname}/non-serializable/mailer`,
