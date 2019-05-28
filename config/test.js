@@ -2,10 +2,6 @@ const { deferConfig } = require('config/defer')
 const AWS = require('aws-sdk')
 const logger = require('@elifesciences/component-logger').mockLogger
 
-global.Promise = require('bluebird')
-
-console.log('\n\nset promises to bluebird\n\n')
-
 module.exports = {
   configTag: 'test',
   'pubsweet-server': {

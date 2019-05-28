@@ -65,16 +65,5 @@ module.exports = app => {
     res.status(200).send({})
   })
 
-  app.post('/graphql', nocache, (req, res, next) => {
-    if (req.body.operationName) {
-      logger.info(
-        new Date().toISOString(),
-        req.body.operationName,
-        req.body.variables ? req.body.variables : {},
-      )
-    }
-    next()
-  })
-
   require(`./publicConfig`)(app)
 }

@@ -47,9 +47,9 @@ const initialize = ({ submission, logger }) => ({
         logger.error(`Expected a ${expected}, ${error.message}`, error)
       } else {
         logger.error(error)
+        // not an error we were expecting.
+        throw error
       }
-      // not an error we were expecting.
-      throw error
     }
 
     return submission.toJSON()
