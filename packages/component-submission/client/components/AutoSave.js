@@ -26,7 +26,7 @@ export default class AutoSave extends React.Component {
     const currentValues = _.omit(this.props.values, FORM_FIELDS_TO_OMIT)
 
     if (!this.props.disabled && !_.isEqual(oldValues, currentValues)) {
-      this.props.onSave(this.props.values)
+      // this.props.onSave(this.props.values)
       this.oldValues = _.cloneDeep(this.props.values)
     }
   }
@@ -38,7 +38,7 @@ export default class AutoSave extends React.Component {
 
 AutoSave.propTypes = {
   disabled: PropTypes.bool,
-  onSave: PropTypes.func.isRequired,
+  // onSave: PropTypes.func.isRequired,
   // eslint-disable-next-line react/forbid-prop-types
   values: PropTypes.any.isRequired,
 }
