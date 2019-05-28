@@ -43,6 +43,7 @@ function createWrapper(valueOverrides, propOverrides) {
         setFieldTouched: jest.fn(),
         setFieldValue: jest.fn(),
         setFieldError: jest.fn(),
+        setIsUploading: jest.fn(),
         deleteManuscriptFile: jest.fn(
           () => new Promise(resolve => resolve(deleteResponse)),
         ),
@@ -80,6 +81,40 @@ describe('FileStepPage', () => {
     const wrapper = createWrapper({}, { setFieldValue: mockSetFieldValue })
     wrapper.instance().onFileDrop([{}])
     expect(mockSetFieldValue).toBeCalledWith('fileStatus', 'CHANGING')
+  })
+
+  it('onFileDrop calls setIsUploading when upload succeds', () => {
+    const mockSetIsUploading = jest.fn()
+    const promise = Promise.resolve().then(() => {
+      expect(mockSetIsUploading.mock.calls).toHaveLength(2)
+      expect(mockSetIsUploading.mock.calls[0][0]).toBe(true)
+      expect(mockSetIsUploading.mock.calls[1][0]).toBe(false)
+    })
+    const wrapper = createWrapper(
+      {},
+      {
+        setIsUploading: mockSetIsUploading,
+        uploadManuscriptFile: jest.fn(() => promise),
+      },
+    )
+    wrapper.instance().onFileDrop([{}])
+  })
+
+  it('onFileDrop calls setIsUploading when upload fails', () => {
+    const mockSetIsUploading = jest.fn()
+    const promise = Promise.reject().then(() => {
+      expect(mockSetIsUploading.mock.calls).toHaveLength(2)
+      expect(mockSetIsUploading.mock.calls[0][0]).toBe(true)
+      expect(mockSetIsUploading.mock.calls[1][0]).toBe(false)
+    })
+    const wrapper = createWrapper(
+      {},
+      {
+        setIsUploading: mockSetIsUploading,
+        uploadManuscriptFile: jest.fn(() => promise),
+      },
+    )
+    wrapper.instance().onFileDrop([{}])
   })
 
   it('onFileDrop calls uploadManuscriptFile if one file is dropped', () => {
