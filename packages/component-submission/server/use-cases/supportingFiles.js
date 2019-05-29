@@ -58,13 +58,11 @@ class SupportingFiles {
     const files = await FileModel.findByManuscriptId(this.manuscriptId)
 
     if (files && files.length > 0) {
-      // let modified = false
       await Promise.all(
         files
           .filter(file => file.type === 'SUPPORTING_FILE')
           .map(async file => {
             try {
-              // modified = true
               await file.updateStatus('CANCELLED')
               await this.storage.deleteContent(file)
               await file.delete()
