@@ -1,5 +1,6 @@
 const config = require('config')
 const Joi = require('joi')
+const { omit } = require('lodash')
 const mailer = require('@pubsweet/component-send-email')
 const logger = require('@pubsweet/logger')
 const { mecaExport } = require('@elifesciences/component-meca')
@@ -20,7 +21,10 @@ async function submitManuscript(_, { data }, { user, ip }) {
     )
   }
 
-  const manuscriptInput = ManuscriptModel.removeOptionalBlankReviewers(data)
+  const manuscriptInput = omit(
+    ManuscriptModel.removeOptionalBlankReviewers(data),
+    'lastStepVisited',
+  )
   const { error: errorManuscript } = Joi.validate(
     manuscriptInput,
     manuscriptInputSchema,
