@@ -32,103 +32,137 @@ import wizardWithGQL from '../graphql/wizardWithGQL'
 
 import { parseFormToOutputData, parseInputToFormData } from '../utils'
 
-const SubmissionWizard = ({
-  match,
-  history,
-  updateManuscript,
-  submitManuscript,
-  initialValues,
-}) => (
-  <Switch>
-    <TrackedRoute
-      exact
-      path={`${match.path}/files`}
-      render={() => (
-        <WizardStep
-          component={FilesStepPage}
-          handleAutoSave={updateManuscript}
-          handleButtonClick={updateManuscript}
-          history={history}
-          initialValues={initialValues}
-          nextUrl={`${match.url}/details`}
-          previousUrl={`${match.url}/author`}
-          step={1}
-          validationSchema={filesSchema}
+class SubmissionWizard extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = { savingRequests: [] }
+  }
+
+  enqueueManuscriptUpdate = (values, cb = null) => {
+    this.setState(state => {
+      const newSavingRequests = state.savingRequests.concat({ values, cb })
+
+      return { savingRequests: newSavingRequests }
+    })
+
+    this.runQueue()
+  }
+
+  runQueue = () => {
+    if (this.state.savingRequests.length === 0) {
+      return
+    }
+
+    const currentSavingRequests = this.state.savingRequests
+    const { values, cb } = currentSavingRequests.shift()
+
+    this.setState({ savingRequests: currentSavingRequests })
+
+    this.props.updateManuscript(values).then(() => {
+      if (cb) {
+        cb()
+      }
+
+      this.runQueue()
+    })
+  }
+
+  render() {
+    const { match, history, submitManuscript, initialValues } = this.props
+
+    return (
+      <Switch>
+        <TrackedRoute
+          exact
+          path={`${match.path}/files`}
+          render={() => (
+            <WizardStep
+              component={FilesStepPage}
+              handleAutoSave={this.enqueueManuscriptUpdate}
+              handleButtonClick={this.enqueueManuscriptUpdate}
+              history={history}
+              initialValues={initialValues}
+              nextUrl={`${match.url}/details`}
+              previousUrl={`${match.url}/author`}
+              step={1}
+              validationSchema={filesSchema}
+            />
+          )}
         />
-      )}
-    />
-    <TrackedRoute
-      path={`${match.path}/details`}
-      render={() => (
-        <WizardStep
-          component={SubmissionPage}
-          handleAutoSave={updateManuscript}
-          handleButtonClick={updateManuscript}
-          history={history}
-          initialValues={initialValues}
-          nextUrl={`${match.url}/editors`}
-          previousUrl={`${match.url}/files`}
-          step={2}
-          title="Help us get your work seen by the right people"
-          validationSchema={submissionSchema}
+        <TrackedRoute
+          path={`${match.path}/details`}
+          render={() => (
+            <WizardStep
+              component={SubmissionPage}
+              handleAutoSave={this.enqueueManuscriptUpdate}
+              handleButtonClick={this.enqueueManuscriptUpdate}
+              history={history}
+              initialValues={initialValues}
+              nextUrl={`${match.url}/editors`}
+              previousUrl={`${match.url}/files`}
+              step={2}
+              title="Help us get your work seen by the right people"
+              validationSchema={submissionSchema}
+            />
+          )}
         />
-      )}
-    />
-    <TrackedRoute
-      path={`${match.path}/editors`}
-      render={() => (
-        <WizardStep
-          component={EditorsStepPage}
-          handleAutoSave={updateManuscript}
-          handleButtonClick={updateManuscript}
-          history={history}
-          initialValues={initialValues}
-          nextUrl={`${match.url}/disclosure`}
-          previousUrl={`${match.url}/details`}
-          step={3}
-          title="Who should review your work?"
-          validationSchema={editorsSchema}
+        <TrackedRoute
+          path={`${match.path}/editors`}
+          render={() => (
+            <WizardStep
+              component={EditorsStepPage}
+              handleAutoSave={this.enqueueManuscriptUpdate}
+              handleButtonClick={this.enqueueManuscriptUpdate}
+              history={history}
+              initialValues={initialValues}
+              nextUrl={`${match.url}/disclosure`}
+              previousUrl={`${match.url}/details`}
+              step={3}
+              title="Who should review your work?"
+              validationSchema={editorsSchema}
+            />
+          )}
         />
-      )}
-    />
-    <TrackedRoute
-      path={`${match.path}/disclosure`}
-      render={() => (
-        <WizardStep
-          component={DisclosureStepPage}
-          finalStep
-          handleAutoSave={updateManuscript}
-          handleButtonClick={submitManuscript}
-          history={history}
-          initialValues={initialValues}
-          nextUrl={`/thankyou/${match.params.id}`}
-          previousUrl={`${match.url}/editors`}
-          step={4}
-          title="Disclosure of data to editors"
-          validationSchema={wizardSchema}
+        <TrackedRoute
+          path={`${match.path}/disclosure`}
+          render={() => (
+            <WizardStep
+              component={DisclosureStepPage}
+              finalStep
+              handleAutoSave={this.enqueueManuscriptUpdate}
+              handleButtonClick={submitManuscript}
+              history={history}
+              initialValues={initialValues}
+              nextUrl={`/thankyou/${match.params.id}`}
+              previousUrl={`${match.url}/editors`}
+              step={4}
+              title="Disclosure of data to editors"
+              validationSchema={wizardSchema}
+            />
+          )}
         />
-      )}
-    />
-    <TrackedRoute
-      path={`${match.path}/author`}
-      render={() => (
-        <WizardStep
-          component={AuthorStepPage}
-          handleAutoSave={updateManuscript}
-          handleButtonClick={updateManuscript}
-          history={history}
-          initialValues={initialValues}
-          nextUrl={`${match.url}/files`}
-          step={0}
-          title="Your details"
-          validationSchema={authorSchema}
+        <TrackedRoute
+          path={`${match.path}/author`}
+          render={() => (
+            <WizardStep
+              component={AuthorStepPage}
+              handleAutoSave={this.enqueueManuscriptUpdate}
+              handleButtonClick={this.enqueueManuscriptUpdate}
+              history={history}
+              initialValues={initialValues}
+              nextUrl={`${match.url}/files`}
+              step={0}
+              title="Your details"
+              validationSchema={authorSchema}
+            />
+          )}
         />
-      )}
-    />
-    <Redirect from="/submit/:id" to={`/submit/${match.params.id}/author`} />
-    <ErrorPage error="404: page not found" />
-  </Switch>
-)
+        <Redirect from="/submit/:id" to={`/submit/${match.params.id}/author`} />
+        <ErrorPage error="404: page not found" />
+      </Switch>
+    )
+  }
+}
 
 export default compose(
   wizardWithGQL,

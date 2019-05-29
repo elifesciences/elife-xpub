@@ -9,7 +9,6 @@ import { FormH2 } from '@elifesciences/component-elife-ui/client/atoms/FormHeadi
 import AutoSave from './AutoSave'
 import ProgressBar from './ProgressBar'
 import WizardSubmit from './WizardSubmit'
-import SavePageStatus from './SavePageStatus'
 
 const BoxNoMinWidth = styled(Box)`
   min-width: 0;
@@ -53,7 +52,9 @@ class WizardStep extends React.Component {
         // ensure each page gets a new form instance otherwise all fields are touched
         key={title}
         onSubmit={values => {
-          handleButtonClick(values).then(() => history.push(nextUrl))
+          handleButtonClick({ ...values, lastStepVisited: nextUrl }, () =>
+            history.push(nextUrl),
+          )
         }}
         render={({
           values,
@@ -71,10 +72,6 @@ class WizardStep extends React.Component {
                   disabled={isSubmitting || this.state.isUploading}
                   onSave={handleAutoSave}
                   values={values}
-                />
-                <SavePageStatus
-                  id={values.id}
-                  url={history.location.pathname}
                 />
                 <Box my={5}>
                   <ProgressBar currentStep={step} />

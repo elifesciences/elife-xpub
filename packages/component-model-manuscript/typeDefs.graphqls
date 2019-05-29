@@ -120,6 +120,7 @@ input ManuscriptInput {
   submitterSignature: String
   disclosureConsent: Boolean
   meta: ManuscriptMetaInput
+  lastStepVisited: String
 }
 
 input ManuscriptMetaInput {

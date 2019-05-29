@@ -1,30 +1,13 @@
-import React, { Component } from 'react'
-import gql from 'graphql-tag'
-import { Mutation } from 'react-apollo'
+import { Component } from 'react'
 
-class SaveOnMount extends Component {
+class SavePageStatus extends Component {
   componentDidMount() {
-    this.props.onMount()
+    // this.props.saveManuscript({ lastStepVisited: this.props.url, ...this.props.values })
   }
 
   render() {
-    return this.props.children || null
+    return ''
   }
 }
-
-const SAVE_PAGE = gql`
-  mutation SavePage($url: String!, $id: String!) {
-    savePage(url: $url, id: $id) {
-      lastStepVisited
-      id
-    }
-  }
-`
-
-const SavePageStatus = ({ url, id }) => (
-  <Mutation mutation={SAVE_PAGE} variables={{ url, id }}>
-    {savePage => <SaveOnMount onMount={savePage} />}
-  </Mutation>
-)
 
 export default SavePageStatus

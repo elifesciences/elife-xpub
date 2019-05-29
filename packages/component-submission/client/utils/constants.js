@@ -64,7 +64,6 @@ export const FORM_FIELDS_TO_OMIT = [
   'status',
   'clientStatus',
   'fileStatus',
-  'lastStepVisited',
   // cosubmitters
   'firstCosubmissionTitle',
   'secondCosubmissionTitle',
