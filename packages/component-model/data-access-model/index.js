@@ -5,20 +5,20 @@ class DataAccessModel extends BaseModel {
     const relations = Object.keys(this.constructor.relationMappings)
     const strRelations = `[${relations.join(', ')}]`
 
-    const incoming =relations.map( (key) => `${key} length= ${this[key].length}` )
+    const incoming = relations.map(key => `${key} length= ${this[key].length}`)
 
     const options = {
       insert: true,
       relate: true,
-      noDelete: true
+      noDelete: true,
     }
 
     this.constructor.query().upsertGraph(this)
-    const before = relations.map( (key) => `${key} length= ${this[key].length}` )
+    const before = relations.map(key => `${key} length= ${this[key].length}`)
 
     // load
     await this.$loadRelated(strRelations)
-    const after = relations.map( (key) => `${key} length= ${this[key].length}` )
+    const after = relations.map(key => `${key} length= ${this[key].length}`)
     console.log(`
     ${this.constructor.name}
     ${incoming}

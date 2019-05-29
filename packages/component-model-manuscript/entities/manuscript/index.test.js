@@ -342,7 +342,7 @@ describe('Manuscript', () => {
         role: 'foo',
         teamMembers: [],
       })
-      await manuscript.save()
+      await manuscript.saveRecursively()
       const loadedManuscript = await Manuscript.find(manuscript.id, userId)
       expect(loadedManuscript.teams).toHaveLength(1)
     })
@@ -375,7 +375,7 @@ describe('Manuscript', () => {
         role: 'foo',
         teamMembers: [],
       })
-      await manuscript.save()
+      await manuscript.saveRecursively()
       const loadedManuscripts = await Manuscript.findByStatus('INITIAL', userId)
       expect(loadedManuscripts[0].teams).toHaveLength(1)
     })
@@ -484,7 +484,8 @@ describe('Manuscript', () => {
         role: 'foo',
         teamMembers: [],
       })
-      await manuscript.save()
+      await manuscript.saveRecursively()
+      // at the moment saveRecursively does not maintain loaded relations
       expect(manuscript.teams).toHaveLength(1)
     })
 
@@ -509,6 +510,7 @@ describe('Manuscript', () => {
         role: 'bar',
         teamMembers: [],
       })
+      // at the moment saveRecursively does not maintain loaded relations
       expect(manuscript.teams).toHaveLength(1)
       await manuscript.saveRecursively()
       expect(manuscript.teams).toHaveLength(1)
