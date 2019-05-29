@@ -74,28 +74,25 @@ describe('Manuscripts', () => {
     })
 
     it('calls the mecaExport function', async () => {
-      const mockedFn = jest.fn()
+      const mockedExportFn = jest.fn()
 
       const promisedManuscript = Mutation.submitManuscript(
         {},
         { data: { ...manuscriptInput, id } },
         { user: profileId },
-        mockedFn,
+        mockedExportFn,
       )
 
       const beforeManuscript = await Manuscript.find(id, userId)
       expect(beforeManuscript.status).toBe(Manuscript.statuses.INITIAL)
 
       return promisedManuscript.then(async returnedManuscript => {
-        // when the submission resolves it should succeed
-        // Actually, when the submission resolves it should still be pending, but how
-        // do we test that it actually succeeds?
         expect(returnedManuscript.status).toBe(
           // It'll still be pending because it's executed asynchronously
           Manuscript.statuses.MECA_EXPORT_PENDING,
         )
 
-        expect(mockedFn).toHaveBeenCalled()
+        expect(mockedExportFn).toHaveBeenCalled()
 
         const storedManuscript = await Manuscript.find(id, userId)
 

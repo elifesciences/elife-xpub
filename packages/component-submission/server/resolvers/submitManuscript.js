@@ -105,4 +105,4 @@ async function submitManuscript(
   })
 }
 
-module.exports = submitManuscript
+module.exports = { submitManuscript, runExport }
