@@ -1,5 +1,7 @@
 const config = require('config')
 const FileModel = require('@elifesciences/component-model-file').model
+const ManuscriptModel = require('@elifesciences/component-model-manuscript')
+  .model
 const logger = require('@pubsweet/logger')
 const Manuscript = require('./manuscript')
 
@@ -50,10 +52,8 @@ class SupportingFiles {
   async removeAll() {
     const manuscript = new Manuscript(config, this.userId, this.storage)
 
-    // let manuscript = await ManuscriptModel.find(this.manuscriptId, this.userId)
-    // const filesWithoutSupporting = manuscript.files.filter(
-    //   file => file.type !== 'SUPPORTING_FILE',
-    // )
+    // we need to do a find to make sure the user has access
+    await ManuscriptModel.find(this.manuscriptId, this.userId)
 
     const files = await FileModel.findByManuscriptId(this.manuscriptId)
 
@@ -73,10 +73,6 @@ class SupportingFiles {
             }
           }),
       )
-      // if (modified) {
-      //   manuscript.files = filesWithoutSupporting
-      //   manuscript = await manuscript.save()
-      // }
     }
 
     return manuscript.getView(this.manuscriptId)
