@@ -1,7 +1,9 @@
+const config = require('config')
+const FileModel = require('@elifesciences/component-model-file').model
 const ManuscriptModel = require('@elifesciences/component-model-manuscript')
   .model
-const FileModel = require('@elifesciences/component-model-file').model
 const logger = require('@pubsweet/logger')
+const Manuscript = require('./manuscript')
 
 class SupportingFiles {
   constructor(storage, manuscriptId, userId) {
@@ -48,21 +50,19 @@ class SupportingFiles {
   }
 
   async removeAll() {
-    let manuscript = await ManuscriptModel.find(this.manuscriptId, this.userId)
-    const filesWithoutSupporting = manuscript.files.filter(
-      file => file.type !== 'SUPPORTING_FILE',
-    )
+    const manuscript = new Manuscript(config, this.userId, this.storage)
+
+    // we need to do a find to make sure the user has access
+    await ManuscriptModel.find(this.manuscriptId, this.userId)
 
     const files = await FileModel.findByManuscriptId(this.manuscriptId)
 
     if (files && files.length > 0) {
-      let modified = false
       await Promise.all(
         files
           .filter(file => file.type === 'SUPPORTING_FILE')
           .map(async file => {
             try {
-              modified = true
               await file.updateStatus('CANCELLED')
               await this.storage.deleteContent(file)
               await file.delete()
@@ -71,13 +71,9 @@ class SupportingFiles {
             }
           }),
       )
-      if (modified) {
-        manuscript.files = filesWithoutSupporting
-        manuscript = await manuscript.save()
-      }
     }
 
-    return manuscript
+    return manuscript.getView(this.manuscriptId)
   }
 }
 
