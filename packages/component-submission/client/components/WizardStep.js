@@ -29,7 +29,6 @@ class WizardStep extends React.Component {
   }
 
   setIsUploading = value => {
-    console.log(`isUploading set to: ${value}`)
     this.setState({ isUploading: value })
   }
 
