@@ -41,7 +41,6 @@ describe('Manuscripts', () => {
       User.createWithIdentity(profileId),
       User.createWithIdentity(badProfileId),
     ])
-    console.log(user)
     userId = user.id
     mailer.clearMails()
   })
