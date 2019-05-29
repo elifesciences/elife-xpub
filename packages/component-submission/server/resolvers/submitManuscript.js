@@ -11,8 +11,7 @@ const manuscriptInputSchema = require('../helpers/manuscriptInputValidationSchem
 const { Manuscript } = require('../use-cases')
 const { Notification } = require('../services')
 
-function runExport(manuscriptModel, userUuid, ip) {
-  return mecaExport(manuscriptModel, S3Storage.getContent, ip)
+const runExport = (manuscriptModel, userUuid, ip) => mecaExport(manuscriptModel, S3Storage.getContent, ip)
     .then(async () => {
       logger.info(`Manuscript ${manuscriptModel.id} successfully exported`)
       const notify = new Notification(config)
@@ -42,14 +41,12 @@ ${err}`,
     .catch(err => {
       logger.error('Error handling MECA export failure', err)
     })
-}
 
-async function submitManuscript(
+const submitManuscript = (_runExport = runExport) => async (
   _,
   { data },
   { user, ip },
-  _runExport = runExport,
-) {
+) => {
   const userUuid = await User.getUuidForProfile(user)
   let manuscriptModel = await ManuscriptModel.find(data.id, userUuid)
   if (manuscriptModel.status !== ManuscriptModel.statuses.INITIAL) {

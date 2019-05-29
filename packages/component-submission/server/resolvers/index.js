@@ -56,7 +56,7 @@ const resolvers = {
         .execute(data.id, userUuid, data)
     },
 
-    submitManuscript,
+    submitManuscript: submitManuscript(),
 
     uploadManuscript,
 
