@@ -46,7 +46,7 @@ const SubmissionWizard = ({
       render={() => (
         <WizardStep
           component={FilesStepPage}
-          handleAutoSave={updateManuscript}
+          handleAutoSave={() => {}}
           handleButtonClick={updateManuscript}
           history={history}
           initialValues={initialValues}
