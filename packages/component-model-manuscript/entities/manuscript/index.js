@@ -195,7 +195,13 @@ class Manuscript extends BaseModel {
     const storedUpdateTime = new Date(current.updated).getTime()
     const instanceUpdateTime = new Date(this.updated).getTime()
 
-    return instanceUpdateTime < storedUpdateTime
+    const result = instanceUpdateTime < storedUpdateTime
+    if (result) {
+      logger.info(
+        `\n\n\nneeds refresh ${storedUpdateTime} : ${instanceUpdateTime}`,
+      )
+    }
+    return result
   }
 
   async save() {
