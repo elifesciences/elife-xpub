@@ -17,7 +17,6 @@ describe('Manuscript', () => {
   })
 
   describe('Small', () => {
-
     it.only('eager loads relations', async () => {
       const manuscript = new Manuscript({
         createdBy: userId,
@@ -30,12 +29,12 @@ describe('Manuscript', () => {
         teamMembers: [],
       })
 
-      console.log("B", manuscript.id, manuscript.teams)
+      console.log('B', manuscript.id, manuscript.teams)
       await manuscript.saveRecursively()
-      console.log("C", manuscript.id, manuscript.teams)
+      console.log('C', manuscript.id, manuscript.teams)
       const loadedManuscript = await Manuscript.find(manuscript.id, userId)
-      console.log("D", manuscript.id, manuscript.teams)
-      console.log("E", loadedManuscript.id, loadedManuscript.teams)
+      console.log('D', manuscript.id, manuscript.teams)
+      console.log('E', loadedManuscript.id, loadedManuscript.teams)
       expect(loadedManuscript.teams).toHaveLength(1)
     })
 
@@ -147,4 +146,3 @@ const createInitialManuscript = async (userId, title = 'Alpha') => {
   await manuscript.save()
   return manuscript
 }
-
