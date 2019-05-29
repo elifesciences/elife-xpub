@@ -35,40 +35,60 @@ import { parseFormToOutputData, parseInputToFormData } from '../utils'
 class SubmissionWizard extends React.Component {
   constructor(props) {
     super(props)
-    this.state = { savingRequests: [] }
+    this.state = { requestQueue: [] }
   }
 
-  enqueueManuscriptUpdate = (values, cb = null) => {
-    this.setState(state => {
-      const newSavingRequests = state.savingRequests.concat({ values, cb })
+  /**
+   * Add an async callback request to the queue and return a promise
+   */
+  enqueueRequest = fn =>
+    new Promise((resolve, reject) => {
+      // add the callback to the queue along with the resolve and reject params
+      const newRequestQueue = this.state.requestQueue.concat({
+        fn,
+        resolve,
+        reject,
+      })
 
-      return { savingRequests: newSavingRequests }
+      this.setState({ requestQueue: newRequestQueue })
+
+      // start to dequeue process
+      this.dequeueRequest()
     })
 
-    this.runQueue()
-  }
-
-  runQueue = () => {
-    if (this.state.savingRequests.length === 0) {
+  /**
+   * Recursively run through the queue
+   */
+  dequeueRequest = () => {
+    if (this.state.requestQueue.length === 0) {
       return
     }
 
-    const currentSavingRequests = this.state.savingRequests
-    const { values, cb } = currentSavingRequests.shift()
+    const currentRequestQueue = this.state.requestQueue
+    const { fn, resolve, reject } = currentRequestQueue.shift()
+    this.setState({ requestQueue: currentRequestQueue })
 
-    this.setState({ savingRequests: currentSavingRequests })
-
-    this.props.updateManuscript(values).then(() => {
-      if (cb) {
-        cb()
-      }
-
-      this.runQueue()
-    })
+    // call the request callback and resolve or reject, then execute
+    // the next request in a recursive call
+    fn()
+      .then(value => {
+        resolve(value)
+        this.dequeueRequest()
+      })
+      .catch(err => {
+        reject(err)
+        this.dequeueRequest()
+      })
   }
 
+  enqueueManuscriptUpdate = values =>
+    this.enqueueRequest(() => this.props.updateManuscript(values))
+
+  enqueueSubmitManuscript = values =>
+    this.enqueueRequest(() => this.props.submitManuscript(values))
+
   render() {
-    const { match, history, submitManuscript, initialValues } = this.props
+    const { match, history, initialValues } = this.props
 
     return (
       <Switch>
@@ -130,7 +150,7 @@ class SubmissionWizard extends React.Component {
               component={DisclosureStepPage}
               finalStep
               handleAutoSave={this.enqueueManuscriptUpdate}
-              handleButtonClick={submitManuscript}
+              handleButtonClick={this.enqueueSubmitManuscript}
               history={history}
               initialValues={initialValues}
               nextUrl={`/thankyou/${match.params.id}`}
