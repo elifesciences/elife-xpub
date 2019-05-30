@@ -5,7 +5,7 @@
 #
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-HOST=52.90.128.135 # prod--xpub--1.elifesciences.org
+HOST=prod--xpub--1.elifesciences.org
 
 # These are the manuscript ids to ignore (these have been dealt with)
 IGNORE="( \
