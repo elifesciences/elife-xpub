@@ -11,6 +11,7 @@ const { mecaExport } = require('@elifesciences/component-meca')
 const User = require('@elifesciences/component-model-user').model
 const Manuscript = require('@elifesciences/component-model-manuscript').model
 const { S3Storage } = require('@elifesciences/component-service-s3')
+const { submitManuscript } = require('./submitManuscript')
 
 const { Mutation } = require('.')
 const {
@@ -72,8 +73,10 @@ describe('Manuscripts', () => {
       id = manuscript.id
     })
 
-    it('stores data with new status', async () => {
-      const promisedManuscript = Mutation.submitManuscript(
+    it('calls the mecaExport function', async () => {
+      const mockedExportFn = jest.fn()
+
+      const promisedManuscript = submitManuscript(mockedExportFn)(
         {},
         { data: { ...manuscriptInput, id } },
         { user: profileId },
@@ -83,16 +86,18 @@ describe('Manuscripts', () => {
       expect(beforeManuscript.status).toBe(Manuscript.statuses.INITIAL)
 
       return promisedManuscript.then(async returnedManuscript => {
-        // when the submission resolves it should succeed
         expect(returnedManuscript.status).toBe(
-          Manuscript.statuses.MECA_EXPORT_SUCCEEDED,
+          // It'll still be pending because it's executed asynchronously
+          Manuscript.statuses.MECA_EXPORT_PENDING,
         )
+
+        expect(mockedExportFn).toHaveBeenCalled()
 
         const storedManuscript = await Manuscript.find(id, userId)
 
         expect(storedManuscript).toMatchObject({
           ...expectedManuscript,
-          status: 'MECA_EXPORT_SUCCEEDED',
+          status: 'MECA_EXPORT_PENDING',
         })
       })
     })
@@ -252,7 +257,7 @@ describe('Manuscripts', () => {
       beforeEach(() => {
         jest.spyOn(logger, 'error').mockImplementationOnce(() => {})
         mecaExport.mockImplementationOnce(() =>
-          Promise.reject(new Error('Broked')),
+          Promise.reject(new Error('Borked')),
         )
         manuscript = lodash.cloneDeep(manuscriptInput)
         manuscript.id = id
@@ -276,16 +281,19 @@ describe('Manuscripts', () => {
         })
       })
 
-      it('updated status to MECA_EXPORT_FAILED', async () => {
+      it('updated status to MECA_EXPORT_FAILED', async done => {
         await Mutation.submitManuscript(
           {},
           { data: manuscript },
           { user: profileId },
         )
-        const updatedManuscript = await Manuscript.find(manuscript.id, userId)
-        expect(updatedManuscript.status).toBe(
-          Manuscript.statuses.MECA_EXPORT_FAILED,
-        )
+        setTimeout(async () => {
+          const updatedManuscript = await Manuscript.find(manuscript.id, userId)
+          expect(updatedManuscript.status).toBe(
+            Manuscript.statuses.MECA_EXPORT_FAILED,
+          )
+          done()
+        }, 3000)
       })
 
       it('should log an error', async () => {

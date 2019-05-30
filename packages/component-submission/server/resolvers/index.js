@@ -9,7 +9,7 @@ const {
 } = require('pubsweet-server/src/graphql/pubsub')
 
 const removeUploadedManuscript = require('./removeUploadedManuscript')
-const submitManuscript = require('./submitManuscript')
+const { submitManuscript } = require('./submitManuscript')
 const uploadManuscript = require('./uploadManuscript')
 const uploadSupportingFile = require('./uploadSupportingFile')
 const removeSupportingFiles = require('./removeSupportingFiles')
@@ -56,7 +56,7 @@ const resolvers = {
         .execute(data.id, userUuid, data)
     },
 
-    submitManuscript,
+    submitManuscript: submitManuscript(),
 
     uploadManuscript,
 
