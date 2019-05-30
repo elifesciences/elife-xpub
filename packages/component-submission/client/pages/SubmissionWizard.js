@@ -41,7 +41,7 @@ class SubmissionWizard extends React.Component {
     }
   }
 
-  disbaleSave = saveStatus => this.setState({ suspendSave: saveStatus })
+  disableSave = saveStatus => this.setState({ suspendSave: saveStatus })
 
   // setResaveStatus = resaveStatus =>
   //   this.setState({ resaveRequired: resaveStatus })
@@ -79,7 +79,7 @@ class SubmissionWizard extends React.Component {
           render={() => (
             <WizardStep
               component={FilesStepPage}
-              disbaleSave={this.disbaleSave}
+              disableSave={this.disableSave}
               handleAutoSave={this.onNextClick}
               handleButtonClick={this.onNextClick}
               history={history}

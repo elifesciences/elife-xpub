@@ -41,7 +41,7 @@ export class FilesStepPageComponent extends React.Component {
       setFieldTouched,
       values,
       uploadManuscriptFile,
-      disbaleSave,
+      disableSave,
     } = this.props
     const manuscriptId = values.id
 
@@ -60,7 +60,7 @@ export class FilesStepPageComponent extends React.Component {
 
     const [file] = files
     this.setState({ manuscriptUploading: true, manuscriptUploadingError: null })
-    disbaleSave(true)
+    disableSave(true)
     uploadManuscriptFile({
       variables: { file, id: manuscriptId, fileSize: file.size },
     })
@@ -77,7 +77,7 @@ export class FilesStepPageComponent extends React.Component {
         })
       })
       .finally(() => {
-        disbaleSave(false)
+        disableSave(false)
       })
   }
 
