@@ -11,7 +11,8 @@ const manuscriptInputSchema = require('../helpers/manuscriptInputValidationSchem
 const { Manuscript } = require('../use-cases')
 const { Notification } = require('../services')
 
-const runExport = (manuscriptModel, userUuid, ip) => mecaExport(manuscriptModel, S3Storage.getContent, ip)
+const runExport = (manuscriptModel, userUuid, ip) =>
+  mecaExport(manuscriptModel, S3Storage.getContent, ip)
     .then(async () => {
       logger.info(`Manuscript ${manuscriptModel.id} successfully exported`)
       const notify = new Notification(config)
@@ -95,11 +96,9 @@ const submitManuscript = (_runExport = runExport) => async (
   // This function can take a while so do not await this (apart from in tests)
   _runExport(manuscriptModel, userUuid, ip)
 
-  return (async () => undefined)().then(async () => {
-    const manuscript = new Manuscript(config, userUuid, S3Storage)
+  const manuscript = new Manuscript(config, userUuid, S3Storage)
 
-    return manuscript.getView(manuscriptModel.id)
-  })
+  return manuscript.getView(manuscriptModel.id)
 }
 
 module.exports = { submitManuscript, runExport }
