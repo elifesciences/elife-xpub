@@ -3,6 +3,7 @@
 if [ $(hostname) != 'peter-xps' ]
 then
   echo Should only be excuted on my PC for now!
+  exit 1
 fi
 
 REPORT=$(mktemp)
