@@ -41,7 +41,7 @@ export class FilesStepPageComponent extends React.Component {
       setFieldTouched,
       values,
       uploadManuscriptFile,
-      setIsUploading,
+      disbaleSave,
     } = this.props
     const manuscriptId = values.id
 
@@ -60,23 +60,24 @@ export class FilesStepPageComponent extends React.Component {
 
     const [file] = files
     this.setState({ manuscriptUploading: true, manuscriptUploadingError: null })
-    setIsUploading(true)
+    disbaleSave(true)
     uploadManuscriptFile({
       variables: { file, id: manuscriptId, fileSize: file.size },
     })
       .then(({ data }) => {
-        setIsUploading(false)
         setFieldValue('meta.title', data.uploadManuscript.meta.title)
         setFieldValue('files', data.uploadManuscript.files)
         setFieldValue('fileStatus', data.uploadManuscript.fileStatus)
         this.setState({ manuscriptUploading: false })
       })
       .catch(error => {
-        setIsUploading(false)
         this.setState({
           manuscriptUploading: false,
           manuscriptUploadingError: error,
         })
+      })
+      .finally(() => {
+        disbaleSave(false)
       })
   }
 

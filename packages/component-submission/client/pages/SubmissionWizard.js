@@ -35,71 +35,53 @@ import { parseFormToOutputData, parseInputToFormData } from '../utils'
 class SubmissionWizard extends React.Component {
   constructor(props) {
     super(props)
-    this.state = { requestQueue: [] }
-  }
-
-  /**
-   * Add an async callback request to the queue and return a promise
-   */
-  enqueueRequest = fn =>
-    new Promise((resolve, reject) => {
-      // add the callback to the queue along with the resolve and reject params
-      const newRequestQueue = this.state.requestQueue.concat({
-        fn,
-        resolve,
-        reject,
-      })
-
-      this.setState({ requestQueue: newRequestQueue })
-
-      // start to dequeue process
-      this.dequeueRequest()
-    })
-
-  /**
-   * Recursively run through the queue
-   */
-  dequeueRequest = () => {
-    if (this.state.requestQueue.length === 0) {
-      return
+    this.state = {
+      // resaveRequired: false,
+      suspendSave: false,
     }
-
-    const currentRequestQueue = this.state.requestQueue
-    const { fn, resolve, reject } = currentRequestQueue.shift()
-    this.setState({ requestQueue: currentRequestQueue })
-
-    // call the request callback and resolve or reject, then execute
-    // the next request in a recursive call
-    fn()
-      .then(value => {
-        resolve(value)
-        this.dequeueRequest()
-      })
-      .catch(err => {
-        reject(err)
-        this.dequeueRequest()
-      })
   }
 
-  enqueueManuscriptUpdate = values =>
-    this.enqueueRequest(() => this.props.updateManuscript(values))
+  disbaleSave = saveStatus => this.setState({ suspendSave: saveStatus })
 
-  enqueueSubmitManuscript = values =>
-    this.enqueueRequest(() => this.props.submitManuscript(values))
+  // setResaveStatus = resaveStatus =>
+  //   this.setState({ resaveRequired: resaveStatus })
+
+  onNextClick = values => {
+    if (!this.state.suspendSave) {
+      this.props.updateManuscript(values)
+    }
+  }
 
   render() {
-    const { match, history, initialValues } = this.props
+    const { match, history, initialValues, submitManuscript } = this.props
 
     return (
       <Switch>
+        <TrackedRoute
+          path={`${match.path}/author`}
+          render={() => (
+            <WizardStep
+              component={AuthorStepPage}
+              handleAutoSave={this.onNextClick}
+              handleButtonClick={this.onNextClick}
+              history={history}
+              initialValues={initialValues}
+              nextUrl={`${match.url}/files`}
+              step={0}
+              title="Your details"
+              validationSchema={authorSchema}
+            />
+          )}
+        />
         <TrackedRoute
           exact
           path={`${match.path}/files`}
           render={() => (
             <WizardStep
               component={FilesStepPage}
-              handleAutoSave={this.enqueueManuscriptUpdate}
-              handleButtonClick={this.enqueueManuscriptUpdate}
+              disbaleSave={this.disbaleSave}
+              handleAutoSave={this.onNextClick}
+              handleButtonClick={this.onNextClick}
               history={history}
               initialValues={initialValues}
               nextUrl={`${match.url}/details`}
@@ -114,8 +96,8 @@ class SubmissionWizard extends React.Component {
           render={() => (
             <WizardStep
               component={SubmissionPage}
-              handleAutoSave={this.enqueueManuscriptUpdate}
-              handleButtonClick={this.enqueueManuscriptUpdate}
+              handleAutoSave={this.onNextClick}
+              handleButtonClick={this.onNextClick}
               history={history}
               initialValues={initialValues}
               nextUrl={`${match.url}/editors`}
@@ -131,8 +113,8 @@ class SubmissionWizard extends React.Component {
           render={() => (
             <WizardStep
               component={EditorsStepPage}
-              handleAutoSave={this.enqueueManuscriptUpdate}
-              handleButtonClick={this.enqueueManuscriptUpdate}
+              handleAutoSave={this.onNextClick}
+              handleButtonClick={this.onNextClick}
               history={history}
               initialValues={initialValues}
               nextUrl={`${match.url}/disclosure`}
@@ -149,8 +131,8 @@ class SubmissionWizard extends React.Component {
             <WizardStep
               component={DisclosureStepPage}
               finalStep
-              handleAutoSave={this.enqueueManuscriptUpdate}
-              handleButtonClick={this.enqueueSubmitManuscript}
+              handleAutoSave={this.onNextClick}
+              handleButtonClick={submitManuscript}
               history={history}
               initialValues={initialValues}
               nextUrl={`/thankyou/${match.params.id}`}
@@ -158,22 +140,6 @@ class SubmissionWizard extends React.Component {
               step={4}
               title="Disclosure of data to editors"
               validationSchema={wizardSchema}
-            />
-          )}
-        />
-        <TrackedRoute
-          path={`${match.path}/author`}
-          render={() => (
-            <WizardStep
-              component={AuthorStepPage}
-              handleAutoSave={this.enqueueManuscriptUpdate}
-              handleButtonClick={this.enqueueManuscriptUpdate}
-              history={history}
-              initialValues={initialValues}
-              nextUrl={`${match.url}/files`}
-              step={0}
-              title="Your details"
-              validationSchema={authorSchema}
             />
           )}
         />

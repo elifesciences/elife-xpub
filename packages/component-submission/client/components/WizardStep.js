@@ -19,16 +19,11 @@ class WizardStep extends React.Component {
 
     this.state = {
       submissionAttempted: false,
-      isUploading: false,
     }
   }
 
   setSubmissionAttempted = (value = true) => {
     this.setState({ submissionAttempted: value })
-  }
-
-  setIsUploading = value => {
-    this.setState({ isUploading: value })
   }
 
   render() {
@@ -52,9 +47,8 @@ class WizardStep extends React.Component {
         // ensure each page gets a new form instance otherwise all fields are touched
         key={title}
         onSubmit={values => {
-          handleButtonClick({ ...values, lastStepVisited: nextUrl }).then(() =>
-            history.push(nextUrl),
-          )
+          handleButtonClick({ ...values, lastStepVisited: nextUrl })
+          history.push(nextUrl)
         }}
         render={({
           values,
@@ -69,7 +63,7 @@ class WizardStep extends React.Component {
             <BoxNoMinWidth flex="1 1 100%" mx={[0, 0, 0, '16.666%']}>
               <form noValidate onSubmit={handleSubmit}>
                 <AutoSave
-                  disabled={isSubmitting || this.state.isUploading}
+                  disabled={isSubmitting}
                   onSave={handleAutoSave}
                   values={values}
                 />
@@ -83,7 +77,6 @@ class WizardStep extends React.Component {
                   values={values}
                   {...formProps}
                   isSubmissionAttempted={this.state.submissionAttempted}
-                  setIsUploading={this.setIsUploading}
                   {...wizardProps}
                 />
 
