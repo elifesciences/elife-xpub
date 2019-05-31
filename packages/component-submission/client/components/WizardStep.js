@@ -47,8 +47,9 @@ class WizardStep extends React.Component {
         // ensure each page gets a new form instance otherwise all fields are touched
         key={title}
         onSubmit={values => {
-          handleButtonClick({ ...values, lastStepVisited: nextUrl })
-          history.push(nextUrl)
+          handleButtonClick({ ...values, lastStepVisited: nextUrl }).then(() =>
+            history.push(nextUrl),
+          )
         }}
         render={({
           values,

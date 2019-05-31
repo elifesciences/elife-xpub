@@ -76,5 +76,34 @@ describe('SubmissionWizard autosave toggling', async () => {
 
     expect(mockUpdate).toHaveBeenCalledTimes(1)
     expect(mockUpdate.mock.calls).toEqual([[{ submitted_should_be: false }]])
+    expect(thing.instance().state.nextSaveValues).toBeNull()
+  })
+
+  it('disables the autosave on submit and re-enables it on completion', async () => {
+    const mockUpdate = jest.fn()
+    const mockSubmit = jest.fn(() =>
+      new Promise(resolve => {
+        expect(thing.instance().state.suspendSave).toBe(true)
+        resolve()
+      }).catch(err => {
+        // eslint-disable-next-line no-undef
+        fail(err)
+      }),
+    )
+    const props = {
+      match: mockMatch,
+      updateManuscript: mockUpdate,
+      submitManuscript: mockSubmit,
+      history: jest.fn(),
+      initialValues: { fileStatus: 'READY' },
+    }
+
+    const thing = shallow(<SubmissionWizard {...props} />)
+
+    expect(thing.instance().state.isUploading).toBe(false)
+    expect(thing.instance().state.suspendSave).toBe(false)
+    // Not testing that suspendSacve has changed back to false becuase of promise issues
+    thing.instance().onSubmitManuscript({ prop: 'key' })
+    expect(mockSubmit).toHaveBeenCalledTimes(1)
   })
 })

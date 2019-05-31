@@ -56,14 +56,21 @@ export class SubmissionWizard extends React.Component {
 
   onNextClick = values => {
     if (!this.state.suspendSave && !this.state.isUploading) {
-      this.props.updateManuscript(values)
-    } else {
-      this.setState({ nextSaveValues: values })
+      return this.props.updateManuscript(values)
     }
+    this.setState({ nextSaveValues: values })
+    return Promise.resolve() // this seems hacky and should probably be changed
+  }
+
+  onSubmitManuscript = async values => {
+    this.disableSave(true)
+    this.props.submitManuscript(values).finally(() => {
+      this.disableSave(false)
+    })
   }
 
   render() {
-    const { match, history, initialValues, submitManuscript } = this.props
+    const { match, history, initialValues } = this.props
 
     return (
       <Switch>
@@ -144,7 +151,7 @@ export class SubmissionWizard extends React.Component {
               component={DisclosureStepPage}
               finalStep
               handleAutoSave={this.onNextClick}
-              handleButtonClick={submitManuscript}
+              handleButtonClick={this.onSubmitManuscript}
               history={history}
               initialValues={initialValues}
               nextUrl={`/thankyou/${match.params.id}`}
