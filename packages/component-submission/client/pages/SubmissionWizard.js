@@ -32,24 +32,33 @@ import wizardWithGQL from '../graphql/wizardWithGQL'
 
 import { parseFormToOutputData, parseInputToFormData } from '../utils'
 
-class SubmissionWizard extends React.Component {
+export class SubmissionWizard extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
       suspendSave: false,
       isUploading: props.initialValues.fileStatus === 'CHANGING',
+      nextSaveValues: null,
     }
   }
 
   disableSave = saveStatus => this.setState({ suspendSave: saveStatus })
 
-  setIsUploading = value => {
-    this.setState({ isUploading: value })
+  setIsUploading = status => {
+    // status: boolean
+    this.disableSave(status)
+    this.setState({ isUploading: status })
+    if (!status && this.state.nextSaveValues) {
+      this.onNextClick(this.state.nextSaveValues)
+      this.setState({ nextSaveValues: null })
+    }
   }
 
   onNextClick = values => {
-    if (!this.state.suspendSave) {
+    if (!this.state.suspendSave && !this.state.isUploading) {
       this.props.updateManuscript(values)
+    } else {
+      this.setState({ nextSaveValues: values })
     }
   }
 
