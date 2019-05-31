@@ -44,12 +44,11 @@ function createWrapper(valueOverrides, propOverrides) {
         setFieldValue: jest.fn(),
         setFieldError: jest.fn(),
         setIsUploading: jest.fn(),
+        disableSave: jest.fn(),
         deleteManuscriptFile: jest.fn(
           () => new Promise(resolve => resolve(deleteResponse)),
         ),
-        uploadManuscriptFile: jest.fn(
-          () => new Promise(resolve => resolve(uploadResponse)),
-        ),
+        uploadManuscriptFile: jest.fn(async () => uploadResponse),
         ...propOverrides,
       }}
     />,
