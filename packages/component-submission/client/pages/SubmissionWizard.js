@@ -36,15 +36,16 @@ class SubmissionWizard extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      // resaveRequired: false,
       suspendSave: false,
+      isUploading: props.initialValues.fileStatus === 'CHANGING',
     }
   }
 
   disableSave = saveStatus => this.setState({ suspendSave: saveStatus })
 
-  // setResaveStatus = resaveStatus =>
-  //   this.setState({ resaveRequired: resaveStatus })
+  setIsUploading = value => {
+    this.setState({ isUploading: value })
+  }
 
   onNextClick = values => {
     if (!this.state.suspendSave) {
@@ -84,8 +85,10 @@ class SubmissionWizard extends React.Component {
               handleButtonClick={this.onNextClick}
               history={history}
               initialValues={initialValues}
+              isUploading={this.state.isUploading}
               nextUrl={`${match.url}/details`}
               previousUrl={`${match.url}/author`}
+              setIsUploading={this.setIsUploading}
               step={1}
               validationSchema={filesSchema}
             />

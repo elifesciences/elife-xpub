@@ -83,7 +83,11 @@ class WizardStep extends React.Component {
                 <Flex mt={6}>
                   {previousUrl && (
                     <Box mr={3}>
-                      <ButtonLink data-test-id="back" to={previousUrl}>
+                      <ButtonLink
+                        data-test-id="back"
+                        disabled={this.props.isUploading}
+                        to={previousUrl}
+                      >
                         Back
                       </ButtonLink>
                     </Box>

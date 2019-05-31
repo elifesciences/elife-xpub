@@ -22,7 +22,6 @@ export class FilesStepPageComponent extends React.Component {
     super(props)
     this.state = {
       // Revisit this once https://github.com/apollographql/react-apollo/issues/2952 has been implemented.
-      manuscriptUploading: false,
       manuscriptUploadingError: null,
     }
   }
@@ -42,6 +41,7 @@ export class FilesStepPageComponent extends React.Component {
       values,
       uploadManuscriptFile,
       disableSave,
+      setIsUploading,
     } = this.props
     const manuscriptId = values.id
 
@@ -59,8 +59,10 @@ export class FilesStepPageComponent extends React.Component {
     }
 
     const [file] = files
-    this.setState({ manuscriptUploading: true, manuscriptUploadingError: null })
+    this.setState({ manuscriptUploadingError: null })
+
     disableSave(true)
+    setIsUploading(true)
     uploadManuscriptFile({
       variables: { file, id: manuscriptId, fileSize: file.size },
     })
@@ -68,16 +70,15 @@ export class FilesStepPageComponent extends React.Component {
         setFieldValue('meta.title', data.uploadManuscript.meta.title)
         setFieldValue('files', data.uploadManuscript.files)
         setFieldValue('fileStatus', data.uploadManuscript.fileStatus)
-        this.setState({ manuscriptUploading: false })
       })
       .catch(error => {
         this.setState({
-          manuscriptUploading: false,
           manuscriptUploadingError: error,
         })
       })
       .finally(() => {
         disableSave(false)
+        setIsUploading(false)
       })
   }
 
@@ -156,7 +157,7 @@ export class FilesStepPageComponent extends React.Component {
           <ManuscriptUpload
             conversion={{
               converting:
-                this.state.manuscriptUploading ||
+                this.props.isUploading ||
                 (manuscriptUploadProgress > 0 &&
                   manuscriptUploadProgress < 100),
               completed: hasManuscript,
