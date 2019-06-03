@@ -50,6 +50,7 @@ services:
 
   api-dummy:
     build:
+      context: ..
       dockerfile: ./docker/Dockerfile-api-dummy
     ports:
       - 8080:8080

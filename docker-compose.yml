@@ -3,12 +3,12 @@ version: '3'
 services:
   test_browser:
     build:
-      context: ..
+      context: .
       dockerfile: ./docker/Dockerfile-development
 
   app:
     build:
-      context: ..
+      context: .
       dockerfile: ./docker/Dockerfile-development
     ports:
       - ${PORT:-3000}:3000
@@ -35,7 +35,7 @@ services:
 
   api-dummy:
     build:
-      context: ..
+      context: .
       dockerfile: ./docker/Dockerfile-api-dummy
     ports:
       - 8080:8080
