@@ -23,7 +23,7 @@ elifePipeline {
                  echo e.getMessage()
                  throw e
              }
-         }, 'build', tag)
+         }, 'build', commit)
         }
 
         stage 'Project tests', {
