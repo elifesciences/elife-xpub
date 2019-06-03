@@ -14,16 +14,38 @@ import { parseInputToFormData } from '../utils'
 const NewSubmissionWizard = ({ initialValues, match }) => (
   <Formik
     initialValues={initialValues}
-    render={({ values, setFieldValue }) => (
+    render={formikProps => (
       <Switch>
         <TrackedRoute
+          formikProps={formikProps}
           path={`${match.path}/author`}
           render={() => <div>author step</div>}
         />
         <TrackedRoute
+          formikProps={formikProps}
           path={`${match.path}/files`}
           render={() => <div>file step</div>}
         />
+        <TrackedRoute
+          formikProps={formikProps}
+          path={`${match.path}/details`}
+          render={() => <div>details step</div>}
+        />
+        <TrackedRoute
+          formikProps={formikProps}
+          path={`${match.path}/editors`}
+          render={() => <div>editors step</div>}
+        />
+        <TrackedRoute
+          formikProps={formikProps}
+          path={`${match.path}/disclosure`}
+          render={() => <div>disclosure step</div>}
+        />
+        <Redirect
+          from="/submit/:id"
+          to={`/newSubmit/${match.params.id}/author`}
+        />
+        <ErrorPage error="404: page not found" />
       </Switch>
     )}
   />
