@@ -15,7 +15,7 @@ elifePipeline {
             withCommitStatus({
              sh "docker-wait-daemon"
              try {
-              sh "IMAGE_TAG=${commit} NODE_ENV=production NODE_CONFIG_ENV=unit-test docker-compose IMAGE_TAG-f docker-compose.yml -f ${DOCKER_ROOT}/docker-compose.ci.yml build"
+              sh "IMAGE_TAG=${commit} NODE_ENV=production NODE_CONFIG_ENV=unit-test docker-compose -f docker-compose.yml -f ${DOCKER_ROOT}/docker-compose.ci.yml build"
              } catch (Exception e) {
                  echo "Exception class: "
                  echo e.getClass().toString()
