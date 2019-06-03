@@ -3,4 +3,4 @@ h.drury@elifesciences.org
 c.donkin@elifesciences.org
 e.odier@elifesciences.org
 w.byrne@elifesciences.org
-#xpub-tech
+p.east@elifesciences.org
