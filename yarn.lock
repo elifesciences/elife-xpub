@@ -415,7 +415,7 @@
     tmp-promise "^1.0.5"
     umzug "^2.1.0"
 
-"@pubsweet/errors@1.0.0":
+"@pubsweet/errors@2.0.10":
   version "2.0.10"
   resolved "https://registry.yarnpkg.com/@pubsweet/errors/-/errors-2.0.10.tgz#7c80df1ab6f3e506b73d6a83558b2b5bf3b73bf7"
   integrity sha512-4L8nwQaucRaJ0VfjyZdXbSLDsaf8gd+f+tZ79bNmduU18wFzajJO9FqD111u42Jm7vSF1BDTW+8148Y5zQsY2Q==
@@ -449,7 +449,7 @@
     joi "^14.3.0"
     lodash "^4.17.4"
 
-"@pubsweet/models@1.0.0", "@pubsweet/models@^0.2.7":
+"@pubsweet/models@0.2.7", "@pubsweet/models@^0.2.7":
   version "0.2.7"
   resolved "https://registry.yarnpkg.com/@pubsweet/models/-/models-0.2.7.tgz#0a0cf77138112e29b49bbf8eec7b8810e9db85b4"
   integrity sha512-bYhse3dyrZ4J34nJVxU28auuJ/pbKPQgZzfcy0p43Zh7gIxFq0ChPzLSNBib8ot8Q4b1GHpQfw3G+cbTdzCeCw==

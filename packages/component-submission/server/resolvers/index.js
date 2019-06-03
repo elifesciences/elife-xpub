@@ -1,4 +1,3 @@
-const config = require('config')
 const logger = require('@pubsweet/logger')
 const models = require('@pubsweet/models')
 const { S3Storage } = require('@elifesciences/component-service-s3')
@@ -15,7 +14,6 @@ const uploadSupportingFile = require('./uploadSupportingFile')
 const removeSupportingFiles = require('./removeSupportingFiles')
 
 const {
-  Manuscript,
   getSubmissionUseCase,
   updateSubmissionUseCase,
 } = require('../use-cases')
@@ -65,22 +63,6 @@ const resolvers = {
     removeUploadedManuscript,
 
     removeSupportingFiles,
-
-    async savePage(_, vars, { user }) {
-      const userUuid = await models.User.getUuidForProfile(user)
-      const manuscriptModel = await models.Manuscript.find(vars.id, userUuid)
-      const manuscript = new Manuscript(config, userUuid, S3Storage)
-
-      manuscriptModel.lastStepVisited = vars.url
-      await manuscriptModel.save()
-      logger.debug(`Updated lastStepVisited`, {
-        manuscriptId: vars.id,
-        userId: userUuid,
-        lastStepVisited: vars.url,
-      })
-
-      return manuscript.getView(vars.id)
-    },
   },
 
   Subscription: {
