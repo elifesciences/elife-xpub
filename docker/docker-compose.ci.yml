@@ -3,7 +3,7 @@ version: '3'
 services:
   test_browser:
     build:
-      dockerfile: ./Dockerfile
+      dockerfile: ./docker/Dockerfile
       args:
         CI_COMMIT_SHA: ${IMAGE_TAG}
     image: elifesciences/elife-xpub:${IMAGE_TAG}
@@ -24,7 +24,7 @@ services:
 
   app:
     build:
-      dockerfile: ./Dockerfile
+      dockerfile: ./docker/Dockerfile
       args:
         CI_COMMIT_SHA: ${IMAGE_TAG}
     image: elifesciences/elife-xpub:${IMAGE_TAG}
@@ -50,7 +50,7 @@ services:
 
   api-dummy:
     build:
-      dockerfile: ./Dockerfile-api-dummy
+      dockerfile: ./docker/Dockerfile-api-dummy
     ports:
       - 8080:8080
 
