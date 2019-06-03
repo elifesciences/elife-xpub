@@ -1,5 +1,5 @@
 elifePipeline {
-    def DOCKER_ROOT = '.'
+    def DOCKER_ROOT = './docker'
     def commit
     node('containers-jenkins-plugin') {
         def image
