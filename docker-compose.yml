@@ -3,13 +3,13 @@ version: '3'
 services:
   test_browser:
     build:
-      context: .
-      dockerfile: ./Dockerfile-development
+      context: ..
+      dockerfile: ./docker/Dockerfile-development
 
   app:
     build:
-      context: .
-      dockerfile: ./Dockerfile-development
+      context: ..
+      dockerfile: ./docker/Dockerfile-development
     ports:
       - ${PORT:-3000}:3000
     depends_on:
@@ -35,7 +35,7 @@ services:
 
   api-dummy:
     build:
-      dockerfile: ./Dockerfile-api-dummy
-      context: .
+      context: ..
+      dockerfile: ./docker/Dockerfile-api-dummy
     ports:
       - 8080:8080
