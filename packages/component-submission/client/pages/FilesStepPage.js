@@ -68,13 +68,12 @@ export class FilesStepPageComponent extends React.Component {
         setFieldValue('meta.title', data.uploadManuscript.meta.title)
         setFieldValue('files', data.uploadManuscript.files)
         setFieldValue('fileStatus', data.uploadManuscript.fileStatus)
+        setIsUploading(false)
       })
       .catch(error => {
         this.setState({
           manuscriptUploadingError: error,
         })
-      })
-      .then(() => {
         setIsUploading(false)
       })
   }
