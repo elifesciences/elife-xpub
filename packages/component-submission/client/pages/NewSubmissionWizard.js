@@ -105,7 +105,7 @@ const NewSubmissionWizard = ({ initialValues, match, history }) => {
                       stepConfigurations[currentStep].fields.forEach(field =>
                         formikProps.setFieldTouched(field, true),
                       )
-                      if (!Object.keys(formikProps.errors).length) {
+                      if (formikProps.isValid) {
                         history.push(
                           `${match.url}/${STEP_NAMES[currentStep + 1]}`,
                         )
