@@ -25,13 +25,13 @@ export const manuscriptFileTypes = {
   SUPPORTING_FILE: 'SUPPORTING_FILE',
 }
 
-export const STEP_NAMES = {
-  AUTHOR: 'Author',
-  FILES: 'Files',
-  DETAILS: 'Details',
-  EDITORS: 'Editors',
-  DISCLOSURE: 'Disclosure',
-}
+export const STEP_NAMES = [
+  'Author',
+  'Files',
+  'Details',
+  'Editors',
+  'Disclosure',
+]
 
 export const FIELD_TO_STEP_MAP = {
   author: STEP_NAMES.AUTHOR,

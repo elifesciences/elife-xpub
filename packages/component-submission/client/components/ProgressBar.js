@@ -7,8 +7,8 @@ import { STEP_NAMES } from '../utils/constants'
 const ProgressBar = ({ currentStep }) => (
   <Box mx="auto" width={[1, 1, 500]}>
     <Steps currentStep={currentStep}>
-      {Object.keys(STEP_NAMES).map(stepKey => (
-        <Steps.Step key={stepKey} title={STEP_NAMES[stepKey]} />
+      {STEP_NAMES.map((stepKey, index) => (
+        <Steps.Step key={stepKey} title={STEP_NAMES[index]} />
       ))}
     </Steps>
   </Box>
