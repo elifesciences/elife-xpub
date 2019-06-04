@@ -3,7 +3,7 @@ version: '3'
 services:
   test_browser:
     build:
-      dockerfile: ./Dockerfile
+      dockerfile: ./Dockerfile-test_browser
       args:
         CI_COMMIT_SHA: ${IMAGE_TAG}
     image: elifesciences/elife-xpub:${IMAGE_TAG}
@@ -24,7 +24,7 @@ services:
 
   app:
     build:
-      dockerfile: ./Dockerfile
+      dockerfile: ./Dockerfile-app
       args:
         CI_COMMIT_SHA: ${IMAGE_TAG}
     image: elifesciences/elife-xpub:${IMAGE_TAG}
