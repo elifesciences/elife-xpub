@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "lib": ["esnext", "esnext.asynciterable", "es2017.object"],
+    "lib": ["dom", "esnext", "esnext.asynciterable", "es2017.object"],
     "target": "es6",
     "module": "commonjs",
     "moduleResolution": "node",
