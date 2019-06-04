@@ -10,7 +10,7 @@ COPY package.json yarn.lock ./
 COPY client client
 COPY packages packages
 
-RUN yarn install --production
+RUN yarn install
 
 COPY \
     app.js \
