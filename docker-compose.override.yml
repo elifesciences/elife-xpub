@@ -20,9 +20,8 @@ services:
     volumes:
       - postgres-volume:/var/lib/postgresql/data
       - ./scripts/test.sql:/docker-entrypoint-initdb.d/test.sql
-      - ./build/logs/postgres:/var/lib/postgresql/data/logs
-    command: postgres -c logging_collector=on -c log_destination=stderr -c log_directory=/var/lib/postgresql/data/logs
-
+      - ./build/postgres:/logs
+    command: postgres -c logging_collector=on -c log_destination=stderr -c log_directory=/logs
 
 volumes:
   postgres-volume:
