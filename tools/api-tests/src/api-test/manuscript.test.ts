@@ -5,10 +5,6 @@ import {defaultConfig} from '../xpub-api';
 import {Manuscript} from '../generated/graphql';
 import {v4} from 'uuid';
 
-test("It saves a manuscript with the endpoint", async (t: TestContext) => {
-  t.fail();
-});
-
 test.todo("The user can submit a manuscript, and other queries update correctly");
 
 test.failing("The user can save a submission and the manuscripts endpoint now includes it", async (t: TestContext) => {
