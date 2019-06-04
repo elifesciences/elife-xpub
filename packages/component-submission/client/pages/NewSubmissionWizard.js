@@ -14,12 +14,17 @@ import {
   ButtonLink,
 } from '@elifesciences/component-elife-ui/client/atoms'
 import { Button } from '@pubsweet/ui'
-import AuthorStep from './AuthorStepPage'
+import AuthorStep, { fields as authorFields } from './AuthorStepPage'
 import ProgressBar from '../components/ProgressBar'
 import wizardWithGQL from '../graphql/wizardWithGQL'
 import { parseInputToFormData } from '../utils'
 import { STEP_NAMES } from '../utils/constants'
-import wizardSchema from '../utils/ValidationSchemas'
+import wizardSchema, {
+  authorSchema,
+  filesSchema,
+  submissionSchema,
+  editorsSchema,
+} from '../utils/ValidationSchemas'
 
 const BoxNoMinWidth = styled(Box)`
   min-width: 0;
@@ -36,6 +41,14 @@ const NewSubmissionWizard = ({ initialValues, match, history }) => {
       setCurrentStep(newStep)
     }
   })
+
+  const stepConfigurations = [
+    { schema: authorSchema, fields: authorFields },
+    { schema: filesSchema },
+    { schema: submissionSchema },
+    { schema: editorsSchema },
+    { schema: wizardSchema },
+  ]
 
   return (
     <Formik
@@ -93,12 +106,13 @@ const NewSubmissionWizard = ({ initialValues, match, history }) => {
                   <Button
                     data-test-id="next"
                     onClick={() => {
+                      stepConfigurations[currentStep].fields.forEach(field =>
+                        formikProps.setFieldTouched(field, true),
+                      )
                       if (formikProps.isValid) {
                         history.push(
                           `${match.url}/${STEP_NAMES[currentStep + 1]}`,
                         )
-                      } else {
-                        formikProps.validateForm()
                       }
                     }}
                     primary
@@ -111,7 +125,9 @@ const NewSubmissionWizard = ({ initialValues, match, history }) => {
           </Flex>
         </Form>
       )}
-      validationSchema={yup.object().shape(wizardSchema)}
+      validationSchema={yup
+        .object()
+        .shape(stepConfigurations[currentStep].schema)}
     />
   )
 }
