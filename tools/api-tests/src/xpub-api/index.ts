@@ -53,9 +53,9 @@ export interface ConnectionInfo {
  * for a given module
  */
 export interface GqlChunk {
-  Query: {[key: string]: (arg0: ApiTestContext) => Promise<unknown>;};
-  Mutation: {[key: string]: (arg0: ApiTestContext) => Promise<unknown>;};
-  Subscription: {[key: string]: (arg0: ApiTestContext) => Promise<unknown>;};
+  Query: {[key: string]: (arg0: ApiTestContext, args?: any) => any;};
+  Mutation: {[key: string]: (arg0: ApiTestContext, args?: any) => any;};
+  Subscription: {[key: string]: (arg0: ApiTestContext, args?: any) => any;};
 }
 
 
