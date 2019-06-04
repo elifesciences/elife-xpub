@@ -7,8 +7,8 @@
  * environment
  */
 
-import { Option, Some } from 'funfix';
-import { defaultTestUser } from '../services/user';
+import { Option, Some } from "funfix";
+import { defaultTestUser } from "../services/user";
 
 /**
  * An object with this type is passed into each test helper, meaning each helper has access to global values
@@ -49,15 +49,14 @@ export interface ConnectionInfo {
 }
 
 /**
- * A `GqlChunk` contains helper functions to call the mutations, queries and subscriptions 
+ * A `GqlChunk` contains helper functions to call the mutations, queries and subscriptions
  * for a given module
  */
 export interface GqlChunk {
-  Query: {[key: string]: (arg0: ApiTestContext, args?: any) => any;};
-  Mutation: {[key: string]: (arg0: ApiTestContext, args?: any) => any;};
-  Subscription: {[key: string]: (arg0: ApiTestContext, args?: any) => any;};
+  Query: { [key: string]: (arg0: ApiTestContext, args?: any) => any };
+  Mutation: { [key: string]: (arg0: ApiTestContext, args?: any) => any };
+  Subscription: { [key: string]: (arg0: ApiTestContext, args?: any) => any };
 }
-
 
 /**
  * Gives the right config when running alongside the app in a local environment
@@ -69,7 +68,7 @@ export const defaultConfig = (): ApiTestContext => ({
       graphql_url: "http://localhost:3000/graphql",
       authorization: Some("Bearer ").map((t) => t + defaultTestUser.token),
       headers: {},
-    }
+    },
   },
-  user: {}
+  user: {},
 });
