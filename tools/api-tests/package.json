@@ -24,11 +24,12 @@
     "fmt:check": "npm run lint && npm run prettier -- --check",
     "build": "npm run graphql:codegen && npm run compile",
     "compile": "tsc",
-    "test": "echo TODO test",
+    "test": "ava-ts",
     "watch": "echo TODO test watch",
     "graphql:codegen": "graphql-codegen --config codegen.yml"
   },
   "devDependencies": {
+    "ts-node": "^8.2.0",
     "@graphql-codegen/cli": "^1.2.0",
     "@graphql-codegen/typescript": "1.2.0",
     "@graphql-codegen/typescript-graphql-files-modules": "1.2.0",
