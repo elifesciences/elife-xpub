@@ -15,6 +15,7 @@ import {
 } from '@elifesciences/component-elife-ui/client/atoms'
 import { Button } from '@pubsweet/ui'
 import AuthorStep, { fields as authorFields } from './AuthorStepPage'
+import FilesStep, { fileds as filesFields } from './FilesStepPage'
 import ProgressBar from '../components/ProgressBar'
 import wizardWithGQL from '../graphql/wizardWithGQL'
 import { parseInputToFormData } from '../utils'
@@ -44,7 +45,7 @@ const NewSubmissionWizard = ({ initialValues, match, history }) => {
 
   const stepConfigurations = [
     { schema: authorSchema, fields: authorFields },
-    { schema: filesSchema },
+    { schema: filesSchema, fields: filesFields },
     { schema: submissionSchema },
     { schema: editorsSchema },
     { schema: wizardSchema },
@@ -62,27 +63,22 @@ const NewSubmissionWizard = ({ initialValues, match, history }) => {
               </Box>
               <Switch>
                 <TrackedRoute
-                  formikProps={formikProps}
                   path={`${match.path}/author`}
                   render={() => <AuthorStep {...formikProps} />}
                 />
                 <TrackedRoute
-                  formikProps={formikProps}
                   path={`${match.path}/files`}
-                  render={() => <div>file step</div>}
+                  render={() => <FilesStep {...formikProps} />}
                 />
                 <TrackedRoute
-                  formikProps={formikProps}
                   path={`${match.path}/details`}
                   render={() => <div>details step</div>}
                 />
                 <TrackedRoute
-                  formikProps={formikProps}
                   path={`${match.path}/editors`}
                   render={() => <div>editors step</div>}
                 />
                 <TrackedRoute
-                  formikProps={formikProps}
                   path={`${match.path}/disclosure`}
                   render={() => <div>disclosure step</div>}
                 />
@@ -109,7 +105,7 @@ const NewSubmissionWizard = ({ initialValues, match, history }) => {
                       stepConfigurations[currentStep].fields.forEach(field =>
                         formikProps.setFieldTouched(field, true),
                       )
-                      if (formikProps.isValid) {
+                      if (!Object.keys(formikProps.errors).length) {
                         history.push(
                           `${match.url}/${STEP_NAMES[currentStep + 1]}`,
                         )
