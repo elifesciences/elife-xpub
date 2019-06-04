@@ -5,6 +5,8 @@ services:
     build:
       context: .
       dockerfile: ./Dockerfile-development
+    volumes:
+      - ./:/home/xpub
 
   app:
     build:
@@ -14,6 +16,8 @@ services:
       - ${PORT:-3000}:3000
     depends_on:
       - postgres
+    volumes:
+      - ./:/home/xpub
 
   postgres:
     image: postgres:10.4

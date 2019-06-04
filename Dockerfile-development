@@ -2,16 +2,8 @@ FROM node:8.14.0
 
 ENV HOME "/home/xpub"
 
-RUN mkdir -p ${HOME}
-
+VOLUME ["/home/xpub"]
 WORKDIR ${HOME}
-
-COPY package.json yarn.lock app.js .babelrc .eslintignore .eslintrc.js .prettierrc .stylelintignore .stylelintrc ./
-COPY webpack webpack
-COPY config config
-COPY app app
-COPY templates templates
-
 ENV XPUB_LOG_PATH "/var/log/xpub"
 RUN mkdir -p ${XPUB_LOG_PATH}
 
