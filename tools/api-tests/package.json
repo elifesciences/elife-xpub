@@ -1,0 +1,29 @@
+{
+  "name": "xpub-api-test",
+  "version": "0.0.1",
+  "description": "A graphql API test for elife-xpub",
+  "main": "dist/index.js",
+  "license": "MIT",
+  "author": "Peter East <petereast+pgp@pm.me>",
+  "dependencies": {
+    "funfix": "^7.0.1"
+  },
+  "scripts": {
+    "start": "node dist/index.js",
+    "lint": "eslint --cache 'src/**/*.ts'",
+    "prettier": "prettier 'src/**/*.ts'",
+    "fmt": "npm run lint -- --fix && npm run prettier -- --write",
+    "fmt:check": "npm run lint && npm run prettier -- --check",
+    "compile": "tsc"
+  },
+  "devDependencies": {
+    "@types/node": "^12.0.2",
+    "@typescript-eslint/eslint-plugin": "^1.9.0",
+    "@typescript-eslint/parser": "^1.9.0",
+    "eslint": "^5.16.0",
+    "eslint-config-prettier": "^4.3.0",
+    "prettier": "^1.17.1",
+    "tslint": "^5.16.0",
+    "typescript": "^3.4.5"
+  }
+}
