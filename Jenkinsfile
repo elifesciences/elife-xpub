@@ -32,6 +32,7 @@ elifePipeline {
                   } finally {
                       sh "sudo docker ps -a"
                       sh "sudo sh -c \"docker logs elife-xpub_postgres_1 > build/logs/unit-postgres-output.txt\""
+                      sh "sh -c \"docker copy elife-xpub_postgres_1:/var/lib/postgresql/data/log/. build/logs/\""
                       archiveArtifacts artifacts: "build/logs/**/*", allowEmptyArchive: true
                       sh "IMAGE_TAG=${commit} docker-compose -f docker-compose.yml -f docker-compose.ci.yml down -v"
                       sh "sudo rm -rf ./build/* || true"
@@ -73,7 +74,7 @@ elifePipeline {
             }
 
             try {
-                sh "IMAGE_TAG=${commit} docker-compose -f docker-compose.yml -f docker-compose.ci.yml up postgres"
+                sh "IMAGE_TAG=${commit} docker-compose -f docker-compose.yml -f docker-compose.ci.yml up -d postgres"
                 sh "IMAGE_TAG=${commit} docker-compose -f docker-compose.yml -f docker-compose.ci.yml run --rm --name elife-xpub_wait_postgres app bash -c './scripts/wait-for-it.sh -t 15 postgres:5432'"
                 parallel actions
             } finally {
