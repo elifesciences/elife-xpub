@@ -31,9 +31,9 @@ elifePipeline {
                       }, 'test', commit)
                   } finally {
                       sh "docker ps -a"
-                      sh "sh -c \"docker logs elife-xpub_postgres_1 > build/logs/unit-postgres-output.txt\""
-                      sh "sh -c \"docker cp elife-xpub_postgres_1:/var/lib/postgresql/data/logs/. build/logs/\""
-                      archiveArtifacts artifacts: "build/logs/**/*", allowEmptyArchive: true
+                      sh "mkdir -p build/postgres-logs && sh -c \"docker logs elife-xpub_postgres_1 > build/postgres-logs/unit-postgres-output.txt\""
+                      sh "sh -c \"docker cp elife-xpub_postgres_1:/var/lib/postgresql/data/logs/. build/postgres-logs/\""
+                      archiveArtifacts artifacts: "build/postgres-logs/**/*", allowEmptyArchive: true
                       sh "IMAGE_TAG=${commit} docker-compose -f docker-compose.yml -f docker-compose.ci.yml down -v"
                       sh "sudo rm -rf ./build/* || true"
                   }
