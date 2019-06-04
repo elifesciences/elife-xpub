@@ -28,4 +28,3 @@ test/screenshots/
 migrations-*
 xpub.log
 build/
-!build/postgres/.gitkeep
