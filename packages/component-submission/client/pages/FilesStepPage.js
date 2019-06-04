@@ -214,4 +214,4 @@ export default compose(
   })),
 )(FilesStepPageComponent)
 
-export const files = ['coverLetter', 'files', 'fileStatus']
+export const fields = ['coverLetter', 'files', 'fileStatus']

@@ -15,7 +15,7 @@ import {
 } from '@elifesciences/component-elife-ui/client/atoms'
 import { Button } from '@pubsweet/ui'
 import AuthorStep, { fields as authorFields } from './AuthorStepPage'
-import FilesStep, { fileds as filesFields } from './FilesStepPage'
+import FilesStep, { fields as filesFields } from './FilesStepPage'
 import ProgressBar from '../components/ProgressBar'
 import wizardWithGQL from '../graphql/wizardWithGQL'
 import { parseInputToFormData } from '../utils'
