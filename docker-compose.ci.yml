@@ -3,10 +3,10 @@ version: '3'
 services:
   test_browser:
     build:
-      dockerfile: ./Dockerfile
+      dockerfile: ./Dockerfile-test_browser
       args:
         CI_COMMIT_SHA: ${IMAGE_TAG}
-    image: elifesciences/elife-xpub:${IMAGE_TAG}
+    image: elifesciences/test_browser:${IMAGE_TAG}
     command: sh -c "./scripts/wait-for-app.sh app:3000 ; socat -d tcp-listen:10081,reuseaddr,fork tcp:localhost:10080 & npm run test:browser -- --screenshots /tmp/screenshots --screenshots-on-fails"
     depends_on:
       - app
@@ -21,10 +21,11 @@ services:
       PUBSWEET_SECRET:
     volumes:
       - ./build/screenshots:/tmp/screenshots
+      - ./:/home/xpub
 
   app:
     build:
-      dockerfile: ./Dockerfile
+      dockerfile: ./Dockerfile-app
       args:
         CI_COMMIT_SHA: ${IMAGE_TAG}
     image: elifesciences/elife-xpub:${IMAGE_TAG}
