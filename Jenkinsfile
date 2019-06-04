@@ -98,11 +98,12 @@ elifePipeline {
         //         }, 'test:browser', commit)
         //     } finally {
         //         sh "docker ps -a"
-        //         sh "sh -c \"docker logs elife-xpub_app_1 > build/logs/app-output.txt\""
-        //         sh "sh -c \"docker logs elife-xpub_postgres_1 > build/logs/postgres-output.txt\""
-        //         sh "sh -c \"docker logs elife-xpub_sftp_1 > build/logs/sftp-output.txt\""
-        //         sh "sh -c \"docker logs elife-xpub_fakes3_1 > build/logs/fakes3-output.txt\""
-        //         archiveArtifacts artifacts: "build/screenshots/**/*,build/logs/**/*,build/meca/*.zip", allowEmptyArchive: true
+        //         sh "mkdir -p build/browser"
+        //         sh "sh -c \"docker logs elife-xpub_app_1 > build/browser/app-output.txt\""
+        //         sh "sh -c \"docker logs elife-xpub_postgres_1 > build/browser/postgres-output.txt\""
+        //         sh "sh -c \"docker logs elife-xpub_sftp_1 > build/browser/sftp-output.txt\""
+        //         sh "sh -c \"docker logs elife-xpub_fakes3_1 > build/browser/fakes3-output.txt\""
+        //         archiveArtifacts artifacts: "build/screenshots/**/*,build/browser/**/*,build/meca/*.zip", allowEmptyArchive: true
         //         sh "aws --endpoint-url='http://localhost:4569' s3 ls s3://test --recursive"
         //         sh "IMAGE_TAG=${commit} docker-compose -f docker-compose.yml -f docker-compose.ci.yml down -v"
         //         sh "sudo rm -rf ./build/* || true"
