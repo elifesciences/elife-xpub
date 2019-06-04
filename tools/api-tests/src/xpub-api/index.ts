@@ -8,6 +8,7 @@
  */
 
 import { Option, Some } from 'funfix';
+import { defaultTestUser } from '../services/user';
 
 /**
  * An object with this type is passed into each test helper, meaning each helper has access to global values
@@ -66,8 +67,7 @@ export const defaultConfig = (): ApiTestContext => ({
     api_version: "0",
     connection: {
       graphql_url: "http://localhost:3000/graphql",
-      // authorization: Some("Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImV3d2JvYzdtIiwiaXNzIjoieHB1YiIsImlhdCI6MTU1OTY1MjEyMiwiZXhwIjoxNTU5NzM4NTIyfQ.tdfPSQ9ltvaGp1TuxZ0Gab-ZHWP-2YevmnRrYkuw4No"),
-      authorization: Some("Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImZsb2JieWwiLCJpc3MiOiJ4cHViIiwiaWF0IjoxNTU5NjUyMTIyLCJleHAiOjE1NTk3Mzg1MjJ9.GLaDqAhzHloxjO6ukt5i5-gltIpnVm0GkKyBgtIEP8o"),
+      authorization: Some("Bearer ").map((t) => t + defaultTestUser.token),
       headers: {},
     }
   },
