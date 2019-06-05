@@ -6,14 +6,6 @@ RUN mkdir -p ${HOME}
 
 WORKDIR ${HOME}
 
-# install Chrome
-RUN curl -sL http://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add -
-RUN echo 'deb http://dl.google.com/linux/chrome/deb/ stable main' >> /etc/apt/sources.list.d/google.list
-RUN apt-get update \
-    && apt-get install -y google-chrome-stable socat \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
-
 COPY package.json yarn.lock ./
 COPY client client
 COPY packages packages
@@ -45,9 +37,6 @@ COPY webpack webpack
 COPY templates templates
 
 ENV NODE_ENV "production"
-ARG CI_COMMIT_SHA
-ENV CI_COMMIT_SHA ${CI_COMMIT_SHA}
-
 ENV XPUB_LOG_PATH "/var/log/xpub"
 RUN mkdir -p ${XPUB_LOG_PATH}
 
