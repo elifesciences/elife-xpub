@@ -48,6 +48,4 @@ COPY test test
 COPY webpack webpack
 COPY templates templates
 
-RUN npx testcafe --version
-
 CMD []
