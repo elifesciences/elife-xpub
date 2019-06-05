@@ -13,6 +13,7 @@ import { Loading } from '@elifesciences/component-elife-ui/client/atoms'
 import { Button } from '@pubsweet/ui'
 import AuthorStep, { fields as authorFields } from './AuthorStepPage'
 import FilesStep, { fields as filesFields } from './FilesStepPage'
+import SubmissionPage, { fields as submissionFields } from './SubmissionPage'
 import ProgressBar from '../components/ProgressBar'
 import wizardWithGQL from '../graphql/wizardWithGQL'
 import { parseInputToFormData } from '../utils'
@@ -39,7 +40,7 @@ const NewSubmissionWizard = ({ initialValues, match, history }) => {
   const stepConfigurations = [
     { schema: authorSchema, fields: authorFields },
     { schema: filesSchema, fields: filesFields },
-    { schema: submissionSchema },
+    { schema: submissionSchema, fields: submissionFields },
     { schema: editorsSchema },
     { schema: wizardSchema },
   ]
@@ -65,7 +66,7 @@ const NewSubmissionWizard = ({ initialValues, match, history }) => {
                 />
                 <TrackedRoute
                   path={`${match.path}/details`}
-                  render={() => <div>details step</div>}
+                  render={() => <SubmissionPage {...formikProps} />}
                 />
                 <TrackedRoute
                   path={`${match.path}/editors`}

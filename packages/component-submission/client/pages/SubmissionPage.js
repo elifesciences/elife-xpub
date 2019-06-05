@@ -130,3 +130,12 @@ const SubmissionPage = ({ values, setFieldValue, setFieldTouched }) => (
 )
 
 export default SubmissionPage
+
+export const fields = [
+  'meta.title',
+  'meta.articleType',
+  'meta.subjects',
+  'previouslyDiscussed',
+  'previouslySubmitted',
+  'firstCosubmissionTitle',
+]
