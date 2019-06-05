@@ -11,12 +11,15 @@ import {
 } from '@elifesciences/component-elife-app/client'
 import { Loading } from '@elifesciences/component-elife-ui/client/atoms'
 import { Button } from '@pubsweet/ui'
-import AuthorStep, { fields as authorFields } from './AuthorStepPage'
-import FilesStep, { fields as filesFields } from './FilesStepPage'
-import SubmissionPage, { fields as submissionFields } from './SubmissionPage'
+
+import AuthorStep from './AuthorStepPage'
+import FilesStep from './FilesStepPage'
+import DetailsStep from './DetailsStepPage'
+import EditorStep from './EditorsStepPage'
+
 import ProgressBar from '../components/ProgressBar'
 import wizardWithGQL from '../graphql/wizardWithGQL'
-import { parseInputToFormData } from '../utils'
+import { parseInputToFormData, flattenObject } from '../utils'
 import { STEP_NAMES } from '../utils/constants'
 import wizardSchema, {
   authorSchema,
@@ -37,12 +40,12 @@ const NewSubmissionWizard = ({ initialValues, match, history }) => {
 
   const [currentStep, setCurrentStep] = useState(getCurrentStepFromPath())
 
-  const stepConfigurations = [
-    { schema: authorSchema, fields: authorFields },
-    { schema: filesSchema, fields: filesFields },
-    { schema: submissionSchema, fields: submissionFields },
-    { schema: editorsSchema },
-    { schema: wizardSchema },
+  const stepValidation = [
+    authorSchema,
+    filesSchema,
+    submissionSchema,
+    editorsSchema,
+    wizardSchema,
   ]
 
   return (
@@ -66,11 +69,11 @@ const NewSubmissionWizard = ({ initialValues, match, history }) => {
                 />
                 <TrackedRoute
                   path={`${match.path}/details`}
-                  render={() => <SubmissionPage {...formikProps} />}
+                  render={() => <DetailsStep {...formikProps} />}
                 />
                 <TrackedRoute
                   path={`${match.path}/editors`}
-                  render={() => <div>editors step</div>}
+                  render={() => <EditorStep {...formikProps} />}
                 />
                 <TrackedRoute
                   path={`${match.path}/disclosure`}
@@ -101,9 +104,6 @@ const NewSubmissionWizard = ({ initialValues, match, history }) => {
                   <Button
                     data-test-id="next"
                     onClick={() => {
-                      stepConfigurations[currentStep].fields.forEach(field =>
-                        formikProps.setFieldTouched(field, true),
-                      )
                       formikProps.validateForm().then(errors => {
                         if (!Object.keys(errors).length) {
                           setCurrentStep(currentStep + 1)
@@ -111,6 +111,24 @@ const NewSubmissionWizard = ({ initialValues, match, history }) => {
                             `${match.url}/${STEP_NAMES[currentStep + 1]}`,
                           )
                         }
+
+                        Object.keys(errors).forEach(errorField => {
+                          if (typeof errors[errorField] === 'object') {
+                            const flattenedSubfields = flattenObject(
+                              errors[errorField],
+                            )
+                            Object.keys(flattenedSubfields).forEach(
+                              subField => {
+                                formikProps.setFieldTouched(
+                                  `${errorField}.${subField}`,
+                                  true,
+                                )
+                              },
+                            )
+                          } else {
+                            formikProps.setFieldTouched(errorField, true, false)
+                          }
+                        })
                       })
                     }}
                     primary
@@ -123,9 +141,7 @@ const NewSubmissionWizard = ({ initialValues, match, history }) => {
           </Flex>
         </Form>
       )}
-      validationSchema={yup
-        .object()
-        .shape(stepConfigurations[currentStep].schema)}
+      validationSchema={yup.object().shape(stepValidation[currentStep])}
     />
   )
 }

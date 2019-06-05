@@ -48,10 +48,3 @@ export default compose(
     },
   }),
 )(AuthorPage)
-
-export const fields = [
-  'author.firstName',
-  'author.lastName',
-  'author.email',
-  'author.aff',
-]

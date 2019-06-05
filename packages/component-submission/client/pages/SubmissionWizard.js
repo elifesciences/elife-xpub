@@ -19,7 +19,7 @@ import AuthorStepPage from './AuthorStepPage'
 import DisclosureStepPage from './DisclosureStepPage'
 import FilesStepPage from './FilesStepPage'
 import EditorsStepPage from './EditorsStepPage'
-import SubmissionPage from './SubmissionPage'
+import DetailsStepPage from './DetailsStepPage'
 
 import wizardSchema, {
   authorSchema,
@@ -114,7 +114,7 @@ export class SubmissionWizard extends React.Component {
           path={`${match.path}/details`}
           render={() => (
             <WizardStep
-              component={SubmissionPage}
+              component={DetailsStepPage}
               handleAutoSave={this.onNextClick}
               handleButtonClick={this.onNextClick}
               history={history}
