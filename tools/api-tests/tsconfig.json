@@ -1,0 +1,29 @@
+{
+  "compilerOptions": {
+    "lib": ["dom", "esnext", "esnext.asynciterable", "es2017.object"],
+    "target": "es6",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "inlineSourceMap": true,
+    "isolatedModules": false,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "declaration": false,
+    "noImplicitAny": true,
+    "noImplicitUseStrict": false,
+    "noUnusedParameters": true,
+    "noUnusedLocals": true,
+    "removeComments": false,
+    "preserveConstEnums": true,
+    "strictNullChecks": true,
+    "suppressImplicitAnyIndexErrors": true,
+    "rootDir": "src",
+    "outDir": "dist"
+  },
+  "exclude": ["node_modules"],
+  "compileOnSave": false,
+  "buildOnSave": false,
+  "atom": {
+    "rewriteTsconfig": false
+  }
+}
