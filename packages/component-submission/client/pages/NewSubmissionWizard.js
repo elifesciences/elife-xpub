@@ -16,6 +16,7 @@ import AuthorStep from './AuthorStepPage'
 import FilesStep from './FilesStepPage'
 import DetailsStep from './DetailsStepPage'
 import EditorStep from './EditorsStepPage'
+import DisclosureStep from './DisclosureStepPage'
 
 import ProgressBar from '../components/ProgressBar'
 import wizardWithGQL from '../graphql/wizardWithGQL'
@@ -77,10 +78,10 @@ const NewSubmissionWizard = ({ initialValues, match, history }) => {
                 />
                 <TrackedRoute
                   path={`${match.path}/disclosure`}
-                  render={() => <div>disclosure step</div>}
+                  render={() => <DisclosureStep {...formikProps} />}
                 />
                 <Redirect
-                  from="/submit/:id"
+                  from="/newSubmit/:id"
                   to={`/newSubmit/${match.params.id}/author`}
                 />
                 <ErrorPage error="404: page not found" />
