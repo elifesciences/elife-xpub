@@ -1,4 +1,7 @@
  #!/bin/bash
+ 
+echo "This relies on the following being run (see Jenkins): "
+echo "    ln -sf .env.ci .env"
 
 export PGHOST=postgres
 
