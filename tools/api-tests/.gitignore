@@ -2,3 +2,6 @@ doc/
 dist/
 src/generated/
 .eslintcache
+codegen.yml
+*.orig
+old/
