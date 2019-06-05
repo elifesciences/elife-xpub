@@ -32,16 +32,18 @@ const BoxNoMinWidth = styled(Box)`
 `
 
 const NewSubmissionWizard = ({ initialValues, match, history }) => {
-  const [currentStep, setCurrentStep] = useState(0)
-
-  useEffect(() => {
-    const newStep = STEP_NAMES.map(step => step.toLowerCase()).indexOf(
+  const getCurrentStepFromPath = () => STEP_NAMES.map(step => step.toLowerCase()).indexOf(
       history.location.pathname.split('/')[3].toLowerCase(),
     )
-    if (newStep !== currentStep) {
-      setCurrentStep(newStep)
-    }
-  })
+
+  const [currentStep, setCurrentStep] = useState(getCurrentStepFromPath())
+
+  useEffect(
+    () => {
+      setCurrentStep(getCurrentStepFromPath())
+    },
+    [history.location.pathname],
+  )
 
   const stepConfigurations = [
     { schema: authorSchema, fields: authorFields },
@@ -105,7 +107,7 @@ const NewSubmissionWizard = ({ initialValues, match, history }) => {
                       stepConfigurations[currentStep].fields.forEach(field =>
                         formikProps.setFieldTouched(field, true),
                       )
-                      if (formikProps.isValid) {
+                      if (!Object.keys(formikProps.errors).length) {
                         history.push(
                           `${match.url}/${STEP_NAMES[currentStep + 1]}`,
                         )

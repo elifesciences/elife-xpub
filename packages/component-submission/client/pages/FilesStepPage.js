@@ -26,6 +26,10 @@ export class FilesStepPageComponent extends React.Component {
     }
   }
 
+  componentDidMount() {
+    this.props.validateForm()
+  }
+
   getManuscriptSourceFile = () => {
     const { values } = this.props
     const manuscriptFileIndex = values.files.findIndex(

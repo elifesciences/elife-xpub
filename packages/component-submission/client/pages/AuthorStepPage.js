@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import ReactGA from 'react-ga'
 import { compose, withHandlers } from 'recompose'
 import {
@@ -9,27 +9,33 @@ import TwoColumnLayout from '@elifesciences/component-elife-ui/client/global/lay
 
 import authorWithGQL from '../graphql/authorWithGQL'
 
-const AuthorPage = ({ prefillDetails }) => (
-  <React.Fragment>
-    <p>
-      <ActionText data-test-id="orcid-prefill" onClick={prefillDetails}>
-        Pre-fill my details
-      </ActionText>{' '}
-      using ORCID
-    </p>
+const AuthorPage = ({ prefillDetails, validateForm = () => {}, errors }) => {
+  useEffect(() => {
+    validateForm()
+  }, [])
 
-    <TwoColumnLayout bottomSpacing={false}>
-      <ValidatedField label="First name" name="author.firstName" />
-      <ValidatedField label="Last name" name="author.lastName" />
-      <ValidatedField
-        label="Email (correspondence)"
-        name="author.email"
-        type="email"
-      />
-      <ValidatedField label="Institution" name="author.aff" />
-    </TwoColumnLayout>
-  </React.Fragment>
-)
+  return (
+    <React.Fragment>
+      <p>
+        <ActionText data-test-id="orcid-prefill" onClick={prefillDetails}>
+          Pre-fill my details
+        </ActionText>{' '}
+        using ORCID
+      </p>
+
+      <TwoColumnLayout bottomSpacing={false}>
+        <ValidatedField label="First name" name="author.firstName" />
+        <ValidatedField label="Last name" name="author.lastName" />
+        <ValidatedField
+          label="Email (correspondence)"
+          name="author.email"
+          type="email"
+        />
+        <ValidatedField label="Institution" name="author.aff" />
+      </TwoColumnLayout>
+    </React.Fragment>
+  )
+}
 
 export default compose(
   authorWithGQL,
