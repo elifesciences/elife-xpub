@@ -1,0 +1,24 @@
+{
+  "extends": [
+    "plugin:@typescript-eslint/recommended",
+    "prettier",
+    "prettier/@typescript-eslint"
+  ],
+  "parserOptions": {
+    "project": "./tsconfig.json",
+  },
+  "parser": "@typescript-eslint/parser",
+  "plugins": [
+    "@typescript-eslint"
+  ],
+  "rules": {
+    "@typescript-eslint/camelcase": "off",
+    // Typescript compiler does this instead
+    "@typescript-eslint/no-unused-vars": "off",
+    // Allow JSON imports with `require()`
+    "@typescript-eslint/no-var-requires": "off",
+    // Allow "{obj} as Thing" syntax in tests
+    "@typescript-eslint/no-object-literal-type-assertion": "off"
+  },
+  "excludedFiles": "src/generated/**/*" 
+}

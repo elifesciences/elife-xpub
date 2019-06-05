@@ -1,0 +1,34 @@
+{
+  "tags": {
+    "allowUnknownTags": true
+  },
+  "plugins": [
+    "plugins/markdown",
+    "/home/petereast/git/elife/elife-xpub/tools/api-tests/node_modules/tsdoc/template/plugins/TSDoc.js"
+  ],
+  "opts": {
+    "template": "/home/petereast/git/elife/elife-xpub/tools/api-tests/node_modules/tsdoc/template",
+    "recurse": "true"
+  },
+  "templates": {
+    "cleverLinks": false,
+    "monospaceLinks": false
+  },
+  "source": {
+    "includePattern": "(\\.d)?\\.ts$"
+  },
+  "markdown": {
+    "parser": "gfm",
+    "hardwrap": true
+  },
+  "tsdoc": {
+    "source": "/home/petereast/git/elife/elife-xpub/tools/api-tests/src/",
+    "destination": "/home/petereast/git/elife/elife-xpub/tools/api-tests/docs",
+    "tutorials": "",
+    "systemName": "api-tests",
+    "footer": "",
+    "copyright": "api-tests Copyright © 2019 petereast.",
+    "outputSourceFiles": true,
+    "commentsOnly": true
+  }
+}
