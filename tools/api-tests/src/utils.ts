@@ -8,10 +8,10 @@ export class NotImplementedError extends Error {
   }
 }
 
-export async function withAuthorization(config: ApiTestContext, query: string) {
+export async function withAuthorization(config: ApiTestContext, query: string, variables?: any) {
   const gqlClient = new GraphQLClient(config.state.connection.graphql_url, {
     headers: { Authorization: config.state.connection.authorization.getOrElse("") },
   });
 
-  return await gqlClient.request(query);
+  return await gqlClient.request(query, variables);
 }
