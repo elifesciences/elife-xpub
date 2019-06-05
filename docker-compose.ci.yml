@@ -7,7 +7,7 @@ services:
       args:
         CI_COMMIT_SHA: ${IMAGE_TAG}
     image: elifesciences/test_browser:${IMAGE_TAG}
-    command: sh -c "pwd; find node_modules; npx testcafe --version && ./scripts/wait-for-app.sh app:3000 ; socat -d tcp-listen:10081,reuseaddr,fork tcp:localhost:10080 & npm run test:browser -- --screenshots /tmp/screenshots --screenshots-on-fails"
+    command: sh -c "./scripts/wait-for-app.sh app:3000 ; socat -d tcp-listen:10081,reuseaddr,fork tcp:localhost:10080 & npm run test:browser -- --screenshots /tmp/screenshots --screenshots-on-fails"
     depends_on:
       - app
     environment:
@@ -21,7 +21,6 @@ services:
       PUBSWEET_SECRET:
     volumes:
       - ./build/screenshots:/tmp/screenshots
-      - ./:/home/xpub
 
   app:
     build:
