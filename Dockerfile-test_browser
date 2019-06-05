@@ -15,8 +15,14 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/*
 
 COPY package.json yarn.lock ./
+COPY client client
+COPY packages packages
 
-RUN yarn install
+# We do a development install because react-styleguidist is a dev dependency and we want to run tests
+# Remove cache and offline mirror in the same command, to avoid creating intermediate layers
+RUN yarn install --frozen-lockfile \
+    && yarn cache clean \
+    && rm -rf /npm-packages-offline-cache
 
 COPY \
     app.js \
@@ -30,8 +36,13 @@ COPY \
     styleguide.config.js \
     ./
 
+COPY app app
+COPY config config
 COPY scripts scripts
+COPY styleguide styleguide
 COPY test test
+COPY webpack webpack
+COPY templates templates
 
 RUN npx testcafe --version
 
