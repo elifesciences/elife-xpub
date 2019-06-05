@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { compose, withProps, branch, renderComponent } from 'recompose'
 import { Switch, Redirect } from 'react-router-dom'
 import { Box, Flex } from '@rebass/grid'
@@ -9,10 +9,7 @@ import {
   ErrorPage,
   TrackedRoute,
 } from '@elifesciences/component-elife-app/client'
-import {
-  Loading,
-  ButtonLink,
-} from '@elifesciences/component-elife-ui/client/atoms'
+import { Loading } from '@elifesciences/component-elife-ui/client/atoms'
 import { Button } from '@pubsweet/ui'
 import AuthorStep, { fields as authorFields } from './AuthorStepPage'
 import FilesStep, { fields as filesFields } from './FilesStepPage'
@@ -32,18 +29,12 @@ const BoxNoMinWidth = styled(Box)`
 `
 
 const NewSubmissionWizard = ({ initialValues, match, history }) => {
-  const getCurrentStepFromPath = () => STEP_NAMES.map(step => step.toLowerCase()).indexOf(
+  const getCurrentStepFromPath = () =>
+    STEP_NAMES.map(step => step.toLowerCase()).indexOf(
       history.location.pathname.split('/')[3].toLowerCase(),
     )
 
   const [currentStep, setCurrentStep] = useState(getCurrentStepFromPath())
-
-  useEffect(
-    () => {
-      setCurrentStep(getCurrentStepFromPath())
-    },
-    [history.location.pathname],
-  )
 
   const stepConfigurations = [
     { schema: authorSchema, fields: authorFields },
@@ -92,13 +83,18 @@ const NewSubmissionWizard = ({ initialValues, match, history }) => {
               </Switch>
               <Flex mt={6}>
                 <Box mr={3}>
-                  <ButtonLink
+                  <Button
                     data-test-id="back"
                     disabled={currentStep === 0}
-                    to={`${match.url}/${STEP_NAMES[currentStep - 1]}`}
+                    onClick={() => {
+                      setCurrentStep(currentStep - 1)
+                      history.push(
+                        `${match.url}/${STEP_NAMES[currentStep - 1]}`,
+                      )
+                    }}
                   >
                     Back
-                  </ButtonLink>
+                  </Button>
                 </Box>
                 <Box>
                   <Button
@@ -107,11 +103,14 @@ const NewSubmissionWizard = ({ initialValues, match, history }) => {
                       stepConfigurations[currentStep].fields.forEach(field =>
                         formikProps.setFieldTouched(field, true),
                       )
-                      if (!Object.keys(formikProps.errors).length) {
-                        history.push(
-                          `${match.url}/${STEP_NAMES[currentStep + 1]}`,
-                        )
-                      }
+                      formikProps.validateForm().then(errors => {
+                        if (!Object.keys(errors).length) {
+                          setCurrentStep(currentStep + 1)
+                          history.push(
+                            `${match.url}/${STEP_NAMES[currentStep + 1]}`,
+                          )
+                        }
+                      })
                     }}
                     primary
                   >
