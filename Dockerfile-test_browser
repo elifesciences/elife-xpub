@@ -36,6 +36,10 @@ COPY \
     styleguide.config.js \
     ./
 
+# Yes! we do need all this and the reason is that the browser tests use the config
+# in turn the config relies on packages. 
+# TODO: Fix the browser tests by passing in the "URL under test" as an env var
+
 COPY app app
 COPY config config
 COPY scripts scripts
