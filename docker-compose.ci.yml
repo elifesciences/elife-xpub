@@ -21,6 +21,7 @@ services:
       PUBSWEET_SECRET:
     volumes:
       - ./build/screenshots:/tmp/screenshots
+      - ./:/home/xpub
 
   app:
     build:
