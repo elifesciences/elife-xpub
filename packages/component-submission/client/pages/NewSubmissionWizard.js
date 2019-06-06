@@ -94,7 +94,9 @@ const NewSubmissionWizard = ({ initialValues, match, history }) => {
                     onClick={() => {
                       setCurrentStep(currentStep - 1)
                       history.push(
-                        `${match.url}/${STEP_NAMES[currentStep - 1]}`,
+                        `${match.url}/${STEP_NAMES[
+                          currentStep - 1
+                        ].toLowerCase()}`,
                       )
                     }}
                   >
@@ -109,7 +111,9 @@ const NewSubmissionWizard = ({ initialValues, match, history }) => {
                         if (!Object.keys(errors).length) {
                           setCurrentStep(currentStep + 1)
                           history.push(
-                            `${match.url}/${STEP_NAMES[currentStep + 1]}`,
+                            `${match.url}/${STEP_NAMES[
+                              currentStep + 1
+                            ].toLowerCase()}`,
                           )
                         }
 
