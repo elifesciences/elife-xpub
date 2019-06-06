@@ -18,6 +18,8 @@ import DetailsStep from './DetailsStepPage'
 import EditorStep from './EditorsStepPage'
 import DisclosureStep from './DisclosureStepPage'
 
+import WizardSubmit from '../components/WizardSubmit'
+
 import ProgressBar from '../components/ProgressBar'
 import wizardWithGQL from '../graphql/wizardWithGQL'
 import { parseInputToFormData, flattenObject } from '../utils'
@@ -40,6 +42,7 @@ const NewSubmissionWizard = ({ initialValues, match, history }) => {
     )
 
   const [currentStep, setCurrentStep] = useState(getCurrentStepFromPath())
+  const [submissionAttempted, setsubmissionAttempted] = useState(false)
 
   const stepValidation = [
     authorSchema,
@@ -52,6 +55,9 @@ const NewSubmissionWizard = ({ initialValues, match, history }) => {
   return (
     <Formik
       initialValues={initialValues}
+      onSubmit={() => {
+        console.log('2051')
+      }}
       render={formikProps => (
         <Form>
           <Flex>
@@ -78,7 +84,12 @@ const NewSubmissionWizard = ({ initialValues, match, history }) => {
                 />
                 <TrackedRoute
                   path={`${match.path}/disclosure`}
-                  render={() => <DisclosureStep {...formikProps} />}
+                  render={() => (
+                    <DisclosureStep
+                      isSubmissionAttempted={submissionAttempted}
+                      {...formikProps}
+                    />
+                  )}
                 />
                 <Redirect
                   from="/newSubmit/:id"
@@ -104,42 +115,55 @@ const NewSubmissionWizard = ({ initialValues, match, history }) => {
                   </Button>
                 </Box>
                 <Box>
-                  <Button
-                    data-test-id="next"
-                    onClick={() => {
-                      formikProps.validateForm().then(errors => {
-                        if (!Object.keys(errors).length) {
-                          setCurrentStep(currentStep + 1)
-                          history.push(
-                            `${match.url}/${STEP_NAMES[
-                              currentStep + 1
-                            ].toLowerCase()}`,
-                          )
-                        }
-
-                        Object.keys(errors).forEach(errorField => {
-                          if (typeof errors[errorField] === 'object') {
-                            const flattenedSubfields = flattenObject(
-                              errors[errorField],
+                  {currentStep === STEP_NAMES.length - 1 ? (
+                    <WizardSubmit
+                      setSubmissionAttempted={setsubmissionAttempted}
+                      setTouched={formikProps.setTouched}
+                      submitForm={formikProps.submitForm}
+                      validateForm={formikProps.validateForm}
+                    />
+                  ) : (
+                    <Button
+                      data-test-id="next"
+                      onClick={() => {
+                        formikProps.validateForm().then(errors => {
+                          if (!Object.keys(errors).length) {
+                            setCurrentStep(currentStep + 1)
+                            history.push(
+                              `${match.url}/${STEP_NAMES[
+                                currentStep + 1
+                              ].toLowerCase()}`,
                             )
-                            Object.keys(flattenedSubfields).forEach(
-                              subField => {
-                                formikProps.setFieldTouched(
-                                  `${errorField}.${subField}`,
-                                  true,
-                                )
-                              },
-                            )
-                          } else {
-                            formikProps.setFieldTouched(errorField, true, false)
                           }
+
+                          Object.keys(errors).forEach(errorField => {
+                            if (typeof errors[errorField] === 'object') {
+                              const flattenedSubfields = flattenObject(
+                                errors[errorField],
+                              )
+                              Object.keys(flattenedSubfields).forEach(
+                                subField => {
+                                  formikProps.setFieldTouched(
+                                    `${errorField}.${subField}`,
+                                    true,
+                                  )
+                                },
+                              )
+                            } else {
+                              formikProps.setFieldTouched(
+                                errorField,
+                                true,
+                                false,
+                              )
+                            }
+                          })
                         })
-                      })
-                    }}
-                    primary
-                  >
-                    Next
-                  </Button>
+                      }}
+                      primary
+                    >
+                      Next
+                    </Button>
+                  )}
                 </Box>
               </Flex>
             </BoxNoMinWidth>
