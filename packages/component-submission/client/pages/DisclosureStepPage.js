@@ -1,8 +1,6 @@
 import React from 'react'
 import { Box } from '@rebass/grid'
 import { format, parse } from 'date-fns'
-import styled from 'styled-components'
-import { th } from '@pubsweet/ui-toolkit'
 
 import {
   FormH3,
@@ -11,12 +9,6 @@ import {
   ValidatedField,
   ControlledCheckbox,
 } from '@elifesciences/component-elife-ui/client/atoms'
-
-import { getErrorStepsFromErrors, convertArrayToReadableList } from '../utils'
-
-const ErrorMessage = styled.div`
-  color: ${th('colorError')};
-`
 
 const localDate = parse(new Date())
 const formattedLocalDate = format(localDate, 'MMM D, YYYY')
@@ -79,17 +71,6 @@ const DisclosureStepPage = ({ values, errors, isSubmissionAttempted }) => {
         label="I agree on behalf of all authors"
         name="disclosureConsent"
       />
-
-      {!!Object.keys(errors).length &&
-        isSubmissionAttempted && (
-          <ErrorMessage data-test-id="test-error-message">
-            We&apos;re sorry but there appears to be one or more errors in your
-            submission that require attention before you can submit. Please use
-            the back button to review the{' '}
-            {convertArrayToReadableList(getErrorStepsFromErrors(errors))} steps
-            before trying again.
-          </ErrorMessage>
-        )}
     </React.Fragment>
   )
 }

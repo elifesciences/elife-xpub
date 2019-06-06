@@ -3,6 +3,7 @@ import { compose, withProps, branch, renderComponent } from 'recompose'
 import { Switch, Redirect } from 'react-router-dom'
 import { Box, Flex } from '@rebass/grid'
 import styled from 'styled-components'
+import { th } from '@pubsweet/ui-toolkit'
 import { Formik, Form } from 'formik'
 import * as yup from 'yup'
 import {
@@ -22,8 +23,14 @@ import WizardSubmit from '../components/WizardSubmit'
 
 import ProgressBar from '../components/ProgressBar'
 import wizardWithGQL from '../graphql/wizardWithGQL'
-import { parseInputToFormData, flattenObject } from '../utils'
+import {
+  parseInputToFormData,
+  flattenObject,
+  getErrorStepsFromErrors,
+  convertArrayToReadableList,
+} from '../utils'
 import { STEP_NAMES } from '../utils/constants'
+
 import wizardSchema, {
   authorSchema,
   filesSchema,
@@ -35,6 +42,10 @@ const BoxNoMinWidth = styled(Box)`
   min-width: 0;
 `
 
+const ErrorMessage = styled.div`
+  color: ${th('colorError')};
+`
+
 const NewSubmissionWizard = ({ initialValues, match, history }) => {
   const getCurrentStepFromPath = () =>
     STEP_NAMES.map(step => step.toLowerCase()).indexOf(
@@ -44,6 +55,8 @@ const NewSubmissionWizard = ({ initialValues, match, history }) => {
   const [currentStep, setCurrentStep] = useState(getCurrentStepFromPath())
   const [isUploading, setIsUploading] = useState(false)
   const [submissionAttempted, setsubmissionAttempted] = useState(false)
+
+  const isLastStep = () => currentStep === STEP_NAMES.length - 1
 
   const stepValidation = [
     authorSchema,
@@ -104,6 +117,19 @@ const NewSubmissionWizard = ({ initialValues, match, history }) => {
                 />
                 <ErrorPage error="404: page not found" />
               </Switch>
+              {!!Object.keys(formikProps.errors).length &&
+                submissionAttempted &&
+                isLastStep() && (
+                  <ErrorMessage data-test-id="test-error-message">
+                    We&apos;re sorry but there appears to be one or more errors
+                    in your submission that require attention before you can
+                    submit. Please use the back button to review the{' '}
+                    {convertArrayToReadableList(
+                      getErrorStepsFromErrors(formikProps.errors),
+                    )}{' '}
+                    steps before trying again.
+                  </ErrorMessage>
+                )}
               <Flex mt={6}>
                 <Box mr={3}>
                   <Button
