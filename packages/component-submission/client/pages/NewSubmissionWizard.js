@@ -18,6 +18,7 @@ import DetailsStep from './DetailsStepPage'
 import EditorStep from './EditorsStepPage'
 import DisclosureStep from './DisclosureStepPage'
 
+import SubmissionSave from '../components/SubmissionSave'
 import ProgressBar from '../components/ProgressBar'
 import wizardWithGQL from '../graphql/wizardWithGQL'
 import { parseInputToFormData, flattenObject } from '../utils'
@@ -33,7 +34,12 @@ const BoxNoMinWidth = styled(Box)`
   min-width: 0;
 `
 
-const NewSubmissionWizard = ({ initialValues, match, history }) => {
+const NewSubmissionWizard = ({
+  initialValues,
+  match,
+  history,
+  updateManuscript,
+}) => {
   const getCurrentStepFromPath = () =>
     STEP_NAMES.map(step => step.toLowerCase()).indexOf(
       history.location.pathname.split('/')[3].toLowerCase(),
@@ -54,6 +60,10 @@ const NewSubmissionWizard = ({ initialValues, match, history }) => {
       initialValues={initialValues}
       render={formikProps => (
         <Form>
+          <SubmissionSave
+            onUpdate={updateManuscript}
+            values={formikProps.values}
+          />
           <Flex>
             <BoxNoMinWidth flex="1 1 100%" mx={[0, 0, 0, '16.666%']}>
               <Box my={5}>
