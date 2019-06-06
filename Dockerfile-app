@@ -1,14 +1,22 @@
-FROM node:8.14.0
+FROM node:8.14 as builder
 
-ENV HOME "/home/xpub"
+RUN mkdir /build
+WORKDIR /build
 
-RUN mkdir -p ${HOME}
+COPY package.json ./
+COPY yarn.lock ./
 
-WORKDIR ${HOME}
 
-COPY package.json yarn.lock ./
+COPY app.js .babelrc .eslintignore .eslintrc.js .prettierrc .stylelintignore .stylelintrc ./
+
+COPY app app
 COPY client client
 COPY packages packages
+COPY config config
+COPY scripts scripts
+COPY static static
+COPY test test
+COPY webpack webpack
 
 # We do a development install because react-styleguidist is a dev dependency and we want to run tests
 # Remove cache and offline mirror in the same command, to avoid creating intermediate layers
@@ -16,32 +24,24 @@ RUN yarn install --frozen-lockfile \
     && yarn cache clean \
     && rm -rf /npm-packages-offline-cache
 
-COPY \
-    app.js \
-    newrelic.js \
-    .babelrc \
-    .eslintignore \
-    .eslintrc.js \
-    .prettierrc \
-    .stylelintignore \
-    .stylelintrc \
-    styleguide.config.js \
-    ./
 
-COPY app app
-COPY config config
-COPY scripts scripts
-COPY styleguide styleguide
-COPY test test
-COPY webpack webpack
-COPY templates templates
+# Need this to build the index.html and app.js
+RUN npm run build
+
+# Now remove all the packages used for build so we are ready for production
+# NOTE: This is the section not fully working yet
+RUN rm -rf node_modules
+RUN yarn install --production
+RUN du -h -d 2 node_modules | sort -h | tail
 
 ENV NODE_ENV "production"
-ENV XPUB_LOG_PATH "/var/log/xpub"
-RUN mkdir -p ${XPUB_LOG_PATH}
+ARG CI_COMMIT_SHA
+ENV CI_COMMIT_SHA ${CI_COMMIT_SHA}
 
-RUN [ "npx", "pubsweet", "build"]
+FROM node:8-alpine
+ENV NODE_ENV "production"
+COPY --from=builder /build /elife-xpub
+WORKDIR /elife-xpub
 
 EXPOSE 3000
-
-CMD []
+CMD ["node", "app.js"]
