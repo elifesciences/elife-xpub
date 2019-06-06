@@ -42,6 +42,7 @@ const NewSubmissionWizard = ({ initialValues, match, history }) => {
     )
 
   const [currentStep, setCurrentStep] = useState(getCurrentStepFromPath())
+  const [isUploading, setIsUploading] = useState(false)
   const [submissionAttempted, setsubmissionAttempted] = useState(false)
 
   const stepValidation = [
@@ -72,7 +73,13 @@ const NewSubmissionWizard = ({ initialValues, match, history }) => {
                 />
                 <TrackedRoute
                   path={`${match.path}/files`}
-                  render={() => <FilesStep {...formikProps} />}
+                  render={() => (
+                    <FilesStep
+                      {...formikProps}
+                      isUploading={isUploading}
+                      setIsUploading={setIsUploading}
+                    />
+                  )}
                 />
                 <TrackedRoute
                   path={`${match.path}/details`}
