@@ -62,7 +62,6 @@ test(
       suggestedReviewers: [],
     }
 
-    console.log(savedManuscript);
     // Check that the stored manuscript matches the original
     // NOTE: The server adds __typename properties that aren't defined in our schema
     // and aren't used anywhere, so we strip them out to check that the stuff we depend on
