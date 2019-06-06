@@ -36,22 +36,28 @@ describe('SemanticExtraction', () => {
     it('return an entity with title filedName when called', () => {
       const titleExtraction = SemanticExtraction.createTitleEntity(
         'manuscriptId',
+        'test title',
       )
       expect(titleExtraction.fieldName).toBe('title')
+      expect(titleExtraction.value).toBe('test title')
     })
   })
 
   describe('findByManuscriptId', () => {
-    it('return an entity with title filedName when called', () => {
-      const titleExtraction = SemanticExtraction.createTitleEntity(
-        'manuscriptId',
-      )
+    it('return an entity with title filedName when called', async () => {
+      const id = uuid()
+      const titleExtraction = SemanticExtraction.createTitleEntity(id, 'abc123')
       expect(titleExtraction.fieldName).toBe('title')
-      const result = SemanticExtraction.findByManuscriptId(
-        titleExtraction.manuscriptId,
-      )
-      expect(result).toHaveProperty('title')
-      expect(result.title).toBe('test_title')
+      await titleExtraction.save()
+
+      const result = await SemanticExtraction.findByManuscriptId(id)
+      expect(result).toHaveLength(1)
+
+      expect(result[0]).toHaveProperty('fieldName')
+      expect(result[0].fieldName).toBe('title')
+
+      expect(result[0]).toHaveProperty('value')
+      expect(result[0].value).toBe('abc123')
     })
   })
 })
