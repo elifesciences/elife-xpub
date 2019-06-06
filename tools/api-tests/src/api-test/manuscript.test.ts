@@ -3,10 +3,11 @@ import dashboard from "../xpub-api/dashboard";
 import submission from "../xpub-api/submission";
 import { defaultConfig } from "../xpub-api";
 import { Manuscript, ManuscriptInput} from "../generated/graphql";
+import { stripTypeNameFromJson  } from '../utils';
 
 test.todo("The user can submit a manuscript, and other queries update correctly");
 
-test.only(
+test(
   "The user can save a submission and the manuscripts endpoint now includes it",
   async (t: TestContext) => {
     const context = defaultConfig();
@@ -15,7 +16,6 @@ test.only(
 
     const newManuscript = await dashboard.Mutation.createManuscript(context);
 
-    console.log(newManuscript);
 
     const manuscriptAuthorDelta: ManuscriptInput = {
       id: newManuscript.createManuscript.id,
@@ -55,17 +55,21 @@ test.only(
       "the new manuscript does not exist in the original list",
     );
 
-    const expectedUpdatedManuscript: Manuscript = {
+    // TODO: Work out exactly what should be here
+    const expectedUpdatedManuscript: Manuscript | ManuscriptInput = {
       ...newManuscript.createManuscript,
       ...manuscriptAuthorDelta as Manuscript,
+      suggestedReviewers: [],
     }
 
+    console.log(savedManuscript);
     // Check that the stored manuscript matches the original
-    console.log(savedManuscript.updateManuscript.author);
-    console.log(expectedUpdatedManuscript.author);
+    // NOTE: The server adds __typename properties that aren't defined in our schema
+    // and aren't used anywhere, so we strip them out to check that the stuff we depend on
+    // is right
     t.deepEqual(
-      savedManuscript.updateManuscript,
-      expectedUpdatedManuscript,
+      stripTypeNameFromJson(savedManuscript.updateManuscript),
+      stripTypeNameFromJson(expectedUpdatedManuscript),
       "the manuscript that is saved is the same as the original manuscript",
     );
   },

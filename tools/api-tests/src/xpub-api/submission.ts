@@ -109,7 +109,6 @@ fragment ReviewerDetails on ReviewerAlias {
   `;
 
   return await withAuthorization(ctx, query, data );
-  throw new NotImplementedError();
 };
 
 /**
