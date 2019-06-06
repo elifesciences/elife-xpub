@@ -2,11 +2,15 @@ const { intersection } = require('lodash')
 const { mergeObjects } = require('../utils')
 
 class Submission {
-  constructor({ models: { Manuscript, File, Team }, services: { Storage } }) {
+  constructor({
+    models: { Manuscript, File, Team, SemanticExtractionModel },
+    services: { Storage },
+  }) {
     this.ManuscriptModel = Manuscript
     this.FileModel = File
     this.TeamModel = Team
     this.Storage = Storage
+    this.SemanticExtraction = SemanticExtractionModel
   }
 
   async initialize(manuscriptId, userId) {
@@ -17,6 +21,9 @@ class Submission {
     )
     this.files = await this.FileModel.findByManuscriptId(manuscriptId)
     this.teams = await this.TeamModel.findByManuscriptId(manuscriptId)
+    this.suggestions = await this.SemanticExtraction.findByManuscriptId(
+      manuscriptId,
+    )
 
     return this
   }

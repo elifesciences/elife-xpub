@@ -40,4 +40,18 @@ describe('SemanticExtraction', () => {
       expect(titleExtraction.fieldName).toBe('title')
     })
   })
+
+  describe('findByManuscriptId', () => {
+    it('return an entity with title filedName when called', () => {
+      const titleExtraction = SemanticExtraction.createTitleEntity(
+        'manuscriptId',
+      )
+      expect(titleExtraction.fieldName).toBe('title')
+      const result = SemanticExtraction.findByManuscriptId(
+        titleExtraction.manuscriptId,
+      )
+      expect(result).toHaveProperty('title')
+      expect(result.title).toBe('test_title')
+    })
+  })
 })

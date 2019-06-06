@@ -1,6 +1,8 @@
 const Manuscript = require('@elifesciences/component-model-manuscript').model
 const File = require('@elifesciences/component-model-file').model
 const Team = require('@elifesciences/component-model-team').model
+const SemanticExtraction = require('@elifesciences/component-model-semantic-extraction')
+
 const { keyBy } = require('lodash')
 
 jest.mock('../utils')
@@ -15,7 +17,7 @@ const createMockObject = (values = {}, mockSaveFn) => ({
 
 const createSubmission = (args = {}) => {
   const {
-    models = { Manuscript, File, Team },
+    models = { Manuscript, File, Team, SemanticExtraction },
     services = { Storage: { getDownloadLink: jest.fn() } },
   } = args
 
