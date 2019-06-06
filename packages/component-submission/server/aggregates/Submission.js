@@ -1,11 +1,16 @@
-const { intersection } = require('lodash')
+const { intersection, omit, find } = require('lodash')
+const uuidv4 = require('uuid/v4')
 const { mergeObjects } = require('../utils')
 
 class Submission {
-  constructor({ models: { Manuscript, File, Team }, services: { Storage } }) {
+  constructor({
+    models: { Manuscript, File, Team, AuditLog },
+    services: { Storage },
+  }) {
     this.ManuscriptModel = Manuscript
     this.FileModel = File
     this.TeamModel = Team
+    this.AuditLogModel = AuditLog
     this.Storage = Storage
   }
 
@@ -163,6 +168,42 @@ class Submission {
     })
 
     return this._saveTeams()
+  }
+
+  async addFile(attrs) {
+    const id = uuidv4()
+    const file = new this.FileModel({
+      ...attrs,
+      manuscriptId: this.manuscript.id,
+      id,
+    })
+
+    await file.save()
+    this.files.push(file)
+
+    return id
+  }
+
+  async updateFile(id, attrs) {
+    const file = find(this.files, { id })
+
+    if (!file) {
+      throw new Error(`Could not find file with id: ${id}`)
+    }
+
+    // manuscriptId cannot be changed, but may that should be done at file model level?
+    Object.assign(file, omit(attrs, 'manuscriptId'))
+
+    if (attrs.status) {
+      await new this.AuditLogModel({
+        action: 'UPDATED',
+        objectId: file.id,
+        objectType: 'file.status',
+        value: attrs.status,
+      }).save()
+    }
+
+    return file.save()
   }
 }
 

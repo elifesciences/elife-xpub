@@ -1,6 +1,7 @@
 const Manuscript = require('@elifesciences/component-model-manuscript').model
 const File = require('@elifesciences/component-model-file').model
 const Team = require('@elifesciences/component-model-team').model
+const AuditLog = require('@elifesciences/component-model-audit-log').model
 const { keyBy } = require('lodash')
 
 jest.mock('../utils')
@@ -15,7 +16,7 @@ const createMockObject = (values = {}, mockSaveFn) => ({
 
 const createSubmission = (args = {}) => {
   const {
-    models = { Manuscript, File, Team },
+    models = { Manuscript, File, Team, AuditLog },
     services = { Storage: { getDownloadLink: jest.fn() } },
   } = args
 
@@ -479,6 +480,88 @@ describe('Submission', () => {
 
       expect(teams.suggestedReviewer).toEqual(reviewerOutput.suggestedReviewer)
       expect(teams.opposedReviewer).toEqual(reviewerOutput.opposedReviewer)
+    })
+  })
+
+  describe('addFile', () => {
+    const manuscriptId = 'b72a1165-3eac-4477-a04a-2f38ff43abfe'
+    const mockFileSave = jest.spyOn(File.prototype, 'save')
+    const mockAuditLogSave = jest.spyOn(AuditLog.prototype, 'save')
+
+    beforeEach(() => {
+      mockManuscriptFind.mockReset()
+      mockManuscriptFind.mockReturnValue(
+        createMockObject({
+          id: manuscriptId,
+        }),
+      )
+      mockFileSave.mockReset()
+      mockFileSave.mockImplementation(() => {})
+      mockAuditLogSave.mockReset()
+      mockAuditLogSave.mockImplementation(() => Promise.resolve())
+    })
+
+    it('should return a uuid', async () => {
+      const submission = await createSubmission().initialize()
+      const file = {
+        filename: 'foo',
+        status: 'CREATED',
+        type: 'type',
+        mimeType: 'mimeType',
+      }
+
+      const fileId = await submission.addFile(file)
+      const v4 = new RegExp(
+        /^[0-9A-F]{8}-[0-9A-F]{4}-4[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i,
+      )
+
+      expect(fileId.match(v4)[0]).toEqual(fileId)
+    })
+
+    it('should add and save the file', async () => {
+      const submission = await createSubmission().initialize()
+      const file = {
+        filename: 'foo',
+        status: 'CREATED',
+        type: 'type',
+        mimeType: 'mimeType',
+      }
+
+      const fileId = await submission.addFile(file)
+      const json = submission.toJSON()
+
+      expect(json.files[0]).toEqual({ id: fileId, manuscriptId, ...file })
+      expect(mockFileSave).toHaveBeenCalledTimes(1)
+    })
+
+    it('should update and save a file', async () => {
+      const submission = await createSubmission().initialize()
+      const file = {
+        filename: 'foo',
+        status: 'CREATED',
+        type: 'type',
+        mimeType: 'mimeType',
+      }
+      const updated = {
+        filename: 'bar',
+        status: 'UPLOADED',
+        type: 'type2',
+        mimeType: 'mimeType2',
+      }
+
+      const fileId = await submission.addFile(file)
+      await submission.updateFile(fileId, updated)
+      const json = submission.toJSON()
+
+      expect(json.files[0]).toEqual({ id: fileId, manuscriptId, ...updated })
+      expect(mockFileSave).toHaveBeenCalledTimes(2)
+    })
+
+    it('should throw an error if file does not exist', async () => {
+      const submission = await createSubmission().initialize()
+      await expect(submission.updateFile('id', {})).rejects.toThrowError(
+        'Could not find file with id: id',
+      )
     })
   })
 })
