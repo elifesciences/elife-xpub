@@ -1,0 +1,4 @@
+doc/
+dist/
+src/generated/
+.eslintcache

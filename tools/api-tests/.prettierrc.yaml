@@ -1,0 +1,8 @@
+# Same as [rustfmt](https://github.com/rust-lang/rustfmt/blob/master/Configurations.md#max_width)
+printWidth: 100
+
+# Trailing commas are good
+trailingComma: all
+
+# Fits with Typescript's requirements for `(foo) => bar` instead of `foo => bar`
+arrowParens: always

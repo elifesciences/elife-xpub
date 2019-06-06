@@ -1,0 +1,47 @@
+{
+  "name": "xpub-api-test",
+  "version": "0.0.1",
+  "description": "A graphql API test for elife-xpub",
+  "main": "dist/index.js",
+  "license": "MIT",
+  "author": "Peter East <petereast+pgp@pm.me>",
+  "dependencies": {
+    "@types/uuid": "^3.4.4",
+    "ava": "^2.0.0",
+    "ava-ts": "^0.25.2",
+    "funfix": "^7.0.1",
+    "graphql-request": "^1.8.2",
+    "io-ts": "^1.8.6",
+    "typedoc": "^0.14.2",
+    "uuid": "^3.3.2"
+  },
+  "scripts": {
+    "start": "node dist/index.js",
+    "lint": "eslint --cache 'src/**/*.ts'",
+    "doc": "typedoc --out ./doc/ src/",
+    "prettier": "prettier 'src/**/*.ts'",
+    "fmt": "npm run lint -- --fix && npm run prettier -- --write",
+    "fmt:check": "npm run lint && npm run prettier -- --check",
+    "build": "npm run graphql:codegen && npm run compile",
+    "compile": "tsc",
+    "test": "ava-ts",
+    "watch": "echo TODO test watch",
+    "graphql:codegen": "graphql-codegen --config codegen.yml"
+  },
+  "devDependencies": {
+    "ts-node": "^8.2.0",
+    "@graphql-codegen/cli": "^1.2.0",
+    "@graphql-codegen/typescript": "1.2.0",
+    "@graphql-codegen/typescript-graphql-files-modules": "1.2.0",
+    "@types/node": "^12.0.2",
+    "@typescript-eslint/eslint-plugin": "^1.9.0",
+    "@typescript-eslint/parser": "^1.9.0",
+    "eslint": "^5.16.0",
+    "eslint-config-prettier": "^4.3.0",
+    "graphql": "^14.3.1",
+    "prettier": "^1.17.1",
+    "ts-node": "^8.2.0",
+    "tslint": "^5.16.0",
+    "typescript": "^3.4.5"
+  }
+}
