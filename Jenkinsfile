@@ -18,11 +18,12 @@ elifePipeline {
 
         stage 'Project tests', {
             def actions = [
-                'lint': {
-                    withCommitStatus({
-                        sh "IMAGE_TAG=${commit} docker-compose -f docker-compose.yml -f docker-compose.ci.yml run --rm --name elife-xpub_app_lint app npm run lint"
-                    }, 'lint', commit)
-                },
+                // TODO move linting before image build
+                // 'lint': {
+                //     withCommitStatus({
+                //         sh "IMAGE_TAG=${commit} docker-compose -f docker-compose.yml -f docker-compose.ci.yml run --rm --name elife-xpub_app_lint app npm run lint"
+                //     }, 'lint', commit)
+                // },
                 'test': {
                   try {
                       withCommitStatus({
