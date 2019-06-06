@@ -36,6 +36,10 @@ COPY \
     styleguide.config.js \
     ./
 
+# Yes! we do need all this and the reason is that the browser tests use the config
+# in turn the config relies on packages. 
+# TODO: Fix the browser tests by passing in the "URL under test" as an env var
+
 COPY app app
 COPY config config
 COPY scripts scripts
@@ -43,16 +47,5 @@ COPY styleguide styleguide
 COPY test test
 COPY webpack webpack
 COPY templates templates
-
-ENV NODE_ENV "production"
-ARG CI_COMMIT_SHA
-ENV CI_COMMIT_SHA ${CI_COMMIT_SHA}
-
-ENV XPUB_LOG_PATH "/var/log/xpub"
-RUN mkdir -p ${XPUB_LOG_PATH}
-
-RUN [ "npx", "pubsweet", "build"]
-
-EXPOSE 3000
 
 CMD []
