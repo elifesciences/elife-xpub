@@ -213,5 +213,3 @@ export default compose(
     manuscriptUploadProgress: props.uploadProgress.manuscriptUploadProgress,
   })),
 )(FilesStepPageComponent)
-
-export const fields = ['coverLetter', 'files', 'fileStatus']
