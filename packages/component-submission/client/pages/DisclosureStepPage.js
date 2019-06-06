@@ -25,6 +25,8 @@ const DisclosureStepPage = ({ values, errors, isSubmissionAttempted }) => {
   const formattedArticleType = values.meta.articleType
     .toUpperCase()
     .replace(/-+/g, ' ')
+
+  console.log('re-render')
   return (
     <React.Fragment>
       <Box mb={4}>
