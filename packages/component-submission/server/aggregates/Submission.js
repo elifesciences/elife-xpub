@@ -36,7 +36,10 @@ class Submission {
     //  fieldName: string;
     //  value: string;
     // }
-    const SemanticExtractionToModels = (acc, extraction) => ({ ...acc, [extraction.fieldName]: extraction.value })
+    const SemanticExtractionToModels = (acc, extraction) => ({
+      ...acc,
+      [extraction.fieldName]: extraction.value,
+    })
 
     this.manuscript = await this.ManuscriptModel.find(
       manuscriptId,
@@ -50,8 +53,6 @@ class Submission {
     ))
       .sort((exA, exB) => exA.updated > exB.updated)
       .reduce(SemanticExtractionToModels, {})
-
-    console.log({ suggestions: this.suggestions })
 
     return this
   }
