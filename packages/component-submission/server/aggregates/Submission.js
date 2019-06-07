@@ -29,6 +29,15 @@ class Submission {
   }
 
   async initialize(manuscriptId, userId) {
+    // interface Extractions: {
+    //  id: string;
+    //  created: DateTime;
+    //  updated: DateTime;
+    //  fieldName: string;
+    //  value: string;
+    // }
+    const SemanticExtractionToModels = (acc, extraction) => ({ ...acc, [extraction.fieldName]: extraction.value })
+
     this.manuscript = await this.ManuscriptModel.find(
       manuscriptId,
       userId,
@@ -36,9 +45,13 @@ class Submission {
     )
     this.files = await this.FileModel.findByManuscriptId(manuscriptId)
     this.teams = await this.TeamModel.findByManuscriptId(manuscriptId)
-    this.suggestions = await this.SemanticExtractionModel.findByManuscriptId(
+    this.suggestions = (await this.SemanticExtractionModel.findByManuscriptId(
       manuscriptId,
-    )
+    ))
+      .sort((exA, exB) => exA.updated > exB.updated)
+      .reduce(SemanticExtractionToModels, {})
+
+    console.log({ suggestions: this.suggestions })
 
     return this
   }
@@ -99,6 +112,10 @@ class Submission {
       fileStatus: this.filesAreStored() ? 'READY' : 'CHANGING',
       files: this._getFilesWithDownloadLink(),
       teams: this.teams.map(team => team.toJSON()),
+      suggestions: Object.entries(this.suggestions).reduce(
+        (acc, [fieldName, value]) => [...acc, { fieldName, value }],
+        [],
+      ),
     }
   }
 
