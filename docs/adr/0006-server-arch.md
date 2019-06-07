@@ -34,13 +34,9 @@ Below is a diagram and some example of how the new code architecture will work.
         |     | aggregates |       | services  |
         |     +------------+       +-----------+
         |           |(n)
-    +----------------------+
-    |       models         |
-    +----------------------+
-              |
-    +----------------------+
-    |  data access layer   |
-    +----------------------+
+    +-----------------------------+
+    | models / data access layer  |
+    +-----------------------------+
 
 </pre>
 
@@ -87,7 +83,7 @@ const resolvers = {
 
 ### The use-case
 
-```
+```js
 const Storage = require('MyStorageService')
 const config = require('config')
 const Submission = require('../aggregates/Submission')
@@ -105,19 +101,31 @@ module.exports = {
 ### The Aggregate
 
 ```js
+const User = require('@elifesciences/component-model-user').model
+const File = require('@elifesciences/component-model-file').model
+const Team = require('@elifesciences/component-model-team').model
+
 class Submission {
-  ctor(config, Storage) {}
-  async get(id, user) {}
+  constructor(config, Storage) {
+    this.config = config
+    this.Storage = Storage
+  }
+
+  async get(id, user) {
+    /*
+     * Here we could get the files' contents, the teams and the manuscript
+     * then stitch them together to send back
+     */
+    return { ... }
+    }
+  }
 }
 ```
 
-### The Models
+### The Models / Data Access Layer
 
+```js
 ```
-
-```
-
-### The Data Access Layer
 
 ## Decision
 
