@@ -9,7 +9,7 @@ const makeWrapper = props =>
   shallow(
     <SubmissionSave
       disabled={false}
-      onSave={jest.fn()}
+      handleSave={jest.fn()}
       values={{ a: 1 }}
       {...props}
     />,
