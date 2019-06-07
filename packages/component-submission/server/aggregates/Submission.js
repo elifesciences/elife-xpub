@@ -3,14 +3,29 @@ const { mergeObjects } = require('../utils')
 
 class Submission {
   constructor({
-    models: { Manuscript, File, Team, SemanticExtractionModel },
+    models: { Manuscript, File, Team, SemanticExtraction },
     services: { Storage },
   }) {
     this.ManuscriptModel = Manuscript
     this.FileModel = File
     this.TeamModel = Team
+    this.SemanticExtractionModel = SemanticExtraction
     this.Storage = Storage
-    this.SemanticExtraction = SemanticExtractionModel
+
+    if (this.ManuscriptModel == null) {
+      throw new Error('Cannot construct Submission without a Manuscript model')
+    }
+    if (this.FileModel == null) {
+      throw new Error('Cannot construct Submission without a File model')
+    }
+    if (this.TeamModel == null) {
+      throw new Error('Cannot construct Submission without a Team model')
+    }
+    if (this.SemanticExtractionModel == null) {
+      throw new Error(
+        'Cannot construct Submission without a SemanticExtraction model',
+      )
+    }
   }
 
   async initialize(manuscriptId, userId) {
@@ -21,7 +36,7 @@ class Submission {
     )
     this.files = await this.FileModel.findByManuscriptId(manuscriptId)
     this.teams = await this.TeamModel.findByManuscriptId(manuscriptId)
-    this.suggestions = await this.SemanticExtraction.findByManuscriptId(
+    this.suggestions = await this.SemanticExtractionModel.findByManuscriptId(
       manuscriptId,
     )
 

@@ -2,6 +2,7 @@ const Manuscript = require('@elifesciences/component-model-manuscript').model
 const File = require('@elifesciences/component-model-file').model
 const Team = require('@elifesciences/component-model-team').model
 const SemanticExtraction = require('@elifesciences/component-model-semantic-extraction')
+  .model
 
 const { keyBy } = require('lodash')
 
@@ -15,12 +16,9 @@ const createMockObject = (values = {}, mockSaveFn) => ({
   save: mockSaveFn || jest.fn(),
 })
 
-const createSubmission = (args = {}) => {
-  const {
-    models = { Manuscript, File, Team, SemanticExtraction },
-    services = { Storage: { getDownloadLink: jest.fn() } },
-  } = args
-
+const createSubmission = (altServices = null) => {
+  const models = { Manuscript, File, Team, SemanticExtraction }
+  const services = altServices || { Storage: { getDownloadLink: jest.fn() } }
   return new Submission({ models, services })
 }
 
@@ -85,7 +83,7 @@ describe('Submission', () => {
       const mockGetDownloadLink = jest.fn(file => `URL:${file.url}`)
 
       const submission = await createSubmission({
-        services: { Storage: { getDownloadLink: mockGetDownloadLink } },
+        Storage: { getDownloadLink: mockGetDownloadLink },
       }).initialize()
 
       const submissionJSON = submission.toJSON()
@@ -101,7 +99,7 @@ describe('Submission', () => {
       const mockGetDownloadLink = jest.fn(file => `URL:${file.url}`)
 
       const submission = await createSubmission({
-        services: { Storage: { getDownloadLink: mockGetDownloadLink } },
+        Storage: { getDownloadLink: mockGetDownloadLink },
       }).initialize()
       const filesAreStored = jest
         .spyOn(submission, 'filesAreStored')
@@ -120,7 +118,7 @@ describe('Submission', () => {
       const mockGetDownloadLink = jest.fn(file => `URL:${file.url}`)
 
       const submission = await createSubmission({
-        services: { Storage: { getDownloadLink: mockGetDownloadLink } },
+        Storage: { getDownloadLink: mockGetDownloadLink },
       }).initialize()
       const filesAreStored = jest
         .spyOn(submission, 'filesAreStored')
@@ -135,7 +133,7 @@ describe('Submission', () => {
 
   describe('filesAreStored', () => {
     it('returns true if there are no related files', () => {
-      const submission = new Submission({ models: {}, services: {} })
+      const submission = createSubmission()
       expect(submission.files).toBe(undefined)
       expect(submission.filesAreStored()).toBe(true)
     })
