@@ -2,6 +2,8 @@ import React from 'react'
 import { omit, isEqual, cloneDeep } from 'lodash'
 import { FORM_FIELDS_TO_OMIT } from '../utils/constants'
 
+const SAVE_INTERVAL = 5000
+
 class SubmissionSave extends React.Component {
   constructor(props) {
     super(props)
@@ -12,7 +14,7 @@ class SubmissionSave extends React.Component {
   }
 
   componentDidMount() {
-    this.timer = setInterval(this.save, 5000)
+    this.timer = setInterval(this.save, SAVE_INTERVAL)
   }
 
   componentWillUnmount() {
