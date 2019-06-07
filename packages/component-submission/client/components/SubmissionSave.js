@@ -35,7 +35,7 @@ class SubmissionSave extends React.Component {
       this.setState({ isSaving: true })
 
       this.props
-        .onUpdate(filteredCurrentValues)
+        .handleSave(filteredCurrentValues)
         .then(() => this.setState({ isSaving: false }))
         .catch(() => this.setState({ isSaving: false }))
     }
