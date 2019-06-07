@@ -25,13 +25,10 @@ class SemanticExtraction extends BaseModel {
   }
 
   static async findByManuscriptId(manuscriptId) {
-    const items = await this.query().where({ manuscriptId })
-    if (!items) {
-      throw new Error(
-        `SemanticExtraction with manuscript_id ${manuscriptId} not found`,
-      )
+    if (manuscriptId == null) {
+      return []
     }
-    return items
+    return this.query().where({ manuscriptId })
   }
 
   async delete() {
