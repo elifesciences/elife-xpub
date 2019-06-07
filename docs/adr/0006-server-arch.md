@@ -128,10 +128,7 @@ class Submission {
       return {
         manuscript: await this.models.Manuscript.find(id),
         teams: await this.models.Team.findByManuscriptId(id),
-        files: await this.models.File.get(
-          this.config.datamodel.File,
-          fileId,
-          this.services.Storage)
+        files: await this.models.File.get(config, fileId, this.services.Storage)
       }
     }
   }
@@ -152,7 +149,8 @@ class Submission {
 // Note all dependencies injected.
 
 class File {
-  static async get(datamodel, id, storage) {
+  static async get(config, id, storage) {
+    const datamodel = config.datamodel.File // a bit of dependency inversion?
     return {
       FileMeta: await datamodel.get(id)
       FileContent: await storage.getFile(id)
