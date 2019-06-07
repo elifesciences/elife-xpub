@@ -17,7 +17,7 @@ const WizardSubmit = ({
         <Button
           data-test-id="submit"
           onClick={() => {
-            setSubmissionAttempted()
+            setSubmissionAttempted(true)
             validateForm().then(errors => {
               if (Object.keys(errors).length) {
                 setTouched(errors)
