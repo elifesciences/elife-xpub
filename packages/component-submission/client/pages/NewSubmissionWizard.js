@@ -51,6 +51,7 @@ const NewSubmissionWizard = ({
   match,
   history,
   updateManuscript,
+  submitManuscript,
 }) => {
   const getCurrentStepFromPath = () =>
     STEP_NAMES.map(step => step.toLowerCase()).indexOf(
@@ -74,12 +75,11 @@ const NewSubmissionWizard = ({
   return (
     <Formik
       initialValues={initialValues}
-      onSubmit={() => {
-        console.log('2051')
-      }}
+      onSubmit={submitManuscript}
       render={formikProps => (
         <Form>
           <SubmissionSave
+            disabled={formikProps.isSubmitting}
             onUpdate={updateManuscript}
             values={formikProps.values}
           />

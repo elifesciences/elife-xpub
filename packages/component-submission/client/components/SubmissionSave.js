@@ -27,6 +27,7 @@ class SubmissionSave extends React.Component {
     const filteredCurrentValues = omit(this.props.values, FORM_FIELDS_TO_OMIT)
 
     if (
+      !this.props.disabled &&
       !this.state.isSaving &&
       !isEqual(filteredPreviousValues, filteredCurrentValues)
     ) {
