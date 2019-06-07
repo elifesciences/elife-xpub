@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { compose, withProps, branch, renderComponent } from 'recompose'
+import { compose, branch, renderComponent } from 'recompose'
 import { Switch, Redirect } from 'react-router-dom'
 import { Box, Flex } from '@rebass/grid'
 import styled from 'styled-components'
@@ -19,12 +19,13 @@ import DetailsStep from './DetailsStepPage'
 import EditorStep from './EditorsStepPage'
 import DisclosureStep from './DisclosureStepPage'
 
+import SubmissionSave from '../components/SubmissionSave'
 import WizardSubmit from '../components/WizardSubmit'
-
 import ProgressBar from '../components/ProgressBar'
 import wizardWithGQL from '../graphql/wizardWithGQL'
 import {
   parseInputToFormData,
+  parseFormToOutputData,
   flattenObject,
   getErrorStepsFromErrors,
   convertArrayToReadableList,
@@ -46,7 +47,13 @@ const ErrorMessage = styled.div`
   color: ${th('colorError')};
 `
 
-const NewSubmissionWizard = ({ initialValues, match, history }) => {
+const NewSubmissionWizard = ({
+  data,
+  match,
+  history,
+  updateManuscript,
+  submitManuscript,
+}) => {
   const getCurrentStepFromPath = () =>
     STEP_NAMES.map(step => step.toLowerCase()).indexOf(
       history.location.pathname.split('/')[3].toLowerCase(),
@@ -57,7 +64,7 @@ const NewSubmissionWizard = ({ initialValues, match, history }) => {
   const [submissionAttempted, setsubmissionAttempted] = useState(false)
 
   const isLastStep = () => currentStep === STEP_NAMES.length - 1
-
+  const initialValues = parseInputToFormData(data.manuscript)
   const stepValidation = [
     authorSchema,
     filesSchema,
@@ -66,14 +73,27 @@ const NewSubmissionWizard = ({ initialValues, match, history }) => {
     wizardSchema,
   ]
 
+  const handleSave = formValues =>
+    updateManuscript({
+      variables: { data: parseFormToOutputData(formValues) },
+    })
+
+  const handleSubmit = formValues =>
+    submitManuscript({
+      variables: { data: parseFormToOutputData(formValues) },
+    })
+
   return (
     <Formik
       initialValues={initialValues}
-      onSubmit={() => {
-        console.log('2051')
-      }}
+      onSubmit={handleSubmit}
       render={formikProps => (
         <Form>
+          <SubmissionSave
+            disabled={formikProps.isSubmitting}
+            handleSave={handleSave}
+            values={formikProps.values}
+          />
           <Flex>
             <BoxNoMinWidth flex="1 1 100%" mx={[0, 0, 0, '16.666%']}>
               <Box my={5}>
@@ -219,7 +239,4 @@ export default compose(
     props => props.data.manuscript.clientStatus !== 'CONTINUE_SUBMISSION',
     () => () => <Redirect to="/" />,
   ),
-  withProps(props => ({
-    initialValues: parseInputToFormData(props.data.manuscript),
-  })),
 )(NewSubmissionWizard)
