@@ -63,13 +63,15 @@ describe('SubmissionSave', () => {
 
     wrapper.setProps({ values: { a: 2 } })
     jest.runOnlyPendingTimers()
-    wrapper.update()
-
     await flushPromises()
 
-    expect(onUpdate).toHaveBeenCalledTimes(1)
+    wrapper.setProps({ values: { a: 3 } })
+    jest.runOnlyPendingTimers()
+    await flushPromises()
+
+    expect(onUpdate).toHaveBeenCalledTimes(2)
     expect(onUpdate.mock.calls[0]).toEqual([{ a: 2 }])
-    expect(wrapper.state().isSaving).toBe(false)
+    expect(onUpdate.mock.calls[1]).toEqual([{ a: 3 }])
   })
 
   it('must save after a failed save', async () => {
@@ -78,12 +80,14 @@ describe('SubmissionSave', () => {
 
     wrapper.setProps({ values: { a: 2 } })
     jest.runOnlyPendingTimers()
-    wrapper.update()
-
     await flushPromises()
 
-    expect(onUpdate).toHaveBeenCalledTimes(1)
+    wrapper.setProps({ values: { a: 3 } })
+    jest.runOnlyPendingTimers()
+    await flushPromises()
+
+    expect(onUpdate).toHaveBeenCalledTimes(2)
     expect(onUpdate.mock.calls[0]).toEqual([{ a: 2 }])
-    expect(wrapper.state().isSaving).toBe(false)
+    expect(onUpdate.mock.calls[1]).toEqual([{ a: 3 }])
   })
 })
