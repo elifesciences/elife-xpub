@@ -77,13 +77,15 @@ class ManuscriptHelper {
     )
 
     try {
-      const manuscript = await ManuscriptModel.find(manuscriptId, this.userId)
+      let manuscript = await ManuscriptModel.find(manuscriptId, this.userId)
 
       await FilesHelper.swapPendingToSource(manuscript.files)
 
       manuscript.files.forEach(file =>
         logger.info(`New Files: ${file.id} | ${file.type}`),
       )
+
+      manuscript = await ManuscriptModel.find(manuscriptId, this.userId)
 
       if (!FilesHelper.validateManuscriptSource(manuscript.files)) {
         throw new Error(`Validation Failure on ${manuscript.id}`)
