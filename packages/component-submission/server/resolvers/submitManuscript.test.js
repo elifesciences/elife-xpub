@@ -4,6 +4,7 @@ jest.mock('@elifesciences/component-meca', () => ({
 }))
 
 const lodash = require('lodash')
+const flushPromises = require('flush-promises')
 const logger = require('@pubsweet/logger')
 const { createTables } = require('@elifesciences/component-model')
 const mailer = require('@pubsweet/component-send-email')
@@ -37,6 +38,7 @@ describe('Manuscripts', () => {
 
   beforeEach(async () => {
     replaySetup('success')
+    await flushPromises()
     await createTables(true)
     const [user] = await Promise.all([
       User.createWithIdentity(profileId),
