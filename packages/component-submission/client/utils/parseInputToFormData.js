@@ -1,15 +1,13 @@
 import { cloneDeep } from 'lodash'
 
 export function parseCosubmissionInput(cosubmissionValues = []) {
-  const returnObject = {}
-
-  returnObject.firstCosubmissionTitle = cosubmissionValues.length
-    ? cosubmissionValues[0]
-    : null
-  returnObject.secondCosubmissionTitle =
-    cosubmissionValues.length > 1 ? cosubmissionValues[1] : null
-
-  return returnObject
+  return {
+    firstCosubmissionTitle: cosubmissionValues.length
+      ? cosubmissionValues[0]
+      : null,
+    secondCosubmissionTitle:
+      cosubmissionValues.lengt > 1 ? cosubmissionValues[1] : null,
+  }
 }
 
 function parseInputToFormData(values) {
