@@ -38,6 +38,8 @@ describe('Manuscripts', () => {
 
   beforeEach(async () => {
     replaySetup('success')
+    // flush promises to prevent deadlock, this can happen when we are not mocking the
+    // runExport method for the submitManuscript mutation
     await flushPromises()
     await createTables(true)
     const [user] = await Promise.all([
