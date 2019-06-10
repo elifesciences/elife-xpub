@@ -1,12 +1,28 @@
 import React from 'react'
-import { shallow } from 'enzyme'
+import { shallow, mount } from 'enzyme'
 import { subDays } from 'date-fns'
+
+import { ThemeProvider } from 'styled-components'
+import { MemoryRouter } from 'react-router-dom'
+import { MockedProvider } from 'react-apollo/test-utils'
+import theme from '@elifesciences/elife-theme'
 
 import DashboardListItem, {
   dashboardDateText,
   DashboardListItemContent,
 } from './DashboardListItem'
 import ManuscriptStatus from './ManuscriptStatus'
+
+const makeMountedWrapper = (props = {}) =>
+  mount(
+    <ThemeProvider theme={theme}>
+      <MemoryRouter>
+        <MockedProvider>
+          <DashboardListItem {...props} />,
+        </MockedProvider>
+      </MemoryRouter>
+    </ThemeProvider>,
+  )
 
 describe('DashboardListItem', () => {
   describe('dashboardDateText', () => {
@@ -85,6 +101,42 @@ describe('DashboardListItem', () => {
       )
 
       expect(wrapper.find('ModalHistoryState')).toHaveLength(0)
+    })
+    it('links to author step when lastStepVisited is null', () => {
+      const dummyManuscript = {
+        id: 'foo',
+        meta: {
+          title: 'MockTitle',
+        },
+        lastStepVisited: null,
+        clientStatus: 'CONTINUE_SUBMISSION',
+        updated: '2019-04-03T15:24:07.190Z',
+      }
+
+      const wrapper = makeMountedWrapper({
+        manuscript: dummyManuscript,
+        onDelete: () => {},
+      })
+
+      expect(wrapper.find('Link').prop('to')).toBe('/submit/foo/author')
+    })
+
+    it('links to the lastStepVisited if present on manuscript', () => {
+      const dummyManuscript = {
+        id: 'foo',
+        meta: {
+          title: 'MockTitle',
+        },
+        lastStepVisited: '/submit/foo/files',
+        clientStatus: 'CONTINUE_SUBMISSION',
+        updated: '2019-04-03T15:24:07.190Z',
+      }
+
+      const wrapper = makeMountedWrapper({
+        manuscript: dummyManuscript,
+        onDelete: () => {},
+      })
+      expect(wrapper.find('Link').prop('to')).toBe('/submit/foo/files')
     })
   })
 })
