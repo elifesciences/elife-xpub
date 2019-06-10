@@ -19,7 +19,7 @@ const resolvers = {
       const manuscript = models.Manuscript.makeInitial({ createdBy: userUuid })
       manuscript.setDefaults()
       await manuscript.save()
-      //id generated on $beforeInsert so need to save before setting lastStepVisited
+      // id generated on $beforeInsert so need to save before setting lastStepVisited
       manuscript.lastStepVisited = `/submit/${manuscript.id}/author`
       return manuscript.save()
     },
