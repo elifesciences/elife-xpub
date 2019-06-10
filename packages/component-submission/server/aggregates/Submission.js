@@ -198,7 +198,6 @@ class Submission {
       const next = {
         fieldName,
         suggestions: [
-          // Ew gross - I hate javscript
           ...((existing && existing.suggestions) || []),
           {
             score: index,
