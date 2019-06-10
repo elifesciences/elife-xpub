@@ -9,6 +9,7 @@ type Manuscript implements Object {
   teams: [Team]
   reviews: [Review]
   status: String
+  suggestions: [ManuscriptSuggestion!]!
   lastStepVisited: String
   decision: String
   meta: ManuscriptMeta
@@ -36,6 +37,18 @@ type ManuscriptMeta {
   history: [MetaDate]
   publicationDates: [MetaDate]
   notes: [Note]
+}
+
+type ManuscriptSuggestion {
+  fieldName: String!
+  suggestions: [SuggestionDetail!]!
+}
+
+type SuggestionDetail {
+  score: Int!
+  value: String!
+  method: String!
+  updated: DateTime!
 }
 
 type ArticleId {

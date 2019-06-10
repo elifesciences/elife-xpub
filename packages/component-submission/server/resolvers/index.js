@@ -21,6 +21,7 @@ const { Submission } = require('../aggregates')
 
 const resolvers = {
   Query: {
+    // This should be called submission
     async manuscript(_, { id }, { user }) {
       const userUuid = await models.User.getUuidForProfile(user)
       const submission = new Submission({

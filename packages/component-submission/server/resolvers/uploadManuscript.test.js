@@ -13,6 +13,8 @@ const mailer = require('@pubsweet/component-send-email')
 const User = require('@elifesciences/component-model-user').model
 const Manuscript = require('@elifesciences/component-model-manuscript').model
 const startS3Server = require('@elifesciences/component-service-s3/mock')
+const SemanticExtraction = require('@elifesciences/component-model-semantic-extraction')
+  .model
 
 const ScienceBeamApi = require('../services/scienceBeamApi')
 const { Mutation } = require('.')
@@ -75,6 +77,7 @@ describe('Manuscripts', () => {
         ),
         mimetype: 'application/pdf',
       }
+
       await Mutation.uploadManuscript(
         {},
         { id, file: fileUpload, fileSize: 73947 },
@@ -84,6 +87,7 @@ describe('Manuscripts', () => {
       const loadedManuscript = await Manuscript.find(id, userId)
       const file = await loadedManuscript.getSource()
       const pdfBinary = await S3Storage.getContent(file)
+
       expect(pdfBinary.toString().substr(0, 6)).toEqual('%PDF-1')
       expect(loadedManuscript.files[0].type).toEqual('MANUSCRIPT_SOURCE')
       expect(loadedManuscript.files[0].filename).toEqual(fileUpload.filename)
@@ -162,18 +166,25 @@ describe('Manuscripts', () => {
         ),
         mimetype: 'application/pdf',
       }
+
       const manuscript = await Mutation.uploadManuscript(
         {},
         { id, file, fileSize: 73947 },
         { user: profileId },
       )
+
+      const extraction = await SemanticExtraction.findByManuscriptId(id)
       expect(manuscript).toMatchObject({
         id,
         meta: {
-          title:
-            'The Relationship Between Lamport Clocks and Interrupts Using Obi',
+          title: '',
         },
         files: [{ filename: 'manuscript.pdf' }],
+      })
+
+      expect(extraction[0]).toMatchObject({
+        value:
+          'The Relationship Between Lamport Clocks and Interrupts Using Obi',
       })
     })
 
