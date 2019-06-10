@@ -92,7 +92,10 @@ const NewSubmissionWizard = ({
           <SubmissionSave
             disabled={formikProps.isSubmitting}
             handleSave={handleSave}
-            values={formikProps.values}
+            values={{
+              ...formikProps.values,
+              lastStepVisited: history.location.pathname,
+            }}
           />
           <Flex>
             <BoxNoMinWidth flex="1 1 100%" mx={[0, 0, 0, '16.666%']}>
