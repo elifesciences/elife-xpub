@@ -29,25 +29,6 @@ class Submission {
   }
 
   async initialize(manuscriptId, userId) {
-    const semanticExtractionToModels = (
-      acc,
-      { fieldName, value, updated },
-      index,
-    ) => [
-      ...acc,
-      {
-        fieldName,
-        suggestions: [
-          {
-            score: index,
-            value,
-            method: 'sciencebeam-june-2019',
-            updated: new Date(updated).toISOString(),
-          },
-        ],
-      },
-    ]
-
     this.manuscript = await this.ManuscriptModel.find(
       manuscriptId,
       userId,
@@ -55,12 +36,9 @@ class Submission {
     )
     this.files = await this.FileModel.findByManuscriptId(manuscriptId)
     this.teams = await this.TeamModel.findByManuscriptId(manuscriptId)
-    this.suggestions = (await this.SemanticExtractionModel.findByManuscriptId(
-      manuscriptId,
-    ))
-      .sort((exA, exB) => exA.updated > exB.updated)
-      .reduce(semanticExtractionToModels, [])
-
+    this.suggestions = Submission.transformSuggestions(
+      await this.SemanticExtractionModel.findByManuscriptId(manuscriptId),
+    )
     return this
   }
 
@@ -207,6 +185,41 @@ class Submission {
     })
 
     return this._saveTeams()
+  }
+  static transformSuggestions(extractions) {
+    /// This is static?
+    const semanticExtractionToModels = (
+      acc,
+      { fieldName, value, updated },
+      index,
+    ) => {
+      const existing = acc.find(e => e.fieldName === fieldName)
+
+      const next = {
+        fieldName,
+        suggestions: [
+          // Ew gross - I hate javscript
+          ...((existing && existing.suggestions) || []),
+          {
+            score: index,
+            value,
+            method: 'sciencebeam-june-2019',
+            updated: new Date(updated).toISOString(),
+          },
+        ],
+      }
+
+      return [
+        // Remove existing entry
+        ...acc.filter(e => e.fieldName !== fieldName),
+        // Replace with new
+        next,
+      ]
+    }
+
+    return extractions
+      .sort((exA, exB) => exA.updated > exB.updated)
+      .reduce(semanticExtractionToModels, [])
   }
 }
 

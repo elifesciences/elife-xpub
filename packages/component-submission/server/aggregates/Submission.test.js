@@ -5,6 +5,7 @@ const SemanticExtraction = require('@elifesciences/component-model-semantic-extr
   .model
 
 const { keyBy } = require('lodash')
+const { v4 } = require('uuid')
 
 jest.mock('../utils')
 const utils = require('../utils')
@@ -480,5 +481,63 @@ describe('Submission', () => {
       expect(teams.suggestedReviewer).toEqual(reviewerOutput.suggestedReviewer)
       expect(teams.opposedReviewer).toEqual(reviewerOutput.opposedReviewer)
     })
+  })
+
+  it('Correctly transforms the suggestions', () => {
+    const inputData = [
+      {
+        id: v4(),
+        created: '2019-06-10T10:26:07.766Z',
+        updated: '2019-06-10T10:26:07.766Z',
+        fieldName: 'a',
+        value: 'suggestion_1',
+      },
+      {
+        id: v4(),
+        created: '2019-06-10T10:26:34.668Z',
+        updated: '2019-06-10T10:26:34.668Z',
+        fieldName: 'b',
+        value: 'suggestion_2',
+      },
+      {
+        id: v4(),
+        created: '2019-06-10T10:27:18.120Z',
+        updated: '2019-06-10T10:27:18.120Z',
+        fieldName: 'a',
+        value: 'suggestion_3',
+      },
+    ]
+    const expectedOutput = [
+      {
+        fieldName: 'b',
+        suggestions: [
+          {
+            value: 'suggestion_2',
+            score: 1,
+            updated: '2019-06-10T10:26:34.668Z',
+            method: 'sciencebeam-june-2019',
+          },
+        ],
+      },
+      {
+        fieldName: 'a',
+        suggestions: [
+          {
+            value: 'suggestion_1',
+            score: 0,
+            updated: '2019-06-10T10:26:07.766Z',
+            method: 'sciencebeam-june-2019',
+          },
+          {
+            value: 'suggestion_3',
+            score: 2,
+            updated: '2019-06-10T10:27:18.120Z',
+            method: 'sciencebeam-june-2019',
+          },
+        ],
+      },
+    ]
+
+    expect(Submission.transformSuggestions(inputData)).toEqual(expectedOutput)
   })
 })
