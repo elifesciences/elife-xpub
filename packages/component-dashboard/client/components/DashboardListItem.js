@@ -170,7 +170,11 @@ const DashboardListItem = ({ manuscript, onDelete }) => {
             <Fragment>
               <DashboardLink
                 data-test-id="continue-submission"
-                to={`${manuscript.lastStepVisited}`}
+                to={
+                  manuscript.lastStepVisited
+                    ? `${manuscript.lastStepVisited}`
+                    : `/submit/${manuscript.id}/author`
+                }
               >
                 <DashboardListItemContent
                   manuscript={manuscript}
