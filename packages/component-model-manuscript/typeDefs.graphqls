@@ -40,8 +40,15 @@ type ManuscriptMeta {
 }
 
 type ManuscriptSuggestion {
-  fieldName: String
-  value: String
+  fieldName: String!
+  suggestions: [SuggestionDetail!]!
+}
+
+type SuggestionDetail {
+  score: Int!
+  value: String!
+  method: String!
+  updated: DateTime!
 }
 
 type ArticleId {

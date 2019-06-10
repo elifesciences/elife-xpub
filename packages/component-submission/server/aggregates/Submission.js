@@ -29,17 +29,24 @@ class Submission {
   }
 
   async initialize(manuscriptId, userId) {
-    // interface Extractions: {
-    //  id: string;
-    //  created: DateTime;
-    //  updated: DateTime;
-    //  fieldName: string;
-    //  value: string;
-    // }
-    const SemanticExtractionToModels = (acc, extraction) => ({
+    const semanticExtractionToModels = (
+      acc,
+      { fieldName, value, updated },
+      index,
+    ) => [
       ...acc,
-      [extraction.fieldName]: extraction.value,
-    })
+      {
+        fieldName,
+        suggestions: [
+          {
+            score: index,
+            value,
+            method: 'sciencebeam-june-2019',
+            updated: new Date(updated).toISOString(),
+          },
+        ],
+      },
+    ]
 
     this.manuscript = await this.ManuscriptModel.find(
       manuscriptId,
@@ -52,7 +59,7 @@ class Submission {
       manuscriptId,
     ))
       .sort((exA, exB) => exA.updated > exB.updated)
-      .reduce(SemanticExtractionToModels, {})
+      .reduce(semanticExtractionToModels, [])
 
     return this
   }
@@ -113,10 +120,7 @@ class Submission {
       fileStatus: this.filesAreStored() ? 'READY' : 'CHANGING',
       files: this._getFilesWithDownloadLink(),
       teams: this.teams.map(team => team.toJSON()),
-      suggestions: Object.entries(this.suggestions).reduce(
-        (acc, [fieldName, value]) => [...acc, { fieldName, value }],
-        [],
-      ),
+      suggestions: this.suggestions,
     }
   }
 
