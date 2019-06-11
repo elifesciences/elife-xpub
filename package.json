@@ -18,7 +18,7 @@
     }
   },
   "scripts": {
-    "app:browser": "NODE_CONFIG_ENV=test NODE_ENV=production pubsweet migrate; pubsweet server",
+    "app:browser": "NODE_CONFIG_ENV=test NODE_ENV=production pubsweet migrate; NODE_CONFIG_ENV=test NODE_ENV=production pubsweet server",
     "build": "NODE_ENV=production pubsweet build",
     "build:styleguide": "styleguidist build",
     "clean": "find . -type d -name node_modules -exec rm -rf {} \\;",
