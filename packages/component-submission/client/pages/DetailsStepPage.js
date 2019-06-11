@@ -1,5 +1,4 @@
 import React from 'react'
-import { sortBy, last } from 'lodash'
 import { Menu } from '@pubsweet/ui'
 import { Box } from '@rebass/grid'
 import {
@@ -12,21 +11,7 @@ import SubjectAreaDropdown from '../components/SubjectAreaDropdown'
 import ExpandingTextField from '../components/ExpandingTextField'
 import OptionalSection from '../components/OptionalSection'
 
-const useSuggestions = ({ suggestions }) =>
-  suggestions.reduce(
-    (acc, sugg) => ({
-      ...acc,
-      [sugg.fieldName]: last(sortBy(sugg.suggestions, ['score'])).value,
-    }),
-    {},
-  )
-
-// TODO: Make this stateful class :))))))))))
-
-const DetailsStep = ({ values, setFieldValue, setFieldTouched }) => {
-  const { title } = useSuggestions(values)
-  return (
-    // TODO: turn this ValidatedField into a richTextBox
+const DetailsStep = ({ values, setFieldValue, setFieldTouched }) => (
     <React.Fragment>
       <Box mb={3}>
         <ValidatedField
@@ -35,7 +20,7 @@ const DetailsStep = ({ values, setFieldValue, setFieldTouched }) => {
           label="Manuscript Title"
           maxRows={4}
           name="meta.title"
-          value={title}
+          placeholder="Manuscript Title"
         />
       </Box>
 
@@ -144,6 +129,5 @@ const DetailsStep = ({ values, setFieldValue, setFieldTouched }) => {
       </OptionalSection>
     </React.Fragment>
   )
-}
 
 export default DetailsStep
