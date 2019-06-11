@@ -13,6 +13,14 @@ class SubmissionSave extends React.Component {
     }
   }
 
+  componentDidUpdate(prevProps) {
+    if (
+      prevProps.values.lastStepVisited !== this.props.values.lastStepVisited
+    ) {
+      this.save()
+    }
+  }
+
   componentDidMount() {
     this.timer = setInterval(this.save, SAVE_INTERVAL)
   }
@@ -22,17 +30,15 @@ class SubmissionSave extends React.Component {
   }
 
   save = () => {
+    if (this.state.isSaving || this.props.disabled) return
+
     const filteredPreviousValues = omit(
       this.previousValues,
       FORM_FIELDS_TO_OMIT,
     )
     const filteredCurrentValues = omit(this.props.values, FORM_FIELDS_TO_OMIT)
 
-    if (
-      !this.props.disabled &&
-      !this.state.isSaving &&
-      !isEqual(filteredPreviousValues, filteredCurrentValues)
-    ) {
+    if (!isEqual(filteredPreviousValues, filteredCurrentValues)) {
       this.previousValues = cloneDeep(this.props.values)
       this.setState({ isSaving: true })
 
