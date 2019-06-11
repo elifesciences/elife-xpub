@@ -12,7 +12,6 @@ import ExpandingTextField from '../components/ExpandingTextField'
 import OptionalSection from '../components/OptionalSection'
 
 const DetailsStep = ({ values, setFieldValue, setFieldTouched }) => (
-  // TODO: turn this ValidatedField into a richTextBox
   <React.Fragment>
     <Box mb={3}>
       <ValidatedField
@@ -21,7 +20,7 @@ const DetailsStep = ({ values, setFieldValue, setFieldTouched }) => (
         label="Manuscript Title"
         maxRows={4}
         name="meta.title"
-        placeholder="Manuscript title"
+        placeholder="Manuscript Title"
       />
     </Box>
 
