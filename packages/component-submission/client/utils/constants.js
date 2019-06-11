@@ -67,4 +67,5 @@ export const FORM_FIELDS_TO_OMIT = [
   // cosubmitters
   'firstCosubmissionTitle',
   'secondCosubmissionTitle',
+  'suggestions',
 ]

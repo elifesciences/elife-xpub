@@ -67,6 +67,15 @@ export const manuscriptFragment = gql`
     submitterSignature
     disclosureConsent
     fileStatus
+    suggestions {
+      fieldName
+      suggestions {
+        value
+        score
+        updated
+        method
+      }
+    }
   }
   ${editorFragment}
   ${reviewerFragment}

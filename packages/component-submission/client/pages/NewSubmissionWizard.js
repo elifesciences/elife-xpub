@@ -48,11 +48,11 @@ const ErrorMessage = styled.div`
 `
 
 const NewSubmissionWizard = ({
-  data,
-  match,
+  data, // Contains data from an apollo GQL query
+  match, // Comes from react router, contains information about the path
   history,
-  updateManuscript,
-  submitManuscript,
+  updateManuscript, // injected by reCompose
+  submitManuscript, // injected by reCompose
 }) => {
   const getCurrentStepFromPath = () =>
     STEP_NAMES.map(step => step.toLowerCase()).indexOf(
@@ -232,7 +232,7 @@ const NewSubmissionWizard = ({
 }
 
 export default compose(
-  wizardWithGQL,
+  wizardWithGQL, // This injects updateManuscript and submitManuscript into the props
   branch(
     props => props.data && (props.data.loading && !props.data.manuscripts),
     renderComponent(Loading),
