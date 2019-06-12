@@ -15,7 +15,7 @@ const WizardSubmit = ({
     {({ showModal, hideModal, isModalVisible }) => (
       <React.Fragment>
         <Button
-          data-test-id="submit"
+          data-testid="submit"
           onClick={() => {
             setSubmissionAttempted(true)
             validateForm().then(errors => {
