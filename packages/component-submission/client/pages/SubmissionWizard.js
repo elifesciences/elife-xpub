@@ -182,7 +182,6 @@ export const SubmissionWizard = ({
                     <Button
                       data-testid="next"
                       onClick={() => {
-                        console.log('next')
                         formikProps.validateForm().then(errors => {
                           if (!Object.keys(errors).length) {
                             setCurrentStep(currentStep + 1)
