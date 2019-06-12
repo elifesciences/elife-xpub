@@ -135,8 +135,8 @@ export const SubmissionWizard = ({
                   )}
                 />
                 <Redirect
-                  from="/newSubmit/:id"
-                  to={`/newSubmit/${match.params.id}/author`}
+                  from="/submit/:id"
+                  to={`/submit/${match.params.id}/author`}
                 />
                 <ErrorPage error="404: page not found" />
               </Switch>
@@ -180,8 +180,9 @@ export const SubmissionWizard = ({
                     />
                   ) : (
                     <Button
-                      data-test-id="next"
+                      data-testid="next"
                       onClick={() => {
+                        console.log('next')
                         formikProps.validateForm().then(errors => {
                           if (!Object.keys(errors).length) {
                             setCurrentStep(currentStep + 1)
