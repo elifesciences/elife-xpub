@@ -9,7 +9,7 @@ type Manuscript implements Object {
   teams: [Team]
   reviews: [Review]
   status: String
-  suggestions: [ManuscriptSuggestion!]!
+  suggestions: [ManuscriptSuggestion!]
   lastStepVisited: String
   decision: String
   meta: ManuscriptMeta
