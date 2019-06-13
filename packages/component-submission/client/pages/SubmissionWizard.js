@@ -11,6 +11,7 @@ import {
   TrackedRoute,
 } from '@elifesciences/component-elife-app/client'
 import { Loading } from '@elifesciences/component-elife-ui/client/atoms'
+import { FormH2 } from '@elifesciences/component-elife-ui/client/atoms/FormHeadings'
 import { Button } from '@pubsweet/ui'
 
 import AuthorStep from './AuthorStepPage'
@@ -102,6 +103,7 @@ export const SubmissionWizard = ({
               <Box my={5}>
                 <ProgressBar currentStep={currentStep} />
               </Box>
+              <FormH2>{STEP_NAMES[currentStep]}</FormH2>
               <Switch>
                 <TrackedRoute
                   path={`${match.path}/author`}
