@@ -22,73 +22,54 @@ jest.mock('../utils/ValidationSchemas', () => ({
   default: {},
 }))
 
+// needs extracting to own file #2126
+const setupProvider = (historyLocation = []) => ({ children }) => (
+  <ThemeProvider theme={theme}>
+    <MemoryRouter initialEntries={historyLocation}>
+      <MockedProvider>{children}</MockedProvider>
+    </MemoryRouter>
+  </ThemeProvider>
+)
+
+const makeProps = (path, pushHistory = jest.fn()) => ({
+  data: { manuscript: {} },
+  match: { path: '/submit/id', url: '', params: { id: 'id' } },
+  history: { location: { pathname: path }, push: pushHistory },
+  updateManuscript: jest.fn(),
+  submitManuscript: jest.fn(),
+})
+
+const renderWithPath = (path, pushHistory) =>
+  render(<SubmissionWizard {...makeProps(path, pushHistory)} />, {
+    wrapper: setupProvider([path]),
+  })
+
 describe('SubmissionWizard', async () => {
   afterEach(cleanup)
 
   it('should display next on all steps except last one', async () => {
-    const props = {
-      data: { manuscript: {} },
-      match: { path: '/submit/id', url: '', params: { id: 'id' } },
-      history: { location: { pathname: '/submit/id/author' } },
-      updateManuscript: jest.fn(),
-      submitManuscript: jest.fn(),
-    }
-
-    const setup = (historyLocation = []) => ({ children }) => (
-      <ThemeProvider theme={theme}>
-        <MemoryRouter initialEntries={historyLocation}>
-          <MockedProvider>{children}</MockedProvider>
-        </MemoryRouter>
-      </ThemeProvider>
-    )
-
-    const renderWithPath = path =>
-      render(<SubmissionWizard {...props} />, { wrapper: setup([path]) })
-
     expect(
       renderWithPath('/submit/id/author').getByText(/Next/),
     ).toBeInTheDocument()
     cleanup()
-    props.history.location.pathname = '/submit/id/files'
     expect(
       renderWithPath('/submit/id/files').getByText(/Next/),
     ).toBeInTheDocument()
     cleanup()
-    props.history.location.pathname = '/submit/id/details'
     expect(
       renderWithPath('/submit/id/details').getByText(/Next/),
     ).toBeInTheDocument()
     cleanup()
-    props.history.location.pathname = '/submit/id/editors'
     expect(
       renderWithPath('/submit/id/editors').getByText(/Next/),
     ).toBeInTheDocument()
     cleanup()
-    props.history.location.pathname = '/submit/id/disclosure'
     expect(
       renderWithPath('/submit/id/disclosure').getByText(/Submit/),
     ).toBeInTheDocument()
   })
 
   it('displays the correct step for each given path', () => {
-    const props = {
-      data: { manuscript: {} },
-      match: { path: '/submit/id', url: '', params: { id: 'id' } },
-      history: { location: { pathname: '/submit/id/author' } },
-      updateManuscript: jest.fn(),
-      submitManuscript: jest.fn(),
-    }
-
-    const setup = (historyLocation = []) => ({ children }) => (
-      <ThemeProvider theme={theme}>
-        <MemoryRouter initialEntries={historyLocation}>
-          <MockedProvider>{children}</MockedProvider>
-        </MemoryRouter>
-      </ThemeProvider>
-    )
-
-    const renderWithPath = path =>
-      render(<SubmissionWizard {...props} />, { wrapper: setup([path]) })
     expect(
       renderWithPath('/submit/id/author').getAllByText('AuthorStepPage'),
     ).toBeTruthy()
@@ -108,162 +89,62 @@ describe('SubmissionWizard', async () => {
     ).toBeTruthy()
   })
 
-  it('should change the location on next', async () => {
+  describe('step navigation', () => {
+    // eslint-disable-next-line no-console
+    const consoleError = console.error
+
     let opts = null
     const pushHistory = jest.fn()
 
-    const makeProps = path => ({
-      data: { manuscript: {} },
-      match: { path: '/submit/id', url: '', params: { id: 'id' } },
-      history: { location: { pathname: path }, push: pushHistory },
-      updateManuscript: jest.fn(),
-      submitManuscript: jest.fn(),
-    })
-
-    const setup = (historyLocation = []) => ({ children }) => (
-      <ThemeProvider theme={theme}>
-        <MemoryRouter initialEntries={historyLocation}>
-          <MockedProvider>{children}</MockedProvider>
-        </MemoryRouter>
-      </ThemeProvider>
-    )
-
-    const renderWithPath = path =>
-      render(<SubmissionWizard {...makeProps(path)} />, {
-        wrapper: setup([path]),
-      })
-
-    // disable formik warnings
-    // see https://stackoverflow.com/questions/55181009/jest-react-testing-library-warning-update-was-not-wrapped-in-act
-    // eslint-disable-next-line no-console
-    const consoleError = console.error
-    // eslint-disable-next-line no-console
-    console.error = (...args) => {
-      if (
-        !args[0].startsWith(
-          'Warning: An update to Formik inside a test was not wrapped in act(...).',
-        )
-      ) {
-        consoleError(...args)
-      }
+    const testStepNavigation = async (currentPath, nextStep, buttonId) => {
+      opts = renderWithPath(currentPath, pushHistory)
+      fireEvent.click(opts.getByTestId(buttonId))
+      await flushPromises()
+      expect(pushHistory).toHaveBeenCalledTimes(1)
+      expect(pushHistory.mock.calls[0]).toEqual([nextStep])
+      cleanup()
+      pushHistory.mockReset()
     }
 
-    opts = renderWithPath('/submit/id/author')
-    fireEvent.click(opts.getByTestId('next'))
-    await flushPromises()
-    expect(pushHistory).toHaveBeenCalledTimes(1)
-    expect(pushHistory.mock.calls[0]).toEqual(['/files'])
-    cleanup()
-    pushHistory.mockReset()
-
-    opts = renderWithPath('/submit/id/files')
-    fireEvent.click(opts.getByTestId('next'))
-    await flushPromises()
-    expect(pushHistory).toHaveBeenCalledTimes(1)
-    expect(pushHistory.mock.calls[0]).toEqual(['/details'])
-    cleanup()
-    pushHistory.mockReset()
-
-    opts = renderWithPath('/submit/id/details')
-    fireEvent.click(opts.getByTestId('next'))
-    await flushPromises()
-    expect(pushHistory).toHaveBeenCalledTimes(1)
-    expect(pushHistory.mock.calls[0]).toEqual(['/editors'])
-    cleanup()
-    pushHistory.mockReset()
-
-    opts = renderWithPath('/submit/id/editors')
-    fireEvent.click(opts.getByTestId('next'))
-    await flushPromises()
-    expect(pushHistory).toHaveBeenCalledTimes(1)
-    expect(pushHistory.mock.calls[0]).toEqual(['/disclosure'])
-    cleanup()
-    pushHistory.mockReset()
-
-    // eslint-disable-next-line no-console
-    console.error = consoleError
-  })
-
-  it('should change the location on back except on first step', async () => {
-    let opts = null
-    const pushHistory = jest.fn()
-
-    const makeProps = path => ({
-      data: { manuscript: {} },
-      match: { path: '/submit/id', url: '', params: { id: 'id' } },
-      history: { location: { pathname: path }, push: pushHistory },
-      updateManuscript: jest.fn(),
-      submitManuscript: jest.fn(),
+    beforeAll(() => {
+      // disable formik warnings
+      // see https://stackoverflow.com/questions/55181009/jest-react-testing-library-warning-update-was-not-wrapped-in-act
+      // eslint-disable-next-line no-console
+      console.error = (...args) => {
+        if (
+          !args[0].startsWith(
+            'Warning: An update to Formik inside a test was not wrapped in act(...).',
+          )
+        ) {
+          consoleError(...args)
+        }
+      }
     })
 
-    const setup = (historyLocation = []) => ({ children }) => (
-      <ThemeProvider theme={theme}>
-        <MemoryRouter initialEntries={historyLocation}>
-          <MockedProvider>{children}</MockedProvider>
-        </MemoryRouter>
-      </ThemeProvider>
-    )
+    it('should change the location on next', async () => {
+      await testStepNavigation('/submit/id/author', '/files', 'next')
+      await testStepNavigation('/submit/id/files', '/details', 'next')
+      await testStepNavigation('/submit/id/details', '/editors', 'next')
+      await testStepNavigation('/submit/id/editors', '/disclosure', 'next')
+    })
 
-    const renderWithPath = path =>
-      render(<SubmissionWizard {...makeProps(path)} />, {
-        wrapper: setup([path]),
-      })
+    it('should change the location on back except on first step', async () => {
+      opts = renderWithPath('/submit/id/author')
+      fireEvent.click(opts.getByTestId('back'))
+      await flushPromises()
+      expect(pushHistory).toHaveBeenCalledTimes(0)
+      cleanup()
+      pushHistory.mockReset()
 
-    // disable formik warnings
-    // see https://stackoverflow.com/questions/55181009/jest-react-testing-library-warning-update-was-not-wrapped-in-act
-    // eslint-disable-next-line no-console
-    const consoleError = console.error
-    // eslint-disable-next-line no-console
-    console.error = (...args) => {
-      if (
-        !args[0].startsWith(
-          'Warning: An update to Formik inside a test was not wrapped in act(...).',
-        )
-      ) {
-        consoleError(...args)
-      }
-    }
+      await testStepNavigation('/submit/id/files', '/author', 'back')
+      await testStepNavigation('/submit/id/details', '/files', 'back')
+      await testStepNavigation('/submit/id/editors', '/details', 'back')
+      await testStepNavigation('/submit/id/disclosure', '/editors', 'back')
+    })
 
-    opts = renderWithPath('/submit/id/author')
-    fireEvent.click(opts.getByTestId('back'))
-    await flushPromises()
-    expect(pushHistory).toHaveBeenCalledTimes(0)
-    cleanup()
-    pushHistory.mockReset()
-
-    opts = renderWithPath('/submit/id/files')
-    fireEvent.click(opts.getByTestId('back'))
-    await flushPromises()
-    expect(pushHistory).toHaveBeenCalledTimes(1)
-    expect(pushHistory.mock.calls[0]).toEqual(['/author'])
-    cleanup()
-    pushHistory.mockReset()
-
-    opts = renderWithPath('/submit/id/details')
-    fireEvent.click(opts.getByTestId('back'))
-    await flushPromises()
-    expect(pushHistory).toHaveBeenCalledTimes(1)
-    expect(pushHistory.mock.calls[0]).toEqual(['/files'])
-    cleanup()
-    pushHistory.mockReset()
-
-    opts = renderWithPath('/submit/id/editors')
-    fireEvent.click(opts.getByTestId('back'))
-    await flushPromises()
-    expect(pushHistory).toHaveBeenCalledTimes(1)
-    expect(pushHistory.mock.calls[0]).toEqual(['/details'])
-    cleanup()
-    pushHistory.mockReset()
-
-    opts = renderWithPath('/submit/id/disclosure')
-    fireEvent.click(opts.getByTestId('back'))
-    await flushPromises()
-    expect(pushHistory).toHaveBeenCalledTimes(1)
-    expect(pushHistory.mock.calls[0]).toEqual(['/editors'])
-    cleanup()
-    pushHistory.mockReset()
-
-    // eslint-disable-next-line no-console
-    console.error = consoleError
+    afterAll(() => {
+      // eslint-disable-next-line no-console
+      console.error = consoleError
+    })
   })
 })
