@@ -1,109 +1,151 @@
-import { shallow } from 'enzyme'
+import { render, cleanup, fireEvent, configure } from '@testing-library/react'
+import theme from '@elifesciences/elife-theme'
 import React from 'react'
-
+import 'jest-dom/extend-expect'
+import flushPromises from 'flush-promises'
+import { ThemeProvider } from 'styled-components'
+import { MemoryRouter } from 'react-router-dom'
+import { MockedProvider } from 'react-apollo/test-utils'
 import { SubmissionWizard } from './SubmissionWizard'
 
-describe('SubmissionWizard autosave toggling', async () => {
-  const mockMatch = {
-    url: '',
-    params: { id: '' },
-    path: '',
-  }
+jest.mock('react-ga')
+jest.mock('./AuthorStepPage', () => () => 'AuthorStepPage')
+jest.mock('./FilesStepPage', () => () => 'FilesStepPage')
+jest.mock('./DetailsStepPage', () => () => 'DetailsStepPage')
+jest.mock('./EditorsStepPage', () => () => 'EditorsStepPage')
+jest.mock('./DisclosureStepPage', () => () => 'DisclosureStepPage')
+jest.mock('../utils/ValidationSchemas', () => ({
+  authorSchema: {},
+  filesSchema: {},
+  submissionSchema: {},
+  editorsSchema: {},
+  default: {},
+}))
 
-  it('disables autosave when a file is uploading', async () => {
-    const mockUpdate = jest.fn()
-    const props = {
-      match: mockMatch,
-      updateManuscript: mockUpdate,
-      history: jest.fn(),
-      initialValues: { fileStatus: 'READY' },
-    }
+// needs extracting to own file #2126
+const setupProvider = (historyLocation = []) => ({ children }) => (
+  <ThemeProvider theme={theme}>
+    <MemoryRouter initialEntries={historyLocation}>
+      <MockedProvider>{children}</MockedProvider>
+    </MemoryRouter>
+  </ThemeProvider>
+)
 
-    const thing = shallow(<SubmissionWizard {...props} />)
+const makeProps = (path, pushHistory = jest.fn()) => ({
+  data: { manuscript: {} },
+  match: { path: '/submit/id', url: '', params: { id: 'id' } },
+  history: { location: { pathname: path }, push: pushHistory },
+  updateManuscript: jest.fn(),
+  submitManuscript: jest.fn(),
+})
 
-    expect(thing.instance().state.isUploading).toBe(false)
-    expect(thing.instance().state.suspendSave).toBe(false)
-
-    thing.instance().setIsUploading(true)
-    thing.instance().onNextClick({ submitted_should_be: false })
-
-    expect(mockUpdate).toHaveBeenCalledTimes(0)
+const renderWithPath = (path, pushHistory) =>
+  render(<SubmissionWizard {...makeProps(path, pushHistory)} />, {
+    wrapper: setupProvider([path]),
   })
 
-  it('enables autosave when a file is finished uploading', async () => {
-    const mockUpdate = jest.fn()
-    const props = {
-      match: mockMatch,
-      updateManuscript: mockUpdate,
-      history: jest.fn(),
-      initialValues: { fileStatus: 'READY' },
-    }
+describe('SubmissionWizard', async () => {
+  beforeAll(() => configure({ testIdAttribute: 'data-test-id' }))
+  afterEach(cleanup)
 
-    const thing = shallow(<SubmissionWizard {...props} />)
-
-    expect(thing.instance().state.isUploading).toBe(false)
-    expect(thing.instance().state.suspendSave).toBe(false)
-
-    thing.instance().setIsUploading(true)
-
-    expect(mockUpdate).toHaveBeenCalledTimes(0)
-    thing.instance().setIsUploading(false)
-
-    thing.instance().onNextClick({ submitted_should_be: false })
-    expect(mockUpdate).toHaveBeenCalledTimes(1)
+  it('should display next on all steps except last one', async () => {
+    expect(
+      renderWithPath('/submit/id/author').getByText(/Next/),
+    ).toBeInTheDocument()
+    cleanup()
+    expect(
+      renderWithPath('/submit/id/files').getByText(/Next/),
+    ).toBeInTheDocument()
+    cleanup()
+    expect(
+      renderWithPath('/submit/id/details').getByText(/Next/),
+    ).toBeInTheDocument()
+    cleanup()
+    expect(
+      renderWithPath('/submit/id/editors').getByText(/Next/),
+    ).toBeInTheDocument()
+    cleanup()
+    expect(
+      renderWithPath('/submit/id/disclosure').getByText(/Submit/),
+    ).toBeInTheDocument()
   })
 
-  it('Keeps and retries the latest save when disabled', async () => {
-    const mockUpdate = jest.fn()
-    const props = {
-      match: mockMatch,
-      updateManuscript: mockUpdate,
-      history: jest.fn(),
-      initialValues: { fileStatus: 'READY' },
-    }
-
-    const thing = shallow(<SubmissionWizard {...props} />)
-
-    expect(thing.instance().state.isUploading).toBe(false)
-    expect(thing.instance().state.suspendSave).toBe(false)
-
-    thing.instance().setIsUploading(true)
-
-    expect(mockUpdate).toHaveBeenCalledTimes(0)
-
-    thing.instance().onNextClick({ submitted_should_be: false })
-    thing.instance().setIsUploading(false)
-
-    expect(mockUpdate).toHaveBeenCalledTimes(1)
-    expect(mockUpdate.mock.calls).toEqual([[{ submitted_should_be: false }]])
-    expect(thing.instance().state.nextSaveValues).toBeNull()
+  it('displays the correct step for each given path', () => {
+    expect(
+      renderWithPath('/submit/id/author').getAllByText('AuthorStepPage'),
+    ).toBeTruthy()
+    expect(
+      renderWithPath('/submit/id/files').getAllByText('FilesStepPage'),
+    ).toBeTruthy()
+    expect(
+      renderWithPath('/submit/id/details').getAllByText('DetailsStepPage'),
+    ).toBeTruthy()
+    expect(
+      renderWithPath('/submit/id/editors').getAllByText('EditorsStepPage'),
+    ).toBeTruthy()
+    expect(
+      renderWithPath('/submit/id/disclosure').getAllByText(
+        'DisclosureStepPage',
+      ),
+    ).toBeTruthy()
   })
 
-  it('disables the autosave on submit and re-enables it on completion', async () => {
-    const mockUpdate = jest.fn()
-    const mockSubmit = jest.fn(() =>
-      new Promise(resolve => {
-        expect(thing.instance().state.suspendSave).toBe(true)
-        resolve()
-      }).catch(err => {
-        // eslint-disable-next-line no-undef
-        fail(err)
-      }),
-    )
-    const props = {
-      match: mockMatch,
-      updateManuscript: mockUpdate,
-      submitManuscript: mockSubmit,
-      history: jest.fn(),
-      initialValues: { fileStatus: 'READY' },
+  describe('step navigation', () => {
+    // eslint-disable-next-line no-console
+    const consoleError = console.error
+    const pushHistory = jest.fn()
+
+    const testStepNavigation = async (currentPath, nextStep, buttonId) => {
+      const opts = renderWithPath(currentPath, pushHistory)
+      fireEvent.click(opts.getByTestId(buttonId))
+      await flushPromises()
+      expect(pushHistory).toHaveBeenCalledTimes(1)
+      expect(pushHistory.mock.calls[0]).toEqual([nextStep])
+      cleanup()
+      pushHistory.mockReset()
     }
 
-    const thing = shallow(<SubmissionWizard {...props} />)
+    const SUPPRESSED_PREFIXES = [
+      'Warning: Do not await the result of calling ReactTestUtils.act(...)',
+      'Warning: An update to %s inside a test was not wrapped in act(...)',
+    ]
 
-    expect(thing.instance().state.isUploading).toBe(false)
-    expect(thing.instance().state.suspendSave).toBe(false)
-    // Not testing that suspendSacve has changed back to false becuase of promise issues
-    thing.instance().onSubmitManuscript({ prop: 'key' })
-    expect(mockSubmit).toHaveBeenCalledTimes(1)
+    beforeAll(() => {
+      // disable formik warnings
+      // see https://stackoverflow.com/questions/55181009/jest-react-testing-library-warning-update-was-not-wrapped-in-act
+      // https://github.com/facebook/react/pull/14853 removes the need for this once we upgrade to react-dom 16.9
+      // eslint-disable-next-line no-console
+      console.error = (...args) => {
+        if (!SUPPRESSED_PREFIXES.some(sp => args[0].startsWith(sp))) {
+          consoleError(...args)
+        }
+      }
+    })
+
+    it('should change the location on next', async () => {
+      await testStepNavigation('/submit/id/author', '/files', 'next')
+      await testStepNavigation('/submit/id/files', '/details', 'next')
+      await testStepNavigation('/submit/id/details', '/editors', 'next')
+      await testStepNavigation('/submit/id/editors', '/disclosure', 'next')
+    })
+
+    it('should change the location on back except on first step', async () => {
+      const opts = renderWithPath('/submit/id/author')
+      fireEvent.click(opts.getByTestId('back'))
+      await flushPromises()
+      expect(pushHistory).toHaveBeenCalledTimes(0)
+      cleanup()
+      pushHistory.mockReset()
+
+      await testStepNavigation('/submit/id/files', '/author', 'back')
+      await testStepNavigation('/submit/id/details', '/files', 'back')
+      await testStepNavigation('/submit/id/editors', '/details', 'back')
+      await testStepNavigation('/submit/id/disclosure', '/editors', 'back')
+    })
+
+    afterAll(() => {
+      // eslint-disable-next-line no-console
+      console.error = consoleError
+    })
   })
 })
