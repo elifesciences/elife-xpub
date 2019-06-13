@@ -112,6 +112,7 @@ describe('SubmissionWizard', async () => {
     beforeAll(() => {
       // disable formik warnings
       // see https://stackoverflow.com/questions/55181009/jest-react-testing-library-warning-update-was-not-wrapped-in-act
+      // https://github.com/facebook/react/pull/14853 removes the need for this once we upgrade to react-dom 16.9
       // eslint-disable-next-line no-console
       console.error = (...args) => {
         if (!SUPPRESSED_PREFIXES.some(sp => args[0].startsWith(sp))) {
