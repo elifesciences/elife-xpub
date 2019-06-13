@@ -2,7 +2,6 @@ jest.mock('pubsweet-server/src/graphql/pubsub', () => ({
   getPubsub: () => Promise.resolve({ publish: jest.fn() }),
   asyncIterators: {},
 }))
-jest.mock('@pubsweet/logger')
 
 const config = require('config')
 const fs = require('fs-extra')
@@ -56,7 +55,7 @@ describe('Manuscripts', () => {
     it("fails if manuscript doesn't belong to user", async () => {
       const blankManuscript = Manuscript.makeInitial()
       blankManuscript.createdBy = userId
-      const manuscript = await blankManuscript.save()
+      const manuscript = await blankManuscript.saveGraph()
 
       await expect(
         Mutation.uploadManuscript(
@@ -69,7 +68,7 @@ describe('Manuscripts', () => {
 
     it('saves manuscript to S3', async () => {
       const blankManuscript = Manuscript.makeInitial({ createdBy: userId })
-      const { id } = await blankManuscript.save()
+      const { id } = await blankManuscript.saveGraph()
       const fileUpload = {
         filename: 'manuscript.pdf',
         stream: fs.createReadStream(
@@ -102,7 +101,7 @@ describe('Manuscripts', () => {
           Promise.reject(new Error('Failed to persist file')),
         )
       const blankManuscript = Manuscript.makeInitial({ createdBy: userId })
-      const { id } = await blankManuscript.save()
+      const { id } = await blankManuscript.saveGraph()
       const file = {
         filename: 'manuscript.pdf',
         stream: fs.createReadStream(
@@ -123,9 +122,11 @@ describe('Manuscripts', () => {
     })
 
     it('sets empty title if ScienceBeam fails', async () => {
-      jest.spyOn(logger, 'warn').mockImplementationOnce(() => {})
+      jest.mock('@pubsweet/logger')
+
+      jest.spyOn(logger, 'warn').mockImplementation(() => {})
       const blankManuscript = Manuscript.makeInitial({ createdBy: userId })
-      const { id } = await blankManuscript.save()
+      const { id } = await blankManuscript.saveGraph()
       const file = {
         filename: 'manuscript.pdf',
         stream: fs.createReadStream(
@@ -133,7 +134,6 @@ describe('Manuscripts', () => {
         ),
         mimetype: 'application/pdf',
       }
-
       jest.spyOn(ScienceBeamApi, 'extractSemantics').mockRejectedValueOnce({
         error: {
           code: 'ETIMEDOUT',
@@ -158,7 +158,7 @@ describe('Manuscripts', () => {
 
     it('extracts title from PDF', async () => {
       const blankManuscript = Manuscript.makeInitial({ createdBy: userId })
-      const { id } = await blankManuscript.save()
+      const { id } = await blankManuscript.saveGraph()
       const file = {
         filename: 'manuscript.pdf',
         stream: fs.createReadStream(
@@ -192,7 +192,7 @@ describe('Manuscripts', () => {
       'fileUpload.maxSizeMB',
     )}MB`, async () => {
       const blankManuscript = Manuscript.makeInitial({ createdBy: userId })
-      const { id } = await blankManuscript.save()
+      const { id } = await blankManuscript.saveGraph()
 
       const maxFileSize = config.get('fileUpload.maxSizeMB')
       const fileSize = maxFileSize * 1e6 + 1
@@ -214,7 +214,7 @@ describe('Manuscripts', () => {
 
     it('replaces old manuscript file with new manuscript file', async () => {
       const blankManuscript = Manuscript.makeInitial({ createdBy: userId })
-      const { id } = await blankManuscript.save()
+      const { id } = await blankManuscript.saveGraph()
       const createFile = fileName => ({
         filename: fileName,
         stream: fs.createReadStream(

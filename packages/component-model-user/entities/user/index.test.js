@@ -70,7 +70,7 @@ describe('User manager', () => {
         new User({
           id: 'f05bbbf9-ddf4-494f-a8da-84957e2708ee',
           defaultIdentity: 'elife',
-        }).save(),
+        }).saveGraph(),
       ).rejects.toThrow())
   })
 })

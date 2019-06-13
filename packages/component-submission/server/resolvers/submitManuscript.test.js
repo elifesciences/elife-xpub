@@ -68,7 +68,7 @@ describe('Manuscripts', () => {
         },
       ]
 
-      const manuscript = await initialManuscript.save()
+      const manuscript = await initialManuscript.saveGraph()
       id = manuscript.id
     })
 
@@ -111,7 +111,7 @@ describe('Manuscripts', () => {
         type: 'SUPPORTING_FILE',
         status: 'CREATED',
       })
-      manuscript = await manuscript.save()
+      manuscript = await manuscript.saveGraph()
 
       expect.assertions(3)
       expect(manuscript.files).toHaveLength(2)
@@ -177,7 +177,7 @@ describe('Manuscripts', () => {
 
     it("fails if manuscript doesn't belong to user", async () => {
       const blankManuscript = Manuscript.makeInitial({ createdBy: userId })
-      const manuscript = await blankManuscript.save()
+      const manuscript = await blankManuscript.saveGraph()
       const mockedExportFn = jest.fn(() => Promise.resolve())
 
       await expect(
@@ -194,7 +194,7 @@ describe('Manuscripts', () => {
         createdBy: userId,
         status: Manuscript.statuses.MECA_EXPORT_PENDING,
       })
-      const manuscript = await blankManuscript.save()
+      const manuscript = await blankManuscript.saveGraph()
       const mockedExportFn = jest.fn(() => Promise.resolve())
 
       await expect(

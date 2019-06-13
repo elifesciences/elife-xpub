@@ -128,7 +128,7 @@
     "prop-types": "^15.6.2",
     "pubsweet": "^4.0.4",
     "pubsweet-client": "^8.0.0",
-    "pubsweet-server": "^10.1.4",
+    "pubsweet-server": "^13.4.3",
     "pug": "^2.0.3",
     "react": "^16.8.6",
     "react-apollo": "^2.1.11",

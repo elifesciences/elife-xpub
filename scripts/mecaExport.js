@@ -1,4 +1,4 @@
-const { db } = require('pubsweet-server')
+const { db } = require('@pubsweet/db-manager')
 const { mecaExport } = require('@elifesciences/component-meca')
 const { S3Storage } = require('@elifesciences/component-service-s3')
 const Manuscript = require('@elifesciences/component-model-manuscript').model
@@ -8,7 +8,7 @@ const doExport = async (id, getContent, ip) => {
   const manuscript = await Manuscript.find(id, m[0].createdBy)
 
   manuscript.status = 'INITIAL'
-  await manuscript.save()
+  await manuscript.saveGraph()
 
   try {
     await mecaExport(manuscript, getContent, ip)

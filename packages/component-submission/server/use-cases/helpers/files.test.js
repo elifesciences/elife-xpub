@@ -36,7 +36,7 @@ describe('FilesHelper', () => {
       await createTables(true)
       const { id } = await ManuscriptModel.makeInitial({
         createdBy: userId,
-      }).save()
+      }).saveGraph()
       const file = {
         stream: {},
         filename: 'filename',
@@ -193,7 +193,7 @@ describe('FilesHelper', () => {
 
       const { id } = await ManuscriptModel.makeInitial({
         createdBy: userId,
-      }).save()
+      }).saveGraph()
 
       await filesHelper.extractFileTitle(null, null, null, id)
 

@@ -27,7 +27,7 @@ const setPendingToSource = async fileList =>
     )
     const newFile = await FileModel.find(fileList[pendingFileIndex].id)
     newFile.type = 'MANUSCRIPT_SOURCE'
-    await newFile.save()
+    await newFile.saveGraph()
     logger.info(`Manuscript new index ${newFile.id} | ${newFile.filename}`)
     resolve(newFile)
   })
@@ -57,7 +57,7 @@ class FilesHelper {
       filename,
       type: 'MANUSCRIPT_SOURCE_PENDING',
       mimeType,
-    }).save()
+    }).saveGraph()
     return {
       stream,
       fileEntity,
@@ -149,7 +149,7 @@ class FilesHelper {
         manuscriptId,
         title,
       )
-      await semanticExtractionEntity.save()
+      await semanticExtractionEntity.saveGraph()
     } catch (error) {
       let errorMessage = ''
       if (error.error.code === 'ETIMEDOUT' || error.error.connect === false) {

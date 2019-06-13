@@ -53,7 +53,7 @@ describe('upload', () => {
     )
 
     const manuscript = Manuscript.makeInitial({ createdBy: userId })
-    const { id: manuscriptId } = await manuscript.save()
+    const { id: manuscriptId } = await manuscript.saveGraph()
 
     expect.assertions(3)
     try {
@@ -81,7 +81,7 @@ describe('upload', () => {
     )
 
     const manuscript = Manuscript.makeInitial({ createdBy: userId })
-    const { id: manuscriptId } = await manuscript.save()
+    const { id: manuscriptId } = await manuscript.saveGraph()
 
     expect.assertions(1)
     try {
@@ -99,7 +99,7 @@ describe('find', () => {
     await createTables(true)
     const profileId = 'ewwboc7m'
     const identities = [{ type: 'elife', identifier: profileId }]
-    const user = await new User({ identities }).save()
+    const user = await new User({ identities }).saveGraph()
     userId = user.id
   })
 
@@ -108,14 +108,14 @@ describe('find', () => {
       getDownloadLink: () => 'http://example.com/download-link',
     })
     const manuscript = Manuscript.makeInitial({ createdBy: userId })
-    const { id: manuscriptId } = await manuscript.save()
+    const { id: manuscriptId } = await manuscript.saveGraph()
     const file = new File({
       manuscriptId,
       filename: 'thisfile.txt',
       url: '/an/url',
     })
 
-    await file.save()
+    await file.saveGraph()
     const foundManuscript = await manuscriptController.getView(manuscriptId)
 
     expect(foundManuscript.files[0].downloadLink).toEqual(

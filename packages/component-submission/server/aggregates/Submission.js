@@ -65,7 +65,7 @@ class Submission {
   async _saveTeams() {
     this.manuscript.teams = this.teams
 
-    await this.manuscript.save()
+    await this.manuscript.saveGraph()
 
     this.teams = this.manuscript.teams
   }
@@ -111,7 +111,7 @@ class Submission {
 
     this.manuscript = mergeObjects(this.manuscript, manuscriptData)
 
-    return this.manuscript.save()
+    return this.manuscript.saveGraph()
   }
 
   async updateAuthorTeam(author) {

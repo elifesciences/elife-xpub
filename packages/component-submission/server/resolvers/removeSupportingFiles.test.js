@@ -16,7 +16,7 @@ const dummyStorage = {
 }
 
 const expectRemoveSupportingFilesDoesNothing = async (manuscriptIn, userId) => {
-  let manuscript = await manuscriptIn.save()
+  let manuscript = await manuscriptIn.saveGraph()
   manuscript = await Manuscript.find(manuscript.id, userId)
   const files = new SupportingFiles(dummyStorage, manuscript.id, userId)
   const mutatedManuscript = await files.removeAll()
@@ -31,7 +31,7 @@ const expectRemoveSupportingFilesLeavesManuscript = async (
     createdBy: userId,
     files: fileList,
   })
-  manuscript = await manuscript.save()
+  manuscript = await manuscript.saveGraph()
   manuscript = await Manuscript.find(manuscript.id, userId)
   expect(manuscript.files).toHaveLength(fileList.length)
   const files = new SupportingFiles(dummyStorage, manuscript.id, userId)
@@ -46,7 +46,7 @@ describe('Manuscripts', () => {
   beforeEach(async () => {
     await createTables(true)
     const user = new User(userData)
-    await user.save()
+    await user.saveGraph()
     userId = user.id
   })
 
@@ -69,7 +69,7 @@ describe('Manuscripts', () => {
         files: [fakeSupport, fakeSupport, fakeManuscript],
       })
 
-      manuscript = await manuscript.save()
+      manuscript = await manuscript.saveGraph()
       manuscript = await Manuscript.find(manuscript.id, userId)
       expect(manuscript.files).toHaveLength(3)
       const files = new SupportingFiles(dummyStorage, manuscript.id, userId)

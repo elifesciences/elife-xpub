@@ -21,7 +21,7 @@ describe('Manuscripts', () => {
       fs.remove(config.get('pubsweet-server.uploads')),
       createTables(true),
     ])
-    const user = await new User(userData).save()
+    const user = await new User(userData).saveGraph()
     userId = user.id
     mailer.clearMails()
   })
@@ -33,8 +33,8 @@ describe('Manuscripts', () => {
         meta: { title: 'title' },
         status: 'INITIAL',
       }
-      const { id } = await Manuscript.makeInitial(manuscriptData).save()
 
+      const { id } = await Manuscript.makeInitial(manuscriptData).saveGraph()
       const manuscript = await Query.manuscript({}, { id }, { user: profileId })
       expect(manuscript).toMatchObject(manuscriptData)
     })

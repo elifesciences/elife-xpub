@@ -36,12 +36,12 @@ class User extends BaseModel {
 
   static async createWithIdentity(identifier, type = 'elife') {
     // TODO : should this be done in one transaction
-    const user = await new User({ defaultIdentity: type }).save()
+    const user = await new User({ defaultIdentity: type }).saveGraph()
     await new Identity({
       type,
       identifier,
       userId: user.id,
-    }).save()
+    }).saveGraph()
     return user
   }
 
@@ -97,10 +97,6 @@ class User extends BaseModel {
     })
 
     return this
-  }
-
-  async save() {
-    return this.$query().upsertGraphAndFetch(this)
   }
 
   isSettable(prop) {

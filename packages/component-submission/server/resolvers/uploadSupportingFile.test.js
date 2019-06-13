@@ -17,7 +17,7 @@ describe('uploadSupportingFile', () => {
   beforeEach(async () => {
     await createTables(true)
     const user = new User(userData)
-    await user.save()
+    await user.saveGraph()
     userId = user.id
 
     const server = await startS3rver({
@@ -34,7 +34,7 @@ describe('uploadSupportingFile', () => {
   it('adds supporting files to the manuscipt', async () => {
     let manuscript = await Manuscript.makeInitial({
       createdBy: userId,
-    }).save()
+    }).saveGraph()
     const { id } = manuscript
     const supportingFile = {
       filename: 'supporting.pdf',

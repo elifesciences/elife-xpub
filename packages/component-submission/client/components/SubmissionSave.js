@@ -17,7 +17,7 @@ class SubmissionSave extends React.Component {
     if (
       prevProps.values.lastStepVisited !== this.props.values.lastStepVisited
     ) {
-      this.save()
+      this.saveGraph()
     }
   }
 
