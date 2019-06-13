@@ -27,6 +27,13 @@ module.exports = {
     watchDirectory: path.resolve(__dirname, '..', 'packages'),
   },
 
+  server: {
+    api: {
+      secret: '',
+      url: 'http://api-dummy:8080/',
+    },
+  },
+
   aws: {
     credentials: {
       region: 'eu-west-1',

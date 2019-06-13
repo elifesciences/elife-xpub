@@ -12,7 +12,6 @@ import {
 import {
   ThankYouPage,
   SubmissionWizard,
-  NewSubmissionWizard,
 } from '@elifesciences/component-submission/client'
 import {
   LoginPage,
@@ -46,8 +45,6 @@ const Routes = () => (
               <Switch>
                 <TrackedRoute component={ThankYouPage} path="/thankyou/:id" />
                 <Route component={SubmissionWizard} path="/submit/:id" />
-                {/* TODO: Remove this before merging */}
-                <Route component={NewSubmissionWizard} path="/newSubmit/:id" />
                 <TrackedRoute component={DashboardPage} exact path="/" />
                 <ErrorPage error="404: page not found" />
               </Switch>

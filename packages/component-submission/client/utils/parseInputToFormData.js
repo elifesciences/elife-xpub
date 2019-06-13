@@ -31,9 +31,8 @@ export function parseTitleSuggestion(values) {
     return {
       meta: { ...values.meta, title: latestSuggestions.title },
     }
-  } 
-    return {}
-  
+  }
+  return {}
 }
 
 // This basically sets the initial values
