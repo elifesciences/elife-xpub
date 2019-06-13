@@ -11,6 +11,7 @@ services:
       - postgres
     environment:
       NODE_ENV: development
+      NODE_CONFIG_ENV: development
       PGHOST: postgres
       PGUSER: $USER
 
