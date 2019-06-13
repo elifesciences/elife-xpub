@@ -92,12 +92,10 @@ describe('SubmissionWizard', async () => {
   describe('step navigation', () => {
     // eslint-disable-next-line no-console
     const consoleError = console.error
-
-    let opts = null
     const pushHistory = jest.fn()
 
     const testStepNavigation = async (currentPath, nextStep, buttonId) => {
-      opts = renderWithPath(currentPath, pushHistory)
+      const opts = renderWithPath(currentPath, pushHistory)
       fireEvent.click(opts.getByTestId(buttonId))
       await flushPromises()
       expect(pushHistory).toHaveBeenCalledTimes(1)
@@ -129,7 +127,7 @@ describe('SubmissionWizard', async () => {
     })
 
     it('should change the location on back except on first step', async () => {
-      opts = renderWithPath('/submit/id/author')
+      const opts = renderWithPath('/submit/id/author')
       fireEvent.click(opts.getByTestId('back'))
       await flushPromises()
       expect(pushHistory).toHaveBeenCalledTimes(0)
