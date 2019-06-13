@@ -1,4 +1,4 @@
-import { render, cleanup, fireEvent } from '@testing-library/react'
+import { render, cleanup, fireEvent, configure } from '@testing-library/react'
 import theme from '@elifesciences/elife-theme'
 import React from 'react'
 import 'jest-dom/extend-expect'
@@ -45,6 +45,7 @@ const renderWithPath = (path, pushHistory) =>
   })
 
 describe('SubmissionWizard', async () => {
+  beforeAll(() => configure({ testIdAttribute: 'data-test-id' }))
   afterEach(cleanup)
 
   it('should display next on all steps except last one', async () => {

@@ -88,7 +88,7 @@ export const SubmissionWizard = ({
       initialValues={initialValues}
       onSubmit={handleSubmit}
       render={formikProps => (
-        <Form data-testid="submission-wizard-form">
+        <Form data-test-id="submission-wizard-form">
           <SubmissionSave
             disabled={formikProps.isSubmitting}
             handleSave={handleSave}
@@ -156,7 +156,7 @@ export const SubmissionWizard = ({
               <Flex mt={6}>
                 <Box mr={3}>
                   <Button
-                    data-testid="back"
+                    data-test-id="back"
                     disabled={currentStep === 0}
                     onClick={() => {
                       setCurrentStep(currentStep - 1)
@@ -180,7 +180,7 @@ export const SubmissionWizard = ({
                     />
                   ) : (
                     <Button
-                      data-testid="next"
+                      data-test-id="next"
                       onClick={() => {
                         formikProps.validateForm().then(errors => {
                           if (!Object.keys(errors).length) {
