@@ -104,16 +104,17 @@ describe('SubmissionWizard', async () => {
       pushHistory.mockReset()
     }
 
+    const SUPPRESSED_PREFIXES = [
+      'Warning: Do not await the result of calling ReactTestUtils.act(...)',
+      'Warning: An update to %s inside a test was not wrapped in act(...)',
+    ]
+
     beforeAll(() => {
       // disable formik warnings
       // see https://stackoverflow.com/questions/55181009/jest-react-testing-library-warning-update-was-not-wrapped-in-act
       // eslint-disable-next-line no-console
       console.error = (...args) => {
-        if (
-          !args[0].startsWith(
-            'Warning: An update to Formik inside a test was not wrapped in act(...).',
-          )
-        ) {
+        if (!SUPPRESSED_PREFIXES.some(sp => args[0].startsWith(sp))) {
           consoleError(...args)
         }
       }
