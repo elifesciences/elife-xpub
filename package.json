@@ -97,8 +97,7 @@
     "secretcheck"
   ],
   "resolutions": {
-    "lodash": ">=4.17.11",
-    "pubsweet-server": "^10.1.4"
+    "lodash": ">=4.17.11"
   },
   "workspaces": [
     "client/*",
