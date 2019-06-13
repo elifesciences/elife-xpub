@@ -156,7 +156,7 @@ export const SubmissionWizard = ({
               <Flex mt={6}>
                 <Box mr={3}>
                   <Button
-                    data-test-id="back"
+                    data-testid="back"
                     disabled={currentStep === 0}
                     onClick={() => {
                       setCurrentStep(currentStep - 1)
