@@ -16,7 +16,7 @@ import {
 
 const DEFAULT_TIMEOUT = 5000
 const FILE_TIMEOUT = 60000
-const OPTS = { timeout: DEFAULT_TIMEOUT }
+const OPTS = { timeout: DEFAULT_TIMEOUT, paste: true }
 
 class NavigationHelper {
   constructor(t) {
@@ -103,7 +103,9 @@ class NavigationHelper {
   }
 
   async setTitle(text) {
-    await this.t.selectText(submission.title).typeText(submission.title, text)
+    await this.t
+      .selectText(submission.title)
+      .typeText(submission.title, text, { paste: true })
   }
 
   async uploadManuscript(manuscript) {
@@ -126,13 +128,21 @@ class NavigationHelper {
       .pressKey('down')
       .pressKey('enter')
       .click(submission.discussionCheckbox)
-      .typeText(submission.discussionText, 'Spoke to Bob about another article')
+      .typeText(
+        submission.discussionText,
+        'Spoke to Bob about another article',
+        { paste: true },
+      )
       .click(submission.previousArticleCheckbox)
-      .typeText(submission.previousArticleText, 'A title')
+      .typeText(submission.previousArticleText, 'A title', { paste: true })
       .click(submission.cosubmissionCheckbox)
-      .typeText(submission.firstCosubmissionTitle, 'Another title')
+      .typeText(submission.firstCosubmissionTitle, 'Another title', {
+        paste: true,
+      })
       .click(submission.moreSubmission)
-      .typeText(submission.secondCosubmissionTitle, 'Yet another title')
+      .typeText(submission.secondCosubmissionTitle, 'Yet another title', {
+        paste: true,
+      })
   }
 
   async openEditorsPicker() {
@@ -210,12 +220,18 @@ class NavigationHelper {
     this.closePeoplePicker()
 
     await this.t
-      .typeText(editors.firstReviewerName, 'Edward')
-      .typeText(editors.firstReviewerEmail, 'edward@example.com')
-      .typeText(editors.secondReviewerName, 'Frances')
-      .typeText(editors.secondReviewerEmail, 'frances@example.net')
-      .typeText(editors.thirdReviewerName, 'George')
-      .typeText(editors.thirdReviewerEmail, 'george@example.org')
+      .typeText(editors.firstReviewerName, 'Edward', { paste: true })
+      .typeText(editors.firstReviewerEmail, 'edward@example.com', {
+        paste: true,
+      })
+      .typeText(editors.secondReviewerName, 'Frances', { paste: true })
+      .typeText(editors.secondReviewerEmail, 'frances@example.net', {
+        paste: true,
+      })
+      .typeText(editors.thirdReviewerName, 'George', { paste: true })
+      .typeText(editors.thirdReviewerEmail, 'george@example.org', {
+        paste: true,
+      })
     this.navigateForward()
   }
 

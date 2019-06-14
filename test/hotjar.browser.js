@@ -59,12 +59,14 @@ test('test suppressions', async t => {
   navigationHelper.closePeoplePicker()
 
   await t
-    .typeText(editors.firstReviewerName, 'Edward')
-    .typeText(editors.firstReviewerEmail, 'edward@example.com')
-    .typeText(editors.secondReviewerName, 'Frances')
-    .typeText(editors.secondReviewerEmail, 'frances@example.net')
-    .typeText(editors.thirdReviewerName, 'George')
-    .typeText(editors.thirdReviewerEmail, 'george@example.org')
+    .typeText(editors.firstReviewerName, 'Edward', { paste: true })
+    .typeText(editors.firstReviewerEmail, 'edward@example.com', { paste: true })
+    .typeText(editors.secondReviewerName, 'Frances', { paste: true })
+    .typeText(editors.secondReviewerEmail, 'frances@example.net', {
+      paste: true,
+    })
+    .typeText(editors.thirdReviewerName, 'George', { paste: true })
+    .typeText(editors.thirdReviewerEmail, 'george@example.org', { paste: true })
   navigationHelper.navigateForward()
 
   // disclosure's page

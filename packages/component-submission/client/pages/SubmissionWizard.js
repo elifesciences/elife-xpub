@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { compose, branch, renderComponent } from 'recompose'
 import { Switch, Redirect } from 'react-router-dom'
 import { Box, Flex } from '@rebass/grid'
@@ -48,189 +48,205 @@ const ErrorMessage = styled.div`
   color: ${th('colorError')};
 `
 
-export const SubmissionWizard = ({
-  data, // Contains data from an apollo GQL query
-  match, // Comes from react router, contains information about the path
-  history,
-  updateManuscript, // injected by reCompose
-  submitManuscript, // injected by reCompose
-}) => {
-  const getCurrentStepFromPath = () =>
+export class SubmissionWizard extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      currentStep: this.getCurrentStepFromPath(),
+      isUploading: false,
+      submissionAttempted: false,
+    }
+  }
+
+  getCurrentStepFromPath = () =>
     STEP_NAMES.map(step => step.toLowerCase()).indexOf(
-      history.location.pathname.split('/')[3].toLowerCase(),
+      this.props.history.location.pathname.split('/')[3].toLowerCase(),
     )
 
-  const [currentStep, setCurrentStep] = useState(getCurrentStepFromPath())
-  const [isUploading, setIsUploading] = useState(false)
-  const [submissionAttempted, setsubmissionAttempted] = useState(false)
+  setIsUploading = isUploading => this.setState({ isUploading })
 
-  const isLastStep = () => currentStep === STEP_NAMES.length - 1
-  const initialValues = parseInputToFormData(data.manuscript)
-  const stepValidation = [
-    authorSchema,
-    filesSchema,
-    submissionSchema,
-    editorsSchema,
-    wizardSchema,
-  ]
+  isLastStep = () => this.state.currentStep === STEP_NAMES.length - 1
 
-  const handleSave = formValues =>
-    updateManuscript({
+  setSubmissionAttempted = submissionAttempted =>
+    this.setState({ submissionAttempted })
+
+  setCurrentStep = currentStep => this.setState({ currentStep })
+
+  handleSave = formValues =>
+    this.props.updateManuscript({
       variables: { data: parseFormToOutputData(formValues) },
     })
 
-  const handleSubmit = formValues =>
-    submitManuscript({
+  handleSubmit = formValues =>
+    this.props.submitManuscript({
       variables: { data: parseFormToOutputData(formValues) },
     })
 
-  return (
-    <Formik
-      initialValues={initialValues}
-      onSubmit={handleSubmit}
-      render={formikProps => (
-        <Form data-test-id="submission-wizard-form">
-          <SubmissionSave
-            disabled={formikProps.isSubmitting}
-            handleSave={handleSave}
-            values={{
-              ...formikProps.values,
-              lastStepVisited: history.location.pathname,
-            }}
-          />
-          <Flex>
-            <BoxNoMinWidth flex="1 1 100%" mx={[0, 0, 0, '16.666%']}>
-              <Box my={5}>
-                <ProgressBar currentStep={currentStep} />
-              </Box>
-              <FormH2>{STEP_NAMES[currentStep]}</FormH2>
-              <Switch>
-                <TrackedRoute
-                  path={`${match.path}/author`}
-                  render={() => <AuthorStep {...formikProps} />}
-                />
-                <TrackedRoute
-                  path={`${match.path}/files`}
-                  render={() => (
-                    <FilesStep
-                      {...formikProps}
-                      isUploading={isUploading}
-                      setIsUploading={setIsUploading}
-                    />
-                  )}
-                />
-                <TrackedRoute
-                  path={`${match.path}/details`}
-                  render={() => <DetailsStep {...formikProps} />}
-                />
-                <TrackedRoute
-                  path={`${match.path}/editors`}
-                  render={() => <EditorStep {...formikProps} />}
-                />
-                <TrackedRoute
-                  path={`${match.path}/disclosure`}
-                  render={() => (
-                    <DisclosureStep
-                      isSubmissionAttempted={submissionAttempted}
-                      {...formikProps}
-                    />
-                  )}
-                />
-                <Redirect
-                  from="/submit/:id"
-                  to={`/submit/${match.params.id}/author`}
-                />
-                <ErrorPage error="404: page not found" />
-              </Switch>
-              {!!Object.keys(formikProps.errors).length &&
-                submissionAttempted &&
-                isLastStep() && (
-                  <ErrorMessage data-test-id="test-error-message">
-                    We&apos;re sorry but there appears to be one or more errors
-                    in your submission that require attention before you can
-                    submit. Please use the back button to review the{' '}
-                    {convertArrayToReadableList(
-                      getErrorStepsFromErrors(formikProps.errors),
-                    )}{' '}
-                    steps before trying again.
-                  </ErrorMessage>
-                )}
-              <Flex mt={6}>
-                <Box mr={3}>
-                  <Button
-                    data-test-id="back"
-                    disabled={currentStep === 0}
-                    onClick={() => {
-                      setCurrentStep(currentStep - 1)
-                      history.push(
-                        `${match.url}/${STEP_NAMES[
-                          currentStep - 1
-                        ].toLowerCase()}`,
-                      )
-                    }}
-                  >
-                    Back
-                  </Button>
+  render() {
+    const stepValidation = [
+      authorSchema,
+      filesSchema,
+      submissionSchema,
+      editorsSchema,
+      wizardSchema,
+    ]
+
+    const { history, match } = this.props
+    const initialValues = parseInputToFormData(this.props.data.manuscript)
+
+    return (
+      <Formik
+        enableReinitialize
+        initialValues={initialValues}
+        onSubmit={this.handleSubmit}
+        render={formikProps => (
+          <Form data-test-id="submission-wizard-form">
+            <SubmissionSave
+              disabled={formikProps.isSubmitting}
+              handleSave={this.handleSave}
+              values={{
+                ...formikProps.values,
+                lastStepVisited: history.location.pathname,
+              }}
+            />
+            <Flex>
+              <BoxNoMinWidth flex="1 1 100%" mx={[0, 0, 0, '16.666%']}>
+                <Box my={5}>
+                  <ProgressBar currentStep={this.state.currentStep} />
                 </Box>
-                <Box>
-                  {currentStep === STEP_NAMES.length - 1 ? (
-                    <WizardSubmit
-                      setSubmissionAttempted={setsubmissionAttempted}
-                      setTouched={formikProps.setTouched}
-                      submitForm={formikProps.submitForm}
-                      validateForm={formikProps.validateForm}
-                    />
-                  ) : (
+                <FormH2>{STEP_NAMES[this.state.currentStep]}</FormH2>
+                <Switch>
+                  <TrackedRoute
+                    path={`${match.path}/author`}
+                    render={() => <AuthorStep {...formikProps} />}
+                  />
+                  <TrackedRoute
+                    path={`${match.path}/files`}
+                    render={() => (
+                      <FilesStep
+                        {...formikProps}
+                        isUploading={this.state.isUploading}
+                        setIsUploading={this.setIsUploading}
+                      />
+                    )}
+                  />
+                  <TrackedRoute
+                    path={`${match.path}/details`}
+                    render={() => <DetailsStep {...formikProps} />}
+                  />
+                  <TrackedRoute
+                    path={`${match.path}/editors`}
+                    render={() => <EditorStep {...formikProps} />}
+                  />
+                  <TrackedRoute
+                    path={`${match.path}/disclosure`}
+                    render={() => (
+                      <DisclosureStep
+                        isSubmissionAttempted={this.state.submissionAttempted}
+                        {...formikProps}
+                      />
+                    )}
+                  />
+                  <Redirect
+                    from="/submit/:id"
+                    to={`/submit/${match.params.id}/author`}
+                  />
+                  <ErrorPage error="404: page not found" />
+                </Switch>
+                {!!Object.keys(formikProps.errors).length &&
+                  this.state.submissionAttempted &&
+                  this.isLastStep() && (
+                    <ErrorMessage data-test-id="test-error-message">
+                      We&apos;re sorry but there appears to be one or more
+                      errors in your submission that require attention before
+                      you can submit. Please use the back button to review the{' '}
+                      {convertArrayToReadableList(
+                        getErrorStepsFromErrors(formikProps.errors),
+                      )}{' '}
+                      steps before trying again.
+                    </ErrorMessage>
+                  )}
+                <Flex mt={6}>
+                  <Box mr={3}>
                     <Button
-                      data-test-id="next"
+                      data-test-id="back"
+                      disabled={this.state.currentStep === 0}
                       onClick={() => {
-                        formikProps.validateForm().then(errors => {
-                          if (!Object.keys(errors).length) {
-                            setCurrentStep(currentStep + 1)
-                            history.push(
-                              `${match.url}/${STEP_NAMES[
-                                currentStep + 1
-                              ].toLowerCase()}`,
-                            )
-                          }
-
-                          Object.keys(errors).forEach(errorField => {
-                            if (typeof errors[errorField] === 'object') {
-                              const flattenedSubfields = flattenObject(
-                                errors[errorField],
-                              )
-                              Object.keys(flattenedSubfields).forEach(
-                                subField => {
-                                  formikProps.setFieldTouched(
-                                    `${errorField}.${subField}`,
-                                    true,
-                                  )
-                                },
-                              )
-                            } else {
-                              formikProps.setFieldTouched(
-                                errorField,
-                                true,
-                                false,
+                        this.setCurrentStep(this.state.currentStep - 1)
+                        history.push(
+                          `${match.url}/${STEP_NAMES[
+                            this.state.currentStep - 1
+                          ].toLowerCase()}`,
+                        )
+                      }}
+                    >
+                      Back
+                    </Button>
+                  </Box>
+                  <Box>
+                    {this.state.currentStep === STEP_NAMES.length - 1 ? (
+                      <WizardSubmit
+                        setSubmissionAttempted={
+                          this.state.setsubmissionAttempted
+                        }
+                        setTouched={formikProps.setTouched}
+                        submitForm={formikProps.submitForm}
+                        validateForm={formikProps.validateForm}
+                      />
+                    ) : (
+                      <Button
+                        data-test-id="next"
+                        onClick={() => {
+                          formikProps.validateForm().then(errors => {
+                            if (!Object.keys(errors).length) {
+                              this.setCurrentStep(this.state.currentStep + 1)
+                              history.push(
+                                `${match.url}/${STEP_NAMES[
+                                  this.state.currentStep
+                                ].toLowerCase()}`,
                               )
                             }
+
+                            Object.keys(errors).forEach(errorField => {
+                              if (typeof errors[errorField] === 'object') {
+                                const flattenedSubfields = flattenObject(
+                                  errors[errorField],
+                                )
+                                Object.keys(flattenedSubfields).forEach(
+                                  subField => {
+                                    formikProps.setFieldTouched(
+                                      `${errorField}.${subField}`,
+                                      true,
+                                    )
+                                  },
+                                )
+                              } else {
+                                formikProps.setFieldTouched(
+                                  errorField,
+                                  true,
+                                  false,
+                                )
+                              }
+                            })
                           })
-                        })
-                      }}
-                      primary
-                    >
-                      Next
-                    </Button>
-                  )}
-                </Box>
-              </Flex>
-            </BoxNoMinWidth>
-          </Flex>
-        </Form>
-      )}
-      validationSchema={yup.object().shape(stepValidation[currentStep])}
-    />
-  )
+                        }}
+                        primary
+                      >
+                        Next
+                      </Button>
+                    )}
+                  </Box>
+                </Flex>
+              </BoxNoMinWidth>
+            </Flex>
+          </Form>
+        )}
+        validationSchema={yup
+          .object()
+          .shape(stepValidation[this.state.currentStep])}
+      />
+    )
+  }
 }
 
 export default compose(
