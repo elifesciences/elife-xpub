@@ -186,9 +186,7 @@ export class SubmissionWizard extends React.Component {
                   <Box>
                     {this.state.currentStep === STEP_NAMES.length - 1 ? (
                       <WizardSubmit
-                        setSubmissionAttempted={
-                          this.state.setsubmissionAttempted
-                        }
+                        setSubmissionAttempted={this.setSubmissionAttempted}
                         setTouched={formikProps.setTouched}
                         submitForm={formikProps.submitForm}
                         validateForm={formikProps.validateForm}
