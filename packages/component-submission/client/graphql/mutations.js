@@ -35,6 +35,15 @@ export const UPLOAD_MANUSCRIPT_FILE = gql`
         id
       }
       fileStatus
+      suggestions {
+        fieldName
+        suggestions {
+          value
+          score
+          updated
+          method
+        }
+      }
     }
   }
 `
