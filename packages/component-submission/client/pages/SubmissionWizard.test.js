@@ -32,7 +32,7 @@ const setupProvider = (historyLocation = []) => ({ children }) => (
 )
 
 const makeProps = (path, pushHistory = jest.fn()) => ({
-  data: { manuscript: {} },
+  data: { manuscript: { meta: {} } },
   match: { path: '/submit/id', url: '', params: { id: 'id' } },
   history: { location: { pathname: path }, push: pushHistory },
   updateManuscript: jest.fn(),
