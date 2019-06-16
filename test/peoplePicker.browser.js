@@ -72,43 +72,43 @@ test('People Picker', async t => {
     .click(wizardStep.next)
 
   // selecting suggested and excluded editors & reviewers
+  await t.click(editors.suggestedSeniorEditorSelection)
+  await t.click(editors.peoplePickerOptions.nth(0))
+  await t.click(editors.peoplePickerOptions.nth(2))
+  await t.click(editors.peoplePickerOptions.nth(3))
+  await t.click(editors.peoplePickerOptions.nth(5))
+  await t.click(editors.peoplePickerOptions.nth(7))
+  await t.click(editors.peoplePickerInfo.nth(9))
+
+  // open modal, and we should be able to select this editor as maximun limit is not reach
+  await t.expect(editors.peoplePickerModalErrorMaximum.count).eql(0)
+  await t.click(Selector('[data-test-id="accept"]'))
+
+  // limit of editors reach, we should get an error in the modal
+  await t.click(editors.peoplePickerInfo.nth(10))
+  await t.expect(editors.peoplePickerModalErrorMaximum.count).eql(1)
+  await t.click(Selector('[data-test-id="cancel"]'))
+
+  await t.wait(500)
+
+  // click on an editor already added, it should display 'REMOVE EDITOR'
+  await t.click(editors.peoplePickerInfo.nth(9))
   await t
-    .click(editors.suggestedSeniorEditorSelection)
-    .click(editors.peoplePickerOptions.nth(0))
-    .click(editors.peoplePickerOptions.nth(2))
-    .click(editors.peoplePickerOptions.nth(3))
-    .click(editors.peoplePickerOptions.nth(5))
-    .click(editors.peoplePickerOptions.nth(7))
-    .click(editors.peoplePickerInfo.nth(9))
-
-    // open modal, and we should be able to select this editor as maximun limit is not reach
-    .expect(editors.peoplePickerModalErrorMaximum.count)
-    .eql(0)
-    .click(Selector('[data-test-id="accept"]'))
-
-    // limit of editors reach, we should get an error in the modal
-    .click(editors.peoplePickerInfo.nth(10))
-    .expect(editors.peoplePickerModalErrorMaximum.count)
-    .eql(1)
-    .click(Selector('[data-test-id="cancel"]'))
-
-    // click on an editor already added, it should display 'REMOVE EDITOR'
-    .click(editors.peoplePickerInfo.nth(9))
     .expect(Selector('[data-test-id="accept"]').innerText)
     .eql('REMOVE EDITOR')
-    .click(Selector('[data-test-id="accept"]'))
+  await t.click(Selector('[data-test-id="accept"]'))
 
-    // then we should be able to add a new editor
-    .click(editors.peoplePickerInfo.nth(10))
-    .expect(editors.peoplePickerModalErrorMaximum.count)
-    .eql(0)
-    .click(Selector('[data-test-id="accept"]'))
+  await t.wait(500)
 
-    .click(editors.peoplePickerSubmit)
-    .click(editors.suggestedReviewingEditorSelection)
-    .click(editors.peoplePickerOptions.nth(1))
-    .click(editors.peoplePickerOptions.nth(4))
-    .click(editors.peoplePickerSubmit)
-    .expect(editors.validationErrors.withText(/./).count)
-    .eql(0)
+  // then we should be able to add a new editor
+  await t.click(editors.peoplePickerInfo.nth(10))
+  await t.expect(editors.peoplePickerModalErrorMaximum.count).eql(0)
+  await t.click(Selector('[data-test-id="accept"]'))
+
+  await t.click(editors.peoplePickerSubmit)
+  await t.click(editors.suggestedReviewingEditorSelection)
+  await t.click(editors.peoplePickerOptions.nth(1))
+  await t.click(editors.peoplePickerOptions.nth(4))
+  await t.click(editors.peoplePickerSubmit)
+  await t.expect(editors.validationErrors.withText(/./).count).eql(0)
 })
