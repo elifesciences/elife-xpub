@@ -192,7 +192,10 @@ export class FilesStepPageComponent extends React.Component {
                     )
                     resolve(data)
                   })
-                  .catch(err => reject(err))
+                  .catch(err => {
+                    setFieldValue('fileStatus', 'READY')
+                    reject(err)
+                  })
               })
             }
           />
