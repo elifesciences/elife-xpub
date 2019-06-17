@@ -73,13 +73,9 @@ export class SubmissionWizard extends React.Component {
   setCurrentStep = currentStep => this.setState({ currentStep })
 
   handleSave = formValues =>
-    this.props
-      .updateManuscript({
-        variables: { data: parseFormToOutputData(formValues) },
-      })
-      .then(() =>
-        this.props.history.push(`/thankyou/${this.props.match.params.id}`),
-      )
+    this.props.updateManuscript({
+      variables: { data: parseFormToOutputData(formValues) },
+    })
 
   handleSubmit = formValues =>
     this.props
