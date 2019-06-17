@@ -1,3 +1,7 @@
+/**
+ * Not used for now, keeping for reference
+ */
+
 import React, { useState } from 'react'
 import { compose, branch, renderComponent } from 'recompose'
 import { Switch, Redirect } from 'react-router-dom'
