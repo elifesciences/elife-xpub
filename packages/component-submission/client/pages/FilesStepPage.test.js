@@ -147,4 +147,28 @@ describe('FileStepPage', () => {
     wrapper.instance().onFileDrop([])
     expect(mockUploadManuscriptFile).toBeCalledTimes(0)
   })
+
+  it('upload supporting file sets the formik value for files on success', async () => {
+    const mockSetFieldValue = jest.fn()
+    const wrapper = createWrapper(
+      {},
+      {
+        uploadSupportingFile: jest.fn(() =>
+          Promise.resolve({
+            data: {
+              uploadSupportingFile: { files: ['foo'], fileStatus: 'READY' },
+            },
+          }),
+        ),
+        setFieldValue: mockSetFieldValue,
+      },
+    )
+
+    await wrapper.instance().onSupportingFileUpload([{}])
+
+    expect(mockSetFieldValue).toBeCalledTimes(3)
+    expect(mockSetFieldValue.mock.calls[0]).toEqual(['fileStatus', 'CHANGING'])
+    expect(mockSetFieldValue.mock.calls[1]).toEqual(['files', ['foo']])
+    expect(mockSetFieldValue.mock.calls[2]).toEqual(['fileStatus', 'READY'])
+  })
 })
