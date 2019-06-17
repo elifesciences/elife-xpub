@@ -24,7 +24,7 @@ setFixtureHooks(f)
  * This test is under quarantine.
  */
 
-test.fail('should display an error when files are still uploading', async t => {
+test.skip('should display an error when files are still uploading', async t => {
   // const navigationHelper = new NavigationHelper(t)
   // navigationHelper.login()
   // await t.expect(profile.name, { 'data-hj-suppress': '' }).ok()
