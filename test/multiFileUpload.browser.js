@@ -23,7 +23,7 @@ const manuscript = {
   ],
 }
 
-test.only('should display an error when files are still uploading', async t => {
+test('should display an error when files are still uploading', async t => {
   const navigationHelper = new NavigationHelper(t)
 
   navigationHelper.login()
