@@ -198,7 +198,7 @@ export class FilesStepPageComponent extends React.Component {
           />
         </Box>
         <ValidatedField
-          data-test-id="ongoing-upload-error"
+          data-test-id="ongoing-upload"
           name="fileStatus"
           type="hidden"
         />

@@ -42,5 +42,7 @@ test('should display an error when files are still uploading', async t => {
   navigationHelper.uploadSupportingFiles(manuscript.supportingFiles)
   await t.takeElementScreenshot(files.supportingFilesUpload)
   navigationHelper.navigateForward()
-  await t.expect(files.ongoingFileUploadError.count).eql(1)
+  await t
+    .expect(files.ongoingFileUploadError.textContent)
+    .eql('Please wait until all files have uploaded.')
 })
