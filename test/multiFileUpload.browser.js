@@ -40,6 +40,7 @@ test('should display an error when files are still uploading', async t => {
   navigationHelper.fillCoverletter()
   navigationHelper.uploadManuscript(manuscript)
   navigationHelper.uploadSupportingFiles(manuscript.supportingFiles)
+  await t.wait(1000)
   await t.takeScreenshot()
   navigationHelper.navigateForward()
   await t.expect(files.ongoingFileUploadError.count).eql(1)
