@@ -16,7 +16,7 @@ const manuscript = {
     './fixtures/dummy-supporting-2.docx',
     './fixtures/dummy-supporting-2.docx',
     './fixtures/dummy-supporting-2.docx',
-    './fixtures/dummy-supporting-2.docx',
+    './fixtures/dummy-manuscript-2.pdf',
   ],
 }
 
