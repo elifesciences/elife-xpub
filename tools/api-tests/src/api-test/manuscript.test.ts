@@ -20,6 +20,11 @@ test(
     const manuscriptAuthorDelta: ManuscriptInput = {
       id: newManuscript.createManuscript.id,
       cosubmission: ['some_other_submission'],
+      meta: {
+        title: `A test manuscript generated ${new Date().toISOString()}`,
+        articleType: 'TEST',
+        subjects: [],
+      },
       author: {
         firstName: "Bobby",
         lastName: "Beans",
