@@ -23,7 +23,7 @@ const manuscript = {
   ],
 }
 
-test('should display an error when files are still uploading', async t => {
+test.only('should display an error when files are still uploading', async t => {
   const navigationHelper = new NavigationHelper(t)
 
   navigationHelper.login()
@@ -40,8 +40,7 @@ test('should display an error when files are still uploading', async t => {
   navigationHelper.fillCoverletter()
   navigationHelper.uploadManuscript(manuscript)
   navigationHelper.uploadSupportingFiles(manuscript.supportingFiles)
-  await t.wait(1000)
-  await t.takeScreenshot()
+  await t.takeElementScreenshot(files.supportingFilesUpload)
   navigationHelper.navigateForward()
   await t.expect(files.ongoingFileUploadError.count).eql(1)
 })
