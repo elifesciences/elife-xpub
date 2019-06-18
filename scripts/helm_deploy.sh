@@ -24,6 +24,8 @@ fi
 
 cd helm/
 cd elife-xpub
+# workaround to allow the `elife` user to move around files into a `jenkins` folder
+chmod 777 .
 sudo -u elife -H helm init --client-only
 sudo -u elife -H helm dependency update .
 cd -
