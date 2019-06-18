@@ -105,7 +105,7 @@ elifePipeline {
                 sh "sh -c \"docker logs elife-xpub_postgres_1 > build/browser/postgres-output.txt\""
                 sh "sh -c \"docker logs elife-xpub_sftp_1 > build/browser/sftp-output.txt\""
                 sh "sh -c \"docker logs elife-xpub_fakes3_1 > build/browser/fakes3-output.txt\""
-                archiveArtifacts artifacts: "build/screenshots/**/*,build/browser/**/*,build/meca/*.zip", allowEmptyArchive: true
+                archiveArtifacts artifacts: "build/logs/**/*,build/screenshots/**/*,build/browser/**/*,build/meca/*.zip", allowEmptyArchive: true
                 sh "aws --endpoint-url='http://localhost:4569' s3 ls s3://test --recursive"
                 sh "IMAGE_TAG=${commit} docker-compose -f docker-compose.yml -f docker-compose.ci.yml down -v"
                 sh "sudo rm -rf ./build/* || true"
