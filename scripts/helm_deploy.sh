@@ -12,11 +12,12 @@ release_name="elife-xpub--${1}"
 image_tag="${2}"
 
 # temporary: should use an S3 chart repository
-if [ ! -d /tmp/elife-xpub-formula ]; then
-    git clone git@github.com:elifesciences/elife-xpub-formula.git /tmp/elife-xpub-formula
-    cd /tmp/elife-xpub-formula
+mkdir -p tmp
+if [ ! -d tmp/elife-xpub-formula ]; then
+    git clone git@github.com:elifesciences/elife-xpub-formula.git tmp/elife-xpub-formula
+    cd tmp/elife-xpub-formula
 else
-    cd /tmp/elife-xpub-formula
+    cd tmp/elife-xpub-formula
     # workaround for https://github.com/elifesciences/issues/issues/4634
     git reset --hard
     git pull origin master
