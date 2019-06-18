@@ -245,12 +245,18 @@ class Manuscript extends BaseModel {
   }
 
   static async updateStatus(id, status) {
-    const [manuscript] = await this.query().where({
-      'manuscript.id': id,
-    })
+    const [manuscript] = await this.query()
+      .where({
+        'manuscript.id': id,
+      })
+      .catch(err => {
+        logger.error(`Attempting to query manuscript ${id}`)
+        logger.error(err)
+        throw err
+      })
 
     if (!manuscript) {
-      throw new Error(`${this.name} not found`)
+      throw new Error(`${this.name} not found: ${id}`)
     }
     // todo why does eager loading sometimes not work?
     await manuscript.$loadRelated('[teams, files]')
