@@ -81,7 +81,7 @@ export class FilesStepPageComponent extends React.Component {
   onSupportingFileUpload = file =>
     new Promise((resolve, reject) => {
       this.props.setFieldValue('fileStatus', 'CHANGING')
-      return this.props
+      this.props
         .uploadSupportingFile({
           variables: { file, id: this.props.values.id },
         })
