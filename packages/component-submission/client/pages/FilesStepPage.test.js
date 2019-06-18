@@ -147,4 +147,24 @@ describe('FileStepPage', () => {
     wrapper.instance().onFileDrop([])
     expect(mockUploadManuscriptFile).toBeCalledTimes(0)
   })
+
+  it('sets fileStatus to CHANGING on supporting upload start', () => {
+    const mockSetFieldValue = jest.fn()
+    const wrapper = createWrapper({}, { setFieldValue: mockSetFieldValue })
+    wrapper.instance().onSupportingFileUpload([])
+    expect(mockSetFieldValue.mock.calls[0]).toBeCalledWith(
+      'fileStatus',
+      'CHANGING',
+    )
+  })
+
+  it('sets fileStatus to READY on supporting upload success,', async () => {
+    const mockSetFieldValue = jest.fn()
+    const wrapper = createWrapper({}, { setFieldValue: mockSetFieldValue })
+    await wrapper.instance().onSupportingFileUpload([])
+    expect(mockSetFieldValue.mock.calls[1]).toBeCalledWith(
+      'fileStatus',
+      'READY',
+    )
+  })
 })
