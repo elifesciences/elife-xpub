@@ -24,6 +24,62 @@ code which should always be the aim.
 
 ### Use of React Hooks
 
+Hooks should be used instead of class components / HOCs where apropriate.
+
+Any component that needs state can be created as a functional component using the `useState` hook. see: [useState](https://reactjs.org/docs/hooks-state.html)
+
+For example:
+
+```javascript
+import React, { useState } from 'react'
+
+const someComponent = props => {
+  const defaultValue = 'Whats that?'
+  const [value, valueSetter] = useState(defaultValue)
+  console.log(value) // Whats that?
+  valueSetter('SQUIRREL!')
+  console.log(value) // SQUIRREL!
+
+  return <span>{value}</span>
+}
+```
+
+Components that require logic to be run at various lifecycle stages can use the `useEffects` hook. see: [useEffect](https://reactjs.org/docs/hooks-effect.html)
+note: this requires a function to be returned which cleans up any subscriptions, similar to `componentWillUnmount()`
+
+For example: `setTimeout()` should return `clearTimeout()`
+
+```javascript
+import React, { useEffect, useState } from 'react'
+const someComponent = props => {
+  const [secondsLeft, setSecondsLeft] = useState(10)
+
+  useEffect(() => {
+    const timerId = setTimeout(() => {
+      setSecondsLeft(secondsLeft - 1)
+    }, 1000)
+    return () => clearTimeout(timerId) // clean up method
+  })
+
+  return <span> You have {secondsLeft} to comply!</span>
+}
+```
+
+Current hooks provided in `React 16.8.6`:
+
+- useState
+- useEffects
+- useContext
+- useReducer
+- useCallback
+- useMemo
+- useRef
+- useImperativeHandle
+- useLayoutEffect
+- useDebugValue
+
+For more information on these hooks see [hooks api reference](https://reactjs.org/docs/hooks-reference.html)
+
 - Please contribute more
 
 ### Testing Principles
