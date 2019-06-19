@@ -149,6 +149,11 @@ describe('Counter', () => {
 })
 ```
 
+#### Reading for context
+
+- [Kent C. Dodds (author of `testing-library/react`)  - _Why I Never Use Shallow Rendering_](https://kentcdodds.com/blog/why-i-never-use-shallow-rendering)
+
+- [_Testing Drag and Drop Components in React.js_](https://github.com/HurricaneJames/dex/blob/master/doc/Testing%20Complex%20Components%20in%20React.js.md)
 ## Decision
 
 ## Consequences
