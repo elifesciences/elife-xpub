@@ -84,8 +84,10 @@ For more information on these hooks see [hooks api reference](https://reactjs.or
 
 ### Testing Principles
 
-- Stand alone logic should be tested with the current famework (currently jest)
-- All react components in general should be tested using `testing-library/react`
+- Utility functions that have been extracted from the react component because they are not tightly coupled with how the component should work (ie: data modelling/processing or validation schemas) should be tested with the standard testing framework (currently jest)
+- All react components in general should be tested using `testing-library/react`
+- Testing should be carried out with a TDD approach of blackbox testing where possible rather than testing implementation detail (__focus on simulating user interactions and passing props not testing internal functions (like instance() testing in enzyme!)__, see [here](https://kentcdodds.com/blog/why-i-never-use-shallow-rendering) for explanation)
+* A unit of functionality in react can involve multiple child components integrating with each other correctly. Don't feel the need to mock out child components in tests unless absolutely necessary (Better a test fail because it's child components are not working correctly in a use-case context then to miss catching errors because of 'unit testing purity')
 - Please contribute more
 
 Its recommended to write tests that assert each component's public interface, with
