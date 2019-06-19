@@ -65,7 +65,7 @@ class Submission {
   async _saveTeams() {
     this.manuscript.teams = this.teams
 
-    await this.manuscript.save()
+    await this.manuscript.save({ noUpdate: '[files]' })
 
     this.teams = this.manuscript.teams
   }

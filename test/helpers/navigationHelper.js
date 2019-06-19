@@ -159,26 +159,28 @@ class NavigationHelper {
       .click(disclosure.consentCheckbox, OPTS)
   }
 
-  async waitForElement(name) {
-    await this.t.expect(Selector(`[data-test-id="${name}"]`, OPTS))
+  waitForElement(name) {
+    this.t.expect(Selector(`[data-test-id="${name}"]`, OPTS))
   }
 
   async submit() {
     await this.t.click(wizardStep.submit, OPTS)
     // wait for "accept" button to show
-    await this.waitForElement('accept')
+    this.waitForElement('accept')
+    // wait for the meca export
+    await this.t.wait(3000)
   }
 
   async accept() {
     await this.t.click(wizardStep.accept, OPTS)
     // wait for "finish" button to show
-    await this.waitForElement('finish')
+    this.waitForElement('finish')
   }
 
   async thankyou() {
     await this.t.click(thankyou.finish, OPTS)
     // wait for "desktop-new-submission" button to show
-    await this.waitForElement('desktop-new-submission')
+    this.waitForElement('desktop-new-submission')
   }
 
   async paricialSubmissionThankyou(manuscript) {

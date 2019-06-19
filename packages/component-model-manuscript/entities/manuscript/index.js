@@ -204,11 +204,14 @@ class Manuscript extends BaseModel {
     return result
   }
 
-  async save() {
+  async save(options = {}) {
     const simpleSave = async (trx = null) => {
       // save manuscript and all relations
       // note that this also deletes any related entities that are not present
-      await this.$query(trx).upsertGraphAndFetch(this, { noDelete: true })
+      await this.$query(trx).upsertGraphAndFetch(this, {
+        noDelete: true,
+        ...options,
+      })
       // reload related entities
       await this.$loadRelated('[teams, files]', null, trx)
     }
@@ -245,12 +248,18 @@ class Manuscript extends BaseModel {
   }
 
   static async updateStatus(id, status) {
-    const [manuscript] = await this.query().where({
-      'manuscript.id': id,
-    })
+    const [manuscript] = await this.query()
+      .where({
+        'manuscript.id': id,
+      })
+      .catch(err => {
+        logger.error(`Attempting to query manuscript ${id}`)
+        logger.error(err)
+        throw err
+      })
 
     if (!manuscript) {
-      throw new Error(`${this.name} not found`)
+      throw new Error(`${this.name} not found: ${id}`)
     }
     // todo why does eager loading sometimes not work?
     await manuscript.$loadRelated('[teams, files]')
