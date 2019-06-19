@@ -68,6 +68,7 @@ describe('Counter', () => {
 
     expect(getByTestId('counter').textContent).toBe('10') })
     cleanup()
+  })
 })
 ```
 
