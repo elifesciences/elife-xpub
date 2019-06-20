@@ -1,6 +1,5 @@
 import parseInputToFormData, {
   parseCosubmissionInput,
-  parseTitleSuggestion,
 } from './parseInputToFormData'
 
 describe('parseCosubmissionInput', () => {
@@ -61,57 +60,5 @@ describe('parseInputToFormData', () => {
       firstCosubmissionTitle: 'd',
       secondCosubmissionTitle: 'e',
     })
-  })
-})
-
-describe('parseTitleSuggestion', () => {
-  it('correctly parses suggestions for the title field with the latest suggestion', () => {
-    const mockInput = {
-      something: 'arbitrary',
-      meta: { title: '' },
-      suggestions: [
-        {
-          fieldName: 'title',
-          suggestions: [
-            {
-              score: 0,
-              value: 'some wrong title',
-            },
-            {
-              score: 1,
-              value: 'some correct title',
-            },
-          ],
-        },
-      ],
-    }
-
-    expect(parseTitleSuggestion(mockInput)).toEqual({
-      meta: { title: 'some correct title' },
-    })
-  })
-
-  it("doesn't change a title if there's already something there", () => {
-    const mockInput = {
-      something: 'arbitrary',
-      meta: { title: 'some existing title' },
-      suggestions: [
-        {
-          fieldName: 'title',
-          suggestions: [
-            {
-              score: 0,
-              value: 'some wrong title',
-            },
-            {
-              score: 1,
-              value: 'some correct title',
-            },
-          ],
-        },
-      ],
-    }
-
-    expect(parseTitleSuggestion(mockInput)).toEqual({})
   })
 })

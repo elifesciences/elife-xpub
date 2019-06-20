@@ -67,6 +67,7 @@ export const SubmissionWizard = ({
   const [currentStep, setCurrentStep] = useState(getCurrentStepFromPath())
   const [isUploading, setIsUploading] = useState(false)
   const [submissionAttempted, setsubmissionAttempted] = useState(false)
+  //   const [hasSuggestedTitle, setHasSuggestedTitle] = useState(false)
 
   const isLastStep = () => currentStep === STEP_NAMES.length - 1
   const initialValues = parseInputToFormData(data.manuscript)
@@ -125,12 +126,7 @@ export const SubmissionWizard = ({
                 />
                 <TrackedRoute
                   path={`${match.path}/details`}
-                  render={() => (
-                    <DetailsStep
-                      initialTitle={initialValues.meta.title}
-                      {...formikProps}
-                    />
-                  )}
+                  render={() => <DetailsStep {...formikProps} />}
                 />
                 <TrackedRoute
                   path={`${match.path}/editors`}

@@ -1,5 +1,6 @@
 export { default as parseFormToOutputData } from './parseFormToOutputData'
 export { default as parseInputToFormData } from './parseInputToFormData'
+export { default as getSuggestedTitle } from './getSuggestedTitle'
 export {
   default as convertArrayToReadableList,
 } from './convertArrayToReadableList'
