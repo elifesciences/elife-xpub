@@ -22,7 +22,7 @@ const WizardSubmit = ({
               if (!Object.keys(errors).length) {
                 showModal()
               }
-              touchAllErrorFields()
+              touchAllErrorFields(errors)
             })
           }}
           primary

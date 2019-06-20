@@ -93,12 +93,10 @@ export const SubmissionWizard = ({
       initialValues={initialValues}
       onSubmit={handleSubmit}
       render={formikProps => {
-        const touchAllErrorFields = () => {
-          Object.keys(formikProps.errors).forEach(errorField => {
-            if (typeof formikProps.errors[errorField] === 'object') {
-              const flattenedSubfields = flattenObject(
-                formikProps.errors[errorField],
-              )
+        const touchAllErrorFields = errors => {
+          Object.keys(errors).forEach(errorField => {
+            if (typeof errors[errorField] === 'object') {
+              const flattenedSubfields = flattenObject(errors[errorField])
               Object.keys(flattenedSubfields).forEach(subField => {
                 formikProps.setFieldTouched(`${errorField}.${subField}`, true)
               })
@@ -218,7 +216,7 @@ export const SubmissionWizard = ({
                                 ].toLowerCase()}`,
                               )
                             }
-                            touchAllErrorFields()
+                            touchAllErrorFields(errors)
                           })
                         }}
                         primary
