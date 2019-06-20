@@ -1,6 +1,6 @@
 import { sortBy, last } from 'lodash'
 
-export default function(values) {
+export default function(fieldName, values) {
   if (!values.suggestions) {
     return ''
   }
@@ -18,5 +18,5 @@ export default function(values) {
     {},
   )
 
-  return latestSuggestions.title
+  return latestSuggestions[fieldName]
 }

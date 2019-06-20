@@ -1,6 +1,6 @@
-import getSuggestedTitle from './getSuggestedTitle'
+import getSuggestion from './getSuggestion'
 
-describe('getSuggestedTitle', () => {
+describe('getSuggestion', () => {
   it('correctly parses suggestions for the title field with the latest suggestion', () => {
     const mockInput = {
       something: 'arbitrary',
@@ -22,6 +22,6 @@ describe('getSuggestedTitle', () => {
       ],
     }
 
-    expect(getSuggestedTitle(mockInput)).toEqual('some correct title')
+    expect(getSuggestion('title', mockInput)).toEqual('some correct title')
   })
 })

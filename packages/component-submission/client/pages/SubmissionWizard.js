@@ -67,7 +67,6 @@ export const SubmissionWizard = ({
   const [currentStep, setCurrentStep] = useState(getCurrentStepFromPath())
   const [isUploading, setIsUploading] = useState(false)
   const [submissionAttempted, setsubmissionAttempted] = useState(false)
-  //   const [hasSuggestedTitle, setHasSuggestedTitle] = useState(false)
 
   const isLastStep = () => currentStep === STEP_NAMES.length - 1
   const initialValues = parseInputToFormData(data.manuscript)
