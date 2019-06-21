@@ -125,15 +125,16 @@ class Submission {
   }
 
   async get(id, user) {
-      /*
-      * Here we could get the files' contents, the teams and the manuscript
-      * then stitch them together to send back
-      */
-      return {
-        manuscript: await this.models.Manuscript.find(id),
-        suggestedEditors: await this.models.SuggestedEditors.findByManuscriptId(id),
-        files: await this.models.File.get(config, fileId, this.services.Storage)
-      }
+    /*
+    * Here we could get the files' contents, the teams and the manuscript
+    * then stitch them together to send back
+    */
+    return {
+      manuscript: await this.models.Manuscript.find(id),
+      suggestedEditors: await this.models.SuggestedEditors.findByManuscriptId(
+        id,
+      ),
+      files: await this.models.File.get(config, fileId, this.services.Storage),
     }
   }
 }
