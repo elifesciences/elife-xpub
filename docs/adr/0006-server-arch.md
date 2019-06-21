@@ -147,7 +147,7 @@ _Outstanding Questions_
 
 ### The Models
 
-- The models are for encapsulating a single are of responsiblity in code for a
+- The models are for encapsulating a single area of responsiblity in code for a
   particlar entity within the system. Examples are, Files, SuggestedEditors,
   Users, etc.
 - They delegate accessing the data to/from the database to the underlying
