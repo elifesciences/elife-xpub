@@ -6,7 +6,7 @@ import {
 } from '@elifesciences/component-elife-ui/client/molecules'
 
 const WizardSubmit = ({
-  setTouched,
+  touchAllErrorFields,
   submitForm,
   validateForm,
   setSubmissionAttempted,
@@ -22,6 +22,7 @@ const WizardSubmit = ({
               if (!Object.keys(errors).length) {
                 showModal()
               }
+              touchAllErrorFields(errors)
             })
           }}
           primary

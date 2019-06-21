@@ -92,146 +92,145 @@ export const SubmissionWizard = ({
     <Formik
       initialValues={initialValues}
       onSubmit={handleSubmit}
-      render={formikProps => (
-        <Form data-test-id="submission-wizard-form">
-          <SubmissionSave
-            disabled={formikProps.isSubmitting}
-            handleSave={handleSave}
-            values={{
-              ...formikProps.values,
-              lastStepVisited: history.location.pathname,
-            }}
-          />
-          <Flex>
-            <BoxNoMinWidth flex="1 1 100%" mx={[0, 0, 0, '16.666%']}>
-              <Box my={5}>
-                <ProgressBar currentStep={currentStep} />
-              </Box>
-              <FormH2>{STEP_NAMES[currentStep]}</FormH2>
-              <Switch>
-                <TrackedRoute
-                  path={`${match.path}/author`}
-                  render={() => <AuthorStep {...formikProps} />}
-                />
-                <TrackedRoute
-                  path={`${match.path}/files`}
-                  render={() => (
-                    <FilesStep
-                      {...formikProps}
-                      isUploading={isUploading}
-                      setIsUploading={setIsUploading}
-                    />
-                  )}
-                />
-                <TrackedRoute
-                  path={`${match.path}/details`}
-                  render={() => <DetailsStep {...formikProps} />}
-                />
-                <TrackedRoute
-                  path={`${match.path}/editors`}
-                  render={() => <EditorStep {...formikProps} />}
-                />
-                <TrackedRoute
-                  path={`${match.path}/disclosure`}
-                  render={() => (
-                    <DisclosureStep
-                      isSubmissionAttempted={submissionAttempted}
-                      {...formikProps}
-                    />
-                  )}
-                />
-                <Redirect
-                  from="/submit/:id"
-                  to={`/submit/${match.params.id}/author`}
-                />
-                <ErrorPage error="404: page not found" />
-              </Switch>
-              {!!Object.keys(formikProps.errors).length &&
-                submissionAttempted &&
-                isLastStep() && (
-                  <ErrorMessage data-test-id="test-error-message">
-                    We&apos;re sorry but there appears to be one or more errors
-                    in your submission that require attention before you can
-                    submit. Please use the back button to review the{' '}
-                    {convertArrayToReadableList(
-                      getErrorStepsFromErrors(formikProps.errors),
-                    )}{' '}
-                    steps before trying again.
-                  </ErrorMessage>
-                )}
-              <Flex mt={6}>
-                <Box mr={3}>
-                  <Button
-                    data-test-id="back"
-                    disabled={currentStep === 0}
-                    onClick={() => {
-                      setCurrentStep(currentStep - 1)
-                      history.push(
-                        `${match.url}/${STEP_NAMES[
-                          currentStep - 1
-                        ].toLowerCase()}`,
-                      )
-                    }}
-                  >
-                    Back
-                  </Button>
-                </Box>
-                <Box>
-                  {currentStep === STEP_NAMES.length - 1 ? (
-                    <WizardSubmit
-                      setSubmissionAttempted={setsubmissionAttempted}
-                      setTouched={formikProps.setTouched}
-                      submitForm={formikProps.submitForm}
-                      validateForm={formikProps.validateForm}
-                    />
-                  ) : (
-                    <Button
-                      data-test-id="next"
-                      onClick={() => {
-                        formikProps.validateForm().then(errors => {
-                          if (!Object.keys(errors).length) {
-                            setCurrentStep(currentStep + 1)
-                            history.push(
-                              `${match.url}/${STEP_NAMES[
-                                currentStep + 1
-                              ].toLowerCase()}`,
-                            )
-                          }
+      render={formikProps => {
+        const touchAllErrorFields = errors => {
+          Object.keys(errors).forEach(errorField => {
+            if (typeof errors[errorField] === 'object') {
+              const flattenedSubfields = flattenObject(errors[errorField])
+              Object.keys(flattenedSubfields).forEach(subField => {
+                formikProps.setFieldTouched(`${errorField}.${subField}`, true)
+              })
+            } else {
+              formikProps.setFieldTouched(errorField, true, false)
+            }
+          })
+        }
 
-                          Object.keys(errors).forEach(errorField => {
-                            if (typeof errors[errorField] === 'object') {
-                              const flattenedSubfields = flattenObject(
-                                errors[errorField],
-                              )
-                              Object.keys(flattenedSubfields).forEach(
-                                subField => {
-                                  formikProps.setFieldTouched(
-                                    `${errorField}.${subField}`,
-                                    true,
-                                  )
-                                },
-                              )
-                            } else {
-                              formikProps.setFieldTouched(
-                                errorField,
-                                true,
-                                false,
+        return (
+          <Form data-test-id="submission-wizard-form">
+            <SubmissionSave
+              disabled={formikProps.isSubmitting}
+              handleSave={handleSave}
+              values={{
+                ...formikProps.values,
+                lastStepVisited: history.location.pathname,
+              }}
+            />
+            <Flex>
+              <BoxNoMinWidth flex="1 1 100%" mx={[0, 0, 0, '16.666%']}>
+                <Box my={5}>
+                  <ProgressBar currentStep={currentStep} />
+                </Box>
+                <FormH2>{STEP_NAMES[currentStep]}</FormH2>
+                <Switch>
+                  <TrackedRoute
+                    path={`${match.path}/author`}
+                    render={() => <AuthorStep {...formikProps} />}
+                  />
+                  <TrackedRoute
+                    path={`${match.path}/files`}
+                    render={() => (
+                      <FilesStep
+                        {...formikProps}
+                        isUploading={isUploading}
+                        setIsUploading={setIsUploading}
+                      />
+                    )}
+                  />
+                  <TrackedRoute
+                    path={`${match.path}/details`}
+                    render={() => (
+                      <DetailsStep
+                        initialTitle={initialValues.meta.title}
+                        {...formikProps}
+                      />
+                    )}
+                  />
+                  <TrackedRoute
+                    path={`${match.path}/editors`}
+                    render={() => <EditorStep {...formikProps} />}
+                  />
+                  <TrackedRoute
+                    path={`${match.path}/disclosure`}
+                    render={() => (
+                      <DisclosureStep
+                        isSubmissionAttempted={submissionAttempted}
+                        {...formikProps}
+                      />
+                    )}
+                  />
+                  <Redirect
+                    from="/submit/:id"
+                    to={`/submit/${match.params.id}/author`}
+                  />
+                  <ErrorPage error="404: page not found" />
+                </Switch>
+                {!!Object.keys(formikProps.errors).length &&
+                  submissionAttempted &&
+                  isLastStep() && (
+                    <ErrorMessage data-test-id="test-error-message">
+                      We&apos;re sorry but there appears to be one or more
+                      errors in your submission that require attention before
+                      you can submit. Please use the back button to review the{' '}
+                      {convertArrayToReadableList(
+                        getErrorStepsFromErrors(formikProps.errors),
+                      )}{' '}
+                      steps before trying again.
+                    </ErrorMessage>
+                  )}
+                <Flex mt={6}>
+                  <Box mr={3}>
+                    <Button
+                      data-test-id="back"
+                      disabled={currentStep === 0}
+                      onClick={() => {
+                        setCurrentStep(currentStep - 1)
+                        history.push(
+                          `${match.url}/${STEP_NAMES[
+                            currentStep - 1
+                          ].toLowerCase()}`,
+                        )
+                      }}
+                    >
+                      Back
+                    </Button>
+                  </Box>
+                  <Box>
+                    {currentStep === STEP_NAMES.length - 1 ? (
+                      <WizardSubmit
+                        setSubmissionAttempted={setsubmissionAttempted}
+                        submitForm={formikProps.submitForm}
+                        touchAllErrorFields={touchAllErrorFields}
+                        validateForm={formikProps.validateForm}
+                      />
+                    ) : (
+                      <Button
+                        data-test-id="next"
+                        onClick={() => {
+                          formikProps.validateForm().then(errors => {
+                            if (!Object.keys(errors).length) {
+                              setCurrentStep(currentStep + 1)
+                              history.push(
+                                `${match.url}/${STEP_NAMES[
+                                  currentStep + 1
+                                ].toLowerCase()}`,
                               )
                             }
+                            touchAllErrorFields(errors)
                           })
-                        })
-                      }}
-                      primary
-                    >
-                      Next
-                    </Button>
-                  )}
-                </Box>
-              </Flex>
-            </BoxNoMinWidth>
-          </Flex>
-        </Form>
-      )}
+                        }}
+                        primary
+                      >
+                        Next
+                      </Button>
+                    )}
+                  </Box>
+                </Flex>
+              </BoxNoMinWidth>
+            </Flex>
+          </Form>
+        )
+      }}
       validationSchema={yup.object().shape(stepValidation[currentStep])}
     />
   )
