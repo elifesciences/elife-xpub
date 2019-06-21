@@ -102,3 +102,17 @@ You should now be able to get access to the running application with:
 ```
 curl http://${NODE_IP}:${NODE_PORT}
 ```
+
+To be able to deploy releases, configure our chart repository:
+
+```
+helm plugin install https://github.com/hypnoglow/helm-s3.git --version 0.7.0
+helm repo add alfred s3://prod-elife-alfred/helm-charts
+```
+
+Then you can delete and recreate a release:
+
+```
+helm delete --purge elife-xpub--pr-2163
+helm upgrade --install elife-xpub--pr-2163 --set image.tag=31016b8563c101e02c7225ac61ab39e0730e5220 alfred/elife-xpub`
+```

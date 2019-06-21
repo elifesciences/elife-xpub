@@ -13,6 +13,7 @@ import ManuscriptUpload from '../components/ManuscriptUpload'
 import SupportingUpload from '../components/SupportingUpload'
 import { errorMessageMapping, manuscriptFileTypes } from '../utils/constants'
 import filesWithGQL from '../graphql/filesWithGQL'
+import { getSuggestion } from '../utils'
 
 const SmallUL = styled.ul`
   font-size: ${th('fontSizeBaseSmall')};
@@ -65,7 +66,13 @@ export class FilesStepPageComponent extends React.Component {
       variables: { file, id: manuscriptId, fileSize: file.size },
     })
       .then(({ data }) => {
-        setFieldValue('meta.title', data.uploadManuscript.meta.title)
+        const suggestedTitle = getSuggestion('title', data.uploadManuscript)
+        const title =
+          data.uploadManuscript.meta.title === '' && suggestedTitle !== ''
+            ? suggestedTitle
+            : data.uploadManuscript.meta.title
+
+        setFieldValue('meta.title', title)
         setFieldValue('files', data.uploadManuscript.files)
         setFieldValue('fileStatus', data.uploadManuscript.fileStatus)
         setIsUploading(false)
