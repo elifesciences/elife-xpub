@@ -125,12 +125,7 @@ export const SubmissionWizard = ({
                 />
                 <TrackedRoute
                   path={`${match.path}/details`}
-                  render={() => (
-                    <DetailsStep
-                      initialTitle={initialValues.meta.title}
-                      {...formikProps}
-                    />
-                  )}
+                  render={() => <DetailsStep {...formikProps} />}
                 />
                 <TrackedRoute
                   path={`${match.path}/editors`}

@@ -243,4 +243,41 @@ describe('FileStepPage', () => {
       expect(mockSetFieldValue.mock.calls[1]).toEqual(['fileStatus', 'READY'])
     }
   })
+
+  it('sets the suggested title on manscript upload', async () => {
+    const mockSetFieldValue = jest.fn()
+    const response = {
+      data: {
+        uploadManuscript: {
+          meta: { title: '' },
+          suggestions: [
+            {
+              fieldName: 'title',
+              suggestions: [
+                {
+                  score: 0,
+                  value: 'some title',
+                },
+              ],
+            },
+          ],
+        },
+      },
+    }
+
+    const wrapper = createWrapper(
+      {},
+      {
+        isUploading: false,
+        uploadManuscriptFile: jest.fn(() => Promise.resolve(response)),
+        setFieldValue: mockSetFieldValue,
+      },
+    )
+
+    await wrapper.instance().onFileDrop([{}])
+    expect(mockSetFieldValue.mock.calls[1]).toEqual([
+      'meta.title',
+      'some title',
+    ])
+  })
 })
