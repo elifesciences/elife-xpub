@@ -13,7 +13,7 @@ const files = {
   supportingFileError: Selector('[data-test-id=file-block-error]'),
   fileName: Selector('[data-test-id=fileName]'),
   dropzoneMessage: Selector('[data-test-id=dropzoneMessage]'),
-  ongoingFileUploadError: Selector('[data-test-id=ongoing-upload-error]'),
+  ongoingFileUploadError: Selector('[data-test-id=error-fileStatus]'),
   manuscriptDownloadLink: Selector('[data-test-id=manusctipt-download-link]'),
 }
 

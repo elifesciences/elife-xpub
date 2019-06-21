@@ -1,5 +1,6 @@
 const lodash = require('lodash')
 const BaseModel = require('@pubsweet/base-model')
+const logger = require('@pubsweet/logger')
 const emptyManuscript = require('./helpers/empty')
 const AuditLog = require('@elifesciences/component-model-audit-log').model
 
@@ -183,12 +184,18 @@ class Manuscript extends BaseModel {
   }
 
   static async updateStatus(id, status) {
-    const [manuscript] = await this.query().where({
-      'manuscript.id': id,
-    })
+    const [manuscript] = await this.query()
+      .where({
+        'manuscript.id': id,
+      })
+      .catch(err => {
+        logger.error(`Attempting to query manuscript ${id}`)
+        logger.error(err)
+        throw err
+      })
 
     if (!manuscript) {
-      throw new Error(`${this.name} not found`)
+      throw new Error(`${this.name} not found: ${id}`)
     }
     // todo why does eager loading sometimes not work?
     await manuscript.$loadRelated('[teams, files]')

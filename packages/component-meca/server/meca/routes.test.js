@@ -111,7 +111,9 @@ describe('MECA HTTP callback handler', () => {
       .post(`/meca-result/F05BBBF9-DDF4-494F-A8DA-84957E2708EE`)
       .set('Authorization', `Bearer ${apiKey}`)
       .send({ result: 'success' })
-      .expect(500, { error: 'Manuscript not found' })
+      .expect(500, {
+        error: 'Manuscript not found: F05BBBF9-DDF4-494F-A8DA-84957E2708EE',
+      })
     expect(logger.error).toHaveBeenCalled()
   })
 

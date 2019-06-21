@@ -113,7 +113,7 @@
     "apollo-link-state": "^0.4.1",
     "config": "^2.0.1",
     "date-fns": "^1.29.0",
-    "formik": "^2.0.0",
+    "formik": "1.5.7",
     "graphql-tag": "^2.8.0",
     "history": "^4.7.2",
     "html-pdf": "^2.2.0",

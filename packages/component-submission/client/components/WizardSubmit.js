@@ -19,9 +19,7 @@ const WizardSubmit = ({
           onClick={() => {
             setSubmissionAttempted(true)
             validateForm().then(errors => {
-              if (Object.keys(errors).length) {
-                setTouched(errors)
-              } else {
+              if (!Object.keys(errors).length) {
                 showModal()
               }
             })
