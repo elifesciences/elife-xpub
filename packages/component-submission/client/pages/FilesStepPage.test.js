@@ -49,6 +49,13 @@ function createWrapper(valueOverrides, propOverrides) {
           () => new Promise(resolve => resolve(deleteResponse)),
         ),
         uploadManuscriptFile: jest.fn(async () => uploadResponse),
+        uploadSupportingFile: jest.fn(() =>
+          Promise.resolve({
+            data: {
+              uploadSupportingFile: { files: [], fileStatus: 'READY' },
+            },
+          }),
+        ),
         ...propOverrides,
       }}
     />,
@@ -146,5 +153,94 @@ describe('FileStepPage', () => {
     )
     wrapper.instance().onFileDrop([])
     expect(mockUploadManuscriptFile).toBeCalledTimes(0)
+  })
+
+  it('upload supporting file sets the formik value for files on success', async () => {
+    const mockSetFieldValue = jest.fn()
+    const wrapper = createWrapper(
+      {},
+      {
+        uploadSupportingFile: jest.fn(() =>
+          Promise.resolve({
+            data: {
+              uploadSupportingFile: { files: ['foo'], fileStatus: 'READY' },
+            },
+          }),
+        ),
+        setFieldValue: mockSetFieldValue,
+      },
+    )
+
+    await wrapper.instance().onSupportingFileUpload([{}])
+
+    expect(mockSetFieldValue).toBeCalledTimes(3)
+    expect(mockSetFieldValue.mock.calls[0]).toEqual(['fileStatus', 'CHANGING'])
+    expect(mockSetFieldValue.mock.calls[1]).toEqual(['files', ['foo']])
+    expect(mockSetFieldValue.mock.calls[2]).toEqual(['fileStatus', 'READY'])
+  })
+
+  it('sets fileStatus to CHANGING on supporting upload start', async () => {
+    const mockSetFieldValue = jest.fn()
+    const wrapper = createWrapper(
+      {},
+      {
+        setFieldValue: mockSetFieldValue,
+      },
+    )
+
+    await wrapper.instance().onSupportingFileUpload([{}])
+    expect(mockSetFieldValue.mock.calls[0]).toEqual(['fileStatus', 'CHANGING'])
+  })
+
+  it('sets fileStatus to the returned fileStatus value on supporting upload success', async () => {
+    const mockSetFieldValue = jest.fn()
+    const options = {
+      setFieldValue: mockSetFieldValue,
+    }
+    let wrapper = createWrapper({}, options)
+
+    await wrapper.instance().onSupportingFileUpload([{}])
+    expect(mockSetFieldValue).toBeCalledTimes(3)
+    expect(mockSetFieldValue.mock.calls[0]).toEqual(['fileStatus', 'CHANGING'])
+    expect(mockSetFieldValue.mock.calls[2]).toEqual(['fileStatus', 'READY'])
+    mockSetFieldValue.mockReset()
+
+    options.uploadSupportingFile = jest.fn(() =>
+      Promise.resolve({
+        data: {
+          uploadSupportingFile: { files: ['foo'], fileStatus: 'CHANGING' },
+        },
+      }),
+    )
+    wrapper = createWrapper({}, options)
+
+    await wrapper.instance().onSupportingFileUpload([{}])
+    expect(mockSetFieldValue.mock.calls[0]).toEqual(['fileStatus', 'CHANGING'])
+    expect(mockSetFieldValue.mock.calls[2]).toEqual(['fileStatus', 'CHANGING'])
+  })
+
+  it('set fileStatus to READY if uploading supporting file fails and no manuscript is uploading', async () => {
+    const mockSetFieldValue = jest.fn()
+    const errorToThrow = new Error('error')
+    const wrapper = createWrapper(
+      {},
+      {
+        isUploading: false,
+        uploadSupportingFile: jest.fn(() => Promise.reject(errorToThrow)),
+        setFieldValue: mockSetFieldValue,
+      },
+    )
+    expect.assertions(4)
+    try {
+      await wrapper.instance().onSupportingFileUpload([{}])
+    } catch (error) {
+      expect(error).toBe(errorToThrow)
+      expect(mockSetFieldValue).toBeCalledTimes(2)
+      expect(mockSetFieldValue.mock.calls[0]).toEqual([
+        'fileStatus',
+        'CHANGING',
+      ])
+      expect(mockSetFieldValue.mock.calls[1]).toEqual(['fileStatus', 'READY'])
+    }
   })
 })

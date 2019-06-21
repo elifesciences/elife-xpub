@@ -82,7 +82,7 @@ export const SubmissionWizard = ({
   const handleSubmit = formValues =>
     submitManuscript({
       variables: { data: parseFormToOutputData(formValues) },
-    })
+    }).then(() => history.push(`/thankyou/${match.params.id}`))
 
   return (
     <Formik

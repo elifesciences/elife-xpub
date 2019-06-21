@@ -78,6 +78,30 @@ export class FilesStepPageComponent extends React.Component {
       })
   }
 
+  onSupportingFileUpload = file => {
+    const {
+      uploadSupportingFile,
+      setFieldValue,
+      isUploading,
+      values,
+    } = this.props
+    return new Promise((resolve, reject) => {
+      setFieldValue('fileStatus', 'CHANGING')
+      uploadSupportingFile({
+        variables: { file, id: values.id },
+      })
+        .then(data => {
+          setFieldValue('files', data.data.uploadSupportingFile.files)
+          setFieldValue('fileStatus', data.data.uploadSupportingFile.fileStatus)
+          resolve(data)
+        })
+        .catch(err => {
+          setFieldValue('fileStatus', isUploading ? 'CHANGING' : 'READY')
+          reject(err)
+        })
+    })
+  }
+
   onUploadValidationError = errorMessage => {
     const {
       setFieldError,
@@ -102,7 +126,6 @@ export class FilesStepPageComponent extends React.Component {
       touched,
       values,
       manuscriptUploadProgress = 0,
-      uploadSupportingFile,
       deleteSupportingFiles,
     } = this.props
 
@@ -179,22 +202,7 @@ export class FilesStepPageComponent extends React.Component {
                 variables: { id: values.id },
               })
             }
-            uploadFile={file =>
-              new Promise((resolve, reject) => {
-                setFieldValue('fileStatus', 'CHANGING')
-                return uploadSupportingFile({
-                  variables: { file, id: values.id },
-                })
-                  .then(data => {
-                    setFieldValue(
-                      'fileStatus',
-                      data.data.uploadSupportingFile.fileStatus,
-                    )
-                    resolve(data)
-                  })
-                  .catch(err => reject(err))
-              })
-            }
+            uploadFile={this.onSupportingFileUpload}
           />
         </Box>
         <ValidatedField
