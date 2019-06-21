@@ -11,4 +11,4 @@ fi
 release_name="elife-xpub--${1}"
 image_tag="${2}"
 
-sudo -u elife -H helm upgrade --install "$release_name" --set image.tag="${image_tag}" alfred/elife-xpub
+helm upgrade --install "$release_name" --set image.tag="${image_tag}" alfred/elife-xpub
