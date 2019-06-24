@@ -450,13 +450,13 @@
   integrity sha1-p3c2C1s5oaLlEG+OhY8v0tBgxXA=
 
 "@pubsweet/base-model@^3.0.8":
-  version "3.3.0"
-  resolved "https://registry.yarnpkg.com/@pubsweet/base-model/-/base-model-3.3.0.tgz#c18c3a1aeffcbdaa6d192533b3ae3a736a434434"
-  integrity sha512-9jM1+/DvJRHC1BF4tBPge5biJgEB8o15qVdToiuahad+d2Ru9p99tlxk+IHGMUVzCR+l5blwxwk9TarlO1m2vA==
+  version "3.3.1"
+  resolved "https://registry.yarnpkg.com/@pubsweet/base-model/-/base-model-3.3.1.tgz#78008e26cd6a56b1eece13b4ed9af65cebc77732"
+  integrity sha512-1vk/o3tJfdfVgc6v2SQ/sty54gR5I8A01ZcFxnGJSQQ5D4hnFPcgwK3E3lS433Yh7OOXkIcGnqyKa+e/A99r7A==
   dependencies:
-    "@pubsweet/db-manager" "^3.0.10"
-    "@pubsweet/errors" "^2.0.14"
-    "@pubsweet/logger" "^0.2.24"
+    "@pubsweet/db-manager" "^3.0.11"
+    "@pubsweet/errors" "^2.0.15"
+    "@pubsweet/logger" "^0.2.25"
     http-status-codes "^1.3.0"
     knex "^0.16.3"
     lodash "^4.17.11"
@@ -471,12 +471,12 @@
     aws-sdk "^2.185.0"
     nodemailer "^4.4.2"
 
-"@pubsweet/db-manager@^3.0.10", "@pubsweet/db-manager@^3.0.7":
-  version "3.0.10"
-  resolved "https://registry.yarnpkg.com/@pubsweet/db-manager/-/db-manager-3.0.10.tgz#abfaab9aea69c9e59bb548c0f00191973278641d"
-  integrity sha512-aFr+jLWP0FtvWvcxXobPGVeNIgPUvsoLPt448EK1SCSoRDXUr4Mtvm9/LTYKR8Cd2Yl8ebSjKUWtnG30xAug3Q==
+"@pubsweet/db-manager@^3.0.11", "@pubsweet/db-manager@^3.0.7":
+  version "3.0.11"
+  resolved "https://registry.yarnpkg.com/@pubsweet/db-manager/-/db-manager-3.0.11.tgz#2dfcaf56bb2a7d285f56f782733e5adb7eaa82d6"
+  integrity sha512-NFjC7ckoF4TlkOZEghVYsBce6uubNOQwm+xuFoAXMkcg45OLdSBKhJSXmbiAAJhDRLhJo0OxGVd3r2QZlZ2K/A==
   dependencies:
-    "@pubsweet/logger" "^0.2.24"
+    "@pubsweet/logger" "^0.2.25"
     fs-extra "^4.0.2"
     isomorphic-fetch "^2.2.1"
     joi "^14.3.0"
@@ -494,17 +494,26 @@
   dependencies:
     http-status-codes "^1.3.0"
 
-"@pubsweet/errors@^2.0.14":
-  version "2.0.14"
-  resolved "https://registry.yarnpkg.com/@pubsweet/errors/-/errors-2.0.14.tgz#e26fc7e4663946e4d1eab95890430fb3e979caaf"
-  integrity sha512-7WnxYF4Txa2OPZP7j6BQnRMGHpBtNHB1TjbpfebbD/Y80qs84R5PTtHj/OZTfMIpaRmMwQebRs3p8/lr8iUTaw==
+"@pubsweet/errors@^2.0.15":
+  version "2.0.15"
+  resolved "https://registry.yarnpkg.com/@pubsweet/errors/-/errors-2.0.15.tgz#dfd8ee97679983f2489dc729866063fcb29fa70e"
+  integrity sha512-XDlypimBkFCISB5bDO4hRc/UXr2if2XAHVgEb+SMfmND13vmYVW+3BQaSZQM/YVJjooN79ubNNupwCLs/GyrJg==
   dependencies:
     http-status-codes "^1.3.0"
 
-"@pubsweet/logger@^0.2.22", "@pubsweet/logger@^0.2.24":
+"@pubsweet/logger@^0.2.22":
   version "0.2.24"
   resolved "https://registry.yarnpkg.com/@pubsweet/logger/-/logger-0.2.24.tgz#b445f7c814be480dada6784459361e2fec3d490f"
   integrity sha512-BQMb78ntNwllrIaCtHUA0EKdd2CypO9M67THJWg3jtmJceSeAYfRaQaLttsbwor/dV4BZ3Zb2hv0XNDDXvsg8A==
+  dependencies:
+    config "^3.0.1"
+    joi "^14.3.0"
+    lodash "^4.17.4"
+
+"@pubsweet/logger@^0.2.25":
+  version "0.2.25"
+  resolved "https://registry.yarnpkg.com/@pubsweet/logger/-/logger-0.2.25.tgz#850bc453127ee263ea0b485571d86dd533950f59"
+  integrity sha512-ts4+bwvmTvO0L8b38FI0YmhQhWL1at+vLnV0KY9fovnSCNl6Bqw+6YZXpTlLbDD834hsNPx3orw18kM7W6ziEA==
   dependencies:
     config "^3.0.1"
     joi "^14.3.0"
@@ -517,12 +526,12 @@
   dependencies:
     "@pubsweet/logger" "^0.2.22"
 
-"@pubsweet/models@^0.2.11", "@pubsweet/models@^0.2.7":
-  version "0.2.11"
-  resolved "https://registry.yarnpkg.com/@pubsweet/models/-/models-0.2.11.tgz#bfd0a4828dbec540c7ec68f6aa49a087fd0c650e"
-  integrity sha512-TbIyoiLTCoLy0ocwRD9RWOPgH2mT6Y0aDDnwHLmk9OFbpbyKc7duYhADLGhNcZMhWTTgkp03GaR4HrRLYDQH+Q==
+"@pubsweet/models@^0.2.12", "@pubsweet/models@^0.2.7":
+  version "0.2.12"
+  resolved "https://registry.yarnpkg.com/@pubsweet/models/-/models-0.2.12.tgz#214d8df2d5905340af3b9f058010637cfcafbde2"
+  integrity sha512-GiUVogtzf4hf2so/Mt1htezpMDf3aNrdydGoBjHwTJgkoGuhlYLNzK3DqEZmeJhzxHm1Sx4DWCt09QrVcfVkfA==
   dependencies:
-    "@pubsweet/logger" "^0.2.24"
+    "@pubsweet/logger" "^0.2.25"
 
 "@pubsweet/ui-toolkit@^2.0.1", "@pubsweet/ui-toolkit@^2.0.3":
   version "2.0.3"
@@ -6915,15 +6924,15 @@ gonzales-pe@^4.0.3, gonzales-pe@^4.2.3:
   dependencies:
     minimist "1.1.x"
 
-graceful-fs@^4.1.11, graceful-fs@^4.1.9:
-  version "4.1.11"
-  resolved "https://registry.yarnpkg.com/graceful-fs/-/graceful-fs-4.1.11.tgz#0e8bdfe4d1ddb8854d64e04ea7c00e2a026e5658"
-  integrity sha1-Dovf5NHduIVNZOBOp8AOKgJuVlg=
-
-graceful-fs@^4.1.15, graceful-fs@^4.1.2, graceful-fs@^4.1.6:
+graceful-fs@^4.1.11, graceful-fs@^4.1.15, graceful-fs@^4.1.2, graceful-fs@^4.1.6:
   version "4.1.15"
   resolved "https://registry.yarnpkg.com/graceful-fs/-/graceful-fs-4.1.15.tgz#ffb703e1066e8a0eeaa4c8b80ba9253eeefbfb00"
   integrity sha512-6uHUhOPEBgQ24HM+r6b/QwWfZq+yiFcipKFrOFiBEnWdy5sdzYoi+pJeQaPI5qOLRFqWmAXUPQNsielzdLoecA==
+
+graceful-fs@^4.1.9:
+  version "4.1.11"
+  resolved "https://registry.yarnpkg.com/graceful-fs/-/graceful-fs-4.1.11.tgz#0e8bdfe4d1ddb8854d64e04ea7c00e2a026e5658"
+  integrity sha1-Dovf5NHduIVNZOBOp8AOKgJuVlg=
 
 graphlib@^2.1.5:
   version "2.1.7"
@@ -9588,10 +9597,15 @@ lodash.uniq@^4.5.0:
   resolved "https://registry.yarnpkg.com/lodash.uniq/-/lodash.uniq-4.5.0.tgz#d0225373aeb652adc1bc82e4945339a842754773"
   integrity sha1-0CJTc662Uq3BvILklFM5qEJ1R3M=
 
-lodash@4.17.11, lodash@4.17.5, "lodash@4.6.1 || ^4.16.1", lodash@>=4.17.11, lodash@^4.0.0, lodash@^4.13.1, lodash@^4.14.0, lodash@^4.15.0, lodash@^4.17.10, lodash@^4.17.11, lodash@^4.17.2, lodash@^4.17.3, lodash@^4.17.4, lodash@^4.17.5, lodash@^4.2.0, lodash@^4.2.1, lodash@^4.3.0, lodash@~4.17.10:
+lodash@4.17.11, "lodash@4.6.1 || ^4.16.1", lodash@^4.0.0, lodash@^4.13.1, lodash@^4.14.0, lodash@^4.15.0, lodash@^4.17.10, lodash@^4.17.11, lodash@^4.17.2, lodash@^4.17.3, lodash@^4.17.4, lodash@^4.17.5, lodash@^4.2.0, lodash@^4.2.1, lodash@^4.3.0, lodash@~4.17.10:
   version "4.17.11"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.11.tgz#b39ea6229ef607ecd89e2c8df12536891cac9b8d"
   integrity sha512-cQKh8igo5QUhZ7lg38DYWAxMvjSAKG0A8wGSVimP07SIUEK2UO+arSRKbRZWtelMtN5V0Hkwh5ryOto/SshYIg==
+
+lodash@4.17.5:
+  version "4.17.5"
+  resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.5.tgz#99a92d65c0272debe8c96b6057bc8fbfa3bed511"
+  integrity sha512-svL3uiZf1RwhH+cWrfZn3A4+U58wbP0tGVTLQPbjplZxZ8ROD9VLuNgsRniTlLe7OlSqR79RUehXgpBW/s0IQw==
 
 log-symbols@^1.0.2:
   version "1.0.2"
@@ -12472,15 +12486,15 @@ pubsweet-client@^8.0.0:
     styled-normalize "^8.0.4"
     subscriptions-transport-ws "^0.9.12"
 
-pubsweet-server@^13.4.5:
-  version "13.4.5"
-  resolved "https://registry.yarnpkg.com/pubsweet-server/-/pubsweet-server-13.4.5.tgz#47dffc6719cc0cf76c6076bf3887ea0a45eef399"
-  integrity sha512-acQDyLyx1ixXYFxoFuv8vj6zbioLRpCgNkD1Qk2wBMNPc5Le2UroMCl1oSZlm5Pj1tjDFUCUi7b0GNXpOjn0dw==
+pubsweet-server@^13.4.5, pubsweet-server@^13.4.6:
+  version "13.4.6"
+  resolved "https://registry.yarnpkg.com/pubsweet-server/-/pubsweet-server-13.4.6.tgz#a5063ec4aff9ce216b52943f0cab3da6a3f28a58"
+  integrity sha512-X5nSyyNSRdPhoZWj32lyRnUFuoKE3gmnpzjFoaQFn9tVQ20AMi/nH+mSLLfoSLOSaoCYQXAVG7k5gN46L9MciA==
   dependencies:
-    "@pubsweet/db-manager" "^3.0.10"
-    "@pubsweet/errors" "^2.0.14"
-    "@pubsweet/logger" "^0.2.24"
-    "@pubsweet/models" "^0.2.11"
+    "@pubsweet/db-manager" "^3.0.11"
+    "@pubsweet/errors" "^2.0.15"
+    "@pubsweet/logger" "^0.2.25"
+    "@pubsweet/models" "^0.2.12"
     apollo-server-express "^2.4.8"
     authsome "^0.1.0"
     bluebird "^3.5.1"
@@ -12511,24 +12525,24 @@ pubsweet-server@^13.4.5:
     pg-boss "^3.1.2"
     promise-queue "^2.2.3"
     prompt "^1.0.0"
-    pubsweet-sse "^1.0.18"
+    pubsweet-sse "^1.0.19"
     subscriptions-transport-ws "^0.9.12"
     uuid "^3.0.1"
     waait "^1.0.2"
     winston "^2.2.0"
 
-pubsweet-sse@^1.0.18:
-  version "1.0.18"
-  resolved "https://registry.yarnpkg.com/pubsweet-sse/-/pubsweet-sse-1.0.18.tgz#cd96c3222967a64fc9ec7b2d454c269c5ce3b325"
-  integrity sha512-MP2rH16QIffK6+gtivIi/Mk5dNeQHFz/RV2PuqZLtk3boRMCsCVy1q8814AX+ii/EhGAP84nsDAQhxPiI9zKwQ==
+pubsweet-sse@^1.0.19:
+  version "1.0.19"
+  resolved "https://registry.yarnpkg.com/pubsweet-sse/-/pubsweet-sse-1.0.19.tgz#57270fef555f9ccff3ad086cc62aef3d802f834b"
+  integrity sha512-8YNl6nXnXfWgt183iDH2TgqswQjj2qcZwt+7plVhoyNVZeJiPdwc7I24eT0mnHiovN9lntGMeCAtkpELn34zqw==
 
 pubsweet@^4.0.4:
-  version "4.1.6"
-  resolved "https://registry.yarnpkg.com/pubsweet/-/pubsweet-4.1.6.tgz#14f21fc72bffd10f99af202aaff5abdf21d782fa"
-  integrity sha512-keEN03VXiEbNvptwXhJjXUThPHvwq0Zj2PPAaWZFbcIxvgREFbqlHs05P8cdrWje7PoQG5uKHFtPQXcDy1zK2g==
+  version "4.1.7"
+  resolved "https://registry.yarnpkg.com/pubsweet/-/pubsweet-4.1.7.tgz#36c4d9776ade7fb96e6deb23e3c12c02ad87ba97"
+  integrity sha512-D9nSpz5j0ChEa7WfneO0Z/TPkxKD0/P4YNC0uzlY647N4O7dtATYaVu/+h5+oxipaHE+gr7YoAflu9WoVqN5cw==
   dependencies:
-    "@pubsweet/db-manager" "^3.0.10"
-    "@pubsweet/logger" "^0.2.24"
+    "@pubsweet/db-manager" "^3.0.11"
+    "@pubsweet/logger" "^0.2.25"
     bluebird "^3.5.0"
     colors "^1.1.2"
     commander "^2.20.0"
@@ -12539,7 +12553,7 @@ pubsweet@^4.0.4:
     inflection "^1.12.0"
     lodash "^4.17.11"
     prompt flatiron/prompt#1c95d1d8d333b5fbc13fa5f0619f3dcf0d514f87
-    pubsweet-server "^13.4.5"
+    pubsweet-server "^13.4.6"
     uuid "^3.0.1"
     webpack "^4.29.5"
     webpack-dev-middleware "^3.6.0"
@@ -15882,15 +15896,10 @@ ts-invariant@^0.4.0:
   dependencies:
     tslib "^1.9.3"
 
-tslib@^1.9.0:
+tslib@^1.9.0, tslib@^1.9.3:
   version "1.10.0"
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-1.10.0.tgz#c3c19f95973fb0a62973fb09d90d961ee43e5c8a"
   integrity sha512-qOebF53frne81cf0S9B41ByenJ3/IuH8yJKngAX35CmiZySA0khhkovshKK+jGCaMnVomla7gVlIcc3EvKPbTQ==
-
-tslib@^1.9.3:
-  version "1.9.3"
-  resolved "https://registry.yarnpkg.com/tslib/-/tslib-1.9.3.tgz#d7e4dd79245d85428c4d7e4822a79917954ca286"
-  integrity sha512-4krF8scpejhaOgqzBEcGM7yDIEfi0/8+8zDRZhNZZ2kjmHJ4hv3zCbQWxoJGz1iw5U0Jl0nma13xzHXcncMavQ==
 
 tty-browserify@0.0.0:
   version "0.0.0"
