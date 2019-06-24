@@ -11,8 +11,8 @@ const { mecaExport } = require('@elifesciences/component-meca')
 const User = require('@elifesciences/component-model-user').model
 const Manuscript = require('@elifesciences/component-model-manuscript').model
 const { S3Storage } = require('@elifesciences/component-service-s3')
+const { submitManuscript, runExport } = require('./submitManuscript')
 
-const { Mutation } = require('.')
 const {
   userData,
   badUserData,
@@ -72,8 +72,10 @@ describe('Manuscripts', () => {
       id = manuscript.id
     })
 
-    it('stores data with new status', async () => {
-      const promisedManuscript = Mutation.submitManuscript(
+    it('calls the mecaExport function', async () => {
+      const mockedExportFn = jest.fn()
+
+      const promisedManuscript = submitManuscript(mockedExportFn)(
         {},
         { data: { ...manuscriptInput, id } },
         { user: profileId },
@@ -83,22 +85,26 @@ describe('Manuscripts', () => {
       expect(beforeManuscript.status).toBe(Manuscript.statuses.INITIAL)
 
       return promisedManuscript.then(async returnedManuscript => {
-        // when the submission resolves it should succeed
         expect(returnedManuscript.status).toBe(
-          Manuscript.statuses.MECA_EXPORT_SUCCEEDED,
+          // It'll still be pending because it's executed asynchronously
+          Manuscript.statuses.MECA_EXPORT_PENDING,
         )
+
+        expect(mockedExportFn).toHaveBeenCalled()
 
         const storedManuscript = await Manuscript.find(id, userId)
 
         expect(storedManuscript).toMatchObject({
           ...expectedManuscript,
-          status: 'MECA_EXPORT_SUCCEEDED',
+          status: 'MECA_EXPORT_PENDING',
         })
       })
     })
 
     it('throws error if manuscript fileStatus is not READY', async () => {
       let manuscript = await Manuscript.find(id, userId)
+      const mockedExportFn = jest.fn(() => Promise.resolve())
+
       manuscript.files.push({
         url: 'fake-path.pdf',
         filename: 'FakeManuscript.pdf',
@@ -107,11 +113,11 @@ describe('Manuscripts', () => {
       })
       manuscript = await manuscript.save()
 
-      expect.assertions(4)
+      expect.assertions(3)
       expect(manuscript.files).toHaveLength(2)
       expect(manuscript.fileStatus).toBe('CHANGING')
       await expect(
-        Mutation.submitManuscript(
+        submitManuscript(mockedExportFn)(
           {},
           { data: { ...manuscriptInput, id } },
           { user: profileId },
@@ -121,41 +127,20 @@ describe('Manuscripts', () => {
           manuscriptId: manuscript.id,
         }),
       )
-      const NUM_EMAILS = 0
-      await waitforEmails(NUM_EMAILS)
-      expect(mailer.getMails()).toHaveLength(NUM_EMAILS)
-    })
-
-    it('sends a confirmation email to the submitter', async () => {
-      await Mutation.submitManuscript(
-        {},
-        { data: { ...manuscriptInput, id } },
-        { user: profileId },
-      )
-      const NUM_EMAILS = 1
-      await waitforEmails(NUM_EMAILS)
-      const allEmails = mailer.getMails()
-
-      expect(allEmails).toHaveLength(NUM_EMAILS)
-      expect(allEmails[0]).toMatchObject({
-        subject: 'Your eLife submission',
-        to: 'mymail@mail.com',
-        from: 'editorial@elifesciences.org',
-      })
-      expect(allEmails[0].text).toMatchSnapshot()
-      expect(allEmails[0].html).toMatchSnapshot()
     })
 
     it('calls meca export with correct arguments', async () => {
       const ip = '1.2.3.4'
-      await Mutation.submitManuscript(
+      const mockedExportFn = jest.fn(() => Promise.resolve())
+
+      await submitManuscript(mockedExportFn)(
         {},
         { data: { ...manuscriptInput, id } },
         { user: profileId, ip },
       )
 
-      expect(mecaExport).toHaveBeenCalled()
-      const [actualManuscript, , actualIp] = mecaExport.mock.calls[0]
+      expect(mockedExportFn).toHaveBeenCalled()
+      const [actualManuscript, , actualIp] = mockedExportFn.mock.calls[0]
 
       expect(actualManuscript.id).toBe(id)
       expect(actualIp).toBe(ip)
@@ -163,6 +148,8 @@ describe('Manuscripts', () => {
 
     it('removes blank optional reviewer rows', async () => {
       const input = lodash.cloneDeep(manuscriptInput)
+      const mockedExportFn = jest.fn(() => Promise.resolve())
+
       input.id = id
       input.suggestedReviewers = [
         { name: 'Reviewer 1', email: 'reviewer1@mail.com' },
@@ -172,7 +159,11 @@ describe('Manuscripts', () => {
         { name: 'Reviewer 4', email: 'reviewer4@mail.com' },
         { name: '', email: '' },
       ]
-      await Mutation.submitManuscript({}, { data: input }, { user: profileId })
+      await submitManuscript(mockedExportFn)(
+        {},
+        { data: input },
+        { user: profileId },
+      )
 
       const manuscript = await Manuscript.find(id, userId)
       const team = manuscript.teams.find(t => t.role === 'suggestedReviewer')
@@ -187,8 +178,10 @@ describe('Manuscripts', () => {
     it("fails if manuscript doesn't belong to user", async () => {
       const blankManuscript = Manuscript.makeInitial({ createdBy: userId })
       const manuscript = await blankManuscript.save()
+      const mockedExportFn = jest.fn(() => Promise.resolve())
+
       await expect(
-        Mutation.submitManuscript(
+        submitManuscript(mockedExportFn)(
           {},
           { data: { id: manuscript.id } },
           { user: badProfileId },
@@ -202,8 +195,10 @@ describe('Manuscripts', () => {
         status: Manuscript.statuses.MECA_EXPORT_PENDING,
       })
       const manuscript = await blankManuscript.save()
+      const mockedExportFn = jest.fn(() => Promise.resolve())
+
       await expect(
-        Mutation.submitManuscript(
+        submitManuscript(mockedExportFn)(
           {},
           { data: { id: manuscript.id } },
           { user: profileId },
@@ -219,8 +214,10 @@ describe('Manuscripts', () => {
         id,
         title: 'Some Title',
       }
+      const mockedExportFn = jest.fn(() => Promise.resolve())
+
       await expect(
-        Mutation.submitManuscript(
+        submitManuscript(mockedExportFn)(
           {},
           { data: badManuscript },
           { user: profileId },
@@ -230,13 +227,15 @@ describe('Manuscripts', () => {
 
     it('fails when manuscript has bad data types', async () => {
       const badManuscript = lodash.cloneDeep(manuscriptInput)
+      const mockedExportFn = jest.fn(() => Promise.resolve())
+
       lodash.merge(badManuscript, {
         id,
         title: 100,
         manuscriptType: {},
       })
       await expect(
-        Mutation.submitManuscript(
+        submitManuscript(mockedExportFn)(
           {},
           { data: badManuscript },
           { user: profileId },
@@ -246,24 +245,20 @@ describe('Manuscripts', () => {
       )
     })
 
-    describe('when export fails', () => {
+    describe('runExport', () => {
       let manuscript
 
-      beforeEach(() => {
-        jest.spyOn(logger, 'error').mockImplementationOnce(() => {})
-        mecaExport.mockImplementationOnce(() =>
-          Promise.reject(new Error('Broked')),
-        )
-        manuscript = lodash.cloneDeep(manuscriptInput)
-        manuscript.id = id
-      })
+      it('sends a confirmation email to the submitter', async () => {
+        const mockedExportFn = jest.fn(() => Promise.resolve())
 
-      it('sends email alert on failure', async () => {
-        await Mutation.submitManuscript(
+        await submitManuscript(mockedExportFn)(
           {},
-          { data: manuscript },
+          { data: { ...manuscriptInput, id } },
           { user: profileId },
         )
+
+        const updatedManuscript = await Manuscript.find(id, userId)
+        await runExport(updatedManuscript, userId, '1.2.3.4')
 
         const NUM_EMAILS = 1
         await waitforEmails(NUM_EMAILS)
@@ -271,33 +266,79 @@ describe('Manuscripts', () => {
 
         expect(allEmails).toHaveLength(NUM_EMAILS)
         expect(allEmails[0]).toMatchObject({
-          to: 'test@example.com',
-          subject: 'MECA export failed',
+          subject: 'Your eLife submission',
+          to: 'mymail@mail.com',
+          from: 'editorial@elifesciences.org',
         })
+        expect(allEmails[0].text).toMatchSnapshot()
+        expect(allEmails[0].html).toMatchSnapshot()
       })
 
-      it('updated status to MECA_EXPORT_FAILED', async () => {
-        await Mutation.submitManuscript(
-          {},
-          { data: manuscript },
-          { user: profileId },
-        )
-        const updatedManuscript = await Manuscript.find(manuscript.id, userId)
-        expect(updatedManuscript.status).toBe(
-          Manuscript.statuses.MECA_EXPORT_FAILED,
-        )
-      })
+      describe('export failure', () => {
+        beforeEach(() => {
+          jest.spyOn(logger, 'error').mockImplementationOnce(() => {})
+          mecaExport.mockImplementationOnce(() =>
+            Promise.reject(new Error('Borked')),
+          )
+          manuscript = lodash.cloneDeep(manuscriptInput)
+          manuscript.id = id
+        })
 
-      it('should log an error', async () => {
-        await Mutation.submitManuscript(
-          {},
-          { data: manuscript },
-          { user: profileId },
-        )
-        expect(logger.error).toHaveBeenCalledWith(
-          'MECA export failed',
-          expect.any(Error),
-        )
+        it('sends email alert on failure', async () => {
+          const mockedExportFn = jest.fn(() => Promise.resolve())
+          await submitManuscript(mockedExportFn)(
+            {},
+            { data: manuscript },
+            { user: profileId },
+          )
+
+          const updatedManuscript = await Manuscript.find(manuscript.id, userId)
+          await runExport(updatedManuscript, userId, '1.2.3.4')
+
+          const NUM_EMAILS = 1
+          await waitforEmails(NUM_EMAILS)
+          const allEmails = mailer.getMails()
+
+          expect(allEmails).toHaveLength(NUM_EMAILS)
+          expect(allEmails[0]).toMatchObject({
+            to: 'test@example.com',
+            subject: 'MECA export failed',
+          })
+        })
+
+        it('updated status to MECA_EXPORT_FAILED', async () => {
+          const mockedExportFn = jest.fn(() => Promise.resolve())
+          await submitManuscript(mockedExportFn)(
+            {},
+            { data: manuscript },
+            { user: profileId },
+          )
+
+          let updatedManuscript = await Manuscript.find(manuscript.id, userId)
+          await runExport(updatedManuscript, userId, '1.2.3.4')
+
+          updatedManuscript = await Manuscript.find(manuscript.id, userId)
+          expect(updatedManuscript.status).toBe(
+            Manuscript.statuses.MECA_EXPORT_FAILED,
+          )
+        })
+
+        it('should log an error', async () => {
+          const mockedExportFn = jest.fn(() => Promise.resolve())
+          await submitManuscript(mockedExportFn)(
+            {},
+            { data: manuscript },
+            { user: profileId },
+          )
+
+          const updatedManuscript = await Manuscript.find(manuscript.id, userId)
+          await runExport(updatedManuscript, userId, '1.2.3.4')
+
+          expect(logger.error).toHaveBeenCalledWith(
+            'MECA export failed',
+            expect.any(Error),
+          )
+        })
       })
     })
   })

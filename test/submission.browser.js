@@ -235,8 +235,9 @@ test('Ability to progress through the wizard is tied to validation', async t => 
       disclosure.url,
       'Validation errors prevent progress to the next page',
     )
+
   await t
-    .expect((await disclosure.validationWarning.textContent).length)
+    .expect((await disclosure.consentValidationWarning.textContent).length)
     .gt(0, 'is visible')
 
   navigationHelper.consentDisclosure()

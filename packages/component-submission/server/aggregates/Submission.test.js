@@ -1,7 +1,11 @@
 const Manuscript = require('@elifesciences/component-model-manuscript').model
 const File = require('@elifesciences/component-model-file').model
 const Team = require('@elifesciences/component-model-team').model
+const SemanticExtraction = require('@elifesciences/component-model-semantic-extraction')
+  .model
+
 const { keyBy } = require('lodash')
+const { v4 } = require('uuid')
 
 jest.mock('../utils')
 const utils = require('../utils')
@@ -13,12 +17,9 @@ const createMockObject = (values = {}, mockSaveFn) => ({
   save: mockSaveFn || jest.fn(),
 })
 
-const createSubmission = (args = {}) => {
-  const {
-    models = { Manuscript, File, Team },
-    services = { Storage: { getDownloadLink: jest.fn() } },
-  } = args
-
+const createSubmission = (altServices = null) => {
+  const models = { Manuscript, File, Team, SemanticExtraction }
+  const services = altServices || { Storage: { getDownloadLink: jest.fn() } }
   return new Submission({ models, services })
 }
 
@@ -83,7 +84,7 @@ describe('Submission', () => {
       const mockGetDownloadLink = jest.fn(file => `URL:${file.url}`)
 
       const submission = await createSubmission({
-        services: { Storage: { getDownloadLink: mockGetDownloadLink } },
+        Storage: { getDownloadLink: mockGetDownloadLink },
       }).initialize()
 
       const submissionJSON = submission.toJSON()
@@ -99,7 +100,7 @@ describe('Submission', () => {
       const mockGetDownloadLink = jest.fn(file => `URL:${file.url}`)
 
       const submission = await createSubmission({
-        services: { Storage: { getDownloadLink: mockGetDownloadLink } },
+        Storage: { getDownloadLink: mockGetDownloadLink },
       }).initialize()
       const filesAreStored = jest
         .spyOn(submission, 'filesAreStored')
@@ -118,7 +119,7 @@ describe('Submission', () => {
       const mockGetDownloadLink = jest.fn(file => `URL:${file.url}`)
 
       const submission = await createSubmission({
-        services: { Storage: { getDownloadLink: mockGetDownloadLink } },
+        Storage: { getDownloadLink: mockGetDownloadLink },
       }).initialize()
       const filesAreStored = jest
         .spyOn(submission, 'filesAreStored')
@@ -133,7 +134,7 @@ describe('Submission', () => {
 
   describe('filesAreStored', () => {
     it('returns true if there are no related files', () => {
-      const submission = new Submission({ models: {}, services: {} })
+      const submission = createSubmission()
       expect(submission.files).toBe(undefined)
       expect(submission.filesAreStored()).toBe(true)
     })
@@ -480,5 +481,63 @@ describe('Submission', () => {
       expect(teams.suggestedReviewer).toEqual(reviewerOutput.suggestedReviewer)
       expect(teams.opposedReviewer).toEqual(reviewerOutput.opposedReviewer)
     })
+  })
+
+  it('Correctly transforms the suggestions', () => {
+    const inputData = [
+      {
+        id: v4(),
+        created: '2019-06-10T10:26:07.766Z',
+        updated: '2019-06-10T10:26:07.766Z',
+        fieldName: 'a',
+        value: 'suggestion_1',
+      },
+      {
+        id: v4(),
+        created: '2019-06-10T10:26:34.668Z',
+        updated: '2019-06-10T10:26:34.668Z',
+        fieldName: 'b',
+        value: 'suggestion_2',
+      },
+      {
+        id: v4(),
+        created: '2019-06-10T10:27:18.120Z',
+        updated: '2019-06-10T10:27:18.120Z',
+        fieldName: 'a',
+        value: 'suggestion_3',
+      },
+    ]
+    const expectedOutput = [
+      {
+        fieldName: 'b',
+        suggestions: [
+          {
+            value: 'suggestion_2',
+            score: 1,
+            updated: '2019-06-10T10:26:34.668Z',
+            method: 'sciencebeam-june-2019',
+          },
+        ],
+      },
+      {
+        fieldName: 'a',
+        suggestions: [
+          {
+            value: 'suggestion_1',
+            score: 0,
+            updated: '2019-06-10T10:26:07.766Z',
+            method: 'sciencebeam-june-2019',
+          },
+          {
+            value: 'suggestion_3',
+            score: 2,
+            updated: '2019-06-10T10:27:18.120Z',
+            method: 'sciencebeam-june-2019',
+          },
+        ],
+      },
+    ]
+
+    expect(Submission.transformSuggestions(inputData)).toEqual(expectedOutput)
   })
 })

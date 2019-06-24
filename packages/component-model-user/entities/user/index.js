@@ -13,6 +13,7 @@ class User extends BaseModel {
       properties: {
         defaultIdentity: { type: 'string' },
       },
+      additionalProperties: true,
     }
   }
 
@@ -27,6 +28,10 @@ class User extends BaseModel {
         },
       },
     }
+  }
+
+  static get virtualAttributes() {
+    return ['username', 'password', 'admin', 'email']
   }
 
   static async createWithIdentity(identifier, type = 'elife') {
@@ -96,6 +101,14 @@ class User extends BaseModel {
 
   async save() {
     return this.$query().upsertGraphAndFetch(this)
+  }
+
+  isSettable(prop) {
+    if (this.constructor.virtualAttributes.includes(prop)) {
+      return true
+    }
+
+    return super.isSettable(prop)
   }
 }
 

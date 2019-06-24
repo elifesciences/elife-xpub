@@ -14,6 +14,9 @@ module.exports = {
     url: 'https://elifesciences.org/submit',
     enableMock: false,
   },
+  logout: {
+    redirectUrl: 'https://elifesciences.org/log-out',
+  },
   meca: {
     email: {
       recipient: 'xpub-tech-alerts@elifesciences.org',

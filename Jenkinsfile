@@ -10,6 +10,8 @@ elifePipeline {
         }
 
         stage 'Build image', {
+            // may have been written by a container in which this repository was mounted as a volume
+            sh "sudo rm -rf .config"
             // TODO: pull existing docker image if caching is not already effective
             dockerComposeBuild(commit)
         }
@@ -30,9 +32,10 @@ elifePipeline {
                           sh "IMAGE_TAG=${commit} NODE_ENV=production NODE_CONFIG_ENV=unit-test docker-compose -f docker-compose.yml -f docker-compose.ci.yml run --rm --name elife-xpub_app_test app npm test"
                       }, 'test', commit)
                   } finally {
-                      sh "sudo docker ps -a"
-                      sh "sudo sh -c \"docker logs elife-xpub_postgres_1 > build/logs/unit-postgres-output.txt\""
-                      archiveArtifacts artifacts: "build/logs/**/*", allowEmptyArchive: true
+                      sh "docker ps -a"
+                      sh "mkdir -p build/postgres-logs && sh -c \"docker logs elife-xpub_postgres_1 > build/postgres-logs/unit-postgres-output.txt\""
+                      sh "sh -c \"docker cp elife-xpub_postgres_1:/var/lib/postgresql/data/logs/. build/postgres-logs/\""
+                      archiveArtifacts artifacts: "build/postgres-logs/**/*", allowEmptyArchive: true
                       sh "IMAGE_TAG=${commit} docker-compose -f docker-compose.yml -f docker-compose.ci.yml down -v"
                       sh "sudo rm -rf ./build/* || true"
                   }
@@ -74,7 +77,7 @@ elifePipeline {
 
             try {
                 sh "IMAGE_TAG=${commit} docker-compose -f docker-compose.yml -f docker-compose.ci.yml up -d postgres"
-                sh "IMAGE_TAG=${commit} docker-compose -f docker-compose.yml -f docker-compose.ci.yml run --rm --name elife-xpub_wait_postgres app bash -c './scripts/wait-for-it.sh postgres:5432'"
+                sh "IMAGE_TAG=${commit} docker-compose -f docker-compose.yml -f docker-compose.ci.yml run --rm --name elife-xpub_wait_postgres app bash -c './scripts/wait-for-it.sh -t 15 postgres:5432'"
                 parallel actions
             } finally {
                 sh "IMAGE_TAG=${commit} docker-compose -f docker-compose.yml -f docker-compose.ci.yml down -v"
@@ -96,12 +99,13 @@ elifePipeline {
                     sh "IMAGE_TAG=${commit} NODE_ENV=production NODE_CONFIG_ENV=unit-test docker-compose -f docker-compose.yml -f docker-compose.ci.yml run --rm --name elife-xpub_app_test app bash -c 'scripts/pipeline-log-filter-test.sh'"
                 }, 'test:browser', commit)
             } finally {
-                sh "sudo docker ps -a"
-                sh "sudo sh -c \"docker logs elife-xpub_app_1 > build/logs/app-output.txt\""
-                sh "sudo sh -c \"docker logs elife-xpub_postgres_1 > build/logs/postgres-output.txt\""
-                sh "sudo sh -c \"docker logs elife-xpub_sftp_1 > build/logs/sftp-output.txt\""
-                sh "sudo sh -c \"docker logs elife-xpub_fakes3_1 > build/logs/fakes3-output.txt\""
-                archiveArtifacts artifacts: "build/screenshots/**/*,build/logs/**/*,build/meca/*.zip", allowEmptyArchive: true
+                sh "docker ps -a"
+                sh "mkdir -p build/browser"
+                sh "sh -c \"docker logs elife-xpub_app_1 > build/browser/app-output.txt\""
+                sh "sh -c \"docker logs elife-xpub_postgres_1 > build/browser/postgres-output.txt\""
+                sh "sh -c \"docker logs elife-xpub_sftp_1 > build/browser/sftp-output.txt\""
+                sh "sh -c \"docker logs elife-xpub_fakes3_1 > build/browser/fakes3-output.txt\""
+                archiveArtifacts artifacts: "build/logs/**/*,build/screenshots/**/*,build/browser/**/*,build/meca/*.zip", allowEmptyArchive: true
                 sh "aws --endpoint-url='http://localhost:4569' s3 ls s3://test --recursive"
                 sh "IMAGE_TAG=${commit} docker-compose -f docker-compose.yml -f docker-compose.ci.yml down -v"
                 sh "sudo rm -rf ./build/* || true"

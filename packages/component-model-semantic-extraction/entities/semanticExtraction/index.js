@@ -24,6 +24,13 @@ class SemanticExtraction extends BaseModel {
     })
   }
 
+  static async findByManuscriptId(manuscriptId) {
+    if (manuscriptId == null) {
+      return []
+    }
+    return this.query().where({ manuscriptId })
+  }
+
   async delete() {
     throw new Error('Unsupported operation')
   }

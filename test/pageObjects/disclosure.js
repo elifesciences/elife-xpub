@@ -9,7 +9,10 @@ const disclosure = {
   consentCheckbox: Selector('[name="disclosureConsent"]').parent(),
   title: Selector('[data-test-id=disclosure-title]'),
   name: Selector('[data-test-id=disclosure-name]'),
-  validationWarning: Selector('[data-test-id=test-error-message]'),
+  validationWarning: Selector('[data-test-id="test-error-message"]'),
+  consentValidationWarning: Selector(
+    '[data-test-id="error-disclosureConsent"]',
+  ),
 }
 
 export default disclosure

@@ -12,6 +12,7 @@ const dummyStorage = {
   deleteContent: async () => ({
     promise: Promise.resolve(true),
   }),
+  getDownloadLink: jest.fn(),
 }
 
 const expectRemoveSupportingFilesDoesNothing = async (manuscriptIn, userId) => {

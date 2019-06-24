@@ -13,6 +13,7 @@ import ManuscriptUpload from '../components/ManuscriptUpload'
 import SupportingUpload from '../components/SupportingUpload'
 import { errorMessageMapping, manuscriptFileTypes } from '../utils/constants'
 import filesWithGQL from '../graphql/filesWithGQL'
+import { getSuggestion } from '../utils'
 
 const SmallUL = styled.ul`
   font-size: ${th('fontSizeBaseSmall')};
@@ -22,7 +23,6 @@ export class FilesStepPageComponent extends React.Component {
     super(props)
     this.state = {
       // Revisit this once https://github.com/apollographql/react-apollo/issues/2952 has been implemented.
-      manuscriptUploading: false,
       manuscriptUploadingError: null,
     }
   }
@@ -41,6 +41,7 @@ export class FilesStepPageComponent extends React.Component {
       setFieldTouched,
       values,
       uploadManuscriptFile,
+      setIsUploading,
     } = this.props
     const manuscriptId = values.id
 
@@ -58,22 +59,54 @@ export class FilesStepPageComponent extends React.Component {
     }
 
     const [file] = files
-    this.setState({ manuscriptUploading: true, manuscriptUploadingError: null })
+    this.setState({ manuscriptUploadingError: null })
+
+    setIsUploading(true)
     uploadManuscriptFile({
       variables: { file, id: manuscriptId, fileSize: file.size },
     })
       .then(({ data }) => {
-        setFieldValue('meta.title', data.uploadManuscript.meta.title)
+        const suggestedTitle = getSuggestion('title', data.uploadManuscript)
+        const title =
+          data.uploadManuscript.meta.title === '' && suggestedTitle !== ''
+            ? suggestedTitle
+            : data.uploadManuscript.meta.title
+
+        setFieldValue('meta.title', title)
         setFieldValue('files', data.uploadManuscript.files)
         setFieldValue('fileStatus', data.uploadManuscript.fileStatus)
-        this.setState({ manuscriptUploading: false })
+        setIsUploading(false)
       })
       .catch(error => {
         this.setState({
-          manuscriptUploading: false,
           manuscriptUploadingError: error,
         })
+        setIsUploading(false)
       })
+  }
+
+  onSupportingFileUpload = file => {
+    const {
+      uploadSupportingFile,
+      setFieldValue,
+      isUploading,
+      values,
+    } = this.props
+    return new Promise((resolve, reject) => {
+      setFieldValue('fileStatus', 'CHANGING')
+      uploadSupportingFile({
+        variables: { file, id: values.id },
+      })
+        .then(data => {
+          setFieldValue('files', data.data.uploadSupportingFile.files)
+          setFieldValue('fileStatus', data.data.uploadSupportingFile.fileStatus)
+          resolve(data)
+        })
+        .catch(err => {
+          setFieldValue('fileStatus', isUploading ? 'CHANGING' : 'READY')
+          reject(err)
+        })
+    })
   }
 
   onUploadValidationError = errorMessage => {
@@ -100,7 +133,6 @@ export class FilesStepPageComponent extends React.Component {
       touched,
       values,
       manuscriptUploadProgress = 0,
-      uploadSupportingFile,
       deleteSupportingFiles,
     } = this.props
 
@@ -151,7 +183,7 @@ export class FilesStepPageComponent extends React.Component {
           <ManuscriptUpload
             conversion={{
               converting:
-                this.state.manuscriptUploading ||
+                this.props.isUploading ||
                 (manuscriptUploadProgress > 0 &&
                   manuscriptUploadProgress < 100),
               completed: hasManuscript,
@@ -177,26 +209,11 @@ export class FilesStepPageComponent extends React.Component {
                 variables: { id: values.id },
               })
             }
-            uploadFile={file =>
-              new Promise((resolve, reject) => {
-                setFieldValue('fileStatus', 'CHANGING')
-                return uploadSupportingFile({
-                  variables: { file, id: values.id },
-                })
-                  .then(data => {
-                    setFieldValue(
-                      'fileStatus',
-                      data.data.uploadSupportingFile.fileStatus,
-                    )
-                    resolve(data)
-                  })
-                  .catch(err => reject(err))
-              })
-            }
+            uploadFile={this.onSupportingFileUpload}
           />
         </Box>
         <ValidatedField
-          data-test-id="ongoing-upload-error"
+          data-test-id="ongoing-upload"
           name="fileStatus"
           type="hidden"
         />

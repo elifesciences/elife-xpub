@@ -67,5 +67,15 @@ describe('component-dashboard resolvers', () => {
       expect(manuscripts.length).toBeGreaterThan(0)
       expect(manuscripts[0].id).toBe(manuscript.id)
     })
+
+    it('adds new manuscript to the db for current user with correct lastStepVisited', async () => {
+      await Mutation.createManuscript({}, {}, { user: profileId })
+
+      const manuscripts = await Manuscript.findByStatus('INITIAL', userId)
+      expect(manuscripts.length).toBeGreaterThan(0)
+      expect(manuscripts[0].lastStepVisited).toBe(
+        `/submit/${manuscripts[0].id}/author`,
+      )
+    })
   })
 })

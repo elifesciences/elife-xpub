@@ -9,6 +9,6 @@ if [ "$#" -ne 1 ]; then
 fi
 
 release_name="elife-xpub--${1}"
-first_node_address=$(sudo -u elife -H kubectl get nodes -o json | jq -r '.items[0].status.addresses[] | select(.type=="ExternalDNS").address')
-node_port=$(sudo -u elife -H kubectl get --namespace default -o jsonpath="{.spec.ports[0].nodePort}" services "$release_name")
+first_node_address=$(kubectl get nodes -o json | jq -r '.items[0].status.addresses[] | select(.type=="ExternalDNS").address')
+node_port=$(kubectl get --namespace default -o jsonpath="{.spec.ports[0].nodePort}" services "$release_name")
 echo "http://$first_node_address:$node_port"

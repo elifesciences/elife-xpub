@@ -12,6 +12,7 @@ function getManuscriptData(data) {
     'opposedReviewersReason',
     'submitterSignature',
     'disclosureConsent',
+    'lastStepVisited',
   ])
 }
 

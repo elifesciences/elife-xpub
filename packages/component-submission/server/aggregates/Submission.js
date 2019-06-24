@@ -2,11 +2,30 @@ const { intersection } = require('lodash')
 const { mergeObjects } = require('../utils')
 
 class Submission {
-  constructor({ models: { Manuscript, File, Team }, services: { Storage } }) {
+  constructor({
+    models: { Manuscript, File, Team, SemanticExtraction },
+    services: { Storage },
+  }) {
     this.ManuscriptModel = Manuscript
     this.FileModel = File
     this.TeamModel = Team
+    this.SemanticExtractionModel = SemanticExtraction
     this.Storage = Storage
+
+    if (this.ManuscriptModel == null) {
+      throw new Error('Cannot construct Submission without a Manuscript model')
+    }
+    if (this.FileModel == null) {
+      throw new Error('Cannot construct Submission without a File model')
+    }
+    if (this.TeamModel == null) {
+      throw new Error('Cannot construct Submission without a Team model')
+    }
+    if (this.SemanticExtractionModel == null) {
+      throw new Error(
+        'Cannot construct Submission without a SemanticExtraction model',
+      )
+    }
   }
 
   async initialize(manuscriptId, userId) {
@@ -17,7 +36,9 @@ class Submission {
     )
     this.files = await this.FileModel.findByManuscriptId(manuscriptId)
     this.teams = await this.TeamModel.findByManuscriptId(manuscriptId)
-
+    this.suggestions = Submission.transformSuggestions(
+      await this.SemanticExtractionModel.findByManuscriptId(manuscriptId),
+    )
     return this
   }
 
@@ -44,7 +65,7 @@ class Submission {
   async _saveTeams() {
     this.manuscript.teams = this.teams
 
-    await this.manuscript.save()
+    await this.manuscript.save({ noUpdate: '[files]' })
 
     this.teams = this.manuscript.teams
   }
@@ -77,6 +98,7 @@ class Submission {
       fileStatus: this.filesAreStored() ? 'READY' : 'CHANGING',
       files: this._getFilesWithDownloadLink(),
       teams: this.teams.map(team => team.toJSON()),
+      suggestions: this.suggestions,
     }
   }
 
@@ -163,6 +185,40 @@ class Submission {
     })
 
     return this._saveTeams()
+  }
+  static transformSuggestions(extractions) {
+    /// This is static?
+    const semanticExtractionToModels = (
+      acc,
+      { fieldName, value, updated },
+      index,
+    ) => {
+      const existing = acc.find(e => e.fieldName === fieldName)
+
+      const next = {
+        fieldName,
+        suggestions: [
+          ...((existing && existing.suggestions) || []),
+          {
+            score: index,
+            value,
+            method: 'sciencebeam-june-2019',
+            updated: new Date(updated).toISOString(),
+          },
+        ],
+      }
+
+      return [
+        // Remove existing entry
+        ...acc.filter(e => e.fieldName !== fieldName),
+        // Replace with new
+        next,
+      ]
+    }
+
+    return extractions
+      .sort((exA, exB) => exA.updated > exB.updated)
+      .reduce(semanticExtractionToModels, [])
   }
 }
 

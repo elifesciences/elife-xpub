@@ -85,9 +85,9 @@ class ManuscriptHelper {
         logger.info(`New Files: ${file.id} | ${file.type}`),
       )
 
+      // We need to do this because otherwise manuscript won't update with the file status
+      // or something like that - this is horrible
       manuscript = await ManuscriptModel.find(manuscriptId, this.userId)
-      manuscript.meta.title = title
-      await manuscript.save()
 
       if (!FilesHelper.validateManuscriptSource(manuscript.files)) {
         throw new Error(`Validation Failure on ${manuscript.id}`)

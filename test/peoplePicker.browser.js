@@ -92,18 +92,25 @@ test('People Picker', async t => {
     .eql(1)
     .click(Selector('[data-test-id="cancel"]'))
 
-    // click on an editor already added, it should display 'REMOVE EDITOR'
-    .click(editors.peoplePickerInfo.nth(9))
+  // we need to wait here for a bit otherwise testcafe doesn't scroll
+  await t.wait(500)
+
+  // click on an editor already added, it should display 'REMOVE EDITOR'
+  await t.click(editors.peoplePickerInfo.nth(9))
+  await t
     .expect(Selector('[data-test-id="accept"]').innerText)
     .eql('REMOVE EDITOR')
     .click(Selector('[data-test-id="accept"]'))
 
-    // then we should be able to add a new editor
+  // we need to wait here for a bit otherwise testcafe doesn't scroll
+  await t.wait(500)
+
+  // then we should be able to add a new editor
+  await t
     .click(editors.peoplePickerInfo.nth(10))
     .expect(editors.peoplePickerModalErrorMaximum.count)
     .eql(0)
     .click(Selector('[data-test-id="accept"]'))
-
     .click(editors.peoplePickerSubmit)
     .click(editors.suggestedReviewingEditorSelection)
     .click(editors.peoplePickerOptions.nth(1))

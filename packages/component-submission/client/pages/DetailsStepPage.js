@@ -11,8 +11,7 @@ import SubjectAreaDropdown from '../components/SubjectAreaDropdown'
 import ExpandingTextField from '../components/ExpandingTextField'
 import OptionalSection from '../components/OptionalSection'
 
-const SubmissionPage = ({ values, setFieldValue, setFieldTouched }) => (
-  // TODO: turn this ValidatedField into a richTextBox
+const DetailsStep = ({ values, setFieldValue, setFieldTouched }) => (
   <React.Fragment>
     <Box mb={3}>
       <ValidatedField
@@ -21,7 +20,7 @@ const SubmissionPage = ({ values, setFieldValue, setFieldTouched }) => (
         label="Manuscript Title"
         maxRows={4}
         name="meta.title"
-        placeholder="Manuscript title"
+        placeholder="Manuscript Title"
       />
     </Box>
 
@@ -129,4 +128,4 @@ const SubmissionPage = ({ values, setFieldValue, setFieldTouched }) => (
   </React.Fragment>
 )
 
-export default SubmissionPage
+export default DetailsStep

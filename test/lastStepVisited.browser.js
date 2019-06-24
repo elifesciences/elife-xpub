@@ -39,6 +39,9 @@ test('Interrupt and resume Submission', async t => {
     .typeText(author.emailField, 'example@example.org')
     .click(wizardStep.next)
 
+  // wait 5 seconds to ensure autosave hasn't interrupted the navigation save
+  navigationHelper.wait(5000)
+
   // navigate back to the dashboard page and continue submission
   await t
     .navigateTo(`${config.get('pubsweet-server.baseUrl')}`)

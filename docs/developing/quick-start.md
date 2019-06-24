@@ -27,9 +27,7 @@ Otherwise the instructions below should be sufficient to get started quickly.
     - In most cases the default settings should work without additional configuration
 - Start any dependencies
   - All necessary dependencies can be started by running `yarn start:services`
-  - To run dependencies within the background use the command `docker-compose up -d postgres fakes3`
-  - To setup the database, run `npx pubsweet setupdb --clobber`, and `npx pubsweet migrate`
-- Start the app with `yarn server`
+- Start the app with `yarn start:app`
   - Visit <http://localhost:3000>
 
 ## Other Dependencies
