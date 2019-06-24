@@ -56,7 +56,7 @@ export const SubmissionWizard = ({
   data, // Contains data from an apollo GQL query
   match, // Comes from react router, contains information about the path
   history,
-  updateManuscript, // injected by reCompose
+  updateSubmission, // injected by reCompose
   submitManuscript, // injected by reCompose
 }) => {
   const getCurrentStepFromPath = () =>
@@ -79,7 +79,7 @@ export const SubmissionWizard = ({
   ]
 
   const handleSave = formValues =>
-    updateManuscript({
+    updateSubmission({
       variables: { data: parseFormToOutputData(formValues) },
     })
 
