@@ -8,16 +8,16 @@ Proposed
 
 ## Context
 
-There needs to be some general principles on best practise in creating react
+There needs to be some general principles on best practice in creating React
 components for the project. This should lead to more readable and testable
 code which should always be the aim.
 
 ### Separation of View and Logic
 
-- In general small easily understood logic or logic that is very specific
-  should like near the code where it is used. Extracting such code would be
+- In general, small easily understood logic or logic that is very specific
+  should live near the code where it is used. Extracting such code would be
   an overhead and decrease readability.
-- More generally logic should be extracted particularly where it is complex or
+- More generally, logic should be extracted, particularly where it is complex or
   re-useable. This will make it more easily testable and the calling code more
   readable.
 - Please contribute more
@@ -45,7 +45,7 @@ const someComponent = props => {
 ```
 
 Components that require logic to be run at various lifecycle stages can use the `useEffects` hook. see: [useEffect](https://reactjs.org/docs/hooks-effect.html)
-note: this requires a function to be returned which cleans up any subscriptions, similar to `componentWillUnmount()`
+Note: this requires a function to be returned which cleans up any subscriptions, similar to `componentWillUnmount()`
 
 For example: `setTimeout()` should return `clearTimeout()`
 
@@ -84,18 +84,18 @@ For more information on these hooks see [hooks api reference](https://reactjs.or
 
 ### Testing Principles
 
-- Utility functions that have been extracted from the react component because they are not tightly coupled with how the component should work (ie: data modelling/processing or validation schemas) should be tested with the standard testing framework (currently jest)
-- All react components in general should be tested using `testing-library/react`
+- Utility functions that have been extracted from the React component because they are not tightly coupled with how the component should work (ie: data modelling/processing or validation schemas) should be tested with the standard testing framework (currently jest)
+- All React components in general should be tested using `testing-library/react`
 - Testing should be carried out with a TDD approach of blackbox testing where possible rather than testing implementation detail (__focus on simulating user interactions and passing props not testing internal functions (like instance() testing in enzyme!)__, see [here](https://kentcdodds.com/blog/why-i-never-use-shallow-rendering) for explanation)
-* A unit of functionality in react can involve multiple child components integrating with each other correctly. Don't feel the need to mock out child components in tests unless absolutely necessary (Better a test fail because it's child components are not working correctly in a use-case context then to miss catching errors because of 'unit testing purity')
+* A unit of functionality in React can involve multiple child components integrating with each other correctly. Don't feel the need to mock out child components in tests unless absolutely necessary (Better a test fail because it's child components are not working correctly in a use-case context then to miss catching errors because of 'unit testing purity')
 - Please contribute more
 
-Its recommended to write tests that assert each component's public interface, with
+It's recommended to write tests that assert each component's public interface, with
 its internals treated as a black box. Each test case should provide the component with some input
 like props or user interactions and assert on the expected output, be it render result or method calls
 on provided props.
 
-As example, lets take a simple Counter component which increments a counter by one by clicking on a button.
+As an example, lets take a simple Counter component which increments a counter by one by clicking on a button.
 
 ```
 import React, { useState } from 'react'
