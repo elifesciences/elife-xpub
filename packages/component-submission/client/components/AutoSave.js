@@ -14,7 +14,7 @@ export default class AutoSave extends React.Component {
   }
 
   componentDidMount() {
-    this.timer = setInterval(() => this.saveGraph(), this.updateInterval)
+    this.timer = setInterval(() => this.save(), this.updateInterval)
   }
 
   componentWillUnmount() {
