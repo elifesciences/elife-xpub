@@ -1,5 +1,6 @@
 # -- BASE MODEL START --
-extend type Team {
+type Team {
+  id: ID!
   created: DateTime!
   updated: DateTime
   teamMembers: [TeamMember]
