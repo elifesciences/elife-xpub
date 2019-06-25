@@ -77,7 +77,7 @@ test("The user can save a submission and the manuscripts endpoint now includes i
   );
 });
 
-test("The user can save a the editors on a submission and they're persisted in the database", async (t: TestContext) => {
+test("can save editors", async (t: TestContext) => {
   const context = defaultConfig();
 
   const newManuscript = await dashboard.Mutation.createManuscript(context);
