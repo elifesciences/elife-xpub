@@ -180,14 +180,22 @@ test("The user can save a the editors on a submission and they're persisted in t
     ...hydratedTeams,
   };
 
+  const fetchedManuscript = await submission.Query.getSubmission(context, {  id: newManuscript.createManuscript.id });
+
   // TODO: Get the updated submission from `getSubmission`, not from the returned value
 
-  // NOTE: The server adds __typename properties that aren't defined in our schema
-  // and aren't used anywhere, so we strip them out to check that the stuff we depend on
-  // is right
+  // NOTE: The server adds __typename properties for use internally, we don't need to assert on them so I've
+  // removed them
   t.deepEqual(
-    stripTypeNameFromJson(savedManuscript.updateSubmission),
     stripTypeNameFromJson(expectedUpdatedManuscript),
-    "the manuscript that contains the correct teams data",
+    stripTypeNameFromJson(savedManuscript.updateSubmission),
+    "the saved manuscript contains the correct teams data",
+  );
+
+  t.deepEqual(
+    // Huh?: why do we get suggestions back with this one and not the other request?
+    stripTypeNameFromJson({...expectedUpdatedManuscript, suggestions: {}}),
+    stripTypeNameFromJson(fetchedManuscript.manuscript),
+    "the fetched manuscript contains the correct teams data",
   );
 });
