@@ -170,14 +170,14 @@ describe('SubmissionWizard', async () => {
     it('displays correct title on Editors step', () => {
       expect(
         renderWithPath('/submit/id/editors').getByText(
-          'Who should review your work',
+          'Who should review your work?',
         ),
       ).toBeInTheDocument()
     })
     it('displays correct title on Disclosure step', () => {
       expect(
         renderWithPath('/submit/id/disclosure').getByText(
-          'Disclosure of data to Editors',
+          'Disclosure of data to editors',
         ),
       ).toBeInTheDocument()
     })
