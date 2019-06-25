@@ -33,6 +33,14 @@ export const STEP_NAMES = [
   'Disclosure',
 ]
 
+export const STEP_TITLES = [
+  'Your details',
+  'Your cover letter',
+  'Help us get your work seen by the right people',
+  'Who should review your work',
+  'Disclosure of data to Editors',
+]
+
 export const FIELD_TO_STEP_MAP = {
   author: STEP_NAMES[0],
   cosubmission: STEP_NAMES[2],

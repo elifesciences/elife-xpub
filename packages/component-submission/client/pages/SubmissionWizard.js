@@ -35,7 +35,7 @@ import {
   getErrorStepsFromErrors,
   convertArrayToReadableList,
 } from '../utils'
-import { STEP_NAMES } from '../utils/constants'
+import { STEP_NAMES, STEP_TITLES } from '../utils/constants'
 
 import wizardSchema, {
   authorSchema,
@@ -121,7 +121,7 @@ export const SubmissionWizard = ({
                 <Box my={5}>
                   <ProgressBar currentStep={currentStep} />
                 </Box>
-                <FormH2>{STEP_NAMES[currentStep]}</FormH2>
+                <FormH2>{STEP_TITLES[currentStep]}</FormH2>
                 <Switch>
                   <TrackedRoute
                     path={`${match.path}/author`}

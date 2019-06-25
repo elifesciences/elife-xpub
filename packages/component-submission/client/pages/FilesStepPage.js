@@ -142,7 +142,6 @@ export class FilesStepPageComponent extends React.Component {
     return (
       <React.Fragment>
         <Box mb={3} width={1}>
-          <FormH2>Your cover letter</FormH2>
           <Paragraph.Small secondary>
             Please enter or paste in your cover letter below. To help with the
             initial evaluation of your submission, you should aim to answer the
