@@ -65,7 +65,7 @@ class Submission {
   async _saveTeams() {
     this.manuscript.teams = this.teams
 
-    await this.manuscript.saveGraph({ noUpdate: '[files]' })
+    await this.manuscript.saveGraph({ noUpdate: ['files'] })
 
     this.teams = this.manuscript.teams
   }
