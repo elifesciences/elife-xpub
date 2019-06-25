@@ -188,6 +188,6 @@ test("The user can save a the editors on a submission and they're persisted in t
   t.deepEqual(
     stripTypeNameFromJson(savedManuscript.updateSubmission),
     stripTypeNameFromJson(expectedUpdatedManuscript),
-    "the manuscript that is saved is the same as the original manuscript",
+    "the manuscript that contains the correct teams data",
   );
 });
