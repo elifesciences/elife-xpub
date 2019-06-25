@@ -31,6 +31,11 @@ class NavigationHelper {
     await this.t.click(wizardStep.back, OPTS)
   }
 
+  async reloadPage() {
+    // eslint-disable-next-line no-restricted-globals
+    await this.t.eval(() => location.reload(true))
+  }
+
   async wait(time) {
     await this.t.wait(time)
   }
@@ -95,6 +100,10 @@ class NavigationHelper {
     )
   }
 
+  async fillShortCoverletter(text) {
+    await this.t.typeText(files.editor, 'Lorem ipsum')
+  }
+
   async fillLongTitle() {
     await this.t.typeText(
       submission.title,
@@ -133,6 +142,16 @@ class NavigationHelper {
       .typeText(submission.firstCosubmissionTitle, 'Another title')
       .click(submission.moreSubmission)
       .typeText(submission.secondCosubmissionTitle, 'Yet another title')
+  }
+
+  async addNecessaryManuscriptMetadata() {
+    await this.t
+      .click(submission.articleType)
+      .click(submission.articleTypes.nth(0))
+      .click(submission.subjectAreaLabel)
+      .pressKey('enter')
+      .pressKey('down')
+      .pressKey('enter')
   }
 
   async openEditorsPicker() {

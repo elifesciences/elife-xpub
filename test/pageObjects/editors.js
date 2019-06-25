@@ -32,6 +32,7 @@ const editors = {
   peoplePickerModalErrorMaximum: Selector(
     '[data-test-id="maximum-people-selected-error"]',
   ),
+  peoplePods: Selector('[data-test-id="person-pod"]'),
 }
 
 export default editors
