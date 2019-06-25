@@ -4,7 +4,7 @@
 
 import { ApiTestContext } from "./index";
 // import { GraphQLClient} from 'graphql-request';
-import { Manuscript, MutationUpdateManuscriptArgs, EditorAlias } from "../generated/graphql";
+import { Manuscript, MutationUpdateSubmissionArgs, EditorAlias } from "../generated/graphql";
 import { withAuthorization, NotImplementedError } from "../utils";
 
 /**
@@ -24,10 +24,10 @@ const editors = async (_ctx: ApiTestContext): Promise<Array<EditorAlias>> => {
 /**
  * Updates or creates a manuscript
  */
-const updateManuscript = async (ctx: ApiTestContext, data: MutationUpdateManuscriptArgs ): Promise<{updateManuscript: Manuscript}> => {
+const updateSubmission = async (ctx: ApiTestContext, data: MutationUpdateSubmissionArgs ): Promise<{updateSubmission: Manuscript}> => {
   const query = `
-mutation UpdateManuscript($data: ManuscriptInput!) {
-  updateManuscript(data: $data) {
+mutation UpdateSubmission($data: ManuscriptInput!) {
+  updateSubmission(data: $data) {
     ...WholeManuscript
     __typename
   }
@@ -156,7 +156,7 @@ const fileUploadProgress = async (_ctx: ApiTestContext): Promise<Manuscript> => 
 const resolvers = {
   Query: { manuscript, editors },
   Mutation: {
-    updateManuscript,
+    updateSubmission,
     submitManuscript,
     uploadManuscript,
     uploadSupportingFile,
