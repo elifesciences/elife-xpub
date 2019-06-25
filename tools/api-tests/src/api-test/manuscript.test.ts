@@ -78,3 +78,132 @@ test(
     );
   },
 );
+
+test(
+  "The user can save a the editors on a submission and they're persisted in the database",
+  async (t: TestContext) => {
+
+    const context = defaultConfig();
+
+    const newManuscript = await dashboard.Mutation.createManuscript(context);
+
+    const manuscriptAuthorDelta: ManuscriptInput = {
+      id: newManuscript.createManuscript.id,
+      cosubmission: ['some_other_submission'],
+      meta: {
+        title: `A manucript to test saving editors - generated: ${new Date().toISOString()} on ${newManuscript.createManuscript.id}`,
+        articleType: 'TEST',
+        subjects: [],
+      },
+      author: {
+        firstName: "Bobby",
+        lastName: "Beans",
+        email: "bobbybe@ns.com",
+        aff: 'University of Bean Studies',
+      },
+    };
+
+    // Test adding some new editors
+    const manuscriptEditorsDelta: ManuscriptInput = {
+      ...manuscriptAuthorDelta,
+      id: newManuscript.createManuscript.id,
+      cosubmission: ['some_other_submission'],
+      // Hard coding values here doesn't give me the warm-fuzzies
+      suggestedSeniorEditors: ['bcooper', 'fbloggs'], 
+      suggestedReviewingEditors: ['djones', 'jqpublic'],
+      suggestedReviewers: [
+        {
+          name: "Some Other",
+          email: "guy@example.com",
+        },
+        {
+          name: "",
+          email: "",
+        }
+      ],
+    };
+
+    // These reviews should resolve to
+    const hydratedTeams = {
+      "suggestedReviewingEditors": [
+        {
+          "id": "djones",
+          "name": "Dai Jones",
+          "aff": null,
+          "focuses": [
+            "Cell polarity"
+          ],
+          "expertises": [
+            "Cell Biology"
+          ],
+        },
+        {
+          "id": "jqpublic",
+          "name": "John Q. Public",
+          "aff": null,
+          "focuses": [
+            "Endocytosis",
+            "Secretion"
+          ],
+          "expertises": [
+            "Cell Biology"
+          ],
+        }
+      ],
+      "suggestedSeniorEditors": [
+        {
+          "id": "bcooper",
+          "name": "Ben Cooper",
+          "aff": null,
+          "focuses": [
+            "Population biology of communicable diseases",
+            "Antimicrobial resistance",
+            "Epidemiological methods"
+          ],
+          "expertises": [
+            "Computational and Systems Biology",
+            "Epidemiology and Global Health"
+          ],
+        },
+        {
+          "id": "fbloggs",
+          "name": "Fred Bloggs III",
+          "aff": null,
+          "focuses": [],
+          "expertises": [],
+        }
+      ],
+      suggestedReviewers: [
+        {
+          name: "Some Other",
+          email: "guy@example.com",
+        },
+        {
+          name: "",
+          email: "",
+        }
+      ],
+
+    }
+
+
+    const savedManuscript = await submission.Mutation.updateSubmission(context, {data: manuscriptEditorsDelta});
+
+    const expectedUpdatedManuscript: Manuscript = {
+      ...newManuscript.createManuscript,
+      ...manuscriptAuthorDelta as Manuscript,
+      ...hydratedTeams,
+    }
+
+    // TODO: Get the updated submission from `getSubmission`, not from the returned value
+
+    // NOTE: The server adds __typename properties that aren't defined in our schema
+    // and aren't used anywhere, so we strip them out to check that the stuff we depend on
+    // is right
+    t.deepEqual(
+      stripTypeNameFromJson(savedManuscript.updateSubmission),
+      stripTypeNameFromJson(expectedUpdatedManuscript),
+      "the manuscript that is saved is the same as the original manuscript",
+    );
+  },
+);
