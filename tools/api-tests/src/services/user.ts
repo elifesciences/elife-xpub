@@ -4,14 +4,27 @@
  * It will provide a list of example users who are in the database and will each have a blank state at startup
  */
 
+import {sign} from 'jsonwebtoken';
+
 export interface UserIdentity {
   token: string;
   identifier: string;
 }
 
+const signUser = (id: string): string => {
+  const payload = {
+    id,
+    iat: new Date().getTime(),
+    exp: new Date().getTime() + 3600,
+    iss: 'xpub',
+  }
+
+  // TODO: This should come out of config
+  return sign(payload, process.env.JWT_SECRET || 'not very secret')
+}
+
 export const defaultTestUser = {
-  token:
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImV3d2JvYzdtIiwiaXNzIjoieHB1YiIsImlhdCI6MTU1OTY1MjEyMiwiZXhwIjoxNTU5NzM4NTIyfQ.tdfPSQ9ltvaGp1TuxZ0Gab-ZHWP-2YevmnRrYkuw4No",
+  token: signUser("ewwboc7m"),
   identifier: "ewwboc7m",
 };
 
