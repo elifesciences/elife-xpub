@@ -4,7 +4,7 @@
 
 import { ApiTestContext } from "./index";
 // import { GraphQLClient} from 'graphql-request';
-import { Manuscript, MutationUpdateManuscriptArgs, EditorAlias } from "../generated/graphql";
+import { Manuscript, MutationUpdateSubmissionArgs, EditorAlias } from "../generated/graphql";
 import { withAuthorization, NotImplementedError } from "../utils";
 
 /**
@@ -24,7 +24,7 @@ const editors = async (_ctx: ApiTestContext): Promise<Array<EditorAlias>> => {
 /**
  * Updates or creates a manuscript
  */
-const updateManuscript = async (ctx: ApiTestContext, data: MutationUpdateManuscriptArgs ): Promise<{updateManuscript: Manuscript}> => {
+const updateManuscript = async (ctx: ApiTestContext, data: MutationUpdateSubmissionArgs ): Promise<{updateManuscript: Manuscript}> => {
   const query = `
 mutation UpdateManuscript($data: ManuscriptInput!) {
   updateManuscript(data: $data) {
