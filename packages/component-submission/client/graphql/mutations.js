@@ -2,9 +2,9 @@ import gql from 'graphql-tag'
 
 import { manuscriptFragment } from './fragments'
 
-export const UPDATE_MANUSCRIPT = gql`
-  mutation UpdateManuscript($data: ManuscriptInput!) {
-    updateManuscript(data: $data) {
+export const updateSubmission = gql`
+  mutation updateSubmission($data: ManuscriptInput!) {
+    updateSubmission(data: $data) {
       ...WholeManuscript
     }
   }

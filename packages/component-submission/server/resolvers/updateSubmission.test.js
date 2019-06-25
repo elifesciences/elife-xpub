@@ -31,13 +31,13 @@ describe('Manuscript resolvers', () => {
     userId = user.id
   })
 
-  describe('updateManuscript', () => {
+  describe('updateSubmission', () => {
     it("fails if manuscript doesn't belong to user", async () => {
       const manuscript = await Manuscript.makeInitial({
         createdBy: userId,
       }).save()
       await expect(
-        Mutation.updateManuscript(
+        Mutation.updateSubmission(
           {},
           { data: { id: manuscript.id } },
           { user: badProfileId },
@@ -51,7 +51,7 @@ describe('Manuscript resolvers', () => {
         status: Manuscript.statuses.MECA_EXPORT_PENDING,
       }).save()
       await expect(
-        Mutation.updateManuscript(
+        Mutation.updateSubmission(
           {},
           { data: { id: manuscript.id } },
           { user: profileId },
@@ -66,7 +66,7 @@ describe('Manuscript resolvers', () => {
         createdBy: userId,
       }).save()
 
-      await Mutation.updateManuscript(
+      await Mutation.updateSubmission(
         {},
         { data: { id: manuscript.id, ...manuscriptInput } },
         { user: profileId },
@@ -80,7 +80,7 @@ describe('Manuscript resolvers', () => {
         createdBy: userId,
       }).save()
 
-      await Mutation.updateManuscript(
+      await Mutation.updateSubmission(
         {},
         { data: { id: manuscript.id, ...manuscriptInput } },
         { user: profileId },
