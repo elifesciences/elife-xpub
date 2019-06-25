@@ -67,6 +67,7 @@ export const SubmissionWizard = ({
   const [currentStep, setCurrentStep] = useState(getCurrentStepFromPath())
   const [isUploading, setIsUploading] = useState(false)
   const [submissionAttempted, setsubmissionAttempted] = useState(false)
+  let updatePromise = Promise.resolve()
 
   const isLastStep = () => currentStep === STEP_NAMES.length - 1
   const initialValues = parseInputToFormData(data.manuscript)
@@ -78,15 +79,35 @@ export const SubmissionWizard = ({
     wizardSchema,
   ]
 
-  const handleSave = formValues =>
-    updateSubmission({
+  // save the promise from the submission update mutation
+  // the reason we are not storing using useState is that its asynchronous
+  const handleSave = formValues => {
+    updatePromise = updateSubmission({
       variables: { data: parseFormToOutputData(formValues) },
     })
 
+    updatePromise
+      .then(() => {
+        updatePromise = Promise.resolve()
+      })
+      .catch(() => {
+        updatePromise = Promise.resolve()
+      })
+
+    return updatePromise
+  }
+
+  // only submit once we are finished updating
+  // this is for the rare case that the form submit while its performing
+  // an auto save
   const handleSubmit = formValues =>
-    submitManuscript({
-      variables: { data: parseFormToOutputData(formValues) },
-    }).then(() => history.push(`/thankyou/${match.params.id}`))
+    updatePromise
+      .then(() =>
+        submitManuscript({
+          variables: { data: parseFormToOutputData(formValues) },
+        }),
+      )
+      .then(() => history.push(`/thankyou/${match.params.id}`))
 
   return (
     <Formik
