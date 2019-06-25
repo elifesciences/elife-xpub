@@ -59,7 +59,6 @@ test("The user can save a submission and the manuscripts endpoint now includes i
     "the new manuscript does not exist in the original list",
   );
 
-  // TODO: Work out exactly what should be here
   const expectedUpdatedManuscript: Manuscript | ManuscriptInput = {
     ...newManuscript.createManuscript,
     ...(manuscriptAuthorDelta as Manuscript),
@@ -181,8 +180,6 @@ test("can save editors", async (t: TestContext) => {
   };
 
   const fetchedManuscript = await submission.Query.getSubmission(context, {  id: newManuscript.createManuscript.id });
-
-  // TODO: Get the updated submission from `getSubmission`, not from the returned value
 
   // NOTE: The server adds __typename properties for use internally, we don't need to assert on them so I've
   // removed them
