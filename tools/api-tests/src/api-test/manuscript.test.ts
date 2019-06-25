@@ -34,7 +34,7 @@ test(
     };
 
     // TODO: Test updating other fields in the form - really exercise those database relations!
-    const savedManuscript = await submission.Mutation.updateManuscript(context, {data: manuscriptAuthorDelta});
+    const savedManuscript = await submission.Mutation.updateSubmission(context, {data: manuscriptAuthorDelta});
 
     const afterUpdating = await dashboard.Query.manuscripts(context);
 
@@ -47,7 +47,7 @@ test(
     // Check that the new manuscript exists in the users new manuscripts
     t.truthy(
       afterUpdating.manuscripts.filter(
-        (manuscript: Manuscript) => manuscript.id === savedManuscript.updateManuscript.id,
+        (manuscript: Manuscript) => manuscript.id === savedManuscript.updateSubmission.id,
       ).length === 1,
       "the new manuscript exists in the updated list of manuscripts",
     );
@@ -55,7 +55,7 @@ test(
     // Check that the new manuscript does not exist in the user's old manuscript list
     t.truthy(
       initialManuscripts.manuscripts.filter(
-        (manuscript: Manuscript) => manuscript.id === savedManuscript.updateManuscript.id,
+        (manuscript: Manuscript) => manuscript.id === savedManuscript.updateSubmission.id,
       ).length === 0,
       "the new manuscript does not exist in the original list",
     );
@@ -72,7 +72,7 @@ test(
     // and aren't used anywhere, so we strip them out to check that the stuff we depend on
     // is right
     t.deepEqual(
-      stripTypeNameFromJson(savedManuscript.updateManuscript),
+      stripTypeNameFromJson(savedManuscript.updateSubmission),
       stripTypeNameFromJson(expectedUpdatedManuscript),
       "the manuscript that is saved is the same as the original manuscript",
     );
