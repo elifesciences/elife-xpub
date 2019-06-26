@@ -109,6 +109,15 @@ export const SubmissionWizard = ({
       )
       .then(() => history.push(`/thankyou/${match.params.id}`))
 
+  const navigateToStep = step => {
+    setCurrentStep(step)
+
+    history.push(`${match.url}/${STEP_NAMES[step].toLowerCase()}`)
+
+    // scroll to top
+    window.scrollTo(0, 0)
+  }
+
   return (
     <Formik
       initialValues={initialValues}
@@ -205,12 +214,7 @@ export const SubmissionWizard = ({
                       data-test-id="back"
                       disabled={currentStep === 0}
                       onClick={() => {
-                        setCurrentStep(currentStep - 1)
-                        history.push(
-                          `${match.url}/${STEP_NAMES[
-                            currentStep - 1
-                          ].toLowerCase()}`,
-                        )
+                        navigateToStep(currentStep - 1)
                       }}
                     >
                       Back
@@ -230,12 +234,7 @@ export const SubmissionWizard = ({
                         onClick={() => {
                           formikProps.validateForm().then(errors => {
                             if (!Object.keys(errors).length) {
-                              setCurrentStep(currentStep + 1)
-                              history.push(
-                                `${match.url}/${STEP_NAMES[
-                                  currentStep + 1
-                                ].toLowerCase()}`,
-                              )
+                              navigateToStep(currentStep + 1)
                             }
                             touchAllErrorFields(errors)
                           })

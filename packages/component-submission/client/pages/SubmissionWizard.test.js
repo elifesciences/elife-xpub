@@ -94,6 +94,7 @@ describe('SubmissionWizard', async () => {
     // eslint-disable-next-line no-console
     const consoleError = console.error
     const pushHistory = jest.fn()
+    const scrollSpy = jest.spyOn(window, 'scrollTo')
 
     const testStepNavigation = async (currentPath, nextStep, buttonId) => {
       const opts = renderWithPath(currentPath, pushHistory)
@@ -141,6 +142,34 @@ describe('SubmissionWizard', async () => {
       await testStepNavigation('/submit/id/details', '/files', 'back')
       await testStepNavigation('/submit/id/editors', '/details', 'back')
       await testStepNavigation('/submit/id/disclosure', '/editors', 'back')
+    })
+
+    it('scrolls to top on next', async () => {
+      const { getByTestId } = renderWithPath('/submit/id/author', pushHistory)
+
+      expect(scrollSpy).toBeCalledTimes(0)
+
+      fireEvent.click(getByTestId('next'))
+      await flushPromises()
+
+      expect(scrollSpy).toBeCalledTimes(1)
+      expect(scrollSpy).toBeCalledWith(0, 0)
+    })
+
+    it('scrolls to top on back', async () => {
+      const { getByTestId } = renderWithPath('/submit/id/files', pushHistory)
+
+      expect(scrollSpy).toBeCalledTimes(0)
+
+      fireEvent.click(getByTestId('back'))
+      await flushPromises()
+
+      expect(scrollSpy).toBeCalledTimes(1)
+      expect(scrollSpy).toBeCalledWith(0, 0)
+    })
+
+    afterEach(() => {
+      scrollSpy.mockClear()
     })
 
     afterAll(() => {
