@@ -64,6 +64,13 @@ class ModalOverlay extends React.Component {
     }
   }
 
+  //   eslint-disable-next-line class-methods-use-this
+  componentWillUnmount() {
+    // unset the no scrolling behaviour otherwise the user can't scroll anymore
+    document.documentElement.style.overflow = ''
+    document.body.style.overflow = ''
+  }
+
   render() {
     const { children, open, theme, transparentBackground } = this.props
     return (
