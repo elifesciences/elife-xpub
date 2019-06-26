@@ -26,6 +26,35 @@ const manuscript = {
 const supportingFileLarge = './fixtures/dummy-pdf-test11MB.pdf'
 const getPageUrl = ClientFunction(() => window.location.href)
 
+test('Persistence of form data', async t => {
+  const navigationHelper = new NavigationHelper(t)
+  await navigationHelper.login()
+  await navigationHelper.newSubmission()
+  await navigationHelper.preFillAuthorDetailsWithOrcid()
+  await navigationHelper.setAuthorEmail('example@example.org')
+  await navigationHelper.navigateForward()
+
+  navigationHelper.fillShortCoverletter()
+  navigationHelper.uploadManuscript(manuscript)
+  navigationHelper.navigateForward()
+
+  navigationHelper.addNecessaryManuscriptMetadata()
+  navigationHelper.navigateForward()
+
+  navigationHelper.openEditorsPicker()
+  navigationHelper.selectPeople([1, 2])
+  navigationHelper.closePeoplePicker()
+
+  navigationHelper.openReviewerPicker()
+  navigationHelper.selectPeople([1, 2])
+  navigationHelper.closePeoplePicker()
+
+  navigationHelper.navigateForward()
+  await navigationHelper.navigateBack()
+  await navigationHelper.reloadPage()
+  await t.expect(editors.peoplePods.count).eql(6)
+})
+
 test('Happy path', async t => {
   const navigationHelper = new NavigationHelper(t)
   navigationHelper.login()

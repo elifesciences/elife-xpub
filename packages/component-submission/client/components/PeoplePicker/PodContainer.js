@@ -88,7 +88,7 @@ const PodContainer = ({
   children,
   ...props
 }) => (
-  <StyledPod justifyContent="space-between">
+  <StyledPod data-test-id="person-pod" justifyContent="space-between">
     {children}
     <ButtonContainer>
       {selectButtonType === 'remove' && (
