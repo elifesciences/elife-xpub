@@ -361,9 +361,9 @@ const JournalPolicies = props => (
         the Open Science Framework
       </NativeLink>
       ) where a domain specific archive does not exist. A comprehensive
-      catalogue of databases has been compiled by the{' '}
-      <NativeLink href="https://fairsharing.org/" target="_blank">
-        FAIRsharing information resource
+      catalogue of recommended databases is available at the{' '}
+      <NativeLink href="https://fairsharing.org/recommendation/eLifeRecommendedRepositoriesandStandards" target="_blank">
+        FAIRsharing Resource
       </NativeLink>
       .
     </Paragraph.Reading>
