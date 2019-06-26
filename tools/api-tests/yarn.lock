@@ -4618,6 +4618,11 @@ no-case@^2.2.0, no-case@^2.3.2:
   dependencies:
     lower-case "^1.1.1"
 
+node-config@^0.0.2:
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/node-config/-/node-config-0.0.2.tgz#46b40dcfbcb0e66d46a15f81b54eac2130fb150d"
+  integrity sha1-RrQNz7yw5m1GoV+BtU6sITD7FQ0=
+
 node-fetch@2.1.2:
   version "2.1.2"
   resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.1.2.tgz#ab884e8e7e57e38a944753cec706f788d1768bb5"

@@ -2,14 +2,14 @@ FROM node:10
 
 WORKDIR /opt
 
-MAINTAINER Peter East <petereast+github@pm.me>
+MAINTAINER Peter East <petereast+pgp@pm.me>
 
 COPY package.json .
-
 RUN ["npm", "i"]
+
+COPY tsconfig.json .
+COPY codegen-docker.yml .
 
 COPY src src
 
-Run ["npm", "run", "build"]
-
-CMD ["npm", "run", "test"]
+CMD npm run graphql:codegen:docker && npm run compile && npm start

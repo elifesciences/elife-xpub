@@ -2,4 +2,12 @@ version: '3'
 services:
   api-test:
     build: '.'
-    network_mode: 'host'
+    networks:
+      - 'elife-xpub_default'
+    environment:
+      JWT_SECRET:
+
+networks:
+  elife-xpub_default:
+    external:
+      name: 'elife-xpub_default'

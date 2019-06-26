@@ -1,13 +1,18 @@
 import { test, TestContext } from "ava-ts";
 import dashboard from "../xpub-api/dashboard";
 import submission from "../xpub-api/submission";
+import user from '../xpub-api/user';
 import { defaultConfig } from "../xpub-api";
 import { Manuscript, ManuscriptInput } from "../generated/graphql";
 import { stripTypeNameFromJson } from "../utils";
 
-test.todo("The user can submit a manuscript, and other queries update correctly");
+test.beforeEach(async _ => {
+  const {currentUser}= await user.Query.currentUser(defaultConfig());
+  console.log(currentUser);
+});
 
 test("The user can save a submission and the manuscripts endpoint now includes it", async (t: TestContext) => {
+
   const context = defaultConfig();
 
   const initialManuscripts = await dashboard.Query.manuscripts(context);

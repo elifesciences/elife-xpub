@@ -8,7 +8,7 @@
  */
 
 import { Option, Some } from "funfix";
-import { defaultTestUser } from "../services/user";
+import { UserIdentity, defaultTestUser } from "../services/user";
 
 /**
  * An object with this type is passed into each test helper, meaning each helper has access to global values
@@ -27,6 +27,11 @@ export interface TestState {
    */
   api_version: string;
   connection: ConnectionInfo;
+
+  /**
+   * The user identity
+   */
+  user: UserIdentity;
 }
 
 export interface ConnectionInfo {
@@ -46,6 +51,7 @@ export interface ConnectionInfo {
    * Any other headers used for all requests
    */
   headers: object;
+
 }
 
 /**
@@ -64,8 +70,9 @@ export interface GqlChunk {
 export const defaultConfig = (): ApiTestContext => ({
   state: {
     api_version: "0",
+    user: defaultTestUser,
     connection: {
-      graphql_url: "http://localhost:3000/graphql",
+      graphql_url: "http://app:3000/graphql",
       authorization: Some("Bearer ").map((t) => t + defaultTestUser.token),
       headers: {},
     },
