@@ -24,15 +24,15 @@ const manuscript = {
 test('test suppressions', async t => {
   const navigationHelper = new NavigationHelper(t)
 
-  navigationHelper.login()
-  navigationHelper.openProfile()
-
+  await navigationHelper.login()
+  await navigationHelper.openProfile()
   await t.expect(profile.name, { 'data-hj-suppress': '' }).ok()
   navigationHelper.newSubmission()
 
   // author's page
   navigationHelper.preFillAuthorDetailsWithOrcid()
   navigationHelper.setAuthorEmail('example@example.org')
+  await navigationHelper.clearCookieNotification()
   navigationHelper.navigateForward()
 
   // files' page

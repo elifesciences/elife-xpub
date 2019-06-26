@@ -42,8 +42,12 @@ class NavigationHelper {
 
   async startAtRedirect() {
     await this.t.navigateTo(redirect.url).click(redirect.button, OPTS)
+    await this.clearCookieNotification()
+  }
 
-    if (Selector(cookie.button)) {
+  async clearCookieNotification() {
+    const cookieNoticeExists = await Selector(cookie.button).exists
+    if (cookieNoticeExists) {
       await this.t.click(Selector(cookie.button, OPTS))
     }
     await this.wait(1000)
@@ -51,10 +55,7 @@ class NavigationHelper {
 
   async login() {
     await this.t.navigateTo(login.url).click(login.button, OPTS)
-
-    if (Selector(cookie.button)) {
-      await this.t.click(Selector(cookie.button, OPTS))
-    }
+    await this.clearCookieNotification()
   }
 
   async openProfile() {
