@@ -228,9 +228,10 @@ const JournalPolicies = props => (
     <H2>Competing Interests</H2>
 
     <Paragraph.Reading>
-      Authors, reviewers, and editors are all required to declare any competing
-      interests that might be perceived to interfere with the objectivity of the
-      presentation or handling of the work. For further information on competing
+      Authors, reviewers, and editors are all required to declare any competing interests that might be perceived to 
+      interfere with the objectivity of the presentation or handling of the work. Any relevant patents, patent applications,
+      and products in development that relate to a submission must be disclosed in full, including patent numbers and titles. 
+      For further information on competing
       interests, see the{' '}
       <NativeLink
         href="http://www.icmje.org/recommendations/browse/roles-and-responsibilities/author-responsibilities--conflicts-of-interest.html"
@@ -360,9 +361,9 @@ const JournalPolicies = props => (
         the Open Science Framework
       </NativeLink>
       ) where a domain specific archive does not exist. A comprehensive
-      catalogue of databases has been compiled by the{' '}
-      <NativeLink href="https://fairsharing.org/" target="_blank">
-        FAIRsharing information resource
+      catalogue of recommended databases is available at the{' '}
+      <NativeLink href="https://fairsharing.org/recommendation/eLifeRecommendedRepositoriesandStandards" target="_blank">
+        FAIRsharing Resource
       </NativeLink>
       .
     </Paragraph.Reading>
