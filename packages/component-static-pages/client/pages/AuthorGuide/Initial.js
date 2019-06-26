@@ -95,9 +95,12 @@ const Initial = props => (
           .
         </Paragraph.Reading>
         <Paragraph.Reading>
-          On first mention, please provide details of any manufacturers in the
-          following format: company name, city, country (or state, if based in
-          the United States).
+          On first mention, please provide details of any manufacturers in the following format: 
+          company name, city, country (or state, if based in the United States).
+        </Paragraph.Reading>
+        <Paragraph.Reading>
+          Any footnotes (including commentary or footnotes embedded within the reference list) should be 
+          placed inside parentheses at the appropriate place in the main text.
         </Paragraph.Reading>
       </li>
       <li>
@@ -309,7 +312,7 @@ const Initial = props => (
           </NativeLink>
           ,{' '}
           <NativeLink
-            href="https://elifesciences.org/about/people/genetics-and-genomics"
+            href="https://elifesciences.org/about/people/genetics-genomics"
             target="_blank"
           >
             Genetics and Genomics
