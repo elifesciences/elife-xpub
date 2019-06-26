@@ -3,16 +3,16 @@
  * The graphql definitions are located in 'packages/component-dashboard/server/typeDefs.graphqls'
  */
 
-import { ApiTestContext, GqlChunk } from "./index";
+import { ApiTestContext } from "./index";
 import { GraphQLClient } from "graphql-request";
 import { Manuscript } from "../generated/graphql";
-import { NotImplementedError } from "../utils";
+import { withAuthorization, NotImplementedError } from "../utils";
 
 /**
  * Returns the manuscripts for the logged in user
  * return type: [Manuscript]!
  */
-const manuscripts = async (ctx: ApiTestContext): Promise<Manuscript[]> => {
+const manuscripts = async (ctx: ApiTestContext): Promise<{manuscripts: Manuscript[]}> => {
   const query = `
 query DashboardManuscripts {
   manuscripts {
@@ -37,9 +37,91 @@ query DashboardManuscripts {
   return await gqlClient.request(query);
 };
 
-const createManuscript = async (_ctx: ApiTestContext): Promise<{}> => {
-  throw new NotImplementedError();
-  return {};
+const createManuscript = async (ctx: ApiTestContext): Promise<{createManuscript: Manuscript}> => {
+  const query  = `
+mutation CreateManuscript {
+  createManuscript {
+    ...WholeManuscript
+    __typename
+  }
+}
+fragment WholeManuscript on Manuscript {
+  id
+  clientStatus
+  meta {
+    title
+    articleType
+    subjects
+    __typename
+  }
+  lastStepVisited
+  suggestedSeniorEditors: assignees(role: "suggestedSeniorEditor") {
+    ...EditorDetails
+    __typename
+  }
+  opposedSeniorEditors: assignees(role: "opposedSeniorEditor") {
+    ...EditorDetails
+    __typename
+  }
+  opposedSeniorEditorsReason
+  suggestedReviewingEditors: assignees(role: "suggestedReviewingEditor") {
+    ...EditorDetails
+    __typename
+  }
+  opposedReviewingEditors: assignees(role: "opposedReviewingEditor") {
+    ...EditorDetails
+    __typename
+  }
+  opposedReviewingEditorsReason
+  suggestedReviewers: assignees(role: "suggestedReviewer") {
+    ...ReviewerDetails
+    __typename
+  }
+  opposedReviewers: assignees(role: "opposedReviewer") {
+    ...ReviewerDetails
+    __typename
+  }
+  opposedReviewersReason
+  files {
+    downloadLink
+    filename
+    type
+    status
+    id
+    __typename
+  }
+  coverLetter
+  author {
+    firstName
+    lastName
+    email
+    aff
+    __typename
+  }
+  previouslyDiscussed
+  previouslySubmitted
+  cosubmission
+  submitterSignature
+  disclosureConsent
+  fileStatus
+  __typename
+}
+fragment EditorDetails on EditorAlias {
+  id
+  name
+  aff
+  focuses
+  expertises
+  __typename
+}
+fragment ReviewerDetails on ReviewerAlias {
+  name
+  email
+  __typename
+}
+  `;
+
+  return await withAuthorization(ctx, query);
 };
 
 const deleteManuscript = async (_ctx: ApiTestContext): Promise<{}> => {
@@ -50,7 +132,7 @@ const deleteManuscript = async (_ctx: ApiTestContext): Promise<{}> => {
 /**
  * Returns a thing that'll perform the queries/mutations and return them
  */
-const resolvers: GqlChunk = {
+const resolvers = {
   Query: {
     manuscripts,
   },

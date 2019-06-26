@@ -2,19 +2,118 @@
  * Helpers for component-submission
  */
 
-import { ApiTestContext, GqlChunk } from "./index";
+import { ApiTestContext } from "./index";
 // import { GraphQLClient} from 'graphql-request';
-import { Manuscript, EditorAlias } from "../generated/graphql";
+import { Manuscript, QueryManuscriptArgs, MutationUpdateSubmissionArgs, EditorAlias } from "../generated/graphql";
 import { withAuthorization, NotImplementedError } from "../utils";
 
 /**
  * Gets a manuscript
  */
-const manuscript = async (ctx: ApiTestContext): Promise<Manuscript> => {
-  const query = ``;
-
-  return await withAuthorization(ctx, query);
+const manuscript = async (_ctx: ApiTestContext): Promise<Manuscript> => {
   throw new NotImplementedError();
+};
+
+const getSubmission = async (ctx: ApiTestContext, data: QueryManuscriptArgs ): Promise<{manuscript: Manuscript}> => {
+  const query = `
+query getSubmission($id: ID!) {
+  manuscript(id: $id) {
+    ...WholeManuscript
+    __typename
+  }
+}
+
+fragment WholeManuscript on Manuscript {
+  id
+  clientStatus
+  meta {
+    title
+    articleType
+    subjects
+    __typename
+  }
+  lastStepVisited
+  suggestedSeniorEditors: assignees(role: "suggestedSeniorEditor") {
+    ...EditorDetails
+    __typename
+  }
+  opposedSeniorEditors: assignees(role: "opposedSeniorEditor") {
+    ...EditorDetails
+    __typename
+  }
+  opposedSeniorEditorsReason
+  suggestedReviewingEditors: assignees(role: "suggestedReviewingEditor") {
+    ...EditorDetails
+    __typename
+  }
+  opposedReviewingEditors: assignees(role: "opposedReviewingEditor") {
+    ...EditorDetails
+    __typename
+  }
+  opposedReviewingEditorsReason
+  suggestedReviewers: assignees(role: "suggestedReviewer") {
+    ...ReviewerDetails
+    __typename
+  }
+  opposedReviewers: assignees(role: "opposedReviewer") {
+    ...ReviewerDetails
+    __typename
+  }
+  opposedReviewersReason
+  files {
+    downloadLink
+    filename
+    type
+    status
+    id
+    __typename
+  }
+  coverLetter
+  author {
+    firstName
+    lastName
+    email
+    aff
+    __typename
+  }
+  previouslyDiscussed
+  previouslySubmitted
+  cosubmission
+  submitterSignature
+  disclosureConsent
+  fileStatus
+  suggestions {
+    fieldName
+    suggestions {
+      value
+      score
+      updated
+      method
+      __typename
+    }
+    __typename
+  }
+  __typename
+}
+
+fragment EditorDetails on EditorAlias {
+  id
+  name
+  aff
+  focuses
+  expertises
+  __typename
+}
+
+fragment ReviewerDetails on ReviewerAlias {
+  name
+  email
+  __typename
+}
+
+  `;
+
+  return (await withAuthorization(ctx, query, data ));
 };
 
 /**
@@ -27,9 +126,91 @@ const editors = async (_ctx: ApiTestContext): Promise<Array<EditorAlias>> => {
 /**
  * Updates or creates a manuscript
  */
-const updateManuscript = async (_ctx: ApiTestContext, data: Manuscript): Promise<Manuscript> => {
-  console.log(data);
-  throw new NotImplementedError();
+const updateSubmission = async (ctx: ApiTestContext, data: MutationUpdateSubmissionArgs ): Promise<{updateSubmission: Manuscript}> => {
+  const query = `
+mutation UpdateSubmission($data: ManuscriptInput!) {
+  updateSubmission(data: $data) {
+    ...WholeManuscript
+    __typename
+  }
+}
+fragment WholeManuscript on Manuscript {
+  id
+  clientStatus
+  meta {
+    title
+    articleType
+    subjects
+    __typename
+  }
+  lastStepVisited
+  suggestedSeniorEditors: assignees(role: "suggestedSeniorEditor") {
+    ...EditorDetails
+    __typename
+  }
+  opposedSeniorEditors: assignees(role: "opposedSeniorEditor") {
+    ...EditorDetails
+    __typename
+  }
+  opposedSeniorEditorsReason
+  suggestedReviewingEditors: assignees(role: "suggestedReviewingEditor") {
+    ...EditorDetails
+    __typename
+  }
+  opposedReviewingEditors: assignees(role: "opposedReviewingEditor") {
+    ...EditorDetails
+    __typename
+  }
+  opposedReviewingEditorsReason
+  suggestedReviewers: assignees(role: "suggestedReviewer") {
+    ...ReviewerDetails
+    __typename
+  }
+  opposedReviewers: assignees(role: "opposedReviewer") {
+    ...ReviewerDetails
+    __typename
+  }
+  opposedReviewersReason
+  files {
+    downloadLink
+    filename
+    type
+    status
+    id
+    __typename
+  }
+  coverLetter
+  author {
+    firstName
+    lastName
+    email
+    aff
+    __typename
+  }
+  previouslyDiscussed
+  previouslySubmitted
+  cosubmission
+  submitterSignature
+  disclosureConsent
+  fileStatus
+  __typename
+}
+fragment EditorDetails on EditorAlias {
+  id
+  name
+  aff
+  focuses
+  expertises
+  __typename
+}
+fragment ReviewerDetails on ReviewerAlias {
+  name
+  email
+  __typename
+}
+  `;
+
+  return await withAuthorization(ctx, query, data );
 };
 
 /**
@@ -74,10 +255,10 @@ const fileUploadProgress = async (_ctx: ApiTestContext): Promise<Manuscript> => 
   throw new NotImplementedError();
 };
 
-const resolvers: GqlChunk = {
-  Query: { manuscript, editors },
+const resolvers = {
+  Query: { manuscript, editors, getSubmission},
   Mutation: {
-    updateManuscript,
+    updateSubmission,
     submitManuscript,
     uploadManuscript,
     uploadSupportingFile,

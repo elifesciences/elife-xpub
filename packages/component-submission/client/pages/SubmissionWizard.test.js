@@ -148,4 +148,38 @@ describe('SubmissionWizard', async () => {
       console.error = consoleError
     })
   })
+
+  describe('Step titles', () => {
+    it('displays correct title on Author step', () => {
+      expect(
+        renderWithPath('/submit/id/author').getByText('Your details'),
+      ).toBeInTheDocument()
+    })
+    it('displays correct title on Files step', () => {
+      expect(
+        renderWithPath('/submit/id/files').getByText('Your cover letter'),
+      ).toBeInTheDocument()
+    })
+    it('displays correct title on Details step', () => {
+      expect(
+        renderWithPath('/submit/id/details').getByText(
+          'Help us get your work seen by the right people',
+        ),
+      ).toBeInTheDocument()
+    })
+    it('displays correct title on Editors step', () => {
+      expect(
+        renderWithPath('/submit/id/editors').getByText(
+          'Who should review your work?',
+        ),
+      ).toBeInTheDocument()
+    })
+    it('displays correct title on Disclosure step', () => {
+      expect(
+        renderWithPath('/submit/id/disclosure').getByText(
+          'Disclosure of data to editors',
+        ),
+      ).toBeInTheDocument()
+    })
+  })
 })
