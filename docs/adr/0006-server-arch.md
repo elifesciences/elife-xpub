@@ -123,7 +123,7 @@ are handled at this level if necessary or passed back to the higher levels.
 async updateSubmissionUseCase(submissionId, user, data) => {
   checkPermission(submissionId, user)
 
-  const submission = await submissionRepository.findById(submissionId)
+  const submission = await this.submissionRepository.findById(submissionId)
 
   // we assume those methods are defined elsewhere
   const submissionData = getSubmissionData(data)
@@ -182,7 +182,8 @@ Person Entity:
 ```js
 class Person {
   constructor(id, firstName, lastName) {
-    ;(this.id = id), (this.firstName = firstName)
+    this.id = id
+    this.firstName = firstName
     this.lastName = lastName
   }
 
@@ -277,10 +278,10 @@ describe('Submission') {
 
 ### Repositories
 
-- A Repository is responsible for persisting and retrieving Aggregates from a storage location (usually a database)
-- There usuall is one Repository per Aggregate, but in some case it might be acceptable for a Repository to operate
+- A Repository is responsible for persisting and retrieving Aggregates from one or more storage locations (usually a database)
+- There usually is one Repository per Aggregate, but in some case it might be acceptable for a Repository to operate
   on more than one Aggregate.
-- A repository can either use a query builder or an ORM to interact with the database.
+- A Repository can either use a query builder or an ORM to interact with the database.
 
 #### Example
 
@@ -290,7 +291,6 @@ Note: The query builder code is just for illustration purposes only.
 class SubmissionRepository {
   findById(submissionId) {
     return new Submission(
-      // generic database query builder, pr
       this.db
         .table('manuscript')
         .where({ id: submissionId })
@@ -339,7 +339,7 @@ describe('SubmissionRepository', () => {
     const submission = submissionRepository.findById('id')
 
     expect(submission).not.toBeNull()
-    expect(submission.toJson).toEqual({
+    expect(submission.toJson()).toEqual({
       /* expected submission data */
     })
   })
@@ -351,7 +351,7 @@ describe('SubmissionRepository', () => {
     const submission = submissionRepository.findById('id')
 
     expect(submission).not.toBeNull()
-    expect(submission.toJson).toEqual({
+    expect(submission.toJson()).toEqual({
       /* expected submission data */
     })
   })
