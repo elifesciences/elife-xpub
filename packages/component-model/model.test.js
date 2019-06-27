@@ -128,8 +128,15 @@ describe('related objects behave as we expect', () => {
     })
 
     it('files are not replaced on the manuscript', async () => {
+      // Achieving what the test describes in code can be done
+      // with noUnrelate: only adds more related things, never
+      // removes them. This is not default expected behaviour though,
+      // as you'd usually want your graph to directly sync with the
+      // database (otherwise you need to special case unrelating when
+      // updating), so specifying it as an exceptional option makes sense.
       let manuscript = await createManuscriptWithOneFile(userId)
       const oldFileId = manuscript.files[0].id
+
       const file = new File({
         manuscriptId: manuscript.id,
         filename: 'test2.txt',
@@ -137,12 +144,11 @@ describe('related objects behave as we expect', () => {
         type: 'test2_file',
       })
       manuscript.files[0] = file
-      await manuscript.saveGraph()
+      await manuscript.saveGraph({ noUnrelate: true })
 
       // in memory
-      expect(manuscript.files).toHaveLength(2)
-      expect(manuscript.files[0].filename).toBe('test.txt')
-      expect(manuscript.files[1].filename).toBe('test2.txt')
+      expect(manuscript.files).toHaveLength(1)
+      expect(manuscript.files[0].filename).toBe('test2.txt')
       expect(File.find(oldFileId)).toBeTruthy()
 
       manuscript = await Manuscript.find(manuscript.id, userId)
@@ -167,49 +173,44 @@ describe('related objects behave as we expect', () => {
       expect(manuscript.meta.title).toBe('changed')
     })
 
-    it('successive entity changes without re-queries are bad', async () => {
+    it('successive entity changes are OK as long as entities are fresh', async () => {
       const manuscript = await createManuscriptWithOneFile(userId)
       const fileId = manuscript.files[0].id
+      const staleFile = await File.find(fileId)
       let file = await File.find(fileId)
 
       expect(file.status).toBe('CREATED')
 
       file.status = 'UPLOADED'
+
       await file.saveGraph()
 
       expect(file).toHaveProperty('id')
       expect(file.status).toBe('UPLOADED')
-
       file.status = 'STORED'
-      // saving at this point causes pubsweet to throw a ValidationError
-      // This should be fixed the next time we upgrade and so the
-      // behaviour will change
-      expect(file.saveGraph()).rejects.toThrow()
+
+      await expect(file.save()).resolves.toBe(file)
+
+      staleFile.status = 'UPLOADED'
+      await expect(staleFile.save()).rejects.toThrow(/Data Integrity Error/)
 
       // re-query
       file = await File.find(fileId)
       expect(file).toHaveProperty('id')
-      // the following is really not expected
-      // but is how things work with the current bug
-      expect(file.status).toBe('UPLOADED')
+      expect(file.status).toBe('STORED')
     })
 
-    it('successive entity changes need re-queries', async () => {
+    it('successive entity changes do not need re-queries', async () => {
       const manuscript = await createManuscriptWithOneFile(userId)
       const fileId = manuscript.files[0].id
-      let file = await File.find(fileId)
+      const file = await File.find(fileId)
 
       file.status = 'UPLOADED'
       await file.saveGraph()
-
-      file = await File.find(fileId)
       expect(file).toHaveProperty('id')
       expect(file.status).toBe('UPLOADED')
-
       file.status = 'STORED'
       await file.saveGraph()
-
-      file = await File.find(fileId)
       expect(file).toHaveProperty('id')
       expect(file.status).toBe('STORED')
 
