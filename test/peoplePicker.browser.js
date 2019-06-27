@@ -42,7 +42,7 @@ test('People Picker', async t => {
     .click(Selector('[data-test-id="cancel"]'))
 
   // click on an editor already added, it should display 'REMOVE EDITOR'
-  await t.click(editors.peoplePickerInfo.nth(9))
+  await t.click(editors.peoplePickerInfo.nth(3))
   await t
     .expect(Selector('[data-test-id="accept"]').innerText)
     .eql('REMOVE EDITOR')
