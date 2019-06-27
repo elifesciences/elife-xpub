@@ -41,7 +41,7 @@ there will be a package that implements this pattern for that domain.
 Each of the following sections describes the general principles that are to
 be used when writing code. This approach uses SOLID Principles.
 
-### Value Obejcts
+### Value Objects
 
 - A Value Object are useful for representing concepts that have intrinsic rules
   but lack identity.
