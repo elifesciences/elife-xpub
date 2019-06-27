@@ -25,15 +25,15 @@ there will be a package that implements this pattern for that domain.
     +------------------------------------------+
                |
     +----------------------+       +-----------+
-    |      use cases       +<------+  config   |
+    |      Use Cases       +<------+  config   |
     +----------------------+       +-----------+
         |           |                    |
         |     +------------+       +-----------+
-        |     | Aggregates |       | services  |
+        |     | Aggregates |       | Services  |
         |     +------------+       +-----------+
         |
     +------------------------------------------+
-    |              repositories                |
+    |              Repositories                |
     +------------------------------------------+
     |           data access layer              |
     +------------------------------------------+
@@ -61,17 +61,19 @@ be used when writing code. This approach uses SOLID Principles.
 const { getSubmissionUseCase, updateSubmissionUseCase } = require('../use-cases')
 const { submissionRepository } = require('../repositories')
 
+const submissionRepository = new SubmissionRepository
+
 const resolvers = {
   Query: {
     async submission(_, { id }, { user }) {
-      return getSubmissionUseCase.initialize(new SubmissionRepository)
+      return getSubmissionUseCase.initialize(submissionRepository)
         .execute(id, user)
     },
   },
 
   Mutation: {
     async updateSubmission(_, { data }, { user }) {
-      return updateSubmissionUseCase.initialize(new SubmissionRepository)
+      return updateSubmissionUseCase.initialize(submissionRepository)
         .execute(data.id, user, data)
     }
   },
@@ -108,7 +110,7 @@ async getSubmissionUseCase(submissionId, user) => {
 ##### use-cases/updateSubmissionUseCase
 
 A more elaborate use case is one that involves change the state of an Aggregate. The basic
-workflow is to
+workflow is:
 
 - retrieve the Aggregate Root
 - call the necessary methods of the Aggregate Root
@@ -123,6 +125,7 @@ async updateSubmissionUseCase(submissionId, user, data) => {
 
   const submission = await submissionRepository.findById(submissionId)
 
+  // we assume those methods are defined elsewhere
   const submissionData = getSubmissionData(data)
   const editorTeams = getEditorTeams(data)
   const reviewerTeams = getReviewerTeams(data)
@@ -145,10 +148,12 @@ async updateSubmissionUseCase(submissionId, user, data) => {
 
 ### Value Obejcts
 
-- A Value Object represents a concept that is defined only by its attributes. For example, two streets
-  with exactly the same name and post code should be represented by a value object since there
-  is only representation possible. Value Objects are
-- Value Objects are immutable
+- A Value Object are useful for representing concepts that have intrinsic rules
+  but lack identity.
+- Two value objects that have exactly the same properties are considered to be equal.
+  For example, two streets with exactly the same name and post code should be represented by the
+  same value object.
+- Value Objects are immutable and cannot be changed once instantiated.
 
 #### Example:
 
@@ -168,7 +173,7 @@ class Street {
   by a thread of continuity and identity._"
 - For example, two persons might share the same first name and last name but are two different
   persons, hence they would be represented by an Entity.
-- Entities may provide methods to change or operate on internal attributes
+- Entities may provide methods to change or operate on internal attributes.
 
 #### Example
 
@@ -193,19 +198,30 @@ class Person {
 
 ### The Aggregate
 
-- [See DDD_Aggregates](https://www.martinfowler.com/bliki/DDD_Aggregate.html)
-  summarised by the following:
-- The Aggregate is composed of Entities or Value Objects, with one of those (usually an Entity)
-  as the Aggregate Root that serves as the entry point to the whole Aggregate
-- The Aggregate enforces a consistency boundary across all the objects it manages.
-- Aggregates are domain concepts
-- No persistent references to objects other than the Aggregate Root from
-  outside the Aggregate (e.g. no fields referring to them and/or
-  foreign keys, but passing them around for computation is ok)
+- An Aggregate is a collection of one or more related Entities and possibly Value Objects
+- Access to the Aggregate is done through an Entity called the Aggregate Root.
+- The Aggregate Root enforces the consistency rules throughout the Aggregate and therefore
+  should not expose access to any of its children.
 - No transaction crosses Aggregates boundaries, as they are the unit of
   consistency.
-- An Aggregate is represented by a class instance that has no knowledge of persistence
-  in the database.
+
+#### What goes in an Aggregate ?
+
+- Its possible for an Aggregate to consist of oone Entity and nothing else.
+- As a rule of thumb, if deleting an Aggregate Root does not delete some of its children,
+  then those children probably belong to a different Aggregate.
+
+#### Persistence
+
+- Persistence is done via a Repository (see below)
+- The Entities and Value Ojects in the Aggregate, including the Aggregate Root, must not
+  have any storage functionality. All functionality should operate in memory without relying
+  on any implementation detail from a persistence mechanism.
+
+#### Links:
+
+- [DDD_Aggregates](https://www.martinfowler.com/bliki/DDD_Aggregate.html)
+- [Aggregate Pattern](https://deviq.com/aggregate-pattern/)
 
 #### Example
 
@@ -241,19 +257,20 @@ Testing of Aggregates (and also entities) is done in memory only:
 
 ```js
 describe('Submission') {
-it('should update the manuscript', () => {
-  const submission = new Submission({
-    // submission data
-  }, [{
-    // team data
-  }])
+  it('should update the manuscript', () => {
+    const submission = new Submission({
+      // submission data
+    }, [{
+      // team data
+    }])
 
-  submission.update({
-    // updated submission data
-  })
+    submission.update({
+      // updated submission data
+    })
 
-  expect(submission.toJSON()).isEqual({
-    // expected json representation
+    expect(submission.toJSON()).isEqual({
+      // expected json representation
+    })
   })
 })}
 ```
@@ -261,9 +278,9 @@ it('should update the manuscript', () => {
 ### Repositories
 
 - A Repository is responsible for persisting and retrieving Aggregates from a storage location (usually a database)
-- There should be one Repository per Aggregate Root.
+- There usuall is one Repository per Aggregate, but in some case it might be acceptable for a Repository to operate
+  on more than one Aggregate.
 - A repository can either use a query builder or an ORM to interact with the database.
-- When saving an Aggregate Root,
 
 #### Example
 
@@ -311,55 +328,42 @@ class SubmissionRepository {
 }
 ```
 
+#### Testing
+
+- Repositories should be tested in an integration test.
+
+```js
+describe('SubmissionRepository', () => {
+  it('should fetch Submission if it exists', () => {
+    const submissionRepository = new SubmissionRepository
+    const submission = submissionRepository.findById('id')
+
+    expect(submission).not.toBeNull()
+    expect(submission.toJson).toEqual({
+      /* expected submission data */
+    })
+  })
+
+  it('should save Submission', () => {
+    const submissionRepository = new SubmissionRepository
+    const submission = new Submission(/* args go here */)
+
+    const submission = submissionRepository.findById('id')
+
+    expect(submission).not.toBeNull()
+    expect(submission.toJson).toEqual({
+      /* expected submission data */
+    })
+  })
+}
+```
+
 _Outstanding Questions_
 
 - How do we pass Aggregates to other Aggregates - at the moment the constructor
   just contains config, models and services as parameter... are Aggregates a model?
-
-### The Models
-
-- The models are for encapsulating a single area of responsiblity in code for a
-  particlar Entity within the system. Examples are, Files, SuggestedEditors,
-  Users, etc.
-- They delegate accessing the data to/from the database to the underlying
-  data access layer. For example, `SuggestedEditors` is a model that uses the
-  `Team` table - it happens to be a list of people but is not a DDD Aggregate.
-- Use Sequelize?
-
-#### Example
-
-```js
-// Note all dependencies injected.
-
-class File {
-  static async get(config, id, storage) {
-    const datamodel = config.datamodel.File // a bit of dependency inversion?
-    return {
-      FileMeta: await datamodel.get(id)
-      FileContent: await storage.getFile(id)
-    }
-  }
-}
-```
-
-### The Data Access Layer
-
-- This layer exists to abstract the code from the data store by using the
-  [Repository Pattern](https://www.martinfowler.com/eaaCatalog/repository.html).
-- Only contains logic to read/write data to the data store.
-- Exposes an interface that is written in terms of the domain languague.
-
-#### Example
-
-```js
-const db = require('@pubsweet/db-manager')
-
-class xPubRepository {
-  async getSuggestedEditors(manuscript_id) {
-    return db.query('team').where({ manuscript_id, role: 'suggestedEditors' })
-  }
-}
-```
+- Can Use Cases use multiple Aggregate Roots or should that be at the level of the GraphQL
+  resolver where they can use multiple use cases?
 
 ## Decision
 
