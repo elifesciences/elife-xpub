@@ -1,18 +1,9 @@
-# 0007 React Components
+# Client Side
 
-Date: 12th June 2019
+The following are the guidelines that should be used when developing the client side
+funcitonality of Libero Reviewer.
 
-## Status
-
-Proposed
-
-## Context
-
-There needs to be some general principles on best practice in creating React
-components for the project. This should lead to more readable and testable
-code which should always be the aim.
-
-### Separation of View and Logic
+## Separation of View and Logic
 
 - In general, small easily understood logic or logic that is very specific
   should live near the code where it is used. Extracting such code would be
@@ -22,7 +13,7 @@ code which should always be the aim.
   readable.
 - Please contribute more
 
-### Use of React Hooks
+## Use of React Hooks
 
 Hooks should be used instead of class components / HOCs where apropriate.
 
@@ -80,17 +71,12 @@ Current hooks provided in `React 16.8.6`:
 
 For more information on these hooks see [hooks api reference](https://reactjs.org/docs/hooks-reference.html)
 
-- Please contribute more
-
-### Testing Principles
+## Testing Principles
 
 - Utility functions that have been extracted from the React component because they are not tightly coupled with how the component should work (ie: data modelling/processing or validation schemas) should be tested with the standard testing framework (currently jest)
 - All React components in general should be tested using `testing-library/react`
 - Testing should be carried out with a TDD approach of blackbox testing where possible rather than testing implementation detail (**focus on simulating user interactions and passing props not testing internal functions (like instance() testing in enzyme!)**, see [here](https://kentcdodds.com/blog/why-i-never-use-shallow-rendering) for explanation)
-
-* A unit of functionality in React can involve multiple child components integrating with each other correctly. Don't feel the need to mock out child components in tests unless absolutely necessary (Better a test fail because it's child components are not working correctly in a use-case context then to miss catching errors because of 'unit testing purity')
-
-- Please contribute more
+- A unit of functionality in React can involve multiple child components integrating with each other correctly. Don't feel the need to mock out child components in tests unless absolutely necessary (Better a test fail because it's child components are not working correctly in a use-case context then to miss catching errors because of 'unit testing purity')
 
 It's recommended to write tests that assert each component's public interface, with
 its internals treated as a black box. Each test case should provide the component with some input
@@ -158,12 +144,8 @@ describe('Counter', () => {
 })
 ```
 
-#### Reading for context
+### Reading for context
 
 - [Kent C. Dodds (author of `testing-library/react`) - _Why I Never Use Shallow Rendering_](https://kentcdodds.com/blog/why-i-never-use-shallow-rendering)
 
 - [_Testing Drag and Drop Components in React.js_](https://github.com/HurricaneJames/dex/blob/master/doc/Testing%20Complex%20Components%20in%20React.js.md)
-
-## Decision
-
-## Consequences
