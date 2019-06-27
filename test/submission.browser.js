@@ -1,6 +1,7 @@
 import { ClientFunction, Selector } from 'testcafe'
 import {
   author,
+  cookie,
   dashboard,
   editors,
   disclosure,
@@ -23,33 +24,13 @@ const manuscript = {
   ],
 }
 
-const supportingFileLarge = './fixtures/dummy-pdf-test11MB.pdf'
 const getPageUrl = ClientFunction(() => window.location.href)
 
 test('Persistence of form data', async t => {
   const navigationHelper = new NavigationHelper(t)
-  await navigationHelper.login()
-  await navigationHelper.newSubmission()
-  await navigationHelper.preFillAuthorDetailsWithOrcid()
-  await navigationHelper.setAuthorEmail('example@example.org')
+  await navigationHelper.skipToEditorsPage(manuscript)
+  await navigationHelper.fillEditorsPage()
   await navigationHelper.navigateForward()
-
-  navigationHelper.fillShortCoverletter()
-  navigationHelper.uploadManuscript(manuscript)
-  navigationHelper.navigateForward()
-
-  navigationHelper.addNecessaryManuscriptMetadata()
-  navigationHelper.navigateForward()
-
-  navigationHelper.openEditorsPicker()
-  navigationHelper.selectPeople([1, 2])
-  navigationHelper.closePeoplePicker()
-
-  navigationHelper.openReviewerPicker()
-  navigationHelper.selectPeople([1, 2])
-  navigationHelper.closePeoplePicker()
-
-  navigationHelper.navigateForward()
   await navigationHelper.navigateBack()
   await navigationHelper.reloadPage()
   await t.expect(editors.peoplePods.count).eql(6)
@@ -57,95 +38,8 @@ test('Persistence of form data', async t => {
 
 test('Happy path', async t => {
   const navigationHelper = new NavigationHelper(t)
-  navigationHelper.login()
-  navigationHelper.newSubmission()
-
-  // author details initially empty
-  await t
-    .expect(author.firstNameField.value)
-    .eql('')
-    .expect(author.secondNameField.value)
-    .eql('')
-    .expect(author.emailField.value)
-    .eql('')
-    .expect(author.institutionField.value)
-    .eql('')
-
-  navigationHelper.preFillAuthorDetailsWithOrcid()
-  await t
-    .expect(author.firstNameField.value)
-    .eql('Aaron')
-    .expect(author.secondNameField.value)
-    .eql('Swartz')
-    .expect(author.emailField.value)
-    .eql('f72c502e0d657f363b5f2dc79dd8ceea')
-    .expect(author.institutionField.value)
-    .eql('Tech team, University of eLife')
-  navigationHelper.setAuthorEmail('example@example.org')
-  navigationHelper.navigateForward()
-
-  await navigationHelper.wait(2000)
-
-  // uploading files - manuscript and cover letter
-  navigationHelper.fillCoverletter()
-  navigationHelper.uploadManuscript(manuscript)
-  navigationHelper.uploadSupportingFiles(manuscript.supportingFiles[0])
-
-  await t
-    .expect(files.supportingFile.count)
-    .eql(1)
-    .click(files.supportingFilesRemove, { timeout: 60000 })
-
-  navigationHelper.uploadSupportingFiles(manuscript.supportingFiles)
-  await t.expect(files.supportingFile.count).eql(2)
-
-  // uploading supporting large files - should display an error
-  navigationHelper.uploadSupportingFiles(supportingFileLarge)
-  await t
-    .expect(files.supportingFile.count)
-    .eql(3)
-    .expect(files.supportingFileError.count)
-    .eql(1)
-  await t.expect(files.manuscriptDownloadLink.hasAttribute('href')).eql(true)
-  navigationHelper.navigateForward()
-
-  // adding manuscript metadata
-  await t.expect(submission.title.value).eql(manuscript.title)
-  navigationHelper.addManuscriptMetadata()
-  navigationHelper.navigateForward()
-
-  // selecting suggested and excluded editors & reviewers
-  navigationHelper.openEditorsPicker()
-  navigationHelper.selectPeople([0, 2, 3, 5, 7, 9])
-  navigationHelper.closePeoplePicker()
-
-  navigationHelper.openReviewerPicker()
-  navigationHelper.selectPeople([1, 4, 6, 8, 10, 11])
-  navigationHelper.closePeoplePicker()
-
-  await t
-    .expect(editors.validationErrors.withText(/./).count)
-    .eql(0)
-    .typeText(editors.firstReviewerName, 'Edward')
-    .typeText(editors.firstReviewerEmail, 'edward@example.com')
-    .typeText(editors.secondReviewerName, 'Frances')
-    .typeText(editors.secondReviewerEmail, 'frances@example.net')
-    .typeText(editors.thirdReviewerName, 'George')
-    .typeText(editors.thirdReviewerEmail, 'george@example.org')
-    .typeText(editors.fourthReviewerName, 'Ayesha')
-    .typeText(editors.fourthReviewerEmail, 'ayesha@example.com')
-    .typeText(editors.fifthReviewerName, 'Sneha')
-    .typeText(editors.fifthReviewerEmail, 'sneha@example.net')
-    .typeText(editors.sixthReviewerName, 'Emily')
-    .typeText(editors.sixthReviewerEmail, 'emily@example.org')
-
-  navigationHelper.navigateForward()
-
-  // consenting to data disclosure
-  navigationHelper.consentDisclosure()
-  navigationHelper.submit()
-  navigationHelper.accept()
-  navigationHelper.thankyou()
+  await navigationHelper.skipToDisclosurePage(manuscript)
+  await navigationHelper.fillDisclosurePage()
 
   // dashboard
   await t
@@ -158,15 +52,13 @@ test('Happy path', async t => {
 
 test('Ability to progress through the wizard is tied to validation', async t => {
   const navigationHelper = new NavigationHelper(t)
-
-  navigationHelper.login()
-  navigationHelper.newSubmission()
+  await navigationHelper.skipToAuthorPage()
 
   // set author details
-  navigationHelper.setAuthorName('Anne')
-  navigationHelper.setAuthorSurname('Author')
-  navigationHelper.setAuthorEmail('anne.author@life')
-  navigationHelper.setAuthorInstitution('University of eLife')
+  await navigationHelper.setAuthorName('Anne')
+  await navigationHelper.setAuthorSurname('Author')
+  await navigationHelper.setAuthorEmail('anne.author@life')
+  await navigationHelper.setAuthorInstitution('University of eLife')
   await t
     .expect(Selector(author.emailValidationMessage).textContent)
     .eql(
@@ -174,39 +66,36 @@ test('Ability to progress through the wizard is tied to validation', async t => 
       'Error is displayed when user enters invalid email',
     )
 
-  navigationHelper.navigateForward()
-  // without this wait the tests sometimes fail on CI ¯\_(ツ)_/¯
-  await navigationHelper.wait(2000)
+  await navigationHelper.navigateForward()
 
   await t
     .expect(getPageUrl())
     .match(author.url, 'Validation errors prevent progress to the next page')
 
-  navigationHelper.setAuthorEmail('anne.author@life.ac.uk')
-  navigationHelper.navigateForward()
+  await navigationHelper.setAuthorEmail('anne.author@life.ac.uk')
+  await navigationHelper.navigateForward()
 
   // File upload stage
   await t
     .expect(getPageUrl())
     .match(files.url, 'Entering valid inputs enables progress to the next page')
 
-  navigationHelper.navigateForward()
+  await navigationHelper.navigateForward()
   await t
     .expect(getPageUrl())
     .match(files.url, 'Validation errors prevent progress to the next page')
 
-  navigationHelper.fillCoverletter()
-  navigationHelper.navigateForward()
+  await navigationHelper.fillShortCoverletter() // dont need a long cover letter for this
+  await navigationHelper.navigateForward()
   await t
     .expect(getPageUrl())
     .match(files.url, 'Entering valid inputs enables progress to the next page')
 
-  navigationHelper.uploadManuscript(manuscript)
-  navigationHelper.uploadSupportingFiles(manuscript.supportingFiles[0])
-  navigationHelper.navigateForward()
+  await navigationHelper.uploadManuscript(manuscript)
+  await navigationHelper.uploadSupportingFiles(manuscript.supportingFiles[0])
+  await navigationHelper.navigateForward()
 
   // Submission metadata entry
-  await navigationHelper.wait(2000)
   await t
     .expect(getPageUrl())
     .match(
@@ -214,7 +103,7 @@ test('Ability to progress through the wizard is tied to validation', async t => 
       'Entering valid inputs enables progress to the next page',
     )
 
-  navigationHelper.navigateForward()
+  await navigationHelper.navigateForward()
   await t
     .expect(getPageUrl())
     .match(
@@ -222,10 +111,9 @@ test('Ability to progress through the wizard is tied to validation', async t => 
       'Validation errors prevent progress to the next page',
     )
 
-  navigationHelper.addManuscriptMetadata()
-  navigationHelper.navigateForward()
+  await navigationHelper.addManuscriptMetadata()
+  await navigationHelper.navigateForward()
   // Editors
-  await navigationHelper.wait(2000)
   await t
     .expect(getPageUrl())
     .match(
@@ -233,21 +121,21 @@ test('Ability to progress through the wizard is tied to validation', async t => 
       'Entering valid inputs enables progress to the next page',
     )
 
-  navigationHelper.navigateForward()
+  await navigationHelper.navigateForward()
 
   await t
     .expect(getPageUrl())
     .match(editors.url, 'Validation errors prevent progress to the next page')
 
-  navigationHelper.openEditorsPicker()
-  navigationHelper.selectPeople([0, 2])
-  navigationHelper.closePeoplePicker()
+  await navigationHelper.openEditorsPicker()
+  await navigationHelper.selectPeople([0, 2])
+  await navigationHelper.closePeoplePicker()
 
-  navigationHelper.openReviewerPicker()
-  navigationHelper.selectPeople([1, 4])
-  navigationHelper.closePeoplePicker()
+  await navigationHelper.openReviewerPicker()
+  await navigationHelper.selectPeople([1, 4])
+  await navigationHelper.closePeoplePicker()
 
-  navigationHelper.navigateForward()
+  await navigationHelper.navigateForward()
 
   // Disclosure
   await t
@@ -257,7 +145,7 @@ test('Ability to progress through the wizard is tied to validation', async t => 
       'Entering valid inputs enables progress to the next page',
     )
 
-  navigationHelper.submit()
+  await navigationHelper.submit()
   await t
     .expect(getPageUrl())
     .match(
@@ -269,35 +157,27 @@ test('Ability to progress through the wizard is tied to validation', async t => 
     .expect((await disclosure.consentValidationWarning.textContent).length)
     .gt(0, 'is visible')
 
-  navigationHelper.consentDisclosure()
-  navigationHelper.submit()
-  navigationHelper.accept()
-  navigationHelper.thankyou()
-
-  // dashboard
-  await t
-    .expect(dashboard.titles.textContent)
-    .eql(manuscript.title)
-    .expect(dashboard.statuses.textContent)
-    // TODO this might cause a race condition
-    .eql('Submitted')
+  await navigationHelper.consentDisclosure()
+  await navigationHelper.submit()
+  await navigationHelper.accept()
+  await navigationHelper.thankyou()
 })
 
 test('Form entries are saved when a user navigates to the next page of the wizard', async t => {
   const navigationHelper = new NavigationHelper(t)
 
   await navigationHelper.login()
-  navigationHelper.newSubmission()
+  await navigationHelper.newSubmission()
 
-  navigationHelper.setAuthorName('Meghan')
-  navigationHelper.setAuthorSurname('Moggy')
-  navigationHelper.setAuthorEmail('meghan@example.com')
-  navigationHelper.setAuthorInstitution('iTunes U')
-  navigationHelper.navigateForward()
+  await navigationHelper.setAuthorName('Meghan')
+  await navigationHelper.setAuthorSurname('Moggy')
+  await navigationHelper.setAuthorEmail('meghan@example.com')
+  await navigationHelper.setAuthorInstitution('iTunes U')
+  await navigationHelper.navigateForward()
 
   // ensure save completed before reloading
   await files.editor
-  navigationHelper.navigateBack()
+  await navigationHelper.navigateBack()
 
   await t
     .expect(author.firstNameField.value)
@@ -312,47 +192,15 @@ test('Form entries are saved when a user navigates to the next page of the wizar
 
 test('redirect page allows you to continue through app', async t => {
   const navigationHelper = new NavigationHelper(t)
-  navigationHelper.startAtRedirect()
+  await navigationHelper.startAtRedirect()
   await t.expect(getPageUrl()).contains('/login')
 })
 
 test('Title entry box expands and shrinks for longer titles', async t => {
   const navigationHelper = new NavigationHelper(t)
-  navigationHelper.login()
-  navigationHelper.newSubmission()
-
-  await t
-    .expect(author.firstNameField.value)
-    .eql('')
-    .expect(author.secondNameField.value)
-    .eql('')
-    .expect(author.emailField.value)
-    .eql('')
-    .expect(author.institutionField.value)
-    .eql('')
-
-  navigationHelper.preFillAuthorDetailsWithOrcid()
-  await t
-    .expect(author.firstNameField.value)
-    .eql('Aaron')
-    .expect(author.secondNameField.value)
-    .eql('Swartz')
-    .expect(author.emailField.value)
-    .eql('f72c502e0d657f363b5f2dc79dd8ceea')
-    .expect(author.institutionField.value)
-    .eql('Tech team, University of eLife')
-  navigationHelper.setAuthorEmail('example@example.org')
-
-  navigationHelper.navigateForward()
-  await navigationHelper.wait(2000)
-  // uploading files - manuscript and cover letter
-  navigationHelper.fillCoverletter()
-  await navigationHelper.uploadManuscript(manuscript)
-
-  navigationHelper.navigateForward()
+  await navigationHelper.skipToDetailsPage(manuscript)
 
   // adding manuscript metadata
-
   await t
     .expect(
       Selector('textarea[data-test-id="manuscript-title-editor"]').getAttribute(
@@ -360,7 +208,7 @@ test('Title entry box expands and shrinks for longer titles', async t => {
       ),
     )
     .eql('1')
-  navigationHelper.fillLongTitle()
+  await navigationHelper.fillLongTitle()
   // The product defined max-height of the titlebox is 4 lines
 
   await t
@@ -382,16 +230,12 @@ test('Title entry box expands and shrinks for longer titles', async t => {
       ),
     )
     .eql('1')
-
-  navigationHelper.addManuscriptMetadata()
-  navigationHelper.navigateForward()
-
   // Change the title to something really long and then expect the rows prop of the textarea to increase
 })
 
 test('cookie notice', async t => {
   await t.navigateTo(login.url)
-  await t.expect(Selector('[data-test-id="cookieAcceptButton"]').exists).ok()
-  await t.click(Selector('[data-test-id="cookieAcceptButton"]'))
-  await t.expect(Selector('[data-test-id="cookieAcceptButton"]').exists).notOk()
+  await t.expect(cookie.button.exists).ok()
+  await t.click(cookie.button)
+  await t.expect(cookie.button.exists).notOk()
 })
