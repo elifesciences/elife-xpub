@@ -1,11 +1,5 @@
 # Server Side
 
-Date: 7th June 2019
-
-## Status
-
-Proposed
-
 ## Context
 
 The server-side code has a number of issues making it difficult to test and
@@ -364,11 +358,3 @@ _Outstanding Questions_
   just contains config, models and services as parameter... are Aggregates a model?
 - Can Use Cases use multiple Aggregate Roots or should that be at the level of the GraphQL
   resolver where they can use multiple use cases?
-
-## Decision
-
-! Record decision here !
-
-## Consequences
-
-- Time / Cost / Quality / Risk
