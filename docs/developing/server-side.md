@@ -112,7 +112,7 @@ class Person {
 - Persistence is done via a Repository (see below)
 - The Entities and Value Ojects in the Aggregate, including the Aggregate Root, must not
   have any storage functionality. All functionality should operate in memory without relying
-  on any implementation detail from a persistence mechanism.
+  on any implementation detail from a persistence mechanism (Persistence agnosticism).
 
 #### Links:
 
