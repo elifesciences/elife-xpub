@@ -35,7 +35,7 @@ there will be a package that implements this pattern for that domain.
     +------------------------------------------+
     |              Repositories                |
     +------------------------------------------+
-    |           data access layer              |
+    |           Data Access Layer              |
     +------------------------------------------+
 
 </pre>
@@ -46,105 +46,6 @@ there will be a package that implements this pattern for that domain.
 
 Each of the following sections describes the general principles that are to
 be used when writing code. This approach uses SOLID Principles.
-
-### GraphQL Resolvers
-
-- The external interface uses graphQL and these are handled with the resolvers.
-- The resolvers should contain no logic themselves. Rather this is delegated
-  to a `use-case` making the resolvers a thin wrapper around the controller logic.
-- Rationale is that it should be easy to implement another interface on the same
-  logic.
-
-#### Example
-
-```js
-const { getSubmissionUseCase, updateSubmissionUseCase } = require('../use-cases')
-const { submissionRepository } = require('../repositories')
-
-const submissionRepository = new SubmissionRepository
-
-const resolvers = {
-  Query: {
-    async submission(_, { id }, { user }) {
-      return getSubmissionUseCase.initialize(submissionRepository)
-        .execute(id, user)
-    },
-  },
-
-  Mutation: {
-    async updateSubmission(_, { data }, { user }) {
-      return updateSubmissionUseCase.initialize(submissionRepository)
-        .execute(data.id, user, data)
-    }
-  },
-  //...
-```
-
-### Use-Cases
-
-- What we call the use case layer is the equivalent of the application layer in Domain Driven Design.
-  Its' responsibility is to transform the input data so that it can be consumed by the Aggregate Root(s).
-- Configuration, services and infastructure layer classes (e.g. repositories) shoulde be injected via
-  a required `initialize` method.
-- An `execute` method must also be present and should implement the functionality of the use case.
-- In general this layer will have an interface that maps one-to-one with the
-  graphQL layer.
-
-#### Example
-
-##### use-cases/getSubmissionUseCase
-
-The following is a very simple use case to return the submission data using its id. Note that the
-`submissionRepository` instance was injected previously via the `initialize` method.
-
-```js
-async getSubmissionUseCase(submissionId, user) => {
-  checkPermissions(submissionId, user)
-
-  const submission = await this.submissionRepository.findById(submissionId)
-
-  return submission.toJSON()
-}
-```
-
-##### use-cases/updateSubmissionUseCase
-
-A more elaborate use case is one that involves change the state of an Aggregate. The basic
-workflow is:
-
-- retrieve the Aggregate Root
-- call the necessary methods of the Aggregate Root
-- save the Aggregate Root using a repository instance
-
-Any errors originating either in the Aggregate Root operations or in peristing the Aggregate
-are handled at this level if necessary or passed back to the higher levels.
-
-```js
-async updateSubmissionUseCase(submissionId, user, data) => {
-  checkPermission(submissionId, user)
-
-  const submission = await this.submissionRepository.findById(submissionId)
-
-  // we assume those methods are defined elsewhere
-  const submissionData = getSubmissionData(data)
-  const editorTeams = getEditorTeams(data)
-  const reviewerTeams = getReviewerTeams(data)
-
-  try {
-    submission.update(manuscriptData)
-    submission.updateAuthorTeam(data.author)
-    submission.updateEditorTeams(editorTeams)
-    submission.updateReviewerTeams(reviewerTeams)
-
-    await this.submissionRepository.save(submission)
-  } catch (Error e) {
-    // handle any errors here
-  }
-
-  return submission.toJSON()
-
-}
-```
 
 ### Value Obejcts
 
@@ -356,6 +257,105 @@ describe('SubmissionRepository', () => {
     })
   })
 }
+```
+
+### Use-Cases
+
+- What we call the use case layer is the equivalent of the application layer in Domain Driven Design.
+  Its' responsibility is to transform the input data so that it can be consumed by the Aggregate Root(s).
+- Configuration, services and infastructure layer classes (e.g. repositories) shoulde be injected via
+  a required `initialize` method.
+- An `execute` method must also be present and should implement the functionality of the use case.
+- In general this layer will have an interface that maps one-to-one with the
+  graphQL layer.
+
+#### Example
+
+##### use-cases/getSubmissionUseCase
+
+The following is a very simple use case to return the submission data using its id. Note that the
+`submissionRepository` instance was injected previously via the `initialize` method.
+
+```js
+async getSubmissionUseCase(submissionId, user) => {
+  checkPermissions(submissionId, user)
+
+  const submission = await this.submissionRepository.findById(submissionId)
+
+  return submission.toJSON()
+}
+```
+
+##### use-cases/updateSubmissionUseCase
+
+A more elaborate use case is one that involves change the state of an Aggregate. The basic
+workflow is:
+
+- retrieve the Aggregate Root
+- call the necessary methods of the Aggregate Root
+- save the Aggregate Root using a repository instance
+
+Any errors originating either in the Aggregate Root operations or in peristing the Aggregate
+are handled at this level if necessary or passed back to the higher levels.
+
+```js
+async updateSubmissionUseCase(submissionId, user, data) => {
+  checkPermission(submissionId, user)
+
+  const submission = await this.submissionRepository.findById(submissionId)
+
+  // we assume those methods are defined elsewhere
+  const submissionData = getSubmissionData(data)
+  const editorTeams = getEditorTeams(data)
+  const reviewerTeams = getReviewerTeams(data)
+
+  try {
+    submission.update(manuscriptData)
+    submission.updateAuthorTeam(data.author)
+    submission.updateEditorTeams(editorTeams)
+    submission.updateReviewerTeams(reviewerTeams)
+
+    await this.submissionRepository.save(submission)
+  } catch (Error e) {
+    // handle any errors here
+  }
+
+  return submission.toJSON()
+
+}
+```
+
+### GraphQL Resolvers
+
+- The external interface uses graphQL and these are handled with the resolvers.
+- The resolvers should contain no logic themselves. Rather this is delegated
+  to a `use-case` making the resolvers a thin wrapper around the controller logic.
+- Rationale is that it should be easy to implement another interface on the same
+  logic.
+
+#### Example
+
+```js
+const { getSubmissionUseCase, updateSubmissionUseCase } = require('../use-cases')
+const { submissionRepository } = require('../repositories')
+
+const submissionRepository = new SubmissionRepository
+
+const resolvers = {
+  Query: {
+    async submission(_, { id }, { user }) {
+      return getSubmissionUseCase.initialize(submissionRepository)
+        .execute(id, user)
+    },
+  },
+
+  Mutation: {
+    async updateSubmission(_, { data }, { user }) {
+      return updateSubmissionUseCase.initialize(submissionRepository)
+        .execute(data.id, user, data)
+    }
+  },
+  //...
 ```
 
 _Outstanding Questions_
