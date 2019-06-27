@@ -1,4 +1,4 @@
-# 0006. Server Architecture
+# Server Side
 
 Date: 7th June 2019
 
