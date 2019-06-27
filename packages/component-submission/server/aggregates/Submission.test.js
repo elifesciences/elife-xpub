@@ -14,7 +14,7 @@ const Submission = require('./Submission')
 const createMockObject = (values = {}, mockSaveFn) => ({
   ...values,
   toJSON: jest.fn(() => values),
-  save: mockSaveFn || jest.fn(),
+  saveGraph: mockSaveFn || jest.fn(),
 })
 
 const createSubmission = (altServices = null) => {
