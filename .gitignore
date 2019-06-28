@@ -8,16 +8,15 @@ package-lock.json
 .env.*
 .cache
 .node_repl_history
-dist/
+src/dist/
 node_modules
-coverage/
+src/coverage/
 api/db/*
 logs/*
 log.txt
 _build*
-uploads/
-config/local*.*
-test/screenshots/
+src/config/local*.*
+src/test/screenshots/
 .config
 .local
 .yarnrc
@@ -27,4 +26,4 @@ test/screenshots/
 .idea
 migrations-*
 xpub.log
-build/
+src/build/
