@@ -12,10 +12,7 @@ test('Interrupt and resume Submission', async t => {
 
   // create a new submission
   await navigationHelper.skipToFilesPage()
-
-  // wait 5 seconds to ensure autosave hasn't interrupted the navigation save
-  // await navigationHelper.wait(5000)
-
+  
   // navigate back to the dashboard page and continue submission
   await t
     .navigateTo(`${config.get('pubsweet-server.baseUrl')}`)
