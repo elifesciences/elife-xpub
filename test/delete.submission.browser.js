@@ -1,6 +1,6 @@
 import config from 'config'
 import { Selector } from 'testcafe'
-import { author, dashboard, wizardStep } from './pageObjects'
+import { dashboard } from './pageObjects'
 import setFixtureHooks from './helpers/set-fixture-hooks'
 import NavigationHelper from './helpers/navigationHelper'
 
@@ -9,34 +9,13 @@ setFixtureHooks(f)
 
 test('Delete a Submission', async t => {
   const navigationHelper = new NavigationHelper(t)
-  navigationHelper.login()
-  navigationHelper.newSubmission()
-
-  // author details initially empty
-  await t
-    .expect(author.firstNameField.value)
-    .eql('')
-    .expect(author.secondNameField.value)
-    .eql('')
-    .expect(author.emailField.value)
-    .eql('')
-    .expect(author.institutionField.value)
-    .eql('')
+  await navigationHelper.login()
+  await navigationHelper.newSubmission()
 
   // create a new submission
-  await t
-    .click(author.orcidPrefill)
-    .expect(author.firstNameField.value)
-    .eql('Aaron')
-    .expect(author.secondNameField.value)
-    .eql('Swartz')
-    .expect(author.emailField.value)
-    .eql('f72c502e0d657f363b5f2dc79dd8ceea')
-    .expect(author.institutionField.value)
-    .eql('Tech team, University of eLife')
-    .selectText(author.emailField)
-    .typeText(author.emailField, 'example@example.org')
-    .click(wizardStep.next)
+  await navigationHelper.preFillAuthorDetailsWithOrcid()
+  await navigationHelper.setAuthorEmail()
+  await navigationHelper.navigateForward()
 
   // navigate back to the dashboard page and cancel the delete the submission
   await t

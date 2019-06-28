@@ -50,7 +50,6 @@ class NavigationHelper {
     if (cookieNoticeExists) {
       await this.t.click(Selector(cookie.button, OPTS))
     }
-    await this.wait(1000)
   }
 
   async login() {
@@ -82,7 +81,7 @@ class NavigationHelper {
       .typeText(author.secondNameField, surname)
   }
 
-  async setAuthorEmail(email) {
+  async setAuthorEmail(email = 'test@example.com') {
     await this.t
       .selectText(author.emailField)
       .typeText(author.emailField, email)
@@ -187,8 +186,6 @@ class NavigationHelper {
     await this.t.click(wizardStep.submit, OPTS)
     // wait for "accept" button to show
     this.waitForElement('accept')
-    // wait for the meca export
-    await this.t.wait(3000)
   }
 
   async accept() {
@@ -247,6 +244,74 @@ class NavigationHelper {
     await this.submit()
     await this.accept()
     await this.thankyou()
+  }
+
+  async fillAuthorPage(email) {
+    await this.preFillAuthorDetailsWithOrcid()
+    await this.setAuthorEmail(email)
+  }
+
+  async fillFilesPage(manuscript, shortCoverLetter = true) {
+    if (shortCoverLetter) {
+      await this.fillShortCoverletter()
+    } else {
+      await this.fillCoverletter()
+    }
+    await this.uploadManuscript(manuscript)
+  }
+
+  async fillDetailsPage(minimal = true) {
+    if (minimal) {
+      await this.addNecessaryManuscriptMetadata()
+    } else {
+      await this.addManuscriptMetadata()
+    }
+  }
+
+  async fillEditorsPage() {
+    await this.openEditorsPicker()
+    await this.selectPeople([1, 2])
+    await this.closePeoplePicker()
+
+    await this.openReviewerPicker()
+    await this.selectPeople([1, 2])
+    await this.closePeoplePicker()
+  }
+
+  async fillDisclosurePage() {
+    await this.consentDisclosure()
+    await this.submit()
+    await this.accept()
+    await this.thankyou()
+  }
+
+  async skipToAuthorPage() {
+    await this.login()
+    await this.newSubmission()
+  }
+
+  async skipToFilesPage() {
+    await this.skipToAuthorPage()
+    await this.fillAuthorPage()
+    await this.navigateForward()
+  }
+
+  async skipToDetailsPage(manuscript, shortCoverLetter) {
+    await this.skipToFilesPage()
+    await this.fillFilesPage(manuscript, shortCoverLetter)
+    await this.navigateForward()
+  }
+
+  async skipToEditorsPage(manuscript, shortCoverLetter, minimalDetails) {
+    await this.skipToDetailsPage(manuscript, shortCoverLetter)
+    await this.fillDetailsPage(minimalDetails)
+    await this.navigateForward()
+  }
+
+  async skipToDisclosurePage(manuscript, shortCoverLetter, minimalDetails) {
+    await this.skipToEditorsPage(manuscript, shortCoverLetter, minimalDetails)
+    await this.fillEditorsPage()
+    await this.navigateForward()
   }
 }
 

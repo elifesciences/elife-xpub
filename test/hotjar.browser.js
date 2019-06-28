@@ -1,11 +1,5 @@
 import { Selector } from 'testcafe'
-import {
-  editors,
-  profile,
-  disclosure,
-  dashboard,
-  thankyou,
-} from './pageObjects'
+import { profile, disclosure, dashboard, thankyou } from './pageObjects'
 import setFixtureHooks from './helpers/set-fixture-hooks'
 import NavigationHelper from './helpers/navigationHelper'
 
@@ -27,13 +21,11 @@ test('test suppressions', async t => {
   await navigationHelper.login()
   await navigationHelper.openProfile()
   await t.expect(profile.name, { 'data-hj-suppress': '' }).ok()
-  navigationHelper.newSubmission()
+  await navigationHelper.newSubmission()
 
   // author's page
-  navigationHelper.preFillAuthorDetailsWithOrcid()
-  navigationHelper.setAuthorEmail('example@example.org')
-  await navigationHelper.clearCookieNotification()
-  navigationHelper.navigateForward()
+  await navigationHelper.fillAuthorPage()
+  await navigationHelper.navigateForward()
 
   // files' page
   await t
@@ -41,31 +33,16 @@ test('test suppressions', async t => {
       'data-hj-suppress': '',
     })
     .ok()
-  navigationHelper.fillCoverletter()
-  navigationHelper.uploadManuscript(manuscript)
-  navigationHelper.navigateForward()
+  await navigationHelper.fillFilesPage(manuscript)
+  await navigationHelper.navigateForward()
 
   // submission metadata
-  navigationHelper.addManuscriptMetadata()
-  navigationHelper.navigateForward()
+  await navigationHelper.fillDetailsPage()
+  await navigationHelper.navigateForward()
 
   // editor's page
-  navigationHelper.openEditorsPicker()
-  navigationHelper.selectPeople([0, 2, 3])
-  navigationHelper.closePeoplePicker()
-
-  navigationHelper.openReviewerPicker()
-  navigationHelper.selectPeople([1, 4, 6])
-  navigationHelper.closePeoplePicker()
-
-  await t
-    .typeText(editors.firstReviewerName, 'Edward')
-    .typeText(editors.firstReviewerEmail, 'edward@example.com')
-    .typeText(editors.secondReviewerName, 'Frances')
-    .typeText(editors.secondReviewerEmail, 'frances@example.net')
-    .typeText(editors.thirdReviewerName, 'George')
-    .typeText(editors.thirdReviewerEmail, 'george@example.org')
-  navigationHelper.navigateForward()
+  await navigationHelper.fillEditorsPage()
+  await navigationHelper.navigateForward()
 
   // disclosure's page
   await t
@@ -78,9 +55,9 @@ test('test suppressions', async t => {
     })
     .ok()
 
-  navigationHelper.consentDisclosure()
-  navigationHelper.submit()
-  navigationHelper.accept()
+  await navigationHelper.consentDisclosure()
+  await navigationHelper.submit()
+  await navigationHelper.accept()
 
   await t
     .expect(thankyou.title, {
@@ -88,7 +65,7 @@ test('test suppressions', async t => {
     })
     .ok()
 
-  navigationHelper.thankyou()
+  await navigationHelper.thankyou()
   await t
     .expect(dashboard.titles, {
       'data-hj-suppress': '',
