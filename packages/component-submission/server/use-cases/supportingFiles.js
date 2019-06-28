@@ -21,7 +21,7 @@ class SupportingFiles {
       type: 'SUPPORTING_FILE',
       mimeType,
     })
-    await fileEntity.saveGraph()
+    await fileEntity.save()
     const fileId = fileEntity.id
 
     const fileContents = await new Promise((resolve, reject) => {

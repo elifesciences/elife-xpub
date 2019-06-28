@@ -328,7 +328,7 @@ describe('Manuscript', () => {
       const manuscript = Manuscript.makeInitial({
         createdBy: userId,
       })
-      await manuscript.saveGraph()
+      await manuscript.save()
       const loadedManuscript = await Manuscript.find(manuscript.id, userId)
       expect(loadedManuscript.id).toBe(manuscript.id)
     })
@@ -342,7 +342,7 @@ describe('Manuscript', () => {
         role: 'foo',
         teamMembers: [],
       })
-      await manuscript.saveGraph()
+      await manuscript.save()
       const loadedManuscript = await Manuscript.find(manuscript.id, userId)
       expect(loadedManuscript.teams).toHaveLength(1)
     })
@@ -361,7 +361,7 @@ describe('Manuscript', () => {
       const manuscript = Manuscript.makeInitial({
         createdBy: userId,
       })
-      await manuscript.saveGraph()
+      await manuscript.save()
       const loadedManuscripts = await Manuscript.findByStatus('INITIAL', userId)
       expect(loadedManuscripts).toHaveLength(1)
     })
@@ -375,7 +375,7 @@ describe('Manuscript', () => {
         role: 'foo',
         teamMembers: [],
       })
-      await manuscript.saveGraph()
+      await manuscript.save()
       const loadedManuscripts = await Manuscript.findByStatus('INITIAL', userId)
       expect(loadedManuscripts[0].teams).toHaveLength(1)
     })
@@ -394,7 +394,7 @@ describe('Manuscript', () => {
           title: 'Title',
         },
         createdBy: userId,
-      }).saveGraph()
+      }).save()
       const loadedManuscript = await Manuscript.updateStatus(
         manuscript.id,
         'NEXT',
@@ -411,7 +411,7 @@ describe('Manuscript', () => {
       expect(dbState).toBe('INITIALIZED')
       const manuscript = await Manuscript.makeInitial({
         createdBy: userId,
-      }).saveGraph()
+      }).save()
       const loadedManuscript = await Manuscript.updateStatus(
         manuscript.id,
         'NEXT',
@@ -442,7 +442,7 @@ describe('Manuscript', () => {
 
       // update and save v3
       ms.v3.meta.title = 'Version3'
-      ms.v3 = await ms.v3.saveGraph()
+      ms.v3 = await ms.v3.save()
       expect(ms.v3.meta.title).toBe('Version3')
       expect(getDbTime(ms.v1.updated)).toBeLessThan(getDbTime(ms.v3.updated))
 
@@ -471,7 +471,7 @@ describe('Manuscript', () => {
         createdBy: userId,
       })
       expect(manuscript.id).toBeUndefined()
-      await manuscript.saveGraph()
+      await manuscript.save()
       expect(manuscript.id).not.toBe(undefined)
     })
 
@@ -484,7 +484,7 @@ describe('Manuscript', () => {
         role: 'foo',
         teamMembers: [],
       })
-      await manuscript.saveGraph()
+      await manuscript.save()
       expect(manuscript.teams).toHaveLength(1)
     })
 
@@ -542,7 +542,7 @@ describe('Manuscript', () => {
         Manuscript.makeInitial({
           id: 'f05bbbf9-ddf4-494f-a8da-84957e2708ee',
           status: 'INITIAL',
-        }).saveGraph(),
+        }).save(),
       ).rejects.toThrow()
     })
 
@@ -552,7 +552,7 @@ describe('Manuscript', () => {
 
       // update and save v3
       ms.v3.meta.title = 'Version3'
-      ms.v3 = await ms.v3.saveGraph()
+      ms.v3 = await ms.v3.save()
       expect(ms.v3.meta.title).toBe('Version3')
       expect(getDbTime(ms.v1.updated)).toBeLessThan(getDbTime(ms.v3.updated))
 
@@ -574,10 +574,10 @@ describe('Manuscript', () => {
       const secondUserId = uuid()
       await Manuscript.makeInitial({
         createdBy: userId,
-      }).saveGraph()
+      }).save()
       await Manuscript.makeInitial({
         createdBy: secondUserId,
-      }).saveGraph()
+      }).save()
       const loadedManuscripts = await Manuscript.all(userId)
       expect(loadedManuscripts).toHaveLength(1)
     })
@@ -596,7 +596,7 @@ describe('Manuscript', () => {
             title,
           },
           createdBy: userId,
-        }).saveGraph()
+        }).save()
 
         // Reset Date object so calling new Date returns a real Date object
         global.Date = originalDate
@@ -623,7 +623,7 @@ const getThreeVersions = async userId => {
     meta: {
       title: 'Version1',
     },
-  }).saveGraph()
+  }).save()
   const v2 = await Manuscript.find(v1.id, userId)
   const v3 = await Manuscript.find(v1.id, userId)
 
@@ -637,7 +637,7 @@ const getThreeVersions = async userId => {
 
 const setStatusOfFile = async (file, manuscript, status) => {
   file.status = status // eslint-disable-line no-param-reassign
-  await file.saveGraph()
+  await file.save()
   return Manuscript.find(manuscript.id, manuscript.createdBy)
 }
 
@@ -648,7 +648,7 @@ const addFileToManuscript = async manuscript => {
     url: '-',
     type: 'test_file',
   })
-  await file.saveGraph()
+  await file.save()
   return Manuscript.find(manuscript.id, manuscript.createdBy)
 }
 
@@ -661,6 +661,6 @@ const createInitialManuscript = async (userId, title = 'Alpha') => {
     status: 'initial',
     teams: [],
   })
-  await manuscript.saveGraph()
+  await manuscript.save()
   return manuscript
 }

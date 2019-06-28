@@ -38,9 +38,9 @@ class File extends BaseModel {
       objectId: this.id,
       objectType: 'file.status',
       value: status,
-    }).saveGraph()
+    }).save()
 
-    return this.saveGraph()
+    return this.save()
   }
 
   static async findByManuscriptId(manuscriptId) {

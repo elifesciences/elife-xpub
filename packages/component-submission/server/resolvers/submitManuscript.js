@@ -84,6 +84,7 @@ const submitManuscript = (_runExport = runExport) => async (
     })
   }
 
+  // saveGraph necessary as manuscriptInput can be a graph
   await manuscriptModel.saveGraph()
 
   if (manuscriptModel.fileStatus !== 'READY') {

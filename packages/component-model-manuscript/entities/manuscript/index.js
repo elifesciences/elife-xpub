@@ -207,7 +207,7 @@ class Manuscript extends BaseModel {
       objectId: id,
       objectType: 'manuscript.status',
       value: status,
-    }).saveGraph()
+    }).save()
 
     return manuscript.saveGraph()
   }

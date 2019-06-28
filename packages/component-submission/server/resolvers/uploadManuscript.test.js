@@ -55,7 +55,7 @@ describe('Manuscripts', () => {
     it("fails if manuscript doesn't belong to user", async () => {
       const blankManuscript = Manuscript.makeInitial()
       blankManuscript.createdBy = userId
-      const manuscript = await blankManuscript.saveGraph()
+      const manuscript = await blankManuscript.save()
 
       await expect(
         Mutation.uploadManuscript(
@@ -68,7 +68,7 @@ describe('Manuscripts', () => {
 
     it('saves manuscript to S3', async () => {
       const blankManuscript = Manuscript.makeInitial({ createdBy: userId })
-      const { id } = await blankManuscript.saveGraph()
+      const { id } = await blankManuscript.save()
       const fileUpload = {
         filename: 'manuscript.pdf',
         stream: fs.createReadStream(
@@ -101,7 +101,7 @@ describe('Manuscripts', () => {
           Promise.reject(new Error('Failed to persist file')),
         )
       const blankManuscript = Manuscript.makeInitial({ createdBy: userId })
-      const { id } = await blankManuscript.saveGraph()
+      const { id } = await blankManuscript.save()
       const file = {
         filename: 'manuscript.pdf',
         stream: fs.createReadStream(
@@ -126,7 +126,7 @@ describe('Manuscripts', () => {
 
       jest.spyOn(logger, 'warn').mockImplementation(() => {})
       const blankManuscript = Manuscript.makeInitial({ createdBy: userId })
-      const { id } = await blankManuscript.saveGraph()
+      const { id } = await blankManuscript.save()
       const file = {
         filename: 'manuscript.pdf',
         stream: fs.createReadStream(
@@ -158,7 +158,7 @@ describe('Manuscripts', () => {
 
     it('extracts title from PDF', async () => {
       const blankManuscript = Manuscript.makeInitial({ createdBy: userId })
-      const { id } = await blankManuscript.saveGraph()
+      const { id } = await blankManuscript.save()
       const file = {
         filename: 'manuscript.pdf',
         stream: fs.createReadStream(
@@ -192,7 +192,7 @@ describe('Manuscripts', () => {
       'fileUpload.maxSizeMB',
     )}MB`, async () => {
       const blankManuscript = Manuscript.makeInitial({ createdBy: userId })
-      const { id } = await blankManuscript.saveGraph()
+      const { id } = await blankManuscript.save()
 
       const maxFileSize = config.get('fileUpload.maxSizeMB')
       const fileSize = maxFileSize * 1e6 + 1
@@ -214,7 +214,7 @@ describe('Manuscripts', () => {
 
     it('replaces old manuscript file with new manuscript file', async () => {
       const blankManuscript = Manuscript.makeInitial({ createdBy: userId })
-      const { id } = await blankManuscript.saveGraph()
+      const { id } = await blankManuscript.save()
       const createFile = fileName => ({
         filename: fileName,
         stream: fs.createReadStream(

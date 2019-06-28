@@ -16,7 +16,7 @@ describe('clearPendingFile()', () => {
 
   it('removes any file with type MANUSCRIPT_SOURCE_PENDING related to this manuscript', async () => {
     let manuscript = Manuscript.makeInitial({ createdBy: userId })
-    const { id } = await manuscript.saveGraph()
+    const { id } = await manuscript.save()
     const fileEntity = new File({
       manuscriptId: id,
       type: 'MANUSCRIPT_SOURCE_PENDING',
@@ -29,8 +29,8 @@ describe('clearPendingFile()', () => {
       filename: 'bar.jpg',
       url: '/',
     })
-    await fileEntity.saveGraph()
-    const sourceFile = await fileEntity2.saveGraph()
+    await fileEntity.save()
+    const sourceFile = await fileEntity2.save()
     manuscript = await Manuscript.find(id, userId)
     expect(manuscript.files).toHaveLength(2)
 

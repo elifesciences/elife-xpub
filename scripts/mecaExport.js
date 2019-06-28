@@ -8,7 +8,7 @@ const doExport = async (id, getContent, ip) => {
   const manuscript = await Manuscript.find(id, m[0].createdBy)
 
   manuscript.status = 'INITIAL'
-  await manuscript.saveGraph()
+  await manuscript.save()
 
   try {
     await mecaExport(manuscript, getContent, ip)

@@ -18,10 +18,11 @@ const resolvers = {
       const userUuid = await models.User.getUuidForProfile(user)
       const manuscript = models.Manuscript.makeInitial({ createdBy: userUuid })
       manuscript.setDefaults()
+      // using saveGraph here because setDefaults adds a related team
       await manuscript.saveGraph()
       // id generated on $beforeInsert so need to save before setting lastStepVisited
       manuscript.lastStepVisited = `/submit/${manuscript.id}/author`
-      return manuscript.saveGraph()
+      return manuscript.save()
     },
 
     async deleteManuscript(_, { id }, { user }) {

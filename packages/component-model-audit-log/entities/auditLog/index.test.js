@@ -16,7 +16,7 @@ describe('AuditLog', () => {
       objectId: uuid(),
       objectType: 'some-object.some-attribute',
       value: 'some-value',
-    }).saveGraph()
+    }).save()
     expect(audit.id).toBeTruthy()
   })
 

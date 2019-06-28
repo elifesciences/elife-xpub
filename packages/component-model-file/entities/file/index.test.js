@@ -26,12 +26,12 @@ describe('File', () => {
     it('should set the status to CREATED', async () => {
       const manuscript = await Manuscript.makeInitial({
         createdBy: userId,
-      }).saveGraph()
+      }).save()
       const file = await new File({
         manuscriptId: manuscript.id,
         filename: 'thisfile.txt',
         url: '/an/url',
-      }).saveGraph()
+      }).save()
       expect(file.status).toBe('CREATED')
     })
   })
@@ -66,12 +66,12 @@ describe('File', () => {
     it('sets file status to value passed', async () => {
       const manuscript = await Manuscript.makeInitial({
         createdBy: userId,
-      }).saveGraph()
+      }).save()
       let file = await new File({
         manuscriptId: manuscript.id,
         filename: 'thisfile.txt',
         url: '/an/url',
-      }).saveGraph()
+      }).save()
       expect(file.status).toBe('CREATED')
       file = await File.find(file.id)
       await file.updateStatus('UPLOADED')

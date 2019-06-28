@@ -22,7 +22,7 @@ describe('creating getters still allows models to be saved', () => {
     const instance = ModelWithGetter.makeInitial({
       createdBy: userId,
     })
-    await instance.saveGraph()
+    await instance.save()
     expect(instance.someGetter).toBe(true)
   })
 })
@@ -49,7 +49,7 @@ describe('related objects behave as we expect', () => {
       const updatedStart = manuscript.updated
 
       manuscript.submitterSignature = 'flibble'
-      await manuscript.saveGraph()
+      await manuscript.save()
 
       // In memory
       expect(updatedStart).not.toEqual(manuscript.updated)
@@ -72,7 +72,7 @@ describe('related objects behave as we expect', () => {
         msList.map(async (m, index) => {
           const manuscript = await Manuscript.find(m.id, userId)
           manuscript.submitterSignature = index.toString()
-          return manuscript.saveGraph()
+          return manuscript.save()
         }),
       )
 
@@ -108,7 +108,7 @@ describe('related objects behave as we expect', () => {
 
       const file = await File.find(manuscript.files[0].id)
       file.type = 'updated'
-      await file.saveGraph()
+      await file.save()
 
       manuscript = await Manuscript.find(manuscript.id, userId)
 
@@ -163,7 +163,7 @@ describe('related objects behave as we expect', () => {
     it('mutates the manuscript when save() is called', async () => {
       let manuscript = await createManuscriptWithOneFile(userId)
       manuscript.meta.title = 'changed'
-      await manuscript.saveGraph()
+      await manuscript.save()
       // in memory
       expect(manuscript).toHaveProperty('id')
       expect(manuscript.meta.title).toBe('changed')
@@ -183,7 +183,7 @@ describe('related objects behave as we expect', () => {
 
       file.status = 'UPLOADED'
 
-      await file.saveGraph()
+      await file.save()
 
       expect(file).toHaveProperty('id')
       expect(file.status).toBe('UPLOADED')
@@ -206,11 +206,11 @@ describe('related objects behave as we expect', () => {
       const file = await File.find(fileId)
 
       file.status = 'UPLOADED'
-      await file.saveGraph()
+      await file.save()
       expect(file).toHaveProperty('id')
       expect(file.status).toBe('UPLOADED')
       file.status = 'STORED'
-      await file.saveGraph()
+      await file.save()
       expect(file).toHaveProperty('id')
       expect(file.status).toBe('STORED')
 
@@ -223,7 +223,7 @@ describe('related objects behave as we expect', () => {
       const manuscript = await createManuscriptWithOneFile(userId)
       const file = await File.find(manuscript.files[0].id)
       file.status = 'UPLOADED'
-      await file.saveGraph()
+      await file.save()
 
       // in memory
       expect(file).toHaveProperty('id')
@@ -237,7 +237,7 @@ describe('related objects behave as we expect', () => {
       expect(dbFile.status).toBe('UPLOADED')
 
       dbFile.status = 'STORED'
-      await dbFile.saveGraph()
+      await dbFile.save()
 
       // in memory
       expect(dbFile).toHaveProperty('id')
@@ -264,7 +264,7 @@ describe('related objects behave as we expect', () => {
         type: 'MANUSCRIPT_SOURCE_PENDING',
         mimeType: 'application/txt',
       })
-      await fileEntity.saveGraph()
+      await fileEntity.save()
       expect(fileEntity).toHaveProperty('id')
     })
   })
@@ -278,7 +278,7 @@ async function createManuscriptWithOneFile(userId) {
     url: '-',
     type: 'test_file',
   })
-  await file.saveGraph()
+  await file.save()
   manuscript = await Manuscript.find(manuscript.id, userId)
   return manuscript
 }
@@ -292,7 +292,7 @@ async function createInitialManuscript(userId, title = 'Alpha') {
     status: 'initial',
     teams: [],
   })
-  await manuscript.saveGraph()
+  await manuscript.save()
   return manuscript
 }
 

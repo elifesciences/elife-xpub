@@ -34,7 +34,7 @@ describe('Manuscripts', () => {
         status: 'INITIAL',
       }
 
-      const { id } = await Manuscript.makeInitial(manuscriptData).saveGraph()
+      const { id } = await Manuscript.makeInitial(manuscriptData).save()
       const manuscript = await Query.manuscript({}, { id }, { user: profileId })
       expect(manuscript).toMatchObject(manuscriptData)
     })

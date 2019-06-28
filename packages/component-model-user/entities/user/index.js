@@ -36,12 +36,12 @@ class User extends BaseModel {
 
   static async createWithIdentity(identifier, type = 'elife') {
     // TODO : should this be done in one transaction
-    const user = await new User({ defaultIdentity: type }).saveGraph()
+    const user = await new User({ defaultIdentity: type }).save()
     await new Identity({
       type,
       identifier,
       userId: user.id,
-    }).saveGraph()
+    }).save()
     return user
   }
 

@@ -36,7 +36,7 @@ describe('Manuscript resolvers', () => {
     it("fails if manuscript doesn't belong to user", async () => {
       const manuscript = await Manuscript.makeInitial({
         createdBy: userId,
-      }).saveGraph()
+      }).save()
       await expect(
         Mutation.updateSubmission(
           {},
@@ -50,7 +50,7 @@ describe('Manuscript resolvers', () => {
       const manuscript = await Manuscript.makeInitial({
         createdBy: userId,
         status: Manuscript.statuses.MECA_EXPORT_PENDING,
-      }).saveGraph()
+      }).save()
       await expect(
         Mutation.updateSubmission(
           {},
@@ -65,7 +65,7 @@ describe('Manuscript resolvers', () => {
     it('updates the current submission for user with data', async () => {
       const manuscript = await Manuscript.makeInitial({
         createdBy: userId,
-      }).saveGraph()
+      }).save()
 
       await Mutation.updateSubmission(
         {},
@@ -79,7 +79,7 @@ describe('Manuscript resolvers', () => {
     it('updates the current submission teams', async () => {
       const manuscript = await Manuscript.makeInitial({
         createdBy: userId,
-      }).saveGraph()
+      }).save()
 
       await Mutation.updateSubmission(
         {},

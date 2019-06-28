@@ -36,7 +36,7 @@ module.exports = app => {
         objectId: manuscriptId,
         objectType: 'manuscript',
         value: JSON.stringify(body, null, 4),
-      }).saveGraph()
+      }).save()
     } catch (error) {
       logger.error(`error saving audit log ${error}`)
     }

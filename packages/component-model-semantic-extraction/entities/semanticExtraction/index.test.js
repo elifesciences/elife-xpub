@@ -13,7 +13,7 @@ describe('SemanticExtraction', () => {
         manuscriptId: uuid(),
         fieldName: 'title',
         value: 'test_title',
-      }).saveGraph()
+      }).save()
       expect(semanticExtraction.id).toBeTruthy()
     })
   })
@@ -48,7 +48,7 @@ describe('SemanticExtraction', () => {
       const id = uuid()
       const titleExtraction = SemanticExtraction.createTitleEntity(id, 'abc123')
       expect(titleExtraction.fieldName).toBe('title')
-      await titleExtraction.saveGraph()
+      await titleExtraction.save()
 
       const result = await SemanticExtraction.findByManuscriptId(id)
       expect(result).toHaveLength(1)
