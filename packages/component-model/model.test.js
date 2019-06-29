@@ -38,10 +38,9 @@ describe('related objects behave as we expect', () => {
   describe('manuscript <-> file', () => {
     it('manuscripts are constructed with a created time', async () => {
       const manuscript = await createInitialManuscript(userId)
-      const now = new Date().toISOString()
-
+      const today = new Date().toDateString()
       expect(manuscript).toHaveProperty('created')
-      expect(manuscript.created.substring(0, 11)).toBe(now.substring(0, 11))
+      expect(manuscript.created.toDateString()).toBe(today)
     })
 
     it('manuscripts have their updated time changed', async () => {
