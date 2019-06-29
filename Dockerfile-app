@@ -6,9 +6,9 @@ RUN mkdir -p ${HOME}
 
 WORKDIR ${HOME}
 
-COPY package.json yarn.lock ./
-COPY client client
-COPY packages packages
+COPY src/package.json yarn.lock ./
+COPY src/client client
+COPY src/packages packages
 
 # We do a development install because react-styleguidist is a dev dependency and we want to run tests
 # Remove cache and offline mirror in the same command, to avoid creating intermediate layers
@@ -17,24 +17,24 @@ RUN yarn install --frozen-lockfile \
     && rm -rf /npm-packages-offline-cache
 
 COPY \
-    app.js \
-    newrelic.js \
-    .babelrc \
-    .eslintignore \
-    .eslintrc.js \
-    .prettierrc \
-    .stylelintignore \
-    .stylelintrc \
-    styleguide.config.js \
+    src/app.js \
+    src/newrelic.js \
+    src/.babelrc \
+    src/.eslintignore \
+    src/.eslintrc.js \
+    src/.prettierrc \
+    src/.stylelintignore \
+    src/.stylelintrc \
+    src/styleguide.config.js \
     ./
 
-COPY app app
-COPY config config
-COPY scripts scripts
-COPY styleguide styleguide
-COPY test test
-COPY webpack webpack
-COPY templates templates
+COPY src/app app
+COPY src/config config
+COPY src/scripts scripts
+COPY src/styleguide styleguide
+COPY src/test test
+COPY src/webpack webpack
+COPY src/templates templates
 
 ENV NODE_ENV "production"
 ENV XPUB_LOG_PATH "/var/log/xpub"

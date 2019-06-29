@@ -14,9 +14,9 @@ RUN apt-get update \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-COPY package.json yarn.lock ./
-COPY client client
-COPY packages packages
+COPY src/package.json yarn.lock ./
+COPY src/client client
+COPY src/packages packages
 
 # We do a development install because react-styleguidist is a dev dependency and we want to run tests
 # Remove cache and offline mirror in the same command, to avoid creating intermediate layers
@@ -25,27 +25,27 @@ RUN yarn install --frozen-lockfile \
     && rm -rf /npm-packages-offline-cache
 
 COPY \
-    app.js \
-    newrelic.js \
-    .babelrc \
-    .eslintignore \
-    .eslintrc.js \
-    .prettierrc \
-    .stylelintignore \
-    .stylelintrc \
-    styleguide.config.js \
+    src/app.js \
+    src/newrelic.js \
+    src/.babelrc \
+    src/.eslintignore \
+    src/.eslintrc.js \
+    src/.prettierrc \
+    src/.stylelintignore \
+    src/.stylelintrc \
+    src/styleguide.config.js \
     ./
 
 # Yes! we do need all this and the reason is that the browser tests use the config
 # in turn the config relies on packages. 
 # TODO: Fix the browser tests by passing in the "URL under test" as an env var
 
-COPY app app
-COPY config config
-COPY scripts scripts
-COPY styleguide styleguide
-COPY test test
-COPY webpack webpack
-COPY templates templates
+COPY src/app app
+COPY src/config config
+COPY src/scripts scripts
+COPY src/styleguide styleguide
+COPY src/test test
+COPY src/webpack webpack
+COPY src/templates templates
 
 CMD []
