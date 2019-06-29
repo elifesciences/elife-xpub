@@ -17,7 +17,7 @@ describe('uploadSupportingFile', () => {
   beforeEach(async () => {
     await createTables(true)
     const user = new User(userData)
-    await user.save()
+    await user.saveGraph()
     userId = user.id
 
     const server = await startS3rver({

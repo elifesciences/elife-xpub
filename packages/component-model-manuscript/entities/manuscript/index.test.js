@@ -342,7 +342,7 @@ describe('Manuscript', () => {
         role: 'foo',
         teamMembers: [],
       })
-      await manuscript.save()
+      await manuscript.saveGraph()
       const loadedManuscript = await Manuscript.find(manuscript.id, userId)
       expect(loadedManuscript.teams).toHaveLength(1)
     })
@@ -375,7 +375,7 @@ describe('Manuscript', () => {
         role: 'foo',
         teamMembers: [],
       })
-      await manuscript.save()
+      await manuscript.saveGraph()
       const loadedManuscripts = await Manuscript.findByStatus('INITIAL', userId)
       expect(loadedManuscripts[0].teams).toHaveLength(1)
     })
@@ -484,7 +484,7 @@ describe('Manuscript', () => {
         role: 'foo',
         teamMembers: [],
       })
-      await manuscript.save()
+      await manuscript.saveGraph()
       expect(manuscript.teams).toHaveLength(1)
     })
 
