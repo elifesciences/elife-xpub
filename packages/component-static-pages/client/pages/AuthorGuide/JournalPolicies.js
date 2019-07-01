@@ -66,7 +66,7 @@ const JournalPolicies = props => (
       <NativeLink href="mailto:editorial@elifesciences.org" target="_blank">
         editorial@elifesciences.org
       </NativeLink>
-      , with their message addressed to the Editor-in-Chief, Randy Schekman.
+      , with their message addressed to the Editor-in-Chief, Michael Eisen.
     </Paragraph.Reading>
 
     <H2>Animal and/or Human Experiments</H2>
