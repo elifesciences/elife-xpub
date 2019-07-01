@@ -9,6 +9,8 @@ import {
 
 import { ON_UPLOAD_PROGRESS } from './subscriptions'
 
+import graphqlMemoWrapper from './graphqlMemoWrapper'
+
 export default compose(
   graphql(UPLOAD_MANUSCRIPT_FILE, {
     name: 'uploadManuscriptFile',
@@ -26,4 +28,5 @@ export default compose(
     name: 'uploadProgress',
     options: props => ({ variables: { id: props.initialValues.id } }),
   }),
+  graphqlMemoWrapper,
 )
