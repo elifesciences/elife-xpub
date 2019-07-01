@@ -20,7 +20,7 @@ const signUser = (id: string): string => {
   }
 
   // TODO: This should come out of config
-  return sign(payload, 'test')
+  return sign(payload, process.env.JWT_SECRET || '')
 }
 
 export const defaultTestUser = {
