@@ -101,7 +101,7 @@ elifePipeline {
                       try {
                         sh "docker ps"
                         sh "NODE_ENV=production NODE_CONFIG_ENV=test docker-compose build"
-                        sh "NODE_ENV=production NODE_CONFIG_ENV=test docker-compose run api-test npm run ci"
+                        sh "JWT_SECRET=fakesecret NODE_ENV=production NODE_CONFIG_ENV=test docker-compose run api-test npm run ci"
                       } finally {
                         sh "docker-compose down"
                       }
