@@ -11,7 +11,6 @@ elifePipeline {
 
         stage 'Build image', {
             // may have been written by a container in which this repository was mounted as a volume
-            // TOTO: Maybe I want to build the API-TEST container in this step?
             sh "sudo rm -rf .config"
             // TODO: pull existing docker image if caching is not already effective
             dockerComposeBuild(commit)

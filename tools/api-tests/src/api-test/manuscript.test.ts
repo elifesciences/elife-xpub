@@ -7,8 +7,7 @@ import { Manuscript, ManuscriptInput } from "../generated/graphql";
 import { stripTypeNameFromJson } from "../utils";
 
 test.beforeEach(async _ => {
-  const {currentUser}= await user.Query.currentUser(defaultConfig());
-  console.log(currentUser);
+  await user.Query.currentUser(defaultConfig());
 });
 
 test("The user can save a submission and the manuscripts endpoint now includes it", async (t: TestContext) => {
