@@ -34,7 +34,7 @@ COPY \
 
 COPY src/app app
 COPY src/config config
-COPY src/scripts scripts
+COPY scripts scripts
 COPY src/styleguide styleguide
 COPY src/test test
 COPY src/webpack webpack
