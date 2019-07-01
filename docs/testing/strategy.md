@@ -1,4 +1,4 @@
-# 0008. Testing Strategy
+# Testing Strategy
 
 ## Unit tests
 
