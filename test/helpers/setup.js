@@ -1,4 +1,4 @@
-import db from 'pubsweet-server/src/db'
+import { db } from '@pubsweet/db-manager'
 
 // idea: this might be another option for when running browser tests
 // while writing tests, using the following to start the server avoids having to recompile the app

@@ -99,10 +99,6 @@ class User extends BaseModel {
     return this
   }
 
-  async save() {
-    return this.$query().upsertGraphAndFetch(this)
-  }
-
   isSettable(prop) {
     if (this.constructor.virtualAttributes.includes(prop)) {
       return true

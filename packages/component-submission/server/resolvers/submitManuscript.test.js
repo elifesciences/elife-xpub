@@ -68,7 +68,7 @@ describe('Manuscripts', () => {
         },
       ]
 
-      const manuscript = await initialManuscript.save()
+      const manuscript = await initialManuscript.saveGraph()
       id = manuscript.id
     })
 
@@ -111,7 +111,7 @@ describe('Manuscripts', () => {
         type: 'SUPPORTING_FILE',
         status: 'CREATED',
       })
-      manuscript = await manuscript.save()
+      manuscript = await manuscript.saveGraph()
 
       expect.assertions(3)
       expect(manuscript.files).toHaveLength(2)

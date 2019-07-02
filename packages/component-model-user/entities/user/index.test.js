@@ -64,13 +64,5 @@ describe('User manager', () => {
         { type: 'elife', identifier: profileId },
       ])
     })
-
-    it('fails to update non-existent user', () =>
-      expect(
-        new User({
-          id: 'f05bbbf9-ddf4-494f-a8da-84957e2708ee',
-          defaultIdentity: 'elife',
-        }).save(),
-      ).rejects.toThrow())
   })
 })

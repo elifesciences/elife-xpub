@@ -28,6 +28,7 @@ describe('Manuscript resolvers', () => {
       User.createWithIdentity(profileId),
       User.createWithIdentity(badProfileId),
     ])
+
     userId = user.id
   })
 

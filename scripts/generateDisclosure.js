@@ -2,7 +2,7 @@
 const fs = require('fs')
 const { generateDisclosurePdf } = require('@elifesciences/component-meca/')
 const Manuscript = require('@elifesciences/component-model-manuscript').model
-const { db } = require('pubsweet-server')
+const { db } = require('@pubsweet/db-manager')
 
 async function regenerate(id) {
   console.log(id)

@@ -1,14 +1,8 @@
 const lodash = require('lodash')
-const { transaction } = require('objection')
 const BaseModel = require('@pubsweet/base-model')
 const logger = require('@pubsweet/logger')
 const emptyManuscript = require('./helpers/empty')
 const AuditLog = require('@elifesciences/component-model-audit-log').model
-
-const integrityError = (property, value, message) =>
-  new Error(
-    `Data Integrity Error property ${property} set to ${value}: ${message}`,
-  )
 
 const mergeObjects = (...inputs) =>
   lodash.mergeWith(
@@ -189,64 +183,6 @@ class Manuscript extends BaseModel {
     await this.$loadRelated('[teams, files]')
   }
 
-  async needsRefresh(trx = null) {
-    const current = await this.constructor.query(trx).findById(this.id)
-
-    const storedUpdateTime = new Date(current.updated).getTime()
-    const instanceUpdateTime = new Date(this.updated).getTime()
-
-    const result = instanceUpdateTime < storedUpdateTime
-    if (result) {
-      logger.info(
-        `\n\n\nneeds refresh ${storedUpdateTime} : ${instanceUpdateTime}`,
-      )
-    }
-    return result
-  }
-
-  async save(options = {}) {
-    const simpleSave = async (trx = null) => {
-      // save manuscript and all relations
-      // note that this also deletes any related entities that are not present
-      await this.$query(trx).upsertGraphAndFetch(this, {
-        noDelete: true,
-        ...options,
-      })
-      // reload related entities
-      await this.$loadRelated('[teams, files]', null, trx)
-    }
-
-    if (this.created && this.updated) {
-      let trx
-      try {
-        trx = await transaction.start(BaseModel.knex())
-
-        if (await this.needsRefresh(trx)) {
-          logger.error(
-            `Attempt to save Manuscript ${this.id} with updated=${
-              this.updated
-            }`,
-          )
-          // Autosave is broken so can fail here
-          throw integrityError(
-            'updated',
-            this.updated,
-            'is older than the one stored in the database!',
-          )
-        }
-
-        await simpleSave(trx)
-        await trx.commit()
-      } catch (err) {
-        await trx.rollback()
-        throw err
-      }
-    } else {
-      await simpleSave()
-    }
-    return this
-  }
-
   static async updateStatus(id, status) {
     const [manuscript] = await this.query()
       .where({
@@ -273,7 +209,7 @@ class Manuscript extends BaseModel {
       value: status,
     }).save()
 
-    return manuscript.save()
+    return manuscript.saveGraph()
   }
 
   applyInput(input) {

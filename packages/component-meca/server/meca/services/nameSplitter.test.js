@@ -1,5 +1,5 @@
 const { createTables } = require('@elifesciences/component-model')
-const { db } = require('pubsweet-server')
+const { db } = require('@pubsweet/db-manager')
 const splitter = require('./nameSplitter')
 
 const existingNames = [

@@ -10,7 +10,7 @@ describe('Manuscripts', () => {
   beforeEach(async () => {
     await createTables(true)
     const user = new User(userData)
-    await user.save()
+    await user.saveGraph()
     userId = user.id
   })
 
@@ -20,7 +20,7 @@ describe('Manuscripts', () => {
         createdBy: userId,
         files: [],
       })
-      const { id } = await manuscript.save()
+      const { id } = await manuscript.saveGraph()
       const mutatedManuscript = await Mutation.removeUploadedManuscript(
         {},
         { id },
@@ -39,7 +39,7 @@ describe('Manuscripts', () => {
         createdBy: userId,
         files: [fakeFile],
       })
-      const { id } = await manuscript.save()
+      const { id } = await manuscript.saveGraph()
       expect(manuscript.files).toHaveLength(1)
       await Mutation.removeUploadedManuscript({}, { id }, { user: profileId })
       const mutatedManuscript = await Manuscript.find(id, userId)

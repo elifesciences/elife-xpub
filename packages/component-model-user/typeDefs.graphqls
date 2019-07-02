@@ -1,5 +1,10 @@
 # -- BASE MODEL START --
-extend type User {
+extend type Query {
+  currentUser: User
+}
+
+type User {
+  id: ID!
   created: DateTime!
   updated: DateTime
   identities: [Identity]

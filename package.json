@@ -96,8 +96,7 @@
     "secretcheck"
   ],
   "resolutions": {
-    "lodash": ">=4.17.11",
-    "pubsweet-server": "^10.1.4"
+    "lodash": ">=4.17.11"
   },
   "workspaces": [
     "client/*",
@@ -111,6 +110,7 @@
     "@pubsweet/ui": "^9.0.3",
     "@pubsweet/ui-toolkit": "^2.0.3",
     "@rebass/grid": "^6.0.0-7",
+    "apollo-client": "2.4.1",
     "apollo-link-state": "^0.4.1",
     "config": "^2.0.1",
     "date-fns": "^1.29.0",
@@ -127,7 +127,7 @@
     "prop-types": "^15.6.2",
     "pubsweet": "^4.0.4",
     "pubsweet-client": "^8.0.0",
-    "pubsweet-server": "^10.1.4",
+    "pubsweet-server": "^13.4.5",
     "pug": "^2.0.3",
     "react": "^16.8.6",
     "react-apollo": "^2.1.11",
@@ -153,6 +153,7 @@
   "devDependencies": {
     "@testing-library/react": "^8.0.1",
     "@yarnpkg/lockfile": "^1.1.0",
+    "apollo-cache-inmemory": "^1.2.9",
     "babel-core": "^6.26.0",
     "babel-eslint": "^8.0.2",
     "babel-loader": "^7.1.2",

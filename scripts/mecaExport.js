@@ -1,4 +1,4 @@
-const { db } = require('pubsweet-server')
+const { db } = require('@pubsweet/db-manager')
 const { mecaExport } = require('@elifesciences/component-meca')
 const { S3Storage } = require('@elifesciences/component-service-s3')
 const Manuscript = require('@elifesciences/component-model-manuscript').model
