@@ -1,9 +1,11 @@
 import { test, TestContext } from "ava-ts";
 import dashboard from "../xpub-api/dashboard";
+import user from "../xpub-api/user";
 import { defaultConfig } from "../xpub-api";
 import { Manuscript } from "../generated/graphql";
 
-test.only("manuscripts returns something", async (t: TestContext) => {
+test("manuscripts returns something", async (t: TestContext) => {
+  await user.Query.currentUser(defaultConfig());
   const fn = dashboard.Query.manuscripts;
   const result = (await fn(defaultConfig())) as { manuscripts: Manuscript[] };
 
