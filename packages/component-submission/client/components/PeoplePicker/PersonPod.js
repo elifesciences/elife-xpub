@@ -4,6 +4,7 @@ import styled from 'styled-components'
 import { th } from '@pubsweet/ui-toolkit'
 import { Action } from '@pubsweet/ui'
 import { Flex, Box } from '@rebass/grid'
+import { isEqual, pick } from 'lodash'
 import {
   Icon,
   ButtonAsIconWrapper,
@@ -64,13 +65,30 @@ class PersonPod extends React.Component {
     }
   }
 
+  shouldComponentUpdate(nextProps) {
+    const compareProps = [
+      'isSelectButtonClickable',
+      'isSelected',
+      'selectButtonType',
+      'institution',
+      'focuses',
+      'expertises',
+      'name',
+    ]
+
+    return !isEqual(
+      pick(nextProps, compareProps),
+      pick(this.props, compareProps),
+    )
+  }
+
   openModal = () => {
     this.setState({ isModalOpen: true })
   }
 
-  acceptModal = person => {
+  acceptModal = () => {
     this.setState({ isModalOpen: false })
-    this.props.togglePersonSelection(person)
+    this.props.togglePersonSelection()
   }
 
   cancelModal = () => {
