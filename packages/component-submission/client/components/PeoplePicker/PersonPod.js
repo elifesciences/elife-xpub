@@ -65,7 +65,7 @@ class PersonPod extends React.Component {
     }
   }
 
-  shouldComponentUpdate(nextProps) {
+  shouldComponentUpdate(nextProps, nextState) {
     const compareProps = [
       'isSelectButtonClickable',
       'isSelected',
@@ -76,9 +76,9 @@ class PersonPod extends React.Component {
       'name',
     ]
 
-    return !isEqual(
-      pick(nextProps, compareProps),
-      pick(this.props, compareProps),
+    return (
+      !isEqual(pick(nextProps, compareProps), pick(this.props, compareProps)) ||
+      !isEqual(this.state, nextState)
     )
   }
 
