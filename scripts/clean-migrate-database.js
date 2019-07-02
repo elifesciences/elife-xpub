@@ -4,4 +4,5 @@ const cleandb = require('pubsweet-server/test/helpers/db_cleaner')
 
 cleandb().then(() => {
   db.destroy()
+  process.exit()
 })
