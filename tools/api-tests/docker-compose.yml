@@ -2,6 +2,7 @@ version: '3'
 services:
   api-test:
     build: '.'
+    image: 'elife-xpub_api-test'
     networks:
       - 'elife-xpub_default'
     environment:
