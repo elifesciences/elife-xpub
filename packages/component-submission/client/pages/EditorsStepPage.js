@@ -298,19 +298,19 @@ export class EditorsStepPageComponent extends React.Component {
         </Box>
 
         <Box mb={5}>
-          <FormH3>Suggest Reviewers</FormH3>
+          <FormH3>Suggest Reviewers (Optional)</FormH3>
 
           {values.suggestedReviewers.map((_, index) => (
             // eslint-disable-next-line react/no-array-index-key
             <Box data-test-id="suggestedReviewerInputGroup" key={index} mb={2}>
               <TwoColumnLayout bottomSpacing={false}>
                 <ValidatedField
-                  label={`Reviewer ${index + 1} name (optional)`}
+                  label={`Reviewer ${index + 1} name`}
                   name={`suggestedReviewers.${index}.name`}
                   onChange={this.handleSuggestedReviewersChanged}
                 />
                 <ValidatedField
-                  label={`Reviewer ${index + 1} email (optional)`}
+                  label={`Reviewer ${index + 1} email`}
                   name={`suggestedReviewers.${index}.email`}
                   onChange={this.handleSuggestedReviewersChanged}
                   type="email"
