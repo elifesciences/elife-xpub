@@ -98,7 +98,6 @@ elifePipeline {
                   dir("tools/api-tests") {
                     withCommitStatus({
                       try {
-                        sh "docker ps"
                         sh "NODE_ENV=production NODE_CONFIG_ENV=test docker-compose build"
                         sh "JWT_SECRET=fakesecret NODE_ENV=production NODE_CONFIG_ENV=test docker-compose run api-test npm run ci"
                       } finally {
