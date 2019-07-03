@@ -138,3 +138,28 @@ For the acceptance tests we want to run them accross the entire collection of us
 ### Running the Tests
 
 Acceptance test take time to run, ideally the tests should be able to run in parallel which will require the tests to be written independant of what is currently in the database and should be able to run against on the dev boxes and in the CI without any additional effort on either side. The tests are currently planned to be done with testcafe so we can quickly convert our existing browser tests into new acceptance tests, however testcafe has restricitons on running in parallel accross multiple browsers which selenium can do out of the box (DISCUSSION NEEDED). The tests should have a quick and long run tag so we can have a set of tests that run on push to a PR that wont take hours and a set of full tests that run nightly and/or on production builds.
+
+### API Tests
+
+The purpose of API testing is to check that the server responds in a sensible way for a given input. API tests typically submit data to the server through a GraphQL mutation, and then check that the data was properly persisted by querying it again in a way similar to how to the client would request the data, and asserting on the response. This allows the team to recreate situations in the server-side that are difficult to reliably test with browser tests. It also checks that the API remains stable between client and server.
+
+#### Running it
+
+```bash
+# You need the platform running
+# pwd = elife-xpub/
+yarn start:services
+# You may need to setup the db
+yarn run pubsweet setupdb --clobber
+
+# Start the server
+yarn run pubsweet server
+
+# Go to the api tests
+cd tools/api-tests
+# pwd = elife-xpub/tools/api-tests
+
+# You should just be able to do this:
+docker-compose build
+docker-compose up
+```
