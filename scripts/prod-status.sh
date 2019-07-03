@@ -26,7 +26,9 @@ COLS="updated, substring((meta->'title')::text, 1, 30) as title, id "
 # TODO: Create a read-only user
 # This pulls the postgres env vars from the container into the current shell
 REMOTE_CMD="env \$(docker exec xpub_app_1 env | grep PG) psql -c"
+REMOTE_CMDX="env \$(docker exec xpub_app_1 env | grep PG) psql -x -c"
 CMD="ssh elife@${HOST} ${REMOTE_CMD}"
+CMDX="ssh elife@${HOST} ${REMOTE_CMDX}"
 
 # Commands to execute
 SQL_STATUS="\"SELECT status, count(*) as num FROM manuscript WHERE id NOT IN ${IGNORE} GROUP BY status ORDER BY status\""
@@ -54,3 +56,28 @@ echo "<h2>Submissions Failed</h2>"
 echo
 echo "<pre>" ; ${CMD} "${SQL_FAILED}"; echo "</pre>"
 
+declare -i day num
+
+
+echo "<hr>"
+echo "<h2>Statistics (last 90 days)</h2>"
+echo "<pre>"
+start=7
+end=97
+for ((day=start; day<=end; day++))
+do
+  SQL_STATS_DATA="\"select date_part('isodow', t.date) as dow, t.date, t.total, t.submitted_in_7d, 100*t.submitted_in_7d / t.total as percent \
+    FROM (select max(date(created)) as date, count(*) as total , count(*) \
+    FILTER ( WHERE status = 'MECA_IMPORT_SUCCEEDED' AND date_part('day', updated - created) <= 7) as submitted_in_7d \
+    FROM manuscript WHERE date(created) = date(current_date - interval '${day} days')) as t\""
+
+  if [ $day = 7 ] 
+  then
+    ${CMD} "${SQL_STATS_DATA}" | head -n -2  
+  else
+    ${CMD} "${SQL_STATS_DATA}" | head -n -2 | tail -n +3 
+  fi
+done
+
+
+echo "</pre>"
