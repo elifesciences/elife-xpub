@@ -160,6 +160,28 @@ For the acceptance tests we want to run them accross the entire collection of us
 - "As a user I want to be able to upload my cover letter as a pdf / word document"
   These are just some samples but we can use the flow charts the UX team created to ensure that all paths are converted into user stories and tests.
 
+### Page Objects
+
+The acceptance tests should use a code based representation of each page / step of the application. This should model user action rather than elements on the page. For example on the Author Details step of the form we would have: `setAuthorName` rather than `setAuthorTextBox`. The premise behind this is that no matter what tests use the page objects if the UX changes then we only have to change one piece of code rather than every test and it makes writing regression tests easier.
+
+### Long and Short running tests
+
+As we get more acceptance tests we will start to run into problems with how long it takes the tests to run on a PR and on local machines. This should be resolved by having a long set of tests and a short set of tests. The long tests will just be all of the tests wheras the short running tests will be a basic happy path testing a few cases, these should be run on PRs and locally and the long running tests can be a nightly task or run before deployment to production.
+
 ### Running the Tests
 
 Acceptance test take time to run, ideally the tests should be able to run in parallel which will require the tests to be written independant of what is currently in the database and should be able to run against on the dev boxes and in the CI without any additional effort on either side. The tests are currently planned to be done with testcafe so we can quickly convert our existing browser tests into new acceptance tests, however testcafe has restricitons on running in parallel accross multiple browsers which selenium can do out of the box (DISCUSSION NEEDED). The tests should have a quick and long run tag so we can have a set of tests that run on push to a PR that wont take hours and a set of full tests that run nightly and/or on production builds. The tests should also be able to run localy and ideally run in parallel, this will necesitate some re-writing of our existing browser tests before they are converted to acceptance tests.
+
+## Regression Testing
+
+Regression tests are for testing a specific bug that is being or has been fixed to ensure it is not accidentaly re-added to the product. In an ideal world before fixing any bug a regression test should be written and the bug is fixed when the test passes. Regression tests should be clearly marked with a comment and the ticket number for the bug so if it starts to fail it is easy to go back and find the original issue and a summary of what happened in the original investigation.
+
+### Where should regression tests live?
+
+Regression tests will almost always be acceptance tests and they should be part of the test files for the page / step being tested. In some circumstances they will be unit or integration tests and these will need to live alongside the components that are being tested.
+
+> **Note** Regression tests do not need to exist in their own files.
+
+### When should the regression tests be run?
+
+The regression tests should be run as part of the long running acceptance tests rather than the happy path tests. There will potentially be a lot of tests depending on the number of bugs discovered and whether they require regression tests to cover the future.
