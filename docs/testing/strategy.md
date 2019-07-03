@@ -41,24 +41,24 @@ All five calls above would not be needed to test the function to a reasonable st
 
 ```js
 describe('someFunc Tests', () => {
-  //Error
+  // Error
   it('should handle incorrect op parameter', () => {
     expect(someFunc('false', 1, 2, 3)).toBe(NaN)
     expect(someFunc(false)).toThrow()
   })
 
-  //Error
+  // Error
   it('should handle incorrect numbers parameter', () => {
     expect(someFunc('avg', [1, 2, 3])).toThrow()
     expect(someFunc('avg')).toBe(NaN)
   })
 
-  //Extreme
+  // Extreme
   it('should be able to handle large amounts of input', () => {
     expect(someFunc('sum' /* lots of numbers */)).toBe(/*correct result */)
   })
 
-  //Normal
+  // Normal
   it('should return the average of a series of numbers passed in', () => {
     expect(someFunc('avg', 1, 2, 3)).toBe(2)
   }) // similar tests for normal cases for each op
@@ -69,7 +69,7 @@ describe('someFunc Tests', () => {
 
 ### Mocking
 
-When we unit test a file / function / component everything not part of it should be mocked out. This is to prevent failures in other parts of the code mudying up our tests. For Exmple:
+When we unit test a file / function / component everything not part of it should be mocked out. This is to prevent failures in other parts of the code muddying up our tests. For Example:
 
 ```js
 import fileService from './fileService'
@@ -108,7 +108,15 @@ describe('fileUtils', () =>{
 ```
 
 We can utilise the jest mocking for these as demonstrated above and this allows us to spy on the functions to ensure that they have been called the correct number of times and with the correct arguments. The mocks should be reset between tests to avoid cross test contamination.
-For react components it is not necessary to mock out child components that are for display only, if they are executing logic that can affect the tests then they should be replaced with mocked components.
+For react components it is not necessary to mock out child components that are for display only, if they are executing logic that can affect the tests then they should be replaced with mocked components. If the component being mocked out is needed in multiple files then it should have a helper function to create the mock this should live with the mocked component and its test, For Example:
+
+```
+/src
+    /folder/
+        foo.js
+        foo.test.js
+        foo.mock.js
+```
 
 ### File Structure
 
