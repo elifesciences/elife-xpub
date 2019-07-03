@@ -14,6 +14,9 @@ module.exports = {
     uploads: 'test/temp/uploads',
     secret: 'test',
     logger,
+    apollo: {
+      introspection: true,
+    },
   },
   login: {
     url: '/mock-token-exchange/ewwboc7m',
