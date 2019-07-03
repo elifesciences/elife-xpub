@@ -30,7 +30,7 @@ const someFunc = (op, ...numbers) => {
 This could be tested with a single test for each `op` parameter, this would suffice for code coverage but would not cover all of the applicable test cases. What happens if it was called with the following calls:
 
 ```js
-   someFunc('avg', {numbers: [1,2,3]})  // Error caser
+   someFunc('avg', {numbers: [1,2,3]})  // Error case
    someFunc('tree', 1, 2, 3, 4) // Error case
    someFunc('sum', [1, 2, 3, 4]) // Normal case
    someFunc(false, 1, 2, 3, 4) // Error case
@@ -81,7 +81,7 @@ const fileTitleNormaliser = fileId => {
 }
 ```
 
-In the above code the fileService may be third party so out of scope for our unit tests or it may ust be in another part of the repo, either way its a point of failure that we are not concerned with in this test so it needs to be mocked out:
+In the above code the fileService may be third party so out of scope for our unit tests or it may just be in another part of the repo, either way its a point of failure that we are not concerned with in this test so it needs to be mocked out:
 
 ```js
 import fileService from './fileService'
@@ -116,7 +116,7 @@ Unit tests should be placed alongisde the file they are testing with the .test a
 
 ## Integration Tests
 
-The integration tests are to test across a loayer of the code base. In the case of Linero Reviewer we are only testing across the server as clinet will be handled with our acceptance tests. It is important that these are easy to run from both the developer machines and the CI and these should be run before any code is puched to the remote branch.
+The integration tests are to test across a layer of the code base. In the case of Linero Reviewer we are only testing across the server as clinet will be handled with our acceptance tests. It is important that these are easy to run from both the developer machines and the CI and these should be run before any code is puched to the remote branch.
 
 ### API Tests
 
