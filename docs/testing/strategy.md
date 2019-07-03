@@ -118,6 +118,31 @@ Unit tests should be placed alongisde the file they are testing with the .test a
 
 The integration tests are to test across a loayer of the code base. In the case of Linero Reviewer we are only testing across the server as clinet will be handled with our acceptance tests. It is important that these are easy to run from both the developer machines and the CI and these should be run before any code is puched to the remote branch.
 
+### API Tests
+
+The purpose of API testing is to check that the server responds in a sensible way for a given input. API tests typically submit data to the server through a GraphQL mutation, and then check that the data was properly persisted by querying it again in a way similar to how to the client would request the data, and asserting on the response. This allows the team to recreate situations in the server-side that are difficult to reliably test with browser tests. It also checks that the API remains stable between client and server.
+
+#### Running it
+
+```bash
+# You need the platform running
+# pwd = elife-xpub/
+yarn start:services
+# You may need to setup the db
+yarn run pubsweet setupdb --clobber
+
+# Start the server
+yarn run pubsweet server
+
+# Go to the api tests
+cd tools/api-tests
+# pwd = elife-xpub/tools/api-tests
+
+# You should just be able to do this:
+docker-compose build
+docker-compose up
+```
+
 ### What to test?
 
 When writing integration tests we want to be testing the api endpoints for the server. These should use the new Api-test framework being put in place. We want to test the that the endpoint is acting in an expected and idempotent way. For example, calling `updateManuscript` via the graphql resolver should return an expected and correct result given sensible input and it should return the same result every time.
