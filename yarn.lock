@@ -558,19 +558,19 @@
   dependencies:
     "@pubsweet/logger" "^0.2.22"
 
-"@pubsweet/models@^0.2.12", "@pubsweet/models@^0.2.7":
-  version "0.2.12"
-  resolved "https://registry.yarnpkg.com/@pubsweet/models/-/models-0.2.12.tgz#214d8df2d5905340af3b9f058010637cfcafbde2"
-  integrity sha512-GiUVogtzf4hf2so/Mt1htezpMDf3aNrdydGoBjHwTJgkoGuhlYLNzK3DqEZmeJhzxHm1Sx4DWCt09QrVcfVkfA==
-  dependencies:
-    "@pubsweet/logger" "^0.2.25"
-
 "@pubsweet/models@^0.2.14":
   version "0.2.14"
   resolved "https://registry.yarnpkg.com/@pubsweet/models/-/models-0.2.14.tgz#006a50fb01576d0d213069520fba5594c8f2f111"
   integrity sha512-jiYbIbxd/6CVRWkhLAVGYyhVWvVXnjcCabIOKuY5uCw0KLi7X7t2vyD9DRulsj9UoyezZldKNFO+Ft9MDW38Ug==
   dependencies:
     "@pubsweet/logger" "^0.2.27"
+
+"@pubsweet/models@^0.2.7":
+  version "0.2.12"
+  resolved "https://registry.yarnpkg.com/@pubsweet/models/-/models-0.2.12.tgz#214d8df2d5905340af3b9f058010637cfcafbde2"
+  integrity sha512-GiUVogtzf4hf2so/Mt1htezpMDf3aNrdydGoBjHwTJgkoGuhlYLNzK3DqEZmeJhzxHm1Sx4DWCt09QrVcfVkfA==
+  dependencies:
+    "@pubsweet/logger" "^0.2.25"
 
 "@pubsweet/ui-toolkit@^2.0.1", "@pubsweet/ui-toolkit@^2.0.3":
   version "2.0.3"
@@ -12281,7 +12281,7 @@ promisify-event@^1.0.0:
   dependencies:
     pinkie-promise "^2.0.0"
 
-prompt@^1.0.0, prompt@flatiron/prompt#1c95d1d8d333b5fbc13fa5f0619f3dcf0d514f87:
+prompt@^1.0.0, "prompt@github:flatiron/prompt#1c95d1d8d333b5fbc13fa5f0619f3dcf0d514f87":
   version "1.0.0"
   resolved "https://codeload.github.com/flatiron/prompt/tar.gz/1c95d1d8d333b5fbc13fa5f0619f3dcf0d514f87"
   dependencies:
@@ -12537,51 +12537,6 @@ pubsweet-client@^8.0.0:
     styled-normalize "^8.0.4"
     subscriptions-transport-ws "^0.9.12"
 
-pubsweet-server@^13.4.6:
-  version "13.4.6"
-  resolved "https://registry.yarnpkg.com/pubsweet-server/-/pubsweet-server-13.4.6.tgz#a5063ec4aff9ce216b52943f0cab3da6a3f28a58"
-  integrity sha512-X5nSyyNSRdPhoZWj32lyRnUFuoKE3gmnpzjFoaQFn9tVQ20AMi/nH+mSLLfoSLOSaoCYQXAVG7k5gN46L9MciA==
-  dependencies:
-    "@pubsweet/db-manager" "^3.0.11"
-    "@pubsweet/errors" "^2.0.15"
-    "@pubsweet/logger" "^0.2.25"
-    "@pubsweet/models" "^0.2.12"
-    apollo-server-express "^2.4.8"
-    authsome "^0.1.0"
-    bluebird "^3.5.1"
-    body-parser "^1.15.2"
-    colors "^1.1.2"
-    config "^3.0.1"
-    cookie-parser "^1.4.3"
-    dotenv "^4.0.0"
-    express "^4.16.1"
-    fs-extra "^7.0.1"
-    graphql "^14.2.1"
-    graphql-postgres-subscriptions "^1.0.4"
-    graphql-tools "^4.0.4"
-    helmet "^3.8.1"
-    http-status-codes "^1.0.6"
-    joi "^14.3.0"
-    jsonwebtoken "^8.4.0"
-    lodash "^4.0.0"
-    minimist "^1.2.0"
-    morgan "^1.8.2"
-    multer "^1.1.0"
-    objection "^1.5.3"
-    passport "^0.4.0"
-    passport-anonymous "^1.0.1"
-    passport-http-bearer "^1.0.1"
-    passport-local "^1.0.0"
-    pg "^7.4.1"
-    pg-boss "^3.1.2"
-    promise-queue "^2.2.3"
-    prompt "^1.0.0"
-    pubsweet-sse "^1.0.19"
-    subscriptions-transport-ws "^0.9.12"
-    uuid "^3.0.1"
-    waait "^1.0.2"
-    winston "^2.2.0"
-
 pubsweet-server@^13.5.0:
   version "13.5.0"
   resolved "https://registry.yarnpkg.com/pubsweet-server/-/pubsweet-server-13.5.0.tgz#c22233d0a23744d8aec6458010b7c23b79db80e1"
@@ -12627,23 +12582,18 @@ pubsweet-server@^13.5.0:
     waait "^1.0.2"
     winston "^2.2.0"
 
-pubsweet-sse@^1.0.19:
-  version "1.0.19"
-  resolved "https://registry.yarnpkg.com/pubsweet-sse/-/pubsweet-sse-1.0.19.tgz#57270fef555f9ccff3ad086cc62aef3d802f834b"
-  integrity sha512-8YNl6nXnXfWgt183iDH2TgqswQjj2qcZwt+7plVhoyNVZeJiPdwc7I24eT0mnHiovN9lntGMeCAtkpELn34zqw==
-
 pubsweet-sse@^1.0.21:
   version "1.0.21"
   resolved "https://registry.yarnpkg.com/pubsweet-sse/-/pubsweet-sse-1.0.21.tgz#06f3c9b254e4fb721b789da6ffe25d9f57d917ae"
   integrity sha512-ilxC0QAAjCJ5zuqsgUoSmMOJ9whRMnzT10RF5OsSuShZxCZ2ZijqK4dMFRPTgRzhbSYy28kaijC898yxxQ2vZw==
 
-pubsweet@^4.0.4:
-  version "4.1.7"
-  resolved "https://registry.yarnpkg.com/pubsweet/-/pubsweet-4.1.7.tgz#36c4d9776ade7fb96e6deb23e3c12c02ad87ba97"
-  integrity sha512-D9nSpz5j0ChEa7WfneO0Z/TPkxKD0/P4YNC0uzlY647N4O7dtATYaVu/+h5+oxipaHE+gr7YoAflu9WoVqN5cw==
+pubsweet@^4.1.9:
+  version "4.1.9"
+  resolved "https://registry.yarnpkg.com/pubsweet/-/pubsweet-4.1.9.tgz#22a7be68a776ecaa48799ee6bd3552f6051ee877"
+  integrity sha512-IuZiIsn1B1u8yG5igqqp0Vbz1ZxR0aOP4gcd1VwuEtL6EfP9Gsh8FERrr+B+nKLHuxuiL+iQx+nY7eZNJBPl2w==
   dependencies:
-    "@pubsweet/db-manager" "^3.0.11"
-    "@pubsweet/logger" "^0.2.25"
+    "@pubsweet/db-manager" "^3.0.13"
+    "@pubsweet/logger" "^0.2.27"
     bluebird "^3.5.0"
     colors "^1.1.2"
     commander "^2.20.0"
@@ -12654,7 +12604,7 @@ pubsweet@^4.0.4:
     inflection "^1.12.0"
     lodash "^4.17.11"
     prompt flatiron/prompt#1c95d1d8d333b5fbc13fa5f0619f3dcf0d514f87
-    pubsweet-server "^13.4.6"
+    pubsweet-server "^13.5.0"
     uuid "^3.0.1"
     webpack "^4.29.5"
     webpack-dev-middleware "^3.6.0"
