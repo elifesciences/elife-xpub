@@ -1,4 +1,5 @@
 ![eLife logo](https://raw.githubusercontent.com/elifesciences/pattern-library/develop/assets/img/patterns/organisms/elife-logo-symbol-2x.png)
+Take this out
 
 # eLife xPub
 
