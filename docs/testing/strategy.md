@@ -195,10 +195,6 @@ test('it does the thing', async (t: TestContext) => {
 ```bash
 # You need the platform running
 # pwd = elife-xpub/
-yarn start:services
-# You may need to setup the db
-yarn run pubsweet setupdb --clobber
-
 # Start the server inside of docker
 ./scripts/run_app_in_docker.sh
 
@@ -208,7 +204,7 @@ cd tools/api-tests
 
 # You should just be able to do this:
 docker-compose build
-docker-compose up
+JWT_SECRET=<jwt secret here> docker-compose up
 ```
 
 ### What to test?
