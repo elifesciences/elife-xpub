@@ -419,8 +419,8 @@ describe('Manuscript', () => {
       const audits = await AuditLog.all()
 
       expect(loadedManuscript.status).toBe('NEXT')
-      expect(audits).toHaveLength(1)
-      expect(audits[0]).toMatchObject({
+      expect(audits).toHaveLength(2)
+      expect(audits[1]).toMatchObject({
         action: 'UPDATED',
         objectType: 'manuscript.status',
         value: 'NEXT',
@@ -565,6 +565,23 @@ describe('Manuscript', () => {
 
       const msFinal = await Manuscript.find(ms.v1.id, userId)
       expect(msFinal.meta.title).toBe('Version3')
+    })
+  })
+
+  describe('Manuscript creation', () => {
+    it('creates a created audit entry after first save', async () => {
+      await Manuscript.makeInitial({
+        createdBy: uuid(),
+      }).save()
+
+      const audits = await AuditLog.all()
+
+      expect(audits).toHaveLength(1)
+      expect(audits[0]).toMatchObject({
+        action: 'CREATED',
+        objectType: 'manuscript',
+        value: {},
+      })
     })
   })
 

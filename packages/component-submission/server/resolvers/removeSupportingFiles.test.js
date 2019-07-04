@@ -77,12 +77,15 @@ describe('Manuscripts', () => {
       expect(mutatedManuscript.files).toHaveLength(1)
 
       const audits = await AuditLog.all()
-      expect(audits).toHaveLength(2)
-      expect(audits[0].value).toBe('CANCELLED')
+      expect(audits).toHaveLength(3)
       expect(audits[1].value).toBe('CANCELLED')
-      expect(audits.map(audit => audit.objectId).sort()).toEqual(
-        [manuscript.files[0].id, manuscript.files[1].id].sort(),
-      )
+      expect(audits[2].value).toBe('CANCELLED')
+      expect(
+        audits
+          .slice(1)
+          .map(audit => audit.objectId)
+          .sort(),
+      ).toEqual([manuscript.files[0].id, manuscript.files[1].id].sort())
     })
 
     it('does not change the manuscript when no files to remove', async () => {

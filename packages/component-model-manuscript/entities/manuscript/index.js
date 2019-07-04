@@ -177,6 +177,15 @@ class Manuscript extends BaseModel {
     return manuscripts
   }
 
+  async $afterInsert() {
+    await new AuditLog({
+      action: 'CREATED',
+      objectId: this.id,
+      objectType: 'manuscript',
+      value: JSON.stringify(this.toJSON()),
+    }).save()
+  }
+
   async refresh() {
     const refreshed = await Manuscript.find(this.id, this.createdBy)
     await this.$set(refreshed)
