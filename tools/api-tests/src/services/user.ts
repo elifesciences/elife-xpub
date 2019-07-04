@@ -24,8 +24,8 @@ const signUser = (id: string): string => {
 }
 
 export const defaultTestUser = {
-  token: signUser("ewwboc7m"),
-  identifier: "ewwboc7m",
+  token: signUser("jcarberry"),
+  identifier: "jcarberry",
 };
 
 export const user1 = {
