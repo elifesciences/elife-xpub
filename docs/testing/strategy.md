@@ -130,6 +130,66 @@ The integration tests are to test across a layer of the code base. In the case o
 
 The purpose of API testing is to check that the server responds in a sensible way for a given input. API tests typically submit data to the server through a GraphQL mutation, and then check that the data was properly persisted by querying it again in a way similar to how to the client would request the data, and asserting on the response. This allows the team to recreate situations in the server-side that are difficult to reliably test with browser tests. It also checks that the API remains stable between client and server.
 
+#### Example tests
+
+To write a minimal example for a new resolver, you'd have to do something like the following:
+
+> Where the resololver takes a parameter of type `{a: string}` and returns an object with type `{b: number}`
+
+- first write the graphql definitions
+- Then in API-tests, you can do a `yarn graphql:codegen`, this will generate type definitions for all resolvers published by the application
+- Have a look in `tools/api-test/src/generates/graphql.ts`, and find the types for your new resolver
+- Write a resolver caller like this
+
+```ts
+import {
+  NewResolver,
+  NewResovlerOutput,
+  NewResolverInput,
+} from '../generated/graphql'
+import { ApiState } from './index'
+import { withAuthorisation } from '../utils'
+
+const newResolver = async (
+  ctx: ApiTestContext,
+  data: NewResolverInput,
+): Promise<{ newResolver: NewResovlerOutput }> => {
+  const query = `
+mutation NewResolver($data: NewResolverInput!) {
+ newResolver(data: $data) {
+   ...NewResolverOutput
+   __typename
+ }
+}
+`
+
+  // Call the graphql and return the result
+  return await withAuthorization(context, query, data)
+}
+
+const resolvers = { mutation: { newResolver } }
+
+export default resolvers
+```
+
+- Then in the test file (inside of `/tools/api-test/src/api-test/context.ts)
+
+```ts
+import { test, TestContext } from 'ava-ts'
+import context from '../xpub-api/context'
+import { defaultContext } from '../index'
+
+test('it does the thing', async (t: TestContext) => {
+  const context = defaultContext()
+  const result = await context.mutation.newResolver(context, {
+    a: 'some string',
+  })
+  t.deepEqual({ b: 100 }, result, 'it does the thing as expected')
+})
+```
+
+- This test should now run as part of the test suite
+
 #### Running it
 
 ```bash
@@ -139,8 +199,8 @@ yarn start:services
 # You may need to setup the db
 yarn run pubsweet setupdb --clobber
 
-# Start the server
-yarn run pubsweet server
+# Start the server inside of docker
+./scripts/run_app_in_docker.sh
 
 # Go to the api tests
 cd tools/api-tests
@@ -187,8 +247,6 @@ Regression tests are for testing a specific bug that is being or has been fixed 
 ### Where should regression tests live?
 
 Regression tests will almost always be acceptance tests and they should be part of the test files for the page / step being tested. In some circumstances they will be unit or integration tests and these will need to live alongside the components that are being tested.
-
-> **Note** Regression tests do not need to exist in their own files.
 
 ### When should the regression tests be run?
 
