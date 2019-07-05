@@ -1,8 +1,10 @@
 const lodash = require('lodash')
 const BaseModel = require('@pubsweet/base-model')
 const logger = require('@pubsweet/logger')
-const emptyManuscript = require('./helpers/empty')
 const AuditLog = require('@elifesciences/component-model-audit-log').model
+
+const emptyManuscript = require('./helpers/empty')
+const difference = require('./helpers/diff')
 
 const mergeObjects = (...inputs) =>
   lodash.mergeWith(
@@ -182,7 +184,7 @@ class Manuscript extends BaseModel {
       action: 'CREATED',
       objectId: this.id,
       objectType: 'manuscript',
-      value: JSON.stringify(this.toJSON()),
+      value: JSON.stringify(difference(this, emptyManuscript)),
     }).save()
   }
 
