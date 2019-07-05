@@ -133,8 +133,8 @@ describe('MECA HTTP callback handler', () => {
       Manuscript.statuses.MECA_IMPORT_SUCCEEDED,
     )
     const audits = await AuditLog.all()
-    expect(audits).toHaveLength(2)
-    expect(audits[0].objectType).toBe('manuscript')
-    expect(audits[0].action).toBe('MECA_RESULT')
+    expect(audits).toHaveLength(3)
+    expect(audits[1].objectType).toBe('manuscript')
+    expect(audits[1].action).toBe('MECA_RESULT')
   })
 })

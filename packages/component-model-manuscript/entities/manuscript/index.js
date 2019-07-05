@@ -1,8 +1,10 @@
 const lodash = require('lodash')
 const BaseModel = require('@pubsweet/base-model')
 const logger = require('@pubsweet/logger')
-const emptyManuscript = require('./helpers/empty')
 const AuditLog = require('@elifesciences/component-model-audit-log').model
+
+const emptyManuscript = require('./helpers/empty')
+const difference = require('./helpers/diff')
 
 const mergeObjects = (...inputs) =>
   lodash.mergeWith(
@@ -175,6 +177,15 @@ class Manuscript extends BaseModel {
       manuscripts.map(manuscript => manuscript.$loadRelated('[teams, files]')),
     )
     return manuscripts
+  }
+
+  async $afterInsert() {
+    await new AuditLog({
+      action: 'CREATED',
+      objectId: this.id,
+      objectType: 'manuscript',
+      value: JSON.stringify(difference(this, emptyManuscript)),
+    }).save()
   }
 
   async refresh() {
