@@ -153,12 +153,12 @@ class FilesHelper {
     } catch (error) {
       let errorMessage = ''
       if (error.error.code === 'ETIMEDOUT' || error.error.connect === false) {
-        errorMessage = 'Request to science beam timed out'
+        errorMessage = 'Request to sciencebeam timed out'
       } else {
         errorMessage = error.message
       }
       logger.warn('Manuscript conversion failed', {
-        error: errorMessage,
+        innerMessage: errorMessage,
         manuscriptId,
         filename,
       })

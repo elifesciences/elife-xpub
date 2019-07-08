@@ -36,6 +36,9 @@ SQL_PENDING="\"SELECT ${COLS} FROM manuscript WHERE id NOT IN ${IGNORE} AND stat
 SQL_SUCCEEDED="\"SELECT ${COLS} FROM manuscript WHERE id NOT IN ${IGNORE} AND status='MECA_EXPORT_SUCCEEDED' ORDER BY updated\""
 SQL_FAILED="\"SELECT ${COLS} FROM manuscript WHERE id NOT IN ${IGNORE} AND status='MECA_IMPORT_FAILED' ORDER BY updated\""
 
+echo "<h2>Today's Errors</h2>"
+ssh elife@${HOST} grep \"error\" /srv/elife-xpub/var/logs/xpub.log
+
 echo
 echo "<h2>Status Summary</h2>"
 echo
