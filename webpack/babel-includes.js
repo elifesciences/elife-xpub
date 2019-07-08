@@ -2,8 +2,6 @@ const path = require('path')
 
 // paths that use ES6 scripts and CSS modules
 // TODO: compile components to ES5 for distribution
-//
-// I think the problem is that server modules are being packaged for webpack, and they're causing errors
 
 module.exports = [
   // include our code
