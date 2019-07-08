@@ -84,29 +84,7 @@ elifePipeline {
             }
         }
 
-        stage 'Integration Tests', {
-            def actions = [
-                "browser": {
-                  sh "IMAGE_TAG=${commit} NODE_ENV=production NODE_CONFIG_ENV=test docker-compose -f docker-compose.yml -f docker-compose.ci.yml run --rm --name elife-xpub_wait-app-browser-test app bash -c './scripts/wait-for-app.sh app:3000'"
-                  withCommitStatus({
-                      sh "IMAGE_TAG=${commit} NODE_ENV=production NODE_CONFIG_ENV=test docker-compose -f docker-compose.yml -f docker-compose.ci.yml run -p 10081:10081 --rm --name elife-xpub_app_test_browser test_browser"
-                      sh "IMAGE_TAG=${commit} NODE_ENV=production NODE_CONFIG_ENV=unit-test docker-compose -f docker-compose.yml -f docker-compose.ci.yml run --rm --name elife-xpub_app_test app bash -c 'scripts/pipeline-log-filter-test.sh'"
-                  }, 'test:browser', commit)
-                },
-                "api": {
-                  sh "IMAGE_TAG=${commit} NODE_ENV=production NODE_CONFIG_ENV=test docker-compose -f docker-compose.yml -f docker-compose.ci.yml run --rm --name elife-xpub_wait-app-api-test app bash -c './scripts/wait-for-app.sh app:3000'"
-                  dir("tools/api-tests") {
-                    withCommitStatus({
-                      try {
-                        sh "NODE_ENV=production NODE_CONFIG_ENV=test docker-compose build"
-                        sh "JWT_SECRET=fakesecret NODE_ENV=production NODE_CONFIG_ENV=test docker-compose run api-test npm run ci"
-                      } finally {
-                        sh "docker-compose down"
-                      }
-                    }, 'test:api', commit)
-                  }
-                }
-            ]
+        stage 'Browser Tests', {
             try {
                 sh "IMAGE_TAG=${commit} NODE_ENV=production NODE_CONFIG_ENV=test docker-compose -f docker-compose.yml -f docker-compose.ci.yml up -d postgres api-dummy fakes3 sftp"
                 sh "IMAGE_TAG=${commit} NODE_ENV=production NODE_CONFIG_ENV=test docker-compose -f docker-compose.yml -f docker-compose.ci.yml run --rm --name elife-xpub_wait_postgres app bash -c './scripts/wait-for-it.sh postgres:5432'"
@@ -116,7 +94,10 @@ elifePipeline {
                 sh "aws --endpoint-url='http://localhost:4569' s3 mb s3://test"
                 sh "IMAGE_TAG=${commit} NODE_ENV=production NODE_CONFIG_ENV=test docker-compose -f docker-compose.yml -f docker-compose.ci.yml run --rm --name elife-xpub_setupdb app bash -c 'npx pubsweet migrate'"
                 sh "IMAGE_TAG=${commit} NODE_ENV=production NODE_CONFIG_ENV=test docker-compose -f docker-compose.yml -f docker-compose.ci.yml up -d app"
-                parallel actions
+                withCommitStatus({
+                    sh "IMAGE_TAG=${commit} NODE_ENV=production NODE_CONFIG_ENV=test docker-compose -f docker-compose.yml -f docker-compose.ci.yml run -p 10081:10081 --rm --name elife-xpub_app_test_browser test_browser"
+                    sh "IMAGE_TAG=${commit} NODE_ENV=production NODE_CONFIG_ENV=unit-test docker-compose -f docker-compose.yml -f docker-compose.ci.yml run --rm --name elife-xpub_app_test app bash -c 'scripts/pipeline-log-filter-test.sh'"
+                }, 'test:browser', commit)
             } finally {
                 sh "docker ps -a"
                 sh "mkdir -p build/browser"
