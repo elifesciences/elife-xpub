@@ -2,7 +2,6 @@ jest.mock('pubsweet-server/src/graphql/pubsub', () => ({
   getPubsub: () => Promise.resolve({ publish: jest.fn() }),
   asyncIterators: {},
 }))
-jest.mock('@pubsweet/logger')
 
 const config = require('config')
 const fs = require('fs-extra')
@@ -123,7 +122,9 @@ describe('Manuscripts', () => {
     })
 
     it('sets empty title if ScienceBeam fails', async () => {
-      jest.spyOn(logger, 'warn').mockImplementationOnce(() => {})
+      jest.mock('@pubsweet/logger')
+
+      jest.spyOn(logger, 'warn').mockImplementation(() => {})
       const blankManuscript = Manuscript.makeInitial({ createdBy: userId })
       const { id } = await blankManuscript.save()
       const file = {
@@ -133,7 +134,6 @@ describe('Manuscripts', () => {
         ),
         mimetype: 'application/pdf',
       }
-
       jest.spyOn(ScienceBeamApi, 'extractSemantics').mockRejectedValueOnce({
         error: {
           code: 'ETIMEDOUT',

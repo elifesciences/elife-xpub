@@ -3,5 +3,5 @@ module.exports = {
   alias: {
     joi: 'joi-browser',
   },
-  extensions: ['.js', '.jsx'],
+  extensions: ['.mjs', '.js', '.jsx'],
 }

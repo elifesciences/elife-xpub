@@ -1,10 +1,10 @@
 {
   "name": "@elifesciences/component-elife-app",
   "version": "1.0.0",
-  "main": "index.js",
   "license": "MIT",
+  "main": "index.js",
   "dependencies": {
-    "@pubsweet/models": "0.2.7",
-    "@pubsweet/errors": "2.0.10"
+    "@pubsweet/errors": "2.0.12",
+    "@pubsweet/models": "0.2.9"
   }
 }

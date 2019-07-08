@@ -1,4 +1,4 @@
-const { db } = require('pubsweet-server')
+const { db } = require('@pubsweet/db-manager')
 
 const createTables = async clobber => {
   const { rows } = await db.raw(`

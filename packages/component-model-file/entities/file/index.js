@@ -30,12 +30,6 @@ class File extends BaseModel {
     return ['downloadLink']
   }
 
-  async save() {
-    await this.$query().upsertGraphAndFetch(this)
-
-    return this
-  }
-
   async updateStatus(status) {
     this.status = status
 

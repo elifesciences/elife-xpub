@@ -19,7 +19,7 @@
     "uuid": "^3.3.2"
   },
   "scripts": {
-    "start": "ava-ts src/api-test/**/*test.ts",
+    "start": "ava-ts src/api-test/**/*test.ts --tap",
     "lint": "eslint --cache 'src/**/*.ts'",
     "doc": "typedoc --out ./doc/ src/",
     "prettier": "prettier 'src/**/*.ts'",

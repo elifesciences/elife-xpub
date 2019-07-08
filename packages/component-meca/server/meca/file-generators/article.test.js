@@ -1,6 +1,6 @@
 const { createTables } = require('@elifesciences/component-model')
 const path = require('path')
-const { db } = require('pubsweet-server')
+const { db } = require('@pubsweet/db-manager')
 const Replay = require('replay')
 
 // Ref: https://stackoverflow.com/questions/10265798/determine-project-root-from-a-running-node-js-application

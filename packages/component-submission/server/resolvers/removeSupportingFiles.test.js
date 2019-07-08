@@ -16,7 +16,7 @@ const dummyStorage = {
 }
 
 const expectRemoveSupportingFilesDoesNothing = async (manuscriptIn, userId) => {
-  let manuscript = await manuscriptIn.save()
+  let manuscript = await manuscriptIn.saveGraph()
   manuscript = await Manuscript.find(manuscript.id, userId)
   const files = new SupportingFiles(dummyStorage, manuscript.id, userId)
   const mutatedManuscript = await files.removeAll()
@@ -31,7 +31,7 @@ const expectRemoveSupportingFilesLeavesManuscript = async (
     createdBy: userId,
     files: fileList,
   })
-  manuscript = await manuscript.save()
+  manuscript = await manuscript.saveGraph()
   manuscript = await Manuscript.find(manuscript.id, userId)
   expect(manuscript.files).toHaveLength(fileList.length)
   const files = new SupportingFiles(dummyStorage, manuscript.id, userId)
@@ -46,7 +46,7 @@ describe('Manuscripts', () => {
   beforeEach(async () => {
     await createTables(true)
     const user = new User(userData)
-    await user.save()
+    await user.saveGraph()
     userId = user.id
   })
 
@@ -69,7 +69,7 @@ describe('Manuscripts', () => {
         files: [fakeSupport, fakeSupport, fakeManuscript],
       })
 
-      manuscript = await manuscript.save()
+      manuscript = await manuscript.saveGraph()
       manuscript = await Manuscript.find(manuscript.id, userId)
       expect(manuscript.files).toHaveLength(3)
       const files = new SupportingFiles(dummyStorage, manuscript.id, userId)
@@ -77,12 +77,15 @@ describe('Manuscripts', () => {
       expect(mutatedManuscript.files).toHaveLength(1)
 
       const audits = await AuditLog.all()
-      expect(audits).toHaveLength(2)
-      expect(audits[0].value).toBe('CANCELLED')
+      expect(audits).toHaveLength(3)
       expect(audits[1].value).toBe('CANCELLED')
-      expect(audits.map(audit => audit.objectId).sort()).toEqual(
-        [manuscript.files[0].id, manuscript.files[1].id].sort(),
-      )
+      expect(audits[2].value).toBe('CANCELLED')
+      expect(
+        audits
+          .slice(1)
+          .map(audit => audit.objectId)
+          .sort(),
+      ).toEqual([manuscript.files[0].id, manuscript.files[1].id].sort())
     })
 
     it('does not change the manuscript when no files to remove', async () => {

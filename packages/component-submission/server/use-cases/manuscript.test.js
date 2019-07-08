@@ -99,7 +99,7 @@ describe('find', () => {
     await createTables(true)
     const profileId = 'ewwboc7m'
     const identities = [{ type: 'elife', identifier: profileId }]
-    const user = await new User({ identities }).save()
+    const user = await new User({ identities }).saveGraph()
     userId = user.id
   })
 

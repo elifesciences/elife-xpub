@@ -17,7 +17,7 @@ describe('uploadSupportingFile', () => {
   beforeEach(async () => {
     await createTables(true)
     const user = new User(userData)
-    await user.save()
+    await user.saveGraph()
     userId = user.id
 
     const server = await startS3rver({
@@ -56,10 +56,10 @@ describe('uploadSupportingFile', () => {
     expect(manuscript.files[0].mimeType).toEqual(supportingFile.mimetype)
     expect(manuscript.files[0].status).toEqual('STORED')
     const audits = await AuditLog.all()
-    expect(audits).toHaveLength(2)
-    expect(audits[0].value).toBe('UPLOADED')
-    expect(audits[0].objectId).toBe(manuscript.files[0].id)
-    expect(audits[1].value).toBe('STORED')
+    expect(audits).toHaveLength(3)
+    expect(audits[1].value).toBe('UPLOADED')
     expect(audits[1].objectId).toBe(manuscript.files[0].id)
+    expect(audits[2].value).toBe('STORED')
+    expect(audits[2].objectId).toBe(manuscript.files[0].id)
   })
 })
