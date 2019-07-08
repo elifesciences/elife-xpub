@@ -36,8 +36,6 @@ elifePipeline {
                       sh "mkdir -p build/postgres-logs && sh -c \"docker logs elife-xpub_postgres_1 > build/postgres-logs/unit-postgres-output.txt\""
                       sh "sh -c \"docker cp elife-xpub_postgres_1:/var/lib/postgresql/data/logs/. build/postgres-logs/\""
                       archiveArtifacts artifacts: "build/postgres-logs/**/*", allowEmptyArchive: true
-                      sh "IMAGE_TAG=${commit} docker-compose -f docker-compose.yml -f docker-compose.ci.yml down -v"
-                      sh "sudo rm -rf ./build/* || true"
                   }
                 },
                 'test:dependencies': {
@@ -54,26 +52,22 @@ elifePipeline {
             elifeMainlineOnly {
                 folder = 'develop'
             }
-            actions['styleguide'] = {
-                def targetUrl = "https://s3.amazonaws.com/ci-elife-xpub-styleguide/${folder}/index.html"
-                withCommitStatus(
-                    {
-                        try {
-                            sh "IMAGE_TAG=${commit} docker-compose -f docker-compose.yml -f docker-compose.ci.yml run --name elife-xpub_app_style_guide app npm run build:styleguide"
-                            sh "docker cp elife-xpub_app_style_guide:/home/xpub/_build_styleguide ${folder}"
-                            sh "aws s3 cp --recursive ${folder} s3://ci-elife-xpub-styleguide/${folder}"
-                            echo "Styleguide URL: $targetUrl"
-                        } catch (e) {
-                            sh "docker-compose -f docker-compose.yml -f docker-compose.ci.yml down -v"
-                        }
-                    },
-                    [
-                        'name': 'styleguide',
-                        'commit': commit,
-                        'targetUrl': targetUrl,
-                    ]
-                )
-            }
+            // actions['styleguide'] = {
+            //     def targetUrl = "https://s3.amazonaws.com/ci-elife-xpub-styleguide/${folder}/index.html"
+            //     withCommitStatus(
+            //         {
+            //             sh "IMAGE_TAG=${commit} docker-compose -f docker-compose.yml -f docker-compose.ci.yml run --name elife-xpub_app_style_guide app npm run build:styleguide"
+            //             sh "docker cp elife-xpub_app_style_guide:/home/xpub/_build_styleguide ${folder}"
+            //             sh "aws s3 cp --recursive ${folder} s3://ci-elife-xpub-styleguide/${folder}"
+            //             echo "Styleguide URL: $targetUrl"
+            //         },
+            //         [
+            //             'name': 'styleguide',
+            //             'commit': commit,
+            //             'targetUrl': targetUrl,
+            //         ]
+            //     )
+            // }
 
             try {
                 sh "IMAGE_TAG=${commit} docker-compose -f docker-compose.yml -f docker-compose.ci.yml up -d postgres"
@@ -81,6 +75,7 @@ elifePipeline {
                 parallel actions
             } finally {
                 sh "IMAGE_TAG=${commit} docker-compose -f docker-compose.yml -f docker-compose.ci.yml down -v"
+                sh "sudo rm -rf ./build/* || true"
             }
         }
 

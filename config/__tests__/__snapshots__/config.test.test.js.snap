@@ -15,6 +15,7 @@ Array [
   "pubsweet-server.morganLogFormat",
   "pubsweet-server.secret",
   "pubsweet-server.baseUrl",
+  "pubsweet-server.apollo",
   "pubsweet-client.isPublic",
   "pubsweet-client.API_ENDPOINT",
   "pubsweet-client.login-redirect",

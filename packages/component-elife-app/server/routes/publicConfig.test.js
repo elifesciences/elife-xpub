@@ -22,6 +22,7 @@ describe('Client config handler', () => {
         secret: 'password',
       },
       get: jest.fn(),
+      has: jest.fn(),
     }))
     routes = require('.')
   })
