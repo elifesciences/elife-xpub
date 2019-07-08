@@ -101,6 +101,7 @@
   ],
   "dependencies": {
     "@elifesciences/elife-theme": "^1.0.0",
+    "@pubsweet/base-model": "^3.0.8",
     "@pubsweet/component-send-email": "^0.2.13",
     "@pubsweet/models": "^0.2.7",
     "@pubsweet/ui": "^9.0.3",
@@ -108,7 +109,7 @@
     "@rebass/grid": "^6.0.0-7",
     "apollo-client": "2.4.1",
     "apollo-link-state": "^0.4.1",
-    "config": "^2.0.1",
+    "config": "^3.0.1",
     "date-fns": "^1.29.0",
     "formik": "1.5.7",
     "graphql-tag": "^2.8.0",
