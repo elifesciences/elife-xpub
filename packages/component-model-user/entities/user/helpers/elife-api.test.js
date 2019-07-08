@@ -4,6 +4,9 @@ jest.mock('config', () => ({
       secret: 'xpubsecret',
     },
   },
+  has(key) {
+    return true
+  },
   get(key) {
     if (key === 'server.api.secret') {
       return this.server.api.secret
