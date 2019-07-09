@@ -1,3 +1,22 @@
+const typeScriptModuleOverrides = path => ({
+  files: [`${path}/**/*.ts`],
+  parser: '@typescript-eslint/parser',
+  excludedFiles: ['**/dist/**'],
+  parserOptions: {
+    project: `${path}/tsconfig.json`,
+  },
+  rules: {
+    '@typescript-eslint/camelcase': 'off',
+    // Typescript compiler does this instead
+    '@typescript-eslint/no-unused-vars': 'off',
+    // Deny imports with `require()`
+    '@typescript-eslint/no-var-requires': 'error',
+    // Allow "{obj} as Thing" syntax in tests
+    '@typescript-eslint/no-object-literal-type-assertion': 'off',
+  },
+  plugins: ['@typescript-eslint'],
+})
+
 module.exports = {
   env: {
     es6: true,
@@ -43,4 +62,9 @@ module.exports = {
     'react/prop-types': 0,
     'sort-keys': 0,
   },
+  overrides: [
+    {
+      ...typeScriptModuleOverrides('packages/component-survey'),
+    },
+  ],
 }

@@ -1,0 +1,15 @@
+{
+  "name": "@elifesciences/component-survey",
+  "version": "1.0.0",
+  "description": "",
+  "license": "ISC",
+  "author": "",
+  "main": "dist/index.js",
+  "scripts": {
+    "compile": "tsc",
+    "test": "ava-ts"
+  },
+  "devDependencies": {
+    "@types/react": "^16.8.22"
+  }
+}
