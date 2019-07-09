@@ -24,6 +24,7 @@ module.exports = {
       '@elifesciences/component-service-s3',
       '@elifesciences/component-dashboard',
       '@elifesciences/component-submission',
+      '@elifesciences/component-survey',
       '@pubsweet/component-send-email',
     ],
   },
