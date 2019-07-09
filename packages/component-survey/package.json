@@ -2,7 +2,7 @@
   "name": "@elifesciences/component-survey",
   "version": "1.0.0",
   "description": "",
-  "license": "ISC",
+  "license": "MIT",
   "author": "",
   "main": "dist/index.js",
   "scripts": {

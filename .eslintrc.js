@@ -6,7 +6,7 @@ const typeScriptModuleOverrides = path => ({
     project: `${path}/tsconfig.json`,
   },
   rules: {
-    '@typescript-eslint/camelcase': 'off',
+    '@typescript-eslint/camelcase': 'always',
     // Typescript compiler does this instead
     '@typescript-eslint/no-unused-vars': 'off',
     // Deny imports with `require()`

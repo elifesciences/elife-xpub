@@ -2,5 +2,3 @@ doc/
 dist/
 src/generated/
 .eslintcache
-*.orig
-old/
