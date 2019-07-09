@@ -185,6 +185,7 @@ class SubjectAreaDropdown extends React.Component {
         IndicatorSeparator: null,
         MultiValueRemove: TagRemovalIcon,
       },
+      id: 'subject-area-container',
       inputId: 'subject-area-select',
       isMulti: true,
       name,

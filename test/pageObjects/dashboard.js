@@ -8,7 +8,12 @@ const dashboard = {
   titles: Selector('[data-test-id=title]'),
   statuses: Selector('[data-test-id=status]'),
   trashButton: Selector('[data-test-id=trash]'),
-  continueSubmission: Selector('[data-test-id=continue-submission'),
+  trashSpecificSubmission: id =>
+    Selector(`[href*="${id}"]`)
+      .sibling('div')
+      .child('[data-test-id=trash]'),
+  continueSubmission: Selector('[data-test-id=continue-submission]'),
+  continueSpecificSubmission: id => Selector(`[href*="${id}"]`),
 }
 
 export default dashboard

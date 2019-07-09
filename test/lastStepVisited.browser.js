@@ -1,6 +1,5 @@
 import { ClientFunction } from 'testcafe'
 import config from 'config'
-import { dashboard } from './pageObjects'
 import setFixtureHooks from './helpers/set-fixture-hooks'
 import NavigationHelper from './helpers/navigationHelper'
 
@@ -9,14 +8,15 @@ setFixtureHooks(f)
 
 test('Interrupt and resume Submission', async t => {
   const navigationHelper = new NavigationHelper(t)
+  const dashboardPage = navigationHelper.getDashboardPage()
 
   // create a new submission
   await navigationHelper.skipToFilesPage()
-  
+  const submissionId = NavigationHelper.getSubmissionId()
+
   // navigate back to the dashboard page and continue submission
-  await t
-    .navigateTo(`${config.get('pubsweet-server.baseUrl')}`)
-    .click(dashboard.continueSubmission)
+  await t.navigateTo(`${config.get('pubsweet-server.baseUrl')}`)
+  await dashboardPage.continueSubmission(submissionId)
 
   // get current location and check if it matches whith the last visited one.
   const getLocation = ClientFunction(() => document.location.href)

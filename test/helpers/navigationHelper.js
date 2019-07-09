@@ -1,13 +1,12 @@
-import { Selector } from 'testcafe'
+import { ClientFunction, Selector } from 'testcafe'
 import {
-  author,
-  dashboard,
-  disclosure,
-  editors,
-  files,
+  AuthorPage,
+  DashboardPage,
+  DisclosurePage,
+  EditorsPage,
+  FilesPage,
   login,
-  submission,
-  thankyou,
+  SubmissionPage,
   wizardStep,
   profile,
   redirect,
@@ -15,12 +14,41 @@ import {
 } from '../pageObjects'
 
 const DEFAULT_TIMEOUT = 5000
-const FILE_TIMEOUT = 60000
 const OPTS = { timeout: DEFAULT_TIMEOUT }
 
 class NavigationHelper {
   constructor(t) {
     this.t = t
+    this.dashboardPage = new DashboardPage(t)
+    this.authorPage = new AuthorPage(t)
+    this.filesPage = new FilesPage(t)
+    this.submissionPage = new SubmissionPage(t)
+    this.editorsPage = new EditorsPage(t)
+    this.disclosurePage = new DisclosurePage(t)
+  }
+
+  getDashboardPage() {
+    return this.dashboardPage
+  }
+
+  getAuthorPage() {
+    return this.authorPage
+  }
+
+  getFilesPage() {
+    return this.filesPage
+  }
+
+  getSubmissionPage() {
+    return this.submissionPage
+  }
+
+  getEditorsPage() {
+    return this.editorsPage
+  }
+
+  getDisclosurePage() {
+    return this.disclosurePage
   }
 
   async navigateForward() {
@@ -34,6 +62,16 @@ class NavigationHelper {
   async reloadPage() {
     // eslint-disable-next-line no-restricted-globals
     await this.t.eval(() => location.reload(true))
+  }
+
+  static async getURL() {
+    const url = await ClientFunction(() => window.location.href)
+    return url()
+  }
+
+  static async getSubmissionId() {
+    const url = await this.getURL()
+    return url.split('/')[4]
   }
 
   async wait(time) {
@@ -61,233 +99,50 @@ class NavigationHelper {
     await this.t.click(profile.open)
   }
 
-  async newSubmission() {
-    await this.t.click(dashboard.desktopNewSubmission)
-  }
-
-  async preFillAuthorDetailsWithOrcid() {
-    await this.t.click(author.orcidPrefill)
-  }
-
-  async setAuthorName(name) {
-    await this.t
-      .selectText(author.firstNameField)
-      .typeText(author.firstNameField, name)
-  }
-
-  async setAuthorSurname(surname) {
-    await this.t
-      .selectText(author.secondNameField)
-      .typeText(author.secondNameField, surname)
-  }
-
-  async setAuthorEmail(email = 'test@example.com') {
-    await this.t
-      .selectText(author.emailField)
-      .typeText(author.emailField, email)
-  }
-
-  async setAuthorInstitution(institution) {
-    await this.t
-      .selectText(author.institutionField)
-      .typeText(author.institutionField, institution)
-  }
-
-  async fillCoverletter(text) {
-    await this.t.typeText(
-      files.editor,
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas semper ante sed volutpat tincidunt.\n\n Nullam rutrum tortor in libero cursus, sit amet dictum ex consectetur. In eget quam ac felis suscipit sodales euismod ac urna. Donec varius mollis sapien ac pharetra. Sed non nunc neque.\n\n Aenean at lorem nisi. Etiam tempor, turpis vitae fringilla sodales, ante felis posuere eros, et imperdiet ante nisi vel tellus.',
-    )
-  }
-
-  async fillShortCoverletter(text) {
-    await this.t.typeText(files.editor, 'Lorem ipsum')
-  }
-
-  async fillLongTitle() {
-    await this.t.typeText(
-      submission.title,
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas semper ante sed volutpat tincidunt.\n\n Nullam rutrum tortor in libero cursus, sit amet dictum ex consectetur. In eget quam ac felis suscipit sodales euismod ac urna. Donec varius mollis sapien ac pharetra. Sed non nunc neque.\n\n Aenean at lorem nisi. Etiam tempor, turpis vitae fringilla sodales, ante felis posuere eros, et imperdiet ante nisi vel tellus.',
-    )
-  }
-
-  async setTitle(text) {
-    await this.t.selectText(submission.title).typeText(submission.title, text)
-  }
-
-  async uploadManuscript(manuscript) {
-    await this.t
-      .setFilesToUpload(files.manuscriptUpload, manuscript.file)
-      .expect(files.dropzoneMessage.textContent)
-      .contains('Replace', { timeout: FILE_TIMEOUT })
-  }
-
-  async uploadSupportingFiles(supportingFiles) {
-    await this.t.setFilesToUpload(files.supportingFilesUpload, supportingFiles)
-  }
-
-  async addManuscriptMetadata() {
-    await this.t
-      .click(submission.articleType)
-      .click(submission.articleTypes.nth(0))
-      .click(submission.subjectAreaLabel)
-      .pressKey('enter')
-      .pressKey('down')
-      .pressKey('enter')
-      .click(submission.discussionCheckbox)
-      .typeText(submission.discussionText, 'Spoke to Bob about another article')
-      .click(submission.previousArticleCheckbox)
-      .typeText(submission.previousArticleText, 'A title')
-      .click(submission.cosubmissionCheckbox)
-      .typeText(submission.firstCosubmissionTitle, 'Another title')
-      .click(submission.moreSubmission)
-      .typeText(submission.secondCosubmissionTitle, 'Yet another title')
-  }
-
-  async addNecessaryManuscriptMetadata() {
-    await this.t
-      .click(submission.articleType)
-      .click(submission.articleTypes.nth(0))
-      .click(submission.subjectAreaLabel)
-      .pressKey('enter')
-      .pressKey('down')
-      .pressKey('enter')
-  }
-
-  async openEditorsPicker() {
-    await this.t.click(editors.suggestedSeniorEditorSelection)
-  }
-
-  async openReviewerPicker() {
-    await this.t.click(editors.suggestedReviewingEditorSelection)
-  }
-
-  async closePeoplePicker() {
-    await this.t.click(editors.peoplePickerSubmit)
-  }
-
-  async selectPeople(people) {
-    people.forEach(async person => {
-      await this.t.click(editors.peoplePickerOptions.nth(person))
-    })
-  }
-
-  async consentDisclosure() {
-    await this.t
-      .typeText(disclosure.submitterName, 'Joe Bloggs', OPTS)
-      .click(disclosure.consentCheckbox, OPTS)
-  }
-
   waitForElement(name) {
     this.t.expect(Selector(`[data-test-id="${name}"]`, OPTS))
   }
 
-  async submit() {
-    await this.t.click(wizardStep.submit, OPTS)
-    // wait for "accept" button to show
-    this.waitForElement('accept')
-  }
-
-  async accept() {
-    await this.t.click(wizardStep.accept, OPTS)
-    // wait for "finish" button to show
-    this.waitForElement('finish')
-  }
-
-  async thankyou() {
-    await this.t.click(thankyou.finish, OPTS)
-    // wait for "desktop-new-submission" button to show
-    this.waitForElement('desktop-new-submission')
-  }
-
-  async paricialSubmissionThankyou(manuscript) {
-    this.login()
-    this.newSubmission()
-
-    // author's page
-    this.preFillAuthorDetailsWithOrcid()
-    this.setAuthorEmail('example@example.org')
-    this.navigateForward()
-
-    // files' page
-    this.fillCoverletter()
-    this.uploadManuscript(manuscript)
-    this.wait(1000)
-    this.navigateForward()
-
-    // submission metadata
-    this.addManuscriptMetadata()
-    this.navigateForward()
-
-    // editor's page
-    this.openEditorsPicker()
-    this.selectPeople([0, 2, 3])
-    this.closePeoplePicker()
-
-    this.openReviewerPicker()
-    this.selectPeople([1, 4, 6])
-    this.closePeoplePicker()
-
-    await this.t
-      .typeText(editors.firstReviewerName, 'Edward')
-      .typeText(editors.firstReviewerEmail, 'edward@example.com')
-      .typeText(editors.secondReviewerName, 'Frances')
-      .typeText(editors.secondReviewerEmail, 'frances@example.net')
-      .typeText(editors.thirdReviewerName, 'George')
-      .typeText(editors.thirdReviewerEmail, 'george@example.org')
-    this.navigateForward()
-  }
-
-  async fullSubmission(manuscript) {
-    await this.paricialSubmissionThankyou(manuscript)
-    await this.consentDisclosure()
-    await this.submit()
-    await this.accept()
-    await this.thankyou()
-  }
-
   async fillAuthorPage(email) {
-    await this.preFillAuthorDetailsWithOrcid()
-    await this.setAuthorEmail(email)
+    await this.authorPage.preFillAuthorDetailsWithOrcid()
+    await this.authorPage.setEmail(email)
   }
 
   async fillFilesPage(manuscript, shortCoverLetter = true) {
     if (shortCoverLetter) {
-      await this.fillShortCoverletter()
+      await this.filesPage.writeShortCoverLetter()
     } else {
-      await this.fillCoverletter()
+      await this.filesPage.writeLongCoverLetter()
     }
-    await this.uploadManuscript(manuscript)
+    await this.filesPage.uploadManuscript(manuscript)
   }
 
   async fillDetailsPage(minimal = true) {
-    if (minimal) {
-      await this.addNecessaryManuscriptMetadata()
-    } else {
-      await this.addManuscriptMetadata()
+    await this.submissionPage.writeTitleIfEmpty()
+    await this.submissionPage.selectArticleType()
+    await this.submissionPage.selectSubjectAreas()
+    if (!minimal) {
+      await this.submissionPage.setDiscussion()
+      await this.submissionPage.setPreviousArticleCheckbox()
+      await this.submissionPage.setCoSubmissionBox()
     }
   }
 
   async fillEditorsPage() {
-    await this.openEditorsPicker()
-    await this.selectPeople([1, 2])
-    await this.closePeoplePicker()
-
-    await this.openReviewerPicker()
-    await this.selectPeople([1, 2])
-    await this.closePeoplePicker()
+    await this.editorsPage.selectSeniorEditors([1, 2])
+    await this.editorsPage.selectSeniorReviewers([1, 2])
   }
 
   async fillDisclosurePage() {
-    await this.consentDisclosure()
-    await this.submit()
-    await this.accept()
-    await this.thankyou()
+    await this.disclosurePage.consentDisclosure()
+    await this.disclosurePage.submit()
+    await this.disclosurePage.accept()
+    await this.disclosurePage.thankyou()
   }
 
   async skipToAuthorPage() {
     await this.login()
-    await this.newSubmission()
+    await this.dashboardPage.startNewSubmission()
   }
 
   async skipToFilesPage() {
