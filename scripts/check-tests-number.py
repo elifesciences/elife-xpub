@@ -9,5 +9,5 @@ if len(sys.argv) < 3:
     sys.exit(1)
 
 test_count = int(ET.parse(sys.argv[1]).getroot().attrib['tests']);
-print '%s tests have been run' % test_count
+print('%s tests have been run' % test_count)
 assert test_count > int(sys.argv[2]), 'Are you sure enough tests have been run?'
