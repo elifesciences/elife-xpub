@@ -10,6 +10,7 @@
     "test": "ava-ts"
   },
   "devDependencies": {
-    "@types/react": "^16.8.22"
+    "@types/react": "^16.8.22",
+    "@elifesciences/component-elife-ui": "1.0.0"
   }
 }
