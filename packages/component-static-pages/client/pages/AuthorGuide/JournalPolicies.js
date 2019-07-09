@@ -275,7 +275,7 @@ const JournalPolicies = props => (
       (CC0)) license;</li>
       <li>Automatically deposited in{' '} 
         <NativeLink
-          href="https://www.ncbi.nlm.nih.gov/pmc/">
+          href="https://www.ncbi.nlm.nih.gov/pmc/"
           target="_blank">
         Pubmed Central
         </NativeLink>/
