@@ -37,6 +37,7 @@
     "test:browser": "NODE_CONFIG_ENV=test NODE_ENV=production testcafe --concurrency 1 \"${BROWSER:-chrome}\" 'test/**/*.browser.js'",
     "test:dependencies": "node scripts/check-duplicate-packages.js react react-dom styled-components pubsweet-server",
     "test:log-emails": "jest --config packages/component-logger/config/jest.config.server.js --testMatch=**/log.filter-ci.js",
+    "test:submission": "NODE_CONFIG_ENV=unit-test jest --runInBand --watch packages/component-submission/client",
     "update": "yarn upgrade-interactive --latest"
   },
   "lint-staged": {
@@ -156,6 +157,7 @@
     "@testing-library/react": "^8.0.1",
     "@yarnpkg/lockfile": "^1.1.0",
     "apollo-cache-inmemory": "^1.2.9",
+    "babel-core": "^7.0.0-bridge.0",
     "babel-eslint": "^10.0.2",
     "babel-jest": "^24.8.0",
     "babel-loader": "^8.0.0",
@@ -184,7 +186,7 @@
     "html-webpack-plugin": "^3.2.0",
     "husky": "^0.14.3",
     "identity-obj-proxy": "^3.0.0",
-    "jest": "^23.5.0",
+    "jest": "^24.0.0",
     "jest-dom": "^3.5.0",
     "joi-browser": "^13.4.0",
     "lint-staged": "^7.2.2",
@@ -192,6 +194,7 @@
     "pdf2json": "^1.1.8",
     "prettier": "^1.8.2",
     "react-styleguidist": "^7.1.0",
+    "regenerator-runtime": "^0.13.2",
     "replay": "^2.4.0",
     "string-replace-loader": "^2.1.1",
     "style-loader": "^0.22.1",
