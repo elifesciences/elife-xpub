@@ -4,6 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
-    "@elifesciences/component-elife-ui": "1.0.0"
+    "@elifesciences/component-elife-ui": "1.0.0",
+    "@elifesciences/component-survey": "1.0.0"
   }
 }

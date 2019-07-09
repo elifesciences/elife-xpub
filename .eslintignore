@@ -5,3 +5,5 @@ migrations-*
 coverage
 node_modules
 assets
+dist
+tools/
