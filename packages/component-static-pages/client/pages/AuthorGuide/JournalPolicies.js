@@ -249,6 +249,64 @@ const JournalPolicies = props => (
       .
     </Paragraph.Reading>
 
+    <H2>Compliance with Funder Open-Access Policies</H2>
+
+    <Paragraph.Reading>
+      eLife complies with all major funding agency requirements for open access 
+      to the published results of their research grants. eLife articles are:
+    </Paragraph.Reading>
+
+    <List.Unordered>
+      <li>Made openly available immediately at the point of publication;</li>
+      <li>Published under a{' '} 
+      <NativeLink
+        href="https://creativecommons.org/licenses/by/4.0/"
+        target="_blank"
+      >
+       Creative Commons Attribution
+       </NativeLink>{' '}
+       (CC-BY 4.0) or{' '}
+      <NativeLink
+        href="https://creativecommons.org/publicdomain/zero/1.0/"
+        target="_blank"
+      >
+      Public Domain Dedication
+      </NativeLink>{' '}
+      (CC0)) license;</li>
+      <li>Automatically deposited in{' '} 
+        <NativeLink
+          href="https://www.ncbi.nlm.nih.gov/pmc/">
+          target="_blank">
+        Pubmed Central
+        </NativeLink>/
+        <NativeLink
+          href="http://europepmc.org/"
+          target="_blank">
+         Europe PMC
+         </NativeLink>{' '}
+      at the time of publication (of the Version of Record);</li>
+      <li>Published with funding information, including grant numbers, 
+        which are deposited by eLife to the{' '} 
+        <NativeLink
+          href="https://support.crossref.org/hc/en-us/articles/214360886-The-Open-Funder-Registry"
+          target="_blank">
+        Open Funder Registry
+        </NativeLink>;</li>
+      <li>Sent to the{' '}
+        <NativeLink
+          href="https://pubrouter.jisc.ac.uk/"
+          target="_blank">
+        JISC Publication Router
+         </NativeLink>, 
+      which helps institutions comply with the open-access policies of research funding bodies 
+      and the{' '}
+         <NativeLink
+            href="https://www.ref.ac.uk/"
+            target="_blank">
+      Research Excellence Framework
+        </NativeLink>.</li>
+      </List.Unordered>
+
     <H2 id="copyrightedMaterial">Copyrighted Material</H2>
 
     <Paragraph.Reading>
