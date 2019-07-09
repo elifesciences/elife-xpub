@@ -85,7 +85,14 @@
       "<rootDir>/packages/component-elife-app/config/jest.config.server.js",
       "<rootDir>/packages/component-elife-app/config/jest.config.client.js",
       "<rootDir>/packages/component-elife-ui/config/jest.config.client.js"
+    ],
+    "reporters": [
+      "default",
+      "jest-junit"
     ]
+  },
+  "jest-junit": {
+    "output": "/tmp/jest-junit/unit-tests.xml"
   },
   "pre-commit": [
     "precommit",

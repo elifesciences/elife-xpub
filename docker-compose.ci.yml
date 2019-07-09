@@ -47,6 +47,7 @@ services:
     volumes:
       - ./build/screenshots:/tmp/screenshots
       - ./build/logs/:/var/log/xpub
+      - ./build/jest-junit/:/tmp/jest-junit
 
   api-dummy:
     build:
