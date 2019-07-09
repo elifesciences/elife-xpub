@@ -36,6 +36,7 @@ elifePipeline {
                       sh "mkdir -p build/postgres-logs && sh -c \"docker logs elife-xpub_postgres_1 > build/postgres-logs/unit-postgres-output.txt\""
                       sh "sh -c \"docker cp elife-xpub_postgres_1:/var/lib/postgresql/data/logs/. build/postgres-logs/\""
                       archiveArtifacts artifacts: "build/postgres-logs/**/*", allowEmptyArchive: true
+                      step([$class: "JUnitResultArchiver", testResults: "build/jest-junit/unit-tests.xml"])
                       sh "scripts/check-test-number.py build/jest-junit/unit-tests.xml 400"
                   }
                 },
