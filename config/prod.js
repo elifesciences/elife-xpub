@@ -45,4 +45,7 @@ module.exports = {
   hotJar: {
     id: 443270,
   },
+  features: {
+    demographicSurvey: false,
+  },
 }

@@ -5,6 +5,7 @@ const logger = require('@pubsweet/logger')
 
 const resolvers = require('./server/resolvers')
 const cleanup = require('./server/cleanup')
+const config = require('config')
 
 const appMessage = action =>
   `${action} Application: ${os.hostname()}, PID: ${process.pid}`
@@ -15,6 +16,9 @@ const stopServer = () => {
 }
 
 logger.info(appMessage('Starting'))
+logger.info(
+  `Feature status: ${JSON.stringify(config.get('features'), null, 4)}`,
+)
 
 cleanup.Cleanup(process, logger, stopServer)
 
