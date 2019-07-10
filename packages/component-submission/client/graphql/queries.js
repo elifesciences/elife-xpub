@@ -14,6 +14,7 @@ export const getSubmission = gql`
 export const getSubmissionTitle = gql`
   query getSubmissionTitle($id: ID!) {
     manuscript(id: $id) {
+      id
       meta {
         title
       }

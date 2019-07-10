@@ -19,6 +19,7 @@ import {
   LogoutPage,
 } from '@elifesciences/component-login/client'
 import { CookieNotice } from '@elifesciences/component-elife-ui/client/global'
+import { SurveyPage } from '@elifesciences/component-survey/client'
 
 import {
   AuthenticatedComponent,
@@ -43,6 +44,7 @@ const Routes = () => (
             <TrackedRoute component={ContactUs} path="/contact-us" />
             <AuthenticatedComponent>
               <Switch>
+                <TrackedRoute component={SurveyPage} path="/survey/:id" />
                 <TrackedRoute component={ThankYouPage} path="/thankyou/:id" />
                 <Route component={SubmissionWizard} path="/submit/:id" />
                 <TrackedRoute component={DashboardPage} exact path="/" />
