@@ -51,7 +51,11 @@ export class ThankYouPageComponent extends React.Component {
         <ButtonLink
           data-test-id="finish"
           primary
-          to={`/survey/${data.manuscript.id}`}
+          to={
+            config.features && config.features.demographicSurvey
+              ? `/survey/${data.manuscript.id}`
+              : '/'
+          }
         >
           Finish
         </ButtonLink>
