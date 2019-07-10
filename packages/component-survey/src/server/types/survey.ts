@@ -13,8 +13,8 @@ export type SurveyDto = {
 }
 
 export type SurveyStorage = {
-  save: (s : SurveyDto) => Promise<boolean>
-  get: (id : SurveyId) => Promise<SurveyDto>
+  save: (s: SurveyDto) => Promise<boolean>
+  get: (id: SurveyId) => Promise<SurveyDto>
 }
 
 export interface SurveyRepositoryInterface {
