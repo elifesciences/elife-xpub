@@ -93,6 +93,7 @@
     "secretcheck"
   ],
   "resolutions": {
+    "graphql": "^14.2.1",
     "lodash": ">=4.17.11"
   },
   "workspaces": [
@@ -113,6 +114,7 @@
     "config": "^3.0.1",
     "date-fns": "^1.29.0",
     "formik": "1.5.7",
+    "graphql": "^14.2.1",
     "graphql-tag": "^2.8.0",
     "history": "^4.7.2",
     "html-pdf": "^2.2.0",
