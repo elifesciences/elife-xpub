@@ -48,7 +48,11 @@ export class ThankYouPageComponent extends React.Component {
           submission.
           <BookmarkLink href="/">elifesciences.org/submissions</BookmarkLink>
         </Paragraph.Small>
-        <ButtonLink data-test-id="finish" primary to="/">
+        <ButtonLink
+          data-test-id="finish"
+          primary
+          to={`/survey/${data.manuscript.id}`}
+        >
           Finish
         </ButtonLink>
       </CenteredContent>
