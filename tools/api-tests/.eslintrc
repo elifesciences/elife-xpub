@@ -19,5 +19,6 @@
     "@typescript-eslint/no-var-requires": "off",
     // Allow "{obj} as Thing" syntax in tests
     "@typescript-eslint/no-object-literal-type-assertion": "off"
-  }
+  },
+  "excludedFiles": "src/generated/**/*" 
 }

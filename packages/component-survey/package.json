@@ -1,16 +1,9 @@
 {
   "name": "@elifesciences/component-survey",
   "version": "1.0.0",
-  "description": "",
+  "main": "index.js",
   "license": "MIT",
-  "author": "",
-  "main": "dist/index.js",
-  "scripts": {
-    "compile": "tsc",
-    "test": "ava-ts"
-  },
-  "devDependencies": {
-    "@types/react": "^16.8.22",
+  "dependencies": {
     "@elifesciences/component-elife-ui": "1.0.0"
   }
 }
