@@ -16,9 +16,11 @@ const stopServer = () => {
 }
 
 logger.info(appMessage('Starting'))
-logger.info(
-  `Feature status: ${JSON.stringify(config.get('features'), null, 4)}`,
+const featuresConf = config.get('features')
+const activeFeatures = Object.keys(featuresConf).filter(
+  key => featuresConf[key] && key !== 'isPublic',
 )
+logger.info(`Feature status: ${JSON.stringify(activeFeatures, null, 4)}`)
 
 cleanup.Cleanup(process, logger, stopServer)
 

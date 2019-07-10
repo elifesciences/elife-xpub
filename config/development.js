@@ -59,4 +59,7 @@ module.exports = {
   hotJar: {
     enabled: false,
   },
+  features: {
+    demographicSurvey: true,
+  },
 }
