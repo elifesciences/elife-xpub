@@ -4,7 +4,7 @@ const { canAccessManuscript } = require('.')
 const { injectFakeResolver } = require('./testHelpers')
 const { AuthorizationError } = require('@pubsweet/errors')
 
-describe('policy: canAccessManuscript', async () => {
+describe('policy: canAccessManuscript', () => {
   const mockManuscript = {
     findById: jest.fn(async m => {
       if (m === 'exampleManuscriptId') {
