@@ -9,6 +9,7 @@ extend type Mutation {
   removeSupportingFiles(id: ID!): Manuscript
   removeUploadedManuscript(id: ID!): Manuscript!
   submitManuscript(data: ManuscriptInput!): Manuscript!
+  submitSurvey(data: SurveySubmission!): Boolean!
 }
 
 extend type Subscription {
@@ -51,3 +52,14 @@ input OpposedReviewerInput {
   email: String
 }
 
+input SurveySubmission {
+  surveyId: String!
+  answers: [SurveyAnswer!]!
+  submissionId: String!
+}
+
+input SurveyAnswer {
+  questionId: String!,
+  text: String!,
+  answer: String!,
+}
