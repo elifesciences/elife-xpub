@@ -22,7 +22,7 @@ RUN yarn compile
 COPY \
     app.js \
     newrelic.js \
-    .babelrc \
+    babel.config.js \
     .eslintignore \
     .eslintrc.js \
     .prettierrc \
