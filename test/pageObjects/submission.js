@@ -9,6 +9,8 @@ const submission = {
   articleType: Selector('[role=listbox] button'),
   articleTypes: Selector('[role=option]'),
   subjectAreaLabel: Selector('label[for=subject-area-select]'),
+  subjectAreaSelect: Selector('#subject-area-container'),
+  subjectArea: Selector('[role="option"]'),
 
   discussionCheckbox: Selector('[name="previouslyDiscussedToggle"]').parent(),
   discussionText: Selector('[name="previouslyDiscussed"]'),

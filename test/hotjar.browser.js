@@ -17,11 +17,13 @@ const manuscript = {
 
 test('test suppressions', async t => {
   const navigationHelper = new NavigationHelper(t)
+  const dashboardPage = navigationHelper.getDashboardPage()
+  const disclosurePage = navigationHelper.getDisclosurePage()
 
   await navigationHelper.login()
   await navigationHelper.openProfile()
   await t.expect(profile.name, { 'data-hj-suppress': '' }).ok()
-  await navigationHelper.newSubmission()
+  await dashboardPage.startNewSubmission()
 
   // author's page
   await navigationHelper.fillAuthorPage()
@@ -55,9 +57,9 @@ test('test suppressions', async t => {
     })
     .ok()
 
-  await navigationHelper.consentDisclosure()
-  await navigationHelper.submit()
-  await navigationHelper.accept()
+  await disclosurePage.consentDisclosure()
+  await disclosurePage.submit()
+  await disclosurePage.accept()
 
   await t
     .expect(thankyou.title, {
@@ -65,7 +67,7 @@ test('test suppressions', async t => {
     })
     .ok()
 
-  await navigationHelper.thankyou()
+  await disclosurePage.thankyou()
   await t
     .expect(dashboard.titles, {
       'data-hj-suppress': '',
