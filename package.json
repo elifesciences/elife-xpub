@@ -199,7 +199,6 @@
     "pdf2json": "^1.1.8",
     "prettier": "^1.8.2",
     "react-styleguidist": "^7.1.0",
-    "regenerator-runtime": "^0.13.2",
     "replay": "^2.4.0",
     "string-replace-loader": "^2.1.1",
     "style-loader": "^0.22.1",
