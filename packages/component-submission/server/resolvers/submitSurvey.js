@@ -1,15 +1,18 @@
-// submit survey resolver -- calls the usecase
 const { submitSurveyUseCase } = require('../use-cases')
 const config = require('config')
 
-async function submitSurvey(_, data, { user }) {
+async function submitSurvey(_, { data }, { user: userId }) {
   const { surveyId, submissionId, answers } = data
 
-  console.log(surveyId, submissionId, answers)
+  console.log(surveyId, submissionId, answers, userId)
 
   try {
-    // submitSurvey
-    return submitSurveyUseCase(null, { surveyId, submissionId, answers, user })
+    return submitSurveyUseCase(null, {
+      surveyId,
+      submissionId,
+      answers,
+      userId,
+    })
   } catch (e) {
     throw e
   }
