@@ -167,6 +167,7 @@ module.exports = {
     submit: 'Submit | eLife',
   },
   features: {
+    isPublic: true,
     demographicSurvey: false,
   },
 }

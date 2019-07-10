@@ -46,6 +46,7 @@ module.exports = {
     id: 1131309,
   },
   features: {
+    isPublic: true,
     demographicSurvey: true,
   },
 }
