@@ -9,12 +9,14 @@ setFixtureHooks(f)
 
 test('Delete a Submission', async t => {
   const navigationHelper = new NavigationHelper(t)
-  await navigationHelper.login()
-  await navigationHelper.newSubmission()
+  const dashboardPage = navigationHelper.getDashboardPage()
+  const authorPage = navigationHelper.getAuthorPage()
+
+  await navigationHelper.skipToAuthorPage()
 
   // create a new submission
-  await navigationHelper.preFillAuthorDetailsWithOrcid()
-  await navigationHelper.setAuthorEmail()
+  await authorPage.preFillAuthorDetailsWithOrcid()
+  await authorPage.setEmail()
   await navigationHelper.navigateForward()
 
   // navigate back to the dashboard page and cancel the delete the submission
@@ -25,10 +27,6 @@ test('Delete a Submission', async t => {
     .expect(dashboard.trashButton.count)
     .eql(1)
 
-  // navigate back to the dashboard page and cancel the delete the submission
-  await t
-    .click(dashboard.trashButton)
-    .click(Selector('[data-test-id=accept'))
-    .expect(dashboard.trashButton.count)
-    .eql(0)
+  const submissionId = await NavigationHelper.getSubmissionId()
+  await dashboardPage.deleteSubmission(submissionId)
 })

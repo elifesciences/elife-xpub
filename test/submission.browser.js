@@ -52,13 +52,15 @@ test('Happy path', async t => {
 
 test('Ability to progress through the wizard is tied to validation', async t => {
   const navigationHelper = new NavigationHelper(t)
+  const authorPage = navigationHelper.getAuthorPage()
+  const filesPage = navigationHelper.getFilesPage()
   await navigationHelper.skipToAuthorPage()
 
   // set author details
-  await navigationHelper.setAuthorName('Anne')
-  await navigationHelper.setAuthorSurname('Author')
-  await navigationHelper.setAuthorEmail('anne.author@life')
-  await navigationHelper.setAuthorInstitution('University of eLife')
+  await authorPage.setFirstName()
+  await authorPage.setSurname()
+  await authorPage.setEmail('anne.author@life')
+  await authorPage.setInstitution()
   await t
     .expect(Selector(author.emailValidationMessage).textContent)
     .eql(
@@ -72,7 +74,7 @@ test('Ability to progress through the wizard is tied to validation', async t => 
     .expect(getPageUrl())
     .match(author.url, 'Validation errors prevent progress to the next page')
 
-  await navigationHelper.setAuthorEmail('anne.author@life.ac.uk')
+  await authorPage.setEmail('anne.author@life.ac.uk')
   await navigationHelper.navigateForward()
 
   // File upload stage
@@ -85,14 +87,14 @@ test('Ability to progress through the wizard is tied to validation', async t => 
     .expect(getPageUrl())
     .match(files.url, 'Validation errors prevent progress to the next page')
 
-  await navigationHelper.fillShortCoverletter() // dont need a long cover letter for this
+  await filesPage.writeShortCoverLetter() // dont need a long cover letter for this
   await navigationHelper.navigateForward()
   await t
     .expect(getPageUrl())
     .match(files.url, 'Entering valid inputs enables progress to the next page')
 
-  await navigationHelper.uploadManuscript(manuscript)
-  await navigationHelper.uploadSupportingFiles(manuscript.supportingFiles[0])
+  await filesPage.uploadManuscript(manuscript)
+  await filesPage.uploadSupportingFiles(manuscript.supportingFiles[0])
   await navigationHelper.navigateForward()
 
   // Submission metadata entry
@@ -110,8 +112,7 @@ test('Ability to progress through the wizard is tied to validation', async t => 
       submission.url,
       'Validation errors prevent progress to the next page',
     )
-
-  await navigationHelper.addManuscriptMetadata()
+  await navigationHelper.fillDetailsPage()
   await navigationHelper.navigateForward()
   // Editors
   await t
@@ -127,13 +128,9 @@ test('Ability to progress through the wizard is tied to validation', async t => 
     .expect(getPageUrl())
     .match(editors.url, 'Validation errors prevent progress to the next page')
 
-  await navigationHelper.openEditorsPicker()
-  await navigationHelper.selectPeople([0, 2])
-  await navigationHelper.closePeoplePicker()
-
-  await navigationHelper.openReviewerPicker()
-  await navigationHelper.selectPeople([1, 4])
-  await navigationHelper.closePeoplePicker()
+  const editorsPage = navigationHelper.getEditorsPage()
+  await editorsPage.selectSeniorEditors([0, 2])
+  await editorsPage.selectSeniorReviewers([1, 4])
 
   await navigationHelper.navigateForward()
 
@@ -145,7 +142,8 @@ test('Ability to progress through the wizard is tied to validation', async t => 
       'Entering valid inputs enables progress to the next page',
     )
 
-  await navigationHelper.submit()
+  const disclosurePage = navigationHelper.getDisclosurePage()
+  await disclosurePage.submit()
   await t
     .expect(getPageUrl())
     .match(
@@ -157,22 +155,22 @@ test('Ability to progress through the wizard is tied to validation', async t => 
     .expect((await disclosure.consentValidationWarning.textContent).length)
     .gt(0, 'is visible')
 
-  await navigationHelper.consentDisclosure()
-  await navigationHelper.submit()
-  await navigationHelper.accept()
-  await navigationHelper.thankyou()
+  await disclosurePage.consentDisclosure()
+  await disclosurePage.submit()
+  await disclosurePage.accept()
+  await disclosurePage.thankyou()
 })
 
 test('Form entries are saved when a user navigates to the next page of the wizard', async t => {
   const navigationHelper = new NavigationHelper(t)
+  const authorPage = navigationHelper.getAuthorPage()
 
-  await navigationHelper.login()
-  await navigationHelper.newSubmission()
+  await navigationHelper.skipToAuthorPage()
 
-  await navigationHelper.setAuthorName('Meghan')
-  await navigationHelper.setAuthorSurname('Moggy')
-  await navigationHelper.setAuthorEmail('meghan@example.com')
-  await navigationHelper.setAuthorInstitution('iTunes U')
+  await authorPage.setFirstName('Meghan')
+  await authorPage.setSurname('Moggy')
+  await authorPage.setEmail('meghan@example.com')
+  await authorPage.setInstitution('iTunes U')
   await navigationHelper.navigateForward()
 
   // ensure save completed before reloading
@@ -198,6 +196,7 @@ test('redirect page allows you to continue through app', async t => {
 
 test('Title entry box expands and shrinks for longer titles', async t => {
   const navigationHelper = new NavigationHelper(t)
+  const submissionPage = navigationHelper.getSubmissionPage()
   await navigationHelper.skipToDetailsPage(manuscript)
 
   // adding manuscript metadata
@@ -208,7 +207,7 @@ test('Title entry box expands and shrinks for longer titles', async t => {
       ),
     )
     .eql('1')
-  await navigationHelper.fillLongTitle()
+  await submissionPage.writeTitle(submissionPage.longText)
   // The product defined max-height of the titlebox is 4 lines
 
   await t
@@ -222,7 +221,7 @@ test('Title entry box expands and shrinks for longer titles', async t => {
     )
     .eql('4')
 
-  await navigationHelper.setTitle('A one line title')
+  await submissionPage.writeTitle()
   await t
     .expect(
       Selector('textarea[data-test-id="manuscript-title-editor"]').getAttribute(
