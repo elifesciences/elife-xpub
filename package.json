@@ -93,8 +93,8 @@
     "secretcheck"
   ],
   "resolutions": {
-    "lodash": ">=4.17.11",
-    "pubsweet-client/graphql": "^14.2.1"
+    "graphql": "^14.2.1",
+    "lodash": ">=4.17.11"
   },
   "workspaces": [
     "client/*",
