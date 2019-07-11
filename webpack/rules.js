@@ -14,7 +14,31 @@ module.exports = [
         include,
         loader: 'babel-loader',
         options: {
-          plugins: ifDev([require('react-hot-loader/babel')], []),
+          presets: [
+            [
+              '@babel/preset-react',
+              {
+                targets: {
+                  browser: true,
+                  node: true,
+                  esmodules: true,
+                },
+              },
+            ],
+            [
+              '@babel/preset-env',
+              {
+                targets: {
+                  node: 'current',
+                },
+                modules: 'cjs',
+              },
+            ],
+          ],
+          plugins: [
+            ...ifDev([require('react-hot-loader/babel')], []),
+            '@babel/plugin-proposal-class-properties',
+          ],
         },
       },
 
