@@ -70,8 +70,11 @@ class NavigationHelper {
   }
 
   static async getSubmissionId() {
+    const uuidRegEx = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i
     const url = await this.getURL()
-    return url.split('/')[4]
+    const uuid = url.split('/')[4]
+    await this.t.expect(uuid).Match(uuidRegEx, 'not a submission id')
+    return uuid
   }
 
   async wait(time) {
