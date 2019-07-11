@@ -16,7 +16,7 @@ elifePipeline {
             sh "sudo rm -rf .config"
             // TODO: pull existing docker image if caching is not already effective
             //dockerComposeBuild(commit)
-            sh 'docker-compose -f docker-compose.yml -f docker-compose.ci.yml build --no-cache'
+            sh 'docker-compose -f docker-compose.yml -f docker-compose.ci.yml build --no-cache --parallel'
         }
 
         stage 'Project tests', {
