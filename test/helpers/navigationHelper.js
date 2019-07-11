@@ -13,6 +13,8 @@ import {
   cookie,
 } from '../pageObjects'
 
+import { verifySubmissionId } from './verify'
+
 const DEFAULT_TIMEOUT = 5000
 const OPTS = { timeout: DEFAULT_TIMEOUT }
 
@@ -64,16 +66,17 @@ class NavigationHelper {
     await this.t.eval(() => location.reload(true))
   }
 
-  static async getURL() {
+  async getURLComponents() {
+    const urlRegEx = /(.*)([0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12})\/(.*)/i
     const url = await ClientFunction(() => window.location.href)
-    return url()
+    const match = urlRegEx.exec(url)
+    this.t.expect(match.length).eql(3)
+    return match
   }
 
-  static async getSubmissionId() {
-    const uuidRegEx = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i
-    const url = await this.getURL()
-    const uuid = url.split('/')[4]
-    await this.t.expect(uuid).Match(uuidRegEx, 'not a submission id')
+  async getSubmissionId() {
+    const [, uuid] = await this.getURLComponents()
+    await this.t.expect(verifySubmissionId(uuid)).ok('not a submission id')
     return uuid
   }
 
