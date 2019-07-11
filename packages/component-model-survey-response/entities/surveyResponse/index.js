@@ -10,7 +10,7 @@ class SurveyResponse extends BaseModel {
       required: ['manuscriptId', 'surveyId', 'response'],
       properties: {
         manuscriptId: { type: 'uuid' },
-        surveyId: { type: 'uuid' },
+        surveyId: { type: 'string' },
         response: {
           type: 'object',
           properties: {

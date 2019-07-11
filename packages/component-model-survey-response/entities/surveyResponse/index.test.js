@@ -22,7 +22,7 @@ const createSurveyResponse = params =>
       ],
     },
     manuscriptId: uuid(),
-    surveyId: uuid(),
+    surveyId: 'survey_id',
   }).save()
 
 describe('AuditLog', () => {
