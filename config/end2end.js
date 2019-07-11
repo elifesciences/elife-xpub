@@ -16,6 +16,9 @@ module.exports = {
     url: 'https://end2end--cdn-journal.elifesciences.org/submit',
     enableMock: false,
   },
+  hotJar: {
+    enabled: false,
+  },
   aws: {
     s3: {
       params: {
