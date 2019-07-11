@@ -115,8 +115,7 @@ elifePipeline {
                 sh "aws --endpoint-url='http://localhost:4569' s3 mb s3://test"
                 sh "IMAGE_TAG=${commit} NODE_ENV=production NODE_CONFIG_ENV=test docker-compose -f docker-compose.yml -f docker-compose.ci.yml run --rm --name elife-xpub_setupdb app bash -c 'npx pubsweet migrate'"
                 sh "IMAGE_TAG=${commit} NODE_ENV=production NODE_CONFIG_ENV=test docker-compose -f docker-compose.yml -f docker-compose.ci.yml up -d app"
-                actions['browser']()
-                actions['api']()
+                parallel actions
             } finally {
                 sh "docker ps -a"
                 sh "mkdir -p build/browser"
