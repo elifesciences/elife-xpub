@@ -1,7 +1,7 @@
 module.exports = {
   displayName: 'component-login-client',
   rootDir: '../',
-  setupFilesAfterEnv: ['<rootDir>/config/jest-setup.client.js'],
+  setupTestFrameworkScriptFile: '<rootDir>/config/jest-setup.client.js',
   testMatch: ['<rootDir>/client/**/*.test.js'],
   transformIgnorePatterns: ['/node_modules/(?!@?pubsweet|xpub)'],
   moduleNameMapper: {

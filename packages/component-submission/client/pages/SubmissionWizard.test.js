@@ -44,7 +44,7 @@ const renderWithPath = (path, pushHistory) =>
     wrapper: setupProvider([path]),
   })
 
-describe('SubmissionWizard', () => {
+describe('SubmissionWizard', async () => {
   beforeAll(() => configure({ testIdAttribute: 'data-test-id' }))
   afterEach(cleanup)
 
