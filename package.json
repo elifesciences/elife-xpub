@@ -18,11 +18,10 @@
     "build": "NODE_ENV=production pubsweet build",
     "build:styleguide": "styleguidist build",
     "clean": "find . -type d -name node_modules -exec rm -rf {} \\;",
-    "compile": "find packages/  -name package.json | xargs dirname | grep \"/\" --color=never | xargs -I {} bash -c 'cd {} && echo {} && npm run compile --if-present'",
     "coverage": "open ./coverage/lcov-report/index.html",
     "cz": "git-cz",
     "lint": "npm run lint:js && npm run lint:style && npm run lint:package",
-    "lint:js": "eslint . --ext .ts,.js,.tsx,.jsx",
+    "lint:js": "eslint .",
     "lint:package": "format-package -w package.json",
     "lint:style": "stylelint app/**/*.scss app/**/*.css",
     "precommit": "lint-staged",
@@ -43,12 +42,12 @@
   },
   "lint-staged": {
     "*.css": "stylelint",
-    "*.scss": "stylelint",
-    "*.{j,t}{s,sx}": [
+    "*.js": [
       "prettier --write",
       "eslint --fix",
       "git add"
     ],
+    "*.scss": "stylelint",
     "*.{json,md}": [
       "prettier --write",
       "git add"
@@ -166,8 +165,6 @@
     "@babel/preset-env": "^7.5.3",
     "@babel/preset-react": "^7.0.0",
     "@testing-library/react": "^8.0.1",
-    "@typescript-eslint/eslint-plugin": "^1.11.0",
-    "@typescript-eslint/parser": "^1.11.0",
     "@yarnpkg/lockfile": "^1.1.0",
     "apollo-cache-inmemory": "^1.2.9",
     "babel-core": "^7.0.0-bridge.0",
@@ -181,8 +178,7 @@
     "cz-conventional-changelog": "^2.1.0",
     "enzyme": "^3.3.0",
     "enzyme-adapter-react-16": "^1.2.0",
-    "eslint": "^5.0.0",
-    "eslint-config-prettier": "^6.0.0",
+    "eslint": "^4.12.0",
     "eslint-config-pubsweet": "^0.0.6",
     "eslint-plugin-import": "^2.8.0",
     "eslint-plugin-jest": "^21.4.0",

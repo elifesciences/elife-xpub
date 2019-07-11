@@ -93,5 +93,7 @@ Array [
   "titles.contact-us",
   "titles.login",
   "titles.submit",
+  "features.isPublic",
+  "features.demographicSurvey",
 ]
 `;

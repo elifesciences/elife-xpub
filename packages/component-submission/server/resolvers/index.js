@@ -12,6 +12,7 @@ const { submitManuscript } = require('./submitManuscript')
 const uploadManuscript = require('./uploadManuscript')
 const uploadSupportingFile = require('./uploadSupportingFile')
 const removeSupportingFiles = require('./removeSupportingFiles')
+const submitSurvey = require('./submitSurvey')
 
 const {
   getSubmissionUseCase,
@@ -64,6 +65,8 @@ const resolvers = {
     removeUploadedManuscript,
 
     removeSupportingFiles,
+
+    submitSurvey,
   },
 
   Subscription: {
