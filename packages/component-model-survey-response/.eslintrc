@@ -1,0 +1,10 @@
+{
+  "rules": {
+    "class-methods-use-this": [
+      "error",
+      {
+        "exceptMethods": ["delete"]
+      }
+    ]
+  }
+}
