@@ -68,14 +68,15 @@ class NavigationHelper {
 
   async getURLComponents() {
     const urlRegEx = /(.*)([0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12})\/(.*)/i
-    const url = await ClientFunction(() => window.location.href)
-    const match = urlRegEx.exec(url())
-    this.t.expect(match.length).eql(3)
+    const urlFn = await ClientFunction(() => window.location.href)
+    const url = await urlFn()
+    const match = urlRegEx.exec(url)
+    await this.t.expect(match.length).eql(4)
     return match
   }
 
   async getSubmissionId() {
-    const [, uuid] = await this.getURLComponents()
+    const [, , uuid] = await this.getURLComponents()
     await this.t.expect(verifySubmissionId(uuid)).ok('not a submission id')
     return uuid
   }
