@@ -69,7 +69,7 @@ class NavigationHelper {
   async getURLComponents() {
     const urlRegEx = /(.*)([0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12})\/(.*)/i
     const url = await ClientFunction(() => window.location.href)
-    const match = urlRegEx.exec(url)
+    const match = urlRegEx.exec(url())
     this.t.expect(match.length).eql(3)
     return match
   }
