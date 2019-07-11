@@ -19,7 +19,7 @@ RUN yarn install --frozen-lockfile \
 COPY \
     app.js \
     newrelic.js \
-    babel.config.js \
+    .babelrc \
     .eslintignore \
     .eslintrc.js \
     .prettierrc \
