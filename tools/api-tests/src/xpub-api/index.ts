@@ -72,7 +72,7 @@ export const defaultConfig = (): ApiTestContext => ({
     api_version: "0",
     user: defaultTestUser,
     connection: {
-      graphql_url: "http://app:3000/graphql",
+      graphql_url: "http://localhost:3000/graphql",
       authorization: Some("Bearer ").map((t) => t + defaultTestUser.token),
       headers: {},
     },

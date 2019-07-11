@@ -4,7 +4,7 @@
 
 import { ApiTestContext } from "./index";
 // import { GraphQLClient} from 'graphql-request';
-import { Manuscript, QueryManuscriptArgs, MutationUpdateSubmissionArgs, EditorAlias } from "../generated/graphql";
+import { SurveySubmission, Manuscript, QueryManuscriptArgs, MutationUpdateSubmissionArgs, EditorAlias } from "../generated/graphql";
 import { withAuthorization, NotImplementedError } from "../utils";
 
 /**
@@ -13,6 +13,7 @@ import { withAuthorization, NotImplementedError } from "../utils";
 const manuscript = async (_ctx: ApiTestContext): Promise<Manuscript> => {
   throw new NotImplementedError();
 };
+
 
 const getSubmission = async (ctx: ApiTestContext, data: QueryManuscriptArgs ): Promise<{manuscript: Manuscript}> => {
   const query = `
@@ -255,9 +256,21 @@ const fileUploadProgress = async (_ctx: ApiTestContext): Promise<Manuscript> => 
   throw new NotImplementedError();
 };
 
+// Submits a survey
+const submitSurvey = async (ctx: ApiTestContext, data: SurveySubmission): Promise<{ submitSurvey: boolean}> => {
+  const query = `
+  mutation SubmitSurvey($data: SurveySubmission!) {
+  submitSurvey(data: $data)
+}
+  `;
+
+  return await withAuthorization(ctx, query, {data} );
+}
+
 const resolvers = {
   Query: { manuscript, editors, getSubmission},
   Mutation: {
+    submitSurvey,
     updateSubmission,
     submitManuscript,
     uploadManuscript,
