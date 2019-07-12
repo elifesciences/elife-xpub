@@ -19,7 +19,7 @@ class SurveyResponse extends BaseModel {
               items: {
                 type: 'object',
                 properties: {
-                  id: { type: 'uuid' },
+                  id: { type: 'string' },
                   question: { type: 'string' },
                 },
               },
@@ -29,7 +29,7 @@ class SurveyResponse extends BaseModel {
               items: {
                 type: 'object',
                 properties: {
-                  questionId: { type: 'uuid' },
+                  questionId: { type: 'string' },
                   answer: { type: 'string' },
                 },
               },
