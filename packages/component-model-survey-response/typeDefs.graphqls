@@ -2,7 +2,7 @@ type SurveyResponse implements Object {
   id: ID!
   created: DateTime!
   updated: DateTime
-  surveyId: ID!
+  surveyId: String!
   manuscriptId: ID!
   repsonse: SurveyQuestionsAndAnswers
 }
