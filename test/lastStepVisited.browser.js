@@ -12,7 +12,7 @@ test('Interrupt and resume Submission', async t => {
 
   // create a new submission
   await navigationHelper.skipToFilesPage()
-  const submissionId = NavigationHelper.getSubmissionId()
+  const submissionId = await navigationHelper.getSubmissionId()
 
   // navigate back to the dashboard page and continue submission
   await t.navigateTo(`${config.get('pubsweet-server.baseUrl')}`)

@@ -8,7 +8,6 @@ const resolve = require('./common-resolve')
 module.exports = [
   {
     name: 'app',
-    mode: 'production',
     target: 'web',
     context: path.join(__dirname, '..', 'app'),
     entry: {

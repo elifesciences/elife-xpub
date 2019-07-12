@@ -18,15 +18,15 @@ test('Delete a Submission', async t => {
   await authorPage.preFillAuthorDetailsWithOrcid()
   await authorPage.setEmail()
   await navigationHelper.navigateForward()
+  const submissionId = await navigationHelper.getSubmissionId()
 
   // navigate back to the dashboard page and cancel the delete the submission
   await t
     .navigateTo(`${config.get('pubsweet-server.baseUrl')}`)
-    .click(dashboard.trashButton)
+    .click(dashboard.trashButton(submissionId))
     .click(Selector('[data-test-id=cancel'))
-    .expect(dashboard.trashButton.count)
-    .eql(1)
+    .expect(dashboard.trashButton(submissionId).exists)
+    .ok()
 
-  const submissionId = await NavigationHelper.getSubmissionId()
   await dashboardPage.deleteSubmission(submissionId)
 })
