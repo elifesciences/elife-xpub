@@ -62,4 +62,8 @@ module.exports = {
       },
     },
   },
+  features: {
+    isPublic: true,
+    demographicSurvey: false,
+  },
 }

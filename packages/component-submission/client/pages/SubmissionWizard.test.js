@@ -1,13 +1,16 @@
+/* eslint-disable import/first */
 import { render, cleanup, fireEvent, configure } from '@testing-library/react'
 import theme from '@elifesciences/elife-theme'
 import React from 'react'
 import 'jest-dom/extend-expect'
 import flushPromises from 'flush-promises'
+import config from 'config'
 import { ThemeProvider } from 'styled-components'
 import { MemoryRouter } from 'react-router-dom'
 import { MockedProvider } from 'react-apollo/test-utils'
 import { SubmissionWizard } from './SubmissionWizard'
 
+jest.mock('config')
 jest.mock('react-ga')
 jest.mock('./AuthorStepPage', () => () => 'AuthorStepPage')
 jest.mock('./FilesStepPage', () => () => 'FilesStepPage')
@@ -88,6 +91,60 @@ describe('SubmissionWizard', async () => {
         'DisclosureStepPage',
       ),
     ).toBeTruthy()
+  })
+
+  describe('submit', () => {
+    it('should redirect to thank you if survey flag is off', async () => {
+      const pushHistory = jest.fn()
+      const submitManuscript = jest.fn()
+      const path = '/submit/id/disclosure'
+      const props = { ...makeProps(path, pushHistory), submitManuscript }
+
+      config.features.demographicSurvey = false
+
+      const { getByTestId, getByText } = render(
+        <SubmissionWizard {...props} />,
+        {
+          wrapper: setupProvider([path]),
+        },
+      )
+
+      fireEvent.click(getByTestId('submit'))
+      await flushPromises()
+
+      fireEvent.click(getByText('Confirm'))
+      await flushPromises()
+
+      expect(submitManuscript).toHaveBeenCalledTimes(1)
+      expect(pushHistory).toHaveBeenCalledTimes(1)
+      expect(pushHistory).toHaveBeenCalledWith('/thankyou/id')
+
+      config.features.demographicSurvey = true
+    })
+
+    it('should redirect to survey page if survey flag is on', async () => {
+      const pushHistory = jest.fn()
+      const submitManuscript = jest.fn()
+      const path = '/submit/id/disclosure'
+      const props = { ...makeProps(path, pushHistory), submitManuscript }
+
+      const { getByTestId, getByText } = render(
+        <SubmissionWizard {...props} />,
+        {
+          wrapper: setupProvider([path]),
+        },
+      )
+
+      fireEvent.click(getByTestId('submit'))
+      await flushPromises()
+
+      fireEvent.click(getByText('Confirm'))
+      await flushPromises()
+
+      expect(submitManuscript).toHaveBeenCalledTimes(1)
+      expect(pushHistory).toHaveBeenCalledTimes(1)
+      expect(pushHistory).toHaveBeenCalledWith('/survey/id')
+    })
   })
 
   describe('step navigation', () => {
