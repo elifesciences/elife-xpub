@@ -2,44 +2,26 @@ const { useCase, makeResponseObject } = require('./submitSurveyUseCase')
 
 describe('submitSurveyUseCase', () => {
   describe('useCase', () => {
-    it('does not supress errors', () => {
-      class MockSurveyResponseThrowsOnSave {
-        constructor(_) {
-          // do nothing
-          return this
-        }
-
-        // Linting disabled - class methods required to use 'this' keyword
-        // eslint-disable-next-line
-        save() {
-          throw new Error('generic error')
-        }
-      }
-      expect(
+    it('does not supress errors', async () => {
+      const mockSurveyResponse = jest.fn(() => ({
+        save: jest.fn().mockRejectedValue(undefined),
+      }))
+      return expect(
         useCase(
-          { SurveyResponse: MockSurveyResponseThrowsOnSave },
+          { SurveyResponse: mockSurveyResponse },
           { surveyId: '', submissionId: '', answers: [], userId: '' },
         ),
-      ).rejects.toThrow()
+      ).rejects.toEqual(undefined)
     })
 
-    it('calls the save function and returns true', () => {
-      class MockSurveyResponseSuccessful {
-        constructor(_) {
-          // do nothing
-          return this
-        }
+    it('calls the save function and returns true', async () => {
+      const mockSurveyResponse = jest.fn(() => ({
+        save: jest.fn().mockResolvedValue(true),
+      }))
 
-        // Linting disabled - class methods required to use 'this' keyword
-        // eslint-disable-next-line
-        async save() {
-          return { ok: true }
-        }
-      }
-
-      expect(
+      return expect(
         useCase(
-          { SurveyResponse: MockSurveyResponseSuccessful },
+          { SurveyResponse: mockSurveyResponse },
           { surveyId: '', submissionId: '', answers: [], userId: '' },
         ),
       ).resolves.toEqual(true)
