@@ -1,4 +1,6 @@
 const { submitSurveyUseCase } = require('../use-cases')
+const SurveyResponse = require('@elifesciences/component-model-survey-response')
+  .model
 const config = require('config')
 
 async function submitSurvey(_, { data }, { user: userId }) {
@@ -7,12 +9,15 @@ async function submitSurvey(_, { data }, { user: userId }) {
   console.log(surveyId, submissionId, answers, userId)
 
   try {
-    return submitSurveyUseCase(null, {
-      surveyId,
-      submissionId,
-      answers,
-      userId,
-    })
+    return submitSurveyUseCase(
+      { SurveyResponse },
+      {
+        surveyId,
+        submissionId,
+        answers,
+        userId,
+      },
+    )
   } catch (e) {
     throw e
   }

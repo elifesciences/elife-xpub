@@ -22,10 +22,13 @@ const makeResponseObject = answers =>
     {},
   )
 
-const useCase = ({ Survey }, { surveyId, answers, submissionId, userId }) => {
+const useCase = (
+  { SurveyResponse },
+  { surveyId, answers, submissionId, userId },
+) => {
   const response = makeResponseObject(answers)
 
-  const surveyResponse = new Survey({
+  const surveyResponse = new SurveyResponse({
     surveyId,
     manuscriptId: submissionId,
     response,
