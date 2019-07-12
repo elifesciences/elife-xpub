@@ -9,7 +9,7 @@ extend type Mutation {
   removeSupportingFiles(id: ID!): Manuscript
   removeUploadedManuscript(id: ID!): Manuscript!
   submitManuscript(data: ManuscriptInput!): Manuscript!
-  submitSurvey(data: SurveySubmission!): Boolean!
+  submitSurveyResponse(data: SurveySubmission!): Boolean!
 }
 
 extend type Subscription {

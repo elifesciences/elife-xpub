@@ -3,7 +3,7 @@ const Manuscript = require('./manuscript')
 
 const getSubmissionUseCase = require('./getSubmissionUseCase')
 const updateSubmissionUseCase = require('./updateSubmissionUseCase')
-const submitSurveyUseCase = require('./submitSurveyUseCase')
+const submitSurveyUseCase = require('./submitSurveyUseCase').useCase
 
 module.exports = {
   getSubmissionUseCase,
