@@ -3,10 +3,8 @@ const SurveyResponse = require('@elifesciences/component-model-survey-response')
   .model
 const config = require('config')
 
-async function submitSurvey(_, { data }, { user: userId }) {
+async function submitSurveyResponse(_, { data }, { user: userId }) {
   const { surveyId, submissionId, answers } = data
-
-  console.log(surveyId, submissionId, answers, userId)
 
   try {
     return await submitSurveyUseCase(
@@ -26,8 +24,5 @@ async function submitSurvey(_, { data }, { user: userId }) {
 module.exports =
   config.has('features.demographicSurvey') &&
   config.get('features.demographicSurvey')
-    ? submitSurvey
-    : async () => {
-        console.log('feat: off')
-        return false
-      }
+    ? submitSurveyResponse
+    : async () => false
