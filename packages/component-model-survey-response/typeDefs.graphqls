@@ -1,0 +1,23 @@
+type SurveyResponse implements Object {
+  id: ID!
+  created: DateTime!
+  updated: DateTime
+  surveyId: String!
+  manuscriptId: ID!
+  repsonse: SurveyQuestionsAndAnswers
+}
+
+type SurveyQuestionsAndAnswers {
+  questions: [SurveyQuestion!]
+  answers: [SurveyAnswer!]
+}
+
+type SurveyQuestion {
+  id: ID!
+  question: String!
+}
+
+type SurveyAnswer {
+  questionId: ID!
+  answer: String!
+}
