@@ -98,7 +98,7 @@ export const DELETE_SUPPORTING_FILES = gql`
 `
 
 export const submitSurveyResponse = gql`
-  mutation SubmitSurveyResponse($data: SurveySubmission) {
+  mutation SubmitSurveyResponse($data: SurveySubmission!) {
     submitSurveyResponse(data: $data)
   }
 `

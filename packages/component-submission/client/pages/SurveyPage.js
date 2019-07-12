@@ -61,25 +61,27 @@ const SurveyPage = ({ submitSurveyResponse, match, history }) => {
         onClick={() =>
           submitSurveyResponse({
             variables: {
-              submissionId: match.params.id,
-              surveyId: 'demographicSurvey',
-              answers: [
-                {
-                  answerId: 'question1',
-                  text: questions.question1,
-                  answer: question1,
-                },
-                {
-                  answerId: 'question2',
-                  text: questions.question2,
-                  answer: question2,
-                },
-                {
-                  answerId: 'question3',
-                  text: questions.question3,
-                  answer: question3,
-                },
-              ],
+              data: {
+                submissionId: match.params.id,
+                surveyId: 'demographicSurvey',
+                answers: [
+                  {
+                    questionId: 'question1',
+                    text: questions.question1,
+                    answer: question1,
+                  },
+                  {
+                    questionId: 'question2',
+                    text: questions.question2,
+                    answer: question2,
+                  },
+                  {
+                    questionId: 'question3',
+                    text: questions.question3,
+                    answer: question3,
+                  },
+                ],
+              },
             },
           }).then(() => {
             history.push(`/thankyou/${match.params.id}`)
