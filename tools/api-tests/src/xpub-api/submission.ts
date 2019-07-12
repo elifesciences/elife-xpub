@@ -257,10 +257,10 @@ const fileUploadProgress = async (_ctx: ApiTestContext): Promise<Manuscript> => 
 };
 
 // Submits a survey
-const submitSurvey = async (ctx: ApiTestContext, data: SurveySubmission): Promise<{ submitSurvey: boolean}> => {
+const submitSurveyResponse = async (ctx: ApiTestContext, data: SurveySubmission): Promise<{ submitSurveyResponse: boolean}> => {
   const query = `
   mutation SubmitSurvey($data: SurveySubmission!) {
-  submitSurvey(data: $data)
+  submitSurveyResponse(data: $data)
 }
   `;
 
@@ -270,7 +270,7 @@ const submitSurvey = async (ctx: ApiTestContext, data: SurveySubmission): Promis
 const resolvers = {
   Query: { manuscript, editors, getSubmission},
   Mutation: {
-    submitSurvey,
+    submitSurveyResponse,
     updateSubmission,
     submitManuscript,
     uploadManuscript,

@@ -4,7 +4,7 @@ import { test, TestContext } from 'ava-ts';
 import { defaultConfig } from "../xpub-api";
 import { v4} from 'uuid';
 
-test.failing("You can submit a survey", async (t: TestContext) => {
+test("You can submit a survey", async (t: TestContext) => {
   const context = defaultConfig();
 
   const testData: SurveySubmission = {
@@ -19,7 +19,7 @@ test.failing("You can submit a survey", async (t: TestContext) => {
     ],
   };
 
-  const result = await submission.Mutation.submitSurvey(context, testData);
+  const result = await submission.Mutation.submitSurveyResponse(context, testData);
 
-  t.deepEqual(result, {submitSurvey: true});
+  t.deepEqual(result, {submitSurveyResponse: true});
 });
