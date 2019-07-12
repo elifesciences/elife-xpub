@@ -10,7 +10,6 @@ import { MemoryRouter } from 'react-router-dom'
 import { MockedProvider } from 'react-apollo/test-utils'
 import { SubmissionWizard } from './SubmissionWizard'
 
-jest.mock('config')
 jest.mock('react-ga')
 jest.mock('./AuthorStepPage', () => () => 'AuthorStepPage')
 jest.mock('./FilesStepPage', () => () => 'FilesStepPage')
@@ -99,8 +98,10 @@ describe('SubmissionWizard', async () => {
       const path = '/submit/id/disclosure'
       const submitManuscript = jest.fn()
       const pushHistory = jest.fn()
+      const originalFeatures = { ...config.features }
 
-      beforeEach(() => {
+      afterEach(() => {
+        config.features = originalFeatures
         submitManuscript.mockReset()
         pushHistory.mockReset()
       })
@@ -120,8 +121,6 @@ describe('SubmissionWizard', async () => {
         expect(submitManuscript).toHaveBeenCalledTimes(1)
         expect(pushHistory).toHaveBeenCalledTimes(1)
         expect(pushHistory).toHaveBeenCalledWith('/thankyou/id')
-
-        config.features.demographicSurvey = true
       })
 
       it('should redirect to survey page if survey flag is on', async () => {
@@ -139,8 +138,6 @@ describe('SubmissionWizard', async () => {
         expect(submitManuscript).toHaveBeenCalledTimes(1)
         expect(pushHistory).toHaveBeenCalledTimes(1)
         expect(pushHistory).toHaveBeenCalledWith('/survey/id')
-
-        config.features.demographicSurvey = false
       })
     })
   })
