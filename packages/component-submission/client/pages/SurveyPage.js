@@ -1,15 +1,25 @@
 import React, { useState } from 'react'
+import { compose } from 'recompose'
+
 import {
   FormH2,
   Paragraph,
 } from '@elifesciences/component-elife-ui/client/atoms'
 import { Button, TextField } from '@pubsweet/ui'
 import { Box } from '@rebass/grid'
+import surveyWithGQL from '../graphql/surveyWithGQL'
 
-const SurveyPage = () => {
-  const [country, setCountry] = useState('')
-  const [gender, setGender] = useState('')
-  const [timeAsPI, setTimeAsPI] = useState('')
+const SurveyPage = ({ submitSurveyResponse, match }) => {
+  const [question1, setQuestion1] = useState('')
+  const [question2, setQuestion2] = useState('')
+  const [question3, setQuestion3] = useState('')
+
+  const questions = {
+    question1: 'Country of residence of Last Author:',
+    question2: 'Gender of Last Author:',
+    question3: 'When did the Last Author become an independent researcher?',
+  }
+
   return (
     <Box mx="25%" width={1 / 2}>
       <FormH2>Help us reduce bias</FormH2>
@@ -24,33 +34,66 @@ const SurveyPage = () => {
       </Paragraph.Writing>
       <Box mb={3}>
         <TextField
-          label="Country of residence of Last Author:"
-          onChange={e => setCountry(e.target.value)}
+          label={questions.question1}
+          onChange={e => setQuestion1(e.target.value)}
           placeholder="Enter text here"
-          value={country}
+          value={question1}
         />
       </Box>
       <Box mb={3}>
         <TextField
-          label="Gender of Last Author:"
-          onChange={e => setGender(e.target.value)}
+          label={questions.question2}
+          onChange={e => setQuestion2(e.target.value)}
           placeholder="Enter text here"
-          value={gender}
+          value={question2}
         />
       </Box>
       <Box mb={4}>
         <TextField
-          label="When did the Last Author become an independent researcher?"
-          onChange={e => setTimeAsPI(e.target.value)}
+          label={questions.question3}
+          onChange={e => setQuestion3(e.target.value)}
           placeholder="Enter text here"
-          value={timeAsPI}
+          value={question3}
         />
       </Box>
-      <Button data-test-id="submit" onClick={() => {}} primary type="button">
-        {country === '' && gender === '' && timeAsPI === '' ? 'Skip' : 'Done'}
+      <Button
+        data-test-id="submit"
+        onClick={() =>
+          submitSurveyResponse({
+            variables: {
+              submissionId: match.params.id,
+              surveyId: 'demographicSurvey',
+              answers: [
+                {
+                  answerId: 'question1',
+                  text: questions.question1,
+                  answer: question1,
+                },
+                {
+                  answerId: 'question2',
+                  text: questions.question2,
+                  answer: question2,
+                },
+                {
+                  answerId: 'question3',
+                  text: questions.question3,
+                  answer: question3,
+                },
+              ],
+            },
+          }).then(() => {
+            console.log('ddsdsdasdsadasdas')
+          })
+        }
+        primary
+        type="button"
+      >
+        {question1 === '' && question2 === '' && question3 === ''
+          ? 'Skip'
+          : 'Done'}
       </Button>
     </Box>
   )
 }
 
-export default SurveyPage
+export default compose(surveyWithGQL)(SurveyPage)
