@@ -62,4 +62,7 @@ module.exports = {
       },
     },
   },
+  features: {
+    demographicSurvey: false,
+  },
 }

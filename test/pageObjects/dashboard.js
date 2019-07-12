@@ -7,8 +7,7 @@ const dashboard = {
   mobileNewSubmission: Selector('[data-test-id=mobile-new-submission]'),
   titles: Selector('[data-test-id=title]'),
   statuses: Selector('[data-test-id=status]'),
-  trashButton: Selector('[data-test-id=trash]'),
-  trashSpecificSubmission: id =>
+  trashButton: id =>
     Selector(`[href*="${id}"]`)
       .sibling('div')
       .child('[data-test-id=trash]'),
