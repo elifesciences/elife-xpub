@@ -34,16 +34,17 @@ const setupProvider = (historyLocation = []) => ({ children }) => (
   </ThemeProvider>
 )
 
-const makeProps = (path, pushHistory = jest.fn()) => ({
+const makeProps = (path, pushHistory = jest.fn(), props) => ({
   data: { manuscript: { meta: {} } },
   match: { path: '/submit/id', url: '', params: { id: 'id' } },
   history: { location: { pathname: path }, push: pushHistory },
   updateManuscript: jest.fn(),
   submitManuscript: jest.fn(),
+  ...props,
 })
 
-const renderWithPath = (path, pushHistory) =>
-  render(<SubmissionWizard {...makeProps(path, pushHistory)} />, {
+const renderWithPath = (path, pushHistory, props = {}) =>
+  render(<SubmissionWizard {...makeProps(path, pushHistory, props)} />, {
     wrapper: setupProvider([path]),
   })
 
@@ -94,56 +95,53 @@ describe('SubmissionWizard', async () => {
   })
 
   describe('submit', () => {
-    it('should redirect to thank you if survey flag is off', async () => {
-      const pushHistory = jest.fn()
-      const submitManuscript = jest.fn()
+    describe('survey feature flag', () => {
       const path = '/submit/id/disclosure'
-      const props = { ...makeProps(path, pushHistory), submitManuscript }
-
-      config.features.demographicSurvey = false
-
-      const { getByTestId, getByText } = render(
-        <SubmissionWizard {...props} />,
-        {
-          wrapper: setupProvider([path]),
-        },
-      )
-
-      fireEvent.click(getByTestId('submit'))
-      await flushPromises()
-
-      fireEvent.click(getByText('Confirm'))
-      await flushPromises()
-
-      expect(submitManuscript).toHaveBeenCalledTimes(1)
-      expect(pushHistory).toHaveBeenCalledTimes(1)
-      expect(pushHistory).toHaveBeenCalledWith('/thankyou/id')
-
-      config.features.demographicSurvey = true
-    })
-
-    it('should redirect to survey page if survey flag is on', async () => {
-      const pushHistory = jest.fn()
       const submitManuscript = jest.fn()
-      const path = '/submit/id/disclosure'
-      const props = { ...makeProps(path, pushHistory), submitManuscript }
+      const pushHistory = jest.fn()
 
-      const { getByTestId, getByText } = render(
-        <SubmissionWizard {...props} />,
-        {
-          wrapper: setupProvider([path]),
-        },
-      )
+      beforeEach(() => {
+        submitManuscript.mockReset()
+        pushHistory.mockReset()
+      })
 
-      fireEvent.click(getByTestId('submit'))
-      await flushPromises()
+      it('should redirect to thank you if survey flag is off', async () => {
+        config.features.demographicSurvey = false
+        const { getByTestId, getByText } = renderWithPath(path, pushHistory, {
+          submitManuscript,
+        })
 
-      fireEvent.click(getByText('Confirm'))
-      await flushPromises()
+        fireEvent.click(getByTestId('submit'))
+        await flushPromises()
 
-      expect(submitManuscript).toHaveBeenCalledTimes(1)
-      expect(pushHistory).toHaveBeenCalledTimes(1)
-      expect(pushHistory).toHaveBeenCalledWith('/survey/id')
+        fireEvent.click(getByText('Confirm'))
+        await flushPromises()
+
+        expect(submitManuscript).toHaveBeenCalledTimes(1)
+        expect(pushHistory).toHaveBeenCalledTimes(1)
+        expect(pushHistory).toHaveBeenCalledWith('/thankyou/id')
+
+        config.features.demographicSurvey = true
+      })
+
+      it('should redirect to survey page if survey flag is on', async () => {
+        config.features.demographicSurvey = true
+        const { getByTestId, getByText } = renderWithPath(path, pushHistory, {
+          submitManuscript,
+        })
+
+        fireEvent.click(getByTestId('submit'))
+        await flushPromises()
+
+        fireEvent.click(getByText('Confirm'))
+        await flushPromises()
+
+        expect(submitManuscript).toHaveBeenCalledTimes(1)
+        expect(pushHistory).toHaveBeenCalledTimes(1)
+        expect(pushHistory).toHaveBeenCalledWith('/survey/id')
+
+        config.features.demographicSurvey = false
+      })
     })
   })
 
