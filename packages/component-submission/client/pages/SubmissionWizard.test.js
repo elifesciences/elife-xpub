@@ -1,8 +1,10 @@
+/* eslint-disable import/first */
 import { render, cleanup, fireEvent, configure } from '@testing-library/react'
 import theme from '@elifesciences/elife-theme'
 import React from 'react'
 import 'jest-dom/extend-expect'
 import flushPromises from 'flush-promises'
+import config from 'config'
 import { ThemeProvider } from 'styled-components'
 import { MemoryRouter } from 'react-router-dom'
 import { MockedProvider } from 'react-apollo/test-utils'
@@ -31,16 +33,17 @@ const setupProvider = (historyLocation = []) => ({ children }) => (
   </ThemeProvider>
 )
 
-const makeProps = (path, pushHistory = jest.fn()) => ({
+const makeProps = (path, pushHistory = jest.fn(), props) => ({
   data: { manuscript: { meta: {} } },
   match: { path: '/submit/id', url: '', params: { id: 'id' } },
   history: { location: { pathname: path }, push: pushHistory },
   updateManuscript: jest.fn(),
   submitManuscript: jest.fn(),
+  ...props,
 })
 
-const renderWithPath = (path, pushHistory) =>
-  render(<SubmissionWizard {...makeProps(path, pushHistory)} />, {
+const renderWithPath = (path, pushHistory, props = {}) =>
+  render(<SubmissionWizard {...makeProps(path, pushHistory, props)} />, {
     wrapper: setupProvider([path]),
   })
 
@@ -88,6 +91,55 @@ describe('SubmissionWizard', async () => {
         'DisclosureStepPage',
       ),
     ).toBeTruthy()
+  })
+
+  describe('submit', () => {
+    describe('survey feature flag', () => {
+      const path = '/submit/id/disclosure'
+      const submitManuscript = jest.fn()
+      const pushHistory = jest.fn()
+      const originalFeatures = { ...config.features }
+
+      afterEach(() => {
+        config.features = originalFeatures
+        submitManuscript.mockReset()
+        pushHistory.mockReset()
+      })
+
+      it('should redirect to thank you if survey flag is off', async () => {
+        config.features.demographicSurvey = false
+        const { getByTestId, getByText } = renderWithPath(path, pushHistory, {
+          submitManuscript,
+        })
+
+        fireEvent.click(getByTestId('submit'))
+        await flushPromises()
+
+        fireEvent.click(getByText('Confirm'))
+        await flushPromises()
+
+        expect(submitManuscript).toHaveBeenCalledTimes(1)
+        expect(pushHistory).toHaveBeenCalledTimes(1)
+        expect(pushHistory).toHaveBeenCalledWith('/thankyou/id')
+      })
+
+      it('should redirect to survey page if survey flag is on', async () => {
+        config.features.demographicSurvey = true
+        const { getByTestId, getByText } = renderWithPath(path, pushHistory, {
+          submitManuscript,
+        })
+
+        fireEvent.click(getByTestId('submit'))
+        await flushPromises()
+
+        fireEvent.click(getByText('Confirm'))
+        await flushPromises()
+
+        expect(submitManuscript).toHaveBeenCalledTimes(1)
+        expect(pushHistory).toHaveBeenCalledTimes(1)
+        expect(pushHistory).toHaveBeenCalledWith('/survey/id')
+      })
+    })
   })
 
   describe('step navigation', () => {

@@ -10,6 +10,7 @@ import styled from 'styled-components'
 import { th } from '@pubsweet/ui-toolkit'
 import { Formik, Form } from 'formik'
 import * as yup from 'yup'
+import config from 'config'
 import {
   ErrorPage,
   TrackedRoute,
@@ -107,7 +108,13 @@ export const SubmissionWizard = ({
           variables: { data: parseFormToOutputData(formValues) },
         }),
       )
-      .then(() => history.push(`/thankyou/${match.params.id}`))
+      .then(() =>
+        history.push(
+          config.features && config.features.demographicSurvey
+            ? `/survey/${match.params.id}`
+            : `/thankyou/${match.params.id}`,
+        ),
+      )
 
   const navigateToStep = step => {
     setCurrentStep(step)
