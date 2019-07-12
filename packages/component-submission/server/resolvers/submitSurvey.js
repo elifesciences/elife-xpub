@@ -9,7 +9,7 @@ async function submitSurvey(_, { data }, { user: userId }) {
   console.log(surveyId, submissionId, answers, userId)
 
   try {
-    return submitSurveyUseCase(
+    return await submitSurveyUseCase(
       { SurveyResponse },
       {
         surveyId,
@@ -27,4 +27,7 @@ module.exports =
   config.has('features.demographicSurvey') &&
   config.get('features.demographicSurvey')
     ? submitSurvey
-    : async () => false
+    : async () => {
+        console.log('feat: off')
+        return false
+      }

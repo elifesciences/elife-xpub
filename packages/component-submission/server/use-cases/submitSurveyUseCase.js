@@ -22,7 +22,7 @@ const makeResponseObject = answers =>
     {},
   )
 
-const useCase = (
+const useCase = async (
   { SurveyResponse },
   { surveyId, answers, submissionId, userId },
 ) => {
@@ -34,8 +34,12 @@ const useCase = (
     response,
   })
 
-  surveyResponse.save()
-  return true
+  try {
+    await surveyResponse.save()
+    return true
+  } catch (e) {
+    throw e
+  }
 }
 
 module.exports = { useCase, makeResponseObject }
