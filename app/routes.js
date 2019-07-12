@@ -12,6 +12,7 @@ import {
 import {
   ThankYouPage,
   SubmissionWizard,
+  SurveyPage,
 } from '@elifesciences/component-submission/client'
 import {
   LoginPage,
@@ -19,7 +20,6 @@ import {
   LogoutPage,
 } from '@elifesciences/component-login/client'
 import { CookieNotice } from '@elifesciences/component-elife-ui/client/global'
-import { SurveyPage } from '@elifesciences/component-survey/client'
 
 import {
   AuthenticatedComponent,
