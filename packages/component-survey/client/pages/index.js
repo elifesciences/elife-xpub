@@ -46,7 +46,7 @@ const SurveyPage = () => {
           value={timeAsPI}
         />
       </Box>
-      <Button data-test-id="submit" primary type="button">
+      <Button data-test-id="submit" onClick={() => {}} primary type="button">
         {country === '' && gender === '' && timeAsPI === '' ? 'Skip' : 'Done'}
       </Button>
     </Box>
