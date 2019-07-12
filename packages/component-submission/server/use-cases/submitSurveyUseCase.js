@@ -16,7 +16,7 @@ const makeResponseObject = answers =>
     {},
   )
 
-module.exports = ({ Survey }, { surveyId, answers, submissionId, userId }) => {
+const useCase = ({ Survey }, { surveyId, answers, submissionId, userId }) => {
   const response = makeResponseObject(answers)
 
   const surveyResponse = new Survey({
@@ -28,3 +28,5 @@ module.exports = ({ Survey }, { surveyId, answers, submissionId, userId }) => {
   surveyResponse.save()
   return true
 }
+
+module.exports = { useCase, makeResponseObject }
