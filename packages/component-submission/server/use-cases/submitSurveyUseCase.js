@@ -1,15 +1,21 @@
-const { uniqBy, pick } = require('lodash')
+const { uniqBy } = require('lodash')
 
 const makeResponseObject = answers =>
   uniqBy(answers, ans => ans.questionId).reduce(
-    (acc, question) => ({
+    (acc, { questionId, text, answer }) => ({
       questions: [
         ...(acc.questions || []),
-        pick(question, ['questionId', 'text']),
+        {
+          id: questionId,
+          question: text,
+        },
       ],
       answers: [
         ...(acc.answers || []),
-        pick(question, ['questionId', 'answer']),
+        {
+          questionId,
+          answer,
+        },
       ],
     }),
 
