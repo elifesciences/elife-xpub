@@ -9,6 +9,39 @@ const setupProvider = () => ({ children }) => (
   <ThemeProvider theme={theme}>{children}</ThemeProvider>
 )
 
+// List of question text for assertions
+const questions = {
+  question1: 'Country of residence of Last Author:',
+  question2: 'Gender of Last Author:',
+  question3: 'When did the Last Author become an independent researcher?',
+}
+
+const buildExpectedSubmitObject = (q1 = '', q2 = '', q3 = '') => ({
+  variables: {
+    data: {
+      submissionId: 'foo',
+      surveyId: 'demographicSurvey',
+      answers: [
+        {
+          questionId: 'question1',
+          text: questions.question1,
+          answer: q1,
+        },
+        {
+          questionId: 'question2',
+          text: questions.question2,
+          answer: q2,
+        },
+        {
+          questionId: 'question3',
+          text: questions.question3,
+          answer: q3,
+        },
+      ],
+    },
+  },
+})
+
 describe('SurveyPage', async () => {
   beforeAll(() => configure({ testIdAttribute: 'data-test-id' }))
   afterEach(cleanup)
@@ -52,5 +85,26 @@ describe('SurveyPage', async () => {
 
     expect(mockPush).toHaveBeenCalledTimes(1)
     expect(mockPush).toBeCalledWith('/thankyou/foo')
+  })
+
+  it('displays Skip text on submit button if all inputs are empty', async () => {
+    const mockSubmit = jest.fn(async () => {})
+
+    const { getByTestId } = render(
+      <SurveyPage
+        history={[]}
+        match={{ params: { id: 'foo' } }}
+        submitSurveyResponse={mockSubmit}
+      />,
+      {
+        wrapper: setupProvider(),
+      },
+    )
+    expect(getByTestId('submit').textContent).toBe('Skip')
+
+    fireEvent.click(getByTestId('submit'))
+    await flushPromises()
+
+    expect(mockSubmit).toBeCalledWith(buildExpectedSubmitObject())
   })
 })
