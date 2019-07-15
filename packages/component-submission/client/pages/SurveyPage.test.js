@@ -29,6 +29,28 @@ describe('SurveyPage', async () => {
     fireEvent.click(getByTestId('submit'))
     await flushPromises()
 
-    expect(mockSubmit).toBeCalled()
+    expect(mockSubmit).toHaveBeenCalledTimes(1)
+  })
+  it('redirects to the thankyou page after submitting', async () => {
+    const mockSubmit = jest.fn(async () => {})
+    const mockHistory = { push: jest.fn() }
+    const { push: mockPush } = mockHistory
+
+    const { getByTestId } = render(
+      <SurveyPage
+        history={mockHistory}
+        match={{ params: { id: 'foo' } }}
+        submitSurveyResponse={mockSubmit}
+      />,
+      {
+        wrapper: setupProvider(),
+      },
+    )
+
+    fireEvent.click(getByTestId('submit'))
+    await flushPromises()
+
+    expect(mockPush).toHaveBeenCalledTimes(1)
+    expect(mockPush).toBeCalledWith('/thankyou/foo')
   })
 })
