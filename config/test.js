@@ -69,4 +69,7 @@ module.exports = {
       },
     },
   },
+  features: {
+    demographicSurvey: true,
+  },
 }
