@@ -34,7 +34,7 @@ export const SurveyPage = ({ submitSurveyResponse, match, history }) => {
       </Paragraph.Writing>
       <Box mb={3}>
         <TextField
-          data-test-id="question1"
+          data-test-id="survey-question-1"
           label={questions.question1}
           onChange={e => setQuestion1(e.target.value)}
           placeholder="Enter text here"
@@ -43,7 +43,7 @@ export const SurveyPage = ({ submitSurveyResponse, match, history }) => {
       </Box>
       <Box mb={3}>
         <TextField
-          data-test-id="question2"
+          data-test-id="survey-question-2"
           label={questions.question2}
           onChange={e => setQuestion2(e.target.value)}
           placeholder="Enter text here"
@@ -52,7 +52,7 @@ export const SurveyPage = ({ submitSurveyResponse, match, history }) => {
       </Box>
       <Box mb={4}>
         <TextField
-          data-test-id="question3"
+          data-test-id="survey-question-3"
           label={questions.question3}
           onChange={e => setQuestion3(e.target.value)}
           placeholder="Enter text here"

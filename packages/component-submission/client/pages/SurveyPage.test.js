@@ -42,43 +42,37 @@ const buildExpectedSubmitObject = (q1 = '', q2 = '', q3 = '') => ({
   },
 })
 
+const renderComponent = (mockSubmit = jest.fn(), mockHistory = []) =>
+  render(
+    <SurveyPage
+      history={mockHistory}
+      match={{ params: { id: 'foo' } }}
+      submitSurveyResponse={mockSubmit}
+    />,
+    {
+      wrapper: setupProvider(),
+    },
+  )
+
 describe('SurveyPage', async () => {
   beforeAll(() => configure({ testIdAttribute: 'data-test-id' }))
   afterEach(cleanup)
 
   it('submits survey when submit button is clicked', async () => {
     const mockSubmit = jest.fn(async () => {})
-    const { getByTestId } = render(
-      <SurveyPage
-        history={[]}
-        match={{ params: { id: 'foo ' } }}
-        submitSurveyResponse={mockSubmit}
-      />,
-      {
-        wrapper: setupProvider(),
-      },
-    )
+    const { getByTestId } = renderComponent(mockSubmit)
 
     fireEvent.click(getByTestId('submit'))
     await flushPromises()
 
     expect(mockSubmit).toHaveBeenCalledTimes(1)
   })
+
   it('redirects to the thankyou page after submitting', async () => {
     const mockSubmit = jest.fn(async () => {})
     const mockHistory = { push: jest.fn() }
     const { push: mockPush } = mockHistory
-
-    const { getByTestId } = render(
-      <SurveyPage
-        history={mockHistory}
-        match={{ params: { id: 'foo' } }}
-        submitSurveyResponse={mockSubmit}
-      />,
-      {
-        wrapper: setupProvider(),
-      },
-    )
+    const { getByTestId } = renderComponent(mockSubmit, mockHistory)
 
     fireEvent.click(getByTestId('submit'))
     await flushPromises()
@@ -89,17 +83,8 @@ describe('SurveyPage', async () => {
 
   it('displays Skip text on submit button if all inputs are empty', async () => {
     const mockSubmit = jest.fn(async () => {})
+    const { getByTestId } = renderComponent(mockSubmit)
 
-    const { getByTestId } = render(
-      <SurveyPage
-        history={[]}
-        match={{ params: { id: 'foo' } }}
-        submitSurveyResponse={mockSubmit}
-      />,
-      {
-        wrapper: setupProvider(),
-      },
-    )
     expect(getByTestId('submit').textContent).toBe('Skip')
 
     fireEvent.click(getByTestId('submit'))
@@ -110,19 +95,41 @@ describe('SurveyPage', async () => {
 
   it('displays Done text on submit button when inputs are filled', async () => {
     const mockSubmit = jest.fn(async () => {})
+    const { getByTestId } = renderComponent(mockSubmit)
 
-    const { getByTestId } = render(
-      <SurveyPage
-        history={[]}
-        match={{ params: { id: 'foo' } }}
-        submitSurveyResponse={mockSubmit}
-      />,
-      {
-        wrapper: setupProvider(),
-      },
-    )
     expect(getByTestId('submit').textContent).toBe('Skip')
-    fireEvent.input(getByTestId('question1'), { target: { value: 'fooo' } })
+    fireEvent.input(getByTestId('survey-question-1'), {
+      target: { value: 'fooo' },
+    })
     expect(getByTestId('submit').textContent).toBe('Done')
+  })
+
+  it('sends the answers when submitting', async () => {
+    const mockSubmit = jest.fn(async () => {})
+    const { getByTestId } = renderComponent(mockSubmit)
+
+    fireEvent.input(getByTestId('survey-question-1'), {
+      target: { value: 'answer 1' },
+    })
+    fireEvent.input(getByTestId('survey-question-2'), {
+      target: { value: 'answer 2' },
+    })
+    fireEvent.input(getByTestId('survey-question-3'), {
+      target: { value: 'answer 3' },
+    })
+    fireEvent.click(getByTestId('submit'))
+    await flushPromises()
+
+    expect(mockSubmit).toBeCalledWith(
+      buildExpectedSubmitObject('answer 1', 'answer 2', 'answer 3'),
+    )
+  })
+
+  it('renders the question text correctly', async () => {
+    const { getByText } = renderComponent()
+
+    expect(getByText(questions.question1)).toBeTruthy()
+    expect(getByText(questions.question2)).toBeTruthy()
+    expect(getByText(questions.question3)).toBeTruthy()
   })
 })
