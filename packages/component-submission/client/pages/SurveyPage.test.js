@@ -107,4 +107,22 @@ describe('SurveyPage', async () => {
 
     expect(mockSubmit).toBeCalledWith(buildExpectedSubmitObject())
   })
+
+  it('displays Done text on submit button when inputs are filled', async () => {
+    const mockSubmit = jest.fn(async () => {})
+
+    const { getByTestId } = render(
+      <SurveyPage
+        history={[]}
+        match={{ params: { id: 'foo' } }}
+        submitSurveyResponse={mockSubmit}
+      />,
+      {
+        wrapper: setupProvider(),
+      },
+    )
+    expect(getByTestId('submit').textContent).toBe('Skip')
+    fireEvent.input(getByTestId('question1'), { target: { value: 'fooo' } })
+    expect(getByTestId('submit').textContent).toBe('Done')
+  })
 })
