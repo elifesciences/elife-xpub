@@ -19,6 +19,7 @@ test('test suppressions', async t => {
   const navigationHelper = new NavigationHelper(t)
   const dashboardPage = navigationHelper.getDashboardPage()
   const disclosurePage = navigationHelper.getDisclosurePage()
+  const thankyouPage = navigationHelper.getThankyouPage()
 
   await navigationHelper.login()
   await navigationHelper.openProfile()
@@ -67,7 +68,8 @@ test('test suppressions', async t => {
     })
     .ok()
 
-  await disclosurePage.thankyou()
+  await navigationHelper.getDemographicPage().submitAnswers()
+  await thankyouPage.finish()
   await t
     .expect(dashboard.titles, {
       'data-hj-suppress': '',

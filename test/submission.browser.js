@@ -38,8 +38,7 @@ test('Persistence of form data', async t => {
 
 test('Happy path', async t => {
   const navigationHelper = new NavigationHelper(t)
-  await navigationHelper.skipToDisclosurePage(manuscript)
-  await navigationHelper.fillDisclosurePage()
+  await navigationHelper.fullSubmission(manuscript)
 
   // dashboard
   await t
@@ -158,7 +157,9 @@ test('Ability to progress through the wizard is tied to validation', async t => 
   await disclosurePage.consentDisclosure()
   await disclosurePage.submit()
   await disclosurePage.accept()
-  await disclosurePage.thankyou()
+
+  await navigationHelper.getDemographicPage().submitAnswers() // skip demographic page as there is no validation
+  await navigationHelper.getThankyouPage().finish()
 })
 
 test('Form entries are saved when a user navigates to the next page of the wizard', async t => {
