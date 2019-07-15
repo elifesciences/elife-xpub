@@ -2,6 +2,7 @@ import { ClientFunction, Selector } from 'testcafe'
 import {
   AuthorPage,
   DashboardPage,
+  DemographicPage,
   DisclosurePage,
   EditorsPage,
   FilesPage,
@@ -11,6 +12,7 @@ import {
   profile,
   redirect,
   cookie,
+  ThankyouPage,
 } from '../pageObjects'
 
 import { verifySubmissionId } from './verify'
@@ -27,6 +29,8 @@ class NavigationHelper {
     this.submissionPage = new SubmissionPage(t)
     this.editorsPage = new EditorsPage(t)
     this.disclosurePage = new DisclosurePage(t)
+    this.demographicPage = new DemographicPage(t)
+    this.thankyouPage = new ThankyouPage(t)
   }
 
   getDashboardPage() {
@@ -51,6 +55,14 @@ class NavigationHelper {
 
   getDisclosurePage() {
     return this.disclosurePage
+  }
+
+  getDemographicPage() {
+    return this.demographicPage
+  }
+
+  getThankyouPage() {
+    return this.thankyouPage
   }
 
   async navigateForward() {
@@ -144,7 +156,13 @@ class NavigationHelper {
     await this.disclosurePage.consentDisclosure()
     await this.disclosurePage.submit()
     await this.disclosurePage.accept()
-    await this.disclosurePage.thankyou()
+  }
+
+  async fillDemographicPage() {
+    await this.demographicPage.answerQuestion1()
+    await this.demographicPage.answerQuestion2()
+    await this.demographicPage.answerQuestion3()
+    await this.demographicPage.submitAnswers()
   }
 
   async skipToAuthorPage() {
@@ -174,6 +192,21 @@ class NavigationHelper {
     await this.skipToEditorsPage(manuscript, shortCoverLetter, minimalDetails)
     await this.fillEditorsPage()
     await this.navigateForward()
+  }
+
+  async skipToDemographicPage(manuscript, shortCoverLetter, minimalDetails) {
+    await this.skipToDisclosurePage(
+      manuscript,
+      shortCoverLetter,
+      minimalDetails,
+    )
+    await this.fillDisclosurePage()
+  }
+
+  async fullSubmission(manuscript) {
+    await this.skipToDemographicPage(manuscript)
+    await this.fillDemographicPage()
+    await this.thankyouPage.finish()
   }
 }
 
