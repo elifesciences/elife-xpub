@@ -9,7 +9,7 @@ import { Button, TextField } from '@pubsweet/ui'
 import { Box } from '@rebass/grid'
 import surveyWithGQL from '../graphql/surveyWithGQL'
 
-const SurveyPage = ({ submitSurveyResponse, match, history }) => {
+export const SurveyPage = ({ submitSurveyResponse, match, history }) => {
   const [question1, setQuestion1] = useState('')
   const [question2, setQuestion2] = useState('')
   const [question3, setQuestion3] = useState('')
