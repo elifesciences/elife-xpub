@@ -17,19 +17,14 @@ export class submissionPage {
     'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas semper ante sed volutpat tincidunt.\n\n Nullam rutrum tortor in libero cursus, sit amet dictum ex consectetur. In eget quam ac felis suscipit sodales euismod ac urna. Donec varius mollis sapien ac pharetra. Sed non nunc neque.\n\n Aenean at lorem nisi. Etiam tempor, turpis vitae fringilla sodales, ante felis posuere eros, et imperdiet ante nisi vel tellus.'
   shortText = 'Lorem ipsum'
 
+  title = 'The Relationship Between Lamport Clocks and Interrupts Using Obi'
+
   discussionText = 'Spoke to Bob about another article'
   firstTitle = 'A title'
   secondTitle = 'Another Title'
 
-  async writeTitle(text = this.shortText) {
+  async writeTitle(text = this.title) {
     await this.t.selectText(submission.title).typeText(submission.title, text)
-  }
-
-  async writeTitleIfEmpty(text = this.shortText) {
-    const textContent = await submission.title.value
-    if (!textContent || textContent.length === 0) {
-      await this.writeTitle(text)
-    }
   }
 
   async selectArticleType(option = this.articleType.featureArticle) {

@@ -1,3 +1,4 @@
+import config from 'config'
 import { files } from './'
 
 export class filesPage {
@@ -9,7 +10,9 @@ export class filesPage {
     'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas semper ante sed volutpat tincidunt.\n\n Nullam rutrum tortor in libero cursus, sit amet dictum ex consectetur. In eget quam ac felis suscipit sodales euismod ac urna. Donec varius mollis sapien ac pharetra. Sed non nunc neque.\n\n Aenean at lorem nisi. Etiam tempor, turpis vitae fringilla sodales, ante felis posuere eros, et imperdiet ante nisi vel tellus.'
   shortText = 'Lorem ipsum'
 
-  opts = { timeout: 6000 }
+  sbTimeout = config.get('scienceBeam.timeoutMs')
+  // This timeout should be bigger than the sciencebeam timeout (20s)
+  opts = { timeout: this.sbTimeout + 5000 }
 
   async writeCoverLetter(text = this.shortText) {
     await this.t.typeText(files.editor, text)
