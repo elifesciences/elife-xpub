@@ -15,7 +15,7 @@ elifePipeline {
             // may have been written by a container in which this repository was mounted as a volume
             sh "sudo rm -rf .config"
             // TODO: pull existing docker image if caching is not already effective
-            dockerComposeBuild(commit)
+            dockerComposeBuild(commit, ["parallel": true])
         }
 
         stage 'Project tests', {
