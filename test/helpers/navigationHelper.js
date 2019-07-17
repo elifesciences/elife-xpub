@@ -137,7 +137,7 @@ class NavigationHelper {
   }
 
   async fillDetailsPage(minimal = true) {
-    await this.submissionPage.writeTitleIfEmpty()
+    await this.submissionPage.writeTitle()
     await this.submissionPage.selectArticleType()
     await this.submissionPage.selectSubjectAreas()
     if (!minimal) {
