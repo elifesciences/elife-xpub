@@ -4,7 +4,6 @@ const AWS = require('aws-sdk')
 const SftpClient = require('ssh2-sftp-client')
 
 const S3_API_VERSION = '2006-03-01'
-const sftp = new SftpClient()
 
 const s3 = new AWS.S3({
   ...config.aws.credentials,
@@ -23,6 +22,7 @@ const getStatusPageData = async () => {
   let mecaResponse
 
   try {
+    const sftp = new SftpClient()
     ;[dbResponse, s3Response, mecaResponse] = await Promise.all([
       checkDb(db),
       checkS3(config, s3),
