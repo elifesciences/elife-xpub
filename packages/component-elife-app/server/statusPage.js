@@ -72,4 +72,9 @@ const getStatusPage = async () => {
   return { page, code }
 }
 
-module.exports = getStatusPage
+module.exports = {
+  getStatusPage,
+  goodSymbol,
+  badSymbol,
+  disabledSymbol,
+}

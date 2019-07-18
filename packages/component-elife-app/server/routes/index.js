@@ -1,4 +1,4 @@
-const getStatusPage = require('../statusPage')
+const { getStatusPage } = require('../statusPage')
 
 const nocache = (req, res, next) => {
   res.header('Cache-Control', 'private, no-cache, no-store, must-revalidate')
