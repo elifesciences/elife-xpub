@@ -1,116 +1,49 @@
-jest.mock('@pubsweet/logger')
-jest.mock('@elifesciences/component-elife-app/server/health')
+jest.mock('config')
+const config = require('config')
 
+const realConfig = jest.requireActual('config')
+
+jest.mock('@pubsweet/logger')
+const { goodSymbol, badSymbol, disabledSymbol } = require('../statusPage')
 const express = require('express')
 const supertest = require('supertest')
-const health = require('../health')
+const routes = require('.')
+
+const makeApp = () => {
+  const app = express()
+  routes(app)
+  return supertest(app)
+}
 
 describe('ping route test', () => {
-  let routes
-
-  const makeApp = () => {
-    const app = express()
-    routes(app)
-    return supertest(app)
-  }
-
-  beforeEach(() => {
-    routes = require('.')
-    health.checkDataBase.mockResolvedValue(14)
-    setS3Success(1)
-    setDbSuccess(1)
-  })
-
-  const setS3Success = value => {
-    health.checkS3.mockResolvedValue({ Contents: value })
-  }
-
-  const setS3Error = value => {
-    health.checkS3.mockResolvedValue(new Error('Mock error'))
-  }
-
-  const setDbSuccess = value => {
-    health.checkDataBase.mockResolvedValue(value)
-  }
-
   it('returns success when app ok', async () => {
     const request = makeApp()
     await request.get('/ping').expect(200)
   })
-
-  describe('Response Errors', () => {
-    it('returns failure when an invalid response is returned from the database', async () => {
-      setDbSuccess(0)
-      const request = makeApp()
-      const response = await request.get('/ping').expect(410)
-      expect(response.body).toHaveLength(1)
-      expect(response.body[0]).toEqual('Database Error')
-    })
-
-    it('returns failure when an invalid response is returned from S3', async () => {
-      setS3Success(0)
-      health.checkDataBase.mockResolvedValue(17)
-      const request = makeApp()
-      const response = await request.get('/ping').expect(410)
-      expect(response.body).toHaveLength(1)
-      expect(response.body[0]).toEqual('S3 Error')
-    })
-
-    it('both S3 and database return invalid responses', async () => {
-      setS3Success(0)
-      setDbSuccess(0)
-      const request = makeApp()
-      const response = await request.get('/ping').expect(410)
-      expect(response.body).toHaveLength(2)
-      expect(response.body[0]).toEqual('Database Error')
-      expect(response.body[1]).toEqual('S3 Error')
-    })
-  })
-
-  describe('Connection Errors', () => {
-    it('returns connection error on S3', async () => {
-      setS3Error()
-      const request = makeApp()
-      const response = await request.get('/ping').expect(410)
-      expect(response.body).toHaveLength(1)
-      expect(response.body[0]).toEqual('S3 Error')
-    })
-
-    it('returns connection error on database', async () => {
-      setDbSuccess(new Error('connection Error'))
-      const request = makeApp()
-      const response = await request.get('/ping').expect(410)
-      expect(response.body).toHaveLength(1)
-      expect(response.body[0]).toEqual('Database Error')
-    })
-
-    it('both returns connection errors', async () => {
-      setS3Error()
-      setDbSuccess(new Error('connection Error'))
-      const request = makeApp()
-      const response = await request.get('/ping').expect(410)
-      expect(response.body).toHaveLength(2)
-      expect(response.body[0]).toEqual('Database Error')
-      expect(response.body[1]).toEqual('S3 Error')
-    })
-  })
 })
 
 describe('status route test', () => {
-  let routes
-
-  const makeApp = () => {
-    const app = express()
-    routes(app)
-    return supertest(app)
-  }
-
-  beforeEach(() => {
-    routes = require('.')
+  it('returns 500 when app not ok', async () => {
+    const request = makeApp()
+    const result = await request.get('/status')
+    expect(result.res.text).toContain(`${goodSymbol} General`)
+    expect(result.res.text).toContain(`${goodSymbol} S3`)
+    expect(result.res.text).toContain(`${goodSymbol} Database`)
+    expect(result.res.text).toContain(`${badSymbol} SFTP`)
+    expect(result.status).toBe(500)
   })
 
-  it('returns success when app ok', async () => {
+  it('returns 200 when app not ok', async () => {
+    config.get.mockImplementation(key => {
+      if (key === 'meca.sftp.disableUpload') return true
+      return realConfig.get(key)
+    })
     const request = makeApp()
-    await request.get('/status').expect(200)
+    const result = await request.get('/status')
+    expect(result.res.text).toContain(`${goodSymbol} General`)
+    expect(result.res.text).toContain(`${goodSymbol} S3`)
+    expect(result.res.text).toContain(`${goodSymbol} Database`)
+    expect(result.res.text).toContain(`${disabledSymbol} SFTP`)
+    expect(result.status).toBe(200)
   })
 })
