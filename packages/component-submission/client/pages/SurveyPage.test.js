@@ -11,9 +11,10 @@ const setupProvider = () => ({ children }) => (
 
 // List of question text for assertions
 const questions = {
-  question1: 'Country of residence of Last Author:',
-  question2: 'Gender of Last Author:',
-  question3: 'When did the Last Author become an independent researcher?',
+  question1: "The group leader's country of residence:",
+  question2: "The group leader's gender:",
+  question3:
+    'The year in which the group leader became an independent researcher (e.g., head of their own lab):',
 }
 
 const buildExpectedSubmitObject = (q1 = '', q2 = '', q3 = '') => ({

@@ -15,29 +15,30 @@ export const SurveyPage = ({ submitSurveyResponse, match, history }) => {
   const [question3, setQuestion3] = useState('')
 
   const questions = {
-    question1: 'Country of residence of Last Author:',
-    question2: 'Gender of Last Author:',
-    question3: 'When did the Last Author become an independent researcher?',
+    question1: "The group leader's country of residence:",
+    question2: "The group leader's gender:",
+    question3:
+      'The year in which the group leader became an independent researcher (e.g., head of their own lab):',
   }
 
   return (
     <Box mx="25%" width={1 / 2}>
-      <FormH2>Help us reduce bias</FormH2>
+      <FormH2>Help us to investigate implicit bias</FormH2>
       <Paragraph.Writing>
-        Answering the following questions about the last author of your
-        submission (i.e. group leader or principal investigator) will help our
-        efforets to reduce bias in our submission and peer review process.
-      </Paragraph.Writing>
-      <Paragraph.Writing>
-        Your answers will <u>not</u> be shared with the Editors handling the
-        papaer and will be anonymised when we analyse the data we collect.
+        Please help us to learn more about the demographic characteristics of
+        submissions to eLife by providing information about the{' '}
+        <b>group leader</b> who has <b>principal responsibility for the work</b>{' '}
+        (e.g., the PI or project leader of the lab in which the majority of the
+        work was conducted). Your answers will not be disclosed to the editors
+        (or reviewers) of your submission, but aggregate data will inform the
+        research we undertake into the submission and review process.
       </Paragraph.Writing>
       <Box mb={3}>
         <TextField
           data-test-id="survey-question-1"
           label={questions.question1}
           onChange={e => setQuestion1(e.target.value)}
-          placeholder="Enter text here"
+          placeholder="Enter here"
           value={question1}
         />
       </Box>
@@ -46,7 +47,7 @@ export const SurveyPage = ({ submitSurveyResponse, match, history }) => {
           data-test-id="survey-question-2"
           label={questions.question2}
           onChange={e => setQuestion2(e.target.value)}
-          placeholder="Enter text here"
+          placeholder="Enter here"
           value={question2}
         />
       </Box>
@@ -55,7 +56,7 @@ export const SurveyPage = ({ submitSurveyResponse, match, history }) => {
           data-test-id="survey-question-3"
           label={questions.question3}
           onChange={e => setQuestion3(e.target.value)}
-          placeholder="Enter text here"
+          placeholder="Enter here"
           value={question3}
         />
       </Box>
