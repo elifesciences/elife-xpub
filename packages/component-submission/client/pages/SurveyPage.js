@@ -1,13 +1,18 @@
 import React, { useState } from 'react'
 import { compose } from 'recompose'
-
+import styled from 'styled-components'
 import {
   FormH2,
   Paragraph,
+  Bold,
 } from '@elifesciences/component-elife-ui/client/atoms'
 import { Button, TextField } from '@pubsweet/ui'
 import { Box } from '@rebass/grid'
 import surveyWithGQL from '../graphql/surveyWithGQL'
+
+const FormH2WithMargin = styled(FormH2)`
+  margin-top: 120px;
+`
 
 export const SurveyPage = ({ submitSurveyResponse, match, history }) => {
   const [question1, setQuestion1] = useState('')
@@ -23,15 +28,19 @@ export const SurveyPage = ({ submitSurveyResponse, match, history }) => {
 
   return (
     <Box mx="25%" width={1 / 2}>
-      <FormH2>Help us to investigate implicit bias</FormH2>
+      <FormH2WithMargin>Help us to investigate implicit bias</FormH2WithMargin>
       <Paragraph.Writing>
         Please help us to learn more about the demographic characteristics of
         submissions to eLife by providing information about the{' '}
-        <b>group leader</b> who has <b>principal responsibility for the work</b>{' '}
-        (e.g., the PI or project leader of the lab in which the majority of the
-        work was conducted). Your answers will not be disclosed to the editors
-        (or reviewers) of your submission, but aggregate data will inform the
-        research we undertake into the submission and review process.
+        <Bold>group leader</Bold> who has{' '}
+        <Bold>principal responsibility for the work</Bold> (e.g., the PI or
+        project leader of the lab in which the majority of the work was
+        conducted).
+      </Paragraph.Writing>
+      <Paragraph.Writing>
+        Your answers will <u>not</u> be disclosed to the editors (or reviewers)
+        of your submission, but aggregate data will inform the research we
+        undertake into the submission and review process.
       </Paragraph.Writing>
       <Box mb={3}>
         <TextField
