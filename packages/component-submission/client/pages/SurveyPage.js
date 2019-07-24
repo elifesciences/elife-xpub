@@ -14,6 +14,10 @@ const FormH2WithMargin = styled(FormH2)`
   margin-top: 120px;
 `
 
+const ExtraSpacing = styled.div`
+  margin-bottom: 48px;
+`
+
 export const SurveyPage = ({ submitSurveyResponse, match, history }) => {
   const [question1, setQuestion1] = useState('')
   const [question2, setQuestion2] = useState('')
@@ -37,11 +41,14 @@ export const SurveyPage = ({ submitSurveyResponse, match, history }) => {
         project leader of the lab in which the majority of the work was
         conducted).
       </Paragraph.Writing>
-      <Paragraph.Writing>
-        Your answers will <u>not</u> be disclosed to the editors (or reviewers)
-        of your submission, but aggregate data will inform the research we
-        undertake into the submission and review process.
-      </Paragraph.Writing>
+      <ExtraSpacing>
+        <Paragraph.Writing>
+          Your answers will <u>not</u> be disclosed to the editors (or
+          reviewers) of your submission, but aggregate data will inform the
+          research we undertake into the submission and review process.
+        </Paragraph.Writing>
+      </ExtraSpacing>
+
       <Box mb={3}>
         <TextField
           data-test-id="survey-question-1"
