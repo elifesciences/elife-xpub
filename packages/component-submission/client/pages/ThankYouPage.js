@@ -14,6 +14,10 @@ import {
 
 import thankYouWithGQL from '../graphql/thankYouWithGQL'
 
+const H1WithMargin = styled(H1)`
+  margin-top: 120px;
+`
+
 const CenteredContent = styled(Box)`
   text-align: center;
 `
@@ -34,7 +38,7 @@ export class ThankYouPageComponent extends React.Component {
     const { data } = this.props
     return (
       <CenteredContent mx="auto" width={[1, 1, 1, 600]}>
-        <H1>Thank you</H1>
+        <H1WithMargin>Thank you</H1WithMargin>
         <Paragraph.Reading data-hj-suppress="" data-test-id="title">
           Your submission, &quot;
           {data.manuscript.meta.title}
