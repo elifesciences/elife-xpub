@@ -30,8 +30,8 @@ const ImageCredit = styled(Box)`
   }
 `
 
-const CreditedImage = ({ image }) => (
-  <ImageContainer>
+const CreditedImage = ({ image, ...otherProps }) => (
+  <ImageContainer {...otherProps}>
     <ImageBlock image={image} />
     <ImageCredit py={2}>
       Illustration by <a href="http://www.davidebonazzi.com/">Davide Bonazzi</a>
