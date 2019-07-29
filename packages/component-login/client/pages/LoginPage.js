@@ -10,7 +10,7 @@ import {
   ButtonLink,
   Paragraph,
   NativeLink,
-  ImageWrapper,
+  CreditedImage,
   FooterPrivacy,
 } from '@elifesciences/component-elife-ui/client/atoms'
 import { TwoColumnLayout } from '@elifesciences/component-elife-ui/client/global'
@@ -165,7 +165,7 @@ class LoginPage extends React.Component {
                 </Flex>
               )}
             </Box>
-            <ImageWrapper image="/assets/welcome.jpg" ml="auto" />
+            <CreditedImage image="/assets/welcome.jpg" ml="auto" />
           </TwoColumnLayout>
           <Box mx={-2}>
             <FooterPrivacy customStyle={footerStyle} />

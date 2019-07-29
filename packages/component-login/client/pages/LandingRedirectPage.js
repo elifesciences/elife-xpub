@@ -6,7 +6,7 @@ import media from '@elifesciences/component-elife-ui/client/global/layout/media'
 import {
   Paragraph,
   ButtonLink,
-  ImageWrapper,
+  CreditedImage,
   FooterPrivacy,
 } from '@elifesciences/component-elife-ui/client/atoms'
 import { TwoColumnLayout } from '@elifesciences/component-elife-ui/client/global'
@@ -43,7 +43,7 @@ const LandingRedirect = () => (
           continue
         </ButtonLink>
       </Box>
-      <ImageWrapper image="/assets/redirect.jpg" ml="auto" />
+      <CreditedImage image="/assets/redirect.jpg" ml="auto" />
     </TwoColumnLayout>
     <FooterPrivacy customStyle={footerStyle} />
   </RedirectLayout>

@@ -3,7 +3,7 @@ import { Box } from '@rebass/grid'
 import { TwoColumnLayout } from '@elifesciences/component-elife-ui/client/global'
 import {
   Paragraph,
-  ImageWrapper,
+  CreditedImage,
   FooterPrivacy,
   NativeLink,
   SmallCenterer,
@@ -13,7 +13,7 @@ import { H1, Button } from '@pubsweet/ui'
 const NewSubmitterScreen = ({ createNewSubmission }) => (
   <SmallCenterer>
     <TwoColumnLayout mb={[0, 0, 5]}>
-      <ImageWrapper image="/assets/before-you-start.jpg" mr="auto" />
+      <CreditedImage image="/assets/before-you-start.jpg" mr="auto" />
       <Box>
         <Box mb={4}>
           <H1>Before you start</H1>
