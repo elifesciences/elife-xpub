@@ -17,6 +17,8 @@ IGNORE="( \
   '428a6b06-1120-4970-a0dc-3c48102d46ad', \
   '785b63b5-2565-4994-b290-696e10125af3', \
   '186c16a6-fe8f-4ca2-bba9-f5725072bbb7', \
+  'dd77c28a-4b35-49d0-9f73-5c647c2d55f8', \
+  '28348cde-ed78-4a6b-86ab-a73624636df5', \
   '115843bc-7ce8-4fa3-9511-f1fa42ac08fa' \
 )"
 
@@ -35,9 +37,15 @@ SQL_STATUS="\"SELECT status, count(*) as num FROM manuscript WHERE id NOT IN ${I
 SQL_PENDING="\"SELECT ${COLS} FROM manuscript WHERE id NOT IN ${IGNORE} AND status='MECA_EXPORT_PENDING' ORDER BY updated\""
 SQL_SUCCEEDED="\"SELECT ${COLS} FROM manuscript WHERE id NOT IN ${IGNORE} AND status='MECA_EXPORT_SUCCEEDED' ORDER BY updated\""
 SQL_FAILED="\"SELECT ${COLS} FROM manuscript WHERE id NOT IN ${IGNORE} AND status='MECA_IMPORT_FAILED' ORDER BY updated\""
+SQL_SURVEY="\"select m.count as complete, t.count as total, concat(100 * m.count / t.count, '%') as response_rate from (select count(*) from survey_response where JSONB(response->'answers'->>0)->'answer' <> '\\\"\\\"' ) as m, (select count(*) from survey_response) as t ;  \""
 
 echo "<h2>Today's Errors</h2>"
 ssh elife@${HOST} grep \"error\" /srv/elife-xpub/var/logs/xpub.log
+
+echo
+echo "<h2>Survey</h2>"
+echo
+echo "<pre>" ; ${CMD} "${SQL_SURVEY}"; echo "</pre>"
 
 echo
 echo "<h2>Status Summary</h2>"
@@ -65,8 +73,9 @@ declare -i day num
 echo "<hr>"
 echo "<h2>Statistics (last 90 days)</h2>"
 echo "<pre>"
+echo Skipped
 start=7
-end=97
+end=0
 for ((day=start; day<=end; day++))
 do
   SQL_STATS_DATA="\"select date_part('isodow', t.date) as dow, t.date, t.total, t.submitted_in_7d, 100*t.submitted_in_7d / t.total as percent \
