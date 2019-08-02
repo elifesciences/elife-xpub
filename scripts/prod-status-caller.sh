@@ -13,8 +13,10 @@ echo "Content-Type: text/html" >> ${REPORT}
 
 echo "<b>This may contain sensitive information</b>" >> ${REPORT}
 
+echo Generating file...
 . $(dirname $0)/prod-status.sh >> ${REPORT}
 
+echo Mailing file...
 echo "<pre>This file was generated on $(hostname) at $(date)" >> ${REPORT}
 echo "cwd used: $(pwd)" >> ${REPORT}
 echo "Script used: $0" >> ${REPORT}
