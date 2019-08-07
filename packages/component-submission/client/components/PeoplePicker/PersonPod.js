@@ -113,20 +113,21 @@ class PersonPod extends React.Component {
     } = this.props
 
     let keywordList
+    /* eslint-disable react/no-array-index-key */
     const keywords = [].concat(focuses).concat(expertises)
     if (isKeywordClickable) {
-      keywordList = keywords.map(keyword => (
+      keywordList = keywords.map((keyword, index) => (
         <SmallAction
           data-test-id="clickable-keyword"
-          key={keyword}
+          key={`${keyword}-${index}`}
           onClick={() => onKeywordClick(keyword)}
         >
           {keyword}
         </SmallAction>
       ))
     } else {
-      keywordList = keywords.map(keyword => (
-        <span data-test-id="non-clickable-keyword" key={keyword}>
+      keywordList = keywords.map((keyword, index) => (
+        <span data-test-id="non-clickable-keyword" key={`${keyword}-${index}`}>
           {keyword}
         </span>
       ))

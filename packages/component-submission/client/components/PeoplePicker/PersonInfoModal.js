@@ -66,13 +66,14 @@ PersonInfoModal.propTypes = {
   open: PropTypes.bool.isRequired,
   maxSelection: PropTypes.number,
   name: personNamePropType.isRequired,
-  institution: affiliationPropType.isRequired,
+  institution: affiliationPropType,
   focuses: focusesPropType.isRequired,
   expertises: expertisesPropType.isRequired,
 }
 
 PersonInfoModal.defaultProps = {
   maxSelection: Infinity,
+  institution: '',
 }
 
 export default PersonInfoModal
