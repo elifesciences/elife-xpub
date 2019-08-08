@@ -9,8 +9,12 @@ CMD="ssh elife@${HOST} ${REMOTE_CMD}"
 
 # Commands to execute
 SQL="\"SELECT
+ manuscript_id,
+ meta->'title',
  UPPER(TEXT(JSONB(response->'answers'->>0)->'answer')) as q1,
  UPPER(TEXT(JSONB(response->'answers'->>1)->'answer')) as q2,
  UPPER(TEXT(JSONB(response->'answers'->>2)->'answer')) as q3
- from survey_response \""
+ from survey_response, manuscript
+ where manuscript_id = manuscript.id \""
+
 ${CMD} "${SQL}"
