@@ -4,8 +4,8 @@ WORKDIR /opt
 
 MAINTAINER Peter East <petereast+pgp@pm.me>
 
-COPY package.json .
-RUN ["npm", "i"]
+COPY package.json yarn.lock ./
+RUN ["yarn", "install"]
 
 COPY tsconfig.json .
 COPY codegen-docker.yml .
