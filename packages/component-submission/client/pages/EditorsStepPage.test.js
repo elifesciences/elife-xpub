@@ -269,12 +269,12 @@ describe('EditorsPage component', () => {
       expect(
         wrapper
           .instance()
-          .calculateNewSuggestedReviewersFieldValue(mockReviewers),
+          .calculateNewSuggestedReviewersFieldValue(mockReviewers, 3, 0),
       ).toHaveLength(3)
       expect(
         wrapper
           .instance()
-          .calculateNewSuggestedReviewersFieldValue(mockReviewers)[2],
+          .calculateNewSuggestedReviewersFieldValue(mockReviewers, 3, 0)[2],
       ).toEqual({ name: '', email: '' })
     })
     it('returns unchanged if max reviewers is met', () => {
@@ -287,13 +287,23 @@ describe('EditorsPage component', () => {
       expect(
         wrapper
           .instance()
-          .calculateNewSuggestedReviewersFieldValue(mockReviewers),
+          .calculateNewSuggestedReviewersFieldValue(
+            mockReviewers,
+            EDITOR_LIMITS.suggestedReviewers.max,
+            EDITOR_LIMITS.suggestedReviewers.min,
+          ),
       ).toEqual(mockReviewers)
     })
     it('returns min + 1 row if passed empty reviewers array', () => {
       const wrapper = makeWrapper()
       expect(
-        wrapper.instance().calculateNewSuggestedReviewersFieldValue([]),
+        wrapper
+          .instance()
+          .calculateNewSuggestedReviewersFieldValue(
+            [],
+            EDITOR_LIMITS.suggestedReviewers.max,
+            EDITOR_LIMITS.suggestedReviewers.min,
+          ),
       ).toHaveLength(EDITOR_LIMITS.suggestedReviewers.min + 1)
     })
   })

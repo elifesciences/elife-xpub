@@ -104,38 +104,43 @@ export class EditorsStepPageComponent extends React.Component {
     return blankRows
   }
 
-  calculateNewSuggestedReviewersFieldValue = reviewers => {
-    const MAX_REVIEWERS = EDITOR_LIMITS.suggestedReviewers.max
-    const MIN_REVIEWERS = EDITOR_LIMITS.suggestedReviewers.min
+  calculateNewSuggestedReviewersFieldValue = (
+    reviewers,
+    maxOptions,
+    minOptions,
+  ) => {
     const newReviewers = cloneDeep(reviewers)
 
     const trailingBlankRows = this.getTrailingBlankReviewerCount(reviewers)
-
     if (trailingBlankRows === 0) {
-      if (reviewers.length < MAX_REVIEWERS) {
+      if (reviewers.length < maxOptions) {
         newReviewers.push({ name: '', email: '' })
       }
     } else if (trailingBlankRows > 1) {
       const rowsToRemove = trailingBlankRows - 1
-      if (reviewers.length - rowsToRemove >= MIN_REVIEWERS) {
+      if (reviewers.length - rowsToRemove >= minOptions) {
         newReviewers.splice(newReviewers.length - rowsToRemove, rowsToRemove)
       }
     }
 
     return newReviewers
   }
-  handleSuggestedReviewersChanged = event => {
+  handleReviewersChanged = (fieldName, event) => {
     this.props.handleChange(event)
     // defer the execution of the function until the default change has been
     // handled so we're operating on the updated
     // "this.props.values.suggestedReviewers"
     this.setState({}, () => {
-      const reviewers = this.props.values.suggestedReviewers
+      const reviewers = this.props.values[fieldName]
 
       if (reviewers) {
         this.props.setFieldValue(
-          'suggestedReviewers',
-          this.calculateNewSuggestedReviewersFieldValue(reviewers),
+          fieldName,
+          this.calculateNewSuggestedReviewersFieldValue(
+            reviewers,
+            EDITOR_LIMITS[fieldName].max,
+            EDITOR_LIMITS[fieldName].min,
+          ),
         )
       }
     })
@@ -307,12 +312,16 @@ export class EditorsStepPageComponent extends React.Component {
                 <ValidatedField
                   label={`Reviewer ${index + 1} name`}
                   name={`suggestedReviewers.${index}.name`}
-                  onChange={this.handleSuggestedReviewersChanged}
+                  onChange={event =>
+                    this.handleReviewersChanged('suggestedReviewers', event)
+                  }
                 />
                 <ValidatedField
                   label={`Reviewer ${index + 1} email`}
                   name={`suggestedReviewers.${index}.email`}
-                  onChange={this.handleSuggestedReviewersChanged}
+                  onChange={event =>
+                    this.handleReviewersChanged('suggestedReviewers', event)
+                  }
                   type="email"
                 />
               </TwoColumnLayout>
@@ -327,30 +336,46 @@ export class EditorsStepPageComponent extends React.Component {
             roleName="reviewer"
           >
             <FormH3>Exclude Reviewers</FormH3>
-
             <TwoColumnLayout bottomSpacing={false}>
               <ValidatedField
                 label="Excluded reviewer 1 name"
                 name="opposedReviewers.0.name"
+                onChange={event =>
+                  this.handleReviewersChanged('opposedReviewers', event)
+                }
               />
               <ValidatedField
                 label="Excluded reviewer 1 email"
                 name="opposedReviewers.0.email"
+                onChange={event =>
+                  this.handleReviewersChanged('opposedReviewers', event)
+                }
                 type="email"
               />
             </TwoColumnLayout>
-            <TwoColumnLayout bottomSpacing={false}>
-              <ValidatedField
-                label="Excluded reviewer 2 name"
-                name="opposedReviewers.1.name"
-              />
-              <ValidatedField
-                label="Excluded reviewer 2 email"
-                name="opposedReviewers.1.email"
-                type="email"
-              />
-            </TwoColumnLayout>
-
+            {values.opposedReviewers.map(
+              (_, index) =>
+                index > 0 && (
+                  // eslint-disable-next-line react/no-array-index-key
+                  <TwoColumnLayout bottomSpacing={false} key={index}>
+                    <ValidatedField
+                      label={`Excluded reviewer ${index + 1} name`}
+                      name={`opposedReviewers.${index}.name`}
+                      onChange={event =>
+                        this.handleReviewersChanged('opposedReviewers', event)
+                      }
+                    />
+                    <ValidatedField
+                      label={`Excluded reviewer ${index + 1} email`}
+                      name={`opposedReviewers.${index}.email`}
+                      onChange={event =>
+                        this.handleReviewersChanged('opposedReviewers', event)
+                      }
+                      type="email"
+                    />
+                  </TwoColumnLayout>
+                ),
+            )}
             <ValidatedField
               component={Textarea}
               label="Reason for exclusion"
