@@ -10,6 +10,7 @@ export const EDITOR_LIMITS = {
   suggestedReviewingEditors: { min: 2, max: 6 },
   opposedReviewingEditors: { min: 0, max: 2 },
   suggestedReviewers: { min: 0, max: 6 },
+  opposedReviewers: { min: 0, max: 2 },
 }
 
 export const errorMessageMapping = {

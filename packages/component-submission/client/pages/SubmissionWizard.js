@@ -142,7 +142,6 @@ export const SubmissionWizard = ({
             }
           })
         }
-
         return (
           <Form data-test-id="submission-wizard-form">
             <SubmissionSave
