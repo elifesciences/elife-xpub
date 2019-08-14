@@ -159,6 +159,13 @@ describe('Manuscripts', () => {
         { name: 'Reviewer 4', email: 'reviewer4@mail.com' },
         { name: '', email: '' },
       ]
+      input.opposedReviewers = [
+        { name: 'Reviewer 5', email: 'reviewer5@mail.com' },
+        { name: '', email: '' },
+        { name: 'Reviewer 6', email: 'reviewer6@mail.com' },
+        { name: '', email: '' },
+      ]
+
       await submitManuscript(mockedExportFn)(
         {},
         { data: input },
@@ -166,12 +173,24 @@ describe('Manuscripts', () => {
       )
 
       const manuscript = await Manuscript.find(id, userId)
-      const team = manuscript.teams.find(t => t.role === 'suggestedReviewer')
-      expect(team.teamMembers.map(member => member.meta)).toEqual([
-        { name: 'Reviewer 1', email: 'reviewer1@mail.com' },
-        { name: 'Reviewer 2', email: 'reviewer2@mail.com' },
-        { name: 'Reviewer 3', email: 'reviewer3@mail.com' },
-        { name: 'Reviewer 4', email: 'reviewer4@mail.com' },
+      const suggestedReviewers = manuscript.teams.find(
+        t => t.role === 'suggestedReviewer',
+      )
+      expect(suggestedReviewers.teamMembers.map(member => member.meta)).toEqual(
+        [
+          { name: 'Reviewer 1', email: 'reviewer1@mail.com' },
+          { name: 'Reviewer 2', email: 'reviewer2@mail.com' },
+          { name: 'Reviewer 3', email: 'reviewer3@mail.com' },
+          { name: 'Reviewer 4', email: 'reviewer4@mail.com' },
+        ],
+      )
+
+      const opposedReviewers = manuscript.teams.find(
+        t => t.role === 'opposedReviewer',
+      )
+      expect(opposedReviewers.teamMembers.map(member => member.meta)).toEqual([
+        { name: 'Reviewer 5', email: 'reviewer5@mail.com' },
+        { name: 'Reviewer 6', email: 'reviewer6@mail.com' },
       ])
     })
 
