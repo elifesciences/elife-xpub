@@ -61,4 +61,24 @@ describe('parseInputToFormData', () => {
       secondCosubmissionTitle: 'e',
     })
   })
+
+  it('adds an empty suggested reviewer if empty', () => {
+    const mockInput = {
+      suggestedReviewers: [],
+    }
+
+    expect(parseInputToFormData(mockInput).suggestedReviewers).toEqual([
+      { name: '', email: '' },
+    ])
+  })
+
+  it("doesn't add an empty suggested reviewer if empty", () => {
+    const mockInput = {
+      suggestedReviewers: [{ name: 'Reviewer 1', email: 'reviewer1@mail.com' }],
+    }
+
+    expect(parseInputToFormData(mockInput).suggestedReviewers).toEqual([
+      { name: 'Reviewer 1', email: 'reviewer1@mail.com' },
+    ])
+  })
 })
