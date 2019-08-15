@@ -14,7 +14,7 @@ export function parseSuggestedReviewers({ suggestedReviewers }) {
   if (suggestedReviewers !== undefined) {
     return suggestedReviewers.length === 0
       ? { suggestedReviewers: [{ name: '', email: '' }] }
-      : suggestedReviewers
+      : { suggestedReviewers }
   }
 
   return {}
