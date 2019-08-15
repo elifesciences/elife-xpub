@@ -33,10 +33,26 @@ export function parseEditorSuggestionsData(values) {
   return returnObject
 }
 
+export function parseReviewersData({ suggestedReviewers, opposedReviewers }) {
+  const itemNotBlank = item => item.name + item.email !== ''
+  const filtered = {}
+
+  if (suggestedReviewers !== undefined) {
+    filtered.suggestedReviewers = suggestedReviewers.filter(itemNotBlank)
+  }
+
+  if (opposedReviewers !== undefined) {
+    filtered.opposedReviewers = opposedReviewers.filter(itemNotBlank)
+  }
+
+  return filtered
+}
+
 function parseFormToOutputData(formValues) {
   return {
     ...omitDeep(formValues, FORM_FIELDS_TO_OMIT),
     ...parseCosubmissionFormData(formValues),
+    ...parseReviewersData(formValues),
     ...parseEditorSuggestionsData(formValues),
   }
 }

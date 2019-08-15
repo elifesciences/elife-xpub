@@ -1,5 +1,6 @@
 import parseFormToOutputData, {
   parseCosubmissionFormData,
+  parseReviewersData,
   parseEditorSuggestionsData,
 } from './parseFormToOutputData'
 
@@ -36,6 +37,38 @@ describe('parseCosubmissionFormData', () => {
     expect(cosubmission).toHaveLength(2)
     expect(cosubmission[0]).toEqual('bar')
     expect(cosubmission[1]).toEqual('foo')
+  })
+})
+
+describe('parseReviewersData', () => {
+  it('removes empty suggested reviewers', () => {
+    const values = {
+      suggestedReviewers: [
+        { name: 'Reviewer 1', email: 'reviewer1@mail.com' },
+        { name: '', email: '' },
+        { name: 'Reviewer 2', email: 'reviewer2@mail.com' },
+      ],
+    }
+
+    expect(parseReviewersData(values).suggestedReviewers).toEqual([
+      { name: 'Reviewer 1', email: 'reviewer1@mail.com' },
+      { name: 'Reviewer 2', email: 'reviewer2@mail.com' },
+    ])
+  })
+
+  it('removes empty opposed reviewers', () => {
+    const values = {
+      opposedReviewers: [
+        { name: 'Reviewer 1', email: 'reviewer1@mail.com' },
+        { name: '', email: '' },
+        { name: 'Reviewer 2', email: 'reviewer2@mail.com' },
+      ],
+    }
+
+    expect(parseReviewersData(values).opposedReviewers).toEqual([
+      { name: 'Reviewer 1', email: 'reviewer1@mail.com' },
+      { name: 'Reviewer 2', email: 'reviewer2@mail.com' },
+    ])
   })
 })
 
