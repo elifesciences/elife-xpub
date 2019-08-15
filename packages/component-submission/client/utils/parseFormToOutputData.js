@@ -50,9 +50,9 @@ export function parseReviewersData({ suggestedReviewers, opposedReviewers }) {
 
 function parseFormToOutputData(formValues) {
   return {
+    ...parseReviewersData(formValues),
     ...omitDeep(formValues, FORM_FIELDS_TO_OMIT),
     ...parseCosubmissionFormData(formValues),
-    ...parseReviewersData(formValues),
     ...parseEditorSuggestionsData(formValues),
   }
 }
