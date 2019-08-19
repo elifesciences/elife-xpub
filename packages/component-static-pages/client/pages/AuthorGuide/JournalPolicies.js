@@ -89,7 +89,44 @@ const JournalPolicies = props => (
       .
     </Paragraph.Reading>
 
+<Paragraph.Reading>
+        For work involving animal research, authors should follow the{' '}
+        <NativeLink
+          href="http://www.plosbiology.org/article/info:doi/10.1371/journal.pbio.1000412"
+          target="_blank"
+        >
+          ARRIVE
+        </NativeLink>{' '} 
+        guidelines (and state clearly in the Materials and Methods whether animals were maintained 
+         singly or in groups).
+        </Paragraph.Reading>
+
     <Paragraph.Reading>
+      For human subjects research informed consent must have been obtained (or
+      the reason for lack of consent explained). When this work includes
+      identifying, or potentially identifying, information, authors must also
+      download the{' '}
+      <NativeLink
+        href="https://elife-cdn.s3.amazonaws.com/author-guide/elife_Consent_to_Publish_Form.pdf"
+        target="_blank"
+      >
+        Consent Form for Publication in eLife
+      </NativeLink>{' '}
+      (PDF), which the individual, parent, or guardian must sign once they have
+      read the article and been informed about the terms of the{' '}
+      <NativeLink
+        href="https://creativecommons.org/licenses/by/4.0/"
+        target="_blank"
+      >
+        Creative Commons Attribution license
+      </NativeLink>{' '}
+      (form and guidance based on those developed by PLOS). The signed consent
+      form should not be submitted alongside the article, but authors should
+      file it with the individual&apos;s case notes and the ethics statement
+      should state that consent authorisation for publication has been obtained.
+    </Paragraph.Reading>
+
+<Paragraph.Reading>
       For clinical trials, eLife follows the{' '}
       <NativeLink
         href="http://www.icmje.org/about-icmje/faqs/clinical-trials-registration/"
@@ -119,31 +156,6 @@ const JournalPolicies = props => (
         flow diagram
       </NativeLink>{' '}
       with their submission.
-    </Paragraph.Reading>
-
-    <Paragraph.Reading>
-      For human subjects research informed consent must have been obtained (or
-      the reason for lack of consent explained). When this work includes
-      identifying, or potentially identifying, information, authors must also
-      download the{' '}
-      <NativeLink
-        href="https://elife-cdn.s3.amazonaws.com/author-guide/elife_Consent_to_Publish_Form.pdf"
-        target="_blank"
-      >
-        Consent Form for Publication in eLife
-      </NativeLink>{' '}
-      (PDF), which the individual, parent, or guardian must sign once they have
-      read the article and been informed about the terms of the{' '}
-      <NativeLink
-        href="https://creativecommons.org/licenses/by/4.0/"
-        target="_blank"
-      >
-        Creative Commons Attribution license
-      </NativeLink>{' '}
-      (form and guidance based on those developed by PLOS). The signed consent
-      form should not be submitted alongside the article, but authors should
-      file it with the individual&apos;s case notes and the ethics statement
-      should state that consent authorisation for publication has been obtained.
     </Paragraph.Reading>
 
     <H2>Authorship</H2>
