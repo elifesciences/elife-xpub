@@ -6,6 +6,7 @@ import {
   NativeLink,
 } from '@elifesciences/component-elife-ui/client/atoms'
 import CalloutTextBox from '../../components/CalloutTextBox'
+import List from '../../components/List'
 
 const Types = props => (
   <React.Fragment>
@@ -276,6 +277,50 @@ const Types = props => (
         <Link to="/author-guide/full">Full Submission</Link> section.
       </Paragraph.Reading>
     </CalloutTextBox>
+
+<h2>Special Issues</h2>
+
+<Paragraph.Reading>
+  eLife has Special Issues on timely and important topics, which are overseen by one 
+  or more eLife editors and external Guest Editors when appropriate. 
+  </Paragraph.Reading>
+
+<Paragraph.Reading>
+    At the point of submission, authors should indicate in their Cover Letter that they 
+    want their work to be considered as part of a Special Issue, citing the relevant title 
+    as indicated below. Submissions are assessed using the same criteria as other eLife 
+    submissions. Authors can submit using the Research Articles, Short Reports, Tools and 
+    Resources and Research Advances article types. The eLife editors may wish to commission 
+    Review Articles as part of a Special Issue.
+    </Paragraph.Reading>
+
+<Paragraph.Reading>
+      We welcome submissions on a rolling basis, although submissions received after the closing 
+      date of a call for papers may not be considered for the Special Issue launch.
+      </Paragraph.Reading>
+
+<Paragraph.Reading>
+        Special Issues open for submissions:
+          <List.Unordered>
+            <li>
+            <NativeLink href="https://elifesciences.org/inside-elife/d81c2cd9/special-issue-call-for-papers-at-the-interface-of-cancer-biology-and-immunology"
+target="_blank">
+  Discovery and Translation of Cancer Immunology
+  </NativeLink>
+            </li>
+            </List.Unordered>
+        </Paragraph.Reading>
+<Paragraph.Reading>
+        Other Special Issues (submissions welcome on a rolling basis):
+          <List.Unordered>
+            <li>
+            <NativeLink href="https://elifesciences.org/collections/e8dda407/mechanistic-microbiome-studies-a-special-issue"
+target="_blank">
+  Mechanistic Microbiome Studies 
+  </NativeLink>
+            </li>
+            </List.Unordered>
+        </Paragraph.Reading>
   </React.Fragment>
 )
 
