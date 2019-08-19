@@ -278,7 +278,7 @@ const Types = props => (
       </Paragraph.Reading>
     </CalloutTextBox>
 
-<h2>Special Issues</h2>
+<H2>Special Issues</H2>
 
 <Paragraph.Reading>
   eLife has Special Issues on timely and important topics, which are overseen by one 
