@@ -73,7 +73,7 @@ const Revised = props => (
       and strains, cell lines, reagents, and software that are essential to
       reproduce the results presented. Please download and complete{' '}
       <NativeLink
-        href="https://cdn.elifesciences.org/author-guide/key_resources_table.xlsx"
+        href="https://elife-cdn.s3.amazonaws.com/author-guide/elifeKRTtemplatev2.docx"
         target="_blank"
       >
         this template

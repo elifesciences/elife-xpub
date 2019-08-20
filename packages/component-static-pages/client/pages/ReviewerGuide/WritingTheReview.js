@@ -34,14 +34,13 @@ const WritingTheReview = props => (
     <H2>Your Review</H2>
 
     <Paragraph.Reading>
-      You will be asked for a general assessment and a summary of any
-      substantive concerns (ideally in fewer than 500 words but longer reviews
-      can also be submitted), and a list of minor comments. If you want to state
-      that something is already known, and either contradicts or duplicates a
-      major conclusion of the manuscript, please support this with appropriate
-      references. When constructing your comments, you should follow these
-      important eLife editorial principles and justify any requests for
-      additional work:
+      You will be asked for a general assessment of the work (ideally in fewer than 100 words), 
+      a numbered summary of any substantive concerns (ideally in fewer than 500 words but longer
+      reviews can also be submitted), and a list of any minor comments or corrections. If you 
+      want to state that something is already known, and either contradicts or duplicates a 
+      major conclusion of the manuscript, please support this with appropriate references. 
+      When constructing your comments, you should follow these important eLife editorial principles 
+      and justify any requests for additional work:
     </Paragraph.Reading>
 
     <List.Ordered>
@@ -103,11 +102,10 @@ const WritingTheReview = props => (
     </Paragraph.Reading>
 
     <Paragraph.Reading>
-      The main part of the review consists of a general assessment and a summary
-      of any substantive concerns (in fewer than 500 words), and a list of minor
-      comments. Please be aware that in the event of acceptance, the decision
-      letter containing the integrated review comments will be published
-      (subject to author approval).
+      The main part of the review consists of a general assessment (ideally in fewer than 100 words), 
+      a numbered summary of any substantive concerns (ideally in fewer than 500 words), and a list of 
+      any minor comments or corrections. Please be aware that in the event of acceptance, the decision 
+      letter containing the integrated review comments will be published.
     </Paragraph.Reading>
   </React.Fragment>
 )
