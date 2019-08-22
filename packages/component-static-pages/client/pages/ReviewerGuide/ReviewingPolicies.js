@@ -13,7 +13,7 @@ const ReviewingPolicies = props => (
 
     <Paragraph.Reading>
       We encourage our reviewers to familiarise themselves with{' '}
-      <Link to="/reviewer-guide/reviewing-policies">
+      <Link to="author-guide/journal-policies">
         eLife&apos;s journal policies
       </Link>{' '}
       before the review process commences.
