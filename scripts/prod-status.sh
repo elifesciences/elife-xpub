@@ -9,6 +9,7 @@ HOST=prod--xpub--1.elifesciences.org
 
 # These are the manuscript ids to ignore (these have been dealt with)
 IGNORE="( \
+  'e3464363-cb42-4d6f-83db-4db7c6c9da1d', \
   'a9fc13af-4c94-44a0-ae51-34ab58b666d5', \
   'ab6f9b83-69a7-44a6-83c3-9f501d0f9071', \
   'c74774c2-1cb4-4981-98dd-0459a499903e', \
