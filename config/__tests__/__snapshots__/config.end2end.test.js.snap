@@ -65,6 +65,7 @@ Array [
   "meca.email.recipient",
   "meca.email.sender",
   "meca.email.subjectPrefix",
+  "staffIds",
   "scienceBeam.url",
   "scienceBeam.timeoutMs",
   "fileUpload.isPublic",
