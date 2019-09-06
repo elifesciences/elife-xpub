@@ -134,6 +134,7 @@ module.exports = {
       subjectPrefix: '',
     },
   },
+  staffIds: [],
   scienceBeam: {
     url: 'https://sciencebeam-texture.elifesciences.org/api/convert',
     timeoutMs: 20000,
