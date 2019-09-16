@@ -26,21 +26,21 @@ const EditorialStaff = () => (
       />
       <StaffCard
         jobTitle="Senior Editorial Assistant"
-        name="Susanna Richmond"
-        photoURL="https://iiif.elifesciences.org/journal-cms/person%2F2017-07%2Fsusanna.jpg/0,53,1000,566/502,284/0/default.jpg"
-        telephone="+44 [0]1223 855377"
+        name="Milly McConnell"
+        photoURL="https://iiif.elifesciences.org/journal-cms/person%2F2018-07%2Fmillie.jpg/0,0,2136,1209/502,284/0/default.jpg"
+        telephone="+44 (0)1223 855348"
       />
       <StaffCard
-        jobTitle="Editorial Assistant"
+        jobTitle="Senior Editorial Assistant"
         name="Emma Smith"
         photoURL="https://iiif.elifesciences.org/journal-cms/person%2F2018-07%2Femmasmith.jpg/0,0,2124,1202/502,284/0/default.jpg"
         telephone="+44 [0]1223 750665"
       />
       <StaffCard
         jobTitle="Editorial Assistant"
-        name="Milly McConnell"
-        photoURL="https://iiif.elifesciences.org/journal-cms/person%2F2018-07%2Fmillie.jpg/0,0,2136,1209/502,284/0/default.jpg"
-        telephone="+44 [0]1223 855348"
+        name="Fiona Bryant"
+        photoURL="https://iiif.elifesciences.org/journal-cms/person%2F2019-06%2FFiona3.jpg/0,0,2136,1209/502,284/0/default.jpg"
+        telephone="+44 (0)1223 855372"
       />
     </StaffGrid>
   </React.Fragment>

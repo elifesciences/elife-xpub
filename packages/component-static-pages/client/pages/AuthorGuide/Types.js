@@ -172,14 +172,16 @@ const Types = props => (
 <H2>Review Articles</H2>
 
     <Paragraph.Reading>
-      Review Articles are commissioned by eLife Senior Editors. If you would like to 
-      propose a Review Article, please send an outline to the most relevant{' '}
+      Review Articles are commissioned by eLife Senior Editors. If you would like 
+      to propose a Review Article, please email your outline to editorial [at] elifesciences [dot] org. 
+      In your email please also suggest a relevant{' '}
       <NativeLink href="https://elifesciences.org/about/people"target="_blank">
         Senior Editor
-      </NativeLink>. 
-      The outline should include: i) 50-100 words on each of the main sections of the 
-      proposed article; ii) a paragraph on why it would be timely to publish an article 
-      on this topic now; iii) a paragraph on why you are a suitable author for such an article.
+      </NativeLink>{' '} 
+      to assess the outline. The outline should include: i) 50-100 words on each of the 
+      main sections of the proposed article; ii) a paragraph on why it would be timely 
+      to publish an article on this topic now; iii) a paragraph on why you are a suitable 
+      author for such an article.
     </Paragraph.Reading>
 
     <H2>Scientific Correspondence</H2>

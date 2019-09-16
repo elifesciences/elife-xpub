@@ -16,7 +16,7 @@ const JournalMetrics = () => (
       We provide the charts below to offer greater transparency about our
       submission volumes and decision times.
     </Paragraph.Reading>
-    <Paragraph.Reading>Last updated: March 6, 2019</Paragraph.Reading>
+    <Paragraph.Reading>Last updated: September 16, 2019</Paragraph.Reading>
 
     <H2>1. Number of eLife submissions</H2>
     <Paragraph.Reading>
@@ -80,7 +80,7 @@ const JournalMetrics = () => (
 
     <Paragraph.Reading>
       In addition to the summary tables, we have made the{' '}
-      <NativeLink href="https://elife-cdn.s3.amazonaws.com/eliferawdata.csv">
+      <NativeLink href="https://elife-cdn.s3.amazonaws.com/eliferawdata.xlsx">
         raw data
       </NativeLink>{' '}
       available to download.
