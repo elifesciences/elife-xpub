@@ -53,8 +53,15 @@ const Types = props => (
       length, but authors are advised to stay below 2000 words, two display
       items (figures, tables etc) and 20 references if possible, and to write in
       an active/engaging style. Feature Articles are peer reviewed at the
-      discretion of the eLife editors and staff. Queries should be sent to the
-      Features Editor at features [at] elifesciences [dot] org.
+      discretion of the eLife editors and staff. Feature Articles can also report 
+      original findings in{' '} 
+      <NativeLink href="https://elifesciences.org/collections/8d233d47/meta-research-a-collection-of-articles" 
+        target="_blank">        
+          meta-research
+      </NativeLink>
+      : such submissions should be formatted like 
+      Research Articles or Short Reports (see below), and should include the prefix 
+      Meta-Research in the title.
     </Paragraph.Reading>
 
     <H2>Research Articles</H2>
