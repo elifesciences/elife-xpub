@@ -28,8 +28,15 @@ module.exports = [
     module: {
       rules,
     },
+    optimization: {
+      minimizer: [
+        new UglifyJSPlugin({
+          sourceMap: true,
+        }),
+      ],
+    },
     resolve,
-    // devtool: 'source-map',
+    devtool: 'source-map',
     plugins: [
       new CleanWebpackPlugin(['assets'], {
         root: path.join(__dirname, '..', '_build'),
@@ -52,9 +59,6 @@ module.exports = [
       new CopyWebpackPlugin([{ from: './assets' }]),
       new webpack.optimize.AggressiveMergingPlugin(),
       new webpack.optimize.OccurrenceOrderPlugin(),
-      new UglifyJSPlugin({
-        // sourceMap: true
-      }),
     ],
     node: {
       fs: 'empty',
