@@ -6,6 +6,7 @@ class ErrorBoundary extends React.Component {
 
   componentDidCatch(error) {
     this.setState({ error })
+    window.newrelic.noticeError(error)
   }
 
   render() {
