@@ -1,9 +1,7 @@
 /* eslint-disable no-await-in-loop */
-const superagent = require('superagent')
 const config = require('config')
 const logger = require('@pubsweet/logger')
-
-const apiRoot = config.get('server.api.url')
+const request = require('./cached-request')
 
 // Taken from journal-cms:
 // sync/field.storage.node.field_person_type.yml
@@ -17,20 +15,6 @@ const validRoles = [
 ]
 
 const isValidRole = role => validRoles.indexOf(role) > 1
-
-const request = (endpoint, query = {}) => {
-  const req = superagent.get(apiRoot + endpoint)
-
-  // only had the header if its defined in config
-  const secret = config.get('server.api.secret')
-  if (secret) {
-    req.header.Authorization = secret
-  }
-  return req.query(query).catch(err => {
-    logger.error('Failed to fetch from eLife API:', err.message, err.stack)
-    throw err
-  })
-}
 
 const convertPerson = apiPerson => {
   const { id, name, research = {}, emailAddresses, affiliations } = apiPerson
