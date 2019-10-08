@@ -1,7 +1,7 @@
 /* eslint-disable no-await-in-loop */
 const config = require('config')
 const logger = require('@pubsweet/logger')
-const request = require('./cached-request')
+const { request } = require('./cached-request')
 
 // Taken from journal-cms:
 // sync/field.storage.node.field_person_type.yml
@@ -57,7 +57,9 @@ const people = async role => {
     if (role) {
       role.split(',').forEach(r => {
         if (!isValidRole(r)) {
-          throw new TypeError(`Invalid Role Querying the eLife API: ${r}`)
+          const msg = `Invalid Role Querying the eLife API: ${r}`
+          logger.error(msg)
+          throw new TypeError(msg)
         }
         query += `&type[]=${r}`
       })

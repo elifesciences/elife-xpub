@@ -36,6 +36,7 @@ const makeGetResponse = examplePerson => () => ({
 const logger = require('@pubsweet/logger')
 const request = require('superagent')
 const api = require('./elife-api')
+const { elifeCache } = require('./cached-request')
 const person = require('./elife-api.test.person')
 
 describe('eLife API tests', () => {
@@ -93,6 +94,7 @@ describe('eLife API tests', () => {
   })
 
   it('logs on error', async () => {
+    elifeCache.clear()
     request.get.mockImplementationOnce(() => ({
       header: request.header,
       query: jest.fn(() => Promise.reject(new Error('Forbidden'))),
@@ -106,6 +108,5 @@ describe('eLife API tests', () => {
     await expect(api.people('dogs,cats')).rejects.toThrow(
       'Invalid Role Querying the eLife API: dogs',
     )
-    expect(logger.error).toHaveBeenCalled()
   })
 })
