@@ -1,5 +1,9 @@
 const crypto = require('crypto')
 
+//
+// Simple implementation of a cache
+//
+
 class ApiCache {
   constructor(ttl) {
     this.ttl = ttl
@@ -10,47 +14,58 @@ class ApiCache {
     this._cache = {}
   }
 
-  static md5(s) {
-    return crypto
-      .createHash('md5')
-      .update(s)
-      .digest('hex')
-  }
+  addEntry(key, result) {
+    const hash = this._keyToHash(key)
 
-  addEntry(hash, result) {
     this._cache[hash] = {
       result,
       time: Date.now(),
     }
   }
 
-  static makeHash(uri, req) {
-    const rString = uri + JSON.stringify(req)
-    const result = ApiCache.md5(rString)
-    return result
-  }
-
-  isExpired(hash) {
+  _isExpired(hash) {
     let result = true
-    if (this.hasEntry(hash)) {
-      const elapsed = this._cache[hash].time - Date.now()
+    if (hash in this._cache) {
+      const elapsed = Date.now() - this._cache[hash].time
       result = elapsed > this.ttl
     }
     return result
   }
 
-  hasEntry(hash) {
+  hasEntry(key) {
+    const hash = this._keyToHash(key)
     return hash in this._cache
   }
 
-  getResult(hash) {
-    let result = null
+  hasLiveEntry(key) {
+    const hash = this._keyToHash(key)
+    if (hash in this._cache && this._isExpired(hash)) {
+      return false
+    }
+    return hash in this._cache
+  }
 
-    if (this.hasEntry(hash)) {
+  getResult(key) {
+    let result = null
+    const hash = this._keyToHash(key)
+
+    if (hash in this._cache) {
       result = this._cache[hash].result
     }
 
     return result
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  _keyToHash(key) {
+    return ApiCache.md5(key)
+  }
+
+  static md5(s) {
+    return crypto
+      .createHash('md5')
+      .update(s)
+      .digest('hex')
   }
 
   getLength() {
