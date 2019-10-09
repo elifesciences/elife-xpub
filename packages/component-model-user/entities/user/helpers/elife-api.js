@@ -1,7 +1,7 @@
 /* eslint-disable no-await-in-loop */
 const config = require('config')
 const logger = require('@pubsweet/logger')
-const { request } = require('./cached-request')
+const { cachedRequest } = require('./cached-request')
 
 // Taken from journal-cms:
 // sync/field.storage.node.field_person_type.yml
@@ -65,7 +65,7 @@ const people = async role => {
       })
     }
 
-    response = await request('people', query)
+    response = await cachedRequest('people', query)
     if (response.body.items) {
       items = items.concat(response.body.items)
     }
@@ -76,7 +76,7 @@ const people = async role => {
 
 const person = async id => {
   logger.debug('Fetching editor from /people', { id })
-  const response = await request(`people/${id}`)
+  const response = await cachedRequest(`people/${id}`)
   return convertPerson(response.body)
 }
 
@@ -87,7 +87,7 @@ const getEditorsByPersonId = async editorIds =>
 
 const profile = async id => {
   logger.debug('Fetching profile with ID', id, 'from public API')
-  return request(`profiles/${id}`)
+  return cachedRequest(`profiles/${id}`)
 }
 
 module.exports = {
