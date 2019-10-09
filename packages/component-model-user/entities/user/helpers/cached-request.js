@@ -6,19 +6,20 @@ const ApiCache = require('./api-cache')
 const apiRoot = config.get('server.api.url')
 const elifeCache = new ApiCache(600)
 
+const getKeyFromRequest = (root, endpoint, query, req) => root + endpoint + query + JSON.stringify(req)
 //
 // cachedRequest() is meant to be a drop in replacement for superagent.request
 //
 const cachedRequest = async (endpoint, query = {}) => {
-  const uri = apiRoot + endpoint
-  const req = superagent.get(uri)
-  const key = uri + query + JSON.stringify(req)
+  const req = superagent.get(apiRoot + endpoint)
 
   // only had the header if its defined in config
   const secret = config.get('server.api.secret')
   if (secret) {
     req.header.Authorization = secret
   }
+
+  const key = getKeyFromRequest(apiRoot, endpoint, query, req)
   const found = elifeCache.hasLiveEntry(key)
 
   let result = null
@@ -46,4 +47,5 @@ const cachedRequest = async (endpoint, query = {}) => {
 module.exports = {
   cachedRequest,
   elifeCache,
+  getKeyFromRequest,
 }

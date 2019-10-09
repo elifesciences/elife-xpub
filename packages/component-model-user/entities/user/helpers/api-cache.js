@@ -21,6 +21,7 @@ class ApiCache {
       result,
       time: Date.now(),
     }
+    return hash
   }
 
   _isExpired(hash) {
