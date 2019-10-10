@@ -6,7 +6,7 @@ module.exports = {
   },
   server: {
     api: {
-      url: 'http://prod--cdn-gateway.elifesciences.org/',
+      url: 'https://prod--cdn-gateway.elifesciences.org/',
     },
   },
   login: {
