@@ -16,7 +16,7 @@ const ImageContainer = styled(Box)`
   width: 75%;
   height: 100%;
   display: none;
-  ${media.tabletPortraitUp`
+  ${media.tabletLandscapeUp`
   display: block`};
 `
 
