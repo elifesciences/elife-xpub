@@ -126,7 +126,7 @@
     "history": "^4.7.2",
     "html-pdf": "^2.2.0",
     "joi": "^13.6.0",
-    "knex": "^0.15.2",
+    "knex": "^0.19.5",
     "lodash": "^4.17.5",
     "newrelic": "^4.8.1",
     "omit-deep-lodash": "^1.1.2",
