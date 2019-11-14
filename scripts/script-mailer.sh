@@ -6,6 +6,9 @@ then
   exit 1
 fi
 
+SCRIPT=$1 # Example: prod-status.sh
+MAIL_TO=$2 # Example: xpub-tech-alerts@elifesciences.org
+
 REPORT=$(mktemp)
 echo "Subject: Submission Status Report" >> ${REPORT}
 echo "Mime-Version: 1.0" >> ${REPORT}
@@ -24,4 +27,4 @@ echo "File generated: ${REPORT}" >> ${REPORT}
 echo "</pre>" >> ${REPORT}
 
 # This script requires that msmtp is installed and configured.
-cat ${REPORT} | msmtp xpub-tech-alerts@elifesciences.org
+cat ${REPORT} | msmtp ${MAIL_TO}
