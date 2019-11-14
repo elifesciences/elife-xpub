@@ -2,13 +2,12 @@
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # This script is designed to be called from 'script-mailer.sh'
-#
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 HOST=prod--xpub--1.elifesciences.org
 
 SEARCH_TERM=neuroblast
-COLS="(meta->'title') as title, manuscript.updated::date, manuscript.id, SUBSTRING(value, 17, 29) "
+COLS="(meta->'title') as title, manuscript.updated::date, manuscript.id, SUBSTRING(value, 17, 29), team_members[1]->'alias' "
 
 # TODO: Create a read-only user
 # This pulls the postgres env vars from the container into the current shell
@@ -19,7 +18,9 @@ CMDX="ssh elife@${HOST} ${REMOTE_CMDX}"
 
 # Commands to execute
 SELECT="SELECT ${COLS} FROM manuscript INNER JOIN audit_log ON manuscript.id = audit_log.object_id "
-SQL_SPECIAL="\"${SELECT} WHERE cover_letter LIKE '%${SEARCH_TERM}%' AND action='MECA_RESULT' ORDER BY updated DESC;\""
+SELECT="${SELECT} INNER JOIN team ON manuscript.id = team.object_id "
+COND=" cover_letter LIKE '%${SEARCH_TERM}%' AND action='MECA_RESULT' AND role='author' "
+SQL_SPECIAL="\"${SELECT} WHERE ${COND} ORDER BY updated DESC;\""
 
 echo "<h2>Special Issues</h2>"
 echo "Search term: ${SEARCH_TERM}"
