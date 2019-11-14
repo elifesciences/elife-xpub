@@ -10,14 +10,14 @@ SCRIPT=$1 # Example: prod-status.sh
 MAIL_TO=$2 # Example: xpub-tech-alerts@elifesciences.org
 
 REPORT=$(mktemp)
-echo "Subject: Submission Status Report" >> ${REPORT}
+echo "Subject: xPub Report" >> ${REPORT}
 echo "Mime-Version: 1.0" >> ${REPORT}
 echo "Content-Type: text/html" >> ${REPORT}
 
 echo "<b>This may contain sensitive information</b>" >> ${REPORT}
 
 echo Generating file...
-. $(dirname $0)/prod-status.sh >> ${REPORT}
+. $(dirname $0)/${SCRIPT} >> ${REPORT}
 
 echo Mailing file...
 echo "<pre>This file was generated on $(hostname) at $(date)" >> ${REPORT}
