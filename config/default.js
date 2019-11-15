@@ -91,6 +91,7 @@ module.exports = {
     enableMock: true,
     signupUrl: 'https://orcid.org/register',
     legacySubmissionUrl: 'https://submit.elifesciences.org',
+    sessionTtl: 86400000,
   },
   logout: {
     isPublic: true,
