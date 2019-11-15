@@ -45,6 +45,7 @@ Array [
   "login.enableMock",
   "login.signupUrl",
   "login.legacySubmissionUrl",
+  "login.sessionTTL",
   "logout.isPublic",
   "logout.redirectUrl",
   "mailer.from",
