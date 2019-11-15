@@ -13,6 +13,7 @@ module.exports = {
   login: {
     url: 'https://continuumtest--cdn-journal.elifesciences.org/submit',
     enableMock: false,
+    sessionTTL: 300000,
   },
   logout: {
     redirectUrl: 'https://continuumtest--cdn-journal.elifesciences.org/log-out',
