@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-# This script is designed to be called from 'prod-status-caller.sh'
+# This script is designed to be called from 'script-mailer.sh'
 #
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -20,6 +20,7 @@ IGNORE="( \
   '186c16a6-fe8f-4ca2-bba9-f5725072bbb7', \
   'dd77c28a-4b35-49d0-9f73-5c647c2d55f8', \
   '28348cde-ed78-4a6b-86ab-a73624636df5', \
+  'e52f80a3-dee5-461d-ba2f-1f79a1be1cc3', \
   '115843bc-7ce8-4fa3-9511-f1fa42ac08fa' \
 )"
 
