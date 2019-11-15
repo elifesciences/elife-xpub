@@ -79,7 +79,7 @@ class LoginPage extends React.Component {
     // force user to signin page once session expires
     setTimeout(() => {
       history.push('/logout')
-    }, config.login.sessionTtl)
+    }, config.login.sessionTTL)
     window.localStorage.setItem('token', token)
   }
 

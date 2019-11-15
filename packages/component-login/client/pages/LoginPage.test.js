@@ -61,8 +61,16 @@ describe('LoginPage component', () => {
     makeWrapper({ client: clientMock, history: historyMock })
 
     await new Promise(resolve => setTimeout(resolve, 0))
-    expect(historyMock.push).toHaveBeenCalledWith('/login', { error: 'Nope' })
+    expect(historyMock.push).toHaveBeenCalledWith('/logout', { error: 'Nope' })
     // eslint-disable-next-line no-console
     expect(console.error).toHaveBeenCalled()
+  })
+
+  it('redirects when session expires', () => {
+    jest.useFakeTimers()
+    makeWrapper({ client: clientMock, history: historyMock })
+    expect(historyMock.push).not.toBeCalled()
+    jest.runAllTimers()
+    expect(historyMock.push).toBeCalledWith('/logout')
   })
 })
