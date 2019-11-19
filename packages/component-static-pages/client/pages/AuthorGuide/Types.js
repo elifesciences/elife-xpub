@@ -53,15 +53,17 @@ const Types = props => (
       length, but authors are advised to stay below 2000 words, two display
       items (figures, tables etc) and 20 references if possible, and to write in
       an active/engaging style. Feature Articles are peer reviewed at the
-      discretion of the eLife editors and staff. Feature Articles can also report 
-      original findings in{' '} 
-      <NativeLink href="https://elifesciences.org/collections/8d233d47/meta-research-a-collection-of-articles" 
-        target="_blank">        
-          meta-research
+      discretion of the eLife editors and staff. Feature Articles can also
+      report original findings in{' '}
+      <NativeLink
+        href="https://elifesciences.org/collections/8d233d47/meta-research-a-collection-of-articles"
+        target="_blank"
+      >
+        meta-research
       </NativeLink>
-      : such submissions should be formatted like 
-      Research Articles or Short Reports (see below), and should include the prefix 
-      Meta-Research in the title.
+      : such submissions should be formatted like Research Articles or Short
+      Reports (see below), and should include the prefix Meta-Research in the
+      title.
     </Paragraph.Reading>
 
     <H2>Research Articles</H2>
@@ -176,19 +178,19 @@ const Types = props => (
       assessment of the original paper.{' '}
     </Paragraph.Reading>
 
-<H2>Review Articles</H2>
+    <H2>Review Articles</H2>
 
     <Paragraph.Reading>
-      Review Articles are commissioned by eLife Senior Editors. If you would like 
-      to propose a Review Article, please email your outline to editorial [at] elifesciences [dot] org. 
-      In your email please also suggest a relevant{' '}
-      <NativeLink href="https://elifesciences.org/about/people"target="_blank">
+      Review Articles are commissioned by eLife Senior Editors. If you would
+      like to propose a Review Article, please email your outline to editorial
+      [at] elifesciences [dot] org. In your email please also suggest a relevant{' '}
+      <NativeLink href="https://elifesciences.org/about/people" target="_blank">
         Senior Editor
-      </NativeLink>{' '} 
-      to assess the outline. The outline should include: i) 50-100 words on each of the 
-      main sections of the proposed article; ii) a paragraph on why it would be timely 
-      to publish an article on this topic now; iii) a paragraph on why you are a suitable 
-      author for such an article.
+      </NativeLink>{' '}
+      to assess the outline. The outline should include: i) 50-100 words on each
+      of the main sections of the proposed article; ii) a paragraph on why it
+      would be timely to publish an article on this topic now; iii) a paragraph
+      on why you are a suitable author for such an article.
     </Paragraph.Reading>
 
     <H2>Scientific Correspondence</H2>
@@ -287,49 +289,64 @@ const Types = props => (
       </Paragraph.Reading>
     </CalloutTextBox>
 
-<H2>Special Issues</H2>
+    <H2>Special Issues</H2>
 
-<Paragraph.Reading>
-  eLife has Special Issues on timely and important topics, which are overseen by one 
-  or more eLife editors and external Guest Editors when appropriate. 
-  </Paragraph.Reading>
-
-<Paragraph.Reading>
-    At the point of submission, authors should indicate in their Cover Letter that they 
-    want their work to be considered as part of a Special Issue, citing the relevant title 
-    as indicated below. Submissions are assessed using the same criteria as other eLife 
-    submissions. Authors can submit using the Research Articles, Short Reports, Tools and 
-    Resources and Research Advances article types. The eLife editors may wish to commission 
-    Review Articles as part of a Special Issue.
+    <Paragraph.Reading>
+      eLife has Special Issues on timely and important topics, which are
+      overseen by one or more eLife editors and external Guest Editors when
+      appropriate.
     </Paragraph.Reading>
 
-<Paragraph.Reading>
-      We welcome submissions on a rolling basis, although submissions received after the closing 
-      date of a call for papers may not be considered for the Special Issue launch.
-      </Paragraph.Reading>
+    <Paragraph.Reading>
+      At the point of submission, authors should indicate in their Cover Letter
+      that they want their work to be considered as part of a Special Issue,
+      citing the relevant title as indicated below. Submissions are assessed
+      using the same criteria as other eLife submissions. Authors can submit
+      using the Research Articles, Short Reports, Tools and Resources and
+      Research Advances article types. The eLife editors may wish to commission
+      Review Articles as part of a Special Issue.
+    </Paragraph.Reading>
 
-<Paragraph.Reading>
-        Special Issues open for submissions:
-          <List.Unordered>
-            <li>
-            <NativeLink href="https://elifesciences.org/inside-elife/d81c2cd9/special-issue-call-for-papers-at-the-interface-of-cancer-biology-and-immunology"
-target="_blank">
-  Discovery and Translation of Cancer Immunology
-  </NativeLink>
-            </li>
-            </List.Unordered>
-        </Paragraph.Reading>
-<Paragraph.Reading>
-        Other Special Issues (submissions welcome on a rolling basis):
-          <List.Unordered>
-            <li>
-            <NativeLink href="https://elifesciences.org/collections/e8dda407/mechanistic-microbiome-studies-a-special-issue"
-target="_blank">
-  Mechanistic Microbiome Studies 
-  </NativeLink>
-            </li>
-            </List.Unordered>
-        </Paragraph.Reading>
+    <Paragraph.Reading>
+      We welcome submissions on a rolling basis, although submissions received
+      after the closing date of a call for papers may not be considered for the
+      Special Issue launch.
+    </Paragraph.Reading>
+
+    <Paragraph.Reading>
+      Special Issues open for submissions:
+      <List.Unordered>
+        <li>
+          <NativeLink
+            href="https://elifesciences.org/inside-elife/4f706531/special-issue-call-for-papers-in-aging-geroscience-and-longevity"
+            target="_blank"
+          >
+            Aging, Geroscience and Longevity
+          </NativeLink>
+        </li>
+      </List.Unordered>
+    </Paragraph.Reading>
+    <Paragraph.Reading>
+      Other Special Issues (submissions welcome on a rolling basis):
+      <List.Unordered>
+        <li>
+          <NativeLink
+            href="https://elifesciences.org/collections/e8dda407/mechanistic-microbiome-studies-a-special-issue"
+            target="_blank"
+          >
+            Mechanistic Microbiome Studies
+          </NativeLink>
+        </li>
+        <li>
+          <NativeLink
+            href="https://elifesciences.org/inside-elife/d81c2cd9/special-issue-call-for-papers-at-the-interface-of-cancer-biology-and-immunology"
+            target="_blank"
+          >
+            Discovery and Translation of Cancer Immunology
+          </NativeLink>
+        </li>
+      </List.Unordered>
+    </Paragraph.Reading>
   </React.Fragment>
 )
 
