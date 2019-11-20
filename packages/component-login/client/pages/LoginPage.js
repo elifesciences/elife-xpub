@@ -53,7 +53,7 @@ class LoginPage extends React.Component {
     // save JWT to local storage if present
     const token = this.getToken()
     if (token) {
-      LoginPage.setToken(token)
+      LoginPage.setToken(token, this.props.history)
       this.exchangeToken(token)
     }
   }
@@ -64,17 +64,22 @@ class LoginPage extends React.Component {
         mutation: EXCHANGE_TOKEN_MUTATION,
         variables: { token },
       })
-      .then(({ data }) => LoginPage.setToken(data.exchangeJournalToken))
+      .then(({ data }) =>
+        LoginPage.setToken(data.exchangeJournalToken, this.props.history),
+      )
       .catch(err => {
-        LoginPage.setToken(null)
         // TODO expose this error once we have a UI to do so
-        this.props.history.push('/login', { error: err.message })
+        this.props.history.push('/logout', { error: err.message })
         // eslint-disable-next-line no-console
         console.error(err)
       })
   }
 
-  static setToken(token) {
+  static setToken(token, history) {
+    // force user to signin page once session expires
+    setTimeout(() => {
+      history.push('/logout')
+    }, config.login.sessionTTL)
     window.localStorage.setItem('token', token)
   }
 

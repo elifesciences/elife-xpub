@@ -7,6 +7,9 @@ module.exports = {
       endpoint: new AWS.Endpoint('http://localhost:4569'),
     },
   },
+  login: {
+    sessionTTL: 300000,
+  },
   meca: {
     sftp: {
       disableUpload: true,
