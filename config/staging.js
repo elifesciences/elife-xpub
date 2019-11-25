@@ -11,11 +11,12 @@ module.exports = {
     },
   },
   login: {
-    url: 'https://continuumtest--cdn-journal.elifesciences.org/submit',
+    url: 'https://continuumtestpreview--journal.elifesciences.org/submit',
     enableMock: false,
   },
   logout: {
-    redirectUrl: 'https://continuumtest--cdn-journal.elifesciences.org/log-out',
+    redirectUrl:
+      'https://continuumtestpreview--journal.elifesciences.org/log-out',
   },
   mailer: {
     from: 'editorial-staging@elifesciences.org',
