@@ -57,11 +57,7 @@ const JournalMetrics = () => (
 
     <H2>5. Submission to publication</H2>
     <Paragraph.Reading>
-      This shows the number of days between receiving the initial submission and publication (25th, 50th, and 75th percentiles).Publish on
-      accept was introduced in April 2014, which allows authors to have their
-      accepted manuscript PDF published within a few days. About 60% of authors
-      opt for this, with the remaining authors preferring to wait for the
-      typeset, author-proofed version.{' '}
+      This shows the number of days between receiving the initial submission and publication (25th, 50th, and 75th percentiles).{' '}
     </Paragraph.Reading>
     <ChartEmbed
       height={358}
