@@ -107,6 +107,27 @@ const WritingTheReview = props => (
       any minor comments or corrections. Please be aware that in the event of acceptance, the decision 
       letter containing the integrated review comments will be published.
     </Paragraph.Reading>
+
+<Paragraph.Reading>
+        Implicit bias (unconscious associations that affect our actions) has repeatedly been shown to 
+        influence decisions in scholarly publishing, especially with respect to author gender, career stage, 
+          nationality and other social groupings. To help increase awareness of what implicit bias is and 
+          how it might affect the eLife review process we encourage editors and reviewers to consult resources 
+          such as{' '}
+      <NativeLink
+        href="https://implicit.harvard.edu/implicit/takeatest.html"
+        target="_blank"
+      >
+        Project Implicit
+      </NativeLink>{' '} 
+          and{' '}
+      <NativeLink
+        href="https://outsmartinghumanminds.org/"
+        target="_blank"
+      >
+        Outsmarting Human Minds
+      </NativeLink>.
+</Paragraph.Reading>          
   </React.Fragment>
 )
 
