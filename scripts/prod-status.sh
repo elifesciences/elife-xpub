@@ -21,6 +21,9 @@ IGNORE="( \
   'dd77c28a-4b35-49d0-9f73-5c647c2d55f8', \
   '28348cde-ed78-4a6b-86ab-a73624636df5', \
   'e52f80a3-dee5-461d-ba2f-1f79a1be1cc3', \
+  '7a2532cd-ae92-49d0-aa30-d88c0fa1b090', \
+  '0fcab2d8-ec36-4f8d-9fbe-53ffab658202', \
+
   '115843bc-7ce8-4fa3-9511-f1fa42ac08fa' \
 )"
 
