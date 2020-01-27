@@ -22,7 +22,7 @@ const mapColor = statusCode =>
 const getText = statusCode =>
   ({
     CONTINUE_SUBMISSION: 'Continue Submission',
-    SUBMITTED: 'Submitted',
+    SUBMITTED: 'Submitted: check email',
     REJECTED: 'Rejected',
   }[statusCode])
 
