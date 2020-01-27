@@ -46,7 +46,7 @@ test('Happy path', async t => {
     .eql(manuscript.title)
     .expect(dashboard.statuses.textContent)
     // TODO this might cause a race condition
-    .eql('Submitted')
+    .eql('Submitted: check email')
 })
 
 test('Ability to progress through the wizard is tied to validation', async t => {
