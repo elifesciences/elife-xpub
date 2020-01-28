@@ -4,11 +4,7 @@ exports[`Manuscripts submitManuscript runExport sends a confirmation email to th
 "Dear Firstname,
 
 Thank you for submitting your work, \\"My manuscript\\", to eLife using our new submission interface. Your submission has now been transferred to our legacy system where the editorial evaluation will be carried out.
-<<<<<<< HEAD
  
-=======
-
->>>>>>> 949bbf3b00fb9bda37938ae022ced7130bdcb4e3
 You will hear from us again shortly once your submission has undergone our quality check process, at which point you will receive a link to track the progress of your submission.
 
 Best wishes,
