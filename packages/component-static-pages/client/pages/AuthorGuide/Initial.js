@@ -24,8 +24,7 @@ const Initial = props => (
 
     <Paragraph.Reading>
       To facilitate the evaluation of the submission, we highly recommend
-      including all authors for each reference in the reference list (e.g. John
-      Smith, Anthony Murray and Peter Castle rather than John Smith et al.),
+      including all authors for each reference in the reference list,
       although discretion can be used to truncate very long lists of authors.
     </Paragraph.Reading>
 
