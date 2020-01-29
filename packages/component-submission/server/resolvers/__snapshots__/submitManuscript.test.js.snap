@@ -3,9 +3,9 @@
 exports[`Manuscripts submitManuscript runExport sends a confirmation email to the submitter 1`] = `
 "Dear Firstname,
 
-You have just submitted your work, \\"My manuscript\\", to eLife using our brand new submission interface. Our aim is to create an application that makes the process of publishing your research faster and simpler. It is a work in progress and we welcome any feedback you may have on your experience.
-
-You will hear from us again shortly once your submission has undergone our quality check process and been assigned to a Senior Editor for initial evaluation. You may be asked to continue your submission using our legacy system.
+Thank you for submitting your work, \\"My manuscript\\", to eLife using our new submission interface. Your submission has now been transferred to our legacy system where the editorial evaluation will be carried out.
+ 
+You will hear from us again shortly once your submission has undergone our quality check process, at which point you will receive a link to track the progress of your submission.
 
 Best wishes,
 
@@ -18,4 +18,4 @@ eLife Sciences Publications, Ltd is a limited liability non-profit non-stock cor
 You are receiving this email because you have been identified as the corresponding author of a submission to eLife. If this isn't you please contact editorial@elifesciences.org."
 `;
 
-exports[`Manuscripts submitManuscript runExport sends a confirmation email to the submitter 2`] = `"<p>Dear Firstname,</p><p>You have just submitted your work, \\"My manuscript\\", to eLife using our brand new submission interface. Our aim is to create an application that makes the process of publishing your research faster and simpler. It is a work in progress and we welcome any feedback you may have on your experience.</p><p>You will hear from us again shortly once your submission has undergone our quality check process and been assigned to a Senior Editor for initial evaluation. You may be asked to continue your submission using our legacy system.</p><p>Best wishes,</p><p>Nicola</p><p>Nicola Adamson (Editorial Assistant)</p><p>eLife Sciences Publications, Ltd is a limited liability non-profit non-stock corporation incorporated in the State of Delaware, USA, with company number 5030732, and is registered in the UK with company number FC030576 and branch number BR015634 at the address, Westbrook Centre, Milton Road, Cambridge CB4 1YG.</p><p>You are receiving this email because you have been identified as the corresponding author of a submission to eLife. If this isn't you please contact editorial@elifesciences.org</p>"`;
+exports[`Manuscripts submitManuscript runExport sends a confirmation email to the submitter 2`] = `"<p>Dear Firstname,</p><p>Thank you for submitting your work, \\"My manuscript\\", to eLife using our new submission interface. Your submission has now been transferred to our legacy system where the editorial evaluation will be carried out.</p><p>You will hear from us again shortly once your submission has undergone our quality check process, at which point you will receive a link to track the progress of your submission.</p><p>Best wishes,</p><p>Nicola</p><p>Nicola Adamson (Editorial Assistant)</p><p>eLife Sciences Publications, Ltd is a limited liability non-profit non-stock corporation incorporated in the State of Delaware, USA, with company number 5030732, and is registered in the UK with company number FC030576 and branch number BR015634 at the address, Westbrook Centre, Milton Road, Cambridge CB4 1YG.</p><p>You are receiving this email because you have been identified as the corresponding author of a submission to eLife. If this isn't you please contact editorial@elifesciences.org</p>"`;
