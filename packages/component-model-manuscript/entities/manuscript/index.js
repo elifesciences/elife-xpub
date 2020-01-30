@@ -324,7 +324,9 @@ class Manuscript extends BaseModel {
     const teamsToClean = ['opposedReviewers', 'suggestedReviewers']
 
     /* eslint no-param-reassign: ["error", { "props": false }] */
-    input.author.email = input.author.email.trim()
+    if (input.author && input.author.email) {
+      input.author.email = input.author.email.trim()
+    }
     teamsToClean.forEach(team => {
       if (input[team]) {
         input[team].forEach(item => {
