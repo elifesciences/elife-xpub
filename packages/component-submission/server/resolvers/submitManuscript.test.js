@@ -154,6 +154,7 @@ describe('Manuscripts', () => {
         '\u2000\u00A0\u200A\u2028\u2029\u202F\u205F\u3000'
 
       input.id = id
+      input.author.email = `${hiddenWhitespace}fred@mail.com${hiddenWhitespace}`
       input.suggestedReviewers = [
         {
           name: 'Reviewer 1',
@@ -176,18 +177,24 @@ describe('Manuscripts', () => {
       )
 
       const manuscript = await Manuscript.find(id, userId)
-      const suggestedReviewers = manuscript.teams.find(
-        t => t.role === 'suggestedReviewer',
-      )
-      expect(suggestedReviewers.teamMembers.map(member => member.meta)).toEqual(
-        [{ name: 'Reviewer 1', email: 'reviewer1@mail.com' }],
-      )
+      const getMembers = (roleName, property) => {
+        const team = manuscript.teams.find(t => t.role === roleName)
+        return team.teamMembers.map(member => member[property])
+      }
 
-      const opposedReviewers = manuscript.teams.find(
-        t => t.role === 'opposedReviewer',
-      )
-      expect(opposedReviewers.teamMembers.map(member => member.meta)).toEqual([
+      expect(getMembers('suggestedReviewer', 'meta')).toEqual([
+        { name: 'Reviewer 1', email: 'reviewer1@mail.com' },
+      ])
+      expect(getMembers('opposedReviewer', 'meta')).toEqual([
         { name: 'Reviewer 5', email: 'reviewer5@mail.com' },
+      ])
+      expect(getMembers('author', 'alias')).toEqual([
+        {
+          aff: 'Institution Inc',
+          email: 'fred@mail.com',
+          firstName: 'Firstname',
+          lastName: 'Lastname',
+        },
       ])
     })
 
