@@ -155,11 +155,17 @@ describe('Manuscripts', () => {
 
       input.id = id
       input.suggestedReviewers = [
-        { name: 'Reviewer 1', email: `reviewer1@mail.com${hiddenWhitespace}` },
+        {
+          name: 'Reviewer 1',
+          email: `${hiddenWhitespace}reviewer1@mail.com${hiddenWhitespace}`,
+        },
         { name: '', email: '' },
       ]
       input.opposedReviewers = [
-        { name: 'Reviewer 5', email: `reviewer5@mail.com${hiddenWhitespace}` },
+        {
+          name: 'Reviewer 5',
+          email: `${hiddenWhitespace}reviewer5@mail.com${hiddenWhitespace}`,
+        },
         { name: '', email: '' },
       ]
 
