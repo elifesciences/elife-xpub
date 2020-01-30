@@ -150,14 +150,16 @@ describe('Manuscripts', () => {
       const input = lodash.cloneDeep(manuscriptInput)
       const mockedExportFn = jest.fn(() => Promise.resolve())
 
-      const hiddenWhitespace = '       　';
+      const hiddenWhitespace =
+        '\u2000\u00A0\u200A\u2028\u2029\u202F\u205F\u3000'
+
       input.id = id
       input.suggestedReviewers = [
-        { name: 'Reviewer 1', email: 'reviewer1@mail.com' + hiddenWhitespace },
+        { name: 'Reviewer 1', email: `reviewer1@mail.com${hiddenWhitespace}` },
         { name: '', email: '' },
       ]
       input.opposedReviewers = [
-        { name: 'Reviewer 5', email: 'reviewer5@mail.com' + hiddenWhitespace },
+        { name: 'Reviewer 5', email: `reviewer5@mail.com${hiddenWhitespace}` },
         { name: '', email: '' },
       ]
 
@@ -172,9 +174,7 @@ describe('Manuscripts', () => {
         t => t.role === 'suggestedReviewer',
       )
       expect(suggestedReviewers.teamMembers.map(member => member.meta)).toEqual(
-        [
-          { name: 'Reviewer 1', email: 'reviewer1@mail.com' },
-        ],
+        [{ name: 'Reviewer 1', email: 'reviewer1@mail.com' }],
       )
 
       const opposedReviewers = manuscript.teams.find(

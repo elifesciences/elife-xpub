@@ -315,6 +315,29 @@ class Manuscript extends BaseModel {
     }
   }
 
+  static cleanUpDataForSubmission(input) {
+    const output = Manuscript.removeOptionalBlankReviewers(input)
+    return Manuscript.cleanWhitespace(output)
+  }
+
+  static cleanWhitespace(input) {
+    const teamsToClean = ['opposedReviewers', 'suggestedReviewers']
+
+    /* eslint no-param-reassign: ["error", { "props": false }] */
+    teamsToClean.forEach(team => {
+      if (input[team]) {
+        input[team].forEach(item => {
+          if (item.email) {
+            item.email = item.email.trim()
+          }
+        })
+      }
+    })
+    /* eslint no-param-reassign: "error" */
+
+    return { ...input }
+  }
+
   // todo this makes more sense as an instance method but that
   // would mean applying the input to the manuscript first
   static removeOptionalBlankReviewers(input) {
