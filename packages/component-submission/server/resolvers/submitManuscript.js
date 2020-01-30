@@ -58,9 +58,10 @@ const submitManuscript = (_runExport = runExport) => async (
   }
 
   const manuscriptInput = omit(
-    ManuscriptModel.removeOptionalBlankReviewers(data),
+    ManuscriptModel.cleanUpDataForSubmission(data),
     'lastStepVisited',
   )
+
   const { error: errorManuscript } = Joi.validate(
     manuscriptInput,
     manuscriptInputSchema,

@@ -146,6 +146,58 @@ describe('Manuscripts', () => {
       expect(actualIp).toBe(ip)
     })
 
+    it('removes whitespace from emails', async () => {
+      const input = lodash.cloneDeep(manuscriptInput)
+      const mockedExportFn = jest.fn(() => Promise.resolve())
+
+      const hiddenWhitespace =
+        '\u2000\u00A0\u200A\u2028\u2029\u202F\u205F\u3000'
+
+      input.id = id
+      input.author.email = `${hiddenWhitespace}fred@mail.com${hiddenWhitespace}`
+      input.suggestedReviewers = [
+        {
+          name: 'Reviewer 1',
+          email: `${hiddenWhitespace}reviewer1@mail.com${hiddenWhitespace}`,
+        },
+        { name: '', email: '' },
+      ]
+      input.opposedReviewers = [
+        {
+          name: 'Reviewer 5',
+          email: `${hiddenWhitespace}reviewer5@mail.com${hiddenWhitespace}`,
+        },
+        { name: '', email: '' },
+      ]
+
+      await submitManuscript(mockedExportFn)(
+        {},
+        { data: input },
+        { user: profileId },
+      )
+
+      const manuscript = await Manuscript.find(id, userId)
+      const getMembers = (roleName, property) => {
+        const team = manuscript.teams.find(t => t.role === roleName)
+        return team.teamMembers.map(member => member[property])
+      }
+
+      expect(getMembers('suggestedReviewer', 'meta')).toEqual([
+        { name: 'Reviewer 1', email: 'reviewer1@mail.com' },
+      ])
+      expect(getMembers('opposedReviewer', 'meta')).toEqual([
+        { name: 'Reviewer 5', email: 'reviewer5@mail.com' },
+      ])
+      expect(getMembers('author', 'alias')).toEqual([
+        {
+          aff: 'Institution Inc',
+          email: 'fred@mail.com',
+          firstName: 'Firstname',
+          lastName: 'Lastname',
+        },
+      ])
+    })
+
     it('removes blank optional reviewer rows', async () => {
       const input = lodash.cloneDeep(manuscriptInput)
       const mockedExportFn = jest.fn(() => Promise.resolve())
