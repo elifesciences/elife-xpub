@@ -240,6 +240,14 @@ export const SubmissionWizard = ({
                         onClick={() => {
                           formikProps.validateForm().then(errors => {
                             if (!Object.keys(errors).length) {
+                              const validator = yup
+                                .object()
+                                .shape(stepValidation[currentStep])
+                              // #2401 The validator removes whitespace on emails using trim()
+                              const newValues = validator.cast(
+                                formikProps.values,
+                              )
+                              formikProps.setValues(newValues)
                               navigateToStep(currentStep + 1)
                             }
                             touchAllErrorFields(errors)
