@@ -11,6 +11,7 @@ export const authorSchema = {
     lastName: yup.string().required('Last name is required'),
     email: yup
       .string()
+      .trim()
       .required('Email is required')
       .email('Must be a valid email address'),
     aff: yup.string().required('Institution is required'),
@@ -68,19 +69,25 @@ export const editorsSchema = {
   suggestedReviewers: yup.array(
     yup.object().shape(
       {
-        name: yup.string().when('email', {
-          is: email => email && email.length > 0,
-          then: yup.string().required('Name is required'),
-          otherwise: yup.string(),
-        }),
-        email: yup.string().when('name', {
-          is: name => name && name.length > 0,
-          then: yup
-            .string()
-            .email('Must be a valid email')
-            .required('Email is required'),
-          otherwise: yup.string().email('Must be a valid email'),
-        }),
+        name: yup
+          .string()
+          .trim()
+          .when('email', {
+            is: email => email && email.length > 0,
+            then: yup.string().required('Name is required'),
+            otherwise: yup.string(),
+          }),
+        email: yup
+          .string()
+          .trim()
+          .when('name', {
+            is: name => name && name.length > 0,
+            then: yup
+              .string()
+              .email('Must be a valid email')
+              .required('Email is required'),
+            otherwise: yup.string().email('Must be a valid email'),
+          }),
       },
       ['name', 'email'],
     ),
@@ -88,19 +95,25 @@ export const editorsSchema = {
   opposedReviewers: yup.array(
     yup.object().shape(
       {
-        name: yup.string().when('email', {
-          is: email => email && email.length > 0,
-          then: yup.string().required('Name is required'),
-          otherwise: yup.string(),
-        }),
-        email: yup.string().when('name', {
-          is: name => name && name.length > 0,
-          then: yup
-            .string()
-            .email('Must be a valid email')
-            .required('Email is required'),
-          otherwise: yup.string().email('Must be a valid email'),
-        }),
+        name: yup
+          .string()
+          .trim()
+          .when('email', {
+            is: email => email && email.length > 0,
+            then: yup.string().required('Name is required'),
+            otherwise: yup.string(),
+          }),
+        email: yup
+          .string()
+          .trim()
+          .when('name', {
+            is: name => name && name.length > 0,
+            then: yup
+              .string()
+              .email('Must be a valid email')
+              .required('Email is required'),
+            otherwise: yup.string().email('Must be a valid email'),
+          }),
       },
       ['name', 'email'],
     ),
