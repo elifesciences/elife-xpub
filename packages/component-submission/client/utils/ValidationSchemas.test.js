@@ -6,8 +6,33 @@ import {
   editorsSchema,
   filesSchema,
   submissionSchema,
+  authorSchema,
 } from './ValidationSchemas'
 import { errorMessageMapping } from './constants'
+
+const hiddenWhitespace = '\u2000\u00A0\u200A\u2028\u2029\u202F\u205F\u3000'
+
+describe('Authors Schema', () => {
+  const validAuthorData = {
+    author: {
+      firstName: 'Adam',
+      lastName: 'Shinkicker',
+      email: 'author@email.com',
+      aff: 'University of Life',
+    },
+  }
+  const schema = yup.object().shape(authorSchema)
+  it('allows valid data', () => {
+    expect(() => schema.validateSync(validAuthorData)).not.toThrow()
+  })
+
+  it('trims email of whitespace', () => {
+    const testData = { ...validAuthorData }
+    testData.author.email = `${hiddenWhitespace}bob@email.com${hiddenWhitespace}`
+    const newData = schema.validateSync(testData, { abortEarly: false })
+    expect(newData.author.email).toEqual('bob@email.com')
+  })
+})
 
 describe('Editors Schema', () => {
   const validEditorData = {
@@ -28,6 +53,7 @@ describe('Editors Schema', () => {
     ],
     opposedReviewersReason: 'Some conflict',
   }
+
   const schema = yup.object().shape(editorsSchema)
   it('allows valid data', () => {
     expect(() => schema.validateSync(validEditorData)).not.toThrow()
@@ -66,6 +92,35 @@ describe('Editors Schema', () => {
       suggestedReviewingEditors: 'Please suggest at least 2 editors',
       suggestedSeniorEditors: 'Please suggest at least 2 editors',
       opposedReviewersReason: 'Please provide a reason for exclusion',
+    })
+  })
+
+  it('trims all emails of whitespace', () => {
+    const testData = { ...validEditorData }
+    testData.suggestedReviewers = [
+      {
+        name: 'bob',
+        email: `${hiddenWhitespace}bob@email.com${hiddenWhitespace}`,
+      },
+    ]
+    testData.opposedReviewers = [
+      {
+        name: 'fred',
+        email: `${hiddenWhitespace}fred@email.com${hiddenWhitespace}`,
+      },
+    ]
+
+    const newData = schema.validateSync(testData, { abortEarly: false })
+
+    expect(newData.suggestedReviewers).toHaveLength(1)
+    expect(newData.suggestedReviewers[0]).toEqual({
+      name: 'bob',
+      email: `bob@email.com`,
+    })
+    expect(newData.opposedReviewers).toHaveLength(1)
+    expect(newData.opposedReviewers[0]).toEqual({
+      name: 'fred',
+      email: `fred@email.com`,
     })
   })
 
