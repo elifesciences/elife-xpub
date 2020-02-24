@@ -17,8 +17,8 @@ const Initial = props => (
     <Paragraph.Reading>
       Authors should start by uploading their manuscript text and figures as a
       single PDF (ideally smaller than 15MB), organised with easy readability in
-      mind. Please include page and line numbers, and a legible font size for
-      the main text and figure legends. We encourage authors to embed figures
+      mind. Please include page and line numbers, and a legible font size for the 
+      main text and figure legends. We strongly encourage authors to embed figures 
       and tables at appropriate places within the main text.
     </Paragraph.Reading>
 
@@ -120,9 +120,9 @@ const Initial = props => (
       <li>
         <strong>References: </strong>
         <Paragraph.Reading>
-          Accepted and published works, datasets (newly generated and previously
-          published), program code, and previously published methods should be
-          appropriately cited and included in the reference list to ensure that
+          Accepted and published works, datasets (newly generated and previously published), 
+          program code, and previously published methods must be appropriately cited and 
+          included in the reference list to ensure that
           a wide range of research objects are afforded recognition through
           citation.
         </Paragraph.Reading>
