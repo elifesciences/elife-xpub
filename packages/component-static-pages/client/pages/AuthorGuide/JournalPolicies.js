@@ -958,9 +958,9 @@ const JournalPolicies = props => (
       >
         Reproducibility Project: Cancer Biology
       </NativeLink>
-      . For other submissions, authors are encouraged to consider whether
-      preregistration would be appropriate, noting if they have done so within
-      their cover letter.
+      . For other submissions, authors are encouraged to consider whether preregistration would 
+      be appropriate, noting if they have done so within their cover letter and submission. If 
+      the preregistration included a precise analysis plan, that should be included as well.
     </Paragraph.Reading>
 
     <H2>Reporting Standards</H2>
