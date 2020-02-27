@@ -933,34 +933,36 @@ const JournalPolicies = props => (
       .
     </Paragraph.Reading>
 
-    <H2>Preregistration</H2>
+    <H2>Preregistration, Registered Reports, and Replication Studies</H2>
 
     <Paragraph.Reading>
-      Preregistration of studies involves registering the study design,
-      variables, and treatment conditions prior to conducting the research. For
-      clinical trials, eLife follows the{' '}
+      Preregistration of studies involves registering the study design, variables, 
+      and treatment conditions prior to conducting the research. For clinical trials, 
+      eLife follows the{' '}
       <NativeLink
         href="http://www.icmje.org/about-icmje/faqs/clinical-trials-registration/"
         target="_blank"
       >
         recommendations of the ICMJE
       </NativeLink>{' '}
-      that all trials must be prospectively registered to be considered for
-      publication, and the clinical trial registration number will be requested
-      during submission.
+      that all trials must be prospectively registered to be considered for publication, 
+      and the clinical trial registration number will be requested during submission. For 
+      other submissions, authors are encouraged to consider whether preregistration would be 
+      appropriate, noting if they have done so within their cover letter and submission. If 
+      the preregistration included a precise analysis plan, that should be included as well.
     </Paragraph.Reading>
 
     <Paragraph.Reading>
-      eLife is using the Registered Reports approach as part of the{' '}
+      We will consider Replication Studies that provide new insights into previously published 
+      research. We will apply the same editorial standards that we apply to other types of submission. 
+      We have also published Replication Studies (and Registered Reports) as part of the{' '}
       <NativeLink
         href="https://elifesciences.org/collections/reproducibility-project-cancer-biology"
         target="_blank"
       >
         Reproducibility Project: Cancer Biology
       </NativeLink>
-      . For other submissions, authors are encouraged to consider whether preregistration would 
-      be appropriate, noting if they have done so within their cover letter and submission. If 
-      the preregistration included a precise analysis plan, that should be included as well.
+      .
     </Paragraph.Reading>
 
     <H2>Reporting Standards</H2>
