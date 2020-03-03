@@ -390,10 +390,13 @@ const Initial = props => (
       </li>
       <li>
         <strong>Reviewer suggestions: </strong>
-        Authors can optionally suggest potential reviewers for their work at the
-        Initial Submission stage. Requests to exclude individuals can also be
-        made and must be accompanied with a brief explanation. We will make
-        every effort to follow author requests for excluded individuals.
+        Authors can optionally suggest potential reviewers for their work at the Initial Submission stage. 
+        Please list the names of experts who are knowledgeable in your area and could give an unbiased 
+        review of your work. To support diversity, please consider suggesting potential reviewers 
+        at an early stage of their career, women, and experts from countries other than the USA and Europe. 
+        Please do not list colleagues who are close associates, collaborators, or family members. 
+        Requests to exclude individuals can also be made and must be accompanied with a brief explanation. 
+        We will make every effort to follow author requests for excluded individuals.
       </li>
     </List.Ordered>
 
