@@ -1,0 +1,1 @@
+ALTER TYPE filestatus ADD VALUE 'DELETED';
