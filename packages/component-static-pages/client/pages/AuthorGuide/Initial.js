@@ -21,7 +21,7 @@ const Initial = props => (
         “Ten common statistical mistakes to watch out for when writing or reviewing a manuscript”
       </NativeLink>{' '}
     as they prepare their submission. Please provide detailed information within the submission to 
-    facilitate the interpretation and replication of experiments, following the guidance in eLife’s{' '}
+    facilitate the interpretation and replication of experiments, following the guidance in eLife&apos;s{' '}
       <NativeLink
         href="https://elife-cdn.s3.amazonaws.com/xpub/guides/transparent_reporting.pdf"
         target="_blank"
