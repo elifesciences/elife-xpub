@@ -136,7 +136,7 @@ const EditorialProcess = props => (
       >
         “Ten common statistical mistakes to watch out for when writing or reviewing a manuscript”
       </NativeLink>{' '}
-      and eLife's{' '}
+      and eLife&apos;s{' '}
       <NativeLink
         href="https://elife-cdn.s3.amazonaws.com/xpub/guides/transparent_reporting.pdf"
         target="_blank"
@@ -144,7 +144,7 @@ const EditorialProcess = props => (
         Transparent Reporting Form
       </NativeLink>{' '}
       as they prepare their submission. During the initial submission phase, members of 
-      eLife’s senior editorial team assess new submissions, often in consultation with 
+      eLife&apos;s senior editorial team assess new submissions, often in consultation with 
       members of the Board of Reviewing Editors or with external guest editors where necessary, 
       to identify the ones that are appropriate for in-depth peer review.
     </Paragraph.Reading>
