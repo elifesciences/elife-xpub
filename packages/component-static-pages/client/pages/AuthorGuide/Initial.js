@@ -11,15 +11,31 @@ import RequiredInfoTable from './RequiredInfoTable'
 const Initial = props => (
   <React.Fragment>
     <H1>Initial submissions</H1>
+  
+  <Paragraph.Reading>
+  We refer authors to{' '}
+      <NativeLink
+        href="https://elifesciences.org/articles/48175?_ga=2.87814296.1615571170.1583746607-392198663.1550050583"
+        target="_blank"
+      >
+        “Ten common statistical mistakes to watch out for when writing or reviewing a manuscript”
+      </NativeLink>{' '}
+    as they prepare their submission. Please provide detailed information within the submission to 
+    facilitate the interpretation and replication of experiments, following the guidance in eLife&apos;s{' '}
+      <NativeLink
+        href="https://elife-cdn.s3.amazonaws.com/xpub/guides/transparent_reporting.pdf"
+        target="_blank"
+      >
+        Transparent Reporting Form
+      </NativeLink>{' '}
+      (a completed version of this form will be requested if the work is invited for in-depth review).
+</Paragraph.Reading>
 
     <H2>Single Manuscript PDF</H2>
 
     <Paragraph.Reading>
-      Authors should start by uploading their manuscript text and figures as a
-      single PDF (ideally smaller than 15MB), organised with easy readability in
-      mind. Please include page and line numbers, and a legible font size for the 
-      main text and figure legends. We strongly encourage authors to embed figures 
-      and tables at appropriate places within the main text.
+      When they are ready to submit, authors should start by uploading their manuscript text and figures as a single 
+      PDF (ideally smaller than 15MB), organised with easy readability in mind.
     </Paragraph.Reading>
 
     <Paragraph.Reading>

@@ -129,16 +129,23 @@ const EditorialProcess = props => (
     <Paragraph.Reading>
       If you are interested in submitting your work to eLife, please review the
       guidelines relating to{' '}
-      <Link to="/author-guide/initial">Initial Submissions</Link>. During the
-      initial submission phase, members of eLife’s{' '}
+      <Link to="/author-guide/initial">Initial Submissions</Link>. We refer authors to{' '}
       <NativeLink
-        href="https://elifesciences.org/about/people?_ga=2.223585432.2069272108.1540132848-2034406101.1537543708"
+        href="https://elifesciences.org/articles/48175?_ga=2.87814296.1615571170.1583746607-392198663.1550050583"
         target="_blank"
       >
-        senior editorial team
+        “Ten common statistical mistakes to watch out for when writing or reviewing a manuscript”
       </NativeLink>{' '}
-      rapidly assess new submissions, often in consultation with members of the
-      Board of Reviewing Editors or with external guest editors where necessary,
+      and eLife&apos;s{' '}
+      <NativeLink
+        href="https://elife-cdn.s3.amazonaws.com/xpub/guides/transparent_reporting.pdf"
+        target="_blank"
+      >
+        Transparent Reporting Form
+      </NativeLink>{' '}
+      as they prepare their submission. During the initial submission phase, members of 
+      eLife&apos;s senior editorial team assess new submissions, often in consultation with 
+      members of the Board of Reviewing Editors or with external guest editors where necessary, 
       to identify the ones that are appropriate for in-depth peer review.
     </Paragraph.Reading>
 
