@@ -29,6 +29,7 @@ const Initial = props => (
         Transparent Reporting Form
       </NativeLink>{' '}
       (a completed version of this form will be requested if the work is invited for in-depth review).
+</Paragraph.Reading>
 
     <H2>Single Manuscript PDF</H2>
 
