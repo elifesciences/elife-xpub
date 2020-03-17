@@ -15,7 +15,7 @@ const RedirectLayout = ({ children }) => (
   <Box pb={5}>
     <TopBarContainer px={3}>
       <LogoWrapper>
-        <img alt="eLife" src="/assets/elife-logo.png" />
+        <img alt="eLife" src="/assets/elife-logo.svg" />
       </LogoWrapper>
     </TopBarContainer>
     <SmallCenterer>{children}</SmallCenterer>

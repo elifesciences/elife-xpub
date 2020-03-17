@@ -37,7 +37,7 @@ const AppBar = ({ user, menuItems }) => (
   <TopBarContainer px={3}>
     <BurgerMenu menuItems={menuItems} />
     <LogoLink href="https://elifesciences.org">
-      <img alt="eLife" src="/assets/elife-logo.png" />
+      <img alt="eLife" src="/assets/elife-logo.svg" />
     </LogoLink>
     <DesktopView data-test-id="app-bar-menu">
       <Separator />
