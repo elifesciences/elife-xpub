@@ -1,5 +1,5 @@
 import React from 'react'
-import { H1, Link } from '@pubsweet/ui'
+import { H1, H2, Link } from '@pubsweet/ui'
 
 import {
   Paragraph,
