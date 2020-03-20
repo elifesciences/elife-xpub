@@ -6,6 +6,8 @@ import {
   NativeLink,
 } from '@elifesciences/component-elife-ui/client/atoms'
 
+import List from '../../components/List'
+
 const ReviewProcess = props => (
   <React.Fragment>
     <H1>The Review Process</H1>
@@ -58,6 +60,52 @@ const ReviewProcess = props => (
       to give researchers the opportunity to be recognised for providing reviews
       for eLife.
     </Paragraph.Reading>
+
+<H2>Involvement of early-career researchers in peer review</H2>
+
+<Paragraph.Reading>
+eLife encourages editors to nominate and involve early-career researchers in the 
+review process. The{' '} 
+<NativeLink href="https://elifesciences.org/inside-elife/31a5173b" target="_blank">
+eLife pool of early-career reviewers
+</NativeLink>{' '}
+aims to provide outstanding early-stage researchers the opportunity to peer review manuscripts. 
+Members of the pool are nominated and/or approved by the eLife editors.
+</Paragraph.Reading>
+
+<Paragraph.Reading>
+To be eligible, researchers have to be either a postdoctoral researcher or have spent less than 
+five years in an independent research position (e.g. Group Leader). It is also a requirement to 
+have had at least two first-author publications in an area of research within the scope of eLife. 
+Researchers wishing to be considered for this pool should contact the journal staff (
+<NativeLink href="mailto:editorial@elifesciences.org" target="_blank">
+editorial@elifesciences.org
+</NativeLink>
+) and provide:
+
+<List.Unordered>
+  <li>A brief letter of endorsement from their supervisor (optional)</li>
+  <li>Their CV</li>
+  <li>The link to their webpage or, at a minimum, another site with 
+    details about their work (e.g. Google Scholar, Publons or ORCID)</li>
+  <li>Two representative first-author publications</li>
+  <li>4-8 keywords and 1-3{' '}
+<NativeLink href="https://elifesciences.org/subjects" target="_blank">
+subject areas of eLife
+</NativeLink>{ ' '}
+ relevant to their research, and</li>
+<li>A short list of eLife Reviewing Editors they could work with</li>
+</List.Unordered>
+Self-nominations will be reviewed by at least one eLife Reviewing Editor.
+</Paragraph.Reading>
+
+<Paragraph.Reading>
+  eLife also encourages reviewers to involve early-career colleagues as co-reviewers, 
+  and we enable all reviewers to receive credit for their contributions through services 
+  such as Publons and ORCID.
+ </Paragraph.Reading>
+  
+
   </React.Fragment>
 )
 
