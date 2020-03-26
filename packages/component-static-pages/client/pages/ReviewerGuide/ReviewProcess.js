@@ -82,7 +82,9 @@ Researchers wishing to be considered for this pool should contact the journal st
 editorial@elifesciences.org
 </NativeLink>
 ) and provide:
+</Paragraph.Reading>
 
+<Paragraph.Reading>
 <List.Unordered>
   <li>A brief letter of endorsement from their supervisor (optional)</li>
   <li>Their CV</li>
