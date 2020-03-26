@@ -164,15 +164,11 @@ const Initial = props => (
     <H2>Figures, Tables, and Rich Media Files</H2>
 
     <Paragraph.Reading>
-      Figures and tables should be included within the PDF. If authors already
-      have a file available with the figures and tables embedded within the
-      text, please provide this, but otherwise the figures and tables can be
-      included at the end. Each figure and table should fit on one page,
-      together with a title and concise legend (where appropriate), ideally on
-      the same page as the display item. If this is not possible, titles and
-      legends should be included at the end of the article file. Figures and
-      tables should be numbered in the order in which they are cited in the
-      text.
+      Figures and tables should be included within the PDF, with the figures and 
+      tables embedded within the text. Each figure and table should fit on one page, 
+      together with a title and concise legend (where appropriate), on the same 
+      page as the display item. Figures and tables should be numbered in the order 
+      in which they are cited in the text.
     </Paragraph.Reading>
 
     <Paragraph.Reading>
