@@ -35,39 +35,53 @@ const WritingTheReview = props => (
 
     <Paragraph.Reading>
       You will be asked for a general assessment of the work (ideally in fewer than 100 words), 
-      a numbered summary of any substantive concerns (ideally in fewer than 500 words but longer
-      reviews can also be submitted), and a list of any minor comments or corrections. If you 
-      want to state that something is already known, and either contradicts or duplicates a 
-      major conclusion of the manuscript, please support this with appropriate references. 
-      When constructing your comments, you should follow these important eLife editorial principles 
-      and justify any requests for additional work:
+      a numbered summary of any substantive concerns (ideally in fewer than 500 words), and a 
+      list of any minor comments or corrections. If you want to state that something is already 
+      known, and either contradicts or duplicates a major conclusion of the manuscript, please 
+      support this with appropriate references. When writing your review, please consider these important 
+      questions  and evaluate the paper as submitted:
     </Paragraph.Reading>
 
     <List.Ordered>
       <li>
-        We will only request new work, such as experiments, analyses, or data
-        collection, if the new data are essential to support the major
-        conclusions.
+        Does the work warrant publication in eLife in principle?
       </li>
       <li>
-        The authors must be able to do any new work in a reasonable time frame
-        (additional work should be conducted and written up within two months).
-        If the conclusions are not adequately supported by the existing data,
-        the submission should be rejected.
+        If the current conclusions warrant publication in eLife, but are not 
+        fully supported by the existing data, can this be easily addressed? 
+        If not, the submission should be rejected.
       </li>
       <li>
-        Any requests for new work must fall within the scope of the current
+        Is the paper suitable for publication in eLife as it stands, even if 
+        the paper would be stronger with additional work? In other words, are 
+        the major conclusions, with potentially minor adjustments, justified 
+        without additional experiments, analyses, or data collection? In these 
+        circumstances, we should limit requests for revision to issues of 
+        clarity and presentation.
+      </li>
+         <li>
+        Do the major conclusions require a modest amount of additional new data 
+        or analyses to be fully supported? If so, we should ask the authors to 
+        alter their claims or make clear which conclusions require what additional 
+        supporting data. (Once such experiments are done, the authors can publish 
+        them on a preprint server and/or submit a Research Advance in future.) This 
+        option reflects the difficulty that many labs are currently facing in acquiring new data.
+      </li>
+        <li>
+        Does the work have potential but require essential additional data to support the central 
+        claims of the paper? In these cases we should ask for revisions (without a deadline) and 
+        encourage the authors to post the paper to a preprint server along with the reviews from 
+        eLife. Please ensure that any requests for new work fall within the scope of the current 
         submission and the technical expertise of the authors.
       </li>
     </List.Ordered>
 
     <Paragraph.Reading>
-      When revisions are requested, the Reviewing Editor’s decision letter will
-      only contain the most relevant review comments, with any subsequent
-      resubmission assessed only by the original Reviewing Editor in most cases.
-      These principles are intended to accelerate scientific progress by
-      promoting modes of communication whereby new results are made available
-      quickly, openly, and in a way that helps others to build upon them.
+      When revisions are requested, the Reviewing Editor’s decision letter will usually only contain 
+      the most relevant review comments, with any subsequent resubmission assessed only by the 
+      original Reviewing Editor in most cases. These principles are intended to accelerate scientific 
+      progress by promoting modes of communication whereby new results are made available quickly, 
+      penly, and in a way that helps others to build upon them.
     </Paragraph.Reading>
 
     <Paragraph.Reading>
