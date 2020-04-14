@@ -128,7 +128,6 @@
     "joi": "^13.6.0",
     "knex": "^0.19.5",
     "lodash": "^4.17.5",
-    "minimist": "^0.2.1",
     "newrelic": "^4.8.1",
     "omit-deep-lodash": "^1.1.2",
     "pre-commit": "^1.0.0",
