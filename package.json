@@ -118,6 +118,7 @@
     "@rebass/grid": "^6.0.0-7",
     "apollo-client": "2.4.1",
     "apollo-link-state": "^0.4.1",
+    "babel-plugin-styled-components": "^1.10.4",
     "config": "^3.0.1",
     "date-fns": "^1.29.0",
     "formik": "1.5.7",
