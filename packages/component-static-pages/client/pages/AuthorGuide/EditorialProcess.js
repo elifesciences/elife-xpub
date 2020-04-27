@@ -13,50 +13,57 @@ const EditorialProcess = props => (
     <H1>The Editorial Process</H1>
 
     <Paragraph.Reading>
-      eLife publishes{' '}
+      eLife is a selective journal that publishes{' '}
       <NativeLink
         href="https://elifesciences.org/elife-news/what-are-elife-papers-made-of"
         target="_blank"
       >
         promising research
       </NativeLink>{' '}
-      across the life sciences and biomedicine. Before you submit your work,
-      please note that eLife is a selective journal that aims to publish work of
-      the highest scientific standards and importance. Leading academic
-      researchers evaluate new submissions and approximately two-thirds are
-      returned to the authors without further peer review. Approximately half of
-      the articles that are selected for peer review go on to be published.
+      in all areas of biology and medicine. Leading academic researchers on our editorial 
+      board evaluate all new submissions. The editors elect to send around 30% of manuscripts, 
+      those that they believe are of the highest scientific standards and importance, to external 
+      experts for in-depth peer review. More than half of the articles that are selected for peer 
+      review are ultimately published in eLife, for an overall acceptance rate of around 16%.
     </Paragraph.Reading>
 
     <Paragraph.Reading>
-      To help increase the accessibility of research and ensure that it is
-      communicated as rapidly as possible, authors are encouraged to make use of
-      preprint servers, such as{' '}
+      To increase the accessibility of research and ensure that it is communicated rapidly, we expect 
+      authors to post their research as a preprint (using preprint servers such as{' '}
       <NativeLink href="http://biorxiv.org/" target="_blank">
         bioRxiv
+      </NativeLink>,{' '}
+      <NativeLink href="https://www.medrxiv.org/" target="_blank">
+        medRxiv
       </NativeLink>{' '}
       or
       <NativeLink href="https://www.authorea.com/" target="_blank">
         Authorea
       </NativeLink>
-      , while their paper is under consideration by eLife. The advantages of
-      depositing early versions of an article are summarised on the{' '}
+      ), either before submission to eLife or during the review process. The advantages of posting 
+      a preprint have been summarised by{' '}
       <NativeLink
         href="https://elifesciences.org/elife-news/what-are-elife-papers-made-of"
         target="_blank"
       >
         ASAPbio
-      </NativeLink>{' '}
-      website. Authors can upload a preprint to{' '}
+      </NativeLink>
+      . Authors can upload a preprint to{' '}
       <NativeLink href="http://biorxiv.org/" target="_blank">
         bioRxiv
       </NativeLink>{' '}
-      or
+      or{' '}
       <NativeLink href="https://www.authorea.com/" target="_blank">
         Authorea
       </NativeLink>{' '}
-      and then transfer their files for consideration by eLife.
-    </Paragraph.Reading>
+      and then transfer their files directly to eLife for consideration, they can have their work 
+      transferred to{' '}
+      <NativeLink href="http://biorxiv.org/" target="_blank">
+        bioRxiv
+      </NativeLink>{' '}
+      during the full submission process, or they can post the preprint themselves to an appropriate 
+      preprint server at any point before acceptance.
+     </Paragraph.Reading>
 
     <Paragraph.Reading>
       Alternatively, authors can submit to eLife directly, or they can submit
