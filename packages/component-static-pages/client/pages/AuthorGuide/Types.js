@@ -181,16 +181,41 @@ const Types = props => (
     <H2>Review Articles</H2>
 
     <Paragraph.Reading>
-      Review Articles are commissioned by eLife Senior Editors. If you would
-      like to propose a Review Article, please email your outline to editorial
+      Review Articles are commissioned by eLife Senior Editors. We are primarily interested 
+      in Review Articles that synthesize the existing knowledge in a field in an original 
+      and/or thought-provoking way, and/or that present substantial ideas for moving this field forward. 
+      In general, we are not interested in Review Articles that mostly summarize what has happened in a 
+      field in the past few years, in Review Articles about fields that have been reviewed many times before, 
+      or Review Articles that would only be interesting for a specialized audience.
+    </Paragraph.Reading> 
+      
+    <Paragraph.Reading>  
+      If you would like to propose a Review Article, please email your outline to editorial
       [at] elifesciences [dot] org. In your email please also suggest a relevant{' '}
       <NativeLink href="https://elifesciences.org/about/people" target="_blank">
         Senior Editor
       </NativeLink>{' '}
-      to assess the outline. The outline should include: i) 50-100 words on each
-      of the main sections of the proposed article; ii) a paragraph on why it
-      would be timely to publish an article on this topic now; iii) a paragraph
-      on why you are a suitable author for such an article.
+      to assess the outline. The outline should include:
+      <List.Ordered>
+        <li>
+          a proposed title
+        </li>
+        <li>
+          a 400–800 word summary of existing knowledge in the field you propose to write about. 
+          This summary needs to convince the relevant Editors that your article will survey this 
+          field of research in an original and/or thought-provoking way
+        </li>
+        <li>
+           a 300–600 word summary of your ideas for moving this field forward
+        </li>
+        <li>
+           a paragraph (~60 words) to explain why you are a suitable author for such an article
+        </li>
+        <li>
+           a list of recently published Review Articles in this field; for each of these articles 
+           please include a sentence explaining how your article would be different.
+        </li>
+      </List.Ordered>
     </Paragraph.Reading>
 
     <H2>Scientific Correspondence</H2>
