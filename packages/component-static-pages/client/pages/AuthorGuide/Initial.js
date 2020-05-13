@@ -5,6 +5,7 @@ import {
   NativeLink,
 } from '@elifesciences/component-elife-ui/client/atoms'
 
+import CalloutTextBox from '../../components/CalloutTextBox'
 import List from '../../components/List'
 import RequiredInfoTable from './RequiredInfoTable'
 
@@ -31,11 +32,35 @@ const Initial = props => (
       (a completed version of this form will be requested if the work is invited for in-depth review).
 </Paragraph.Reading>
 
+<CalloutTextBox>
+        <H2>Preprint Review</H2>
+      <Paragraph.Reading>
+      Authors who have posted their research as a preprint to bioRxiv are invited to have their work 
+      considered for publication in eLife and simultaneously peer-reviewed in-depth on bioRxiv through 
+      our Preprint Review service. Submissions to Preprint Review will proceed directly to peer review, 
+      provided we have appropriate expertise and capacity on our editorial board. All resulting peer 
+      reviews will be posted to bioRxiv and will independently inform a decision about whether to publish 
+      the paper in eLife. Authors will be given an opportunity to respond to the reviews prior to posting, 
+      but they cannot veto the posting of reviews.
+      </Paragraph.Reading>
+      <Paragraph.Reading>
+      Please read our{' '}
+      <NativeLink href="https://elifesciences.org/inside-elife/d0c5d114/new-from-elife-invitation-to-submit-to-preprint-review" target="_blank">
+        announcement
+      </NativeLink>{' '}
+      for more details and restrictions. To opt in, please refer to the &quot;Preprint Review&quot; 
+      service clearly in your cover letter and include a link to the preprint.
+      </Paragraph.Reading>
+    </CalloutTextBox>
+
     <H2>Single Manuscript PDF</H2>
 
     <Paragraph.Reading>
-      When they are ready to submit, authors should start by uploading their manuscript text and figures as a single 
-      PDF (ideally smaller than 15MB), organised with easy readability in mind.
+      Authors should start by uploading their manuscript text and figures as a single PDF 
+      (ideally smaller than 15MB), organised with easy readability in mind. Please include 
+      page and line numbers, and a legible font size for the main text and figure legends. 
+      We strongly encourage authors to embed figures and tables at appropriate places within 
+      the main text.
     </Paragraph.Reading>
 
     <Paragraph.Reading>
