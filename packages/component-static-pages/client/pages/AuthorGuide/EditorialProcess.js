@@ -65,6 +65,26 @@ const EditorialProcess = props => (
       preprint server at any point before acceptance.
      </Paragraph.Reading>
 
+    <CalloutTextBox>
+      <Paragraph.Reading>
+      Authors who have posted their research as a preprint to bioRxiv are invited to have their work 
+      considered for publication in eLife and simultaneously peer-reviewed in-depth on bioRxiv through 
+      our Preprint Review service. Submissions to Preprint Review will proceed directly to peer review, 
+      provided we have appropriate expertise and capacity on our editorial board. All resulting peer 
+      reviews will be posted to bioRxiv and will independently inform a decision about whether to publish 
+      the paper in eLife. Authors will be given an opportunity to respond to the reviews prior to posting, 
+      but they cannot veto the posting of reviews.
+      </Paragraph.Reading>
+      <Paragraph.Reading>
+      Please read our{' '}
+      <NativeLink href="https://elifesciences.org/inside-elife/d0c5d114/new-from-elife-invitation-to-submit-to-preprint-review" target="_blank">
+        announcement
+      </NativeLink>{' '}
+      for more details and restrictions. To opt in, please refer to the “Preprint Review” 
+      service clearly in your cover letter and include a link to the preprint.
+      </Paragraph.Reading>
+    </CalloutTextBox>
+
     <Paragraph.Reading>
       Alternatively, authors can submit to eLife directly, or they can submit
       using the{' '}
