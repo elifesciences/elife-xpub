@@ -56,8 +56,11 @@ const Initial = props => (
     <H2>Single Manuscript PDF</H2>
 
     <Paragraph.Reading>
-      When they are ready to submit, authors should start by uploading their manuscript text and figures as a single 
-      PDF (ideally smaller than 15MB), organised with easy readability in mind.
+      Authors should start by uploading their manuscript text and figures as a single PDF 
+      (ideally smaller than 15MB), organised with easy readability in mind. Please include 
+      page and line numbers, and a legible font size for the main text and figure legends. 
+      We strongly encourage authors to embed figures and tables at appropriate places within 
+      the main text.
     </Paragraph.Reading>
 
     <Paragraph.Reading>
