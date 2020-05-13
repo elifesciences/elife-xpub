@@ -81,7 +81,7 @@ const EditorialProcess = props => (
       <NativeLink href="https://elifesciences.org/inside-elife/d0c5d114/new-from-elife-invitation-to-submit-to-preprint-review" target="_blank">
         announcement
       </NativeLink>{' '}
-      for more details and restrictions. To opt in, please refer to the “Preprint Review” 
+      for more details and restrictions. To opt in, please refer to the &quot;Preprint Review&quot; 
       service clearly in your cover letter and include a link to the preprint.
       </Paragraph.Reading>
     </CalloutTextBox>
