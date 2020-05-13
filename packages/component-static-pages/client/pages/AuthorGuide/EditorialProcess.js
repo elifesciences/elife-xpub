@@ -66,6 +66,7 @@ const EditorialProcess = props => (
      </Paragraph.Reading>
 
     <CalloutTextBox>
+        <H2>Preprint Review</H2>
       <Paragraph.Reading>
       Authors who have posted their research as a preprint to bioRxiv are invited to have their work 
       considered for publication in eLife and simultaneously peer-reviewed in-depth on bioRxiv through 
