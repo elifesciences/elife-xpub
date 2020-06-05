@@ -343,6 +343,14 @@ const Types = props => (
       <List.Unordered>
         <li>
           <NativeLink
+            href="https://elifesciences.org/inside-elife/bb34a238/special-issue-call-for-papers-in-evolutionary-medicine"
+            target="_blank"
+          >
+            Evolutionary Medicine
+          </NativeLink>
+        </li>
+        <li>
+          <NativeLink
             href="https://elifesciences.org/inside-elife/4f706531/special-issue-call-for-papers-in-aging-geroscience-and-longevity"
             target="_blank"
           >
