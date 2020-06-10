@@ -10,3 +10,7 @@ export const FormH3 = styled(H3)`
   padding-top: 0px;
   margin-bottom: 24px;
 `
+export const FormH3a = styled(H3)`
+  padding-top: 12px;
+  margin-bottom: 6px;
+`
