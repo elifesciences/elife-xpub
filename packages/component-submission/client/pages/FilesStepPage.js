@@ -6,6 +6,8 @@ import { compose, withProps } from 'recompose'
 import {
   ValidatedField,
   FormH2,
+  FormH3,
+  NativeLink,
   Paragraph,
 } from '@elifesciences/component-elife-ui/client/atoms'
 import CoverLetterEditor from '../components/CoverLetterEditor'
@@ -142,7 +144,7 @@ export class FilesStepPageComponent extends React.Component {
     return (
       <React.Fragment>
         <Box mb={3} width={1}>
-          <Paragraph.Small secondary>
+          <Paragraph.Small>
             Please enter or paste in your cover letter below. To help with the
             initial evaluation of your submission, you should aim to answer the
             following questions:
@@ -164,10 +166,23 @@ export class FilesStepPageComponent extends React.Component {
               achieved?
             </li>
           </SmallUL>
-          <Paragraph.Small secondary>
+          <Paragraph.Small>
             In addition, please upload any related studies that you have
             published recently or have under consideration elsewhere as
             supporting files and describe them in your cover letter.
+          </Paragraph.Small>
+          <FormH3>Preprint Review</FormH3>
+          <Paragraph.Small>
+            If you&apos;ve posted your manuscript as a preprint you can now have
+            it peer reviewed directly on bioR&chi;iv while it is also considered
+            for publication in eLife. Submissions to our new Preprint Review
+            service will go directly to peer review, provided we have
+            appropriate expertise and capacity on our editorial board. To opt-in
+            to this service please include this intention in your cover letter
+            along with a link to your preprint on bioR&chi;iv.
+            <NativeLink href="https://elifesciences.org/inside-elife/d0c5d114/new-from-elife-invitation-to-submit-to-preprint-review">
+              Read more about Preprint Review.
+            </NativeLink>
           </Paragraph.Small>
           <ValidatedField
             component={CoverLetterEditor}
