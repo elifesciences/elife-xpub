@@ -6,7 +6,7 @@ import { compose, withProps } from 'recompose'
 import {
   ValidatedField,
   FormH2,
-  FormH3,
+  FormH3a,
   NativeLink,
   Paragraph,
 } from '@elifesciences/component-elife-ui/client/atoms'
@@ -171,7 +171,7 @@ export class FilesStepPageComponent extends React.Component {
             published recently or have under consideration elsewhere as
             supporting files and describe them in your cover letter.
           </Paragraph.Small>
-          <FormH3>Preprint Review</FormH3>
+          <FormH3a>Preprint Review</FormH3a>
           <Paragraph.Small>
             If you&apos;ve posted your manuscript as a preprint you can now have
             it peer reviewed directly on bioR&chi;iv while it is also considered
@@ -179,7 +179,7 @@ export class FilesStepPageComponent extends React.Component {
             service will go directly to peer review, provided we have
             appropriate expertise and capacity on our editorial board. To opt-in
             to this service please include this intention in your cover letter
-            along with a link to your preprint on bioR&chi;iv.
+            along with a link to your preprint on bioR&chi;iv.&nbsp;
             <NativeLink href="https://elifesciences.org/inside-elife/d0c5d114/new-from-elife-invitation-to-submit-to-preprint-review">
               Read more about Preprint Review.
             </NativeLink>
