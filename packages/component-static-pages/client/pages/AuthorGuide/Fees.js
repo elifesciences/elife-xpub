@@ -9,7 +9,7 @@ import List from '../../components/List'
 
 const Fees = props => (
   <React.Fragment>
-    <H1>Publication Fees FAQs</H1>
+    <H1>Publication Fees</H1>
 
     <Paragraph.Reading>
       A fee of $2,500* is collected for published research papers; however,
