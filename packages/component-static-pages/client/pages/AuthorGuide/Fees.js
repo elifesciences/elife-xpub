@@ -9,7 +9,7 @@ import List from '../../components/List'
 
 const Fees = props => (
   <React.Fragment>
-    <H1>Publication Fees FAQs</H1>
+    <H1>Publication Fees</H1>
 
     <Paragraph.Reading>
       A fee of $2,500* is collected for published research papers; however,
@@ -69,12 +69,13 @@ const Fees = props => (
     <H3>1. How did eLife decide on a fee of $2,500?</H3>
 
     <Paragraph.Reading>
-      As a non-profit organisation, we believe the fee should be derived from our real costs. 
-      At $2,500, the publication fee covers the marginal costs that we incur for every new 
-      article we publish. It does not cover our fixed publishing costs or the costs of our 
-      technology and innovation efforts. By recovering our marginal costs, we can help to ensure 
-      the long-term sustainability of eLife. We also considered how the fee compares to those at 
-      other journals and believe we offer good value.
+      As a non-profit organisation, we believe the fee should be derived from
+      our real costs. At $2,500, the publication fee covers the marginal costs
+      that we incur for every new article we publish. It does not cover our
+      fixed publishing costs or the costs of our technology and innovation
+      efforts. By recovering our marginal costs, we can help to ensure the
+      long-term sustainability of eLife. We also considered how the fee compares
+      to those at other journals and believe we offer good value.
     </Paragraph.Reading>
 
     <Paragraph.Reading>

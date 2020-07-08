@@ -10,6 +10,7 @@ import Post from './Post'
 import JournalPolicies from './JournalPolicies'
 import Fees from './Fees'
 import JournalMetrics from './JournalMetrics'
+import JournalFAQs from './journalFAQs'
 
 const AuthorGuide = props => (
   <Layout
@@ -40,6 +41,11 @@ const AuthorGuide = props => (
         label: 'Journal Policies',
         link: '/author-guide/journal-policies',
         component: JournalPolicies,
+      },
+      {
+        label: 'Journal FAQs',
+        link: '/author-guide/journal-faqs',
+        component: JournalFAQs,
       },
       {
         label: 'Publication Fees',
