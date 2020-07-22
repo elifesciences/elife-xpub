@@ -35,37 +35,6 @@ const Fees = props => (
       below.
     </Paragraph.Reading>
 
-    <Paragraph.Reading>
-      For background and more information, please also read:
-    </Paragraph.Reading>
-
-    <List.Unordered>
-      <li>
-        <NativeLink
-          href="https://elifesciences.org/elife-news/inside-elife-setting-fee-publication"
-          target="_blank"
-        >
-          Inside eLife: Setting a fee for publication
-        </NativeLink>
-      </li>
-      <li>
-        <NativeLink
-          href="https://elifesciences.org/content/5/e21230"
-          target="_blank"
-        >
-          Editorial: Building a sustainable future for eLife
-        </NativeLink>
-      </li>
-      <li>
-        <NativeLink
-          href="https://elifesciences.org/elife-news/inside-elife-what-it-costs-publish"
-          target="_blank"
-        >
-          Inside eLife: What it costs to publish
-        </NativeLink>
-      </li>
-    </List.Unordered>
-
     <H3>1. How did eLife decide on a fee of $2,500?</H3>
 
     <Paragraph.Reading>
