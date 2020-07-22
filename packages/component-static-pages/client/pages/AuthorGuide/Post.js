@@ -209,6 +209,10 @@ const Post = props => (
       <NativeLink href="http://www.eneuro.org/ " target="_blank">
         eNeuro
       </NativeLink>
+      ,{' '}
+      <NativeLink href="https://www.life-science-alliance.org/ " target="_blank">
+        Life Science Alliance
+      </NativeLink>
       , the{' '}
       <NativeLink
         href="https://www.plos.org/which-journal-is-right-for-me"
