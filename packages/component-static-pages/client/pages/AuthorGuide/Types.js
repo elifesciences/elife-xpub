@@ -96,37 +96,31 @@ const Types = props => (
     <H2>Tools and Resources</H2>
 
     <Paragraph.Reading>
-      This category highlights tools or resources that are especially important
-      for their respective fields and have the potential to accelerate
-      discovery. For example, we welcome the submission of significant
-      technological or methodological advances, genomic or other datasets,
-      collections of biological resources, software tools, and so on. The
-      article should fully describe the tool or resource so that prospective
-      users have all the information needed to deploy it within their own work.
-      Therefore, major datasets must be publicly deposited (unless there are
-      strong ethical or legal reasons to restrict access); relevant code must
-      conform to the{' '}
+      This category highlights tools or resources that have the potential to substantially 
+      accelerate discovery in any area of biology or medicine, and that are therefore likely 
+      to find rapid and widespread adoption. Submissions will be evaluated for their likely 
+      impact, not for their technical contribution alone, and should be of interest to a broad 
+      audience. The article should fully describe the tool or resource so that prospective users 
+      have all the information needed to deploy it within their own work. Therefore, major datasets 
+      must be publicly deposited (unless there are strong ethical or legal reasons to restrict access); 
+      relevant code must conform to the {' '}
       <NativeLink href="https://opensource.org/docs/osd" target="_blank">
         Open Source Definition
       </NativeLink>{' '}
-      and be deposited in an appropriate public repository; and methodological
-      advances need to be comprehensively described, along with details of the
-      reagents and equipment, and their sources. Authors should follow the
-      format for Research Articles or Short Reports, as appropriate.
+      and be deposited in an appropriate public repository; and methodological advances need to be 
+      comprehensively described, along with details of the reagents and equipment, and their sources. 
+      Authors should follow the format for Research Articles or Short Reports, as appropriate.
     </Paragraph.Reading>
 
     <Paragraph.Reading>
-      Tools and Resources articles do not have to report major new biological
-      insights or mechanisms, but it must be clear that they will enable such
-      advances to take place. Specifically, submissions will be assessed in
-      terms of their potential to facilitate experiments that address problems
-      that to date have been challenging or even intractable. Some Tools and
-      Resources papers will be the first report of an entirely novel technology.
-      In many other cases, authors will wish to report substantial improvements
-      and extensions of existing technologies. In those cases, the new method
-      should be properly compared and benchmarked against existing methods used
-      in the field. Minor improvements on existing methodologies are unlikely to
-      fare well in review.
+      Tools and Resources articles do not have to report major new biological insights or mechanisms, 
+      but it must be clear that they will enable such advances to take place, for example, through 
+      exploratory or proof-of-concept experiments. Specifically, submissions will be assessed in terms of 
+      their potential to facilitate experiments that address problems that to date have been challenging or 
+      even intractable. Some Tools and Resources papers will be the first report of an entirely novel technology. 
+      In other cases, authors will report substantial improvements and extensions of existing technologies. In 
+      those cases, the new method must be thoroughly  compared and benchmarked against existing methods used in 
+      the field. Minor improvements on existing methodologies are unlikely to fare well in review.
     </Paragraph.Reading>
 
     <H2>Research Advances</H2>
