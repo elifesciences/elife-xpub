@@ -220,8 +220,10 @@ const Initial = props => (
     </Paragraph.Reading>
 
     <Paragraph.Reading>
-      When preparing coloured tables, authors should note that we can only
-      accomodate schemes as outlined in{' '}
+      Coloured text and cells are discouraged in tables because they are less accessible 
+      and machine readable. Where possible, bold and/or italics can be used to highlight 
+      cells or data. If some colour is essential in a table, please only use the colour 
+      schemes outlined in {' '}
       <NativeLink
         href="https://cdn.elifesciences.org/author-guide/tables-colour.pdf?_ga=2.122882312.2069272108.1540132848-2034406101.1537543708"
         target="_blank"
