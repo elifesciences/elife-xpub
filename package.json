@@ -100,6 +100,7 @@
     "secretcheck"
   ],
   "resolutions": {
+    "dot-prop": "^5.1.1",
     "graphql": "^14.2.1",
     "lodash": ">=4.17.11"
   },
