@@ -35,7 +35,8 @@
   },
   "resolutions": {
     "lodash.merge": "^4.6.2",
-    "lodash": "^4.17.13"
+    "lodash": "^4.17.13",
+    "dot-prop": "^5.1.1"
   },
   "devDependencies": {
     "@graphql-codegen/cli": "^1.2.0",
