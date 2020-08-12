@@ -72,7 +72,6 @@ module.exports = {
       'epidemiology-global-health': 'Epidemiology and Global Health',
       'evolutionary-biology': 'Evolutionary Biology',
       'genetics-genomics': 'Genetics and Genomics',
-      'human-biology': 'Human Biology',
       'immunology-inflammation': 'Immunology and Inflammation',
       medicine: 'Medicine',
       'microbiology-infectious-disease': 'Microbiology and Infectious Disease',
