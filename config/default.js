@@ -72,7 +72,9 @@ module.exports = {
       'epidemiology-global-health': 'Epidemiology and Global Health',
       'evolutionary-biology': 'Evolutionary Biology',
       'genetics-genomics': 'Genetics and Genomics',
+      'human-biology': 'Human Biology',
       'immunology-inflammation': 'Immunology and Inflammation',
+      medicine: 'Medicine',
       'microbiology-infectious-disease': 'Microbiology and Infectious Disease',
       neuroscience: 'Neuroscience',
       'physics-living-systems': 'Physics of Living Systems',
@@ -81,8 +83,6 @@ module.exports = {
         'Stem Cells and Regenerative Medicine',
       'structural-biology-molecular-biophysics':
         'Structural Biology and Molecular Biophysics',
-      'human-biology': 'Human Biology',
-      medicine: 'Medicine',
     },
   },
   login: {
