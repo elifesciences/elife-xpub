@@ -2,8 +2,6 @@ FROM node:10
 
 WORKDIR /opt
 
-MAINTAINER Peter East <petereast+pgp@pm.me>
-
 COPY package.json yarn.lock ./
 RUN ["yarn", "install"]
 
